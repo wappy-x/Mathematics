@@ -59,7 +59,7 @@ Undoing one turns that multiply into a divide:
 - **The percent names its amount.** The 8% tax is of the $60.00 sale price. Without "of what", a percent has no size.
 - **Each step in a chain is taken of the amount it meets.** Add the percents instead and the till says $66.40, not $64.80.
 - **To undo a step, divide by the same multiply.** Add the 25% back instead and $60.00 becomes $75.00, not the $80.00 tag.
-- **A change in a rate is counted in points.** Read 15% to 18% as "3% more" and the tip is $7.11, not $8.28.
+- **A change in a rate is counted in percentage points.** A tip that moves from 15% to 18% has gone up 3 points. Read that as "3% more tip" and the tip is $7.11, not $8.28.
 
 ---
 
@@ -319,7 +319,7 @@ example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to th
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to the jacket and dinner numbers, so expect one to fire.
 > - **Tax first, then the sale.** Does the order matter? Flip the second road to `part(part(tag, 100 + 8), 100 - 25)`: still $64.80, and no assert fires.
 > - **Tip 18% from the start.** Set `part(dinner, 15)` to `part(dinner, 18)`: $8.28, and the last assert fires.
 
@@ -353,9 +353,10 @@ example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to th
 
 ## Where this goes next
 
+- [The number families](../02-The%20Number%20Line/01-number-families.md): the first card of the next shelf. It steps back and sorts every kind of number met so far, from counting numbers to fractions and decimals, by the sum that forced each one.
 - [Growth factors](../04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): the one-multiply step given its own name, so changes chain — why a 50% fall then a 50% rise does not break even.
 
-This card leaves one question open: what happens when the same percent is applied again and again, each time to a new amount?
+This card leaves one question open, and it jumps ahead to Growth factors rather than to the next shelf: what happens when the same percent is applied again and again, each time to a new amount?
 
 ---
 

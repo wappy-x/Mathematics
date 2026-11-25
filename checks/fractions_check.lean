@@ -10,14 +10,15 @@ import Mathlib.Tactic.Ring
 to add, cut both into pieces of one size (the common bottom `b × d`) and add the tops;
 taking away works the same way, taking the tops away over the common bottom;
 to multiply, take tops times tops and bottoms times bottoms;
-to divide, flip the second fraction and multiply. -/
-theorem fraction_add_sub_mul_div_rules (a b c d : ℤ) (hb : b ≠ 0) (hd : d ≠ 0) :
+to divide by a fraction that is not zero (`c ≠ 0` as well), flip it and multiply. -/
+theorem fraction_add_sub_mul_div_rules (a b c d : ℤ) (hb : b ≠ 0) (hc : c ≠ 0) (hd : d ≠ 0) :
     ((a : ℚ) / b + (c : ℚ) / d = ((a * d + c * b : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b - (c : ℚ) / d = ((a * d - c * b : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b * ((c : ℚ) / d) = ((a * c : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b / ((c : ℚ) / d) = (a : ℚ) / b * ((d : ℚ) / c)) := by
   have hb' : (b : ℚ) ≠ 0 := by exact_mod_cast hb
   have hd' : (d : ℚ) ≠ 0 := by exact_mod_cast hd
+  have hc' : (c : ℚ) ≠ 0 := by exact_mod_cast hc
   refine ⟨?_, ?_, ?_, ?_⟩
   · push_cast
     field_simp

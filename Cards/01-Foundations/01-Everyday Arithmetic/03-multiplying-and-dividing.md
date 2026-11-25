@@ -58,7 +58,7 @@ The second never says "divided". It says what the pile was made of: the honest w
 ### When it holds
 
 - **Every lot is the same size.** Twelve apples at different prices is an adding job, not 12 × 75.
-- **One or more people sharing.** Share by 0 and no number of zeros adds up to 12: the check finds 0 under 100.
+- **One or more people sharing.** Share by 0 and the answer would be a number of zeros adding up to 12. Any number of zeros adds up to 0, so there is none.
 - **The leftover is under the number sharing.** Stop with four or more left and another round would still go out, so the share comes out too small.
 - **Whole things, shared whole.** Allow cutting and there is no remainder, only a part of an apple each: that is [Fractions](07-fractions.md).
 
@@ -70,7 +70,9 @@ The second never says "divided". It says what the pile was made of: the honest w
 
 A dot for every cent: twelve rows, one per apple, 75 dots in a row. Count row by row and you are adding 75 twelve times. Turn the page a quarter turn and it is 75 rows of twelve. Nobody added a dot, so both counts give 900.
 
-Two things fall out. **Order does not matter when you multiply**: twelve lots of 75 is 75 lots of twelve. And **dividing is that block with a different hole in it**: multiplying, you know both sides and want the dots; dividing, you know the dots and one side. That is why every division can be checked by multiplying back: four lots of 225 comes back to 900.
+Two things fall out. **Order does not matter when you multiply**: twelve lots of 75 is 75 lots of twelve.
+
+And **dividing is that block with a different hole in it**: multiplying, you know both sides and want the dots; dividing, you know the dots and one side. That is why every division can be checked by multiplying back: four lots of 225 comes back to 900.
 
 ### Step 1: the leftover stays smaller than the number sharing
 
@@ -91,7 +93,7 @@ For any pile shared by one or more people, exactly one share-and-leftover pair f
 
 "12 shared by 4 is 3" is shorthand for this: four lots of three make twelve. Every division is a multiplication asked backwards.
 
-So "12 shared by 0" asks for a number of zeros adding up to twelve: the check tries every whole number under 100 and finds none. "0 shared by 0" breaks the other way, because every number fits, and endless answers is no answer.
+So "12 shared by 0" asks for a number of zeros adding up to twelve. Any number of zeros adds up to 0, never 12, so there is no answer. "0 shared by 0" breaks the other way, because every number fits, and endless answers is no answer.
 
 ---
 
@@ -120,14 +122,13 @@ Nine dollars for the apples, a dollar back, everyone owes $2.25.
 
 ## Code, from first principles, and it actually runs
 
-The house example twice: the plain way, then the same answers by a route that cannot borrow them — 75 added to itself twelve times, the shares added back up.
+The apple stall twice: the plain way, then the same answers by a route that cannot borrow them — 75 added to itself twelve times, the shares added back up.
 
 ### Python
 
 ```python
 # Multiplying and dividing -- the check behind the card.  Nothing is imported.
 # The plain way first, then the same answers again by adding, as a cross-check.
-
 def added_up(count, size):            # size added to itself, count times over
     total = 0
     for _ in range(count):
@@ -135,29 +136,30 @@ def added_up(count, size):            # size added to itself, count times over
     return total
 
 def row(label, value): print(f"{label:<36}{value:>28}")
-
-cost = 12 * 75                        # twelve apples at 75 cents each
+price, friends = 75, 4                # cents for one apple; people sharing
+cost = 12 * price                     # twelve apples
 change = 1000 - cost                  # handed over a $10 bill, which is 1000 cents
-each, over = cost // 4, cost % 4      # the money split four ways
+each, over = cost // friends, cost % friends     # the money shared out
 zeros = [q for q in range(0, 100) if added_up(q, 0) == 12]   # nothing here works
-assert cost == added_up(12, 75), "adding 75 twelve times must give the same total"
-assert added_up(each, 4) + over == cost, "four lots of 225 must rebuild the 900"
-assert added_up(14 // 4, 4) + 14 % 4 == 14, "three each and two over must rebuild 14"
-row("12 apples at 75 cents each", f"{cost} cents")
+assert cost == added_up(12, price) == added_up(price, 12), "12 lots of 75 is 75 lots of 12"
+assert added_up(friends, each) + over == cost, "the shares and the leftover must rebuild the cost"
+assert added_up(friends, 14 // friends) + 14 % friends == 14 and zeros == [], "rebuild 14; no 0s make 12"
+row(f"12 apples at {price} cents each", f"{cost} cents")
 row("that in dollars", f"{cost // 100}.{cost % 100:02d}")
 row("change from the 1000-cent bill", f"{change} cents")
-row("cross-check, 75 added 12 times", f"{added_up(12, 75)} cents")
-row("900 cents shared by 4 friends", f"{each} each, {over} over")
+row(f"cross-check, {price} added 12 times", f"{added_up(12, price)} cents")
+row(f"{cost} cents shared by {friends} friends", f"{each} each, {over} over")
 row("each friend pays, in dollars", f"{each // 100}.{each % 100:02d}")
-row("cross-check, 4 lots of 225", f"{added_up(each, 4) + over} cents")
-row("12 apples shared by 4 friends", f"{12 // 4} each, {12 % 4} over")
-row("14 apples shared by 4 friends", f"{14 // 4} each, {14 % 4} over")
-row("cross-check, 4 lots of 3, plus 2", f"{added_up(14 // 4, 4) + 14 % 4} apples")
+row(f"cross-check, {friends} lots of {each}", f"{added_up(friends, each) + over} cents")
+row(f"12 apples shared by {friends} friends", f"{12 // friends} each, {12 % friends} over")
+row(f"14 apples shared by {friends} friends", f"{14 // friends} each, {14 % friends} over")
+row(f"cross-check, {friends} lots of {14 // friends}, plus {14 % friends}",
+    f"{added_up(friends, 14 // friends) + 14 % friends} apples")
 row("any number of 0s adding up to 12", f"{len(zeros)} found under 100")
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 12 apples at 75 cents each                             900 cents
@@ -197,29 +199,31 @@ fn row(label: &str, value: String) {
 }
 
 fn main() {
-    let cost = 12 * 75;                        // twelve apples at 75 cents each
+    let (price, friends) = (75, 4);            // cents for one apple; people sharing
+    let cost = 12 * price;                     // twelve apples
     let change = 1000 - cost;                  // handed over a $10 bill, 1000 cents
-    let (each, over) = (cost / 4, cost % 4);   // the money split four ways
+    let (each, over) = (cost / friends, cost % friends);   // the money shared out
     let zeros = (0..100).filter(|&q| added_up(q, 0) == 12).count();  // nothing works
-    assert!(cost == added_up(12, 75), "adding 75 twelve times must give the same total");
-    assert!(added_up(each, 4) + over == cost, "four lots of 225 must rebuild the 900");
-    assert!(added_up(14 / 4, 4) + 14 % 4 == 14, "three each and two over must rebuild 14");
-    row("12 apples at 75 cents each", format!("{} cents", cost));
+    assert!(cost == added_up(12, price) && cost == added_up(price, 12), "12 lots of 75 is 75 lots of 12");
+    assert!(added_up(friends, each) + over == cost, "the shares and the leftover must rebuild the cost");
+    assert!(added_up(friends, 14 / friends) + 14 % friends == 14 && zeros == 0, "rebuild 14; no 0s make 12");
+    row(&format!("12 apples at {} cents each", price), format!("{} cents", cost));
     row("that in dollars", format!("{}.{:02}", cost / 100, cost % 100));
     row("change from the 1000-cent bill", format!("{} cents", change));
-    row("cross-check, 75 added 12 times", format!("{} cents", added_up(12, 75)));
-    row("900 cents shared by 4 friends", format!("{} each, {} over", each, over));
+    row(&format!("cross-check, {} added 12 times", price), format!("{} cents", added_up(12, price)));
+    row(&format!("{} cents shared by {} friends", cost, friends), format!("{} each, {} over", each, over));
     row("each friend pays, in dollars", format!("{}.{:02}", each / 100, each % 100));
-    row("cross-check, 4 lots of 225", format!("{} cents", added_up(each, 4) + over));
-    row("12 apples shared by 4 friends", format!("{} each, {} over", 12 / 4, 12 % 4));
-    row("14 apples shared by 4 friends", format!("{} each, {} over", 14 / 4, 14 % 4));
-    row("cross-check, 4 lots of 3, plus 2", format!("{} apples", added_up(14 / 4, 4) + 14 % 4));
+    row(&format!("cross-check, {} lots of {}", friends, each), format!("{} cents", added_up(friends, each) + over));
+    row(&format!("12 apples shared by {} friends", friends), format!("{} each, {} over", 12 / friends, 12 % friends));
+    row(&format!("14 apples shared by {} friends", friends), format!("{} each, {} over", 14 / friends, 14 % friends));
+    row(&format!("cross-check, {} lots of {}, plus {}", friends, 14 / friends, 14 % friends),
+        format!("{} apples", added_up(friends, 14 / friends) + 14 % friends));
     row("any number of 0s adding up to 12", format!("{} found under 100", zeros));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 12 apples at 75 cents each                             900 cents
@@ -325,15 +329,15 @@ example : ∀ q, q < 100 → (List.replicate q 0).sum ≠ 12 := by decide
 > [!TIP]
 > **Try changing**
 > Guess the answer first. Then run it.
-> - **Put the price up to 80 cents.** Change both 75s: the cost line and its cross-check.
-> - **Make it seven friends.** Change the 4s in the sharing line and its cross-check. The money stops dividing evenly; the rebuild still holds.
+> - **Put the price up to 80 cents.** Set `price` to 80. The bill, the change and each share all move, and every cross-check still holds.
+> - **Make it seven friends.** Set `friends` to 7. The money stops dividing evenly; the rebuild still holds.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Believing "divided by zero" has a hidden answer, zero or infinity.** It has neither. Division is multiplication backwards, so "12 shared by 0" asks what number of zeros adds up to 12. The check finds 0 of them.
+> **Believing "divided by zero" has a hidden answer, zero or infinity.** It has neither. Division is multiplication backwards, so "12 shared by 0" asks what number of zeros adds up to 12. Any number of zeros adds up to 0, so none does: the check tries every count under 100 and finds 0.
 >
 > Two smaller traps:
 > - **Dropping the remainder.** Handing 3 apples each out of 14 accounts for 12 and loses two.
@@ -363,7 +367,7 @@ example : ∀ q, q < 100 → (List.replicate q 0).sum ≠ 12 := by decide
 - [Fractions](07-fractions.md): what to do with the two apples left over. Cut them.
 - [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself, over and over.
 
-Left open: when the two leftover apples can be cut, how much does each of the four friends get?
+Left open: the change is 1000 − 12 × 75 cents, and the four friends share it. Written on one line, as 1000 − 12 × 75 ÷ 4, which step goes first?
 
 ---
 

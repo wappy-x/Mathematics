@@ -98,9 +98,9 @@ The change is four quarters, so each friend gets 25 cents back with their apples
 
 | Mistake | What comes out |
 | --- | --- |
-| The carry is dropped, not moved left | Ten ones lost at every overflow, and a bill far below 900. |
-| A short column takes the smaller digit from the bigger | More change than the note, which cannot happen. |
-| The subtraction is done the wrong way round | An answer past zero: a debt, not change. |
+| The carry is dropped, not moved left | Ten lost at every overflow: 75 + 75 comes out at 40, not 150. |
+| A short column takes the smaller digit from the bigger | 1000 − 900 comes out at 1900: more change than the note, which cannot happen. |
+| The subtraction is done the wrong way round | 900 − 1000 is −100: an answer past zero, a debt, not change. |
 
 Swapping the numbers in an addition changes nothing. In a subtraction it changes everything.
 
@@ -108,56 +108,57 @@ Swapping the numbers in an addition changes nothing. In a subtraction it changes
 
 ## Code, from first principles, and it actually runs
 
-The house example the plain way, one price added on at a time, then the same bill again as a cross-check: the twelve tens digits and the twelve ones digits, added as piles.
+The apple stall, two ways. First add 75 cents twelve times. Then add the twelve tens digits and the twelve ones digits as piles, as a cross-check.
 
 ### Python
 
 ```python
 # The check behind the card: twelve apples at 75 cents, a $10 bill, four
 # friends, everything in whole cents.  Nothing is imported.
-APPLES, PRICE, PAID, QUARTER = 12, 75, 1000, 25
+APPLES, PRICE, PAID = 12, 75, 1000
 # First way: put one apple's price on the pile at a time, keeping the bill.
 bill, running = 0, []
 for _ in range(APPLES):
     bill = bill + PRICE
     running.append(bill)
-# Second way, the cross-check: the same total by piles -- twelve sevens in
-# the tens column and twelve fives in the ones, exactly as on the card.
+# Second way, the cross-check: the tens digits and the ones digits, added as piles.
 tens, ones = 0, 0
 for _ in range(APPLES):
-    tens, ones = tens + 7, ones + 5
+    tens, ones = tens + PRICE // 10, ones + PRICE % 10
 piles = tens * 10 + ones
-change = PAID - bill
-share = PRICE + PRICE + PRICE
+change, share = PAID - bill, PRICE + PRICE + PRICE
+each = change // 4                         # the change, shared four ways
 print(f"one apple, cents           {PRICE:>5}")
 print(f"twelve apples, added up    {bill:>5}")
 print(f"twelve apples, by piles    {piles:>5}")
-print(f"   twelve sevens {tens} tens, twelve fives {ones} ones")
+print(f"   {APPLES} x {PRICE // 10} = {tens} tens, {APPLES} x {PRICE % 10} = {ones} ones")
 print(f"paid with, cents           {PAID:>5}")
 print(f"change, cents              {change:>5}")
 print(f"check: change + bill       {change + bill:>5}")
 print(f"one friend's three apples  {share:>5}")
-print(f"one friend's quarter       {QUARTER:>5}")
+print(f"each friend's change       {each:>5}")
 print("running bill, cents:  " + " ".join(str(v) for v in running))
+print(f"the three mistakes: {(5 + 5) % 10 + (7 + 7) % 10 * 10}, {1 * 1000 + (9 - 0) * 100}, {900 - 1000}")
 assert bill == piles, "the two roads to the bill must agree"
-assert change + bill == PAID, "the change plus the bill must give back the note"
+assert change + bill == PAID and each * 4 == change, "change + bill is the note; change splits 4 ways"
 assert share + share + share + share == bill, "four shares must be the whole basket"
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 one apple, cents              75
 twelve apples, added up      900
 twelve apples, by piles      900
-   twelve sevens 84 tens, twelve fives 60 ones
+   12 x 7 = 84 tens, 12 x 5 = 60 ones
 paid with, cents            1000
 change, cents                100
 check: change + bill        1000
 one friend's three apples    225
-one friend's quarter          25
+each friend's change          25
 running bill, cents:  75 150 225 300 375 450 525 600 675 750 825 900
+the three mistakes: 40, 1900, -100
 ALL CHECKS PASS
 ```
 
@@ -170,7 +171,6 @@ fn main() {
     const APPLES: i64 = 12;
     const PRICE: i64 = 75;
     const PAID: i64 = 1000;
-    const QUARTER: i64 = 25;
     // First way: put one apple's price on the pile at a time, keeping the bill.
     let mut bill = 0i64;
     let mut running: Vec<i64> = Vec::new();
@@ -178,47 +178,49 @@ fn main() {
         bill = bill + PRICE;
         running.push(bill);
     }
-    // Second way, the cross-check: the same total by piles -- twelve sevens in
-    // the tens column and twelve fives in the ones, exactly as on the card.
+    // Second way, the cross-check: the tens digits and the ones digits, added as piles.
     let (mut tens, mut ones) = (0i64, 0i64);
     for _ in 0..APPLES {
-        tens = tens + 7;
-        ones = ones + 5;
+        tens = tens + PRICE / 10;
+        ones = ones + PRICE % 10;
     }
     let piles = tens * 10 + ones;
     let change = PAID - bill;
     let share = PRICE + PRICE + PRICE;
+    let each = change / 4;                    // the change, shared four ways
     println!("one apple, cents           {:>5}", PRICE);
     println!("twelve apples, added up    {:>5}", bill);
     println!("twelve apples, by piles    {:>5}", piles);
-    println!("   twelve sevens {} tens, twelve fives {} ones", tens, ones);
+    println!("   {} x {} = {} tens, {} x {} = {} ones", APPLES, PRICE / 10, tens, APPLES, PRICE % 10, ones);
     println!("paid with, cents           {:>5}", PAID);
     println!("change, cents              {:>5}", change);
     println!("check: change + bill       {:>5}", change + bill);
     println!("one friend's three apples  {:>5}", share);
-    println!("one friend's quarter       {:>5}", QUARTER);
+    println!("each friend's change       {:>5}", each);
     let cents: Vec<String> = running.iter().map(|v| v.to_string()).collect();
     println!("running bill, cents:  {}", cents.join(" "));
+    println!("the three mistakes: {}, {}, {}", (5 + 5) % 10 + (7 + 7) % 10 * 10, 1 * 1000 + (9 - 0) * 100, 900 - 1000);
     assert!(bill == piles, "the two roads to the bill must agree");
-    assert!(change + bill == PAID, "the change plus the bill must give back the note");
+    assert!(change + bill == PAID && each * 4 == change, "change + bill is the note; change splits 4 ways");
     assert!(share + share + share + share == bill, "four shares must be the whole basket");
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 one apple, cents              75
 twelve apples, added up      900
 twelve apples, by piles      900
-   twelve sevens 84 tens, twelve fives 60 ones
+   12 x 7 = 84 tens, 12 x 5 = 60 ones
 paid with, cents            1000
 change, cents                100
 check: change + bill        1000
 one friend's three apples    225
-one friend's quarter          25
+each friend's change          25
 running bill, cents:  75 150 225 300 375 450 525 600 675 750 825 900
+the three mistakes: 40, 1900, -100
 ALL CHECKS PASS
 ```
 
@@ -440,7 +442,7 @@ example : 25 + 25 + 25 + 25 = 100 := by norm_num
 > [!TIP]
 > **Try changing**
 > - **Apples at 80 cents.** Set PRICE to 80. The ones column is 0 and 0 every time, so twelve additions go by without a single carry out of the ones column. Round prices are easy for this reason.
-> - **A thirteenth apple.** Set APPLES to 13. The bill climbs past 900, and the change left over no longer splits four ways. That is the next card.
+> - **A thirteenth apple.** Set APPLES to 13. The bill climbs to 975, and the 25 cents of change no longer splits four ways, so an assert fires. Sharing out is the next card.
 
 ---
 

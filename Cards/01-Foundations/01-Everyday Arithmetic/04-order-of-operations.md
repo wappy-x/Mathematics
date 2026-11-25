@@ -14,7 +14,7 @@ Write it on one line and it looks like this:
 
 Type those keystrokes into a spreadsheet and it answers 775. The right answer is 25. The spreadsheet is not broken. The line says something you did not mean.
 
-A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations** — the same in every scientific calculator, spreadsheet and programming language.
+A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations**. They are the same in every scientific calculator, spreadsheet and programming language.
 
 **In one sentence: multiplying and dividing are packages that get unwrapped before any adding or subtracting can touch them, and brackets exist so you can say "this part first" when that default is wrong.**
 
@@ -40,7 +40,7 @@ Which part happens first is settled by a four-rung ladder, in words:
 
 **brackets → powers → multiply and divide → add and subtract**
 
-Higher rung first, and left to right inside a rung.
+Higher rung first, and left to right inside a rung. A power is a number multiplied by itself, such as 10 × 10; this card does not need one.
 
 | Symbol | Plain meaning | In our example |
 | --- | --- | --- |
@@ -60,9 +60,19 @@ Higher rung first, and left to right inside a rung.
 
 ## Why it works
 
-Multiplying is shorthand for adding. `12 × 75` is short for seventy-five written out twelve times and added up, and those twelve were never separate items. The × sign is a wrapper around a sum that already exists, so a subtraction standing outside cannot reach in and grab the first one. That is the whole of "multiply beats add": you unwrap the package before you take anything off it. Powers sit a rung higher for the same reason, being shorthand for multiplying.
+### Step 0: multiplying is a wrapped-up sum
 
-Multiply and divide share a rung because dividing by 2 is the same as multiplying by a half — one job, not two. So `8 ÷ 2 × 4` is **16**, left to right. Do the multiply first because a mnemonic put it earlier and you get **1**, a completely different number. Subtracting sits with adding one rung down for the same reason: taking 4 away is adding minus four.
+Multiplying is shorthand for adding. `12 × 75` is short for seventy-five written out twelve times and added up, and those twelve were never separate items. The × sign is a wrapper around a sum that already exists, so a subtraction standing outside cannot reach in and grab the first one.
+
+That is the whole of "multiply beats add": you unwrap the package before you take anything off it. Powers sit a rung higher for the same reason, being shorthand for multiplying.
+
+### Step 1: multiply and divide share a rung
+
+Multiply and divide share a rung because dividing by 2 is the same as multiplying by a half — one job, not two. So `8 ÷ 2 × 4` is **16**, left to right. Do the multiply first because a mnemonic put it earlier and you get **1**, a completely different number.
+
+Subtracting sits with adding one rung down for the same reason: taking 4 away is adding minus four.
+
+### Step 2: brackets override the default
 
 Brackets are the override: this is one quantity, finish it before anything outside touches it. In `(1000 − 12 × 75) ÷ 4` they stop the ÷ 4 from reaching the apples. Without them the ÷ 4 shares the third rung with the ×, takes its turn left to right, and you split the bill instead of the change.
 
@@ -79,7 +89,7 @@ Twelve apples at 75 cents, a note worth 1000 cents, four friends.
 | inside, now the subtract | 1000 − 900 | 100 |
 | brackets closed, now the divide | 100 ÷ 4 | **25** |
 
-A quarter each. Cross-check the other way round: each friend's share of the bill is 12 × 75 ÷ 4 = 225, and 225 plus the quarter is 250 — exactly 1000 ÷ 4. The money lands twice, and the code checks it.
+A quarter each. Cross-check the other way round: each friend's share of the bill is 12 × 75 ÷ 4 = 225. Add the quarter and you get 250, exactly 1000 ÷ 4. The money lands twice, and the code checks it.
 
 ### What breaks if you drop a piece
 
@@ -93,7 +103,7 @@ A quarter each. Cross-check the other way round: each friend's share of the bill
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each program works the apples out the obvious way, then checks it by a second route: split the bill and split the note, and see the two halves add back up.
+Nothing is imported. Each program works the apples out the obvious way. Then it checks by a second route: split the bill and split the note, and see the two halves add back up.
 
 ### Python
 
@@ -126,10 +136,11 @@ for label, value in (("twelve apples", bill),
 assert each == 25, "twelve apples from a 1000-cent note, four ways, is 25 cents each"
 assert cost_each + each == note_each, "cost each plus change each is the note split four ways"
 assert no_brackets == 775, "without the brackets the divide grabs the apples"
+assert 8 // 2 * 4 == 16 and 8 // (2 * 4) == 1, "multiply and divide share a rung: left to right"
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 twelve apples                  900
@@ -181,11 +192,12 @@ fn main() {
     assert!(each == 25, "twelve apples from a 1000-cent note, four ways, is 25 cents each");
     assert!(cost_each + each == note_each, "cost each plus change each is the note split four ways");
     assert!(no_brackets == 775, "without the brackets the divide grabs the apples");
+    assert!(8 / 2 * 4 == 16 && 8 / (2 * 4) == 1, "multiply and divide share a rung: left to right");
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 twelve apples                  900
@@ -210,7 +222,7 @@ Lean proves three of the card's facts for every number, not just the apples, and
 
 - Each friend's cost plus each friend's change is the note split the same number of ways, whenever the change splits evenly.
 - Multiplying is shorthand for adding: any whole number times an amount is that amount written out that many times and added up.
-- Multiply and divide share a rung: dividing by 2 is multiplying by a half, and the same holds for every number.
+- Multiply and divide share a rung: dividing by 2 is multiplying by a half, and the same holds for every number except 0, which you cannot divide by.
 - Every number in the worked example, the mistakes table and the Try changing box comes out as the card says. Lean reads each line by the same rungs.
 
 Showing that real programming languages read a line by the same rungs is left to the Python and Rust checks.
@@ -242,8 +254,9 @@ theorem mul_eq_repeated_add (n : ℕ) (a : ℤ) :
     (n : ℤ) * a = ∑ _i ∈ Finset.range n, a := by
   simp
 
-/-- Multiply and divide share a rung: dividing by `b` is the same as multiplying by `1 / b`. -/
-theorem div_eq_mul_one_div_rung (a b : ℚ) : a / b = a * (1 / b) := by
+/-- Multiply and divide share a rung: dividing by any `b` other than 0 is the same as
+multiplying by `1 / b`. -/
+theorem div_eq_mul_one_div_rung (a b : ℚ) (_hb : b ≠ 0) : a / b = a * (1 / b) := by
   rw [mul_one_div]
 
 -- The card's worked numbers, in whole cents (Lean reads these lines with the same rungs).
@@ -266,7 +279,7 @@ example : (1000 - 12 * 80) / 4 = 10 := by decide
 #print axioms div_eq_mul_one_div_rung
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'split_bill_add_split_change_eq_split_cash' depends on axioms: [propext, Quot.sound]
@@ -301,7 +314,7 @@ example : (1000 - 12 * 80) / 4 = 10 := by decide
 
 ## What this builds on
 
-- [Multiplying and dividing](03-multiplying-and-dividing.md): multiplying as repeated adding. That is the whole reason multiply outranks add, so if the "package" idea felt thin tonight, that card is where it is built.
+- [Multiplying and dividing](03-multiplying-and-dividing.md): multiplying as repeated adding. That is the whole reason multiply outranks add, so if the "package" idea felt thin, that card is where it is built.
 - [Adding and subtracting](02-adding-and-subtracting.md): carrying and borrowing. Every rung eventually bottoms out in those.
 
 ## Where this goes next

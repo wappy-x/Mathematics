@@ -24,8 +24,9 @@ theorem mul_eq_repeated_add (n : ℕ) (a : ℤ) :
     (n : ℤ) * a = ∑ _i ∈ Finset.range n, a := by
   simp
 
-/-- Multiply and divide share a rung: dividing by `b` is the same as multiplying by `1 / b`. -/
-theorem div_eq_mul_one_div_rung (a b : ℚ) : a / b = a * (1 / b) := by
+/-- Multiply and divide share a rung: dividing by any `b` other than 0 is the same as
+multiplying by `1 / b`. -/
+theorem div_eq_mul_one_div_rung (a b : ℚ) (_hb : b ≠ 0) : a / b = a * (1 / b) := by
   rw [mul_one_div]
 
 -- The card's worked numbers, in whole cents (Lean reads these lines with the same rungs).

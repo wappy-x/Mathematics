@@ -22,6 +22,8 @@ A thermometer reads the same road: 3 below zero is −3, and after a 5-degree dr
 
 ### The picture: the account as the story runs
 
+Then the bank charges three $25 overdraft fees, and the balance drops to −$100. It cancels all three, and the balance is back at −$25.
+
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
 xychart-beta
@@ -58,7 +60,7 @@ Then multiplying: three $25 fees charged, then all three cancelled.
 ### When it holds
 
 - **Every number has an opposite.** Without −65, the counting numbers have no answer for 40 − 65.
-- **The spreading law holds.** It is the only thing that forces the sign rules. Drop it, cancel the fees as −3 × 25, and the account ends at −175, not −25.
+- **The spreading law holds.** It is the only thing that forces the sign rules. Drop it and nothing makes (−3) × (−25) a plus. Work it out as −75 and the account ends at −175, not −25.
 - **A minus sign points the same way every time.** A bill, a fee and a colder day all move left. Move right for "5 colder" and −3 gives 2, not −8.
 - **You divide by a number other than 0.** −75 ÷ 3 = −25 undoes 3 × (−25). No number times 0 gives −75, so −75 ÷ 0 has no answer.
 
@@ -117,7 +119,7 @@ The running balance printed below is the chart: 0, 40, −25, −100, −25.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Cancelling the fees as −3 × 25 | −175, not −25 | Two minus signs give a plus |
+| Working the cancellation (−3) × (−25) out as −75 | −175, not −25 | Two minus signs give a plus: cancelling adds 75 |
 | Reading 40 − 65 as 65 − 40 | 25 | Order matters here |
 | Reading "5 colder" as −3 + 5 | 2, above zero | Colder moves left: −3 + (−5) |
 
@@ -332,7 +334,7 @@ example : (-1 : ℤ) + 2 = 1 := by norm_num
 > **Reading a minus sign as damage instead of a direction.** A bigger debt is a smaller number: −100 sits left of −25 on the line, though further from zero.
 >
 > - **Subtracting a negative and keeping the minus.** Taking the fees back off is −100 − (−75) = −100 + 75 = −25, same as adding (−3) × (−25) above. As −100 − 75 it gives −175.
-> - **Two minuses made into a minus.** Cancelling as −3 × 25 gives −75, and the account ends at −175.
+> - **Two minuses made into a minus.** Working the cancellation (−3) × (−25) out as −75 sends the account to −175.
 > - **Facing the wrong way.** Five colder than −3 is −3 + (−5) = −8. Written −3 + 5 it gives 2, above zero.
 
 ---
@@ -354,6 +356,7 @@ example : (-1 : ℤ) + 2 = 1 := by norm_num
 
 ## Where this goes next
 
+- [Fractions](07-fractions.md): the next card. When a sharing does not come out whole, like 25 shared between 3, the leftover gets cut and named.
 - [The number families](../02-The%20Number%20Line/01-number-families.md): each family of numbers named by the sum the one before could not do.
 - [Absolute value](../02-The%20Number%20Line/05-absolute-value-and-distance.md): the "size, sign ignored" row above, made into its own tool.
 - [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): a minus sign moved up into the count of the multiplications.

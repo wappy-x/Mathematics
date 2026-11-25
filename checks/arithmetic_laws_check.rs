@@ -29,7 +29,8 @@ fn main() {
     show("each friend, 900 / 4", share);
     show("wrong, 12 x 70 + 5", half);
     show("wrong, 1000 - (900 - 100)", bad_minus);
-    assert!(bill == 900 && bill_again == bill && PRICE * APPLES == bill, "swap and regroup hold");
+    assert!(bill == 900 && bill_again == bill && (FRIENDS * 3) * PRICE == bill && PRICE * APPLES == bill, "times");
+    assert!(second + first == first + second && (first + second) + change == first + (second + change), "plus");
     assert!(first + second == bill && change == 100 && share == 225, "spread, change, share");
     assert!(half == 845 && bad_minus == 200, "the two traps");
     println!("ALL CHECKS PASS");

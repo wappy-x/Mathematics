@@ -12,7 +12,7 @@ The petrol was worth 78 dollars, 62 cents and half a cent. The pump picked a sid
 
 That dot is not a new kind of number. It is the columns from [Place value](01-place-value.md), carried right: after ones come tenths, hundredths, thousandths. Those columns make a fraction — 1.85 is 185 over 100 — so decimals obey the rules from [Fractions](07-fractions.md).
 
-**A decimal is a fraction whose bottom is a power of ten — ten, a hundred, a thousand, and so on — so you can strip the point out, work in whole numbers, and put the point back at the end.**
+**A decimal that stops is a fraction over 10, 100, 1000 and so on, so you can strip the point out, work in whole numbers, and put the point back.**
 
 **What kind of fact this is:** a definition, plus a method proved on this card in Why it works. Rounding a half cent up is a trade rule, not maths.
 
@@ -387,7 +387,7 @@ example : 185 * 430 = 79550 ∧ 185 * 430 / 10 = 7955 := by norm_num
 ## Where you meet it in real life
 
 - **Every pump and till.** In the US, petrol is priced to a tenth of a cent, so nearly every fill lands between two cents and is rounded.
-- **Payroll and invoices.** A rate like $1.85 an hour meets hours like 42.5, and the rounded cent must be accounted for.
+- **Payroll and invoices.** A rate like $21.85 an hour meets hours like 42.5, and the rounded cent must be accounted for.
 - **Anything measured.** Litres and kilograms are read to a decimal place, and counting places carries into [Ratios and rates](09-ratios-and-rates.md).
 
 > **Say it back**
@@ -406,7 +406,7 @@ example : 185 * 430 = 79550 ∧ 185 * 430 / 10 = 7955 := by norm_num
 - [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): decimals that never stop and never repeat, which no fraction can write.
 - [Scientific notation](../03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): shifting the point, to write very large and very small numbers short.
 
-This card leaves one question open: a decimal with no last column cannot be cleared to a whole number, so what exact number does it name?
+This card leaves one question open: $1.85 a litre compares dollars with litres, two different kinds of amount. How do you compare and scale amounts like that?
 
 ---
 

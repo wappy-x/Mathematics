@@ -50,19 +50,19 @@ example : (120 : ℚ) / (3 / 2) = 80 := by norm_num
 example : (80 : ℚ) * (3 / 2) = 120 := by norm_num
 -- At a steady 80 km per hour: 40 km by the half hour, 80 by the hour.
 example : (80 : ℚ) * (1 / 2) = 40 ∧ (80 : ℚ) * 1 = 80 := by norm_num
--- Unit price: $2.25 (9/4 dollars) for 3 litres is $0.75 (3/4 of a dollar) a litre.
-example : (9 / 4 : ℚ) / 3 = 3 / 4 := by norm_num
--- Twelve litres, two roads: 12 × $0.75 = $9.00, and 12 litres is 4 lots of 3, 4 × $2.25 = $9.00.
-example : (12 : ℚ) * (3 / 4) = 9 := by norm_num
+-- Unit price: $22.50 (45/2 dollars) for 3 litres is $7.50 (15/2 dollars) a litre.
+example : (45 / 2 : ℚ) / 3 = 15 / 2 := by norm_num
+-- Twelve litres, two roads: 12 × $7.50 = $90.00, and 12 litres is 4 lots of 3, 4 × $22.50 = $90.00.
+example : (12 : ℚ) * (15 / 2) = 90 := by norm_num
 example : 12 / 3 = 4 := by decide
-example : (4 : ℚ) * (9 / 4) = 9 := by norm_num
+example : (4 : ℚ) * (45 / 2) = 90 := by norm_num
 -- Mistake: dividing 15 by the 3 blue parts gives parts of 5 litres, and 5 parts of 5 is 25 litres.
 example : 15 / 3 = 5 ∧ 5 * 5 = 25 ∧ 15 < 25 := by decide
 -- Mistake: 1.5 ÷ 120 is 0.0125 (1/80), hours per kilometre.
 example : (3 / 2 : ℚ) / 120 = 1 / 80 := by norm_num
--- Mistake: $2.25 × 12 = $27.00, which buys 27 ÷ 0.75 = 36 litres.
-example : (9 / 4 : ℚ) * 12 = 27 := by norm_num
-example : (27 : ℚ) / (3 / 4) = 36 := by norm_num
+-- Mistake: $22.50 × 12 = $270.00, which buys 270 ÷ 7.50 = 36 litres.
+example : (45 / 2 : ℚ) * 12 = 270 := by norm_num
+example : (270 : ℚ) / (15 / 2) = 36 := by norm_num
 -- Scaling one side only: 9 litres of blue against 2 of white is not 3 : 2.
 example : (9 : ℚ) / 2 ≠ 3 / 2 := by norm_num
 -- Try changing: a 3 : 1 mix has 4 parts, whole-number 15 ÷ 4 floors to 3, and the tin check is 12.

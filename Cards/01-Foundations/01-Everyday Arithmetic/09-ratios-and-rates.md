@@ -12,9 +12,11 @@ A part is any scoop, so long as every scoop is the same size — teaspoon or buc
 
 A car covers 120 kilometres in 1.5 hours. Different kinds of amount: distance and time. Divide distance by time: 120 ÷ 1.5 = 80 kilometres per hour. That is a **rate**, how much of the first per one of the second.
 
+Prices are rates too. Blue paint sells at 3 litres for $22.50, which is $7.50 per litre.
+
 **A ratio says how a whole splits up; a rate says how much per one. Both survive scaling: do the same to both sides and nothing changes.**
 
-**What kind of fact this is:** two definitions, ratio and rate, and one rule about them: scaling both sides by the same number changes nothing, shown on this card in Why it works.
+**What kind of fact this is:** two definitions, ratio and rate, and one rule about them: scaling both sides by the same number, other than zero, changes nothing, shown on this card in Why it works.
 
 ### The picture: a straight climb
 
@@ -50,14 +52,14 @@ Making a rate:
 | a part | one equal scoop | 3 litres | bigger tin, same colour |
 | the ratio 3 : 2 | parts to each side | 3 blue, 2 white | raise the 3 alone: bluer paint |
 | a rate | top ÷ bottom of a fraction | 80 km per hour | further per hour |
-| a unit price | dollars per one | $2.25 ÷ 3 litres = $0.75 | the order costs more |
+| a unit price | dollars per one | $22.50 ÷ 3 litres = $7.50 | the order costs more |
 
 ### When it holds
 
 - **Every part is the same size.** The 3 : 2 counts equal scoops. Measure blue with a teaspoon and white with a bucket, and the paint is not 3 : 2 at all.
 - **Both sides are scaled by the same number.** 9 litres to 6 is 3 : 2 times 3. Scale the blue alone, 9 litres against 2, and the colour changes.
 - **The rate stays steady.** 80 kilometres per hour gives 40 kilometres by the half hour only if the car holds its speed. With a stop on the way, 80 is only an average, and the half-hour figure can be wrong.
-- **Every litre costs the same.** Twelve litres at $0.75 cost $9.00 only with no bulk discount. A shop that sells big tins cheaper breaks the multiply.
+- **Every litre costs the same.** Twelve litres at $7.50 cost $90.00 only with no bulk discount. A shop that sells big tins cheaper breaks the multiply.
 
 ---
 
@@ -77,7 +79,7 @@ Making a rate:
 
 ### Step 3: with a per-one figure, scaling is multiplying
 
-Blue paint sells at 3 litres for $2.25. Per litre, 2.25 ÷ 3 = $0.75, so twelve litres cost 12 × 0.75 = **$9.00**. Second road, no unit price: twelve litres is four lots of three, and 4 × $2.25 = **$9.00**.
+Blue paint sells at 3 litres for $22.50. Per litre, 22.50 ÷ 3 = $7.50, so twelve litres cost 12 × 7.50 = **$90.00**. Second road, no unit price: twelve litres is four lots of three, and 4 × $22.50 = **$90.00**.
 
 School calls two equal fractions a proportion; same move. A ratio with its bottom amount pinned at 100 is a percentage: [Percentages](10-percentages.md).
 
@@ -92,10 +94,10 @@ School calls two equal fractions a proportion; same move. A ratio with its botto
 | blue, then white | 3 × 3, then 2 × 3 | **9**, **6** |
 | the check, back to the tin | 9 + 6 | 15 |
 | the car's rate, and the check | 120 ÷ 1.5, then 80 × 1.5 | **80**, 120 |
-| unit price | 2.25 ÷ 3 | **0.75** |
-| twelve litres, and the other road | 12 × 0.75, then 4 × 2.25 | **9.00**, 9.00 |
+| unit price | 22.50 ÷ 3 | **7.50** |
+| twelve litres, and the other road | 12 × 7.50, then 4 × 22.50 | **90.00**, 90.00 |
 
-Nine litres of blue, six of white. The car is doing 80 kilometres per hour, and twelve litres costs $9.00.
+Nine litres of blue, six of white. The car is doing 80 kilometres per hour, and twelve litres costs $90.00.
 
 ### What breaks if you drop a piece
 
@@ -103,7 +105,7 @@ Nine litres of blue, six of white. The car is doing 80 kilometres per hour, and 
 | --- | --- | --- |
 | Dividing 15 by the 3 blue parts | 25 litres | Parts of 5 litres overflow the tin |
 | Dividing 1.5 by 120 | 0.0125 hours per km | Upside down: time per kilometre |
-| Multiplying the shelf price by 12 | $27.00 | $2.25 already buys 3 litres |
+| Multiplying the shelf price by 12 | $270.00 | $22.50 already buys 3 litres |
 
 ---
 
@@ -116,7 +118,7 @@ Nothing is imported. The tin is split by parts, then checked by adding the sides
 ```python
 # Ratios and rates -- the check behind the card.  Nothing is imported.  Paint
 # mixed 3 parts blue to 2 parts white, scaled up to a 15 litre tin.  A car that
-# covers 120 km in 1.5 hours.  Blue paint sold at 3 litres for $2.25.
+# covers 120 km in 1.5 hours.  Blue paint sold at 3 litres for $22.50.
 def row(name, value):
     print(f"{name:<34}{value:>11}")
 
@@ -134,19 +136,19 @@ speed = km / hours                            # a rate: kilometres per one hour
 row("car speed, 120 km / 1.5 hours", f"{speed:.0f}")
 row("distance check, speed x 1.5 hours", f"{speed * hours:.0f}")
 row("km by 0.5 hours and by 1 hour", f"{speed * 0.5:.0f} and {speed:.0f}")
-price, litres = 2.25, 3
+price, litres = 22.50, 3
 unit = price / litres                         # the same move: dollars per litre
-row("unit price, $2.25 / 3 litres", f"{unit:.2f}")
+row("unit price, $22.50 / 3 litres", f"{unit:.2f}")
 row("twelve litres, 12 x unit price", f"{12 * unit:.2f}")
-row("twelve litres, 4 x $2.25", f"{(12 // litres) * price:.2f}")
+row("twelve litres, 4 x $22.50", f"{(12 // litres) * price:.2f}")
 print(f"the three mistakes: {(tin // blue_parts) * parts} litres, {hours / km:.4f} hours per km, ${12 * price:.2f}")
 assert parts == 5 and per_part == 3 and blue == 9 and white == 6 and blue + white == 15
 assert speed == 80.0 and speed * hours == 120.0 and speed * 0.5 == 40.0
-assert unit == 0.75 and 12 * unit == 9.0 and (12 // litres) * price == 9.0
+assert unit == 7.5 and 12 * unit == 90.0 and (12 // litres) * price == 90.0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 parts in the mix, 3 blue + 2 white          5
@@ -156,10 +158,10 @@ blue + white, back to the tin              15
 car speed, 120 km / 1.5 hours              80
 distance check, speed x 1.5 hours         120
 km by 0.5 hours and by 1 hour       40 and 80
-unit price, $2.25 / 3 litres             0.75
-twelve litres, 12 x unit price           9.00
-twelve litres, 4 x $2.25                 9.00
-the three mistakes: 25 litres, 0.0125 hours per km, $27.00
+unit price, $22.50 / 3 litres            7.50
+twelve litres, 12 x unit price          90.00
+twelve litres, 4 x $22.50               90.00
+the three mistakes: 25 litres, 0.0125 hours per km, $270.00
 ALL CHECKS PASS
 ```
 
@@ -170,7 +172,7 @@ Same numbers and labels, built with `rustc --edition 2021 -O`.
 ```rust
 // Ratios and rates -- the same check as ratios_and_rates_check.py, in Rust.  No
 // crates.  Paint mixed 3 parts blue to 2 parts white, scaled up to a 15 litre
-// tin.  A car covering 120 km in 1.5 hours.  Blue paint, 3 litres for $2.25.
+// tin.  A car covering 120 km in 1.5 hours.  Blue paint, 3 litres for $22.50.
 fn row(name: &str, value: String) { println!("{:<34}{:>11}", name, value); }
 
 fn main() {
@@ -189,22 +191,22 @@ fn main() {
     row("distance check, speed x 1.5 hours", format!("{:.0}", speed * hours));
     row("km by 0.5 hours and by 1 hour", format!("{:.0} and {:.0}", speed * 0.5, speed));
 
-    let (price, litres) = (2.25f64, 3.0f64);
+    let (price, litres) = (22.50f64, 3.0f64);
     let unit = price / litres;                    // the same move: dollars per litre
-    row("unit price, $2.25 / 3 litres", format!("{:.2}", unit));
+    row("unit price, $22.50 / 3 litres", format!("{:.2}", unit));
     row("twelve litres, 12 x unit price", format!("{:.2}", 12.0 * unit));
-    row("twelve litres, 4 x $2.25", format!("{:.2}", (12.0 / litres) * price));
+    row("twelve litres, 4 x $22.50", format!("{:.2}", (12.0 / litres) * price));
     println!("the three mistakes: {} litres, {:.4} hours per km, ${:.2}",
              (tin / blue_parts) * parts, hours / km, 12.0 * price);
 
     assert!(parts == 5 && per_part == 3 && blue == 9 && white == 6 && blue + white == 15);
     assert!(speed == 80.0 && speed * hours == 120.0 && speed * 0.5 == 40.0);
-    assert!(unit == 0.75 && 12.0 * unit == 9.0 && (12.0 / litres) * price == 9.0);
+    assert!(unit == 7.5 && 12.0 * unit == 90.0 && (12.0 / litres) * price == 90.0);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 parts in the mix, 3 blue + 2 white          5
@@ -214,10 +216,10 @@ blue + white, back to the tin              15
 car speed, 120 km / 1.5 hours              80
 distance check, speed x 1.5 hours         120
 km by 0.5 hours and by 1 hour       40 and 80
-unit price, $2.25 / 3 litres             0.75
-twelve litres, 12 x unit price           9.00
-twelve litres, 4 x $2.25                 9.00
-the three mistakes: 25 litres, 0.0125 hours per km, $27.00
+unit price, $22.50 / 3 litres            7.50
+twelve litres, 12 x unit price          90.00
+twelve litres, 4 x $22.50               90.00
+the three mistakes: 25 litres, 0.0125 hours per km, $270.00
 ALL CHECKS PASS
 ```
 
@@ -286,19 +288,19 @@ example : (120 : ℚ) / (3 / 2) = 80 := by norm_num
 example : (80 : ℚ) * (3 / 2) = 120 := by norm_num
 -- At a steady 80 km per hour: 40 km by the half hour, 80 by the hour.
 example : (80 : ℚ) * (1 / 2) = 40 ∧ (80 : ℚ) * 1 = 80 := by norm_num
--- Unit price: $2.25 (9/4 dollars) for 3 litres is $0.75 (3/4 of a dollar) a litre.
-example : (9 / 4 : ℚ) / 3 = 3 / 4 := by norm_num
--- Twelve litres, two roads: 12 × $0.75 = $9.00, and 12 litres is 4 lots of 3, 4 × $2.25 = $9.00.
-example : (12 : ℚ) * (3 / 4) = 9 := by norm_num
+-- Unit price: $22.50 (45/2 dollars) for 3 litres is $7.50 (15/2 dollars) a litre.
+example : (45 / 2 : ℚ) / 3 = 15 / 2 := by norm_num
+-- Twelve litres, two roads: 12 × $7.50 = $90.00, and 12 litres is 4 lots of 3, 4 × $22.50 = $90.00.
+example : (12 : ℚ) * (15 / 2) = 90 := by norm_num
 example : 12 / 3 = 4 := by decide
-example : (4 : ℚ) * (9 / 4) = 9 := by norm_num
+example : (4 : ℚ) * (45 / 2) = 90 := by norm_num
 -- Mistake: dividing 15 by the 3 blue parts gives parts of 5 litres, and 5 parts of 5 is 25 litres.
 example : 15 / 3 = 5 ∧ 5 * 5 = 25 ∧ 15 < 25 := by decide
 -- Mistake: 1.5 ÷ 120 is 0.0125 (1/80), hours per kilometre.
 example : (3 / 2 : ℚ) / 120 = 1 / 80 := by norm_num
--- Mistake: $2.25 × 12 = $27.00, which buys 27 ÷ 0.75 = 36 litres.
-example : (9 / 4 : ℚ) * 12 = 27 := by norm_num
-example : (27 : ℚ) / (3 / 4) = 36 := by norm_num
+-- Mistake: $22.50 × 12 = $270.00, which buys 270 ÷ 7.50 = 36 litres.
+example : (45 / 2 : ℚ) * 12 = 270 := by norm_num
+example : (270 : ℚ) / (15 / 2) = 36 := by norm_num
 -- Scaling one side only: 9 litres of blue against 2 of white is not 3 : 2.
 example : (9 : ℚ) / 2 ≠ 3 / 2 := by norm_num
 -- Try changing: a 3 : 1 mix has 4 parts, whole-number 15 ÷ 4 floors to 3, and the tin check is 12.
@@ -311,7 +313,7 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 #print axioms scaling_one_side_changes_ratio
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'ratio_unchanged_when_both_sides_scaled' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -321,7 +323,7 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to the card's numbers, so expect one to fire.
 > - **Make it a 3 : 1 mix.** Change the 2 in the mix line to a 1. Four parts now: the code floors 15 ÷ 4 to 3 litres, and the tin check comes out 12.
 > - **Slow the car.** Set `hours` to 2.0. The rate drops to 60 kilometres per hour; the distance check still says 120.
 
@@ -334,13 +336,13 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 >
 > - **Turning a rate upside down.** 1.5 ÷ 120 = 0.0125 is a real number, but in hours per kilometre.
 > - **Scaling one side only.** Nine litres of blue with the original 2 of white is not the same colour.
-> - **Multiplying a price that already covers several.** $2.25 × 12 = $27.00 buys 36 litres. Price one first.
+> - **Multiplying a price that already covers several.** $22.50 × 12 = $270.00 buys 36 litres. Price one first.
 
 ---
 
 ## Where you meet it in real life
 
-- **The unit price on a shelf tag.** Dollars per litre, cents per 100 grams: the same 2.25 ÷ 3, done for you.
+- **The unit price on a shelf tag.** Dollars per litre, cents per 100 grams: the same 22.50 ÷ 3, done for you.
 - **Anything with "per" in it.** Kilometres per hour, pay per hour, rent per week. Divide until the bottom is 1.
 - **Mixing and scaling.** Paint, concrete, cocktails, dough. Hold the ratio, change the batch.
 
@@ -352,7 +354,7 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 ## What this builds on
 
 - [Fractions](07-fractions.md): reducing 9 : 6 to 3 : 2 is the cancelling move, done to a ratio.
-- [Decimals](08-decimals.md): the numbers rarely land whole — 1.5 hours in, $0.75 a litre out.
+- [Decimals](08-decimals.md): the numbers rarely land whole — 1.5 hours in, $7.50 a litre out.
 
 ## Where this goes next
 

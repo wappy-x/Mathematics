@@ -134,14 +134,14 @@ yours, friend, share = (3, 8), (1, 4), tidy(8, 3)
 both, flour = add(yours, friend), times((1, 2), (3, 4))
 left, scoops = add((1, 1), (-both[0], both[1])), times(flour, (8, 1))  # take away: add a minus top
 row(f"you ate {yours[0]} of the 8 slices", yours)
-row("your friend ate a quarter", (2, 8))
+row("your friend ate a quarter", (friend[0] * 8 // friend[1], 8))
 row("together", both)
 row("left in the box", left)
 row("half a batch of 3/4 cup, in cups", flour)
 row("that flour in 1/8-cup scoops", scoops)
 row("a fair share of the 8 slices", share)
 print(f"a fair share is {share[0] // share[1]} slices and {share[0] % share[1]}/{share[1]} of a slice")
-m1, m2 = tidy(3 + 1, 8 + 4), times(yours, (1, 8))
+m1, m2 = tidy(3 + 1, 8 + 4), times(flour, (1, 8))
 print(f"the three mistakes come out at {m1[0]}/{m1[1]}, {m2[0]}/{m2[1]} and {8 // 3}")
 assert both == tidy(3 + 2, 8) and left == tidy(8 - 5, 8)
 assert flour == tidy(6 // 2, 8) and share[0] == 2 * share[1] + 2
@@ -149,7 +149,7 @@ assert scoops == (3, 1) and times(scoops, (1, 8)) == flour
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 you ate 3 of the 8 slices           3/8
@@ -191,7 +191,7 @@ fn main() {
     let (both, flour) = (add(yours, friend), times((1, 2), (3, 4)));
     let (left, scoops) = (add((1, 1), (-both.0, both.1)), times(flour, (8, 1))); // take away: add a minus top
     row(&format!("you ate {} of the 8 slices", yours.0), yours);
-    row("your friend ate a quarter", (2, 8));
+    row("your friend ate a quarter", (friend.0 * 8 / friend.1, 8));
     row("together", both);
     row("left in the box", left);
     row("half a batch of 3/4 cup, in cups", flour);
@@ -199,7 +199,7 @@ fn main() {
     row("a fair share of the 8 slices", share);
     println!("a fair share is {} slices and {}/{} of a slice",
              share.0 / share.1, share.0 % share.1, share.1);
-    let (m1, m2) = (tidy(3 + 1, 8 + 4), times(yours, (1, 8)));
+    let (m1, m2) = (tidy(3 + 1, 8 + 4), times(flour, (1, 8)));
     println!("the three mistakes come out at {}/{}, {}/{} and {}",
              m1.0, m1.1, m2.0, m2.1, 8 / 3);
     assert!(both == tidy(3 + 2, 8) && left == tidy(8 - 5, 8));
@@ -209,7 +209,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 you ate 3 of the 8 slices           3/8
@@ -232,7 +232,7 @@ Lean proves the card's rules for every whole-number top and every bottom that is
 
 - To add or take away, use the common bottom made by multiplying the two bottoms, then add or take away the tops.
 - To multiply, take tops times tops and bottoms times bottoms.
-- To divide, flip the second fraction and multiply.
+- To divide by a fraction that is not zero, flip it and multiply. Dividing by a zero fraction has no answer.
 - Multiplying top and bottom by the same number, not zero, keeps the amount the same. Tidying goes back the same way.
 - Any top over a bottom is the whole share plus the leftover over the bottom, as 8/3 is 2 and 2/3.
 - Every worked number, the three mistakes and both Try changing results come out as the card says.
@@ -252,14 +252,15 @@ import Mathlib.Tactic.Ring
 to add, cut both into pieces of one size (the common bottom `b × d`) and add the tops;
 taking away works the same way, taking the tops away over the common bottom;
 to multiply, take tops times tops and bottoms times bottoms;
-to divide, flip the second fraction and multiply. -/
-theorem fraction_add_sub_mul_div_rules (a b c d : ℤ) (hb : b ≠ 0) (hd : d ≠ 0) :
+to divide by a fraction that is not zero (`c ≠ 0` as well), flip it and multiply. -/
+theorem fraction_add_sub_mul_div_rules (a b c d : ℤ) (hb : b ≠ 0) (hc : c ≠ 0) (hd : d ≠ 0) :
     ((a : ℚ) / b + (c : ℚ) / d = ((a * d + c * b : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b - (c : ℚ) / d = ((a * d - c * b : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b * ((c : ℚ) / d) = ((a * c : ℤ) : ℚ) / ((b * d : ℤ) : ℚ)) ∧
     ((a : ℚ) / b / ((c : ℚ) / d) = (a : ℚ) / b * ((d : ℚ) / c)) := by
   have hb' : (b : ℚ) ≠ 0 := by exact_mod_cast hb
   have hd' : (d : ℚ) ≠ 0 := by exact_mod_cast hd
+  have hc' : (c : ℚ) ≠ 0 := by exact_mod_cast hc
   refine ⟨?_, ?_, ?_, ?_⟩
   · push_cast
     field_simp
@@ -327,7 +328,7 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 #print axioms fraction_is_share_plus_leftover
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'fraction_add_sub_mul_div_rules' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -337,7 +338,7 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so one will fire.
+> Guess first, then run it. The asserts are pinned to the pizza and recipe numbers, so one will fire.
 > - **A third of a batch, not half.** The flour comes out at 1/4 cup, the scoops at 2/1, and the second assert fires.
 > - **Eat one more slice.** Start with 4 of the 8: together is 3/4, and the first assert fires.
 

@@ -26,4 +26,5 @@ for label, value in (("twelve apples", bill),
 assert each == 25, "twelve apples from a 1000-cent note, four ways, is 25 cents each"
 assert cost_each + each == note_each, "cost each plus change each is the note split four ways"
 assert no_brackets == 775, "without the brackets the divide grabs the apples"
+assert 8 // 2 * 4 == 16 and 8 // (2 * 4) == 1, "multiply and divide share a rung: left to right"
 print("ALL CHECKS PASS")
