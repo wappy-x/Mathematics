@@ -257,7 +257,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 15 · Orders and Set Systems · 4 cards
 
-*Partial orders and families of sets: Dilworth's chains, Sperner's antichains, Mobius inversion on any order, and families in which every two sets meet.*
+*Partial orders and families of sets: Dilworth's chains, Sperner's antichains, Mobius inversion on any order, and intersecting k-set families with shadows (Erdos-Ko-Rado and Kruskal-Katona).*
 
 1. [Dilworth's theorem: the fewest chains that cover an order equals the most items no two of which compare](15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md)
 2. [Sperner's theorem: a family of subsets in which none contains another has at most the middle binomial coefficient of members, by the LYM inequality](15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md)

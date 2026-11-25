@@ -16,7 +16,7 @@ The first answer can never be smaller than the second. Two items of an antichain
 
 So each answer certifies the other: the two chains rule out an antichain of three, and 4, 6 rules out a single chain. The same count gives the Erdős–Szekeres theorem on rising and falling prices.
 
-**In a finite order, the fewest chains that hold every item equals the largest antichain, and a largest matching on the graph of comparable pairs finds both at once.**
+**In a finite order, the fewest chains that hold every item equals the largest antichain, and pairing comparable items without overlap (a largest matching) finds both at once.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from Kőnig's theorem; chain and antichain are definitions.
 
@@ -41,7 +41,9 @@ The Hasse diagram: up the page means "divides into", and only short steps are dr
 
 ## The formula
 
-Write $`P`$ for a finite order: a set of items with a rule that passes the three tests of [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md). Write $`n`$ for its number of items. A **chain cover** is a list of chains $`C_1, \dots, C_k`$ that between them hold every item.
+Write $`P`$ for a finite order: a set of items with a "below" rule ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)). Every item is below itself, two different items are never each below the other, and $`a`$ below $`b`$ below $`c`$ puts $`a`$ below $`c`$.
+
+Write $`n`$ for its number of items. A **chain cover** is a list of chains $`C_1, \dots, C_k`$ that between them hold every item.
 
 ```math
 \min \{\, k : C_1 \cup \dots \cup C_k = P \,\} \;=\; \max \{\, \lvert A\rvert : A \text{ an antichain of } P \,\}
@@ -49,13 +51,13 @@ Write $`P`$ for a finite order: a set of items with a rule that passes the three
 
 **Read it aloud:** the fewest chains that hold every item equals the size of the largest set of items no two of which compare.
 
-The proof uses a two-sided graph $`G`$. Give each item a left copy and a right copy. Join the left copy of $`a`$ to the right copy of $`b`$ whenever $`a`$ is below $`b`$ and $`a \neq b`$: 12 lines here.
+The proof uses a two-sided graph $`G`$. Give each item a left copy and a right copy. Join the left copy of $`a`$ to the right copy of $`b`$ whenever $`a`$ is below $`b`$ and $`a \neq b`$: 12 lines here. A **matching** picks lines sharing no copy; a **vertex cover** picks copies touching every line ([Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md)).
 
 ```math
 k \;=\; n - \nu(G) \;=\; n - \tau(G) \;=\; \lvert A\rvert
 ```
 
-**Read it aloud:** the fewest chains is the item count minus the largest matching, which by Kőnig equals the item count minus the smallest cover, which is the largest antichain.
+**Read it aloud:** the fewest chains is the item count minus the largest matching, which by Kőnig equals the item count minus the smallest vertex cover, which is the largest antichain.
 
 Here $`6 - 4 = 2`$.
 
@@ -67,7 +69,7 @@ Here $`6 - 4 = 2`$.
 | $`C_1, \dots, C_k`$ | the chains in a cover, $`k`$ of them | 1, 2, 4, 12 and 3, 6; $`k = 2`$ | — |
 | $`A`$, $`\lvert A\rvert`$ | an antichain, and its number of items | 4 and 6; 2 | $`k`$ rises with it |
 | $`G`$ | two-sided graph: left copy of $`a`$ joined to right copy of $`b`$ | 12 lines | — |
-| $`\nu`$, $`\tau`$ | most lines sharing no copy; fewest copies touching every line ([Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md)) | 4 and 4 | $`k`$ falls by as much |
+| $`\nu`$, $`\tau`$ | largest matching (most lines sharing no copy); smallest vertex cover (fewest copies touching every line; [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md)) | 4 and 4 | $`k`$ falls by as much |
 | $`h`$ | the longest chain (Step 4) | 4: 1, 2, 4, 12 | more antichains needed |
 
 ### When it holds
@@ -84,7 +86,7 @@ Here $`6 - 4 = 2`$.
 
 Start with every item alone: $`n`$ chains of one. Link an item to one item above it, and let each item have at most one link up and one link down. Each link joins two pieces into one, so each link lowers the chain count by one.
 
-Links with that "one up, one down" rule are exactly a matching in $`G`$. So the fewest chains is $`n`$ minus the largest matching. Kőnig's theorem turns that matching into a cover, and the items the cover misses form the antichain.
+Links with that "one up, one down" rule are exactly a matching in $`G`$. So the fewest chains is $`n`$ minus the largest matching. Kőnig's theorem turns that matching into a vertex cover, and the items the cover misses form the antichain.
 
 ### Step 1: no cover can beat an antichain
 
@@ -98,7 +100,7 @@ Follow the links up from each item with nothing linked below it. From 1: 1, 2, 4
 
 ### Step 3: Kőnig's cover leaves an antichain
 
-By [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md), a smallest cover of $`G`$ also has 4 copies. The walks of that card build one: left 1, left 2, left 3 and right 12. Every line touches one of them.
+By [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md), a smallest vertex cover of $`G`$ also has 4 copies. The walks of that card build one: left 1, left 2, left 3 and right 12. Every line touches one of them.
 
 The items with neither copy in the cover are 4 and 6. They form an antichain: if one were below the other, the line between their copies would be uncovered. The cover touches at most 4 items, so at least $`6 - 4 = 2`$ stay untouched. With Step 1, chains and antichain match: 2 and 2.
 
@@ -119,7 +121,9 @@ Step 1 gives $`k \ge \lvert A\rvert`$, so all three are equal.
 
 Swap the roles: how few antichains hold every item? Give each item its **height**: the longest chain ending there. 1 has height 1; 2 and 3 have height 2; 4 and 6 have 3; 12 has 4.
 
-Two items of equal height never compare: if $`a`$ were below $`b`$, any chain ending at $`a`$ would stretch to $`b`$, and $`b`$ would be higher. So the layers {1}, {2, 3}, {4, 6}, {12} are 4 antichains. An antichain holds at most one item of the chain 1, 2, 4, 12, so $`h = 4`$ is the fewest. Leon Mirsky published this dual in 1971.
+Two items of equal height never compare: if $`a`$ were below $`b`$, any chain ending at $`a`$ would stretch to $`b`$, and $`b`$ would be higher. So the layers {1}, {2, 3}, {4, 6}, {12} are 4 antichains.
+
+An antichain holds at most one item of the chain 1, 2, 4, 12, so $`h = 4`$ is the fewest. Leon Mirsky published this dual in 1971.
 
 ```math
 h \;=\; \text{fewest antichains that hold every item}
@@ -846,7 +850,7 @@ example : ((Finset.univ : Finset (Fin 4)).powerset.filter (fun t => t.card = 2))
 ## What this builds on
 
 - [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): the three tests, comparable pairs and the Hasse diagram of the divisors of 12.
-- [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md): the largest matching equals the smallest cover, which turns links into an antichain.
+- [Konig's theorem](../13-Matchings%20and%20Flows/03-konigs-theorem-and-vertex-cover.md): the largest matching equals the smallest vertex cover, which turns links into an antichain.
 - [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): the price list and the rising and falling runs that Step 5 recovers.
 
 ## Where this goes next

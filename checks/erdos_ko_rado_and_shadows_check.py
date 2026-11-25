@@ -38,7 +38,7 @@ print(f"arcs from the star, over all {len(circ)} circles: {star_arcs}")
 s7, c7 = best(ksets(7, 3)); s5 = best(ksets(5, 3))[0]; m5 = best(arcs(circles(5)[0], 3))[0]; s4, c4 = best(ksets(4, 2))
 print(f"n = 7, k = 3: bound C(6, 2) = {C(6, 2)}; search: {s7}; families reaching it: {c7}; stars: {stars(7, 3, s7)}")
 print(f"n = 5, k = 3: largest intersecting family {s5}; bound C(4, 2) = {C(4, 2)} fails; arcs of one circle meeting: {m5} of 5")
-print(f"house, n = 4, k = 2: largest intersecting family of pairs {s4} = C(3, 1); families reaching it: {c4}; stars: {stars(4, 2, s4)}")
+print(f"n = 4, k = 2 (pairs of 4): largest intersecting family of pairs {s4} = C(3, 1); families reaching it: {c4}; stars: {stars(4, 2, s4)}")
 print(f"shadow of the star through 1: {shadow(star)} pairs; of the first 10 in colex: {shadow(S[:10])} pairs")
 low, u = [99] * 21, [0] * (1 << 20)                  # u[f]: the shadow of family f, as bits
 sh = [sum(1 << (s & ~(1 << p)) for p in range(n) if s >> p & 1) for s in S]

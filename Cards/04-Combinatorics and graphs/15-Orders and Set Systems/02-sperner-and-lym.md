@@ -10,11 +10,13 @@ A bank vault has four managers, numbered 1 to 4. Its rule book lists the groups 
 
 A tidy rule book never lists one group inside another: a line for {2,3,4} adds nothing, since it includes the pair {2,3}. A family of sets in which no member sits inside another is an **antichain** (also called a **Sperner family**).
 
-How many lines can a tidy book for four managers hold? Sixteen groups exist, from nobody to all four. The answer is 6: the six pairs, the rule "any two of four". No other tidy book has 6 lines, and none has 7. Emanuel Sperner proved the general case in 1928. David Lubell found the short proof on this card in 1966.
+How many lines can a tidy book for four managers hold? Sixteen groups exist, from nobody to all four. The answer is 6: the six pairs, the rule "any two of four". No other tidy book has 6 lines, and none has 7.
+
+Emanuel Sperner proved the general case in 1928. David Lubell found the short proof on this card in 1966.
 
 The proof gives each family a score. A member holding k managers scores 1 over the number of groups of that size. The four-line book scores 1/4 + 3/6 = 0.75, and no antichain scores more than 1.
 
-**Score each member of an antichain 1 over the number of sets of its size; the total is at most 1, so the antichain has at most as many members as the middle layer, and only a whole middle layer has that many.**
+**Score each member 1 over the sets of its size; an antichain totals at most 1, capping it at the middle layer, which only a whole middle layer reaches.**
 
 **What kind of fact this is:** two theorems, the LYM inequality and Sperner's theorem, both proved on this card in Why it works.
 
@@ -125,7 +127,9 @@ Let n be odd and write $`k = (n-1)/2`$, so the two middle layers hold the sets o
 
 A score of exactly 1 means every one of the $`n!`$ orders meets the family once.
 
-Suppose the family holds a set $`A`$ of size $`k`$. Add one more thing to get $`B`$, of size $`k+1`$. $`B`$ contains $`A`$, so $`B`$ is not in the family. Now take any order that passes through $`B`$. It must meet the family, at size $`k`$ or $`k+1`$. It cannot meet it at $`B`$, so the $`k`$-set it passed just before $`B`$ is in the family. That set can be any $`k`$-subset of $`B`$.
+Suppose the family holds a set $`A`$ of size $`k`$. Add one more thing to get $`B`$, of size $`k+1`$. $`B`$ contains $`A`$, so $`B`$ is not in the family.
+
+Now take any order that passes through $`B`$. It must meet the family, at size $`k`$ or $`k+1`$. It cannot meet it at $`B`$, so the $`k`$-set it passed just before $`B`$ is in the family. That set can be any $`k`$-subset of $`B`$.
 
 So swapping one member of $`A`$ for one thing outside $`A`$ stays inside the family. Repeated swaps reach every $`k`$-set. The family holds the whole layer of size $`k`$, which already fills the cap, so it holds nothing else. If the family holds no $`k`$-set, all of it lies in the layer of size $`k+1`$, and it is that whole layer.
 
@@ -771,10 +775,10 @@ example : (List.range 10).map (fun m => (m + 1).choose ((m + 1) / 2)) =
 
 ## Where this goes next
 
-- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): add the rule that every two members meet, and a counting argument on orders gives a sharper cap.
 - [Mobius inversion on an order](03-mobius-inversion-on-posets.md): undoing sums taken over every set below a set, on these same 16 groups and on any other order.
+- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): for sets all of one size $`k`$ (with $`n \ge 2k`$) where every two meet, a counting argument on circular orders caps the family at $`C(n-1, k-1)`$.
 
-Sperner says how large an antichain can be; how many antichains exist, 168 for four things, has no known closed formula.
+Sperner says how large an antichain can be; how many antichains exist (168 for four things) has no known closed formula. Next on this shelf, [Mobius inversion on an order](03-mobius-inversion-on-posets.md) stays on these 16 sets and asks how to undo a sum taken over every set below a set.
 
 ---
 

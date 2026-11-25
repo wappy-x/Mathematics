@@ -40,7 +40,7 @@ flowchart BT
     D3 --> D6
 ```
 
-An arrow runs from a divisor to a larger one it divides. Weight each count by its sign μ(d, 6) and add: 2 − 4 − 8 + 64 = 54.
+An arrow runs from a divisor to a larger one it divides. Weight each count by its sign and add: 2 − 4 − 8 + 64 = 54.
 
 ---
 
@@ -48,7 +48,7 @@ An arrow runs from a divisor to a larger one it divides. Weight each count by it
 
 An **order** (a partially ordered set) is a set with a relation $`x \le y`$, "x is below y". Every member is below itself, two different members are never each below the other, and $`x \le z \le y`$ gives $`x \le y`$. Some pairs are unrelated: 2 and 3 do not divide each other.
 
-The **interval** from $`x`$ to $`y`$ is every $`z`$ with $`x \le z \le y`$. The Möbius function gives each pair $`x \le y`$ a whole number, built upward from $`x`$:
+The **interval** from $`x`$ to $`y`$ is every $`z`$ with $`x \le z \le y`$. The Möbius function $`\mu`$ (the Greek letter mu) gives each pair $`x \le y`$ a whole number, built upward from $`x`$:
 
 ```math
 \mu(x,x) = 1, \qquad \mu(x,y) = -\sum_{x \le z < y} \mu(x,z) \ \text{ when } x < y
@@ -411,10 +411,10 @@ Lean proves the inversion formula for every order where everything below each me
 - Take two sets $`S \subseteq T`$, ordered by "is contained in". Then $`\mu(S, T) = (-1)^{\lvert T\rvert - \lvert S\rvert}`$.
 - Take $`g(n)`$ as the sum of $`f(d)`$ over the divisors $`d`$ of $`n`$, for every positive $`n`$. Then $`f(n)`$ is the sum of $`\mu(n/d)\, g(d)`$ over those divisors, and each formula gives the other.
 - The count 54 comes out three ways: the formula, testing all 64 strings, and number theory's Möbius function on 1, 2, 3, 6.
-- On divisors $`\mu(1, 4) = 0`$, and peeling gives 64 − 2 − 2 − 6 = 54, with 54 ÷ 6 = 9.
+- Number theory's $`\mu(4) = 0`$, and peeling gives 64 − 2 − 2 − 6 = 54, with 54 ÷ 6 = 9.
 - Length 12 gives 4,020, the 16 subsets of {1, 2, 3, 4} split 8 and 8 by sign, and the hotel gives 20.
 
-Listing the necklaces, the counts for lengths 1 to 8, and walking the hotel's roster are left to the Python and Rust checks.
+Proving that the poset function $`\mu(d, n)`$ on divisors matches number theory's $`\mu(n/d)`$, and the upside-down inversion of Step 5, are left to the prose. Listing the necklaces, the counts for lengths 1 to 8, and walking the hotel's roster are left to the Python and Rust checks.
 
 ```lean
 -- Mobius inversion on an order: on any order where everything below each member is finite, totals over everything below can be undone with the Mobius function, which is a sign on subsets and number theory's Mobius function on divisors.
@@ -621,16 +621,16 @@ example : (100 : ℤ) - 120 + 45 - 5 = 20 := by norm_num
 ## What this builds on
 
 - [Dilworth's theorem](01-dilworths-theorem.md): orders, chains and the "below" relation this card computes on.
-- [Sperner's theorem](02-sperner-and-lym.md): the subset order on the shelf's 16 subsets of {1, 2, 3, 4}; there μ(∅, T) is +1 for 8 and −1 for 8.
+- [Sperner's theorem](02-sperner-and-lym.md): the subset order on the 16 subsets of {1, 2, 3, 4}, on which this card checks that $`\mu(\varnothing, T)`$ is +1 for 8 subsets and −1 for 8.
 - [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the hotel count that Step 5 recovers as the subset case.
 - [Alternating sums](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md): the binomial identity that makes μ on subsets a sign.
 
 ## Where this goes next
 
+- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): back to families of equal-sized subsets, now asking how many can pairwise meet.
 - [The Mobius function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/03-mobius-inversion.md): the divisor case in full, recovering Euler's totient.
-- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): back to families of subsets, now asking how many can pairwise meet.
 
-The question this card leaves open: on which orders does μ have a simple closed form, as it does on subsets and divisors?
+On which orders $`\mu`$ has a simple closed form, as it does on subsets and divisors, stays open here. Next on this shelf, [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md) returns to families of subsets and asks how large a family of equal-sized sets can be when every two meet.
 
 ---
 

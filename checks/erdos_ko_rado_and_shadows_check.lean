@@ -79,7 +79,7 @@ example : ¬ ∃ p : Fin 6, ∀ A ∈ (univ.powersetCard 3).filter
 -- At n = 2k = 6: 10 opposite pairs, so 2 ^ 10 = 1024 ways to take one group from each.
 example : Nat.choose 6 3 / 2 = 10 ∧ 2 ^ 10 = 1024 := by decide
 
--- House example, n = 4, k = 2: 6 pairs, at most C(3, 1) = 3 pairwise meeting.
+-- Small case n = 4, k = 2: 6 pairs, at most C(3, 1) = 3 pairwise meeting.
 example : Nat.choose 4 2 = 6 ∧ Nat.choose 3 1 = 3 := by decide
 
 -- Shadows: the star through server 1 has 15 pairs in its shadow; all 3-sets of the first five

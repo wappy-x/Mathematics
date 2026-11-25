@@ -14,9 +14,9 @@ Ten is reached: take every group containing server 1. There are $`C(5,2) = 10`$ 
 
 A list of sets all of size $`k`$ is a **family of k-sets**, also called a **k-uniform hypergraph** (a graph whose edges join $`k`$ points, not two). A family is **intersecting** when every two members share at least one point. The family of all k-sets through one fixed point is a **star**.
 
-**If every two k-sets in a family share a point, and there are at least 2k points, the family is no bigger than a star: at most C(n−1, k−1) members.**
+**If every two k-sets from n points share a point, and n is at least 2k, the family is no bigger than a star: at most C(n−1, k−1) members.**
 
-**What kind of fact this is:** a theorem of Erdős, Ko and Rado (1961), proved on this card in Why it works by Katona's circle argument (1972). The Kruskal–Katona theorem near the end is stated and checked on small cases, not proved.
+**What kind of fact this is:** a theorem of Erdős, Ko and Rado (1961), proved on this card in Why it works by Katona's circle argument (1972). The Kruskal–Katona theorem near the end is stated and checked on small cases in the text, and proved in Lean.
 
 ### The picture: Katona's count in four moves
 
@@ -88,7 +88,9 @@ Take the seating 1, 2, 3, 4, 5, 6 in order round the table. Its arcs are:
 | --- | --- | --- | --- | --- | --- | --- |
 | The arc | 1,2,3 | 2,3,4 | 3,4,5 | 4,5,6 | 5,6,1 | 6,1,2 |
 
-Suppose arc 1,2,3 is in the family. Every other arc meeting it ends or starts inside it. Pair the arc ending at a seat with the arc starting at the next seat: 5,6,1 with 2,3,4, and 6,1,2 with 3,4,5. Each pair is disjoint, so the family holds at most one. That leaves at most $`1 + 2 = 3`$ arcs. The star through server 1 holds exactly 3: 1,2,3 and 5,6,1 and 6,1,2.
+Suppose arc 1,2,3 is in the family. Every other arc meeting it ends or starts inside it. Pair the arc ending at a seat with the arc starting at the next seat: 5,6,1 with 2,3,4, and 6,1,2 with 3,4,5.
+
+Each pair is disjoint, so the family holds at most one. That leaves at most $`1 + 2 = 3`$ arcs. The star through server 1 holds exactly 3: 1,2,3 and 5,6,1 and 6,1,2.
 
 <details>
 <summary>Detailed proof: at most k arcs, for any n at least 2k</summary>
@@ -111,7 +113,7 @@ With 5 servers and groups of 3, the Step 2 pairing breaks: arcs 1,2,3 and 3,4,5 
 
 At exactly $`n = 2k`$, opposite pairs give the bound too. The 20 groups make 10 opposite pairs, a family takes at most one from each, and any one-from-each choice works: $`2^{10} = 1{,}024`$ largest families. One of them is "every group holding at least two of servers 1, 2, 3": 10 groups, any two meet, and no server is in all of them.
 
-The shelf's house example is the case $`n = 4`$, $`k = 2`$: of the 6 pairs from {1,2,3,4}, at most $`C(3,1) = 3`$ pairwise meet. Eight families reach 3: four stars, such as 12, 13, 14, and four triangles, such as 12, 13, 23.
+On the four-element set {1,2,3,4}, the case $`n = 4`$, $`k = 2`$ behaves the same way: of the 6 pairs, at most $`C(3,1) = 3`$ pairwise meet. Eight families reach 3: four stars, such as 12, 13, 14, and four triangles, such as 12, 13, 23.
 
 ### Step 5: shadows and the Kruskal–Katona theorem
 
@@ -200,7 +202,7 @@ print(f"arcs from the star, over all {len(circ)} circles: {star_arcs}")
 s7, c7 = best(ksets(7, 3)); s5 = best(ksets(5, 3))[0]; m5 = best(arcs(circles(5)[0], 3))[0]; s4, c4 = best(ksets(4, 2))
 print(f"n = 7, k = 3: bound C(6, 2) = {C(6, 2)}; search: {s7}; families reaching it: {c7}; stars: {stars(7, 3, s7)}")
 print(f"n = 5, k = 3: largest intersecting family {s5}; bound C(4, 2) = {C(4, 2)} fails; arcs of one circle meeting: {m5} of 5")
-print(f"house, n = 4, k = 2: largest intersecting family of pairs {s4} = C(3, 1); families reaching it: {c4}; stars: {stars(4, 2, s4)}")
+print(f"n = 4, k = 2 (pairs of 4): largest intersecting family of pairs {s4} = C(3, 1); families reaching it: {c4}; stars: {stars(4, 2, s4)}")
 print(f"shadow of the star through 1: {shadow(star)} pairs; of the first 10 in colex: {shadow(S[:10])} pairs")
 low, u = [99] * 21, [0] * (1 << 20)                  # u[f]: the shadow of family f, as bits
 sh = [sum(1 << (s & ~(1 << p)) for p in range(n) if s >> p & 1) for s in S]
@@ -222,7 +224,7 @@ assert low[1:] == [kk(m, 3) for m in range(1, 21)] == [shadow(S[:m]) for m in ra
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 n = 6, k = 3: 20 three-sets, the star through 1 holds C(5, 2) = 10
@@ -235,7 +237,7 @@ Katona: |F| x 36 <= 3 x 120 = 360, so |F| <= 10
 arcs from the star, over all 120 circles: 360
 n = 7, k = 3: bound C(6, 2) = 15; search: 15; families reaching it: 7; stars: 7
 n = 5, k = 3: largest intersecting family 10; bound C(4, 2) = 6 fails; arcs of one circle meeting: 5 of 5
-house, n = 4, k = 2: largest intersecting family of pairs 3 = C(3, 1); families reaching it: 8; stars: 4
+n = 4, k = 2 (pairs of 4): largest intersecting family of pairs 3 = C(3, 1); families reaching it: 8; stars: 4
 shadow of the star through 1: 15 pairs; of the first 10 in colex: 10 pairs
 smallest shadow, search,  m = 1..20: [3, 5, 6, 6, 8, 9, 9, 10, 10, 10, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15]
 Kruskal-Katona formula,   m = 1..20: [3, 5, 6, 6, 8, 9, 9, 10, 10, 10, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15]
@@ -309,7 +311,7 @@ fn main() {
     let (s7, c7) = best(&ksets(7, 3)); let s5 = best(&ksets(5, 3)).0; let m5 = best(&arcs(&circles(5)[0], 3)).0; let (s4, c4) = best(&ksets(4, 2));
     println!("n = 7, k = 3: bound C(6, 2) = {}; search: {}; families reaching it: {}; stars: {}", c(6, 2), s7, c7, stars(7, 3, s7));
     println!("n = 5, k = 3: largest intersecting family {}; bound C(4, 2) = {} fails; arcs of one circle meeting: {} of 5", s5, c(4, 2), m5);
-    println!("house, n = 4, k = 2: largest intersecting family of pairs {} = C(3, 1); families reaching it: {}; stars: {}", s4, c4, stars(4, 2, s4));
+    println!("n = 4, k = 2 (pairs of 4): largest intersecting family of pairs {} = C(3, 1); families reaching it: {}; stars: {}", s4, c4, stars(4, 2, s4));
     println!("shadow of the star through 1: {} pairs; of the first 10 in colex: {} pairs", shadow(&star), shadow(&s[..10]));
     let sh: Vec<u64> = s.iter().map(|&x| (0..n).filter(|p| x >> p & 1 == 1).fold(0u64, |a, p| a | 1 << (x & !(1 << p)))).collect();
     let (mut low, mut u) = (vec![99u32; 21], vec![0u64; 1 << 20]);   // u[f]: the shadow of family f, as bits
@@ -331,7 +333,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 n = 6, k = 3: 20 three-sets, the star through 1 holds C(5, 2) = 10
@@ -344,7 +346,7 @@ Katona: |F| x 36 <= 3 x 120 = 360, so |F| <= 10
 arcs from the star, over all 120 circles: 360
 n = 7, k = 3: bound C(6, 2) = 15; search: 15; families reaching it: 7; stars: 7
 n = 5, k = 3: largest intersecting family 10; bound C(4, 2) = 6 fails; arcs of one circle meeting: 5 of 5
-house, n = 4, k = 2: largest intersecting family of pairs 3 = C(3, 1); families reaching it: 8; stars: 4
+n = 4, k = 2 (pairs of 4): largest intersecting family of pairs 3 = C(3, 1); families reaching it: 8; stars: 4
 shadow of the star through 1: 15 pairs; of the first 10 in colex: 10 pairs
 smallest shadow, search,  m = 1..20: [3, 5, 6, 6, 8, 9, 9, 10, 10, 10, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15]
 Kruskal-Katona formula,   m = 1..20: [3, 5, 6, 6, 8, 9, 9, 10, 10, 10, 12, 13, 13, 14, 14, 14, 15, 15, 15, 15]
@@ -365,7 +367,7 @@ Lean proves the card's three general claims for every number of points $`n`$ and
 - The worked numbers hold exactly: the 20 groups, the star of 10, and Katona's 120, 36 and 360.
 - So do the five-server case, the family holding two of servers 1, 2, 3, and the shadows of 15 and 10 pairs.
 
-Counting all the largest families, at 6 and 7 servers, and the greedy shadow formula are left to the Python and Rust checks.
+Uniqueness of the star for all $`n > 2k`$ is left outside Lean. Counting all the largest families at 6 and 7 servers, and the greedy shadow formula, are left to the Python and Rust checks.
 
 ```lean
 -- Erdos-Ko-Rado: an intersecting family of k-sets on n ≥ 2k points has at most C(n-1, k-1) members, the star reaches it, and initial colex segments have the smallest shadow.
@@ -449,7 +451,7 @@ example : ¬ ∃ p : Fin 6, ∀ A ∈ (univ.powersetCard 3).filter
 -- At n = 2k = 6: 10 opposite pairs, so 2 ^ 10 = 1024 ways to take one group from each.
 example : Nat.choose 6 3 / 2 = 10 ∧ 2 ^ 10 = 1024 := by decide
 
--- House example, n = 4, k = 2: 6 pairs, at most C(3, 1) = 3 pairwise meeting.
+-- Small case n = 4, k = 2: 6 pairs, at most C(3, 1) = 3 pairwise meeting.
 example : Nat.choose 4 2 = 6 ∧ Nat.choose 3 1 = 3 := by decide
 
 -- Shadows: the star through server 1 has 15 pairs in its shadow; all 3-sets of the first five
@@ -465,7 +467,7 @@ example : 7 = Nat.choose 4 3 + Nat.choose 3 2 ∧ Nat.choose 4 2 + Nat.choose 3 
 #print axioms kruskal_katona_colex_smallest_shadow
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'erdos_ko_rado_intersecting_family_le_star' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -500,7 +502,9 @@ example : 7 = Nat.choose 4 3 + Nat.choose 3 2 ∧ Nat.choose 4 2 + Nat.choose 3 
 - **Triangulated shapes.** A shape glued from triangles (a simplicial complex) includes every edge of every triangle: the shadow. Kruskal–Katona says which counts of points, edges and triangles are possible at all; 10 triangles need at least 10 edges.
 
 > **Say it back**
-> A family of k-sets is intersecting when every two members share a point. Seat the n points round a table: one seating shows at most k members as blocks of neighbours, and each k-set is such a block in $`k!\,(n-k)!`$ seatings. Counting both ways caps the family at $`C(n-1,k-1)`$, the size of a star, when $`n \ge 2k`$. For six servers and groups of three that cap is 10. Below $`n = 2k`$ every two k-sets meet and the cap fails; the shadow of a family is smallest when it is an early block in colex order.
+> A family of k-sets is intersecting when every two members share a point. Seat the n points round a table: one seating shows at most k members as blocks of neighbours, and each k-set is such a block in $`k!\,(n-k)!`$ seatings.
+>
+> Counting both ways caps the family at $`C(n-1,k-1)`$, the size of a star, when $`n \ge 2k`$. For six servers and groups of three that cap is 10. Below $`n = 2k`$ every two k-sets meet and the cap fails; the shadow of a family is smallest when it is an early block in colex order.
 
 ---
 
@@ -512,10 +516,11 @@ example : 7 = Nat.choose 4 3 + Nat.choose 3 2 ∧ Nat.choose 4 2 + Nat.choose 3 
 
 ## Where this goes next
 
+- [Block designs](../16-Designs/01-block-designs-and-fishers-inequality.md): next in this wing, families of equal-sized k-sets where every pair of points appears together equally often.
 - [Simplicial complexes and chains](../../17-Topology/05-Homology/01-simplicial-complexes-and-chains.md): triangles glued along their edges, where shadows are the faces Kruskal–Katona counts.
 - [Sunflowers and union-closed families](../../25-Frontier/04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md): two open questions about families of sets.
 
-The card leaves open how large an intersecting family can be when no point lies in every member, the question the Hilton–Milner theorem answers.
+How large an intersecting family can be when no point lies in every member stays open here (the Hilton–Milner theorem answers it). Next, [Block designs](../16-Designs/01-block-designs-and-fishers-inequality.md) asks what happens when every pair of points must appear together the same number of times.
 
 ---
 

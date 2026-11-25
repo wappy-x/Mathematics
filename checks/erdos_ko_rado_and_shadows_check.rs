@@ -58,7 +58,7 @@ fn main() {
     let (s7, c7) = best(&ksets(7, 3)); let s5 = best(&ksets(5, 3)).0; let m5 = best(&arcs(&circles(5)[0], 3)).0; let (s4, c4) = best(&ksets(4, 2));
     println!("n = 7, k = 3: bound C(6, 2) = {}; search: {}; families reaching it: {}; stars: {}", c(6, 2), s7, c7, stars(7, 3, s7));
     println!("n = 5, k = 3: largest intersecting family {}; bound C(4, 2) = {} fails; arcs of one circle meeting: {} of 5", s5, c(4, 2), m5);
-    println!("house, n = 4, k = 2: largest intersecting family of pairs {} = C(3, 1); families reaching it: {}; stars: {}", s4, c4, stars(4, 2, s4));
+    println!("n = 4, k = 2 (pairs of 4): largest intersecting family of pairs {} = C(3, 1); families reaching it: {}; stars: {}", s4, c4, stars(4, 2, s4));
     println!("shadow of the star through 1: {} pairs; of the first 10 in colex: {} pairs", shadow(&star), shadow(&s[..10]));
     let sh: Vec<u64> = s.iter().map(|&x| (0..n).filter(|p| x >> p & 1 == 1).fold(0u64, |a, p| a | 1 << (x & !(1 << p)))).collect();
     let (mut low, mut u) = (vec![99u32; 21], vec![0u64; 1 << 20]);   // u[f]: the shadow of family f, as bits
