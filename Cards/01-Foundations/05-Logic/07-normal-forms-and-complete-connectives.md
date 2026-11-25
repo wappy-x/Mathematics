@@ -12,7 +12,7 @@ The sign is an if-then, so its rule **E** is: not after 9 pm, or shows ID ([If-t
 
 This card reads two standard formulas off that table, then rebuilds the rule from one **gate** (a tiny chip circuit for one connective): **NAND**, "not both".
 
-**Any truth table can be written as an "or" of "and"s, one per true row, or as an "and" of "or"s, one per false row; and since NAND builds "not", "and" and "or", NAND alone builds every table.**
+**Any truth table is an "or" of "and"s, one per true row, or an "and" of "or"s, one per false row, and NAND alone can build every table.**
 
 **What kind of fact this is:** a theorem, proved in Why it works and checked on every table with two or three inputs.
 
@@ -110,6 +110,7 @@ The NAND circuit gives the rule's column.
 | Building the clauses from the true rows | agrees on 0 of 4 rows | It shuts out the passing rows |
 | Leaving "A and I" out of the DNF | agrees on 3 of 4 rows | ID holders after 9 pm are turned away |
 | Writing `NAND(A, I)` with no inner gate | agrees on 2 of 4 rows | After 9 pm it refuses ID and admits no ID |
+| Putting "not" on the false inputs of the clause | agrees on 2 of 4 rows | "A or not I" admits no ID after 9 pm and refuses ID before 9 pm |
 
 ---
 
@@ -458,13 +459,14 @@ example :
 
 ## Where this goes next
 
+- [Direct proof](../06-Proof/01-direct-proof.md): the first card of the next shelf, chaining valid steps like those in [Valid arguments](06-valid-arguments.md) into a full proof.
 - [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the laws these forms obey.
 - [SAT solvers](../../24-Computability%20and%20complexity/03-Time%20Complexity/07-sat-solvers-and-hard-problems-in-practice.md): how solvers search a CNF fast in practice.
 - [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md): why telling whether a CNF can be true is as hard as any problem whose answers are quick to check.
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 - [Proof complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
 
-Left open: the read-off forms can be long; what is the shortest formula for a given table?
+This card ends the Logic shelf, and the Proof shelf opens with Direct proof. Left open for the Algebra and Complexity cards above: the read-off forms can be long; what is the shortest formula for a given table?
 
 ---
 

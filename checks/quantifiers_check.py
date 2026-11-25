@@ -25,6 +25,6 @@ row("the same carryings added down the keys", down)
 full = verdicts(OFFICE, "")
 print("shrink the office to the five who carry front")
 small = verdicts(OFFICE[:5], "  ")
-assert across == 9 and down == across
+assert across == 9 and down == across and sum(keys_of(p) == 1 for p in OFFICE) == 3
 assert full == (True, False, 5) and small == (True, True, 5)
 print("ALL CHECKS PASS")

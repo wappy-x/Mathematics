@@ -80,7 +80,9 @@ De Morgan, from [Logical equivalence and De Morgan](03-logical-equivalence-and-d
 
 not (A and B and C) = (not A) or (not B) or (not C)
 
-The left side is "the sign is wrong". The right side reads back as *some* bag under 7 kg was refused. The "and" became an "or", so "every" became "some". The mirror law, not (A or B or C) = (not A) and (not B) and (not C), takes "no bag is over 20 kg" to "bag 1 is 20 kg or under **and** bag 2 is **and**…": "some" became "every".
+The left side is "the sign is wrong". The right side reads back as *some* bag under 7 kg was refused. The "and" became an "or", so "every" became "some".
+
+The mirror law works the same way: not (A or B or C) = (not A) and (not B) and (not C). It turns "no bag is over 20 kg" into "bag 1 is 20 kg or under **and** bag 2 is **and**…", so "some" becomes "every".
 
 ### Why one side is cheap
 
@@ -340,7 +342,7 @@ example : ∀ a b c : Bool,
 - **Testing anything.** One failing case shows a rule is broken. No failing case shows only that you have not found one.
 
 > **Say it back**
-> "Every" is a long "and"; "some" is a long "or". Put a "not" in front and they trade places: not-every is some-not, not-some is every-not. Stacked claims: flip each one in turn, keep the order. One counterexample kills an "every"; only a full sweep kills a "some". One 6 kg bag in the hold beat the sign.
+> "Every" is a long "and"; "some" is a long "or". Put a "not" in front and they trade places: not-every is some-not, not-some is every-not. One counterexample kills an "every"; only a full sweep kills a "some". One 6 kg bag in the hold beat the sign.
 
 ---
 
@@ -351,7 +353,7 @@ example : ∀ a b c : Bool,
 
 ## Where this goes next
 
-- [Valid arguments](06-valid-arguments.md): what follows from a claim once you know whether it is an "every" or a "some".
+- [Valid arguments](06-valid-arguments.md): the same counterexample hunt, used to test whether an argument's premises force its conclusion.
 - [Turing degrees and the arithmetical hierarchy](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
 
 This card shows how to knock a claim down. It leaves open which steps are safe when you build a new claim up from true ones.

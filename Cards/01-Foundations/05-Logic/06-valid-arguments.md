@@ -328,7 +328,7 @@ example : (Finset.univ.filter (fun c : Bool Ã— Bool => c.1 && !c.2)).card = 1 âˆ
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Repair Tess.** In her row swap the second premise `f` for `l`. She becomes Rosa: counterexamples fall to 0.
+> - **Repair Tess.** In her row swap `f` and `l`: the second premise becomes `l` and the conclusion becomes `f`. She becomes Rosa: counterexamples fall to 0.
 > - **Delete the promise.** Make `rule` return 1 always. All four arguments turn INVALID, 1 counterexample each.
 >
 > Either edit ends in an error, not ALL CHECKS PASS: an IndexError for Tess, no bad case left for the last line to print; an AssertionError for the promise.
@@ -364,10 +364,11 @@ example : (Finset.univ.filter (fun c : Bool Ã— Bool => c.1 && !c.2)).card = 1 âˆ
 
 ## Where this goes next
 
+- [Normal forms](07-normal-forms-and-complete-connectives.md): the last card on this shelf. It goes back to truth tables: any table rebuilt as an "or" of "and"s, or from NAND gates alone.
 - [Direct proof](../06-Proof/01-direct-proof.md): stringing these forced steps together until the last is what you set out to show.
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 
-Left open: one forced step is easy to check, so how do you chain many of them to prove something new?
+Left open: one forced step is easy to check, so how do you chain many of them to prove something new? Normal forms finishes this shelf's truth tables first; Direct proof, the first card of the next shelf, answers this question.
 
 ---
 

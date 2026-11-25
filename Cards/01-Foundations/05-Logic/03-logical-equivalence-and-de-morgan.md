@@ -79,7 +79,7 @@ Columns four and five match on all 4 rows: law 1, so she read the note right. Co
 
 ### Step 2: where it goes wrong
 
-Columns six and seven sound like the same promise. They say yes on dishes 2 and 3, where the note says no. "Not both" is not "neither": it lets 3 dishes through, the note 1.
+Columns six and seven sound like the same promise as the note. They say yes on dishes 2 and 3, where the note says no. "Not both" is not "neither": it lets 3 dishes through, the note 1.
 
 ### Step 3: why the join has to flip
 
@@ -365,15 +365,17 @@ example : (!true || true) = true ∧ (!(true || true)) = false := by decide
 
 ## What this builds on
 
-- [If-then](02-if-then.md): the truth table that settles an argument, and the habit of testing every case.
+- [Statements and connectives](01-statements-and-connectives.md): the truth tables for "and", "or" and "not" that every check here uses.
+- [If-then](02-if-then.md): a first case of two wordings with one truth-table column, and the habit of testing every case.
 
 ## Where this goes next
 
-- [Quantifiers](04-quantifiers.md): "everyone" and "someone" are an "and" and an "or" stretched over a crowd; this flip waits there.
+- [Quantifiers](04-quantifiers.md): "everyone" and "someone" as an "and" and an "or" stretched over a crowd, and why their order matters.
+- [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): this flip applied to "everyone" and "someone".
 - [Set operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
 - [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
 
-The question this card leaves open: what does a "not" do to "everyone" and "someone"?
+The question this card leaves open: "everyone" and "someone" stretch "and" and "or" over a whole group, so what changes when you swap which comes first?
 
 ---
 

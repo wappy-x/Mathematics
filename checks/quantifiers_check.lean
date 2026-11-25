@@ -89,6 +89,10 @@ example : ∃ k : Key, ∀ p ∈ [ana, ben, cara, dev, eve], carries p k = true 
 example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
     ∃ k : Key, carries ana k = true := by decide
 
+-- Misread "some key" as "exactly one key": only Ben, Dev and Finn pass, 3 of 6.
+example : (Finset.univ.filter
+    (fun p => (Finset.univ.filter (fun k => carries p k = true)).card = 1)).card = 3 := by decide
+
 #print axioms exists_forall_imp_forall_exists
 #print axioms not_forall_exists_imp_exists_forall
 #print axioms office_everyone_has_a_key_but_no_master_key

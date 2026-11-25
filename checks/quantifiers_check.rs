@@ -34,7 +34,7 @@ fn main() {
     let full = verdicts(&OFFICE, "");
     println!("shrink the office to the five who carry front");
     let small = verdicts(&OFFICE[..5], "  ");
-    assert!(across == 9 && down == across);
+    assert!(across == 9 && down == across && OFFICE.iter().filter(|p| keys_of(p) == 1).count() == 3);
     assert!(full == (true, false, 5) && small == (true, true, 5));
     println!("ALL CHECKS PASS");
 }

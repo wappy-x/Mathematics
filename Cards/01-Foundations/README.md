@@ -91,7 +91,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 05 · Logic · 7 cards
 
-*Statements, and/or/not, if-then, equivalence and De Morgan, quantifiers and their negation, valid arguments.*
+*Statements, and/or/not, if-then, equivalence and De Morgan, quantifiers and their negation, valid arguments, normal forms and NAND.*
 
 1. [Statements and connectives: and, or, not, and the truth table that settles them](05-Logic/01-statements-and-connectives.md)
 2. [If-then: a promise that breaks only one way, with its converse and contrapositive](05-Logic/02-if-then.md)

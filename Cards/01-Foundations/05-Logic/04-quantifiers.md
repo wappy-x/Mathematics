@@ -16,7 +16,7 @@ All that changed is which came first, "everyone" or "one key". Words like every,
 
 **"Every person has some key" and "some key is held by every person" are different claims, and what separates them is which of the two you pick first.**
 
-**What kind of fact this is:** a definition of two words, plus one theorem proved in Why it works: one key everyone has always gives everyone a key, but the reverse can fail, as this office shows.
+**What kind of fact this is:** a definition of two words, plus one theorem proved in Why it works. One key everyone has always gives everyone a key, but this office shows the reverse can fail.
 
 ### The picture: which one you pick first
 
@@ -118,7 +118,7 @@ Both are right: different questions.
 | --- | --- | --- |
 | Hearing the first claim as the second | 5 of 6 | You measured the master key: front reaches 5, Finn is the sixth. You call "everyone has a key" False. It is True |
 | Shrinking the group to the five with front | 5 of 5, **True** | The claim never moved. The group did |
-| Reading "some key" in the first claim as "exactly one key" | Ana fails, 5 of 6 | At least one is enough. Ana carries 2 and still counts |
+| Reading "some key" in the first claim as "exactly one key" | Ana, Cara and Eve fail, 3 of 6 | At least one is enough. Ana, Cara and Eve carry 2 and still count |
 
 The "one" in "there is one key everyone has" also means at least one.
 
@@ -126,7 +126,9 @@ The "one" in "there is one key everyone has" also means at least one.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The office is walked person by person: is some key on this ring? Then again key by key: does every person hold this one? The nine carryings, added across the people and again down the keys, are the cross-check. Then the room shrinks to the five who carry front, and the second claim flips.
+Nothing is imported. The office is walked person by person: is some key on this ring? Then again key by key: does every person hold this one? The nine carryings, added across the people and again down the keys, are the cross-check.
+
+An assert also pins the misreading from the table above: only 3 people carry exactly one key. Then the room shrinks to the five who carry front, and the second claim flips.
 
 ### Python
 
@@ -158,12 +160,12 @@ row("the same carryings added down the keys", down)
 full = verdicts(OFFICE, "")
 print("shrink the office to the five who carry front")
 small = verdicts(OFFICE[:5], "  ")
-assert across == 9 and down == across
+assert across == 9 and down == across and sum(keys_of(p) == 1 for p in OFFICE) == 3
 assert full == (True, False, 5) and small == (True, True, 5)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 people 6, keys 3, carryings added across          9
@@ -221,13 +223,13 @@ fn main() {
     let full = verdicts(&OFFICE, "");
     println!("shrink the office to the five who carry front");
     let small = verdicts(&OFFICE[..5], "  ");
-    assert!(across == 9 && down == across);
+    assert!(across == 9 && down == across && OFFICE.iter().filter(|p| keys_of(p) == 1).count() == 3);
     assert!(full == (true, false, 5) && small == (true, true, 5));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 people 6, keys 3, carryings added across          9
@@ -257,6 +259,7 @@ Lean proves the theorem for every group of people and keys, and checks this offi
 - Front reaches 5 of 6 and misses Finn.
 - Shrink the office to the five who carry front, and front is one key everyone has.
 - Ana carries 2 keys and still counts as having a key.
+- Read "some key" as "exactly one key" and only 3 of the 6 pass: Ana, Cara and Eve carry 2.
 
 Finding the largest reach of any one key, and printing the table, is left to the Python and Rust checks.
 
@@ -352,12 +355,16 @@ example : ∃ k : Key, ∀ p ∈ [ana, ben, cara, dev, eve], carries p k = true 
 example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
     ∃ k : Key, carries ana k = true := by decide
 
+-- Misread "some key" as "exactly one key": only Ben, Dev and Finn pass, 3 of 6.
+example : (Finset.univ.filter
+    (fun p => (Finset.univ.filter (fun k => carries p k = true)).card = 1)).card = 3 := by decide
+
 #print axioms exists_forall_imp_forall_exists
 #print axioms not_forall_exists_imp_exists_forall
 #print axioms office_everyone_has_a_key_but_no_master_key
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'exists_forall_imp_forall_exists' does not depend on any axioms
@@ -397,6 +404,7 @@ example : (Finset.univ.filter (fun k => carries ana k = true)).card = 2 ∧
 
 ## What this builds on
 
+- [Statements and connectives](01-statements-and-connectives.md): "and" and "or", the two joining words a quantifier stretches over a group.
 - [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): how a "not" moves through an and or an or — the two words a quantifier stretches over a group.
 
 ## Where this goes next

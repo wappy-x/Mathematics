@@ -57,7 +57,7 @@ Books call this an **implication**, written P → Q, where → is read "if… th
 ### When it holds
 
 - **Each half is a plain yes or no.** That gives exactly 4 rows. A half with a third answer, such as "cracked a little", has no row in the table.
-- **The verdict uses the two answers alone.** Everyday speech often adds a cause between the halves. The table ignores it, so "If 2 is odd, then 1 = 0" still reads 1. Where everyday "if" leaves the table: the Edgington entry in Sources.
+- **The verdict uses the two answers alone.** Everyday speech often adds a cause between the halves. The table ignores it, so "If 2 is odd, then 1 = 0" is a Dee row and reads 1. Where everyday "if" leaves the table: the Edgington entry in Sources.
 - **The promise runs one way.** Read it as "if and only if" and Cal's row wrongly reads 0.
 
 ---
@@ -69,8 +69,6 @@ Books call this an **implication**, written P → Q, where → is read "if… th
 The if part is yes or no; so is the then part. That is 4 combinations. Ana, Ben, Cal and Dee are not a sample: they are every customer this sentence can have.
 
 Ben is the only one owed something who did not get it.
-
-The verdict uses those two answers alone, not any link between the halves. "If 2 is odd, then 1 = 0" is a Dee row: the if part never happens, so its verdict is 1.
 
 ### The same promise, said with "or"
 
@@ -369,12 +367,12 @@ example : Odd (2 : ℕ) → (1 : ℕ) = 0 := by decide
 
 ## Where this goes next
 
-- [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): why the two readings count as one sentence.
+- [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): when two wordings count as the same claim, and how "not" moves through "and" and "or".
 - [Valid arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
 - [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
 - [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
 
-Left open: given the warranty and one fact about a customer, which conclusions are safe to draw?
+Left open: the warranty, its "or" form and its contrapositive gave the same verdict for every customer. When do two wordings count as the same claim, and how does a "not" move through "and" and "or"?
 
 ---
 
