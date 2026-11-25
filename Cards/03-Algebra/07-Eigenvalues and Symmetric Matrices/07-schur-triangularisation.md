@@ -8,7 +8,7 @@
 
 Eigenvalue software, the routine inside every numerical library, is handed matrices with no promise that they can be made diagonal.
 
-Take a step rule that updates two numbers each step, as the rental fleet does monthly. This one sends (x, y) to (x + y, −x + 3y): the matrix `[[1, 1], [-1, 3]]`, called A. Feed it (1, 1) and out comes (2, 2): the same direction, twice as long. That makes (1, 1) an **eigenvector** (a direction the matrix only stretches) with **eigenvalue** 2 (the stretch) ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)).
+Take a step rule that updates two numbers each step, as the rental fleet on [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) does monthly (rental cars moving between two cities). This one sends (x, y) to (x + y, −x + 3y): the matrix `[[1, 1], [-1, 3]]`, called A. Feed it (1, 1) and out comes (2, 2): the same direction, twice as long. That makes (1, 1) an **eigenvector** (a direction the matrix only stretches) with **eigenvalue** 2 (the stretch) ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)).
 
 The eigenvalue 2 comes twice, yet every eigenvector lies on the one line through (1, 1). Diagonalisation needs two independent eigenvectors, so A is **defective**, like the shear on [Diagonalisation](03-diagonalisation-and-matrix-powers.md), and cannot be made diagonal.
 
@@ -654,7 +654,7 @@ example : (1 : ℤ) ^ 2 + 1 ^ 2 + (-1) ^ 2 + 3 ^ 2 = 12 ∧ (2 : ℤ) ^ 2 + (-2)
 - [Jordan form](10-jordan-canonical-form.md): the simplest triangle, with axes no longer perpendicular.
 - [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): exactly when the triangle is diagonal.
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex dot products and unitary matrices in full.
-- [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
+- [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use a ratio of two polynomials (a Padé approximation), square back up, and why eigenvectors are a trap.
 
 The triangle's diagonal holds the roots of A's characteristic polynomial. What comes out when A itself is put into that polynomial? That is the next card's question.
 

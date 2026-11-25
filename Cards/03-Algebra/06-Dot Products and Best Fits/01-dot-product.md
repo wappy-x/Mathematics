@@ -567,7 +567,7 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): the second list as a machine.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
 - [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
-- [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, weighted by a softmax.
+- [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, scored by a dot product, with the scores turned into weights that add to 1.
 
 Nothing here splits a vector into a part along another and a part square to it; that split, and the shadow it names, comes next.
 

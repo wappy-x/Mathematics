@@ -497,7 +497,7 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 
 - **Anything thrown, launched or dropped.** Height against time is a quadratic, and its zeros are when the thing is at ground level — usually the question being asked.
 - **Areas inside a fixed edge.** Patio edging, a fence, a picture frame: fix the length of the edge and the area is a quadratic in one side. Set it to the area you need, and the zeros are the sides that work.
-- **Break-even points.** Profit that rises then falls with price is a quadratic; its zeros are where the money is level.
+- **Break-even points.** When sales fall in a straight line as the price rises, profit is a quadratic in the price; its zeros are where the money is level.
 - **Reading a graph.** Where a curve crosses the bottom it has a bracket: [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 > **Say it back**

@@ -67,7 +67,7 @@ The plus-or-minus sign is not a hedge: it is two answers on one line.
 | $`x`$ | the unknown being solved for | the time in seconds | — |
 | $`t`$ | seconds since the kick | 1 and 3 | — |
 | $`a`$ | the number in front of the squared term | 5 | the arch narrows, the answers close in |
-| $`b`$ | the number in front of the plain term: minus the kick speed | -20 | a softer kick: the two answers close in and come earlier, then vanish |
+| $`b`$ | the number in front of the plain term: minus the kick speed | -20 | a softer kick: the two answers close in on an earlier middle, then vanish |
 | $`c`$ | the number standing alone | 15 | both walk toward the middle, then vanish |
 | $`D`$ | the discriminant, under the square root | 100 | the answers pull further apart |
 
@@ -172,7 +172,7 @@ Everything there is ordinary arithmetic except the square root, and under it sit
 - Exactly zero: the root is zero, so both signs give the same answer, -b/(2a) — one moment, counted twice.
 - Below zero: nothing on the number line squares to a negative, so there is no root and no answer.
 
-When the discriminant is not a perfect square the root runs on forever without repeating, and the answers are irrational ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
+When the discriminant is a whole number that is not a perfect square, the root runs on forever without repeating, and the answers are irrational ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
 
 <details>
 <summary>The two answers add and multiply to something you can read off the equation</summary>
@@ -571,7 +571,7 @@ example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
 ## Where you meet it in real life
 
 - **Anything thrown, dropped or fired.** Height under gravity is a quadratic in time. "When does it pass this height" and "when does it land" are one question asked twice: the landing is 20t - 5t^2 = 0, answered at 0 and 4 seconds.
-- **Break-even in a plan.** Sales fall as the price rises, so revenue — price times sales — is a quadratic in price. Set it against costs and the answers are the break-even prices; the discriminant says whether any price pays at all.
+- **Break-even in a plan.** When sales fall in a straight line as the price rises, revenue — price times sales — is a quadratic in price. Set it against costs and the answers are the break-even prices; the discriminant says whether any price pays at all.
 - **Inside bigger machinery.** [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md), the directions a matrix only stretches and the stretch factors, ends on a quadratic, solved by this formula.
 
 > **Say it back**

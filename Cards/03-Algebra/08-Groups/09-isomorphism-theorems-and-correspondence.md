@@ -31,7 +31,7 @@ Two stages on top, one below: same group, same reading.
 
 ## The formula
 
-Notation from [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): a **normal** subgroup $`N`$ of a group $`G`$ is one that every conjugation leaves in place. Its **piles** (cosets) $`gN`$ form the **quotient group** $`G/N`$, said "G over N". The sign $`\cong`$ means isomorphic: one group under two sets of names. Bars count members: $`\lvert H\rvert`$ is the size of $`H`$.
+Notation from [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): a **normal** subgroup $`N`$ of a group $`G`$ is one that every conjugation (do a move, then a member of N, then undo the move) leaves in place. Its **piles** (cosets) $`gN`$ form the **quotient group** $`G/N`$, said "G over N". The sign $`\cong`$ means isomorphic: one group under two sets of names. Bars count members: $`\lvert H\rvert`$ is the size of $`H`$.
 
 **The third theorem.** Take two normal subgroups of $`G`$ with $`K`$ inside $`N`$. The piles of $`K`$ that lie inside $`N`$ form a normal subgroup $`N/K`$ of $`G/K`$, and
 
@@ -552,7 +552,7 @@ example : ((Finset.univ : Finset (Finset (DihedralGroup 4))).filter
 
 ## Where you meet it in real life
 
-- **Schedules on a clock face.** A rota repeating every $`d`$ hours, with $`d`$ dividing 12, reads off a 12-hour face. The six such rotas are the clock's six subgroups.
+- **Schedules on a clock face.** A schedule repeating every $`d`$ hours, with $`d`$ dividing 12, reads off a 12-hour face. The six such schedules are the clock's six subgroups.
 - **Divisibility tests.** The last three digits of a number decide its remainder on division by 8, because 8 divides 1,000. Reading the last three digits is the first stage of a two-stage collapse ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 - **Simplifying a group in steps.** Composition series collapse a group one step at a time; the diamond theorem shows any two such chains have the same pieces.
 

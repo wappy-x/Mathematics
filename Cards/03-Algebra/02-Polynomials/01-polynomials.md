@@ -104,7 +104,7 @@ Look far out and the top power wins. At 10 seconds 20t is 200 but 5t^2 is 500, s
 | 1 | a number times the letter, plus a plain number | a straight line, no bends |
 | 2 | a squared term as well | one bend, up then down or down then up |
 
-Degree 3 adds a cubed term and a second bend, and so on up. A polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times. [Roots and factors](05-roots-and-the-factor-theorem.md) proves the second ceiling; the count of bends is a fact from calculus.
+Degree 3 adds a cubed term and can add a second bend, and so on up. A polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times. [Roots and factors](05-roots-and-the-factor-theorem.md) proves the second ceiling; the count of bends is a fact from calculus.
 
 ### Step 3: adding is collecting like terms, and the degree can fall
 

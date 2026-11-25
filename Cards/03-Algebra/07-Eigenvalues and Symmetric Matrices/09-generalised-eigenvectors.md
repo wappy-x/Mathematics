@@ -363,14 +363,7 @@ Lean proves the theorem for every square matrix whose characteristic polynomial 
 - Take any square matrix M of size n. Then a vector killed by $`M^k`$ is also killed by $`M^{k+1}`$.
 - Take the same M. Then once two kernels of powers in a row are equal, all later ones are equal too.
 - Take the same M. Then the kernels of its powers stop growing by the power n.
-- Take the card's A. Then $`p(t) = t^3 - 2t^2 + t = t (t - 1)^2`$.
-- Take the card's A. Then A − I sends (1, 1, 0) to (1, 0, 1), and (1, 0, 1) to zero.
-- Take the card's A. Then $`(A - I)^2`$ is `[[0, 0, 0], [0, 0, 0], [-1, 1, 1]]`, and $`(A - I)^3`$ is the same with signs flipped.
-- Take the variable t. Then $`(2 - t)\,t + (t - 1)^2 = 1`$.
-- Take the card's A. Then $`P_1`$ and $`P_0`$ add to I, multiply to zero, and split (3, 1, 0) into (3, 1, 2) + (0, 0, −2).
-- Take the card's A. Then $`p(A) = 0`$, and $`A^{10}`$ sends (3, 1, 0) to (13, 1, 12).
-- Take the ten-minute count. Then the van is at 3 + 10 = 13 km, and the app shows 2 + 10 = 12 km.
-- Take the usual mistake of a bare factor. Then A alone sends (3, 1, 0) to (4, 1, 3), not to its plane piece (3, 1, 2).
+- It also re-checks the van's worked numbers: $`p(t)`$, the chain, the powers of A − I, the identity $`(2 - t)\,t + (t - 1)^2 = 1`$, the projectors, $`p(A) = 0`$, the ten-minute state and the bare-factor mistake.
 
 The example's kernel sizes by elimination, the change of axes and the traces are left to the Python and Rust checks.
 

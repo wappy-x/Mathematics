@@ -12,7 +12,7 @@ One rule for all four would be a straight line: a price when new, the same amoun
 
 So ask which line misses least. Least squares scores every candidate the same way — each car's miss, squared, the four squares added — and takes the smallest total.
 
-The winner is price = 23.5 − 3.4 × age: the cars land at 20.1, 16.7, 13.3 and 9.9, squared miss 0.2. The worst single miss is $300, on a car that sold for 13 thousand. One equation hands that line over; no hunting.
+The winner is price = 23.5 − 3.4 × age: the cars land at 20.1, 16.7, 13.3 and 9.9, squared miss 0.2. The worst miss is $300, on the two middle cars. One equation hands that line over; no hunting.
 
 **The four cars stack into one matrix equation with no exact answer, and the best fit is the shadow of the prices on everything a line can reach: the misses left over stick straight out of it.**
 
@@ -678,7 +678,7 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 
 ## Where you meet it in real life
 
-- **Every straight trendline in a spreadsheet.** `SLOPE`, `INTERCEPT` and `LINEST` answer these normal equations, by a steadier route than building the small matrix $`A^T A`$; any table of ages and prices is a depreciation schedule fitted this way.
+- **Every straight trendline in a spreadsheet.** `SLOPE`, `INTERCEPT` and `LINEST` answer these normal equations, by a steadier route than building the small matrix $`A^T A`$; a depreciation line fitted to any table of ages and prices is found this way.
 - **Calibrating an instrument.** Weigh known masses on a new scale, fit a line to what it reports, then read it backwards to correct later readings.
 - **More columns, same equation.** Add mileage: $`A`$ becomes 4 × 3, $`A^T A`$ becomes 3 × 3, every word above holds. That is "regression" in most reports.
 - **Columns already perpendicular.** Perpendicular columns of length 1 make the small matrix the identity (1s on the diagonal, 0s elsewhere), and the answer is two dot products ([Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md)).
