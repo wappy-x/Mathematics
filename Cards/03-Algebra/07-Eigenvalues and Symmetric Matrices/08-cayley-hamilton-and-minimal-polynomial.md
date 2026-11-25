@@ -6,9 +6,15 @@
 
 ## General Overview
 
-Three shops, X, Y and Z, grow by word of mouth. Each week every customer brings one new customer to their own shop (two at Z), and each Y customer also brings one to X. A week doubles X's count and adds Y's, doubles Y's and triples Z's: the matrix A = `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]`. Without Y's referrals, the week is D = `[[2, 0, 0], [0, 2, 0], [0, 0, 3]]`, written diag(2, 2, 3). They differ only in A's top-row 1: Y's leak into X.
+A program lists every binary code (string of 0s and 1s) of a given length. It counts the 1s the codes hold between them, and the codes themselves. A third count is the codes over three symbols, 0, 1 and 2.
 
-Both have eigenvalues (stretch factors, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)) 2, 2 and 3, and the same characteristic polynomial (the polynomial whose roots are the eigenvalues), $`x^3 - 7x^2 + 16x - 12`$. Yet their tenth powers differ: the top row of A's is (1024, 5120, 0), D's (1024, 0, 0). After ten weeks one Y customer accounts for 5120 at X.
+Make every code one symbol longer. Each binary code gets a 0 or a 1 on the end, so the codes double. Every old 1 is written twice, and each new code ending in 1 adds one more: the 1s become twice themselves plus the codes. Each three-symbol code gets three endings, so that count triples.
+
+That step is the matrix A = `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]` applied to the column of counts (1s, binary codes, three-symbol codes). Forget the new 1s and the step is D = `[[2, 0, 0], [0, 2, 0], [0, 0, 3]]`, written diag(2, 2, 3). They differ only in A's top-row 1: the codes feed the 1s.
+
+Both have eigenvalues (stretch factors, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)) 2, 2 and 3, and the same characteristic polynomial (the polynomial whose roots are the eigenvalues), $`x^3 - 7x^2 + 16x - 12`$. Yet their tenth powers differ: the top row of A's is (1024, 5120, 0), D's (1024, 0, 0).
+
+From the empty code, (0, 1, 1), ten steps give 1024 ten-bit codes holding 5120 ones: half of their 10,240 bits.
 
 Two facts explain this. Any square matrix put into its own characteristic polynomial gives the zero matrix. The lowest-degree polynomial that does this, the **minimal polynomial**, sees the difference. For D it is $`(x - 2)(x - 3)`$, with no repeated root. A needs $`(x - 2)^2`$, and can never be made diagonal.
 
@@ -53,11 +59,11 @@ f(A) = 0 \;\Longrightarrow\; m_A \text{ divides } f, \qquad A \text{ diagonalisa
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`A`$, $`D`$, $`F`$ | one week of the shops, with and without Y's leak; the fleet | `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]`, diag(2, 2, 3); `[[0.8, 0.3], [0.2, 0.7]]` | — |
+| $`A`$, $`D`$, $`F`$ | one step of the code counts, with and without the new 1s; the fleet | `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]`, diag(2, 2, 3); `[[0.8, 0.3], [0.2, 0.7]]` | — |
 | $`n`$, $`I`$, $`x`$ | the size; the identity of that size; the polynomial's letter, later replaced by a matrix | 3; 1s on the diagonal | the characteristic polynomial has degree n |
 | $`\lambda`$, $`v`$ | an eigenvalue and an eigenvector: $`Av = \lambda v`$ | 2 or 3 | — |
 | $`p_A`$ | the characteristic polynomial, $`\det(xI - A)`$ | $`x^3 - 7x^2 + 16x - 12`$ for both | — |
-| $`m_A`$ | the minimal polynomial | A: the same cubic; D: $`x^2 - 5x + 6`$ | a higher degree: longer chains of leaking |
+| $`m_A`$ | the minimal polynomial | A: the same cubic; D: $`x^2 - 5x + 6`$ | a higher degree: longer chains of one count feeding another |
 | $`Q`$, $`T`$, $`t_1, \dots, t_n`$ | Schur's form $`A = QTQ^{-1}`$: T is triangular, its diagonal entries $`t_i`$ are the eigenvalues | A is already triangular: Q = I, T = A, t = 2, 2, 3 | — |
 | $`f`$, $`q`$, $`r`$, $`\deg`$ | a polynomial with $`f(A) = 0`$; quotient and remainder after dividing it by $`m_A`$; deg: the degree (highest power) | $`f = p_D`$, $`q = x - 2`$, $`r = 0`$ | r is always 0 |
 | $`e_j`$, $`P_k`$ | in the proof fold: column j of I; the product of the first k factors | $`P_2 = (A - 2I)^2`$ | — |
@@ -108,7 +114,7 @@ From k − 1 to k: $`P_k = P_{k-1}(T - t_k I)`$. Take $`j \le k`$. Column j of $
 
 ### Step 4: the minimal polynomial divides everything that kills A
 
-Cayley-Hamilton gives a monic polynomial that kills A, so a lowest-degree one, $`m_A`$, exists. Divide any f with $`f(A) = 0`$ by it. Long division by a monic polynomial always works (Axler, chapter 4), leaving a remainder of lower degree:
+Cayley-Hamilton gives a monic polynomial that kills A, so a lowest-degree one, $`m_A`$, exists. Divide any f with $`f(A) = 0`$ by it. Long division by a monic polynomial always works ([Polynomial long division](../02-Polynomials/04-polynomial-division.md)), leaving a remainder of lower degree:
 
 ```math
 f = q\,m_A + r, \qquad r = 0 \ \text{or} \ \deg r < \deg m_A
@@ -156,7 +162,7 @@ Cayley-Hamilton also inverts A: $`A(A^2 - 7A + 16I) = 12I`$, so $`12A^{-1}`$ = `
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| $`(x - 2)(x - 3)`$ taken as A's minimal polynomial | `[[0, -1, 0], [0, 0, 0], [0, 0, 0]]` | A's leak needs $`(x - 2)^2`$ |
+| $`(x - 2)(x - 3)`$ taken as A's minimal polynomial | `[[0, -1, 0], [0, 0, 0], [0, 0, 0]]` | the codes feeding the 1s need $`(x - 2)^2`$ |
 | Fleet constant added to every entry | `[[0.0, 0.5], [0.5, 0.0]]` | 0.5 means 0.5 times I |
 | The x = A shortcut, tried on the trace | $`3A - 7I`$ = `[[-1, 3, 0], [0, -1, 0], [0, 0, 2]]` | substituting inside a determinant is not allowed |
 | Diagonalisability read off the characteristic polynomial | D: root 2 repeated, yet 3 eigenvector directions | A and D share that polynomial |
@@ -197,7 +203,7 @@ def pdiv(p, m):                # long division by a monic m: quotient, remainder
     p, q = list(p), []
     while len(p) >= len(m): q.append(p[0]); p = [a - p[0] * b for a, b in zip(p, m + [0] * len(p))][1:]
     return q, p
-def repeated(p): return any(big(at(p, [[t]])) == 0 == big(at([c * (len(p) - 1 - i) for i, c in enumerate(p[:-1])], [[t]])) for t in (2, 3))
+def repeated(p): return any(big(at(p, [[t]])) == 0 == big(at([c * (len(p) - 1 - i) for i, c in enumerate(p[:-1])], [[t]])) for t in (2, 3))   # roots 2, 3 only
 def rank(rows):                # elimination in whole numbers: cross-multiply, never divide
     rows = [r for r in rows if any(r)]
     if not rows: return 0
@@ -236,7 +242,7 @@ assert D4 == add(eye(3, x4[1]), D, x4[0]) and mul(inv12, A) == eye(3, 12)       
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 A: characteristic polynomial by traces [1, -7, 16, -12]; from the diagonal 2, 2, 3: [1, -7, 16, -12]
@@ -290,7 +296,7 @@ fn pdiv(p: &[i64], m: &[i64]) -> (Vec<i64>, Vec<i64>) {   // long division by a 
     while p.len() >= m.len() { q.push(p[0]); p = (1..p.len()).map(|i| p[i] - p[0] * if i < m.len() { m[i] } else { 0 }).collect() }
     (q, p)
 }
-fn repeated(p: &[i64]) -> bool {
+fn repeated(p: &[i64]) -> bool {       // tries only the roots 2 and 3, the eigenvalues of A and D
     let slope: Vec<i64> = p[..p.len() - 1].iter().enumerate().map(|(i, c)| c * (p.len() - 1 - i) as i64).collect();
     [2, 3].iter().any(|&t| big(&at(p, &vec![vec![t]])) == 0 && big(&at(&slope, &vec![vec![t]])) == 0)
 }
@@ -343,7 +349,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 A: characteristic polynomial by traces [1, -7, 16, -12]; from the diagonal 2, 2, 3: [1, -7, 16, -12]
@@ -516,7 +522,7 @@ theorem diagonalisable_iff_minimal_polynomial_has_no_repeated_root {n : ℕ}
       ↔ (minpoly ℂ A).roots.Nodup := by
   exact ⟨minpoly_roots_nodup_of_diagonalisable A, diagonalisable_of_minpoly_roots_nodup A⟩
 
--- The shops' week A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]] has characteristic polynomial x^3 - 7x^2 + 16x - 12.
+-- The code-count step A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]] has characteristic polynomial x^3 - 7x^2 + 16x - 12.
 example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℚ).charpoly
     = X ^ 3 - 7 * X ^ 2 + 16 * X - 12 := by
   rw [Matrix.charpoly, Matrix.det_fin_three]
@@ -571,7 +577,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 #print axioms diagonalisable_iff_minimal_polynomial_has_no_repeated_root
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'aeval_conj_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -586,7 +592,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Remove the leak.** Change A's top row to `[2, 0, 0]`. The minimal polynomial drops to `[1, -5, 6]`, the first factor zeroes 2 columns, and the second assert stops the run.
+> - **Forget the new 1s.** Change A's top row to `[2, 0, 0]`. The minimal polynomial drops to `[1, -5, 6]`, the first factor zeroes 2 columns, and the second assert stops the run.
 > - **Any other 4 by 4.** Change M's first row to `[1, 1, 1, 1]`. The polynomial becomes `[1, 0, -30, 8, 10]` and p(M) is still zero.
 > - **A different fleet.** Make `F` `[[9, 3], [1, 7]]`. Its polynomial becomes `[1.0, -1.6, 0.6]`; the old equation misses by 0.03, and the second assert stops the run.
 
@@ -607,7 +613,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 
 - **Matrix powers and functions.** Any power is a mix of lower powers: $`D^4 = 65D - 114I`$. So a 3 by 3 matrix exponential's power series ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)) collapses to a mix of I, A and $`A^2`$.
 - **Control engineering.** Ackermann's formula for a controller's gains is Cayley-Hamilton on the system matrix ([Pole placement](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md)).
-- **Recurrences.** Each entry of A's powers obeys the recurrence: 7 times the last term, minus 16 times the one before, plus 12 times the one before that ([A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md)).
+- **Recurrences.** Each entry of A's powers obeys the recurrence: 7 times the last term, minus 16 times the one before, plus 12 times the one before that. ([A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md)).
 
 > **Say it back**
 > Put a square matrix into its own characteristic polynomial and every entry comes out zero. On Schur's triangle each factor wipes out one more column. The lowest-degree monic polynomial that kills the matrix is its minimal polynomial, and it divides every other one. The matrix can be diagonalised exactly when that polynomial has no repeated root.
@@ -628,7 +634,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): division with remainder, borrowed in Step 4, and Euclid's algorithm, proved in full.
 - [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): over a local ring, generators can be checked modulo the maximal ideal.
 
-The minimal polynomial says A falls short of diagonal, not what it looks like instead: which basis makes A simplest?
+Here $`(A - 2I)^2`$ kills a direction that $`A - 2I`$ misses. Which vectors fill that gap, and how do they split the space? That is the next card's question.
 
 ---
 

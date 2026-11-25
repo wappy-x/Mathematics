@@ -8,7 +8,7 @@
 
 A rental company runs 1000 cars out of two cities. Each month 80% of city A's cars come back in A and 20% are dropped in B; of B's cars, 70% stay and 30% arrive in A.
 
-That month is a matrix, row by row: `[[0.8, 0.3], [0.2, 0.7]]`. Its top row builds next month's count for A, its bottom row B's ([Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md)).
+That month is a matrix, row by row: `[[0.8, 0.3], [0.2, 0.7]]`. Its top row builds next month's count for A, its bottom row B's ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)).
 
 Park 600 in A and 400 in B. A then holds 0.8 × 600 + 0.3 × 400 — 600 again — and B holds 400. Cars moved; the split did not.
 
@@ -161,7 +161,7 @@ The fleet ends at 600 cars in A, 400 in B; from all 1000 in A, the 400 out of pl
 | --- | --- | --- |
 | Lambda off the top-left entry only | 0.714286, one root | The identity sits on **both** diagonal entries |
 | ad + bc as the determinant | discriminant −0.230000 | One sign hides two real directions |
-| Diagonal entries read as factors | product 0.560000 | True only for a staircase matrix |
+| Diagonal entries read as factors | product 0.560000 | True only for a triangular matrix, with zeros on one side of the diagonal |
 | (3, −2) guessed as the split | (1.80, −0.80) | Not a multiple of it: no eigenvector |
 
 Both checks print all four.
@@ -552,7 +552,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 ## What this builds on
 
 - [Determinants](../05-Solving%20Systems/04-determinants.md): area, and that zero means something was flattened — Step 1's hinge.
-- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): how a matrix multiplies a column.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): how a matrix multiplies a column.
 - [The quadratic formula](../02-Polynomials/03-quadratic-formula.md): the two roots and the discriminant.
 
 ## Where this goes next
@@ -574,7 +574,7 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 - [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): no quadratic.
 - [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): infinite dimensions.
 - [Finitely many solutions](../../22-Algebraic%20geometry/01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md): polynomial systems.
-- [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md): all the shapes.
+- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): every shape a matrix can take, found without needing its eigenvalues.
 - [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): matrix generators.
 - [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
 - [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.

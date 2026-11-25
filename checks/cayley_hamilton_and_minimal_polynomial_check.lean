@@ -130,7 +130,7 @@ theorem diagonalisable_iff_minimal_polynomial_has_no_repeated_root {n : ℕ}
       ↔ (minpoly ℂ A).roots.Nodup := by
   exact ⟨minpoly_roots_nodup_of_diagonalisable A, diagonalisable_of_minpoly_roots_nodup A⟩
 
--- The shops' week A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]] has characteristic polynomial x^3 - 7x^2 + 16x - 12.
+-- The code-count step A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]] has characteristic polynomial x^3 - 7x^2 + 16x - 12.
 example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℚ).charpoly
     = X ^ 3 - 7 * X ^ 2 + 16 * X - 12 := by
   rw [Matrix.charpoly, Matrix.det_fin_three]

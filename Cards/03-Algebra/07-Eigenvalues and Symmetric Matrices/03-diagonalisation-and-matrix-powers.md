@@ -66,7 +66,7 @@ cars and city B holds 400 − 400 × 0.5^n. The 600 and 400 are the split that n
 
 - **Enough independent eigenvectors.** Two for a 2 × 2, neither a multiple of the other, or P has no inverse.
 - **Different eigenvalues guarantee it.** A repeated one is checked, not rejected: the identity has eigenvalue 1 twice and every direction is an eigenvector.
-- **Real eigenvectors, and whole powers.** A quarter-turn has no real eigenvector and needs complex numbers, absent from this wing. Negative powers need $`A`$ invertible; here neither eigenvalue is 0.
+- **Real eigenvectors, and whole powers.** A quarter-turn has no real eigenvector and needs complex numbers, which this shelf brings in from [Schur's triangle](07-schur-triangularisation.md) on. Negative powers need $`A`$ invertible; here neither eigenvalue is 0.
 - **The fleet model.** The percentages hold every month and no car is scrapped, so 600.1 is a fleet average.
 
 ---
@@ -133,7 +133,7 @@ The shear `[[1, 1], [0, 1]]` slides points sideways in proportion to their heigh
 
 Every eigenvector lies along (1, 0): one direction where two are needed, so P's columns would be multiples of each other, P would have no inverse, and there is no factorisation. Such a matrix is **defective**, and its replacement is the [Jordan form](10-jordan-canonical-form.md).
 
-Its powers stay easy by hand — `[[1, n], [0, 1]]` after n months, `[[1, 12], [0, 1]]` after twelve — just not this way.
+Its powers stay easy by hand — `[[1, n], [0, 1]]` after n steps, `[[1, 12], [0, 1]]` after twelve — just not this way.
 
 **The other route.** Multiplying the matrix out twelve times reaches the same powers with no eigenvectors, and works on the shear, but explains nothing.
 
@@ -204,7 +204,7 @@ hand = [[600.0 + 400.0 * 0.5 ** n, 400.0 - 400.0 * 0.5 ** n] for n in MONTHS]
 w = act(PINV, START)                    # the start, read in eigenvector amounts
 steady, fade = [P[0][0] * w[0], P[1][0] * w[0]], [P[0][1] * w[1], P[1][1] * w[1]]
 shear, spow = [[1.0, 1.0], [0.0, 1.0]], [[1.0, 0.0], [0.0, 1.0]]
-for _ in range(12): spow = mul(shear, spow)            # the shear, twelve months of it
+for _ in range(12): spow = mul(shear, spow)            # the shear, twelve steps of it
 rows, rinv = [[3.0, 2.0], [1.0, -1.0]], [[0.2, 0.4], [0.2, -0.6]]
 swap, sinv = [[1.0, 3.0], [-1.0, 2.0]], [[0.4, -0.6], [0.2, 0.2]]
 wrong = [act(three(rows, dpow(12), rinv), START), act(three(P, dpow(12), P), START),
@@ -236,7 +236,7 @@ assert spow == [[1.0, 12.0], [0.0, 1.0]] and act(shear, [1.0, 0.0]) == [1.0, 0.0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 fleet matrix A = [[0.8, 0.3], [0.2, 0.7]], start (1000, 0) cars
@@ -312,7 +312,7 @@ fn main() {
     let fade: V = [P[0][1] * w[1], P[1][1] * w[1]];
     let shear: M = [[1.0, 1.0], [0.0, 1.0]];
     let mut spow = ID;
-    for _ in 0..12 { spow = mul(shear, spow); }   // the shear, twelve months of it
+    for _ in 0..12 { spow = mul(shear, spow); }   // the shear, twelve steps of it
     let rows: M = [[3.0, 2.0], [1.0, -1.0]]; let rinv: M = [[0.2, 0.4], [0.2, -0.6]];
     let swap: M = [[1.0, 3.0], [-1.0, 2.0]]; let sinv: M = [[0.4, -0.6], [0.2, 0.2]];
     let wrong = [act(three(rows, dpow(12), rinv), START), act(three(P, dpow(12), P), START),
@@ -346,7 +346,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 fleet matrix A = [[0.8, 0.3], [0.2, 0.7]], start (1000, 0) cars
@@ -377,7 +377,7 @@ Lean proves the power formula for every real square matrix with a full set of in
 
 - Put independent eigenvectors in the columns of P and their eigenvalues on the diagonal of D. Then $`A^n = PD^nP^{-1}`$ for every whole number n.
 - From 1,000 cars in city A, city A holds 600 + 400 × 0.5^n cars after n months. City B holds 400 − 400 × 0.5^n.
-- The shear `[[1, 1], [0, 1]]` after n months is `[[1, n], [0, 1]]`. It has no two independent eigenvectors, so no P can be built for it.
+- The shear `[[1, 1], [0, 1]]` after n steps is `[[1, n], [0, 1]]`. It has no two independent eigenvectors, so no P can be built for it.
 - Both eigenvectors, P inverse and A rebuilt from P D P inverse come out exactly as the card says. So do the amounts (200, 400), one month, and 600.1 cars after a year.
 - Putting P where P inverse belongs ends the year at (9000.488281, 5999.511719).
 
@@ -455,7 +455,7 @@ theorem fleet_after_n_months (n : ℕ) :
     ext i; fin_cases i <;>
       simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, pow_succ] <;> ring
 
-/-- The matrix this cannot be done to. The shear `[[1, 1], [0, 1]]` after `n` months is
+/-- The matrix this cannot be done to. The shear `[[1, 1], [0, 1]]` after `n` steps is
 `[[1, n], [0, 1]]`, yet it has no two independent eigenvectors, so there is no invertible `P`
 and diagonal `D` with shear = P D P⁻¹. -/
 theorem shear_is_not_diagonalisable :
@@ -519,7 +519,7 @@ example : (600 : ℚ) + 400 * (1/2) = 800 ∧ (400 : ℚ) - 400 * (1/2) = 200 :=
 example : (600 : ℚ) + 400 * (1/2) ^ 12 = 153625 / 256 ∧ (400 : ℚ) - 400 * (1/2) ^ 12 = 102375 / 256 ∧
     (153625 / 256 : ℚ) + 102375 / 256 = 1000 ∧
     (60005 / 100 : ℚ) ≤ 153625 / 256 ∧ (153625 / 256 : ℚ) < 60015 / 100 := by norm_num
--- Step 4: the shear after twelve months is [[1, 12], [0, 1]]; it fixes (1, 0) and sends (1, 1) to (2, 1).
+-- Step 4: the shear after twelve steps is [[1, 12], [0, 1]]; it fixes (1, 0) and sends (1, 1) to (2, 1).
 example : (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) ^ 12 = !![1, 12; 0, 1] := by decide
 example : (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 0] = ![1, 0] ∧
     (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 1] = ![2, 1] := by decide
@@ -535,7 +535,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 #print axioms shear_is_not_diagonalisable
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'pow_eq_P_diagonal_pow_P_inv' depends on axioms: [propext, Classical.choice, Quot.sound]

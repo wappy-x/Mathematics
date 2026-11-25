@@ -136,7 +136,13 @@ Three jobs in turn: collecting $`x \cdot v_1`$ and $`x \cdot v_2`$ is $`V^T x`$,
 <details>
 <summary>Detailed proof, for any number of rows and columns</summary>
 
-Let $`A`$ have real entries, any shape, with n columns. $`G = A^T A`$ is square and symmetric, so the spectral theorem gives perpendicular unit eigenvectors $`v_1, \ldots, v_n`$ with eigenvalues $`\lambda_1 \ge \ldots \ge \lambda_n`$, none negative since Step 1 makes $`\lambda_k = |A v_k|^2`$. Let $`r`$ count those above zero. For k up to $`r`$, set $`\sigma_k = \sqrt{\lambda_k}`$ and $`u_k = A v_k / \sigma_k`$, perpendicular unit vectors by Step 2; above $`r`$ the length is zero, so that axis is flattened. Extend $`u_1, \ldots, u_r`$ to a full perpendicular unit set, the extras meeting zeros in $`S`$. Then $`x = (x \cdot v_1) v_1 + \ldots + (x \cdot v_n) v_n`$ gives $`A x = \sigma_1 (x \cdot v_1) u_1 + \ldots + \sigma_r (x \cdot v_r) u_r`$, which is $`U S V^T x`$, and matrices agreeing on every input are equal. Repeated eigenvalues leave the axes unfixed, the factors fixed.
+Let $`A`$ have real entries, any shape, with n columns.
+
+1. **The input axes.** $`G = A^T A`$ is square and symmetric, so the spectral theorem gives perpendicular unit eigenvectors $`v_1, \ldots, v_n`$ with eigenvalues $`\lambda_1 \ge \ldots \ge \lambda_n`$. None is negative, since Step 1 makes $`\lambda_k = |A v_k|^2`$. Let $`r`$ count those above zero.
+2. **The factors and output axes.** For k up to $`r`$, set $`\sigma_k = \sqrt{\lambda_k}`$ and $`u_k = A v_k / \sigma_k`$, perpendicular unit vectors by Step 2. Above $`r`$ the length is zero, so that axis is flattened. Extend $`u_1, \ldots, u_r`$ to a full perpendicular unit set, the extras meeting zeros in $`S`$.
+3. **Put it together.** Write $`x = (x \cdot v_1) v_1 + \ldots + (x \cdot v_n) v_n`$. Then $`A x = \sigma_1 (x \cdot v_1) u_1 + \ldots + \sigma_r (x \cdot v_r) u_r`$, which is $`U S V^T x`$. Matrices agreeing on every input are equal.
+
+Repeated eigenvalues leave the axes unfixed, the factors fixed.
 
 </details>
 
@@ -783,6 +789,7 @@ Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid ma
 
 ## Where this goes next
 
+- [Schur's triangle](07-schur-triangularisation.md): the next card. When a square matrix must use one perpendicular basis on both sides, it can always be made upper triangular, though not always diagonal.
 - [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
 - [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): how many axes a wide table needs.
 - [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): the factors without building $`A^T A`$; best answers to unsolvable systems.
@@ -795,7 +802,7 @@ Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid ma
 - [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
 - [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
 
-One question stays open, and every application above turns on it: the fold "Keeping only the biggest stretches" measures what a dropped factor costs the matrix, never what it costs the answer.
+The decomposition always works because it may use two different sets of perpendicular axes, one for inputs and one for outputs. What can a square matrix still be made to look like when both sides must share one perpendicular basis? That is the next card's question.
 
 ---
 

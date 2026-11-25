@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A step model updates two numbers each step, as the rental fleet does monthly. Here a step sends (x, y) to (x + y, −x + 3y): the matrix `[[1, 1], [-1, 3]]`, called A. Feed it (1, 1) and out comes (2, 2): the same direction, twice as long. That makes (1, 1) an **eigenvector** (a direction the matrix only stretches) with **eigenvalue** 2 (the stretch) ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)).
+Eigenvalue software, the routine inside every numerical library, is handed matrices with no promise that they can be made diagonal.
+
+Take a step rule that updates two numbers each step, as the rental fleet does monthly. This one sends (x, y) to (x + y, −x + 3y): the matrix `[[1, 1], [-1, 3]]`, called A. Feed it (1, 1) and out comes (2, 2): the same direction, twice as long. That makes (1, 1) an **eigenvector** (a direction the matrix only stretches) with **eigenvalue** 2 (the stretch) ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)).
 
 The eigenvalue 2 comes twice, yet every eigenvector lies on the one line through (1, 1). Diagonalisation needs two independent eigenvectors, so A is **defective**, like the shear on [Diagonalisation](03-diagonalisation-and-matrix-powers.md), and cannot be made diagonal.
 
@@ -147,7 +149,7 @@ Each step the gap feeds the total again, so the corner of $`T^k`$ is $`k \times 
 | Axes (1, 1) and (1, 0), transpose used as inverse | `[[4, 0], [2, 1]]`, diagonal sum 5 | Non-perpendicular axes: the transpose does not undo Q |
 | Axes not shrunk to length 1 | `[[4, -4], [0, 4]]`, diagonal 4 and 4 | Each length √2 doubles every entry |
 | A's own diagonal read as eigenvalues | 1 and 3, product 3, not 4 | Only a triangle shows eigenvalues on its diagonal |
-| Real axes for the quarter turn | lower-left entry 1.000000 at every angle | Its eigenvalues i and −i are not real |
+| Real axes for the quarter turn | lower-left entry of size 1.000000 at every angle | Its eigenvalues i and −i are not real |
 
 ---
 
@@ -654,7 +656,7 @@ example : (1 : ℤ) ^ 2 + 1 ^ 2 + (-1) ^ 2 + 3 ^ 2 = 12 ∧ (2 : ℤ) ^ 2 + (-2)
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex dot products and unitary matrices in full.
 - [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use Pade, square back up, and why eigenvectors are a trap.
 
-The triangle hides the eigenvector structure in its corner: what is the simplest form A takes when the axes need not be perpendicular?
+The triangle's diagonal holds the roots of A's characteristic polynomial. What comes out when A itself is put into that polynomial? That is the next card's question.
 
 ---
 

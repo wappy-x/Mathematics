@@ -1,6 +1,6 @@
 // Jordan form -- the same check as the Python, in Rust.  No crates.  Ranks of the
 // powers of N = A - 2I give the block sizes; the longest Jordan chain gives them again.
-// A^10 four ways: A times itself, P J^10 P^-1 with J^10 by blocks, 2^10 I + 10 x 2^9 N, the cultures.
+// A^10 four ways: A times itself, P J^10 P^-1, 2^10 I + 10 x 2^9 N, and the step rules on (a(n), a(n+1), b(n)).
 type M = Vec<Vec<i64>>;
 
 fn mul(x: &M, y: &M) -> M {
@@ -27,7 +27,7 @@ fn rank(x: &M) -> usize {                // whole-number elimination, no fractio
 }
 
 fn main() {
-    let a: M = vec![vec![3, 1, 0], vec![-1, 1, 0], vec![0, 0, 2]];
+    let (a, s): (M, Vec<i64>) = (vec![vec![0, 1, 0], vec![-4, 4, 0], vec![0, 0, 2]], vec![1, 6, 1]);
     let (l, n, id): (i64, u32, M) = (2, 10, eye());
     let nn: M = (0..3).map(|i| (0..3).map(|j| a[i][j] - l * id[i][j]).collect()).collect();
     let trace: i64 = (0..3).map(|i| a[i][i]).sum();
@@ -39,21 +39,20 @@ fn main() {
     let mut at_least: Vec<usize> = (0..3).map(|k| ranks[k] - ranks[k + 1]).collect();
     at_least.push(0);                    // blocks of size > k
     let sizes: Vec<usize> = [2, 1, 0].iter().flat_map(|&k| vec![k + 1; at_least[k] - at_least[k + 1]]).collect();
-    let top = id.iter().rev().max_by_key(|e| life(&nn, e)).unwrap().clone();   // the basis vector with the longest chain
+    let top = id.iter().max_by_key(|e| life(&nn, e)).unwrap().clone();   // a basis vector with the longest chain (a tie goes to the later one)
     let low = apply(&nn, &top);
     let extra = id.iter().find(|e| !nonzero(&apply(&nn, e))).cloned().unwrap_or(vec![0, 0, 0]);
     let mut lengths = vec![life(&nn, &top)];
     lengths.extend(vec![1; 3usize.saturating_sub(life(&nn, &top))]);   // the other dimensions: lone eigenvectors
     let p: M = (0..3).map(|i| vec![low[i], top[i], extra[i]]).collect();
-    let pinv: M = vec![vec![0, -1, 0], vec![1, 1, 0], vec![0, 0, 1]];   // by hand, checked below
+    let pinv: M = vec![vec![1, 0, 0], vec![-2, 1, 0], vec![0, 0, 1]];   // by hand, checked below
     let j = mul(&pinv, &mul(&a, &p));
     let road1 = power(&a, n);
     let (big, step) = (l.pow(n), n as i64 * l.pow(n - 1));
     let road2 = mul(&p, &mul(&vec![vec![big, step, 0], vec![0, big, 0], vec![0, 0, big]], &pinv));
     let road3: M = (0..3).map(|r| (0..3).map(|c| big * id[r][c] + step * nn[r][c]).collect()).collect();
-    let (mut feed, mut main) = (1i64, 0i64);
-    for _ in 0..n { (main, feed) = (2 * main + feed, 2 * feed) }   // each hour both double; main takes in the feeder's size
-    let terms: Vec<i64> = (0..7).map(|k| power(&a, k)[0][0]).collect();
+    let (mut walk, c, an) = (s.clone(), apply(&pinv, &s), apply(&road1, &s));   // the start, in the chain basis, and A^10 on it
+    for _ in 0..n { walk = vec![walk[1], 4 * walk[1] - 4 * walk[0], 2 * walk[2]] }   // a(n+2) = 4a(n+1) - 4a(n), b(n+1) = 2b(n)
     println!("A = {:?}; trace {}, 2 by 2 minors {}, det {}: (x - 2)^3", a, trace, minors, det);
     println!("N = A - 2I = {:?}", nn);
     println!("ranks of N^0, N^1, N^2, N^3: {:?}", ranks);
@@ -66,15 +65,16 @@ fn main() {
     println!("road 1, A times itself {} times: {:?}", n, road1);
     println!("road 2, P J^{} P^-1 with J^{} from the block formula, same matrix: {}", n, n, yn(road2 == road1));
     println!("road 3, 2^{} I + {} x 2^{} N, same matrix: {}", n, n, n - 1, yn(road3 == road1));
-    println!("top-left: 2^{} + {} x 2^{} = {} + {} = {}", n, n, n - 1, big, step, road1[0][0]);
-    println!("cultures after {} hours: feeder {}, main {} = {} batches of {}, total {}", n, feed, main, n, l.pow(n - 1), feed + main);
-    println!("terms of top-left, n = 0 to 6: {:?}", terms);
-    println!("mistake 1, each entry to the 10th power: 3^10 = {}\nmistake 2, the diagonal of J only: 2^10 = {}", 3i64.pow(n), big);
-    println!("mistake 3, 2^10 in the extra term: 2^10 + 10 x 2^10 = {} + {} = {}", big, n as i64 * big, big + n as i64 * big);
+    println!("start {:?} = {} x {:?} + {} x {:?} + {} x {:?}, so a({}) = 2^{} + {} x {} x 2^{} = {} + {} = {}", s, c[0], low, c[1], top, c[2], extra, n, n, c[1], n, n - 1, big, c[1] * step, an[0]);
+    println!("step rules run {} times from {:?}: {:?}; A^{} on {:?}, same: {}", n, s, walk, n, s, yn(an == walk));
+    println!("a(n), n = 0 to 6: {:?}", (0..7).map(|k| apply(&power(&a, k), &s)[0]).collect::<Vec<i64>>());
+    println!("mistake 1, each entry to the 10th power: a(10) = {}\nmistake 2, the diagonal of J only: a(10) = 2^10 = {}",
+        apply(&a.iter().map(|row| row.iter().map(|&x| x.pow(n)).collect()).collect::<M>(), &s)[0], c[0] * big);
+    println!("mistake 3, 2^10 in the extra term: 2^10 + {} x 10 x 2^10 = {} + {} = {}", c[1], big, c[1] * n as i64 * big, big + c[1] * n as i64 * big);
     println!("mistake 4, blocks counted as rank N: {} block, not {}", ranks[1], at_least[0]);
     assert!((trace, minors, det) == (3 * l, 3 * l * l, l.pow(3)));        // (x - 2)^3
     assert!(sizes == lengths && mul(&a, &p) == mul(&p, &j));               // ranks against the chain
     assert!(j == vec![vec![2, 1, 0], vec![0, 2, 0], vec![0, 0, 2]] && mul(&pinv, &p) == id);
-    assert!(road1 == road2 && road2 == road3 && road1[0][0] == 6144 && feed + main == 6144 && road1[1][0] == -main);   // A^10 four ways
+    assert!(road1 == road2 && road2 == road3 && an == walk && walk[0] == 21504);   // A^10 four ways
     println!("ALL CHECKS PASS");
 }

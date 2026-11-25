@@ -567,6 +567,7 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 
 ## Where this goes next
 
+- [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md): the next card, which finds the directions a matrix only stretches, the best address book for that map.
 - [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $`A_B`$ diagonal turns many moves into small multiplies.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the same translation on a whole signal, samples in time becoming pure tones.
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): conjugation (the $`P^{-1} A P`$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
@@ -575,7 +576,7 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 - [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
 - [Equivalence of categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
 
-Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
+Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having. The next card answers that: it finds the directions a matrix only stretches.
 
 ---
 

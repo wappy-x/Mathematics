@@ -1,6 +1,6 @@
-# Generalised eigenvectors -- the check behind the card.  Nothing is imported.  Road one: sizes of ker (A - lambda I)^k
-# by elimination, in A's axes and in others.  Road two: multiplicities from traces.  Road three: Bezout projectors.  Road four: A^10 two ways.
-A, n, v = [[2, 1, 0], [0, 2, 0], [0, 0, 3]], 3, (1, 1, 1)
+# Generalised eigenvectors -- the check behind the card.  Nothing is imported.  A: one minute of a van's (position, speed, shown position).
+# Road one: sizes of ker (A - lambda I)^k by elimination, in A's axes and others.  Two: multiplicities from traces.  Three: Bezout projectors.  Four: A^10 two ways.
+A, n, v = [[1, 1, 0], [0, 1, 0], [1, 0, 0]], 3, (3, 1, 0)
 I, Z = [[int(i == j) for j in range(n)] for i in range(n)], [[0] * n for _ in range(n)]
 S, Si = [[1, 1, 1], [0, 1, 1], [1, 1, 2]], [[1, -1, 0], [1, 1, -1], [-1, 0, 1]]   # other axes, and their inverse
 def mul(X, Y): return [[sum(X[i][k] * Y[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
@@ -33,28 +33,28 @@ for k in range(1, n + 1):
     coef.append(-sum(mul(A, M)[i][i] for i in range(n)) // k)
 roots = [r for r in range(-12, 13) if divide(coef, r)[1] == 0]
 dims = {lam: [n - rank(mpow(shift(lam), k)) for k in (1, 2, 3)] for lam in roots}
-P2, P3 = mul(add(I, A, -1), shift(3)), mpow(shift(2), 2)    # (1 - t)(t - 3) and (t - 2)^2
+P1, P0 = mul(add(add(I, I), A, -1), A), mpow(shift(1), 2)   # (2 - t) t and (t - 1)^2
 pA = [[sum(c * mpow(A, n - i)[r][s] for i, c in enumerate(coef)) for s in range(n)] for r in range(n)]
-u, w, slow = act(P2, v), act(P3, v), act(mpow(A, 10), v)
-fast = tuple(2**10 * a + 10 * 2**9 * b + 3**10 * c for a, b, c in zip(u, act(shift(2), u), w))
+u, w, slow = act(P1, v), act(P0, v), act(mpow(A, 10), v)
+fast = tuple(1**10 * a + 10 * 1**9 * b + 0**10 * c for a, b, c in zip(u, act(shift(1), u), w))
 print(f"A = {A}; characteristic polynomial coefficients {coef}")
 for lam in roots:
     print(f"eigenvalue {lam}: multiplicity {mult(coef, lam)}; dim ker (A - {lam}I)^k, k = 1, 2, 3: {dims[lam]}")
-print(f"A - 2I sends (0, 1, 0) to {vec(act(shift(2), (0, 1, 0)))}, which it sends to {vec(act(shift(2), (1, 0, 0)))}")
-print(f"A sends (1, 0, 0) to {vec(act(A, (1, 0, 0)))} and (0, 1, 0) to {vec(act(A, (0, 1, 0)))}")
-print(f"A - 2I = {shift(2)}; (A - 2I)^2 = {P3}; A - 3I = {shift(3)}")
-print(f"(1 - t)(t - 3) + (t - 2)^2 at t = 0..5: {[(1 - t) * (t - 3) + (t - 2)**2 for t in range(6)]}")
-print(f"P2 = (I - A)(A - 3I) = {P2}")
-print(f"P2 + P3 = {add(P2, P3)}; P2 P3 = {mul(P2, P3)}")
+print(f"A - I sends (1, 1, 0) to {vec(act(shift(1), (1, 1, 0)))}, which it sends to {vec(act(shift(1), (1, 0, 1)))}")
+print(f"A sends (1, 0, 1) to {vec(act(A, (1, 0, 1)))} and (1, 1, 0) to {vec(act(A, (1, 1, 0)))}")
+print(f"A - I = {shift(1)}; (A - I)^2 = {P0}; (A - I)^3 = {mpow(shift(1), 3)}")
+print(f"(2 - t) t + (t - 1)^2 at t = 0..5: {[(2 - t) * t + (t - 1)**2 for t in range(6)]}")
+print(f"P1 = (2I - A) A = {P1}")
+print(f"P1 + P0 = {add(P1, P0)}; P1 P0 = {mul(P1, P0)}")
 print(f"Cayley-Hamilton, p(A) = {pA}")
-print(f"(1, 1, 1) = {vec(u)} + {vec(w)}; piece sizes {rank(P2)} + {rank(P3)} = {rank(P2) + rank(P3)}")
-print(f"A^10 (1, 1, 1), ten multiplications: {vec(slow)}; by the pieces: {vec(fast)}")
-print(f"mistake, eigenvectors only: {dims[2][0]} + {dims[3][0]} = {dims[2][0] + dims[3][0]} directions for {n}; whole chain added: {sum(dims[2][:2]) + dims[3][0]}")
-print(f"mistake, powers as if diagonal: {vec(act(mpow([[2, 0, 0], [0, 2, 0], [0, 0, 3]], 10), v))}, missing 10 x 2^9 = {10 * 2**9}")
-print(f"mistake, projector without the Bezout factor: {vec(act(shift(3), v))}, not {vec(u)}")
-assert [dims[lam][-1] for lam in roots] == [mult(coef, lam) for lam in roots] == [2, 1]
-assert add(P2, P3) == I and mul(P2, P3) == Z and pA == Z and rank(P2) == dims[2][-1]
-assert all(act(P3, act(A, e)) == (0, 0, 0) for e in [(1, 0, 0), (0, 1, 0)])  # A keeps the plane
+print(f"(3, 1, 0) = {vec(u)} + {vec(w)}; piece sizes {rank(P1)} + {rank(P0)} = {rank(P1) + rank(P0)}")
+print(f"A^10 (3, 1, 0), ten multiplications: {vec(slow)}; by the pieces: {vec(fast)}")
+print(f"mistake, eigenvectors only: {dims[1][0]} + {dims[0][0]} = {dims[1][0] + dims[0][0]} directions for {n}; whole chain added: {sum(dims[1][:2]) + dims[0][0]}")
+print(f"mistake, powers as if diagonal: {vec(u)}, missing 10 x {vec(act(shift(1), u))}")
+print(f"mistake, projector without the Bezout factor: {vec(act(A, v))}, not {vec(u)}")
+assert [dims[lam][-1] for lam in roots] == [mult(coef, lam) for lam in roots] == [1, 2]
+assert add(P1, P0) == I and mul(P1, P0) == Z and pA == Z and rank(P1) == dims[1][-1]
+assert all(act(P0, act(A, e)) == (0, 0, 0) for e in [(1, 0, 1), (1, 1, 0)])  # A keeps the plane
 assert mul(S, Si) == I and all(n - rank(mul(mul(S, mpow(shift(l), k)), Si)) == dims[l][k - 1] for l in roots for k in (1, 2, 3))  # other axes
-assert slow == fast and dims[2][0] < dims[2][1] == dims[2][2]
+assert slow == fast and dims[1][0] < dims[1][1] == dims[1][2]
 print("ALL CHECKS PASS")

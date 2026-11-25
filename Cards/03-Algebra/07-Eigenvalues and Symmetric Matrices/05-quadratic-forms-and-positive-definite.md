@@ -622,8 +622,8 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 
 ## Where this goes next
 
+- [The singular value decomposition](06-singular-value-decomposition.md): the next card. For any matrix $`M`$, the product $`M^T M`$ has a quadratic form that is a squared length, so never below zero.
 - [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): second derivatives, gathered in a symmetric matrix whose quadratic form models a curved surface near a point.
-- [The singular value decomposition](06-singular-value-decomposition.md): for any matrix $`M`$, the product $`M^T M`$, whose quadratic form is a squared length and so never below zero.
 - [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes, where the springs' stored energy is a quadratic form, above zero for every displacement.
 - [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): bell shapes, whose tilted distance from the centre is a quadratic form with oval level curves.
 - [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): linked returns, built from a triangular factor that exists exactly when the correlation matrix is positive definite.
@@ -645,7 +645,7 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 - [Sums of squares and the Positivstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
 - [Hasse-Minkowski](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
 
-This card leaves open where the matrix comes from when a surface is measured rather than a mix: second derivatives, a later card's business.
+Every matrix $`M`$, even a rectangular one, builds a form that is never negative: $`x^T M^T M x`$, the squared length of $`M x`$. What that form says about $`M`$ itself is the next card's question.
 
 ---
 

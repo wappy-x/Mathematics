@@ -153,57 +153,55 @@ theorem kernels_grow_then_stop {K : Type*} [Field K] {n : ℕ}
     rw [key] at hv'
     simpa [LinearMap.mem_ker, ← Matrix.toLin'_pow, Matrix.toLin'_apply] using hv'
 
-/-! The card's worked numbers, for `A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]]`, in whole numbers. -/
+/-! The card's worked numbers, for the van `A = [[1, 1, 0], [0, 1, 0], [1, 0, 0]]`, in whole numbers. -/
 
--- The characteristic polynomial is t³ − 7t² + 16t − 12 = (t − 2)²(t − 3).
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ).charpoly =
-    X ^ 3 - 7 * X ^ 2 + 16 * X - 12 := by
+-- The characteristic polynomial is t³ − 2t² + t = t (t − 1)².
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ).charpoly =
+    X ^ 3 - 2 * X ^ 2 + X := by
   rw [Matrix.charpoly, det_fin_three]
   simp
   ring
-example : (X ^ 3 - 7 * X ^ 2 + 16 * X - 12 : ℤ[X]) = (X - 2) ^ 2 * (X - 3) := by ring
+example : (X ^ 3 - 2 * X ^ 2 + X : ℤ[X]) = X * (X - 1) ^ 2 := by ring
 
--- The chain: A − 2I sends (0, 1, 0) to (1, 0, 0), and (1, 0, 0) to zero.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 1, 0] =
-    ![1, 0, 0] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 0] =
+-- The chain: A − I sends (1, 1, 0) to (1, 0, 1), and (1, 0, 1) to zero.
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 0] =
+    ![1, 0, 1] := by decide
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 1] =
     0 := by decide
 
--- The powers of A − 2I: the square is [[0, 0, 0], [0, 0, 0], [0, 0, 1]], and the cube is the same.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 =
-    !![0, 0, 0; 0, 0, 0; 0, 0, 1] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 3 =
-    !![0, 0, 0; 0, 0, 0; 0, 0, 1] := by decide
+-- The powers of A − I: the square is [[0, 0, 0], [0, 0, 0], [−1, 1, 1]], and the cube is its negative.
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 =
+    !![0, 0, 0; 0, 0, 0; -1, 1, 1] := by decide
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 3 =
+    !![0, 0, 0; 0, 0, 0; 1, -1, -1] := by decide
 
--- Bezout: (1 − t)(t − 3) + (t − 2)² = 1.
-example : ((1 - X) * (X - 3) + (X - 2) ^ 2 : ℤ[X]) = 1 := by ring
+-- Bezout: (2 − t) t + (t − 1)² = 1.
+example : ((2 - X) * X + (X - 1) ^ 2 : ℤ[X]) = 1 := by ring
 
--- The projectors P₂ = (I − A)(A − 3I) and P₃ = (A − 2I)² add to I, multiply to zero,
--- and split (1, 1, 1) into (1, 1, 0) + (0, 0, 1).
-example : ((1 - !![2, 1, 0; 0, 2, 0; 0, 0, 3]) * (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1) :
-    Matrix (Fin 3) (Fin 3) ℤ) = !![1, 0, 0; 0, 1, 0; 0, 0, 0] := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] + !![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
+-- The projectors P₁ = (2I − A) A and P₀ = (A − I)² add to I, multiply to zero,
+-- and split (3, 1, 0) into (3, 1, 2) + (0, 0, −2).
+example : (((2 : ℤ) • 1 - !![1, 1, 0; 0, 1, 0; 1, 0, 0]) * !![1, 1, 0; 0, 1, 0; 1, 0, 0] :
+    Matrix (Fin 3) (Fin 3) ℤ) = !![1, 0, 0; 0, 1, 0; 1, -1, 0] := by decide
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] + !![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
     1 := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] * !![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] * !![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
     0 := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] = ![1, 1, 0] ∧
-    (!![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] = ![0, 0, 1] := by decide
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] = ![3, 1, 2] ∧
+    (!![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] = ![0, 0, -2] := by decide
 
--- Cayley-Hamilton for A: A³ − 7A² + 16A − 12I = 0.
-example : let A : Matrix (Fin 3) (Fin 3) ℤ := !![2, 1, 0; 0, 2, 0; 0, 0, 3]
-    A ^ 3 - 7 • A ^ 2 + 16 • A - 12 • 1 = 0 := by decide
+-- Cayley-Hamilton for A: A³ − 2A² + A = 0.
+example : let A : Matrix (Fin 3) (Fin 3) ℤ := !![1, 1, 0; 0, 1, 0; 1, 0, 0]
+    A ^ 3 - 2 • A ^ 2 + A = 0 := by decide
 
--- Ten steps: A¹⁰ (1, 1, 1) = (6144, 1024, 59049), and 6144 = 2¹⁰ + 10 × 2⁹.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 1, 1] =
-    ![6144, 1024, 59049] := by decide
-example : (2 : ℤ) ^ 10 + 10 * 2 ^ 9 = 6144 ∧ (3 : ℤ) ^ 10 = 59049 := by norm_num
+-- Ten minutes: A¹⁰ (3, 1, 0) = (13, 1, 12), which is (3, 1, 2) + 10 × (1, 0, 1).
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![3, 1, 0] =
+    ![13, 1, 12] := by decide
+example : (3 : ℤ) + 10 * 1 = 13 ∧ (2 : ℤ) + 10 * 1 = 12 := by norm_num
 
--- The usual mistakes: powering as if diagonal gives (1024, 1024, 59049), and the bare factor
--- A − 3I sends (1, 1, 1) to (0, −1, 0), not to its plane piece (1, 1, 0).
-example : (!![2, 0, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 1, 1] =
-    ![1024, 1024, 59049] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] =
-    ![0, -1, 0] := by decide
+-- The usual mistakes: powering as if diagonal leaves the piece (3, 1, 2) where it was, and the
+-- bare factor A sends (3, 1, 0) to (4, 1, 3), not to its plane piece (3, 1, 2).
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] =
+    ![4, 1, 3] := by decide
 
 #print axioms generalised_eigenspaces_fill_the_space
 #print axioms mem_generalisedEigenspace_iff

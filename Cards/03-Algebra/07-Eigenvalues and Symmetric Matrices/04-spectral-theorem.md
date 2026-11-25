@@ -59,7 +59,7 @@ A direction kept on its own line is an **eigenvector**, its multiplier the **eig
 
 - **It must equal its own transpose.** A rental fleet's month-to-month table, rows (0.800000, 0.300000) and (0.200000, 0.700000), has real factors 1.000000 and 0.500000, but its directions (3, 2) and (1, -1) dot to 1.000000, not 0.
 - **The entries must be real**, or the flip must change the sign of the imaginary part too ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
-- **The matrix must be finite** (Compact and symmetric has the infinite conditions).
+- **The matrix must be finite** ([Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md) has the infinite conditions).
 
 ---
 
@@ -191,7 +191,7 @@ gram, rebuilt = mul(tp(Q), Q), mul(mul(Q, D), tp(Q))
 x, rawq = [4.0, 2.0], [[1.0, 1.0], [1.0, -1.0]]
 coords = mv(tp(Q), x)
 scaled = mv(D, coords)
-bad_unit = mul(mul(tp(rawq), D), rawq)
+bad_unit = mul(mul(rawq, D), tp(rawq))
 bad_swap = mul(mul(Q, [[small, 0.0], [0.0, big]]), tp(Q))
 curve = [stretch(A, [1.0, s]) for s in (-3.0, -2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0, 3.0)]
 sweep = [stretch(A, v) for k in range(-1000, 1001)
@@ -226,7 +226,7 @@ assert near(bad_unit[0] + bad_unit[1], [4.0, 2.0, 2.0, 4.0]) and near(fleet, [1.
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 A rows (2.000000, 1.000000) and (1.000000, 2.000000): symmetric, trace 4.000000, determinant 3.000000
@@ -288,7 +288,7 @@ fn main() {
     let (x, rawq): (V, M) = ([4.0, 2.0], [[1.0, 1.0], [1.0, -1.0]]);
     let coords = mv(tp(q), x);
     let scaled = mv(d, coords);
-    let bad_unit = mul(mul(tp(rawq), d), rawq);
+    let bad_unit = mul(mul(rawq, d), tp(rawq));
     let bad_swap = mul(mul(q, [[small, 0.0], [0.0, big]]), tp(q));
     let slopes = [-3.0, -2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0, 3.0];
     let curve: Vec<f64> = slopes.iter().map(|&s| stretch(a, [1.0, s])).collect();
@@ -334,7 +334,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 A rows (2.000000, 1.000000) and (1.000000, 2.000000): symmetric, trace 4.000000, determinant 3.000000

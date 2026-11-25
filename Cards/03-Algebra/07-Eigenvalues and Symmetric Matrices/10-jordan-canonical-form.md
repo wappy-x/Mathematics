@@ -6,9 +6,11 @@
 
 ## General Overview
 
-A lab grows cell cultures, and every cell divides once an hour. The feeder culture just doubles. The main culture doubles too, and each hour it also takes in a batch as large as the feeder. The hourly rule is the matrix `A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]]`. Its coordinates are the two cultures' total, minus the main culture, and a third culture that only doubles. Its only eigenvalue (stretch factor along a direction the rule does not turn) is 2. Doubling alone would turn one cell into 1,024 after ten hours.
+A step rule makes each term from the two before it: a(n + 2) = 4a(n + 1) − 4a(n). Started at 1 and 6, it runs 1, 6, 20, 56, 144, …. Its equation r² = 4r − 4 has only the root 2, standing twice ([The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md) solves it by guessing).
 
-Start with one feeder cell: the vector (1, 0, 0). After ten hours the total, the top-left entry of A^10, is 6,144. The feeder holds 1,024; the main culture holds 5,120 = 10 × 512, since each batch is twice the last but has one hour less to double. The top-left entries of the powers run 1, 3, 8, 20, 48, 112, 256: the same repeated-root pattern as the step rule a(n) = 4a(n−1) − 4a(n−2) on [The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md).
+Next to it runs plain doubling, b(n + 1) = 2b(n), from b(0) = 1. A step takes (a(n), a(n + 1), b(n)) to (a(n + 1), 4a(n + 1) − 4a(n), 2b(n)). That is the matrix `A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]]`.
+
+Its only eigenvalue (stretch factor along a direction the rule does not turn) is 2. Doubling alone takes b to 1,024 in ten steps. Yet a(10) is 21,504 = 1,024 + 20,480. The extra 20,480 = 4 × 10 × 2^9 grows with the step count.
 
 The cause is a missing eigenvector: eigenvalue 2 counts three times, but only two independent directions are merely stretched, so [Diagonalisation](03-diagonalisation-and-matrix-powers.md) fails. Jordan form replaces it with the nearest-to-diagonal basis.
 
@@ -20,7 +22,7 @@ The cause is a missing eigenvector: eigenvalue 2 counts three times, but only tw
 
 ```mermaid
 flowchart LR
-    T["top (1, 0, 0)"] -->|"A − 2I"| L["eigenvector (1, −1, 0)"]
+    T["top (0, 1, 0)"] -->|"A − 2I"| L["eigenvector (1, 2, 0)"]
     L -->|"A − 2I"| Z["zero"]
     E["eigenvector (0, 0, 1)"] -->|"A − 2I"| Z
 ```
@@ -55,12 +57,12 @@ J_2(\lambda)^n = \lambda^n I + n\lambda^{n-1} N_2 = \begin{pmatrix} \lambda^n & 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`A`$ | the hourly rule | `[[3, 1, 0], [-1, 1, 0], [0, 0, 2]]` | — |
+| $`A`$ | one step of the rules, on (a(n), a(n + 1), b(n)) | `[[0, 1, 0], [-4, 4, 0], [0, 0, 2]]` | — |
 | $`\lambda`$, $`I`$ | an eigenvalue; the identity matrix | 2; the 3 × 3 identity | each power grows faster |
-| $`N`$ | $`A - \lambda I`$, the non-stretching part | `[[1, 1, 0], [-1, -1, 0], [0, 0, 0]]` | — |
+| $`N`$ | $`A - \lambda I`$, the non-stretching part | `[[-2, 1, 0], [-4, 2, 0], [0, 0, 0]]` | — |
 | $`J_k(\lambda)`$, $`N_k`$ | a Jordan block of size k; its ones | $`J_2(2)`$ = `[[2, 1], [0, 2]]` | a longer chain |
 | $`J`$ | the Jordan form | `[[2, 1, 0], [0, 2, 0], [0, 0, 2]]` | — |
-| $`P`$ | the chain vectors as columns | `[[1, 1, 0], [-1, 0, 0], [0, 0, 1]]` | — |
+| $`P`$ | the chain vectors as columns | `[[1, 0, 0], [2, 1, 0], [0, 0, 1]]` | — |
 | $`r_k`$ | rank of $`(A - \lambda I)^k`$ | $`r_0, r_1, r_2`$ = 3, 1, 0 | falls slowly: fewer, longer blocks |
 | $`k`$, $`n`$ | a block size or power; the step count | k = 1, 2; n = 10 | $`n\lambda^{n-1}`$ grows |
 
@@ -107,13 +109,13 @@ Independence: suppose a combination of these vectors is zero. Apply N. The $`z_j
 
 </details>
 
-Here the image of N is the line through (1, −1, 0), a chain of length one. Lift it: N(1, 0, 0) = (1, −1, 0). Add the eigenvector (0, 0, 1). That gives a chain of two and a chain of one.
+Here the image of N is the line through (1, 2, 0), a chain of length one. Lift it: N(0, 1, 0) = (1, 2, 0). Add the eigenvector (0, 0, 1). That gives a chain of two and a chain of one.
 
 ### Step 3: in the chain basis, A is the Jordan matrix
 
-Put the chain vectors into P as columns, bottom first. Column by column, AP = PJ: A sends the eigenvector (1, −1, 0) to 2 times itself, and the top (1, 0, 0) to (3, −1, 0), which is 2 times the top plus the vector below it. Hence $`P^{-1} A P = J`$, with J = `[[2, 1, 0], [0, 2, 0], [0, 0, 2]]` ([Change of basis](01-change-of-basis.md)).
+Put the chain vectors into P as columns, bottom first. Column by column, AP = PJ. A sends the eigenvector (1, 2, 0) to (2, 4, 0), 2 times itself. It sends the top (0, 1, 0) to (1, 4, 0), which is 2 times the top plus the vector below it. Hence $`P^{-1} A P = J`$, with J = `[[2, 1, 0], [0, 2, 0], [0, 0, 2]]` ([Change of basis](01-change-of-basis.md)).
 
-In culture terms, the top (1, 0, 0) is one feeder cell, (1, −1, 0) is one main-culture cell, and the 1 above J's diagonal is the feeder's hourly batch.
+In sequence terms, the eigenvector (1, 2, 0) starts the doubling run 1, 2, 4, …. The top (0, 1, 0) starts 0, 1, 4, 12, …, which is n × 2^(n−1). The 1 above J's diagonal feeds it one copy of the doubling run each step.
 
 ### Step 4: the ranks fix the block sizes
 
@@ -123,7 +125,9 @@ Here the ranks are 3, 1, 0. Blocks of size at least 1: 3 − 1 = 2. Of size at l
 
 ### Step 5: powers of a block
 
-λI and N commute, so the binomial theorem applies, and with $`N^2 = 0`$ it stops after two terms. So $`A^n = 2^n I + n 2^{n-1} N`$, and its top-left entry is $`2^n + n 2^{n-1}`$. At n = 10: 1,024 + 5,120 = 6,144.
+λI and N commute, so the binomial theorem applies, and with $`N^2 = 0`$ it stops after two terms. So $`A^n = 2^n I + n 2^{n-1} N`$.
+
+The start (1, 6, 1) is 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1). So a(n) = 2^n + 4n × 2^(n−1), which is (1 + 2n) × 2^n. At n = 10: 1,024 + 20,480 = 21,504.
 
 ---
 
@@ -132,22 +136,23 @@ Here the ranks are 3, 1, 0. Blocks of size at least 1: 3 − 1 = 2. Of size at l
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | characteristic polynomial | trace 6, minors 12, det 8 | (x − 2)³ |
-| N = A − 2I | subtract 2 down the diagonal | `[[1, 1, 0], [-1, -1, 0], [0, 0, 0]]` |
-| rank of N | rows 1, 2 opposite; row 3 zero | 1 |
-| N² | row 1 times N: (1 − 1, 1 − 1, 0) | zero matrix, rank 0 |
+| N = A − 2I | subtract 2 down the diagonal | `[[-2, 1, 0], [-4, 2, 0], [0, 0, 0]]` |
+| rank of N | row 2 is twice row 1; row 3 zero | 1 |
+| N² | row 1 times N: (4 − 4, −2 + 2, 0) | zero matrix, rank 0 |
 | block counts | 3 − 1 = 2 blocks; 1 − 0 = 1 of size ≥ 2 | sizes **2 and 1** |
-| chain | N(1, 0, 0) = (1, −1, 0), then 0 | P = `[[1, 1, 0], [-1, 0, 0], [0, 0, 1]]` |
-| A to the 10th, top-left | 2^10 + 10 × 2^9 = 1,024 + 5,120 | **6,144** |
+| chain | N(0, 1, 0) = (1, 2, 0), then 0 | P = `[[1, 0, 0], [2, 1, 0], [0, 0, 1]]` |
+| the start in chain terms | (1, 6, 1) = 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1) | 1, 4 and 1 |
+| a(10) | 2^10 + 4 × 10 × 2^9 = 1,024 + 20,480 | **21,504** |
 
-The batches (5,120) exist only because an eigenvector is missing; they outweigh the doubling (1,024) five to one, and that share grows with n.
+The extra 20,480 exists only because an eigenvector is missing. It is twenty times the doubling part, and its share grows with n.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Raise each entry of A to the 10th power | 3^10 = 59,049 | A^10 is matrix products, not entry powers |
-| Keep only the diagonal of J | 2^10 = 1,024 | Dropping the 1 above the diagonal invents a third eigenvector |
-| Use $`\lambda^n`$ in the extra term | 2^10 + 10 × 2^10 = 11,264 | The derivative-like term is $`n\lambda^{n-1}`$ |
+| Raise each entry of A to the 10th power | a(10) = 6 | A^10 is matrix products, not entry powers |
+| Keep only the diagonal of J | a(10) = 2^10 = 1,024 | Dropping the 1 above the diagonal invents a third eigenvector |
+| Use $`\lambda^n`$ in the extra term | 2^10 + 4 × 10 × 2^10 = 41,984 | The derivative-like term is $`n\lambda^{n-1}`$ |
 | Count blocks as rank N | 1 block, not 2 | Blocks = eigenvectors = 3 − rank N |
 
 The code prints all four.
@@ -156,16 +161,16 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; all numbers are whole, so nothing rounds. Block sizes come twice: from ranks of powers of N, and from the longest chain starting at a basis vector, other dimensions being lone eigenvectors (enough for 3 × 3 with one eigenvalue). A^10 is found three ways: ten products of A, P times the block formula for $`J^{10}`$ times P⁻¹, and $`2^{10} I + 10 \times 2^9 N`$. A fourth runs the cultures hour by hour: 6,144 again.
+Nothing is imported; all numbers are whole, so nothing rounds. Block sizes come twice: from ranks of powers of N, and from the longest chain starting at a basis vector, other dimensions being lone eigenvectors (enough for 3 × 3 with one eigenvalue). A^10 is found three ways: ten products of A, P times the block formula for $`J^{10}`$ times P⁻¹, and $`2^{10} I + 10 \times 2^9 N`$. A fourth runs the step rules ten times: 21,504 again.
 
 ### Python
 
 ```python
 # Jordan form -- the check behind the card.  Nothing is imported.  Ranks of the
 # powers of N = A - 2I give the block sizes; the longest Jordan chain gives them again.
-# A^10 four ways: A times itself, P J^10 P^-1 with J^10 by blocks, 2^10 I + 10 x 2^9 N, the cultures.
-A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]]
-L, n, R = 2, 10, range(3)
+# A^10 four ways: A times itself, P J^10 P^-1, 2^10 I + 10 x 2^9 N, and the step rules on (a(n), a(n+1), b(n)).
+A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]]
+L, n, R, S = 2, 10, range(3), [1, 6, 1]
 I = [[int(i == j) for j in R] for i in R]
 
 def mul(X, Y): return [[sum(X[i][k] * Y[k][j] for k in R) for j in R] for i in R]
@@ -188,16 +193,16 @@ det = sum(A[0][j] * (A[1][(j + 1) % 3] * A[2][(j + 2) % 3] - A[1][(j + 2) % 3] *
 ranks = [rank(power(N, k)) for k in range(4)]
 at_least = [ranks[k] - ranks[k + 1] for k in range(3)] + [0]   # blocks of size > k
 sizes = [k + 1 for k in (2, 1, 0) for _ in range(at_least[k] - at_least[k + 1])]
-top = max(I, key=life)                                   # the basis vector with the longest chain
+top = max(I[::-1], key=life)                             # a basis vector with the longest chain (a tie goes to the later one)
 low, extra = apply(N, top), next((I[i] for i in R if not any(apply(N, I[i]))), [0, 0, 0])
 lengths = [life(top)] + [1] * (3 - life(top))            # the other dimensions: lone eigenvectors
 P = [[low[i], top[i], extra[i]] for i in R]
-Pinv = [[0, -1, 0], [1, 1, 0], [0, 0, 1]]                 # by hand, checked below
+Pinv = [[1, 0, 0], [-2, 1, 0], [0, 0, 1]]                 # by hand, checked below
 J = mul(Pinv, mul(A, P))
 road1, road2 = power(A, n), mul(P, mul([[L ** n, n * L ** (n - 1), 0], [0, L ** n, 0], [0, 0, L ** n]], Pinv))
 road3 = [[L ** n * I[i][j] + n * L ** (n - 1) * N[i][j] for j in R] for i in R]
-feed, main = 1, 0
-for _ in range(n): main, feed = 2 * main + feed, 2 * feed   # each hour both double; main takes in the feeder's size
+walk, c = S[:], apply(Pinv, S)                            # the start, and the start in the chain basis
+for _ in range(n): walk = [walk[1], 4 * walk[1] - 4 * walk[0], 2 * walk[2]]   # a(n+2) = 4a(n+1) - 4a(n), b(n+1) = 2b(n)
 print(f"A = {A}; trace {sum(A[i][i] for i in R)}, 2 by 2 minors {minors}, det {det}: (x - 2)^3")
 print(f"N = A - 2I = {N}")
 print(f"ranks of N^0, N^1, N^2, N^3: {ranks}")
@@ -210,40 +215,40 @@ print(f"J = P^-1 A P = {J}")
 print(f"road 1, A times itself {n} times: {road1}")
 print(f"road 2, P J^{n} P^-1 with J^{n} from the block formula, same matrix: {'yes' if road2 == road1 else 'no'}")
 print(f"road 3, 2^{n} I + {n} x 2^{n - 1} N, same matrix: {'yes' if road3 == road1 else 'no'}")
-print(f"top-left: 2^{n} + {n} x 2^{n - 1} = {L ** n} + {n * L ** (n - 1)} = {road1[0][0]}")
-print(f"cultures after {n} hours: feeder {feed}, main {main} = {n} batches of {L ** (n - 1)}, total {feed + main}")
-print(f"terms of top-left, n = 0 to 6: {[power(A, k)[0][0] for k in range(7)]}")
-print(f"mistake 1, each entry to the 10th power: 3^10 = {3 ** n}", f"mistake 2, the diagonal of J only: 2^10 = {L ** n}", sep="\n")
-print(f"mistake 3, 2^10 in the extra term: 2^10 + 10 x 2^10 = {L ** n} + {n * L ** n} = {L ** n + n * L ** n}")
+print(f"start {S} = {c[0]} x {low} + {c[1]} x {top} + {c[2]} x {extra}, so a({n}) = 2^{n} + {c[1]} x {n} x 2^{n - 1} = {L ** n} + {c[1] * n * L ** (n - 1)} = {apply(road1, S)[0]}")
+print(f"step rules run {n} times from {S}: {walk}; A^{n} on {S}, same: {'yes' if apply(road1, S) == walk else 'no'}")
+print(f"a(n), n = 0 to 6: {[apply(power(A, k), S)[0] for k in range(7)]}")
+print(f"mistake 1, each entry to the 10th power: a(10) = {apply([[x ** n for x in row] for row in A], S)[0]}", f"mistake 2, the diagonal of J only: a(10) = 2^10 = {c[0] * L ** n}", sep="\n")
+print(f"mistake 3, 2^10 in the extra term: 2^10 + {c[1]} x 10 x 2^10 = {L ** n} + {c[1] * n * L ** n} = {L ** n + c[1] * n * L ** n}")
 print(f"mistake 4, blocks counted as rank N: {ranks[1]} block, not {at_least[0]}")
 assert (sum(A[i][i] for i in R), minors, det) == (3 * L, 3 * L * L, L ** 3)  # (x - 2)^3
 assert sizes == lengths and mul(A, P) == mul(P, J)       # ranks against the chain
 assert J == [[2, 1, 0], [0, 2, 0], [0, 0, 2]] and mul(Pinv, P) == I
-assert road1 == road2 == road3 and road1[0][0] == 6144 == feed + main and road1[1][0] == -main   # A^10 four ways
+assert road1 == road2 == road3 and apply(road1, S) == walk and walk[0] == 21504   # A^10 four ways
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]]; trace 6, 2 by 2 minors 12, det 8: (x - 2)^3
-N = A - 2I = [[1, 1, 0], [-1, -1, 0], [0, 0, 0]]
+A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]]; trace 6, 2 by 2 minors 12, det 8: (x - 2)^3
+N = A - 2I = [[-2, 1, 0], [-4, 2, 0], [0, 0, 0]]
 ranks of N^0, N^1, N^2, N^3: [3, 1, 0, 0]
 blocks of size at least 1, 2, 3: [2, 1, 0]; block sizes [2, 1]
 independent eigenvectors: 3 - rank N = 2
-chain: top [1, 0, 0] -> N top [1, -1, 0] -> 0; extra eigenvector [0, 0, 1]
+chain: top [0, 1, 0] -> N top [1, 2, 0] -> 0; extra eigenvector [0, 0, 1]
 chain lengths from the vectors: [2, 1]
-P = [[1, 1, 0], [-1, 0, 0], [0, 0, 1]]; P^-1 P = I: yes
+P = [[1, 0, 0], [2, 1, 0], [0, 0, 1]]; P^-1 P = I: yes
 J = P^-1 A P = [[2, 1, 0], [0, 2, 0], [0, 0, 2]]
-road 1, A times itself 10 times: [[6144, 5120, 0], [-5120, -4096, 0], [0, 0, 1024]]
+road 1, A times itself 10 times: [[-9216, 5120, 0], [-20480, 11264, 0], [0, 0, 1024]]
 road 2, P J^10 P^-1 with J^10 from the block formula, same matrix: yes
 road 3, 2^10 I + 10 x 2^9 N, same matrix: yes
-top-left: 2^10 + 10 x 2^9 = 1024 + 5120 = 6144
-cultures after 10 hours: feeder 1024, main 5120 = 10 batches of 512, total 6144
-terms of top-left, n = 0 to 6: [1, 3, 8, 20, 48, 112, 256]
-mistake 1, each entry to the 10th power: 3^10 = 59049
-mistake 2, the diagonal of J only: 2^10 = 1024
-mistake 3, 2^10 in the extra term: 2^10 + 10 x 2^10 = 1024 + 10240 = 11264
+start [1, 6, 1] = 1 x [1, 2, 0] + 4 x [0, 1, 0] + 1 x [0, 0, 1], so a(10) = 2^10 + 4 x 10 x 2^9 = 1024 + 20480 = 21504
+step rules run 10 times from [1, 6, 1]: [21504, 47104, 1024]; A^10 on [1, 6, 1], same: yes
+a(n), n = 0 to 6: [1, 6, 20, 56, 144, 352, 832]
+mistake 1, each entry to the 10th power: a(10) = 6
+mistake 2, the diagonal of J only: a(10) = 2^10 = 1024
+mistake 3, 2^10 in the extra term: 2^10 + 4 x 10 x 2^10 = 1024 + 40960 = 41984
 mistake 4, blocks counted as rank N: 1 block, not 2
 ALL CHECKS PASS
 ```
@@ -255,7 +260,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 ```rust
 // Jordan form -- the same check as the Python, in Rust.  No crates.  Ranks of the
 // powers of N = A - 2I give the block sizes; the longest Jordan chain gives them again.
-// A^10 four ways: A times itself, P J^10 P^-1 with J^10 by blocks, 2^10 I + 10 x 2^9 N, the cultures.
+// A^10 four ways: A times itself, P J^10 P^-1, 2^10 I + 10 x 2^9 N, and the step rules on (a(n), a(n+1), b(n)).
 type M = Vec<Vec<i64>>;
 
 fn mul(x: &M, y: &M) -> M {
@@ -282,7 +287,7 @@ fn rank(x: &M) -> usize {                // whole-number elimination, no fractio
 }
 
 fn main() {
-    let a: M = vec![vec![3, 1, 0], vec![-1, 1, 0], vec![0, 0, 2]];
+    let (a, s): (M, Vec<i64>) = (vec![vec![0, 1, 0], vec![-4, 4, 0], vec![0, 0, 2]], vec![1, 6, 1]);
     let (l, n, id): (i64, u32, M) = (2, 10, eye());
     let nn: M = (0..3).map(|i| (0..3).map(|j| a[i][j] - l * id[i][j]).collect()).collect();
     let trace: i64 = (0..3).map(|i| a[i][i]).sum();
@@ -294,21 +299,20 @@ fn main() {
     let mut at_least: Vec<usize> = (0..3).map(|k| ranks[k] - ranks[k + 1]).collect();
     at_least.push(0);                    // blocks of size > k
     let sizes: Vec<usize> = [2, 1, 0].iter().flat_map(|&k| vec![k + 1; at_least[k] - at_least[k + 1]]).collect();
-    let top = id.iter().rev().max_by_key(|e| life(&nn, e)).unwrap().clone();   // the basis vector with the longest chain
+    let top = id.iter().max_by_key(|e| life(&nn, e)).unwrap().clone();   // a basis vector with the longest chain (a tie goes to the later one)
     let low = apply(&nn, &top);
     let extra = id.iter().find(|e| !nonzero(&apply(&nn, e))).cloned().unwrap_or(vec![0, 0, 0]);
     let mut lengths = vec![life(&nn, &top)];
     lengths.extend(vec![1; 3usize.saturating_sub(life(&nn, &top))]);   // the other dimensions: lone eigenvectors
     let p: M = (0..3).map(|i| vec![low[i], top[i], extra[i]]).collect();
-    let pinv: M = vec![vec![0, -1, 0], vec![1, 1, 0], vec![0, 0, 1]];   // by hand, checked below
+    let pinv: M = vec![vec![1, 0, 0], vec![-2, 1, 0], vec![0, 0, 1]];   // by hand, checked below
     let j = mul(&pinv, &mul(&a, &p));
     let road1 = power(&a, n);
     let (big, step) = (l.pow(n), n as i64 * l.pow(n - 1));
     let road2 = mul(&p, &mul(&vec![vec![big, step, 0], vec![0, big, 0], vec![0, 0, big]], &pinv));
     let road3: M = (0..3).map(|r| (0..3).map(|c| big * id[r][c] + step * nn[r][c]).collect()).collect();
-    let (mut feed, mut main) = (1i64, 0i64);
-    for _ in 0..n { (main, feed) = (2 * main + feed, 2 * feed) }   // each hour both double; main takes in the feeder's size
-    let terms: Vec<i64> = (0..7).map(|k| power(&a, k)[0][0]).collect();
+    let (mut walk, c, an) = (s.clone(), apply(&pinv, &s), apply(&road1, &s));   // the start, in the chain basis, and A^10 on it
+    for _ in 0..n { walk = vec![walk[1], 4 * walk[1] - 4 * walk[0], 2 * walk[2]] }   // a(n+2) = 4a(n+1) - 4a(n), b(n+1) = 2b(n)
     println!("A = {:?}; trace {}, 2 by 2 minors {}, det {}: (x - 2)^3", a, trace, minors, det);
     println!("N = A - 2I = {:?}", nn);
     println!("ranks of N^0, N^1, N^2, N^3: {:?}", ranks);
@@ -321,41 +325,42 @@ fn main() {
     println!("road 1, A times itself {} times: {:?}", n, road1);
     println!("road 2, P J^{} P^-1 with J^{} from the block formula, same matrix: {}", n, n, yn(road2 == road1));
     println!("road 3, 2^{} I + {} x 2^{} N, same matrix: {}", n, n, n - 1, yn(road3 == road1));
-    println!("top-left: 2^{} + {} x 2^{} = {} + {} = {}", n, n, n - 1, big, step, road1[0][0]);
-    println!("cultures after {} hours: feeder {}, main {} = {} batches of {}, total {}", n, feed, main, n, l.pow(n - 1), feed + main);
-    println!("terms of top-left, n = 0 to 6: {:?}", terms);
-    println!("mistake 1, each entry to the 10th power: 3^10 = {}\nmistake 2, the diagonal of J only: 2^10 = {}", 3i64.pow(n), big);
-    println!("mistake 3, 2^10 in the extra term: 2^10 + 10 x 2^10 = {} + {} = {}", big, n as i64 * big, big + n as i64 * big);
+    println!("start {:?} = {} x {:?} + {} x {:?} + {} x {:?}, so a({}) = 2^{} + {} x {} x 2^{} = {} + {} = {}", s, c[0], low, c[1], top, c[2], extra, n, n, c[1], n, n - 1, big, c[1] * step, an[0]);
+    println!("step rules run {} times from {:?}: {:?}; A^{} on {:?}, same: {}", n, s, walk, n, s, yn(an == walk));
+    println!("a(n), n = 0 to 6: {:?}", (0..7).map(|k| apply(&power(&a, k), &s)[0]).collect::<Vec<i64>>());
+    println!("mistake 1, each entry to the 10th power: a(10) = {}\nmistake 2, the diagonal of J only: a(10) = 2^10 = {}",
+        apply(&a.iter().map(|row| row.iter().map(|&x| x.pow(n)).collect()).collect::<M>(), &s)[0], c[0] * big);
+    println!("mistake 3, 2^10 in the extra term: 2^10 + {} x 10 x 2^10 = {} + {} = {}", c[1], big, c[1] * n as i64 * big, big + c[1] * n as i64 * big);
     println!("mistake 4, blocks counted as rank N: {} block, not {}", ranks[1], at_least[0]);
     assert!((trace, minors, det) == (3 * l, 3 * l * l, l.pow(3)));        // (x - 2)^3
     assert!(sizes == lengths && mul(&a, &p) == mul(&p, &j));               // ranks against the chain
     assert!(j == vec![vec![2, 1, 0], vec![0, 2, 0], vec![0, 0, 2]] && mul(&pinv, &p) == id);
-    assert!(road1 == road2 && road2 == road3 && road1[0][0] == 6144 && feed + main == 6144 && road1[1][0] == -main);   // A^10 four ways
+    assert!(road1 == road2 && road2 == road3 && an == walk && walk[0] == 21504);   // A^10 four ways
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]]; trace 6, 2 by 2 minors 12, det 8: (x - 2)^3
-N = A - 2I = [[1, 1, 0], [-1, -1, 0], [0, 0, 0]]
+A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]]; trace 6, 2 by 2 minors 12, det 8: (x - 2)^3
+N = A - 2I = [[-2, 1, 0], [-4, 2, 0], [0, 0, 0]]
 ranks of N^0, N^1, N^2, N^3: [3, 1, 0, 0]
 blocks of size at least 1, 2, 3: [2, 1, 0]; block sizes [2, 1]
 independent eigenvectors: 3 - rank N = 2
-chain: top [1, 0, 0] -> N top [1, -1, 0] -> 0; extra eigenvector [0, 0, 1]
+chain: top [0, 1, 0] -> N top [1, 2, 0] -> 0; extra eigenvector [0, 0, 1]
 chain lengths from the vectors: [2, 1]
-P = [[1, 1, 0], [-1, 0, 0], [0, 0, 1]]; P^-1 P = I: yes
+P = [[1, 0, 0], [2, 1, 0], [0, 0, 1]]; P^-1 P = I: yes
 J = P^-1 A P = [[2, 1, 0], [0, 2, 0], [0, 0, 2]]
-road 1, A times itself 10 times: [[6144, 5120, 0], [-5120, -4096, 0], [0, 0, 1024]]
+road 1, A times itself 10 times: [[-9216, 5120, 0], [-20480, 11264, 0], [0, 0, 1024]]
 road 2, P J^10 P^-1 with J^10 from the block formula, same matrix: yes
 road 3, 2^10 I + 10 x 2^9 N, same matrix: yes
-top-left: 2^10 + 10 x 2^9 = 1024 + 5120 = 6144
-cultures after 10 hours: feeder 1024, main 5120 = 10 batches of 512, total 6144
-terms of top-left, n = 0 to 6: [1, 3, 8, 20, 48, 112, 256]
-mistake 1, each entry to the 10th power: 3^10 = 59049
-mistake 2, the diagonal of J only: 2^10 = 1024
-mistake 3, 2^10 in the extra term: 2^10 + 10 x 2^10 = 1024 + 10240 = 11264
+start [1, 6, 1] = 1 x [1, 2, 0] + 4 x [0, 1, 0] + 1 x [0, 0, 1], so a(10) = 2^10 + 4 x 10 x 2^9 = 1024 + 20480 = 21504
+step rules run 10 times from [1, 6, 1]: [21504, 47104, 1024]; A^10 on [1, 6, 1], same: yes
+a(n), n = 0 to 6: [1, 6, 20, 56, 144, 352, 832]
+mistake 1, each entry to the 10th power: a(10) = 6
+mistake 2, the diagonal of J only: a(10) = 2^10 = 1024
+mistake 3, 2^10 in the extra term: 2^10 + 4 x 10 x 2^10 = 1024 + 40960 = 41984
 mistake 4, blocks counted as rank N: 1 block, not 2
 ALL CHECKS PASS
 ```
@@ -371,13 +376,13 @@ Lean proves the three general facts for every complex square matrix, and checks 
 - That holds for every such P, so the block sizes depend only on A, not on the chains chosen.
 - Take any eigenvalue λ and any power n. Then $`J_2(\lambda)^n`$ has $`\lambda^n`$ on the diagonal and $`n\lambda^{n-1}`$ just above it.
 - Take the card's matrix A. Then its characteristic polynomial is (x − 2)³, $`N^2 = 0`$, the chain vectors work and $`P^{-1} A P = J`$.
-- A^10 is the matrix in the outputs above, with top-left entry 6,144.
-- The top-left entries 1, 3, 8, 20, 48, 112, 256 also check, and so do the mistakes' 59,049 and 11,264.
+- A^10 is the matrix in the outputs above, and it takes the start (1, 6, 1) to (21,504, 47,104, 1,024).
+- The terms a(0) to a(6), 1, 6, 20, 56, 144, 352, 832, also check, and so do the mistakes' 6 and 41,984.
 
-Finding the ranks of N, building the chains from the vectors, and the culture counts are left to the Python and Rust checks.
+Finding the ranks of N, building the chains from the vectors, and running the step rules term by term are left to the Python and Rust checks.
 
 ```lean
--- Jordan form: every complex square matrix becomes, after a change of basis, a stack of Jordan blocks (an eigenvalue down the diagonal, ones just above it), the number of blocks of each size is read from the ranks of the powers of A − λI, a block of size 2 has n-th power with corner entry nλ^(n−1), and the card's 3 × 3 matrix has blocks of sizes 2 and 1 and A^10 with top-left entry 6,144.
+-- Jordan form: every complex square matrix becomes, after a change of basis, a stack of Jordan blocks (an eigenvalue down the diagonal, ones just above it), the number of blocks of each size is read from the ranks of the powers of A − λI, a block of size 2 has n-th power with corner entry nλ^(n−1), and the card's 3 × 3 step-rule matrix has blocks of sizes 2 and 1 and gives a(10) = 21,504.
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Data.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -861,39 +866,45 @@ theorem jordanBlock_two_pow (μ : ℂ) (n : ℕ) :
     · simp
     · simp [pow_succ]; push_cast; ring
 
--- Worked numbers. A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]], exact whole numbers throughout.
+-- Worked numbers. A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]] steps (a(n), a(n+1), b(n)) for the rules
+-- a(n+2) = 4a(n+1) − 4a(n) and b(n+1) = 2b(n); exact whole numbers throughout.
 -- Characteristic polynomial: trace 6, sum of 2 × 2 diagonal minors 12, det 8, so (x − 2)³.
-example : (3 : ℤ) + 1 + 2 = 6 ∧ (3 * 1 - 1 * (-1)) + (3 * 2 - 0 * 0) + (1 * 2 - 0 * 0) = (12 : ℤ) ∧
-    (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ).det = 8 := by
+example : (0 : ℤ) + 4 + 2 = 6 ∧ (0 * 4 - 1 * (-4)) + (0 * 2 - 0 * 0) + (4 * 2 - 0 * 0) = (12 : ℤ) ∧
+    (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ).det = 8 := by
   refine ⟨by norm_num, by norm_num, ?_⟩
   simp [Matrix.det_fin_three]
 -- x³ − 6x² + 12x − 8 is (x − 2)³.
 example (x : ℤ) : x ^ 3 - 6 * x ^ 2 + 12 * x - 8 = (x - 2) ^ 3 := by ring
--- N = A − 2I is [[1, 1, 0], [-1, -1, 0], [0, 0, 0]], and N² is the zero matrix.
-example : (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) - 2 • 1 =
-    !![1, 1, 0; -1, -1, 0; 0, 0, 0] := by decide
-example : (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 = 0 := by decide
--- The chain: N (1, 0, 0) = (1, −1, 0), N (1, −1, 0) = 0, N (0, 0, 1) = 0.
-example : (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 0] = ![1, -1, 0] ∧
-    (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, -1, 0] = 0 ∧
-    (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 0, 1] = 0 := by decide
--- P = [[1, 1, 0], [-1, 0, 0], [0, 0, 1]] has inverse [[0, -1, 0], [1, 1, 0], [0, 0, 1]], and
+-- N = A − 2I is [[-2, 1, 0], [-4, 2, 0], [0, 0, 0]], and N² is the zero matrix.
+example : (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) - 2 • 1 =
+    !![-2, 1, 0; -4, 2, 0; 0, 0, 0] := by decide
+example : (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 = 0 := by decide
+-- The chain: N (0, 1, 0) = (1, 2, 0), N (1, 2, 0) = 0, N (0, 0, 1) = 0.
+example : (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 1, 0] = ![1, 2, 0] ∧
+    (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 2, 0] = 0 ∧
+    (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 0, 1] = 0 := by decide
+-- P = [[1, 0, 0], [2, 1, 0], [0, 0, 1]] has inverse [[1, 0, 0], [-2, 1, 0], [0, 0, 1]], and
 -- P⁻¹ A P = J = [[2, 1, 0], [0, 2, 0], [0, 0, 2]].
-example : (!![0, -1, 0; 1, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![1, 1, 0; -1, 0, 0; 0, 0, 1] = 1 ∧
-    (!![0, -1, 0; 1, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![3, 1, 0; -1, 1, 0; 0, 0, 2] *
-      !![1, 1, 0; -1, 0, 0; 0, 0, 1] = !![2, 1, 0; 0, 2, 0; 0, 0, 2] := by decide
+example : (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![1, 0, 0; 2, 1, 0; 0, 0, 1] = 1 ∧
+    (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![0, 1, 0; -4, 4, 0; 0, 0, 2] *
+      !![1, 0, 0; 2, 1, 0; 0, 0, 1] = !![2, 1, 0; 0, 2, 0; 0, 0, 2] := by decide
 -- Block counts from the ranks 3, 1, 0: 3 − 1 = 2 blocks, 1 − 0 = 1 of size 2 or more; sizes 2 and 1.
 example : (3 : ℕ) - 1 = 2 ∧ (1 : ℕ) - 0 = 1 ∧ 2 + 1 = 3 := by norm_num
--- A^10 = [[6144, 5120, 0], [-5120, -4096, 0], [0, 0, 1024]].
-example : (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 =
-    !![6144, 5120, 0; -5120, -4096, 0; 0, 0, 1024] := by decide
--- Top-left: 2^10 + 10 × 2^9 = 1,024 + 5,120 = 6,144; ten batches of 512 make 5,120.
-example : (2 : ℕ) ^ 10 + 10 * 2 ^ 9 = 6144 ∧ (2 : ℕ) ^ 10 = 1024 ∧ 10 * 2 ^ 9 = 5120 := by norm_num
--- Top-left entries of A^0, …, A^6: 1, 3, 8, 20, 48, 112, 256.
-example : (List.range 7).map (fun k => ((!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ k) 0 0) =
-    [1, 3, 8, 20, 48, 112, 256] := by decide
--- The mistakes: 3^10 = 59,049; 2^10 + 10 × 2^10 = 11,264.
-example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by norm_num
+-- A^10 = [[-9216, 5120, 0], [-20480, 11264, 0], [0, 0, 1024]].
+example : (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 =
+    !![-9216, 5120, 0; -20480, 11264, 0; 0, 0, 1024] := by decide
+-- The start (1, 6, 1) is 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1), and ten steps take it to
+-- (21504, 47104, 1024).
+example : (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 6, 1] = ![1, 4, 1] ∧
+    (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 6, 1] =
+      ![21504, 47104, 1024] := by decide
+-- a(10) = 2^10 + 4 × 10 × 2^9 = 1,024 + 20,480 = 21,504.
+example : (2 : ℕ) ^ 10 + 4 * 10 * 2 ^ 9 = 21504 ∧ 4 * 10 * 2 ^ 9 = 20480 := by norm_num
+-- a(0), …, a(6): 1, 6, 20, 56, 144, 352, 832.
+example : (List.range 7).map (fun k => ((!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ k
+    *ᵥ ![1, 6, 1]) 0) = [1, 6, 20, 56, 144, 352, 832] := by decide
+-- The mistakes: entry powers give a(10) = 0 × 1 + 1 × 6 = 6; 2^10 + 4 × 10 × 2^10 = 41,984.
+example : (0 : ℤ) ^ 10 * 1 + 1 ^ 10 * 6 + 0 ^ 10 * 1 = 6 ∧ (2 : ℕ) ^ 10 + 4 * 10 * 2 ^ 10 = 41984 := by norm_num
 
 #print axioms restrict_pow_coe
 #print axioms card_sigma_fin
@@ -910,7 +921,7 @@ example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by 
 #print axioms jordanBlock_two_pow
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'restrict_pow_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -931,8 +942,8 @@ example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by 
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the card's matrix, so expect one to stop the program.
-> - **Ten becomes twelve.** Set `n` to 12. Guess the top-left entry first: 2^12 + 12 × 2^11 = 28,672. The last assert stops it, because it expects 6,144.
-> - **One long chain.** Change the middle row of `A` to `[-1, 1, 1]`. The ranks become 3, 2, 1, 0, so there is one block of size 3, and the vectors find one chain of 3. The top-right entry of A^10 becomes 11,520 = 45 × 2^8, the third binomial term. P is still built for a chain of 2 and a lone eigenvector, so the chain assert stops it.
+> - **Ten becomes twelve.** Set `n` to 12. Guess a(12) first: 2^12 + 4 × 12 × 2^11 = 102,400. The last assert stops it, because it expects 21,504.
+> - **One long chain.** Change the bottom row of `A` to `[0, 1, 2]`. The ranks become 3, 2, 1, 0, so there is one block of size 3, and the vectors find one chain of 3. The bottom-left entry of A^10 becomes −46,080 = −4 × 45 × 2^8, from the third binomial term. P is still built for a chain of 2 and a lone eigenvector, so the chain assert stops it.
 > - **A second eigenvalue.** Change the bottom-right 2 to 3. The ranks of A − 2I become 3, 2, 1, 1: they never reach 0, because eigenvalue 3 keeps one rank. Only the block of size 2 is counted. The first assert stops it.
 
 ---
@@ -949,13 +960,13 @@ example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by 
 
 ## Where you meet it in real life
 
-- **Repeated roots in step rules.** A double root gives an n × r^n term, as in (1 + 2n) × 2^n on [The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md). The n comes from a block of size 2.
+- **Repeated roots in step rules.** A double root gives an n × r^n term, as in this card's (1 + 2n) × 2^n. The n comes from a block of size 2.
 - **Critically damped springs and circuits.** A double root gives a t × e^(−t) term ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)): the same block in continuous time.
 - **Classifying matrices.** "Are these the same map in different bases?" becomes: do the block sizes match?
 - **Slow decay in stable systems.** In a control loop or Markov chain, a repeated eigenvalue's n × λ^(n−1) term can grow the error before it shrinks.
 
 > **Say it back**
-> Some matrices have too few eigenvectors to diagonalise. Jordan form still finds a basis: chains that A − λI passes along, ending at an eigenvector. There A is blocks, λ on the diagonal, ones just above. Ranks of the powers of A − λI count blocks of each size. Powers of a block gain n λ^(n−1): the corner of A^10 is 6,144, not 1,024.
+> Some matrices have too few eigenvectors to diagonalise. Jordan form still finds a basis: chains that A − λI passes along, ending at an eigenvector. There A is blocks, λ on the diagonal, ones just above. Ranks of the powers of A − λI count blocks of each size. Powers of a block gain n λ^(n−1): a(10) is 21,504, not 1,024.
 
 ---
 
@@ -973,7 +984,7 @@ example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by 
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): $`e^{At}`$ of a Jordan block, by the same binomial step.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): the rational canonical form, which needs no eigenvalues.
 
-Open question: Jordan form is exact but fragile; what stable computation still shows the structure?
+Jordan form shows what happens when a matrix cannot be diagonalised. It leaves open the opposite extreme: which matrices have all blocks of size 1 and perpendicular eigenvectors? That is the next card's question.
 
 ---
 

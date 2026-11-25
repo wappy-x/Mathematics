@@ -46,7 +46,7 @@ fn main() {
     let fade: V = [P[0][1] * w[1], P[1][1] * w[1]];
     let shear: M = [[1.0, 1.0], [0.0, 1.0]];
     let mut spow = ID;
-    for _ in 0..12 { spow = mul(shear, spow); }   // the shear, twelve months of it
+    for _ in 0..12 { spow = mul(shear, spow); }   // the shear, twelve steps of it
     let rows: M = [[3.0, 2.0], [1.0, -1.0]]; let rinv: M = [[0.2, 0.4], [0.2, -0.6]];
     let swap: M = [[1.0, 3.0], [-1.0, 2.0]]; let sinv: M = [[0.4, -0.6], [0.2, 0.2]];
     let wrong = [act(three(rows, dpow(12), rinv), START), act(three(P, dpow(12), P), START),

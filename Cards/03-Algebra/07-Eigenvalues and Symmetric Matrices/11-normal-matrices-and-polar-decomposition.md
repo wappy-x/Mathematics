@@ -121,7 +121,9 @@ Real symmetric matrices are the real Hermitian ones, so [The spectral theorem](0
 
 ### Step 4: the polar form from the SVD
 
-[The singular value decomposition](06-singular-value-decomposition.md) proves $`A = W S V^*`$ for real matrices; Step 1 extends it. $`A^* A`$ is Hermitian, so V's columns can be perpendicular unit eigenvectors v of it. Each eigenvalue is $`\lvert A v\rvert^2`$, never negative; its square root σ goes on the diagonal S. W's columns $`A v / \sigma`$ are perpendicular unit vectors, as $`v^* A^* A v' = 0`$; any perpendicular unit columns fill in where σ = 0. So $`A V = W S`$. Slip $`V^* V = I`$ into the middle:
+[The singular value decomposition](06-singular-value-decomposition.md) proves $`A = W S V^*`$ for real matrices; Step 1 extends it. $`A^* A`$ is Hermitian, so V's columns can be perpendicular unit eigenvectors v of it. Each eigenvalue is $`\lvert A v\rvert^2`$, never negative; its square root σ goes on the diagonal S.
+
+W's columns $`A v / \sigma`$ are perpendicular unit vectors, as $`v^* A^* A v' = 0`$; any perpendicular unit columns fill in where σ = 0. So $`A V = W S`$. Slip $`V^* V = I`$ into the middle:
 
 ```math
 A = (W V^*)(V S V^*) = U P
@@ -771,11 +773,11 @@ end NormalMatricesAndPolarDecomposition
 
 ## Where this goes next
 
-- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex dot product in full, with Hermitian and unitary matrices at work.
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): the next card on this shelf, on pairing two vectors through a matrix.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex dot product in full, with Hermitian and unitary matrices at work.
 - [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
 
-Schur's corner measures how far a matrix is from normal; what that distance costs when computing its powers is left open.
+Every card on this shelf so far treats a matrix as a map that moves vectors. What changes when a matrix instead pairs two vectors to give one number? That is the next card's question.
 
 ---
 

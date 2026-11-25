@@ -27,7 +27,7 @@ fn pdiv(p: &[i64], m: &[i64]) -> (Vec<i64>, Vec<i64>) {   // long division by a 
     while p.len() >= m.len() { q.push(p[0]); p = (1..p.len()).map(|i| p[i] - p[0] * if i < m.len() { m[i] } else { 0 }).collect() }
     (q, p)
 }
-fn repeated(p: &[i64]) -> bool {
+fn repeated(p: &[i64]) -> bool {       // tries only the roots 2 and 3, the eigenvalues of A and D
     let slope: Vec<i64> = p[..p.len() - 1].iter().enumerate().map(|(i, c)| c * (p.len() - 1 - i) as i64).collect();
     [2, 3].iter().any(|&t| big(&at(p, &vec![vec![t]])) == 0 && big(&at(&slope, &vec![vec![t]])) == 0)
 }

@@ -6,13 +6,17 @@
 
 ## General Overview
 
-Three shops, X, Y and Z, grow by word of mouth. Each week X's customer count doubles and gains Y's, Y's doubles, and Z's triples: the matrix A = `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]` applied to the counts (x, y, z). Its eigenvalues (stretch factors) are 2, 2 and 3, so 2 has multiplicity 2: it comes twice.
+A delivery van drives at a steady 1 km a minute. Its tracking app updates once a minute and shows where the van was a minute ago. The state is three numbers: position in km, speed in km a minute, and the shown position.
 
-[Diagonalisation](03-diagonalisation-and-matrix-powers.md) needs three independent eigenvectors (directions A only stretches). A has two lines of them, through (1, 0, 0) for 2 and (0, 0, 1) for 3: one direction is missing.
+A minute sends (position, speed, shown) to (position + speed, speed, position): the matrix A = `[[1, 1, 0], [0, 1, 0], [1, 0, 0]]`. Its eigenvalues (stretch factors) are 1, 1 and 0, so 1 has multiplicity 2: it comes twice.
 
-Look at (0, 1, 0), one customer at Y. A sends it to (1, 2, 0): twice itself, plus a push of (1, 0, 0), the referral to X. Apply A − 2I, which removes the stretch: only the push is left. Apply A − 2I again and the push goes to zero. A nonzero vector that some power of A − λI sends to zero is a **generalised eigenvector** for the eigenvalue λ (lambda).
+[Diagonalisation](03-diagonalisation-and-matrix-powers.md) needs three independent eigenvectors (directions A only stretches). A has two lines of them: a parked van shown correctly, (1, 0, 1), with eigenvalue 1, and a pure display error, (0, 0, 1), wiped out at the next update. One direction is missing.
 
-Ten weeks turn one customer per shop, (1, 1, 1), into (6144, 1024, 59049). Pure doubling gives X 1024. The extra 5120 is 10 × 2^9: the push, added once per week. Generalised eigenvectors predict that term exactly.
+Look at (1, 1, 0): the van at km 1 and moving, the app one minute behind. A sends it to itself plus a push of (1, 0, 1). Apply A − I and only the push is left; apply it again and the push goes to zero.
+
+A nonzero vector that some power of A − λI sends to zero is a **generalised eigenvector** for the eigenvalue λ (lambda).
+
+Start at km 3, the app still showing the depot at km 0: (3, 1, 0). Ten minutes on, it is (13, 1, 12). The split is (3, 1, 2), a van tracked one minute behind, plus (0, 0, −2), a display error that dies at the first update. The tracked part gains the push ten times.
 
 **For each eigenvalue, the vectors killed by some power of A − λI form a generalised eigenspace that A keeps; its size is the eigenvalue's multiplicity, and together these spaces rebuild the whole space, each vector splitting into pieces in one way only.**
 
@@ -22,9 +26,9 @@ Ten weeks turn one customer per shop, (1, 1, 1), into (6144, 1024, 59049). Pure 
 
 ```mermaid
 flowchart LR
-    Y["(0, 1, 0)<br/>generalised eigenvector"] -->|"A − 2I"| X["(1, 0, 0)<br/>eigenvector, stretch 2"]
-    X -->|"A − 2I"| O1["(0, 0, 0)"]
-    W["(0, 0, 1)<br/>eigenvector, stretch 3"] -->|"A − 3I"| O2["(0, 0, 0)"]
+    Y["(1, 1, 0)<br/>generalised eigenvector"] -->|"A − I"| X["(1, 0, 1)<br/>eigenvector, stretch 1"]
+    X -->|"A − I"| O1["(0, 0, 0)"]
+    W["(0, 0, 1)<br/>eigenvector, stretch 0"] -->|"A − 0I"| O2["(0, 0, 0)"]
 ```
 
 ---
@@ -45,24 +49,24 @@ G_\lambda = \{\, v : (A - \lambda I)^k v = 0 \text{ for some whole number } k \,
 
 **Read it aloud:** every column of n numbers splits one way only into a piece from each generalised eigenspace, and each has as many directions as its eigenvalue's multiplicity.
 
-Here $`G_2`$ is the plane of the first two axes and $`G_3`$ the third axis: 2 + 1 = 3.
+Here $`G_1`$ is the plane where the app is one minute behind, and $`G_0`$ the line through (0, 0, 1): 2 + 1 = 3.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`A`$, $`I`$ | the square matrix; the identity | `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]` | more rows, more pieces |
-| $`\lambda`$, $`\lambda_i`$, $`r`$, $`\mu`$ | an eigenvalue; the i-th of r different ones; another eigenvalue | 2 and 3; r = 2 | — |
-| $`v`$, $`k`$ | a column of n numbers; applications of A − λI | (0, 1, 0); k = 1, 2, 3 | larger k kills more, then stops |
-| $`\ker M`$, $`\dim`$ | columns M sends to zero; their count of independent directions | $`\ker (A - 2I)`$: the line through (1, 0, 0), dim 1 | — |
-| $`p(t)`$, $`t`$, $`m_\lambda`$ | characteristic polynomial in the variable t; how often λ is a root of p(t) | $`t^3 - 7t^2 + 16t - 12`$; $`m_2 = 2`$, $`m_3 = 1`$ | bigger multiplicity, bigger piece |
-| $`G_\lambda`$ | the generalised eigenspace of λ | $`G_2`$: a plane; $`G_3`$: a line | — |
+| $`A`$, $`I`$ | the square matrix; the identity | `[[1, 1, 0], [0, 1, 0], [1, 0, 0]]` | more rows, more pieces |
+| $`\lambda`$, $`\lambda_i`$, $`r`$, $`\mu`$ | an eigenvalue; the i-th of r different ones; another eigenvalue | 1 and 0; r = 2 | — |
+| $`v`$, $`k`$ | a column of n numbers; applications of A − λI | (1, 1, 0); k = 1, 2, 3 | larger k kills more, then stops |
+| $`\ker M`$, $`\dim`$ | columns M sends to zero; their count of independent directions | $`\ker (A - I)`$: the line through (1, 0, 1), dim 1 | — |
+| $`p(t)`$, $`t`$, $`m_\lambda`$ | characteristic polynomial in the variable t; how often λ is a root of p(t) | $`t^3 - 2t^2 + t`$; $`m_1 = 2`$, $`m_0 = 1`$ | bigger multiplicity, bigger piece |
+| $`G_\lambda`$ | the generalised eigenspace of λ | $`G_1`$: a plane; $`G_0`$: a line | — |
 | $`\mathbb{R}^n`$, $`\mathbb{C}^n`$, $`n`$, $`\oplus`$ | columns of n real, or complex, numbers; the size; direct sum: pieces split one way only | n = 3 | — |
-| $`P_\lambda`$, $`P_i`$, $`q_i`$, $`a_i`$ | projector: picks out a vector's piece in $`G_\lambda`$; built from polynomials $`a_i`$, $`q_i`$ | $`P_2`$ sends (1, 1, 1) to (1, 1, 0) | — |
+| $`P_\lambda`$, $`P_i`$, $`q_i`$, $`a_i`$ | projector: picks out a vector's piece in $`G_\lambda`$; built from polynomials $`a_i`$, $`q_i`$ | $`P_1`$ sends (3, 1, 0) to (3, 1, 2) | — |
 
 ### When it holds
 
 - **The characteristic polynomial splits.** The quarter turn `[[0, -1], [1, 0]]` has $`p(t) = t^2 + 1`$ and no real root, so no real pieces; with complex numbers it splits, and the pieces fill $`\mathbb{C}^n`$.
 - **A finite size.** Kernels of higher powers must stop growing. With infinitely many directions they need not.
-- **Exact arithmetic.** Rounding splits the repeated 2 into two nearby eigenvalues, and a kernel's size then hangs on a tolerance.
+- **Exact arithmetic.** Rounding splits the repeated 1 into two nearby eigenvalues, and a kernel's size then hangs on a tolerance.
 
 ---
 
@@ -70,35 +74,37 @@ Here $`G_2`$ is the plane of the first two axes and $`G_3`$ the third axis: 2 + 
 
 ### Step 0: the idea
 
-A − λI measures how far a vector is from being an eigenvector for λ: on the plane, A − 2I slides (0, 1, 0) to (1, 0, 0), then to zero. A polynomial identity then cuts the space along such chains.
+A − λI measures how far a vector is from being an eigenvector for λ: on the plane, A − I slides (1, 1, 0) to (1, 0, 1), then to zero. A polynomial identity then cuts the space along such chains.
 
 ### Step 1: the kernels grow, then stop
 
-If $`(A - \lambda I)^k v = 0`$, one more application still gives zero, so each kernel contains the one before. For λ = 2 the sizes are 1, 2, 2.
+If $`(A - \lambda I)^k v = 0`$, one more application still gives zero, so each kernel contains the one before. For λ = 1 the sizes are 1, 2, 2.
 
 Once two kernels in a row are equal, all later ones are. If v is killed by k + 2 applications, (A − λI)v is killed by k + 1, hence by k (equal kernels), so v is killed by k + 1. Sizes cannot pass n, so growth stops by k = n.
 
 ### Step 2: A keeps each piece
 
-A and A − λI commute (their order of multiplying does not matter). So if $`(A - \lambda I)^k v = 0`$, then $`(A - \lambda I)^k A v = A (A - \lambda I)^k v = 0`$. Here A sends (1, 0, 0) to (2, 0, 0) and (0, 1, 0) to (1, 2, 0): both stay in the plane.
+A and A − λI commute (their order of multiplying does not matter). So if $`(A - \lambda I)^k v = 0`$, then $`(A - \lambda I)^k A v = A (A - \lambda I)^k v = 0`$. Here A sends (1, 0, 1) to itself and (1, 1, 0) to (2, 1, 1): both stay in the plane.
 
 ### Step 3: a polynomial mix of 1 splits every vector
 
-[Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md) says $`p(A) = 0`$. The factors $`(t - 2)^2`$ and $`t - 3`$ share no root, so Euclid's algorithm run backwards ([Bezout's identity](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)) finds a mix of them equal to 1:
+[Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md) says $`p(A) = 0`$. The factors t and $`(t - 1)^2`$ share no root, so Euclid's algorithm run backwards ([Bezout's identity](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)) finds a mix of them equal to 1:
 
 ```math
-(1 - t)(t - 3) + (t - 2)^2 = 1
+(2 - t)\,t + (t - 1)^2 = 1
 ```
 
-Put A in place of t: $`P_2 = (I - A)(A - 3I)`$ and $`P_3 = (A - 2I)^2`$ add to I, so every v equals $`P_2 v + P_3 v`$.
+Put A in place of t: $`P_1 = (2I - A)A`$ and $`P_0 = (A - I)^2`$ add to I, so every v equals $`P_1 v + P_0 v`$.
 
-Each term lands in its own piece: $`(A - 2I)^2 P_2 v = (I - A)\, p(A)\, v = 0`$, and $`(A - 3I) P_3 v = p(A)\, v = 0`$. For v = (1, 1, 1): (1, 1, 0) + (0, 0, 1).
+Each term lands in its own piece: $`(A - I)^2 P_1 v = (2I - A)\, p(A)\, v = 0`$, and $`A P_0 v = p(A)\, v = 0`$. For v = (3, 1, 0): (3, 1, 2) + (0, 0, −2).
 
 ### Step 4: the split is unique, and the sizes are the multiplicities
 
-On $`G_\lambda`$ the only eigenvalue is λ. If v is in $`G_\lambda`$ and Av = μv for another number μ, then $`(A - \lambda I)^k v = (\mu - \lambda)^k v`$, never zero unless v is. So two different pieces share only zero. With three or more pieces that is not enough (three lines in a plane also share only zero, yet split vectors many ways). The projectors make the split unique: $`P_i`$ keeps a vector's piece in $`G_{\lambda_i}`$ and kills the others (fold).
+On $`G_\lambda`$ the only eigenvalue is λ. If v is in $`G_\lambda`$ and Av = μv for another number μ, then $`(A - \lambda I)^k v = (\mu - \lambda)^k v`$, never zero unless v is. So two different pieces share only zero.
 
-Use bases of the pieces as one basis ([Change of basis](01-change-of-basis.md)). By Step 2, A becomes diagonal blocks: here `[[2, 1], [0, 2]]` and `[3]`. Its characteristic polynomial is the product of the blocks' ones ([Determinants](../05-Solving%20Systems/04-determinants.md)). Block i has only the eigenvalue $`\lambda_i`$, so it contributes $`t - \lambda_i`$ once per direction. Matching factors with p(t), each size is its multiplicity.
+With three or more pieces that is not enough (three lines in a plane also share only zero, yet split vectors many ways). The projectors make the split unique: $`P_i`$ keeps a vector's piece in $`G_{\lambda_i}`$ and kills the others (fold).
+
+Use bases of the pieces as one basis ([Change of basis](01-change-of-basis.md)). By Step 2, A becomes diagonal blocks: here `[[1, 1], [0, 1]]` in the basis (1, 0, 1), (1, 1, 0), and `[0]`. Its characteristic polynomial is the product of the blocks' ones ([Determinants](../05-Solving%20Systems/04-determinants.md)). Block i has only the eigenvalue $`\lambda_i`$, so it contributes $`t - \lambda_i`$ once per direction. Matching factors with p(t), each size is its multiplicity.
 
 <details>
 <summary>Detailed proof: the split for any number of eigenvalues</summary>
@@ -119,7 +125,7 @@ Since each piece equals its kernel, $`P_i`$ is I on $`G_{\lambda_i}`$ and zero o
 
 ### Step 5: what it buys: powers
 
-On $`G_2`$, A is 2I plus the slide A − 2I, and two slides give zero. So the binomial expansion keeps two terms: $`A^{10} = 2^{10} I + 10 \times 2^9 (A - 2I)`$ there. On $`G_3`$, A is 3I. Split (1, 1, 1), power each piece, add: (6144, 1024, 59049).
+On $`G_1`$, A is I plus the slide A − I, and two slides give zero. So the binomial expansion keeps two terms: $`A^{10} = I + 10 (A - I)`$ there. On $`G_0`$, A is zero, so $`A^{10}`$ is zero. Split (3, 1, 0), power each piece, add: (3, 1, 2) + 10 × (1, 0, 1) = (13, 1, 12).
 
 ---
 
@@ -127,25 +133,25 @@ On $`G_2`$, A is 2I plus the slide A − 2I, and two slides give zero. So the bi
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| characteristic polynomial | $`(t - 2)(t - 2)(t - 3)`$ multiplied out | $`t^3 - 7t^2 + 16t - 12`$ |
-| multiplicities | count each root | 2 twice, 3 once |
-| $`\ker (A - 2I)`$ | `[[0, 1, 0], [0, 0, 0], [0, 0, 1]]` kills (x, y, z) when y = 0 and z = 0 | line through (1, 0, 0), dim 1 |
-| $`\ker (A - 2I)^2`$ | `[[0, 0, 0], [0, 0, 0], [0, 0, 1]]` kills it when z = 0 | plane of the first two axes, dim 2 |
-| $`\ker (A - 2I)^3`$ | the same matrix again | dim 2: growth stopped |
-| $`\ker (A - 3I)`$ | `[[-1, 1, 0], [0, -1, 0], [0, 0, 0]]`: y = 0, then x = 0 | the third axis, dim 1 |
+| characteristic polynomial | $`t (t - 1)(t - 1)`$ multiplied out | $`t^3 - 2t^2 + t`$ |
+| multiplicities | count each root | 1 twice, 0 once |
+| $`\ker (A - I)`$ | `[[0, 1, 0], [0, 0, 0], [1, 0, -1]]` kills it when speed is 0 and shown = position | line through (1, 0, 1), dim 1 |
+| $`\ker (A - I)^2`$ | `[[0, 0, 0], [0, 0, 0], [-1, 1, 1]]` kills it when shown = position − speed | a plane, dim 2 |
+| $`\ker (A - I)^3`$ | `[[0, 0, 0], [0, 0, 0], [1, -1, -1]]`, the same row negated | dim 2: growth stopped |
+| $`\ker A`$ | `[[1, 1, 0], [0, 1, 0], [1, 0, 0]]`: speed 0, then position 0 | the line through (0, 0, 1), dim 1 |
 | sizes | 2 + 1 | **3, the whole space** |
-| split (1, 1, 1) | $`P_2`$ = `[[1, 0, 0], [0, 1, 0], [0, 0, 0]]`, $`P_3`$ = `[[0, 0, 0], [0, 0, 0], [0, 0, 1]]` | (1, 1, 0) + (0, 0, 1) |
-| ten steps | 1024 × (1, 1, 0) + 5120 × (1, 0, 0) + 59049 × (0, 0, 1) | **(6144, 1024, 59049)** |
+| split (3, 1, 0) | $`P_1`$ = `[[1, 0, 0], [0, 1, 0], [1, -1, 0]]`, $`P_0`$ = `[[0, 0, 0], [0, 0, 0], [-1, 1, 1]]` | (3, 1, 2) + (0, 0, −2) |
+| ten minutes | (3, 1, 2) + 10 × (1, 0, 1) + 0 × (0, 0, −2) | **(13, 1, 12)** |
 
-Ten multiplications become three scalings and a push.
+Ten multiplications become one push, added ten times.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Eigenvectors only, k = 1 | 1 + 1 = 2 directions for 3 | (0, 1, 0) needs two applications of A − 2I |
-| Powers as if A were diagonal | (1024, 1024, 59049) | Drops the push 10 × 2^9 = 5120 |
-| Projector $`A - 3I`$, without the factor $`I - A`$ | (0, −1, 0), not (1, 1, 0) | It kills $`G_3`$ but bends $`G_2`$; the Bezout factor undoes the bend |
+| Eigenvectors only, k = 1 | 1 + 1 = 2 directions for 3 | (1, 1, 0) needs two applications of A − I |
+| Powers as if A were diagonal | (3, 1, 2) | Drops the push 10 × (1, 0, 1): the van never moves |
+| Projector $`A`$, without the factor $`2I - A`$ | (4, 1, 3), not (3, 1, 2) | It kills $`G_0`$ but bends $`G_1`$; the Bezout factor undoes the bend |
 
 ---
 
@@ -156,9 +162,9 @@ Nothing is imported, and every number is whole. Four roads: elimination on power
 ### Python
 
 ```python
-# Generalised eigenvectors -- the check behind the card.  Nothing is imported.  Road one: sizes of ker (A - lambda I)^k
-# by elimination, in A's axes and in others.  Road two: multiplicities from traces.  Road three: Bezout projectors.  Road four: A^10 two ways.
-A, n, v = [[2, 1, 0], [0, 2, 0], [0, 0, 3]], 3, (1, 1, 1)
+# Generalised eigenvectors -- the check behind the card.  Nothing is imported.  A: one minute of a van's (position, speed, shown position).
+# Road one: sizes of ker (A - lambda I)^k by elimination, in A's axes and others.  Two: multiplicities from traces.  Three: Bezout projectors.  Four: A^10 two ways.
+A, n, v = [[1, 1, 0], [0, 1, 0], [1, 0, 0]], 3, (3, 1, 0)
 I, Z = [[int(i == j) for j in range(n)] for i in range(n)], [[0] * n for _ in range(n)]
 S, Si = [[1, 1, 1], [0, 1, 1], [1, 1, 2]], [[1, -1, 0], [1, 1, -1], [-1, 0, 1]]   # other axes, and their inverse
 def mul(X, Y): return [[sum(X[i][k] * Y[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
@@ -191,51 +197,51 @@ for k in range(1, n + 1):
     coef.append(-sum(mul(A, M)[i][i] for i in range(n)) // k)
 roots = [r for r in range(-12, 13) if divide(coef, r)[1] == 0]
 dims = {lam: [n - rank(mpow(shift(lam), k)) for k in (1, 2, 3)] for lam in roots}
-P2, P3 = mul(add(I, A, -1), shift(3)), mpow(shift(2), 2)    # (1 - t)(t - 3) and (t - 2)^2
+P1, P0 = mul(add(add(I, I), A, -1), A), mpow(shift(1), 2)   # (2 - t) t and (t - 1)^2
 pA = [[sum(c * mpow(A, n - i)[r][s] for i, c in enumerate(coef)) for s in range(n)] for r in range(n)]
-u, w, slow = act(P2, v), act(P3, v), act(mpow(A, 10), v)
-fast = tuple(2**10 * a + 10 * 2**9 * b + 3**10 * c for a, b, c in zip(u, act(shift(2), u), w))
+u, w, slow = act(P1, v), act(P0, v), act(mpow(A, 10), v)
+fast = tuple(1**10 * a + 10 * 1**9 * b + 0**10 * c for a, b, c in zip(u, act(shift(1), u), w))
 print(f"A = {A}; characteristic polynomial coefficients {coef}")
 for lam in roots:
     print(f"eigenvalue {lam}: multiplicity {mult(coef, lam)}; dim ker (A - {lam}I)^k, k = 1, 2, 3: {dims[lam]}")
-print(f"A - 2I sends (0, 1, 0) to {vec(act(shift(2), (0, 1, 0)))}, which it sends to {vec(act(shift(2), (1, 0, 0)))}")
-print(f"A sends (1, 0, 0) to {vec(act(A, (1, 0, 0)))} and (0, 1, 0) to {vec(act(A, (0, 1, 0)))}")
-print(f"A - 2I = {shift(2)}; (A - 2I)^2 = {P3}; A - 3I = {shift(3)}")
-print(f"(1 - t)(t - 3) + (t - 2)^2 at t = 0..5: {[(1 - t) * (t - 3) + (t - 2)**2 for t in range(6)]}")
-print(f"P2 = (I - A)(A - 3I) = {P2}")
-print(f"P2 + P3 = {add(P2, P3)}; P2 P3 = {mul(P2, P3)}")
+print(f"A - I sends (1, 1, 0) to {vec(act(shift(1), (1, 1, 0)))}, which it sends to {vec(act(shift(1), (1, 0, 1)))}")
+print(f"A sends (1, 0, 1) to {vec(act(A, (1, 0, 1)))} and (1, 1, 0) to {vec(act(A, (1, 1, 0)))}")
+print(f"A - I = {shift(1)}; (A - I)^2 = {P0}; (A - I)^3 = {mpow(shift(1), 3)}")
+print(f"(2 - t) t + (t - 1)^2 at t = 0..5: {[(2 - t) * t + (t - 1)**2 for t in range(6)]}")
+print(f"P1 = (2I - A) A = {P1}")
+print(f"P1 + P0 = {add(P1, P0)}; P1 P0 = {mul(P1, P0)}")
 print(f"Cayley-Hamilton, p(A) = {pA}")
-print(f"(1, 1, 1) = {vec(u)} + {vec(w)}; piece sizes {rank(P2)} + {rank(P3)} = {rank(P2) + rank(P3)}")
-print(f"A^10 (1, 1, 1), ten multiplications: {vec(slow)}; by the pieces: {vec(fast)}")
-print(f"mistake, eigenvectors only: {dims[2][0]} + {dims[3][0]} = {dims[2][0] + dims[3][0]} directions for {n}; whole chain added: {sum(dims[2][:2]) + dims[3][0]}")
-print(f"mistake, powers as if diagonal: {vec(act(mpow([[2, 0, 0], [0, 2, 0], [0, 0, 3]], 10), v))}, missing 10 x 2^9 = {10 * 2**9}")
-print(f"mistake, projector without the Bezout factor: {vec(act(shift(3), v))}, not {vec(u)}")
-assert [dims[lam][-1] for lam in roots] == [mult(coef, lam) for lam in roots] == [2, 1]
-assert add(P2, P3) == I and mul(P2, P3) == Z and pA == Z and rank(P2) == dims[2][-1]
-assert all(act(P3, act(A, e)) == (0, 0, 0) for e in [(1, 0, 0), (0, 1, 0)])  # A keeps the plane
+print(f"(3, 1, 0) = {vec(u)} + {vec(w)}; piece sizes {rank(P1)} + {rank(P0)} = {rank(P1) + rank(P0)}")
+print(f"A^10 (3, 1, 0), ten multiplications: {vec(slow)}; by the pieces: {vec(fast)}")
+print(f"mistake, eigenvectors only: {dims[1][0]} + {dims[0][0]} = {dims[1][0] + dims[0][0]} directions for {n}; whole chain added: {sum(dims[1][:2]) + dims[0][0]}")
+print(f"mistake, powers as if diagonal: {vec(u)}, missing 10 x {vec(act(shift(1), u))}")
+print(f"mistake, projector without the Bezout factor: {vec(act(A, v))}, not {vec(u)}")
+assert [dims[lam][-1] for lam in roots] == [mult(coef, lam) for lam in roots] == [1, 2]
+assert add(P1, P0) == I and mul(P1, P0) == Z and pA == Z and rank(P1) == dims[1][-1]
+assert all(act(P0, act(A, e)) == (0, 0, 0) for e in [(1, 0, 1), (1, 1, 0)])  # A keeps the plane
 assert mul(S, Si) == I and all(n - rank(mul(mul(S, mpow(shift(l), k)), Si)) == dims[l][k - 1] for l in roots for k in (1, 2, 3))  # other axes
-assert slow == fast and dims[2][0] < dims[2][1] == dims[2][2]
+assert slow == fast and dims[1][0] < dims[1][1] == dims[1][2]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]]; characteristic polynomial coefficients [1, -7, 16, -12]
-eigenvalue 2: multiplicity 2; dim ker (A - 2I)^k, k = 1, 2, 3: [1, 2, 2]
-eigenvalue 3: multiplicity 1; dim ker (A - 3I)^k, k = 1, 2, 3: [1, 1, 1]
-A - 2I sends (0, 1, 0) to (1, 0, 0), which it sends to (0, 0, 0)
-A sends (1, 0, 0) to (2, 0, 0) and (0, 1, 0) to (1, 2, 0)
-A - 2I = [[0, 1, 0], [0, 0, 0], [0, 0, 1]]; (A - 2I)^2 = [[0, 0, 0], [0, 0, 0], [0, 0, 1]]; A - 3I = [[-1, 1, 0], [0, -1, 0], [0, 0, 0]]
-(1 - t)(t - 3) + (t - 2)^2 at t = 0..5: [1, 1, 1, 1, 1, 1]
-P2 = (I - A)(A - 3I) = [[1, 0, 0], [0, 1, 0], [0, 0, 0]]
-P2 + P3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; P2 P3 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+A = [[1, 1, 0], [0, 1, 0], [1, 0, 0]]; characteristic polynomial coefficients [1, -2, 1, 0]
+eigenvalue 0: multiplicity 1; dim ker (A - 0I)^k, k = 1, 2, 3: [1, 1, 1]
+eigenvalue 1: multiplicity 2; dim ker (A - 1I)^k, k = 1, 2, 3: [1, 2, 2]
+A - I sends (1, 1, 0) to (1, 0, 1), which it sends to (0, 0, 0)
+A sends (1, 0, 1) to (1, 0, 1) and (1, 1, 0) to (2, 1, 1)
+A - I = [[0, 1, 0], [0, 0, 0], [1, 0, -1]]; (A - I)^2 = [[0, 0, 0], [0, 0, 0], [-1, 1, 1]]; (A - I)^3 = [[0, 0, 0], [0, 0, 0], [1, -1, -1]]
+(2 - t) t + (t - 1)^2 at t = 0..5: [1, 1, 1, 1, 1, 1]
+P1 = (2I - A) A = [[1, 0, 0], [0, 1, 0], [1, -1, 0]]
+P1 + P0 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; P1 P0 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 Cayley-Hamilton, p(A) = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-(1, 1, 1) = (1, 1, 0) + (0, 0, 1); piece sizes 2 + 1 = 3
-A^10 (1, 1, 1), ten multiplications: (6144, 1024, 59049); by the pieces: (6144, 1024, 59049)
+(3, 1, 0) = (3, 1, 2) + (0, 0, -2); piece sizes 2 + 1 = 3
+A^10 (3, 1, 0), ten multiplications: (13, 1, 12); by the pieces: (13, 1, 12)
 mistake, eigenvectors only: 1 + 1 = 2 directions for 3; whole chain added: 4
-mistake, powers as if diagonal: (1024, 1024, 59049), missing 10 x 2^9 = 5120
-mistake, projector without the Bezout factor: (0, -1, 0), not (1, 1, 0)
+mistake, powers as if diagonal: (3, 1, 2), missing 10 x (1, 0, 1)
+mistake, projector without the Bezout factor: (4, 1, 3), not (3, 1, 2)
 ALL CHECKS PASS
 ```
 
@@ -244,11 +250,11 @@ ALL CHECKS PASS
 Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Generalised eigenvectors -- the same check as the Python, in Rust.  No crates.  Road one: sizes of ker (A - lambda I)^k
-// by elimination, in A's axes and in others.  Road two: multiplicities from traces.  Road three: Bezout projectors.  Road four: A^10 two ways.
+// Generalised eigenvectors -- the same check as the Python, in Rust.  No crates.  A: one minute of a van's (position, speed, shown position).
+// Road one: sizes of ker (A - lambda I)^k by elimination, in A's axes and others.  Two: multiplicities from traces.  Three: Bezout projectors.  Four: A^10 two ways.
 type M = Vec<Vec<i64>>;
 const N: usize = 3;
-fn a() -> M { vec![vec![2, 1, 0], vec![0, 2, 0], vec![0, 0, 3]] }
+fn a() -> M { vec![vec![1, 1, 0], vec![0, 1, 0], vec![1, 0, 0]] }
 fn id() -> M { (0..N).map(|i| (0..N).map(|j| (i == j) as i64).collect()).collect() }
 fn mul(x: &M, y: &M) -> M { (0..N).map(|i| (0..N).map(|j| (0..N).map(|k| x[i][k] * y[k][j]).sum()).collect()).collect() }
 fn add(x: &M, y: &M, c: i64) -> M { (0..N).map(|i| (0..N).map(|j| x[i][j] + c * y[i][j]).collect()).collect() }
@@ -280,7 +286,7 @@ fn mult(c: &[i64], r: i64) -> usize {                  // how many times (t - r)
 }
 fn vec3(v: [i64; 3]) -> String { format!("({}, {}, {})", v[0], v[1], v[2]) }
 fn main() {
-    let (am, i3, z, v): (M, M, M, [i64; 3]) = (a(), id(), vec![vec![0; N]; N], [1, 1, 1]);
+    let (am, i3, z, v): (M, M, M, [i64; 3]) = (a(), id(), vec![vec![0; N]; N], [3, 1, 0]);
     let (s, si): (M, M) = (vec![vec![1, 1, 1], vec![0, 1, 1], vec![1, 1, 2]], vec![vec![1, -1, 0], vec![1, 1, -1], vec![-1, 0, 1]]); // other axes, inverse
     let (mut coef, mut m) = (vec![1i64], z.clone());            // det(tI - A) from traces of powers
     for k in 1..=N {
@@ -290,59 +296,59 @@ fn main() {
     }
     let roots: Vec<i64> = (-12..13).filter(|&r| divide(&coef, r).1 == 0).collect();
     let dims = |lam: i64| -> Vec<usize> { (1..4).map(|k| N - rank(&mpow(&shift(lam), k))).collect() };
-    let (p2, p3) = (mul(&add(&i3, &am, -1), &shift(3)), mpow(&shift(2), 2)); // (1 - t)(t - 3), (t - 2)^2
+    let (p1, p0) = (mul(&add(&add(&i3, &i3, 1), &am, -1), &am), mpow(&shift(1), 2)); // (2 - t) t, (t - 1)^2
     let mut pa = z.clone();
     for (i, &c) in coef.iter().enumerate() { pa = add(&pa, &mpow(&am, N - i), c); }
-    let (u, w, slow) = (act(&p2, v), act(&p3, v), act(&mpow(&am, 10), v));
-    let nu = act(&shift(2), u);
-    let fast: [i64; 3] = std::array::from_fn(|i| 2i64.pow(10) * u[i] + 10 * 2i64.pow(9) * nu[i] + 3i64.pow(10) * w[i]);
-    let (d2, d3) = (dims(2), dims(3));
-    let bez: Vec<i64> = (0..6).map(|t: i64| (1 - t) * (t - 3) + (t - 2) * (t - 2)).collect();
+    let (u, w, slow) = (act(&p1, v), act(&p0, v), act(&mpow(&am, 10), v));
+    let nu = act(&shift(1), u);
+    let fast: [i64; 3] = std::array::from_fn(|i| 1i64.pow(10) * u[i] + 10 * 1i64.pow(9) * nu[i] + 0i64.pow(10) * w[i]);
+    let (d1, d0) = (dims(1), dims(0));
+    let bez: Vec<i64> = (0..6).map(|t: i64| (2 - t) * t + (t - 1) * (t - 1)).collect();
     println!("A = {:?}; characteristic polynomial coefficients {:?}", am, coef);
     for &lam in &roots {
         println!("eigenvalue {}: multiplicity {}; dim ker (A - {}I)^k, k = 1, 2, 3: {:?}", lam, mult(&coef, lam), lam, dims(lam));
     }
-    println!("A - 2I sends (0, 1, 0) to {}, which it sends to {}", vec3(act(&shift(2), [0, 1, 0])), vec3(act(&shift(2), [1, 0, 0])));
-    println!("A sends (1, 0, 0) to {} and (0, 1, 0) to {}", vec3(act(&am, [1, 0, 0])), vec3(act(&am, [0, 1, 0])));
-    println!("A - 2I = {:?}; (A - 2I)^2 = {:?}; A - 3I = {:?}", shift(2), p3, shift(3));
-    println!("(1 - t)(t - 3) + (t - 2)^2 at t = 0..5: {:?}", bez);
-    println!("P2 = (I - A)(A - 3I) = {:?}", p2);
-    println!("P2 + P3 = {:?}; P2 P3 = {:?}", add(&p2, &p3, 1), mul(&p2, &p3));
+    println!("A - I sends (1, 1, 0) to {}, which it sends to {}", vec3(act(&shift(1), [1, 1, 0])), vec3(act(&shift(1), [1, 0, 1])));
+    println!("A sends (1, 0, 1) to {} and (1, 1, 0) to {}", vec3(act(&am, [1, 0, 1])), vec3(act(&am, [1, 1, 0])));
+    println!("A - I = {:?}; (A - I)^2 = {:?}; (A - I)^3 = {:?}", shift(1), p0, mpow(&shift(1), 3));
+    println!("(2 - t) t + (t - 1)^2 at t = 0..5: {:?}", bez);
+    println!("P1 = (2I - A) A = {:?}", p1);
+    println!("P1 + P0 = {:?}; P1 P0 = {:?}", add(&p1, &p0, 1), mul(&p1, &p0));
     println!("Cayley-Hamilton, p(A) = {:?}", pa);
-    println!("(1, 1, 1) = {} + {}; piece sizes {} + {} = {}", vec3(u), vec3(w), rank(&p2), rank(&p3), rank(&p2) + rank(&p3));
-    println!("A^10 (1, 1, 1), ten multiplications: {}; by the pieces: {}", vec3(slow), vec3(fast));
-    println!("mistake, eigenvectors only: {} + {} = {} directions for {}; whole chain added: {}", d2[0], d3[0], d2[0] + d3[0], N, d2[0] + d2[1] + d3[0]);
-    println!("mistake, powers as if diagonal: {}, missing 10 x 2^9 = {}", vec3(act(&mpow(&vec![vec![2, 0, 0], vec![0, 2, 0], vec![0, 0, 3]], 10), v)), 10 * 2i64.pow(9));
-    println!("mistake, projector without the Bezout factor: {}, not {}", vec3(act(&shift(3), v)), vec3(u));
+    println!("(3, 1, 0) = {} + {}; piece sizes {} + {} = {}", vec3(u), vec3(w), rank(&p1), rank(&p0), rank(&p1) + rank(&p0));
+    println!("A^10 (3, 1, 0), ten multiplications: {}; by the pieces: {}", vec3(slow), vec3(fast));
+    println!("mistake, eigenvectors only: {} + {} = {} directions for {}; whole chain added: {}", d1[0], d0[0], d1[0] + d0[0], N, d1[0] + d1[1] + d0[0]);
+    println!("mistake, powers as if diagonal: {}, missing 10 x {}", vec3(u), vec3(nu));
+    println!("mistake, projector without the Bezout factor: {}, not {}", vec3(act(&am, v)), vec3(u));
     let stable: Vec<usize> = roots.iter().map(|&l| dims(l)[2]).collect();
     let mults: Vec<usize> = roots.iter().map(|&l| mult(&coef, l)).collect();
-    assert!(stable == mults && mults == vec![2, 1]);
-    assert!(add(&p2, &p3, 1) == i3 && mul(&p2, &p3) == z && pa == z && rank(&p2) == d2[2]);
-    assert!([[1, 0, 0], [0, 1, 0]].iter().all(|&e| act(&p3, act(&am, e)) == [0, 0, 0])); // A keeps the plane
+    assert!(stable == mults && mults == vec![1, 2]);
+    assert!(add(&p1, &p0, 1) == i3 && mul(&p1, &p0) == z && pa == z && rank(&p1) == d1[2]);
+    assert!([[1, 0, 1], [1, 1, 0]].iter().all(|&e| act(&p0, act(&am, e)) == [0, 0, 0])); // A keeps the plane
     assert!(mul(&s, &si) == i3 && roots.iter().all(|&l| (1..4).all(|k| N - rank(&mul(&mul(&s, &mpow(&shift(l), k)), &si)) == dims(l)[k - 1]))); // other axes
-    assert!(slow == fast && d2[0] < d2[1] && d2[1] == d2[2]);
+    assert!(slow == fast && d1[0] < d1[1] && d1[1] == d1[2]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]]; characteristic polynomial coefficients [1, -7, 16, -12]
-eigenvalue 2: multiplicity 2; dim ker (A - 2I)^k, k = 1, 2, 3: [1, 2, 2]
-eigenvalue 3: multiplicity 1; dim ker (A - 3I)^k, k = 1, 2, 3: [1, 1, 1]
-A - 2I sends (0, 1, 0) to (1, 0, 0), which it sends to (0, 0, 0)
-A sends (1, 0, 0) to (2, 0, 0) and (0, 1, 0) to (1, 2, 0)
-A - 2I = [[0, 1, 0], [0, 0, 0], [0, 0, 1]]; (A - 2I)^2 = [[0, 0, 0], [0, 0, 0], [0, 0, 1]]; A - 3I = [[-1, 1, 0], [0, -1, 0], [0, 0, 0]]
-(1 - t)(t - 3) + (t - 2)^2 at t = 0..5: [1, 1, 1, 1, 1, 1]
-P2 = (I - A)(A - 3I) = [[1, 0, 0], [0, 1, 0], [0, 0, 0]]
-P2 + P3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; P2 P3 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+A = [[1, 1, 0], [0, 1, 0], [1, 0, 0]]; characteristic polynomial coefficients [1, -2, 1, 0]
+eigenvalue 0: multiplicity 1; dim ker (A - 0I)^k, k = 1, 2, 3: [1, 1, 1]
+eigenvalue 1: multiplicity 2; dim ker (A - 1I)^k, k = 1, 2, 3: [1, 2, 2]
+A - I sends (1, 1, 0) to (1, 0, 1), which it sends to (0, 0, 0)
+A sends (1, 0, 1) to (1, 0, 1) and (1, 1, 0) to (2, 1, 1)
+A - I = [[0, 1, 0], [0, 0, 0], [1, 0, -1]]; (A - I)^2 = [[0, 0, 0], [0, 0, 0], [-1, 1, 1]]; (A - I)^3 = [[0, 0, 0], [0, 0, 0], [1, -1, -1]]
+(2 - t) t + (t - 1)^2 at t = 0..5: [1, 1, 1, 1, 1, 1]
+P1 = (2I - A) A = [[1, 0, 0], [0, 1, 0], [1, -1, 0]]
+P1 + P0 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; P1 P0 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 Cayley-Hamilton, p(A) = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-(1, 1, 1) = (1, 1, 0) + (0, 0, 1); piece sizes 2 + 1 = 3
-A^10 (1, 1, 1), ten multiplications: (6144, 1024, 59049); by the pieces: (6144, 1024, 59049)
+(3, 1, 0) = (3, 1, 2) + (0, 0, -2); piece sizes 2 + 1 = 3
+A^10 (3, 1, 0), ten multiplications: (13, 1, 12); by the pieces: (13, 1, 12)
 mistake, eigenvectors only: 1 + 1 = 2 directions for 3; whole chain added: 4
-mistake, powers as if diagonal: (1024, 1024, 59049), missing 10 x 2^9 = 5120
-mistake, projector without the Bezout factor: (0, -1, 0), not (1, 1, 0)
+mistake, powers as if diagonal: (3, 1, 2), missing 10 x (1, 0, 1)
+mistake, projector without the Bezout factor: (4, 1, 3), not (3, 1, 2)
 ALL CHECKS PASS
 ```
 
@@ -357,14 +363,14 @@ Lean proves the theorem for every square matrix whose characteristic polynomial 
 - Take any square matrix M of size n. Then a vector killed by $`M^k`$ is also killed by $`M^{k+1}`$.
 - Take the same M. Then once two kernels of powers in a row are equal, all later ones are equal too.
 - Take the same M. Then the kernels of its powers stop growing by the power n.
-- Take the card's A. Then $`p(t) = t^3 - 7t^2 + 16t - 12 = (t - 2)^2 (t - 3)`$.
-- Take the card's A. Then A − 2I sends (0, 1, 0) to (1, 0, 0), and (1, 0, 0) to zero.
-- Take the card's A. Then $`(A - 2I)^2`$ and $`(A - 2I)^3`$ are both `[[0, 0, 0], [0, 0, 0], [0, 0, 1]]`.
-- Take the variable t. Then $`(1 - t)(t - 3) + (t - 2)^2 = 1`$.
-- Take the card's A. Then $`P_2`$ and $`P_3`$ add to I, multiply to zero, and split (1, 1, 1) into (1, 1, 0) + (0, 0, 1).
-- Take the card's A. Then $`p(A) = 0`$, and $`A^{10}`$ sends (1, 1, 1) to (6144, 1024, 59049).
-- Take the ten-week count. Then X has $`2^{10} + 10 \times 2^9 = 6144`$ customers, and Z has $`3^{10} = 59049`$.
-- Take the usual mistakes. Then powering as if diagonal gives (1024, 1024, 59049), and A − 3I sends (1, 1, 1) to (0, −1, 0).
+- Take the card's A. Then $`p(t) = t^3 - 2t^2 + t = t (t - 1)^2`$.
+- Take the card's A. Then A − I sends (1, 1, 0) to (1, 0, 1), and (1, 0, 1) to zero.
+- Take the card's A. Then $`(A - I)^2`$ is `[[0, 0, 0], [0, 0, 0], [-1, 1, 1]]`, and $`(A - I)^3`$ is the same with signs flipped.
+- Take the variable t. Then $`(2 - t)\,t + (t - 1)^2 = 1`$.
+- Take the card's A. Then $`P_1`$ and $`P_0`$ add to I, multiply to zero, and split (3, 1, 0) into (3, 1, 2) + (0, 0, −2).
+- Take the card's A. Then $`p(A) = 0`$, and $`A^{10}`$ sends (3, 1, 0) to (13, 1, 12).
+- Take the ten-minute count. Then the van is at 3 + 10 = 13 km, and the app shows 2 + 10 = 12 km.
+- Take the usual mistake of a bare factor. Then A alone sends (3, 1, 0) to (4, 1, 3), not to its plane piece (3, 1, 2).
 
 The example's kernel sizes by elimination, the change of axes and the traces are left to the Python and Rust checks.
 
@@ -524,64 +530,62 @@ theorem kernels_grow_then_stop {K : Type*} [Field K] {n : ℕ}
     rw [key] at hv'
     simpa [LinearMap.mem_ker, ← Matrix.toLin'_pow, Matrix.toLin'_apply] using hv'
 
-/-! The card's worked numbers, for `A = [[2, 1, 0], [0, 2, 0], [0, 0, 3]]`, in whole numbers. -/
+/-! The card's worked numbers, for the van `A = [[1, 1, 0], [0, 1, 0], [1, 0, 0]]`, in whole numbers. -/
 
--- The characteristic polynomial is t³ − 7t² + 16t − 12 = (t − 2)²(t − 3).
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ).charpoly =
-    X ^ 3 - 7 * X ^ 2 + 16 * X - 12 := by
+-- The characteristic polynomial is t³ − 2t² + t = t (t − 1)².
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ).charpoly =
+    X ^ 3 - 2 * X ^ 2 + X := by
   rw [Matrix.charpoly, det_fin_three]
   simp
   ring
-example : (X ^ 3 - 7 * X ^ 2 + 16 * X - 12 : ℤ[X]) = (X - 2) ^ 2 * (X - 3) := by ring
+example : (X ^ 3 - 2 * X ^ 2 + X : ℤ[X]) = X * (X - 1) ^ 2 := by ring
 
--- The chain: A − 2I sends (0, 1, 0) to (1, 0, 0), and (1, 0, 0) to zero.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 1, 0] =
-    ![1, 0, 0] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 0] =
+-- The chain: A − I sends (1, 1, 0) to (1, 0, 1), and (1, 0, 1) to zero.
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 0] =
+    ![1, 0, 1] := by decide
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 1] =
     0 := by decide
 
--- The powers of A − 2I: the square is [[0, 0, 0], [0, 0, 0], [0, 0, 1]], and the cube is the same.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 =
-    !![0, 0, 0; 0, 0, 0; 0, 0, 1] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (2 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 3 =
-    !![0, 0, 0; 0, 0, 0; 0, 0, 1] := by decide
+-- The powers of A − I: the square is [[0, 0, 0], [0, 0, 0], [−1, 1, 1]], and the cube is its negative.
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 =
+    !![0, 0, 0; 0, 0, 0; -1, 1, 1] := by decide
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] - (1 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) ^ 3 =
+    !![0, 0, 0; 0, 0, 0; 1, -1, -1] := by decide
 
--- Bezout: (1 − t)(t − 3) + (t − 2)² = 1.
-example : ((1 - X) * (X - 3) + (X - 2) ^ 2 : ℤ[X]) = 1 := by ring
+-- Bezout: (2 − t) t + (t − 1)² = 1.
+example : ((2 - X) * X + (X - 1) ^ 2 : ℤ[X]) = 1 := by ring
 
--- The projectors P₂ = (I − A)(A − 3I) and P₃ = (A − 2I)² add to I, multiply to zero,
--- and split (1, 1, 1) into (1, 1, 0) + (0, 0, 1).
-example : ((1 - !![2, 1, 0; 0, 2, 0; 0, 0, 3]) * (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1) :
-    Matrix (Fin 3) (Fin 3) ℤ) = !![1, 0, 0; 0, 1, 0; 0, 0, 0] := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] + !![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
+-- The projectors P₁ = (2I − A) A and P₀ = (A − I)² add to I, multiply to zero,
+-- and split (3, 1, 0) into (3, 1, 2) + (0, 0, −2).
+example : (((2 : ℤ) • 1 - !![1, 1, 0; 0, 1, 0; 1, 0, 0]) * !![1, 1, 0; 0, 1, 0; 1, 0, 0] :
+    Matrix (Fin 3) (Fin 3) ℤ) = !![1, 0, 0; 0, 1, 0; 1, -1, 0] := by decide
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] + !![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
     1 := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] * !![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] * !![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) =
     0 := by decide
-example : (!![1, 0, 0; 0, 1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] = ![1, 1, 0] ∧
-    (!![0, 0, 0; 0, 0, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] = ![0, 0, 1] := by decide
+example : (!![1, 0, 0; 0, 1, 0; 1, -1, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] = ![3, 1, 2] ∧
+    (!![0, 0, 0; 0, 0, 0; -1, 1, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] = ![0, 0, -2] := by decide
 
--- Cayley-Hamilton for A: A³ − 7A² + 16A − 12I = 0.
-example : let A : Matrix (Fin 3) (Fin 3) ℤ := !![2, 1, 0; 0, 2, 0; 0, 0, 3]
-    A ^ 3 - 7 • A ^ 2 + 16 • A - 12 • 1 = 0 := by decide
+-- Cayley-Hamilton for A: A³ − 2A² + A = 0.
+example : let A : Matrix (Fin 3) (Fin 3) ℤ := !![1, 1, 0; 0, 1, 0; 1, 0, 0]
+    A ^ 3 - 2 • A ^ 2 + A = 0 := by decide
 
--- Ten steps: A¹⁰ (1, 1, 1) = (6144, 1024, 59049), and 6144 = 2¹⁰ + 10 × 2⁹.
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 1, 1] =
-    ![6144, 1024, 59049] := by decide
-example : (2 : ℤ) ^ 10 + 10 * 2 ^ 9 = 6144 ∧ (3 : ℤ) ^ 10 = 59049 := by norm_num
+-- Ten minutes: A¹⁰ (3, 1, 0) = (13, 1, 12), which is (3, 1, 2) + 10 × (1, 0, 1).
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![3, 1, 0] =
+    ![13, 1, 12] := by decide
+example : (3 : ℤ) + 10 * 1 = 13 ∧ (2 : ℤ) + 10 * 1 = 12 := by norm_num
 
--- The usual mistakes: powering as if diagonal gives (1024, 1024, 59049), and the bare factor
--- A − 3I sends (1, 1, 1) to (0, −1, 0), not to its plane piece (1, 1, 0).
-example : (!![2, 0, 0; 0, 2, 0; 0, 0, 3] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 1, 1] =
-    ![1024, 1024, 59049] := by decide
-example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1 : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 1, 1] =
-    ![0, -1, 0] := by decide
+-- The usual mistakes: powering as if diagonal leaves the piece (3, 1, 2) where it was, and the
+-- bare factor A sends (3, 1, 0) to (4, 1, 3), not to its plane piece (3, 1, 2).
+example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3, 1, 0] =
+    ![4, 1, 3] := by decide
 
 #print axioms generalised_eigenspaces_fill_the_space
 #print axioms mem_generalisedEigenspace_iff
 #print axioms kernels_grow_then_stop
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'toLin'_sub_smul_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -594,26 +598,26 @@ example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1 : Matrix (Fin 3) (Fin
 > [!TIP]
 > **Try changing**
 > Guess first, then run the Python.
-> - **Remove the push.** Set the top-middle entry of `A` to 0. The kernel sizes for 2 read 2, 2, 2: nothing is left to generalise, and the last assert stops the run.
-> - **Split another vector.** Set `v` to `(5, 7, 4)`. The labels still say (1, 1, 1), but the split is (5, 7, 0) + (0, 0, 4) and both roads give (40960, 7168, 236196).
-> - **Use too low a power.** Change `mpow(shift(2), 2)` to `mpow(shift(2), 1)`. The projectors no longer add to I, and the second assert stops the run.
+> - **Remove the push.** Set the top-middle entry of `A` to 0. The kernel sizes for 1 read 2, 2, 2: nothing is left to generalise, and the last assert stops the run.
+> - **Split another vector.** Set `v` to `(10, 1, 4)`. The labels still say (3, 1, 0), but the split is (10, 1, 9) + (0, 0, −5) and both roads give (20, 1, 19).
+> - **Use too low a power.** Change `mpow(shift(1), 2)` to `mpow(shift(1), 1)`. The projectors no longer add to I, and the second assert stops the run.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Counting eigenvectors and stopping there.** A repeated eigenvalue can have fewer eigenvectors than its multiplicity. Here 2 is a double root with one eigenvector line, so plain eigenvectors give 1 + 1 = 2 directions for 3.
+> **Counting eigenvectors and stopping there.** A repeated eigenvalue can have fewer eigenvectors than its multiplicity. Here 1 is a double root with one eigenvector line, so plain eigenvectors give 1 + 1 = 2 directions for 3.
 >
-> - **Powering as if diagonal.** Dropping the push from A gives (1024, 1024, 59049) after ten steps, not (6144, 1024, 59049).
-> - **Using the bare factor as a projector.** A − 3I kills $`G_3`$, but it sends (1, 1, 1) to (0, −1, 0), not to its plane piece (1, 1, 0).
-> - **Adding every kernel in the chain.** The sizes 1 and 2 for λ = 2 are nested, so 1 + 2 + 1 = 4 directions in three dimensions. Only the largest kernel counts.
+> - **Powering as if diagonal.** Dropping the push leaves (3, 1, 2) after ten minutes, not (13, 1, 12).
+> - **Using the bare factor as a projector.** A kills $`G_0`$, but it sends (3, 1, 0) to (4, 1, 3), not to its plane piece (3, 1, 2).
+> - **Adding every kernel in the chain.** The sizes 1 and 2 for λ = 1 are nested, so 1 + 2 + 1 = 4 directions in three dimensions. Only the largest kernel counts.
 
 ---
 
 ## Where you meet it in real life
 
-- **Step models.** Wherever one quantity feeds another that grows at the same rate, as Y feeds X, a generalised eigenvector adds terms like 10 × 2^9 on top of 2^10.
+- **Tracking.** Trackers and radar filters step position and speed together, as here. The generalised eigenvector adds a term growing with the step count.
 - **Critically damped motion.** A door closer tuned to shut without overshoot has a repeated eigenvalue; the t e^(−t) term in its motion comes from one generalised eigenvector ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
 - **Splitting a system into blocks.** Engineers solve a large system one eigenvalue block at a time; the direct sum guarantees nothing is lost.
 
@@ -631,7 +635,7 @@ example : (!![2, 1, 0; 0, 2, 0; 0, 0, 3] - (3 : ℤ) • 1 : Matrix (Fin 3) (Fin
 
 ## Where this goes next
 
-- [Jordan form](10-jordan-canonical-form.md): inside each generalised eigenspace, chains like (0, 1, 0) → (1, 0, 0) → 0 give a basis where A is almost diagonal.
+- [Jordan form](10-jordan-canonical-form.md): inside each generalised eigenspace, chains like (1, 1, 0) → (1, 0, 1) → 0 give a basis where A is almost diagonal.
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): the same split, in continuous time, where it produces the factor t.
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): Euclid's algorithm proved for polynomials.
 

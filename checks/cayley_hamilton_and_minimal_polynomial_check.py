@@ -21,7 +21,7 @@ def pdiv(p, m):                # long division by a monic m: quotient, remainder
     p, q = list(p), []
     while len(p) >= len(m): q.append(p[0]); p = [a - p[0] * b for a, b in zip(p, m + [0] * len(p))][1:]
     return q, p
-def repeated(p): return any(big(at(p, [[t]])) == 0 == big(at([c * (len(p) - 1 - i) for i, c in enumerate(p[:-1])], [[t]])) for t in (2, 3))
+def repeated(p): return any(big(at(p, [[t]])) == 0 == big(at([c * (len(p) - 1 - i) for i, c in enumerate(p[:-1])], [[t]])) for t in (2, 3))   # roots 2, 3 only
 def rank(rows):                # elimination in whole numbers: cross-multiply, never divide
     rows = [r for r in rows if any(r)]
     if not rows: return 0

@@ -112,7 +112,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 07 · Eigenvalues and Symmetric Matrices · 12 cards
 
-*Change of basis and similar matrices, eigenvalues and eigenvectors by the 2 by 2 characteristic equation, diagonalisation and fast matrix powers, the spectral theorem for symmetric matrices, quadratic forms and positive definiteness, the singular value decomposition in outline. Rests on shelves 4 and 5.*
+*Change of basis and similar matrices, eigenvalues and eigenvectors, diagonalisation and matrix powers, the spectral theorem for symmetric matrices, quadratic forms and positive definiteness, the singular value decomposition, Schur's triangle, Cayley-Hamilton and the minimal polynomial, generalised eigenvectors, Jordan form, normal matrices and the polar form, and bilinear forms with Sylvester's law. Rests on shelves 4, 5 and 6.*
 
 1. [Change of basis: the same point with a new address book, and the same map as a new matrix P^-1 A P](07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)
 2. [Eigenvalues and eigenvectors: the directions a matrix only stretches, and the stretch factors, found from a quadratic](07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)

@@ -69,7 +69,7 @@ theorem fleet_after_n_months (n : ℕ) :
     ext i; fin_cases i <;>
       simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, pow_succ] <;> ring
 
-/-- The matrix this cannot be done to. The shear `[[1, 1], [0, 1]]` after `n` months is
+/-- The matrix this cannot be done to. The shear `[[1, 1], [0, 1]]` after `n` steps is
 `[[1, n], [0, 1]]`, yet it has no two independent eigenvectors, so there is no invertible `P`
 and diagonal `D` with shear = P D P⁻¹. -/
 theorem shear_is_not_diagonalisable :
@@ -133,7 +133,7 @@ example : (600 : ℚ) + 400 * (1/2) = 800 ∧ (400 : ℚ) - 400 * (1/2) = 200 :=
 example : (600 : ℚ) + 400 * (1/2) ^ 12 = 153625 / 256 ∧ (400 : ℚ) - 400 * (1/2) ^ 12 = 102375 / 256 ∧
     (153625 / 256 : ℚ) + 102375 / 256 = 1000 ∧
     (60005 / 100 : ℚ) ≤ 153625 / 256 ∧ (153625 / 256 : ℚ) < 60015 / 100 := by norm_num
--- Step 4: the shear after twelve months is [[1, 12], [0, 1]]; it fixes (1, 0) and sends (1, 1) to (2, 1).
+-- Step 4: the shear after twelve steps is [[1, 12], [0, 1]]; it fixes (1, 0) and sends (1, 1) to (2, 1).
 example : (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) ^ 12 = !![1, 12; 0, 1] := by decide
 example : (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 0] = ![1, 0] ∧
     (!![1, 1; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![1, 1] = ![2, 1] := by decide

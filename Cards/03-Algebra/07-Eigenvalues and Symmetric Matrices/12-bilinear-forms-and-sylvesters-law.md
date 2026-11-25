@@ -762,14 +762,15 @@ example : (!![(1 : ℤ), 1; 1, 1])ᵀ * !![(1 : ℤ), 2; 2, 1] * !![(1 : ℤ), 1
 
 ## Where this goes next
 
-- [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): Sylvester's law in any size, with a computer-checked proof, naming three families of equations.
+- [Groups](../08-Groups/01-groups.md): the next shelf. One operation and four rules, met already in the invertible changes of grid on this shelf.
+- [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): uses Sylvester's sign counts on the second-derivative matrix to sort partial differential equations into three families.
 - [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): second-derivative sign counts telling peaks, pits and saddles apart.
 - [Symplectic form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md): an alternating form that drives how mechanical systems move.
 - [Generalised eigenproblems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
 - [Darboux's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
 - [The Killing form and roots](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): a Lie algebra split into directions that a torus scales.
 
-This card leaves open what survives when the numbers are not real: over the rationals, for example, a form keeps far more than its sign counts.
+This card ends the shelf. Its changes of grid can be combined and undone. What do all such collections of moves have in common? That is the next shelf's question, starting with [Groups](../08-Groups/01-groups.md). Also left open: when the numbers are not real, over the rationals for example, a form keeps far more than its sign counts.
 
 ---
 

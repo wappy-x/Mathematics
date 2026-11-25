@@ -1,4 +1,4 @@
--- Jordan form: every complex square matrix becomes, after a change of basis, a stack of Jordan blocks (an eigenvalue down the diagonal, ones just above it), the number of blocks of each size is read from the ranks of the powers of A − λI, a block of size 2 has n-th power with corner entry nλ^(n−1), and the card's 3 × 3 matrix has blocks of sizes 2 and 1 and A^10 with top-left entry 6,144.
+-- Jordan form: every complex square matrix becomes, after a change of basis, a stack of Jordan blocks (an eigenvalue down the diagonal, ones just above it), the number of blocks of each size is read from the ranks of the powers of A − λI, a block of size 2 has n-th power with corner entry nλ^(n−1), and the card's 3 × 3 step-rule matrix has blocks of sizes 2 and 1 and gives a(10) = 21,504.
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Data.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -482,39 +482,45 @@ theorem jordanBlock_two_pow (μ : ℂ) (n : ℕ) :
     · simp
     · simp [pow_succ]; push_cast; ring
 
--- Worked numbers. A = [[3, 1, 0], [-1, 1, 0], [0, 0, 2]], exact whole numbers throughout.
+-- Worked numbers. A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]] steps (a(n), a(n+1), b(n)) for the rules
+-- a(n+2) = 4a(n+1) − 4a(n) and b(n+1) = 2b(n); exact whole numbers throughout.
 -- Characteristic polynomial: trace 6, sum of 2 × 2 diagonal minors 12, det 8, so (x − 2)³.
-example : (3 : ℤ) + 1 + 2 = 6 ∧ (3 * 1 - 1 * (-1)) + (3 * 2 - 0 * 0) + (1 * 2 - 0 * 0) = (12 : ℤ) ∧
-    (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ).det = 8 := by
+example : (0 : ℤ) + 4 + 2 = 6 ∧ (0 * 4 - 1 * (-4)) + (0 * 2 - 0 * 0) + (4 * 2 - 0 * 0) = (12 : ℤ) ∧
+    (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ).det = 8 := by
   refine ⟨by norm_num, by norm_num, ?_⟩
   simp [Matrix.det_fin_three]
 -- x³ − 6x² + 12x − 8 is (x − 2)³.
 example (x : ℤ) : x ^ 3 - 6 * x ^ 2 + 12 * x - 8 = (x - 2) ^ 3 := by ring
--- N = A − 2I is [[1, 1, 0], [-1, -1, 0], [0, 0, 0]], and N² is the zero matrix.
-example : (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) - 2 • 1 =
-    !![1, 1, 0; -1, -1, 0; 0, 0, 0] := by decide
-example : (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 = 0 := by decide
--- The chain: N (1, 0, 0) = (1, −1, 0), N (1, −1, 0) = 0, N (0, 0, 1) = 0.
-example : (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 0, 0] = ![1, -1, 0] ∧
-    (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, -1, 0] = 0 ∧
-    (!![1, 1, 0; -1, -1, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 0, 1] = 0 := by decide
--- P = [[1, 1, 0], [-1, 0, 0], [0, 0, 1]] has inverse [[0, -1, 0], [1, 1, 0], [0, 0, 1]], and
+-- N = A − 2I is [[-2, 1, 0], [-4, 2, 0], [0, 0, 0]], and N² is the zero matrix.
+example : (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) - 2 • 1 =
+    !![-2, 1, 0; -4, 2, 0; 0, 0, 0] := by decide
+example : (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) ^ 2 = 0 := by decide
+-- The chain: N (0, 1, 0) = (1, 2, 0), N (1, 2, 0) = 0, N (0, 0, 1) = 0.
+example : (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 1, 0] = ![1, 2, 0] ∧
+    (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 2, 0] = 0 ∧
+    (!![-2, 1, 0; -4, 2, 0; 0, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![0, 0, 1] = 0 := by decide
+-- P = [[1, 0, 0], [2, 1, 0], [0, 0, 1]] has inverse [[1, 0, 0], [-2, 1, 0], [0, 0, 1]], and
 -- P⁻¹ A P = J = [[2, 1, 0], [0, 2, 0], [0, 0, 2]].
-example : (!![0, -1, 0; 1, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![1, 1, 0; -1, 0, 0; 0, 0, 1] = 1 ∧
-    (!![0, -1, 0; 1, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![3, 1, 0; -1, 1, 0; 0, 0, 2] *
-      !![1, 1, 0; -1, 0, 0; 0, 0, 1] = !![2, 1, 0; 0, 2, 0; 0, 0, 2] := by decide
+example : (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![1, 0, 0; 2, 1, 0; 0, 0, 1] = 1 ∧
+    (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) * !![0, 1, 0; -4, 4, 0; 0, 0, 2] *
+      !![1, 0, 0; 2, 1, 0; 0, 0, 1] = !![2, 1, 0; 0, 2, 0; 0, 0, 2] := by decide
 -- Block counts from the ranks 3, 1, 0: 3 − 1 = 2 blocks, 1 − 0 = 1 of size 2 or more; sizes 2 and 1.
 example : (3 : ℕ) - 1 = 2 ∧ (1 : ℕ) - 0 = 1 ∧ 2 + 1 = 3 := by norm_num
--- A^10 = [[6144, 5120, 0], [-5120, -4096, 0], [0, 0, 1024]].
-example : (!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 =
-    !![6144, 5120, 0; -5120, -4096, 0; 0, 0, 1024] := by decide
--- Top-left: 2^10 + 10 × 2^9 = 1,024 + 5,120 = 6,144; ten batches of 512 make 5,120.
-example : (2 : ℕ) ^ 10 + 10 * 2 ^ 9 = 6144 ∧ (2 : ℕ) ^ 10 = 1024 ∧ 10 * 2 ^ 9 = 5120 := by norm_num
--- Top-left entries of A^0, …, A^6: 1, 3, 8, 20, 48, 112, 256.
-example : (List.range 7).map (fun k => ((!![3, 1, 0; -1, 1, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ k) 0 0) =
-    [1, 3, 8, 20, 48, 112, 256] := by decide
--- The mistakes: 3^10 = 59,049; 2^10 + 10 × 2^10 = 11,264.
-example : (3 : ℕ) ^ 10 = 59049 ∧ (2 : ℕ) ^ 10 + 10 * 2 ^ 10 = 11264 := by norm_num
+-- A^10 = [[-9216, 5120, 0], [-20480, 11264, 0], [0, 0, 1024]].
+example : (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 =
+    !![-9216, 5120, 0; -20480, 11264, 0; 0, 0, 1024] := by decide
+-- The start (1, 6, 1) is 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1), and ten steps take it to
+-- (21504, 47104, 1024).
+example : (!![1, 0, 0; -2, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![1, 6, 1] = ![1, 4, 1] ∧
+    (!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ 10 *ᵥ ![1, 6, 1] =
+      ![21504, 47104, 1024] := by decide
+-- a(10) = 2^10 + 4 × 10 × 2^9 = 1,024 + 20,480 = 21,504.
+example : (2 : ℕ) ^ 10 + 4 * 10 * 2 ^ 9 = 21504 ∧ 4 * 10 * 2 ^ 9 = 20480 := by norm_num
+-- a(0), …, a(6): 1, 6, 20, 56, 144, 352, 832.
+example : (List.range 7).map (fun k => ((!![0, 1, 0; -4, 4, 0; 0, 0, 2] : Matrix (Fin 3) (Fin 3) ℤ) ^ k
+    *ᵥ ![1, 6, 1]) 0) = [1, 6, 20, 56, 144, 352, 832] := by decide
+-- The mistakes: entry powers give a(10) = 0 × 1 + 1 × 6 = 6; 2^10 + 4 × 10 × 2^10 = 41,984.
+example : (0 : ℤ) ^ 10 * 1 + 1 ^ 10 * 6 + 0 ^ 10 * 1 = 6 ∧ (2 : ℕ) ^ 10 + 4 * 10 * 2 ^ 10 = 41984 := by norm_num
 
 #print axioms restrict_pow_coe
 #print axioms card_sigma_fin

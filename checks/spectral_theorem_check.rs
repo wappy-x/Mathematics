@@ -33,7 +33,7 @@ fn main() {
     let (x, rawq): (V, M) = ([4.0, 2.0], [[1.0, 1.0], [1.0, -1.0]]);
     let coords = mv(tp(q), x);
     let scaled = mv(d, coords);
-    let bad_unit = mul(mul(tp(rawq), d), rawq);
+    let bad_unit = mul(mul(rawq, d), tp(rawq));
     let bad_swap = mul(mul(q, [[small, 0.0], [0.0, big]]), tp(q));
     let slopes = [-3.0, -2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0, 3.0];
     let curve: Vec<f64> = slopes.iter().map(|&s| stretch(a, [1.0, s])).collect();
