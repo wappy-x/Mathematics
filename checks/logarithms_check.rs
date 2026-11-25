@@ -3,6 +3,7 @@
 // down to 1; road two multiplies back up to the same number.
 const QUAKES: [(i64, i64); 4] = [(4, 10000), (5, 100000), (6, 1000000), (7, 10000000)];
 fn log_by_dividing(base: i64, x: i64) -> i64 {   // divide by the base until 1
+    assert!(base > 1 && x >= 1, "needs a base above 1 and a number of at least 1");
     let (mut x, mut steps) = (x, 0i64);
     while x > 1 {
         assert!(x % base == 0, "not a whole power of that base");
@@ -17,7 +18,6 @@ fn power(base: i64, steps: i64) -> i64 {         // the road back
     out
 }
 fn row(name: &str, value: i64) { println!("{:<37}{:>9}", name, value); }
-
 fn main() {
     for (mag, swing) in QUAKES {
         println!("magnitude {}  needle swing {:>9}  log base 10 of it {}",

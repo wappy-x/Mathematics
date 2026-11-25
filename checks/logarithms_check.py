@@ -3,6 +3,7 @@
 # road two multiplies back up and has to land on the same number.
 QUAKES = [(4, 10000), (5, 100000), (6, 1000000), (7, 10000000)]
 def log_by_dividing(base, x):        # divide by the base until 1, counting steps
+    assert base > 1 and x >= 1, "needs a base above 1 and a number of at least 1"
     steps = 0
     while x > 1:
         assert x % base == 0, "not a whole power of that base"
@@ -14,7 +15,6 @@ def power(base, steps):              # the road back, the base multiplied by its
     for _ in range(steps): out *= base
     return out
 def row(name, value): print(f"{name:<37}{value:>9}")
-
 for mag, swing in QUAKES:
     print(f"magnitude {mag}  needle swing {swing:>9}  log base 10 of it {log_by_dividing(10, swing)}")
 print("dividing ten million by ten:", *(10000000 // power(10, s) for s in range(1, 8)))

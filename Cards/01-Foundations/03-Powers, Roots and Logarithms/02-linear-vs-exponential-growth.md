@@ -10,7 +10,7 @@ Two ponds, side by side. Each starts with one lily pad. A gardener tends the fir
 
 For the first few days the ponds look much the same. Day 2: three pads against four. Nothing to make you nervous.
 
-A million pads covers a pond. The doubling pond is covered on day 20. The gardener's pond needs 999,999 days: 2,739 years.
+A million pads covers a pond. The doubling pond is covered on day 20. The gardener's pond needs 999,999 days: over 2,739 years.
 
 Growth that **adds** a fixed amount every step is **linear** — it draws a straight line. Growth that **multiplies** by a fixed factor every step is **exponential**.
 
@@ -82,6 +82,8 @@ The doubling pond obeys the same rule on day 2 as on day 20, but doubling a smal
 
 Any straight line loses to any curve that multiplies by a factor bigger than 1, if you wait. Hand the gardener a thousand pads a day and the doubling pond still passes him, a few days later.
 
+The reason: the gardener's daily gain stays fixed, but the doubling pond's overnight gain grows with the pond. Once one night's gain beats the gardener's lump, the gap widens every day after.
+
 ---
 
 ## Worked numbers, by hand
@@ -95,7 +97,7 @@ Any straight line loses to any curve that multiplies by a factor bigger than 1, 
 | day 20, gardener | 1 + 20 × 1 | **21** |
 | the gap on day 20 | 1,048,576 − 21 | **1,048,555** |
 
-A million pads covers a pond. The doubling pond is covered on day 20; the gardener's on day 999,999 — 2,739 years of mornings.
+A million pads covers a pond. The doubling pond is covered on day 20; the gardener's on day 999,999 — over 2,739 years of mornings.
 
 ### What breaks if you drop a piece
 
@@ -105,7 +107,7 @@ A million pads covers a pond. The doubling pond is covered on day 20; the garden
 | Reading "doubles for 20 days" as 2 × 20 | 40 | Days count the multiplications; a day is not one of the numbers |
 | Guessing day 10 is half of day 20 | 524,288 (that is half of day 20); day 10 actually holds 1,024 | Halfway in time is nowhere near halfway in size |
 
-The code prints the two mistake numbers, and every other number here.
+The code prints the first two mistake numbers on one line, and every other number here.
 
 ---
 
@@ -368,7 +370,7 @@ example : 2 ^ 5 - 2 ^ 4 = 16 ∧ 2 ^ 20 - 2 ^ 19 = 524288 := by norm_num
 - **Charts that look flat, then explode.** Squash exponential numbers onto an ordinary axis and everything before the last few steps reads as zero. A log scale fixes that: each equal step up its axis multiplies by the same factor. See [Log laws and log scales](06-log-laws-and-log-scales.md).
 
 > **Say it back**
-> Linear growth adds the same fixed amount every step: a straight line. Exponential growth multiplies by the same fixed factor every step. Double, and each step is as big as everything before it. Two ponds from one lily pad: one pad a day reaches 21 by day 20, doubling reaches 1,048,576. A million pads covers a pond, so one is covered on day 20 and the other on day 999,999 — 2,739 years. The early days look alike. That is the trap.
+> Linear growth adds the same fixed amount every step: a straight line. Exponential growth multiplies by the same fixed factor every step. Double, and each step is as big as everything before it. Two ponds from one lily pad: one pad a day reaches 21 by day 20, doubling reaches 1,048,576. A million pads covers a pond, so one is covered on day 20 and the other on day 999,999 — over 2,739 years. The early days look alike. That is the trap.
 
 ---
 
@@ -378,9 +380,11 @@ example : 2 ^ 5 - 2 ^ 4 = 16 ∧ 2 ^ 20 - 2 ^ 19 = 524288 := by norm_num
 
 ## Where this goes next
 
+- [Roots](03-roots-and-fractional-exponents.md): running a power backwards to find the factor — what number, multiplied in twice, gives 50?
+- [Logarithms](05-logarithms.md): running it backwards to find the count — how many doublings reach 1,048,576?
 - [Simple interest](../04-Compound%20Growth%20and%20Discounting/02-simple-interest.md): the gardener's pond in money — a fixed amount added each period, never earning on itself.
 
-This card leaves one question open: how do you find the day the doubling pond passes a million without counting the doublings one at a time? [Logarithms](05-logarithms.md) answers it.
+This card leaves one question open: if a pond went from 1 pad to 50 in two nights, multiplying by the same factor each night, what was the factor? [Roots](03-roots-and-fractional-exponents.md) answers it.
 
 ---
 

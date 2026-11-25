@@ -10,7 +10,9 @@ A chain message starts with one person. She sends it to 3 friends. Each of those
 
 Round 1 reaches 3 people, round 2 reaches 9, round 5 reaches **243**. With the woman who started it: 1 + 3 + 9 + 27 + 81 + 243 = **364** people hold the message.
 
-Writing 3 × 3 × 3 × 3 × 3 gets old fast, so it has a shorthand: **3^5**, said "three to the fifth" — the ^ means the 5 sits raised. The 3 is the **base**, the number doing the multiplying. The 5 is the **exponent**, how many copies of the base are multiplied. The answer, 243, is the **power**.
+Writing 3 × 3 × 3 × 3 × 3 gets old fast, so it has a shorthand: **3^5**, said "three to the fifth". The ^ means the 5 sits raised.
+
+The 3 is the **base**, the number doing the multiplying. The 5 is the **exponent**, how many copies of the base are multiplied. The answer, 243, is the **power**.
 
 **An exponent counts copies of the base. Once counts can be added and taken away, an exponent of zero and a negative exponent each have only one possible meaning.**
 
@@ -375,16 +377,18 @@ example : (3 : ℕ) ^ 6 = 729 := by norm_num
 
 ## What this builds on
 
-- [Multiplying and dividing](../01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): repeated multiplication, and cancelling factors.
-- [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): what a minus sign on the exponent means.
+- [Multiplying and dividing](../01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiplying as repeated adding in one move, and dividing as its undo.
+- [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): subtracting past zero, which gives exponents like 2 − 5 = −3.
 - [Fractions](../01-Everyday%20Arithmetic/07-fractions.md): where 3^-3 lands, one twenty-seventh.
 
 ## Where this goes next
 
-- [Linear versus exponential growth](02-linear-vs-exponential-growth.md): this chain against one that adds 3 people a round.
-- [Roots](03-roots-and-fractional-exponents.md): what half a round would mean, and why it is a root.
+- [Linear versus exponential growth](02-linear-vs-exponential-growth.md): multiplying by a fixed factor each step against adding a fixed amount, shown with two lily-pad ponds.
+- [Roots](03-roots-and-fractional-exponents.md): what a fractional exponent such as 1/2 or 1/3 means, and why it is a root.
 - [Scientific notation](04-scientific-notation.md): powers of ten, for very big and very small numbers.
 - [Logarithms](05-logarithms.md): this card backwards — given 243 and base 3, what power got me here?
+
+This card leaves one question open: how fast does multiplying by a fixed factor outrun adding a fixed amount each step? [Linear versus exponential growth](02-linear-vs-exponential-growth.md) answers it.
 
 ---
 

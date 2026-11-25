@@ -8,7 +8,7 @@
 
 The Sun is about 150,000,000 km away. A red blood cell is about 0.000007 m across. Put both on one page and neither reads: one is a wall of zeros, the other is zeros before a single 7.
 
-Scientific notation — also called **standard form** — splits a number in two: a **front number** between 1 and 10, properly the **coefficient** (or significand), and a **power of ten** counting the tens to multiply or divide by. The Sun becomes 1.5 x 10^8 km. The cell becomes 7 x 10^-6 m. No zeros left to count, nothing rounded away.
+Scientific notation — also called **standard form** — splits a number in two. First comes a **front number** between 1 and 10, properly the **coefficient** (or significand). Then comes a **power of ten**, counting the tens to multiply or divide by. The Sun becomes 1.5 x 10^8 km. The cell becomes 7 x 10^-6 m. No zeros left to count, nothing rounded away.
 
 **Write the front number, then the count of tens it rides on, and the number is written.**
 
@@ -42,7 +42,7 @@ Each number, written out then split:
 | Piece | Plain meaning | In our two numbers |
 | --- | --- | --- |
 | the front number (coefficient) | from 1 up to, not including, 10 | 1.5, and 7 |
-| the power of ten | places the dot moves | 8, and -6 |
+| the power of ten | its exponent counts places the dot moves; below, "the power" is short for that exponent | 8, and -6 |
 | a positive power | dot right, number big | 1.5 x 10^8 is 150,000,000 |
 | a negative power | dot left, number small | 7 x 10^-6 is 0.000007 |
 | the two together | front number on that power | the number, no zeros counted |
@@ -61,7 +61,7 @@ The minus in 10^-6 does not make the number negative. It says *divide* by ten si
 
 ### Step 0: sliding the dot is multiplying by ten
 
-Each column of a written number is worth ten times the column on its right. Slide the dot one place right and the number is multiplied by ten; one place left, divided by ten — [Decimals](../01-Everyday%20Arithmetic/08-decimals.md) read from the other end. Nothing is lost: slide back the same distance and the original is there.
+Each column of a written number is worth ten times the column on its right. Slide the dot one place right and the number is multiplied by ten; one place left, divided by ten. That is [Decimals](../01-Everyday%20Arithmetic/08-decimals.md) read from the other end. Nothing is lost: slide back the same distance and the original is there.
 
 ### Step 1: slide until one digit stands in front
 
@@ -81,7 +81,7 @@ How many blood cells wide is the distance to the Sun? Divide 1.5 x 10^11 m by 7 
 
 That is 0.2142857 x 10^17, not yet standard form: the front number must sit between 1 and 10. Slide the dot one place right, drop the power by one. **2.142857 x 10^16.**
 
-The power alone is the number's **order of magnitude**: its size to the nearest ten-fold step. Which power a number sits on is [Logarithms](05-logarithms.md).
+The power alone is the number's **order of magnitude**: the ten-fold bracket it sits in. For 1.5 x 10^8 that is from 10^8 up to 10^9. Counting tens like this, for any base, is [Logarithms](05-logarithms.md).
 
 ---
 
@@ -96,7 +96,7 @@ The power alone is the number's **order of magnitude**: its size to the nearest 
 | subtract the powers | 11 − (−6) | 17 |
 | slide back into standard form | 0.2142857 x 10^17 | **2.142857 x 10^16** |
 
-The Sun is about 2.142857 x 10^16 blood-cell widths away.
+From those rounded figures, the division gives 2.142857 x 10^16: the Sun is roughly 2 x 10^16 blood-cell widths away.
 
 ### What breaks if you drop a piece
 
@@ -379,10 +379,10 @@ example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (
 
 ## Where this goes next
 
-- [Logarithms](05-logarithms.md): "what power got me here?", when the power is not a whole number.
+- [Logarithms](05-logarithms.md): "what power got me here?", asked for any base, starting with whole powers.
 - [Log laws and log scales](06-log-laws-and-log-scales.md): an axis marked 1, 10, 100 instead of 1, 2, 3 — this card's picture as a ruler.
 
-This card leaves one question open: which single power of ten is 1.5 x 10^8?
+This card leaves one question open: here the power of ten was found by sliding a dot, so how do you find the count for any base, such as how many 2s multiply to 32? [Logarithms](05-logarithms.md) answers it.
 
 ---
 

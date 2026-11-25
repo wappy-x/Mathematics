@@ -8,7 +8,7 @@
 
 A magnitude 5 earthquake rattles windows. A magnitude 7 brings buildings down. On paper they sit two apart. The ground moves a hundred times as far.
 
-The magnitude is not a measurement of the shaking. It is a count. A seismograph — the machine with the needle — measures the swing in thousandths of a millimetre, 100 km from the quake so every quake is scored the same way: 100,000 for a magnitude 5, 1,000,000 for a 6, 10,000,000 for a 7. Every step up the scale is another multiply by ten.
+The magnitude is not a measurement of the shaking. It is a count. A seismograph — the machine with the needle — measures the swing in thousandths of a millimetre, scored as if it sat 100 km from the quake. A magnitude 5 swings 100,000 units, a 6 swings 1,000,000, and a 7 swings 10,000,000. Every step up the scale is another multiply by ten.
 
 That count has a name: the **logarithm** of the swing — log, for short — to base 10, the base being the number doing the multiplying. Magnitude 7 says seven tens, multiplied together, got me to this swing.
 
@@ -55,7 +55,7 @@ The 10 straight after "log" is the base, 10,000,000 is what you are reaching, 7 
 
 - **The number is above 0.** 0 and negative numbers have no log (Step 3).
 - **The base is bigger than 1.** Divide 10 by 1 and you still have 10: the count never ends.
-- **The number is a whole power of the base.** Otherwise the dividing stops short of 1 and the check's assert fires.
+- **For this card's divide-and-count method, the number is a whole power of the base.** Otherwise the dividing stops short of 1 and the check's assert fires. Other numbers still have logs; they sit between two whole counts (Step 3).
 
 ---
 
@@ -79,7 +79,9 @@ Multiply seven tens together and you land on 10,000,000 again. Powering and logg
 
 ### Step 3: the base does not have to be ten
 
-Nothing above cared that the base was ten. Halve 32 until you reach 1: five halvings, so the log base 2 of 32 is 5. And 1 needs no multiplying at all, so the log of 1 is 0 whatever the base. Multiply the base by itself however you like and the answer stays positive — never 0, never negative. So 0 and negative numbers have no log.
+Nothing above cared that the base was ten. Halve 32 until you reach 1: five halvings, so the log base 2 of 32 is 5. And 1 needs no multiplying at all, so the log of 1 is 0 whatever the base.
+
+Multiply the base by itself however you like and the answer stays positive — never 0, never negative. So 0 and negative numbers have no log.
 
 Real quakes come with a decimal point: the swing is rarely a clean power of ten, so the count lands between two whole numbers. Reading those is [Log laws and log scales](06-log-laws-and-log-scales.md).
 
@@ -124,6 +126,7 @@ Nothing is imported. The swings become magnitudes the plain way: divide by ten, 
 # road two multiplies back up and has to land on the same number.
 QUAKES = [(4, 10000), (5, 100000), (6, 1000000), (7, 10000000)]
 def log_by_dividing(base, x):        # divide by the base until 1, counting steps
+    assert base > 1 and x >= 1, "needs a base above 1 and a number of at least 1"
     steps = 0
     while x > 1:
         assert x % base == 0, "not a whole power of that base"
@@ -135,7 +138,6 @@ def power(base, steps):              # the road back, the base multiplied by its
     for _ in range(steps): out *= base
     return out
 def row(name, value): print(f"{name:<37}{value:>9}")
-
 for mag, swing in QUAKES:
     print(f"magnitude {mag}  needle swing {swing:>9}  log base 10 of it {log_by_dividing(10, swing)}")
 print("dividing ten million by ten:", *(10000000 // power(10, s) for s in range(1, 8)))
@@ -151,7 +153,7 @@ assert log_by_dividing(2, 32) == 5 and log_by_dividing(10, 1) == 0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 magnitude 4  needle swing     10000  log base 10 of it 4
@@ -178,6 +180,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // down to 1; road two multiplies back up to the same number.
 const QUAKES: [(i64, i64); 4] = [(4, 10000), (5, 100000), (6, 1000000), (7, 10000000)];
 fn log_by_dividing(base: i64, x: i64) -> i64 {   // divide by the base until 1
+    assert!(base > 1 && x >= 1, "needs a base above 1 and a number of at least 1");
     let (mut x, mut steps) = (x, 0i64);
     while x > 1 {
         assert!(x % base == 0, "not a whole power of that base");
@@ -192,7 +195,6 @@ fn power(base: i64, steps: i64) -> i64 {         // the road back
     out
 }
 fn row(name: &str, value: i64) { println!("{:<37}{:>9}", name, value); }
-
 fn main() {
     for (mag, swing) in QUAKES {
         println!("magnitude {}  needle swing {:>9}  log base 10 of it {}",
@@ -215,7 +217,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 magnitude 4  needle swing     10000  log base 10 of it 4

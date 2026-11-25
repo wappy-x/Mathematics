@@ -6,11 +6,13 @@
 
 ## General Overview
 
-You are building a square raised bed for vegetables that must cover 50 square metres. Beside it goes a cube-shaped water tank holding 8,000 litres. One question covers both: how long is a side?
+You are digging a square vegetable bed that must cover 50 square metres. Beside it goes a cube-shaped water tank holding 8,000 litres. One question covers both: how long is a side?
 
 Multiplying is the easy direction: 7 metres a side covers 49 square metres, nearly enough. Here you are handed the 50 and asked for the 7-and-a-bit — the backwards move, a **root**.
 
-The bed's side is the **square root** of 50: the number that, times itself, gives 50. The tank's side is the **cube root** of 8, since 8,000 litres is 8 cubic metres: the number that, in three copies, gives 8. As powers, in the notation from [Exponents](01-exponents-and-powers.md), they are 50^(1/2) and 8^(1/3); the old sign for the first is √50. The bottom of the fraction says how many copies: 2 for the bed, 3 for the tank.
+The bed's side is the **square root** of 50: the number that, times itself, gives 50. The tank's side is the **cube root** of 8, since 8,000 litres is 8 cubic metres: the number that, in three copies, gives 8.
+
+As powers, in the notation from [Exponents](01-exponents-and-powers.md), they are 50^(1/2) and 8^(1/3); the old sign for the first is √50. The bottom of the fraction says how many copies: 2 for the bed, 3 for the tank.
 
 **A root is a power run backwards, and written as the exponent 1/2 or 1/3 it obeys every law powers already obey.**
 
@@ -54,7 +56,7 @@ The question, written down, defines the answer:
 
 - **A base of zero or more, for a square root.** Nothing times itself lands on a minus, so a negative base has none.
 - **The plus answer, for a length.** −7.071067811865 also squares to 50, but no side is negative.
-- **One unit for the base.** Read 8,000 litres as cubic metres and the side comes out at 20 metres, ten times too big.
+- **One unit for the base.** Read 8,000 litres as 8,000 cubic metres and the side comes out at 20 metres, ten times too big.
 
 ---
 
@@ -74,7 +76,9 @@ Thirds work the same: one third, three times, adds to 1, so three copies of 8^(1
 
 Guess 7. Divide 50 by the guess. A right guess hands back itself; this one does not, so one is too small, the other too big, and the side sits between. Average them: 7.071428571429.
 
-Again, with that as the guess: 7.071067821068. Once more: 7.071067811865, and a fourth round does not move it. Each round roughly doubles the digits you can trust; the value it lands on sits on a Babylonian clay tablet 3,800 years old, for the square root of 2. Cube roots weight the guess two to one against 8 ÷ (guess × guess) — same idea, three copies.
+Again, with that as the guess: 7.071067821068. Once more: 7.071067811865, and a fourth round does not move it. Each round roughly doubles the digits you can trust. A Babylonian clay tablet about 3,800 years old, YBC 7289, gives the square root of 2 correct to about six decimal places; how its scribe found it is not known.
+
+Cube roots weight the guess two to one against 8 ÷ (guess × guess) — same idea, three copies.
 
 ### Step 3: the minus twin, and a second road
 
@@ -99,7 +103,7 @@ The tank needs no cube root at all. A litre is a cube one decimetre on a side, a
 | the tank, root way | 8^(1/3) | **2.000000000000** |
 | one face | 8^(2/3) | 4.000000000000 |
 
-The bed is a shade over 7 metres a side; the tank 2 metres, its faces 4 square metres.
+The bed is a shade over 7 metres a side: 7.07 m on a tape measure. The 12 decimal places only show the rounds settling. The tank is 2 metres a side, its faces 4 square metres.
 
 ### What breaks if you drop a piece
 
@@ -386,11 +390,14 @@ example : (7 : ℤ) * 7 = 49 ∧ (-7 : ℤ) * (-7) = 49 := by decide
 ## What this builds on
 
 - [Exponents](01-exponents-and-powers.md): exponent notation, and the law that multiplying powers of one base adds their exponents — what forces 1/2 to mean a square root.
-- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): why the bed's side never stops in digits, and the tank's is exactly 2.
+- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): why a root that is not exact, like √2 or the bed's √50, has a decimal that never stops or repeats.
 
 ## Where this goes next
 
+- [Scientific notation](04-scientific-notation.md): next on this shelf — very big and very small numbers written with powers of ten.
 - [Logarithms](05-logarithms.md): a root runs a power backwards for the base; a logarithm runs it backwards for the exponent — "what power got me here?"
+
+This card leaves one question open: 8,000 litres became 8 cubic metres by moving three tens, so how do powers of ten keep numbers like the distance to the Sun short and readable? [Scientific notation](04-scientific-notation.md) answers it.
 
 ---
 
