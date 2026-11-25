@@ -1,5 +1,5 @@
 # Fermat's little theorem -- the check behind the card.  Nothing is imported.  A
-# 13-position lock dial, base 2: twelve doublings land on 1, the twelve doubled
+# 13-position dial, base 2: twelve doublings land on 1, the twelve doubled
 # positions are the twelve positions shuffled, and 2 to the 1000 collapses to 3.
 DIAL, BASE = 13, 2
 
@@ -13,16 +13,16 @@ whole, left = BASE ** (DIAL - 1), 1000 % (DIAL - 1)   # 4096 in full; 1000 split
 doubles = [(BASE * k) % DIAL for k in range(1, DIAL)]
 plain, shuffled = 1, 1                                # 1 x 2 x ... x 12, and each doubled
 for k in range(1, DIAL): plain, shuffled = plain * k, shuffled * (BASE * k)
-row("2 doubled twelve times", whole)
-row(f"{whole} = {whole // DIAL} x {DIAL} + 1, so the dial shows", whole % DIAL)
-row(f"2 to the {DIAL} = {BASE ** DIAL}, so the dial shows", turn(BASE, DIAL, DIAL))
-print("1 to 12, each doubled: " + " ".join(str(d) for d in doubles))
-row("1 to 12 multiplied", plain)
-row("the twelve doubles multiplied", shuffled)
-row("both of those, on the 13-dial", plain % DIAL)
+row(f"{BASE} to the {DIAL - 1}", whole)
+row(f"{whole} = {whole // DIAL} x {DIAL} + {whole % DIAL}, so the dial shows", whole % DIAL)
+row(f"{BASE} to the {DIAL} = {BASE ** DIAL}, so the dial shows", turn(BASE, DIAL, DIAL))
+print(f"1 to {DIAL - 1}, each doubled: " + " ".join(str(d) for d in doubles))
+row(f"1 to {DIAL - 1} multiplied", plain)
+row(f"the {DIAL - 1} doubles multiplied", shuffled)
+row(f"both of those, on the {DIAL}-dial", plain % DIAL)
 row(f"1000 = {1000 // (DIAL - 1)} x {DIAL - 1} + {left}, leftover exponent", left)
-row(f"2 to the {left} = {BASE ** left}, so the dial shows", turn(BASE, left, DIAL))
-row("2 to the 1000 the long way, on the 13-dial", turn(BASE, 1000, DIAL))
+row(f"{BASE} to the {left} = {BASE ** left}, so the dial shows", turn(BASE, left, DIAL))
+row(f"{BASE} to the 1000 the long way, on the {DIAL}-dial", turn(BASE, 1000, DIAL))
 print(f"gone wrong: cut by 13 -> {turn(BASE, 1000 % DIAL, DIAL)}, base 26 -> {turn(2 * DIAL, DIAL - 1, DIAL)}, 14 on a 15-dial ({BASE ** 14}) -> {turn(BASE, 14, 15)}")
 assert whole == 4096 and whole == 315 * DIAL + 1 and turn(BASE, DIAL - 1, DIAL) == 1
 assert sorted(doubles) == list(range(1, DIAL)) and shuffled % DIAL == plain % DIAL == 12

@@ -12,9 +12,9 @@ Trying all twelve works; indices are faster. Start at 1 and keep doubling: 1, 2,
 
 So each remainder has a step number: 7 is step 11. That number is its **index**, also called its **discrete logarithm**: how many 2s, multiplied together, got here ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-Indices turn a fifth power into multiplying by 5. With $`i`$ the index of the unknown, the question becomes $`5i \equiv 11 \pmod{12}`$, a linear congruence. Its answer $`i = 7`$ gives $`x = 2^7 \equiv 11`$, and indeed $`11^5 \equiv 7`$.
+Indices turn a fifth power into multiplying by 5. With $`i`$ the index of the unknown, the question becomes $`5i \equiv 11 \pmod{12}`$, a **linear congruence**: an equation on a clock with the unknown to the first power only ([Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md)). Its answer $`i = 7`$ gives $`x = 2^7 \equiv 11`$, and indeed $`11^5 \equiv 7`$.
 
-**An index table turns every power equation on a prime clock into a linear congruence on a clock one smaller, which says at once how many answers there are and what they are.**
+**An index table turns every power equation on a prime clock into a linear congruence on a clock one smaller, which gives the number of answers and the answers themselves.**
 
 **What kind of fact this is:** a theorem, proved in Why it works; a primitive root exists by [Every prime clock has a primitive root](08-primitive-roots-mod-p.md).
 
@@ -35,7 +35,7 @@ All twelve heights appear once. Height 7 stands at index 11.
 
 ## The formula
 
-Three rules, on a prime clock $`p`$ with a primitive root $`g`$:
+Three rules, on a prime clock $`p`$ with a primitive root $`g`$, for nonzero remainders $`a`$ and $`b`$:
 
 ```math
 \mathrm{ind}(ab) \equiv \mathrm{ind}(a) + \mathrm{ind}(b) \pmod{p-1}
@@ -49,7 +49,7 @@ x^k \equiv a \pmod{p} \iff k \cdot \mathrm{ind}(x) \equiv \mathrm{ind}(a) \pmod{
 x^k \equiv a \text{ has } d \text{ answers if } a^{(p-1)/d} \equiv 1 \pmod{p}, \text{ and none otherwise}
 ```
 
-**Read it aloud:** indices add when numbers multiply, on a clock of size p − 1; a k-th power multiplies the index by k; and passing the power test means d answers.
+**Read it aloud:** indices add when numbers multiply, on a clock of size p − 1. A k-th power multiplies the index by k. Passing the power test means d answers.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -453,10 +453,11 @@ example : (10 : ZMod 13) ^ 5 = 4 := by decide
 
 ## Where this goes next
 
+- [Carmichael's function](11-carmichael-function.md): next on this shelf. On a clock that is not prime there may be no primitive root, so it asks for the longest order instead.
 - [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): powers are fast, indices slow.
 - [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): a shared secret kept safe by that slowness.
 
-Left open: is there a fast way to find an index on a huge prime clock? None is known for ordinary computers.
+Left open: is there a fast way to find an index on a huge prime clock? None is known for ordinary computers. That question belongs to the Codes and Secrets shelf; this shelf goes on to clocks that are not prime.
 
 ---
 

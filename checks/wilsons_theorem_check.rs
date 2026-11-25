@@ -1,5 +1,5 @@
 // Wilson's theorem -- the same check as the Python one, in Rust.  No crates.
-// Six dancers, 1 to 6, on a 7-hour clock: each pairs off with the partner that
+// The six numbers 1 to 6 on a 7-hour clock: each pairs off with the partner that
 // undoes it, so the whole product reads 6, one short of a clock, which is -1.
 const CLOCK: i64 = 7;
 
@@ -25,7 +25,7 @@ fn main() {
     row("1 x 2 x 3 x 4 x 5 x 6", plain);
     row(&format!("{} = {} x {} + {}, so the 7-clock reads", plain, plain / CLOCK, CLOCK, plain % CLOCK), plain % CLOCK);
     let who: Vec<String> = partners.iter().map(|b| b.to_string()).collect();
-    println!("who undoes who, dancers 1 to 6:  {}", who.join(" "));
+    println!("who undoes who, numbers 1 to 6:  {}", who.join(" "));
     let two: Vec<String> = pairs.iter()
         .map(|&(a, b)| format!("{} x {} = {} reads {}", a, b, a * b, a * b % CLOCK)).collect();
     println!("the two pairs: {}", two.join(", "));

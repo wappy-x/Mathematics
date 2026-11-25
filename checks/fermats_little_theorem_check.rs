@@ -1,5 +1,5 @@
 // Fermat's little theorem -- the same check as the Python one, in Rust.  No crates.
-// A 13-position lock dial, base 2: twelve doublings land on 1, the twelve doubled
+// A 13-position dial, base 2: twelve doublings land on 1, the twelve doubled
 // positions are the twelve positions shuffled, and 2 to the 1000 collapses to 3.
 const DIAL: i64 = 13;
 const BASE: i64 = 2;
@@ -19,16 +19,16 @@ fn main() {
     let (mut plain, mut shuffled) = (1i64, 1i64);    // 1 x 2 x ... x 12, and each doubled
     for k in 1..DIAL { plain *= k; shuffled *= BASE * k; }
     let marks: Vec<String> = doubles.iter().map(|d| d.to_string()).collect();
-    row("2 doubled twelve times", whole);
-    row(&format!("{} = {} x {} + 1, so the dial shows", whole, whole / DIAL, DIAL), whole % DIAL);
-    row(&format!("2 to the {} = {}, so the dial shows", DIAL, BASE.pow(DIAL as u32)), turn(BASE, DIAL, DIAL));
-    println!("1 to 12, each doubled: {}", marks.join(" "));
-    row("1 to 12 multiplied", plain);
-    row("the twelve doubles multiplied", shuffled);
-    row("both of those, on the 13-dial", plain % DIAL);
+    row(&format!("{} to the {}", BASE, DIAL - 1), whole);
+    row(&format!("{} = {} x {} + {}, so the dial shows", whole, whole / DIAL, DIAL, whole % DIAL), whole % DIAL);
+    row(&format!("{} to the {} = {}, so the dial shows", BASE, DIAL, BASE.pow(DIAL as u32)), turn(BASE, DIAL, DIAL));
+    println!("1 to {}, each doubled: {}", DIAL - 1, marks.join(" "));
+    row(&format!("1 to {} multiplied", DIAL - 1), plain);
+    row(&format!("the {} doubles multiplied", DIAL - 1), shuffled);
+    row(&format!("both of those, on the {}-dial", DIAL), plain % DIAL);
     row(&format!("1000 = {} x {} + {}, leftover exponent", 1000 / (DIAL - 1), DIAL - 1, left), left);
-    row(&format!("2 to the {} = {}, so the dial shows", left, BASE.pow(left as u32)), turn(BASE, left, DIAL));
-    row("2 to the 1000 the long way, on the 13-dial", turn(BASE, 1000, DIAL));
+    row(&format!("{} to the {} = {}, so the dial shows", BASE, left, BASE.pow(left as u32)), turn(BASE, left, DIAL));
+    row(&format!("{} to the 1000 the long way, on the {}-dial", BASE, DIAL), turn(BASE, 1000, DIAL));
     println!("gone wrong: cut by 13 -> {}, base 26 -> {}, 14 on a 15-dial ({}) -> {}",
              turn(BASE, 1000 % DIAL, DIAL), turn(2 * DIAL, DIAL - 1, DIAL), BASE.pow(14), turn(BASE, 14, 15));
     let mut sorted = doubles.clone(); sorted.sort();

@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A delivery van's trip counter has three wheels. It leaves the depot reading 001, and every night the software multiplies the reading by 7 and writes it back. Anything above 999 has nowhere to sit: only the last three digits survive.
+Simulations and games need long streams of random-looking numbers. The simplest random-number generator makes each new number from the last one. It multiplies by a fixed number and keeps only the remainder. This small one multiplies by 7 and keeps the last three digits.
 
-Night one it reads 007, night two 049, night three 343. Night four the true number is 2401 and the counter shows 401 — the thousands fell off the end.
+It starts at 001. Step one gives 007, step two 049, step three 343. At step four the true number is 2401, and the generator keeps 401: the thousands fall away.
 
-What does it read on day 123? The counter gets there one multiplication a night, 123 of them. You do not have to. Multiply a reading by itself and the days it stands for double at a stroke. Six such squarings, plus five extra 7s for the odd day counts, land on day 123: **eleven multiplications**.
+A simulation split across many computers gives each one its own part of the stream. One may need step 123 without making the 122 before it.
 
-**Throw the thousands away as you go, and square instead of repeating: 123 days costs eleven multiplications instead of 123.**
+The generator itself gets there one multiplication per step, 123 of them. You do not have to. Multiply an output by itself and the steps it stands for double at once. Six such squarings, plus five extra 7s for the odd step counts, land on step 123: **eleven multiplications**.
+
+**Throw the thousands away as you go, and square instead of repeating: 123 steps cost eleven multiplications instead of 123.**
 
 **What kind of fact this is:** a method, proved correct in Why it works.
 
@@ -20,10 +22,10 @@ What does it read on day 123? The counter gets there one multiplication a night,
 
 ```mermaid
 flowchart LR
-  A["day 1<br>reads 7"] --> B["day 3<br>reads 343"] --> C["day 7<br>reads 543"] --> D["day 15<br>reads 943"] --> E["day 30<br>reads 249"] --> F["day 61<br>reads 7"] --> G["day 123<br>reads 343"]
+  A["step 1<br>gives 7"] --> B["step 3<br>gives 343"] --> C["step 7<br>gives 543"] --> D["step 15<br>gives 943"] --> E["step 30<br>gives 249"] --> F["step 61<br>gives 7"] --> G["step 123<br>gives 343"]
 ```
 
-Each arrow squares the reading, doubling the days, and adds a 7 where the day count is odd. Name the parts: the wheels are the modulus, 1000; the day count is the exponent, 123; the 7 is the base. The method is called **modular exponentiation**, done by **square-and-multiply**. Those words carry the rest of the card.
+Each arrow squares the output, doubling the steps, and multiplies by one more 7 where the step count is odd. Name the parts: the 1000 that keeps three digits is the modulus; the step count is the exponent, 123; the 7 is the base. The method is called **modular exponentiation**, done by **square-and-multiply**. Those words carry the rest of the card.
 
 ---
 
@@ -37,24 +39,24 @@ The question in symbols:
 
 Two lines are the whole method, with b the base and e the exponent:
 
-**Even exponent: b^e = (b^(e/2))^2.** Halve the day count, then square that reading.
+**Even exponent: b^e = (b^(e/2))^2.** Halve the step count, then square that output.
 
-**Odd exponent: b^e = b × (b^((e−1)/2))^2.** Halve, drop the spare day, square that reading, then one more 7.
+**Odd exponent: b^e = b × (b^((e−1)/2))^2.** Halve, drop the spare step, square that output, then one more 7.
 
-**Read it aloud:** halve the days to 1, then climb back, squaring at each rung and slipping in a 7 where the day count was odd. Keep only the last three digits: 2401 ≡ 401 (mod 1000).
+**Read it aloud:** halve the steps to 1, then climb back, squaring at each rung and slipping in a 7 where the step count was odd. Keep only the last three digits: 2401 ≡ 401 (mod 1000).
 
-| Piece | Plain meaning | On the counter |
+| Piece | Plain meaning | In the generator |
 | --- | --- | --- |
-| the base, b | what the reading is multiplied by nightly | 7 |
-| the exponent, e | how many times the base is used: the days | 123 |
-| the modulus, n | what you divide by: what the wheels hold | 1000 |
-| the remainder, r | what is left over: what the wheels show | 343 on day 123 |
+| the base, b | what each output is multiplied by | 7 |
+| the exponent, e | how many times the base is used: the steps | 123 |
+| the modulus, n | what you divide by: 1000 keeps three digits | 1000 |
+| the remainder, r | what is left over: the output | 343 at step 123 |
 
 ### When it holds
 
-- **The day count is a whole number.** Halving with the spare dropped walks it down to 1. A fraction of a day has no rung to climb.
-- **The same 7 every night.** Squaring doubles the days only because every night uses the same base. Change the multiplier from night to night and there is no ladder.
-- **Every product fits the computer's numbers.** Here the biggest is 889249. On a far wider clock, Rust's `i64` whole numbers overflow and the readings come out wrong.
+- **The step count is a whole number.** Halving with the spare dropped walks it down to 1. A fraction of a step has no rung to climb.
+- **The same 7 at every step.** Squaring doubles the steps only because every step uses the same base. Change the multiplier from step to step and there is no ladder.
+- **Every product fits the computer's numbers.** Here the biggest is 889249. On a far wider clock, fixed-size computer numbers, like the Rust check's 64-bit `i64`, overflow and the outputs come out wrong.
 
 ---
 
@@ -62,99 +64,99 @@ Two lines are the whole method, with b the base and e the exponent:
 
 ### Step 0: what falls off never comes back
 
-Remainders multiply on their own ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): reduce first or reduce at the end, same remainder. On day 7 the true number is 823543 and the counter reads 543. Dropping the thousands costs nothing.
+Remainders multiply on their own ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): reduce first or reduce at the end, same remainder. At step 7 the true number is 823543 and the generator keeps 543. Dropping the thousands costs nothing.
 
-It also caps the work. Both readings entering a multiplication are under 1000, so every product is under 1000 × 1000 = 1,000,000 — the same ceiling on the last night as the first.
+It also caps the work. Both numbers entering a multiplication are under 1000, so every product is under 1000 × 1000 = 1,000,000 — the same ceiling on the last step as the first.
 
-### Step 1: squaring doubles the days
+### Step 1: squaring doubles the steps
 
-The day 15 reading is 7 used 15 times, thousands thrown away. Square it and 7 has been used 30 times ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)): 943 × 943 = 889249, keep 249. Day 30, one multiplication.
+The step 15 output is 7 used 15 times, thousands thrown away. Square it and 7 has been used 30 times ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)): 943 × 943 = 889249, keep 249. Step 30, one multiplication.
 
-### Step 2: every day count halves to 1
+### Step 2: every step count halves to 1
 
-Halve, dropping the spare when the count is odd: 123, 61, 30, 15, 7, 3, 1. Seven rungs; the five odd ones above the bottom each cost an extra 7. Double the days and the list gains one rung, not double the rungs.
+Halve, dropping the spare when the count is odd: 123, 61, 30, 15, 7, 3, 1. Seven rungs; the five odd ones above the bottom each cost an extra 7. Double the steps and the list gains one rung, not double the rungs.
 
 ### Step 3: climb back up
 
-Day 1: the counter reads 7. Read the list bottom to top. Each rung is double the one below, plus a spare when odd: square for the doubling, one more 7 for the spare.
+Step 1: the output is 7. Read the list bottom to top. Each rung is double the one below, plus a spare when odd: square for the doubling, one more 7 for the spare.
 
-Nothing drifts: if a rung's reading is right, its square is right for double that rung, and one more 7 is right for double-plus-one. The bottom rung is plainly right, so all are ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Nothing drifts: if a rung's output is right, its square is right for double that rung, and one more 7 is right for double-plus-one. The bottom rung is plainly right, so all are ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
-Six rungs sit above the first: six squarings. Five of those are odd: five more 7s. Eleven multiplications, with the day-1 reading of 7 free; the slow road starts at 1 and pays 123.
+Six rungs sit above the first: six squarings. Five of those are odd: five more 7s. Eleven multiplications, with the step-1 output of 7 free; the slow road starts at 1 and pays 123.
 
 ---
 
 ## Worked numbers, by hand
 
-| Step | Arithmetic | Reading |
+| Step | Arithmetic | Output |
 | --- | --- | --- |
-| day 1 | the counter reads 7 | 7 |
-| day 3 | square 7, one more 7 | 343 |
-| day 7 | square 343, one more 7 | 543 |
-| day 15 | square 543, one more 7 | 943 |
-| day 30 | square 943: 889249, last three | 249 |
-| day 61 | square 249, one more 7 | 7 |
-| day 123 | square 7, one more 7 | **343** |
+| step 1 | the output is 7 | 7 |
+| step 3 | square 7, one more 7 | 343 |
+| step 7 | square 343, one more 7 | 543 |
+| step 15 | square 543, one more 7 | 943 |
+| step 30 | square 943: 889249, last three | 249 |
+| step 61 | square 249, one more 7 | 7 |
+| step 123 | square 7, one more 7 | **343** |
 
-On day 123 the wheels read 343, nothing longer than six digits written. Day 3 reads 343 too, which is not luck: [The order of a number and primitive roots](05-order-and-primitive-roots.md).
+At step 123 the generator gives 343, with nothing longer than six digits written. Step 3 gives 343 too, which is not luck: [The order of a number and primitive roots](05-order-and-primitive-roots.md).
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Squaring only, no spare 7s | 401 | The six squarings reach day 64, not day 123: a right reading for the wrong day |
-| Keeping the thousands, reducing at the end | 823543 on day 7 | Still ends in 543, but day 123 in full is 104 digits — at key size, more digits than atoms in the street |
+| Squaring only, no spare 7s | 401 | The six squarings reach step 64, not step 123: a right output for the wrong step |
+| Keeping the thousands, reducing at the end | 823543 at step 7 | Still ends in 543, but step 123 in full is 104 digits; at key sizes, more digits than atoms in the universe |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The ladder is climbed rung by rung, then checked against the counter's own road: 123 nights of multiplying by 7.
+Nothing is imported. The ladder is climbed rung by rung, then checked against the generator's own road: 123 steps of multiplying by 7.
 
 ### Python
 
 ```python
-# Powers on the clock -- the check behind the card.  Nothing is imported.  A three-digit
-# trip counter multiplies its reading by 7 each day and keeps only the last three digits.
-def by_squaring(days, spare=True):     # halve the days down, then square back up
+# Powers on the clock -- the check behind the card.  Nothing is imported.  A toy random-number
+# generator multiplies its output by 7 at each step and keeps only the last three digits.
+def by_squaring(steps, spare=True):    # halve the steps down, then square back up
     rungs = []
-    while days: rungs.append(days); days //= 2
+    while steps: rungs.append(steps); steps //= 2
     rungs.reverse()
     reading, mults, trace = 7, 0, [7]
     for rung in rungs[1:]:
-        reading = reading * reading % 1000; mults += 1        # square: doubles the days
-        if spare and rung % 2: reading = reading * 7 % 1000; mults += 1   # the spare day
+        reading = reading * reading % 1000; mults += 1        # square: doubles the steps
+        if spare and rung % 2: reading = reading * 7 % 1000; mults += 1   # the spare step
         trace.append(reading)
     return reading, mults, rungs, trace
-def slow(days):                        # the counter's own way, one multiplication a day
+def slow(steps):                       # the generator's own way, one multiplication a step
     reading = 1
-    for _ in range(days): reading = reading * 7 % 1000
+    for _ in range(steps): reading = reading * 7 % 1000
     return reading
 def line(name, values): print(f"{name:<33}" + "".join(f"{v:>7}" for v in values))
-fast, mults, rungs, readings = by_squaring(123)
-line("the days, from 1 up to 123", rungs)
-line("what the counter reads on them", readings)
-line("day 123 by squaring, mod 1000", [fast])
-line("day 123 the slow way, mod 1000", [slow(123)])
-line("multiplications, fast then slow", [mults, 123])
-line("day 7 with nothing thrown away", [7 * 7 * 7 * 7 * 7 * 7 * 7])
+STEPS = 123; fast, mults, rungs, readings = by_squaring(STEPS)
+line(f"the steps, from 1 up to {STEPS}", rungs)
+line("what the generator gives on them", readings)
+line(f"step {STEPS} by squaring, mod 1000", [fast])
+line(f"step {STEPS} the slow way, mod 1000", [slow(STEPS)])
+line("multiplications, fast then slow", [mults, STEPS])
+line("step 7 with nothing thrown away", [7 * 7 * 7 * 7 * 7 * 7 * 7])
 line("biggest number written down", [943 * 943])
-line("skipping the spare 7s", [by_squaring(123, False)[0]])
-assert fast == 343 and slow(123) == 343 and fast == slow(123)
+line("skipping the spare 7s", [by_squaring(STEPS, False)[0]])
+assert fast == 343 and slow(STEPS) == 343 and fast == slow(STEPS)
 assert rungs == [1, 3, 7, 15, 30, 61, 123] and readings == [7, 343, 543, 943, 249, 7, 343]
 assert mults == 11 and 7 ** 7 % 1000 == readings[2] and by_squaring(123, False)[0] == 401
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-the days, from 1 up to 123             1      3      7     15     30     61    123
-what the counter reads on them         7    343    543    943    249      7    343
-day 123 by squaring, mod 1000        343
-day 123 the slow way, mod 1000       343
+the steps, from 1 up to 123            1      3      7     15     30     61    123
+what the generator gives on them       7    343    543    943    249      7    343
+step 123 by squaring, mod 1000       343
+step 123 the slow way, mod 1000      343
 multiplications, fast then slow       11    123
-day 7 with nothing thrown away    823543
+step 7 with nothing thrown away   823543
 biggest number written down       889249
 skipping the spare 7s                401
 ALL CHECKS PASS
@@ -166,23 +168,23 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
 // Powers on the clock -- the same check as modular_exponentiation_check.py, in Rust.  No
-// crates.  A three-digit trip counter multiplies its reading by 7 each day and keeps only
-// the last three digits.
-fn by_squaring(mut days: i64, spare: bool) -> (i64, i64, Vec<i64>, Vec<i64>) {
-    let mut rungs: Vec<i64> = Vec::new();          // halve the days down, then square back up
-    while days > 0 { rungs.push(days); days /= 2; }
+// crates.  A toy random-number generator multiplies its output by 7 at each step and keeps
+// only the last three digits.
+fn by_squaring(mut steps: i64, spare: bool) -> (i64, i64, Vec<i64>, Vec<i64>) {
+    let mut rungs: Vec<i64> = Vec::new();          // halve the steps down, then square back up
+    while steps > 0 { rungs.push(steps); steps /= 2; }
     rungs.reverse();
     let (mut reading, mut mults, mut trace) = (7i64, 0i64, vec![7i64]);
     for rung in &rungs[1..] {
-        reading = reading * reading % 1000; mults += 1;        // square: doubles the days
-        if spare && rung % 2 == 1 { reading = reading * 7 % 1000; mults += 1; }  // spare day
+        reading = reading * reading % 1000; mults += 1;        // square: doubles the steps
+        if spare && rung % 2 == 1 { reading = reading * 7 % 1000; mults += 1; }  // spare step
         trace.push(reading);
     }
     (reading, mults, rungs, trace)
 }
-fn slow(days: i64) -> i64 {             // the counter's own way, one multiplication a day
+fn slow(steps: i64) -> i64 {            // the generator's own way, one multiplication a step
     let mut reading = 1i64;
-    for _ in 0..days { reading = reading * 7 % 1000; }
+    for _ in 0..steps { reading = reading * 7 % 1000; }
     reading
 }
 fn line(name: &str, values: &[i64]) {
@@ -191,31 +193,31 @@ fn line(name: &str, values: &[i64]) {
     println!("{}", out);
 }
 fn main() {
-    let (fast, mults, rungs, readings) = by_squaring(123, true);
-    line("the days, from 1 up to 123", &rungs);
-    line("what the counter reads on them", &readings);
-    line("day 123 by squaring, mod 1000", &[fast]);
-    line("day 123 the slow way, mod 1000", &[slow(123)]);
-    line("multiplications, fast then slow", &[mults, 123]);
-    line("day 7 with nothing thrown away", &[7 * 7 * 7 * 7 * 7 * 7 * 7]);
+    const STEPS: i64 = 123; let (fast, mults, rungs, readings) = by_squaring(STEPS, true);
+    line(&format!("the steps, from 1 up to {}", STEPS), &rungs);
+    line("what the generator gives on them", &readings);
+    line(&format!("step {} by squaring, mod 1000", STEPS), &[fast]);
+    line(&format!("step {} the slow way, mod 1000", STEPS), &[slow(STEPS)]);
+    line("multiplications, fast then slow", &[mults, STEPS]);
+    line("step 7 with nothing thrown away", &[7 * 7 * 7 * 7 * 7 * 7 * 7]);
     line("biggest number written down", &[943 * 943]);
-    line("skipping the spare 7s", &[by_squaring(123, false).0]);
-    assert!(fast == 343 && slow(123) == 343 && fast == slow(123));
+    line("skipping the spare 7s", &[by_squaring(STEPS, false).0]);
+    assert!(fast == 343 && slow(STEPS) == 343 && fast == slow(STEPS));
     assert!(rungs == vec![1, 3, 7, 15, 30, 61, 123] && readings == vec![7, 343, 543, 943, 249, 7, 343]);
     assert!(mults == 11 && 7i64.pow(7) % 1000 == readings[2] && by_squaring(123, false).0 == 401);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-the days, from 1 up to 123             1      3      7     15     30     61    123
-what the counter reads on them         7    343    543    943    249      7    343
-day 123 by squaring, mod 1000        343
-day 123 the slow way, mod 1000       343
+the steps, from 1 up to 123            1      3      7     15     30     61    123
+what the generator gives on them       7    343    543    943    249      7    343
+step 123 by squaring, mod 1000       343
+step 123 the slow way, mod 1000      343
 multiplications, fast then slow       11    123
-day 7 with nothing thrown away    823543
+step 7 with nothing thrown away   823543
 biggest number written down       889249
 skipping the spare 7s                401
 ALL CHECKS PASS
@@ -227,11 +229,11 @@ The two outputs match line for line.
 
 Lean proves the method correct for every base, every whole-number exponent and every modulus.
 
-- Square-and-multiply, keeping only the remainder after each multiplication, gives the same reading as multiplying by the base night after night.
-- The ladder makes at most two multiplications per halving of the day count.
-- Doubling the day count adds one rung and one multiplication, not double the work.
-- Every product the ladder forms stays below the modulus times itself: under 1,000,000 on this counter.
-- On the counter itself: day 123 reads 343, the rungs read as in the table, and the ladder makes eleven multiplications.
+- Square-and-multiply, keeping only the remainder after each multiplication, gives the same output as multiplying by the base step after step.
+- The ladder makes at most two multiplications per halving of the step count.
+- Doubling the step count adds one rung and one multiplication, not double the work.
+- Every product the ladder forms stays below the modulus times itself: under 1,000,000 in this generator.
+- On the generator itself: step 123 gives 343, the rungs give the outputs in the table, and the ladder makes eleven multiplications.
 
 Running the method as real programs, where Rust's `i64` whole numbers must hold every product, is left to the Python and Rust checks.
 
@@ -241,9 +243,9 @@ import Mathlib.Data.Nat.Log
 import Mathlib.Tactic.NormNum.Pow
 import Mathlib.Tactic.NormNum.DivMod
 
-/-- Square-and-multiply on a clock of size n. Day 0 reads 1 and day 1 reads the base b (its
-remainder). For a day count of 2 or more: halve it, dropping the spare day when it is odd, find
-that reading, square it and keep the remainder; on an odd day count multiply once more by the base
+/-- Square-and-multiply on a clock of size n. Step 0 gives 1 and step 1 gives the base b (its
+remainder). For a step count of 2 or more: halve it, dropping the spare step when it is odd, find
+that output, square it and keep the remainder; on an odd step count multiply once more by the base
 and keep the remainder again. -/
 def ladder (b n : ℕ) : ℕ → ℕ
   | 0 => 1 % n
@@ -253,8 +255,8 @@ def ladder (b n : ℕ) : ℕ → ℕ
     if (e + 2) % 2 = 0 then r * r % n else r * r % n * (b % n) % n
 decreasing_by omega
 
-/-- How many multiplications the ladder makes: none for day 0 or day 1, and on each rung above
-one squaring plus one more multiplication by the base when the day count is odd. -/
+/-- How many multiplications the ladder makes: none for step 0 or step 1, and on each rung above
+one squaring plus one more multiplication by the base when the step count is odd. -/
 def ladderMults : ℕ → ℕ
   | 0 => 0
   | 1 => 0
@@ -262,9 +264,9 @@ def ladderMults : ℕ → ℕ
 decreasing_by omega
 
 /-- Modular exponentiation by square-and-multiply is correct. For every base b, every whole-number
-day count e and every clock size n, climbing the ladder (square on each rung, one more b on the
+step count e and every clock size n, climbing the ladder (square on each rung, one more b on the
 odd rungs, throw away everything but the remainder after each multiplication) gives exactly the
-remainder of b to the power e divided by n: the same reading as multiplying by b one night at a
+remainder of b to the power e divided by n: the same output as multiplying by b one step at a
 time. -/
 theorem square_and_multiply_gives_power_mod (b e n : ℕ) : ladder b n e = b ^ e % n := by
   induction e using Nat.strong_induction_on with
@@ -290,8 +292,8 @@ theorem square_and_multiply_gives_power_mod (b e n : ℕ) : ladder b n e = b ^ e
           congr 1
         rw [hsq, h3, Nat.mul_mod_mod, Nat.mod_mul_mod]
 
-/-- The ladder is short. For a day count e of at least 1, it makes at most two multiplications per
-halving, at most 2 × log₂ e in all; and doubling the day count adds one rung, one multiplication,
+/-- The ladder is short. For a step count e of at least 1, it makes at most two multiplications per
+halving, at most 2 × log₂ e in all; and doubling the step count adds one rung, one multiplication,
 not double the work. -/
 theorem ladder_uses_at_most_two_multiplications_per_halving (e : ℕ) (he : 1 ≤ e) :
     ladderMults e ≤ 2 * Nat.log 2 e ∧ ladderMults (2 * e) = ladderMults e + 1 := by
@@ -315,7 +317,7 @@ theorem ladder_uses_at_most_two_multiplications_per_halving (e : ℕ) (he : 1 �
     have h2 : (2 * k + 2) % 2 = 0 := by omega
     rw [h1, h2]
 
-/-- What falls off never piles up. On a clock of size n, every reading on the ladder is a
+/-- What falls off never piles up. On a clock of size n, every output on the ladder is a
 remainder, so both products the ladder forms on the next rung, the squaring and the extra
 multiplication by the base, stay below n × n. -/
 theorem ladder_products_stay_below_modulus_squared (b n e : ℕ) (hn : 0 < n) :
@@ -330,7 +332,7 @@ theorem ladder_products_stay_below_modulus_squared (b n e : ℕ) (hn : 0 < n) :
 
 -- The question: 7 to the 123, mod 1000, is 343.
 example : 7 ^ 123 % 1000 = 343 := by norm_num
--- The day counts halve to 1: 123, 61, 30, 15, 7, 3, 1.
+-- The step counts halve to 1: 123, 61, 30, 15, 7, 3, 1.
 example : 123 / 2 = 61 ∧ 61 / 2 = 30 ∧ 30 / 2 = 15 ∧ 15 / 2 = 7 ∧ 7 / 2 = 3 ∧ 3 / 2 = 1 := by
   decide
 -- Climbing back by hand: 7, 343, 543, 943, 249, 7, 343.
@@ -343,11 +345,11 @@ example : ladder 7 1000 1 = 7 ∧ ladder 7 1000 3 = 343 ∧ ladder 7 1000 7 = 54
     ladder 7 1000 123 = 343 := by decide +kernel
 -- Eleven multiplications instead of 123.
 example : ladderMults 123 = 11 := by decide +kernel
--- Day 7 with nothing thrown away is 823543, which still ends in 543; the biggest product is 889249.
+-- Step 7 with nothing thrown away is 823543, which still ends in 543; the biggest product is 889249.
 example : 7 ^ 7 = 823543 ∧ 823543 % 1000 = 543 ∧ 943 * 943 = 889249 := by norm_num
--- Day 4: the true number is 2401 and the counter shows 401.
+-- Step 4: the true number is 2401 and the generator keeps 401.
 example : 7 ^ 4 = 2401 ∧ 2401 % 1000 = 401 := by norm_num
--- Skipping the spare 7s: six squarings reach day 64, which reads 401, not 343.
+-- Skipping the spare 7s: six squarings reach step 64, which gives 401, not 343.
 example : 7 ^ 64 % 1000 = 401 := by norm_num
 
 #print axioms square_and_multiply_gives_power_mod
@@ -355,7 +357,7 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 #print axioms ladder_products_stay_below_modulus_squared
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'square_and_multiply_gives_power_mod' depends on axioms: [propext, Quot.sound]
@@ -366,19 +368,19 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Take the spare days away.** Switch the spare-day flag off: 401, not 343 — six squarings land on day 64.
-> - **Move the day count.** Set all four 123s in the code to 61. Both roads still agree, on 7, and the asserts naming the 123-day list fire.
+> - **Take the spare steps away.** Switch the spare-step flag off: 401, not 343 — six squarings land on step 64.
+> - **Move the step count.** Set `STEPS` to 61. Both roads still agree, on 7, and the first assert, which expects 343, fires.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Squaring the reading doubles the days, not the reading.** Squaring 943 does not give twice 943. It gives 249: the reading for twice as many days.
+> **Squaring the output doubles the steps, not the output.** Squaring 943 does not give twice 943. It gives 249: the output for twice as many steps.
 >
 > - Skipping the spare 7 on an odd rung: 401, not 343.
-> - Rounding a halving up instead of dropping the spare day: every odd rung lands a day too far.
-> - The reading wraps at 1000; the exponent does not. Shrinking the exponent has its own rule: [Fermat's little theorem](02-fermats-little-theorem.md).
+> - Rounding a halving up instead of dropping the spare step: every odd rung lands a step too far.
+> - The output wraps at 1000; the exponent does not. Shrinking the exponent has its own rule: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 ---
 
@@ -386,10 +388,11 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 
 - **Keys and secrets.** Encryption is this ladder on a clock hundreds of digits wide: [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md).
 - **Testing for primeness.** The standard test is a huge power on a clock: [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md).
-- **Last digits of huge powers.** Every "what does it end in" is a counter with few wheels: [Fermat's little theorem](02-fermats-little-theorem.md).
+- **Random numbers for simulations.** Multiply-and-keep-the-remainder generators use this ladder to jump far ahead, so parallel runs can share one stream without overlap.
+- **Last digits of huge powers.** Every "what does it end in" is a power on a clock of 10, 100 or 1000: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 > **Say it back**
-> A three-wheel counter multiplies by 7 nightly and keeps the last three digits: base 7, modulus 1000. To reach exponent 123, halve the day count over and over — 123, 61, 30, 15, 7, 3, 1 — then climb the list backwards from a reading of 7. Square at each rung, since squaring doubles the exponent, and slip in a 7 where the rung is odd. Drop the thousands as you go: no product passes 1,000,000. That is modular exponentiation by square-and-multiply: eleven multiplications, and the counter reads 343.
+> A toy random-number generator multiplies by 7 at each step and keeps the last three digits: base 7, modulus 1000. To reach exponent 123, halve the step count over and over — 123, 61, 30, 15, 7, 3, 1 — then climb the list backwards from an output of 7. Square at each rung, since squaring doubles the exponent, and slip in a 7 where the rung is odd. Drop the thousands as you go: no product passes 1,000,000. That is modular exponentiation by square-and-multiply: eleven multiplications, and step 123 gives 343.
 
 ---
 
@@ -401,12 +404,12 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 
 ## Where this goes next
 
-- [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock the readings return to 1 on a schedule, shrinking the exponent before you climb.
-- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): easy forwards, and nobody knows how to run it backwards.
+- [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock the outputs return to 1 on a schedule, shrinking the exponent before you climb.
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): the ladder run backwards. Given only the output 343, nobody knows a fast way to find the step count.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): a primality test, one ladder per round.
-- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
+- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): on many prime clocks, one fast power gives a square root.
 
-Left open: given only the reading 343, can anyone find the day count fast?
+Left open: step 3 and step 123 both give 343, so the outputs repeat. On a prime clock, which power always brings a number back to 1?
 
 ---
 

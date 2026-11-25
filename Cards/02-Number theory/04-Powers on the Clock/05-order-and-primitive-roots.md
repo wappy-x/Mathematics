@@ -10,9 +10,11 @@ Divide 1 by 7 on paper. The answer is 0.142857 142857 142857, forever. Six digit
 
 Divide 1 by 13: 0.076923 076923 076923. Six again. The shared six is not luck.
 
-Long division carries a remainder, and each step multiplies that carry by 10 before dividing again. First carry 10, next 10 × 10, and so on. So the carries are the powers of 10 on the clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), and the digits repeat once a carry returns to 1. On the 7-clock they run 3, 2, 6, 4, 5, 1; on the 13-clock, 10, 9, 12, 3, 4, 1. Six steps home both times: the **order** of 10 is 6.
+Long division carries a remainder, and each step multiplies that carry by 10 before dividing again. First carry 10, next 10 × 10, and so on. So the carries are the powers of 10 on the clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), and the digits repeat once a carry returns to 1.
 
-On the 7-clock those carries hit all six numbers you can multiply by and get back from — sharing no factor above 1 with 7; on the 13-clock, half of twelve. A number whose powers reach everything is a **primitive root**.
+On the 7-clock they run 3, 2, 6, 4, 5, 1; on the 13-clock, 10, 9, 12, 3, 4, 1. Six steps home both times: the **order** of 10 is 6.
+
+On the 7-clock those carries hit all six numbers that share no factor above 1 with 7: the numbers you can multiply by and undo. On the 13-clock they hit only half of the twelve. A number whose powers reach everything is a **primitive root**.
 
 **The order is how many steps a number's powers take to return to 1. It always divides the count of remainders you can get back from, and equalling that count makes the number a primitive root.**
 
@@ -66,7 +68,7 @@ A clock can have more than one primitive root. The 7-clock has two, 3 and 5; 10 
 
 ### Step 0: the powers cannot wander forever
 
-A clock holds only so many remainders, so multiplying by 10 over and over must revisit one. When 10 and the clock size share no factor above 1, every step can be undone ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)), so the first repeat is a return to 1.
+Start at 1 and multiply by 10 over and over. A clock holds only so many remainders, so the run must revisit one. When 10 and the clock size share no factor above 1, every step can be undone ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). So the first remainder to come back is the starting 1 itself.
 
 Drop the condition and it fails. 10 and 14 are both even: the powers of 10 on the 14-clock go 10, 2, 6, 4, 12, 8 and round again, never touching 1.
 
@@ -411,12 +413,14 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 
 ## Where this goes next
 
+- [Wilson's theorem](06-wilsons-theorem.md): next on this shelf. It multiplies all the remainders you can undo together, instead of powering one of them.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): proves every prime clock has one, by counting how many numbers have each order.
+- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): the proof of Gauss's list from the fold above.
 - [Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): the order of 2 on a clock, riffles back to a fresh deck.
 - [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): why key exchange rests on a primitive root of a large prime.
-- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): count how many numbers have each order.
-- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest.
+- [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): the orders of small helper numbers steer the search for a square root.
 
-Left open: on which clocks is 10 a primitive root, so that 1/n repeats as long as it can?
+Left open: on which clocks is 10 a primitive root, so that 1/n repeats as long as it can? No card answers this in full. Nobody has proved even that infinitely many prime clocks work (this is Artin's conjecture).
 
 ---
 

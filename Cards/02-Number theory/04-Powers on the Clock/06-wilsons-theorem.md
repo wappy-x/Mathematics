@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Six dancers, 1 to 6, on a floor marked as a 7-hour clock: hours 0 to 6, and a step past 6 lands on 0 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Each must find the partner who undoes them: the one they multiply with to reach 1 ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
+Take a 7-hour clock: hours 0 to 6, and a step past 6 lands on 0 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Each of the six numbers 1 to 6 has a partner that undoes it: the number it multiplies with to reach 1 ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
 
 2 takes 4: 2 × 4 is 8, one clock and 1 over. 3 takes 5: 15 is two clocks and 1 over. 1 partners itself, and so does 6: 36 is five clocks and 1 over.
 
@@ -25,13 +25,13 @@ Wilson claimed it in 1770; Lagrange proved it a year later.
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
 xychart-beta
-    title "Each dancer on a 7-hour clock, and the partner who undoes them"
-    x-axis "The dancer" [1, 2, 3, 4, 5, 6]
+    title "Each number on a 7-hour clock, and the partner that undoes it"
+    x-axis "The number" [1, 2, 3, 4, 5, 6]
     y-axis "The partner that multiplies with it to 1" 0 --> 6
     bar [1, 4, 5, 2, 3, 6]
 ```
 
-Dancers 1 and 6 sit on their own numbers. The other four cross over: 2 with 4, 3 with 5. Two alone, the rest in couples: that is the proof.
+Numbers 1 and 6 are their own partners. The other four cross over: 2 with 4, 3 with 5. Two alone, the rest in couples: that is the proof.
 
 ---
 
@@ -58,7 +58,7 @@ It runs backwards too: a reading of -1 means the clock size is prime.
 
 ### When it holds
 
-- **A prime clock size.** It gives every dancer one partner. On an 8-clock, 2 and 4 both sit in the row and make a whole clock: the reading is 0.
+- **A prime clock size.** It gives every number one partner. On an 8-clock, 2 and 4 both sit in the row and make a whole clock: the reading is 0.
 - **The whole row.** Stop short and a couple breaks: leave out 4, and 2 has nothing to cancel with.
 - **Backwards, every composite fails.** Most read 0; the 4-clock reads 2. Neither is -1.
 
@@ -66,15 +66,15 @@ It runs backwards too: a reading of -1 means the clock size is prime.
 
 ## Why it works
 
-### Step 0: on a prime clock every dancer has one undo
+### Step 0: on a prime clock every number has one undo
 
-7 is prime, so no dancer from 1 to 6 shares a factor with it. That is the condition for an undo, and it is unique ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Partnering is mutual: if 4 undoes 2, 2 undoes 4.
+7 is prime, so no number from 1 to 6 shares a factor with it. That is the condition for an undo, and it is unique ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Partnering is mutual: if 4 undoes 2, 2 undoes 4.
 
 ### Step 1: only 1 and 6 are their own partner
 
-A dancer is its own partner when multiplying it by itself reads 1. That means 7 divides the dancer times itself, minus 1 — one below the dancer times one above it. Take dancer 3: 3 × 3 - 1 is 8, which is 2 × 4.
+A number is its own partner when multiplying it by itself reads 1. That means 7 divides the number times itself, minus 1 — one below the number times one above it. Take 3: 3 × 3 - 1 is 8, which is 2 × 4.
 
-7 is prime, so it divides one of those two pieces ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). One below is 0 only for dancer 1; one above is 7 only for dancer 6.
+7 is prime, so it divides one of those two pieces ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). One below is 0 only for 1; one above is 7 only for 6.
 
 ### Step 2: everyone else cancels in couples, and 1 × 6 is left
 
@@ -90,7 +90,7 @@ A 9-clock has just one factor, 3, twice over. Still 0: 3 and its double 6 both s
 
 That leaves the 4-clock, too small to hold its factors apart: 1 × 2 × 3 is 6, which reads 2.
 
-Fermat's little theorem shuffles these dancers ([Fermat's little theorem](02-fermats-little-theorem.md)); this one multiplies them together.
+[Fermat's little theorem](02-fermats-little-theorem.md) shuffles these numbers; this one multiplies them together.
 
 ---
 
@@ -125,8 +125,8 @@ Nothing is imported. The row is multiplied in full, 720, then whole clocks come 
 ### Python
 
 ```python
-# Wilson's theorem -- the check behind the card.  Nothing is imported.  Six
-# dancers, 1 to 6, on a 7-hour clock: each pairs off with the partner that
+# Wilson's theorem -- the check behind the card.  Nothing is imported.  The six
+# numbers 1 to 6 on a 7-hour clock: each pairs off with the partner that
 # undoes it, so the whole product reads 6, one short of a clock, which is -1.
 CLOCK = 7
 def product(top, clock):        # 1 x 2 x ... x top, whole clocks taken off
@@ -145,7 +145,7 @@ for a, b in pairs: paired = (paired * a * b) % CLOCK                  # each pai
 for a in alone: paired = (paired * a) % CLOCK                         # 1 and 6 are left
 row("1 x 2 x 3 x 4 x 5 x 6", plain)
 row(f"{plain} = {plain // CLOCK} x {CLOCK} + {plain % CLOCK}, so the 7-clock reads", plain % CLOCK)
-print("who undoes who, dancers 1 to 6:  " + " ".join(str(b) for b in partners))
+print("who undoes who, numbers 1 to 6:  " + " ".join(str(b) for b in partners))
 print("the two pairs: " + ", ".join(f"{a} x {b} = {a * b} reads {a * b % CLOCK}" for a, b in pairs))
 print(f"their own partner: 1 x 1 = 1 and 6 x 6 = {alone[1] * alone[1]}, both read 1")
 row("the pairing road, 1 x 1 x 1 x 6, reads", paired)
@@ -157,12 +157,12 @@ assert paired == 6 and plain % CLOCK == 6 and product(7, 8) == 0 and product(3, 
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 1 x 2 x 3 x 4 x 5 x 6                             720
 720 = 102 x 7 + 6, so the 7-clock reads             6
-who undoes who, dancers 1 to 6:  1 4 5 2 3 6
+who undoes who, numbers 1 to 6:  1 4 5 2 3 6
 the two pairs: 2 x 4 = 8 reads 1, 3 x 5 = 15 reads 1
 their own partner: 1 x 1 = 1 and 6 x 6 = 36, both read 1
 the pairing road, 1 x 1 x 1 x 6, reads              6
@@ -177,7 +177,7 @@ Same numbers, built with `rustc --edition 2021 -O`.
 
 ```rust
 // Wilson's theorem -- the same check as the Python one, in Rust.  No crates.
-// Six dancers, 1 to 6, on a 7-hour clock: each pairs off with the partner that
+// The six numbers 1 to 6 on a 7-hour clock: each pairs off with the partner that
 // undoes it, so the whole product reads 6, one short of a clock, which is -1.
 const CLOCK: i64 = 7;
 
@@ -203,7 +203,7 @@ fn main() {
     row("1 x 2 x 3 x 4 x 5 x 6", plain);
     row(&format!("{} = {} x {} + {}, so the 7-clock reads", plain, plain / CLOCK, CLOCK, plain % CLOCK), plain % CLOCK);
     let who: Vec<String> = partners.iter().map(|b| b.to_string()).collect();
-    println!("who undoes who, dancers 1 to 6:  {}", who.join(" "));
+    println!("who undoes who, numbers 1 to 6:  {}", who.join(" "));
     let two: Vec<String> = pairs.iter()
         .map(|&(a, b)| format!("{} x {} = {} reads {}", a, b, a * b, a * b % CLOCK)).collect();
     println!("the two pairs: {}", two.join(", "));
@@ -218,12 +218,12 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 1 x 2 x 3 x 4 x 5 x 6                             720
 720 = 102 x 7 + 6, so the 7-clock reads             6
-who undoes who, dancers 1 to 6:  1 4 5 2 3 6
+who undoes who, numbers 1 to 6:  1 4 5 2 3 6
 the two pairs: 2 x 4 = 8 reads 1, 3 x 5 = 15 reads 1
 their own partner: 1 x 1 = 1 and 6 x 6 = 36, both read 1
 the pairing road, 1 x 1 x 1 x 6, reads              6
@@ -328,12 +328,12 @@ example : ((720 : ℕ) : ZMod 7) = -1 := by decide
 -- Who undoes who on the 7-clock: 2 × 4 = 8 and 3 × 5 = 15 read 1; 1 × 1 = 1 and 6 × 6 = 36 read 1.
 example : 2 * 4 = 8 ∧ 8 % 7 = 1 ∧ 3 * 5 = 15 ∧ 15 % 7 = 1 := by decide
 example : 1 * 1 % 7 = 1 ∧ 6 * 6 = 36 ∧ 36 % 7 = 1 := by decide
--- The partner table: dancers 1 to 6 have partners 1, 4, 5, 2, 3, 6.
+-- The partner table: numbers 1 to 6 have partners 1, 4, 5, 2, 3, 6.
 example : (1 * 1) % 7 = 1 ∧ (2 * 4) % 7 = 1 ∧ (3 * 5) % 7 = 1 ∧ (4 * 2) % 7 = 1 ∧
     (5 * 3) % 7 = 1 ∧ (6 * 6) % 7 = 1 := by decide
 -- The pairing road: 1 × (2 × 4) × (3 × 5) × 6 reads 6.
 example : (1 * (2 * 4) * (3 * 5) * 6) % 7 = 6 := by decide
--- Dancer 3: 3 × 3 - 1 = 8 = 2 × 4.
+-- Number 3: 3 × 3 - 1 = 8 = 2 × 4.
 example : 3 * 3 - 1 = 8 ∧ 8 = 2 * 4 := by decide
 -- An 8-clock: 7! = 5040 reads 0. A 4-clock: 3! = 6 reads 2.
 example : 7 ! = 5040 ∧ 5040 % 8 = 0 := by decide
@@ -350,7 +350,7 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 #print axioms own_partner_iff_one_or_neg_one
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'helper_mul_dvd_factorial' depends on axioms: [propext, Quot.sound]
@@ -363,8 +363,8 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts and the printed labels are pinned to the 7-clock: expect an assert to fire, and the labels to lie.
-> - **Move to a 5-clock.** The row is 1 × 2 × 3 × 4 = 24: four clocks and 4 over, one short of 5. Still -1.
-> - **Break the prime.** Set the clock to 9. Dancers 3 and 6 share its factor 3 and have no partner, so the script trips before printing.
+> - **Move to a 5-clock.** Set `CLOCK` to 5. The row is 1 × 2 × 3 × 4 = 24: four clocks and 4 over, one short of 5. Still -1.
+> - **Break the prime.** Set `CLOCK` to 9. The numbers 3 and 6 share its factor 3 and have no partner, so the script trips before printing.
 
 ---
 
@@ -383,7 +383,7 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 
 - **Proving a number prime on paper.** An exact test both ways, no liars to rule out — unlike Fermat's ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
 - **Square roots on a prime clock.** Step 1 stands alone: only 1 and the top hour are their own partner, so a square root has two answers or none.
-- **Clocks where every number has an undo.** The pairing still runs, but more dancers are their own partner, so the answer changes: an 8-clock and a 12-clock read 1. Only 4, powers of one prime, and twice those, read -1 ([The order of a number and primitive roots](05-order-and-primitive-roots.md)).
+- **Multiplying only the numbers that have an undo.** On a clock that is not prime, multiply just the numbers sharing no factor above 1 with the clock size. They still pair off, but more of them can be their own partner, so the answer can change: an 8-clock and a 12-clock read 1. Only 2, 4, powers of an odd prime, and twice those read -1. These are exactly the clocks with a primitive root ([Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md)).
 
 > **Say it back**
 > Line up 1 to 6. Each has one partner it multiplies with to reach 1 on the 7-clock, and only 1 and 6 are their own partner. So the row folds into couples reading 1, leaving 1 × 6 = 6, one short of the clock: -1. A clock that is not prime never gets there: its own factors sit in the row and spoil it. A reading of -1 proves a prime — exact, and far too slow to use.
@@ -398,12 +398,12 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 
 ## Where this goes next
 
+- [Lagrange's root bound](07-lagrange-root-bound.md): next on this shelf. It proves Wilson's theorem a second way, from the roots of x^(p − 1) − 1 on a prime clock.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): a quick primality test, and the numbers that fool it.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the test RSA actually uses. RSA locks messages with two large primes ([RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
-- [Lagrange's root bound](07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
-- [Gauss's lemma](12-gauss-lemma.md): count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square.
+- [Gauss's lemma](12-gauss-lemma.md): uses Step 1, only 1 and -1 square to 1, to tell squares from non-squares on a prime clock.
 
-Left open: is there a prime test as exact as this one, but fast enough for big numbers?
+Left open: is there a prime test as exact as this one, but fast enough for big numbers? The next card stays with the theory; the speed question moves to the Fermat and Miller-Rabin tests on the Codes and Secrets shelf.
 
 ---
 

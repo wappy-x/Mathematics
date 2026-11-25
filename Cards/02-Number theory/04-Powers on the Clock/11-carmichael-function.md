@@ -10,7 +10,7 @@ On the 561-clock (keep the remainder on division by 561), [Euler's theorem](04-e
 
 Why: 561 = 3 × 11 × 17, and a coprime base comes home every 2 steps on the 3-clock, every 10 on the 11-clock and every 16 on the 17-clock. The smallest number that 2, 10 and 16 all divide is 80: their **least common multiple**, written lcm. Euler's count multiplies them: 2 × 10 × 16 = 320.
 
-The **Fermat test** screens n for primality: raise a base to the power n − 1; a prime always gives 1 ([Fermat's little theorem](02-fermats-little-theorem.md)). 80 divides 560, so every coprime base gives 1 on 561, though 561 is composite.
+The **Fermat test** screens n for primality: raise a coprime base to the power n − 1; a prime always gives 1 ([Fermat's little theorem](02-fermats-little-theorem.md)). 80 divides 560, so every coprime base gives 1 on 561, though 561 is composite.
 
 **Carmichael's function λ(n) is the smallest power that sends every number coprime to n back to 1 on the n-clock: the lcm of the return times on the prime-power pieces of n.**
 
@@ -88,7 +88,7 @@ Every odd base is home on the $`2^k`$-clock by power $`2^{k-2}`$ ([Which clocks 
 
 $`\displaystyle (1 + m \times 2^j)^2 = 1 + (m + m^2 \times 2^{j-1}) \times 2^{j+1}`$
 
-From 5 = 1 + 4, $`5^{2^{k-3}}`$ is 1 plus an odd multiple of $`2^{k-1}`$: not 1. The code prints 5's cycle on 8 to 64.
+From 5 = 1 + 4, for k ≥ 3, $`5^{2^{k-3}}`$ is 1 plus an odd multiple of $`2^{k-1}`$: not 1. The code prints 5's cycle on 8 to 64.
 
 </details>
 
@@ -449,10 +449,12 @@ example : carmichael 3233 = 780 := by
 
 ## Where this goes next
 
-- [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the test in use, and its repair.
-- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): where a key built from λ(n) is used.
+- [Gauss's lemma](12-gauss-lemma.md): next on this shelf. It turns from return powers to a new question: which numbers are squares on a prime clock.
+- [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the test in use, and how Carmichael numbers fool it.
+- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the repaired test, which catches Carmichael numbers.
+- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the cipher, worked there with φ(n); its standard swaps in λ(n), as in the RSA keys example above.
 
-Left open: Carmichael numbers never run out (proved 1994), but how rare are they?
+Left open: Carmichael numbers never run out (proved 1994), but how rare are they? No card on this shelf answers that; it is a question about counting, and the shelf turns next to squares.
 
 ---
 

@@ -12,7 +12,7 @@ On the 49-clock, 42 remainders share no factor with 49. One test shows 3 visits 
 
 Some clocks have none: on the 8-clock every odd square leaves 1, short of the 4 steps needed; on the 15-clock, every fourth power, short of 8.
 
-**A primitive root on an odd prime clock lifts to every power of that prime once it passes one test, and an odd one to twice each power; every other clock above 4 has none.**
+**A primitive root of an odd prime p lifts to every power of p after one test, and if odd, to twice those; no other clock above 4 has one.**
 
 **What kind of fact this is:** a theorem, proved in Why it works. It proves the list stated in [The order of a number and primitive roots](05-order-and-primitive-roots.md).
 
@@ -32,8 +32,10 @@ flowchart LR
 
 ## The formula
 
+For an odd prime $`p`$ and a primitive root $`g`$ on the $`p`$-clock:
+
 ```math
-g^{p-1} \not\equiv 1 \pmod{p^2} \;\Longrightarrow\; g \text{ is a primitive root mod } p^k \text{ for every } k
+g^{p-1} \not\equiv 1 \pmod{p^2} \;\Longrightarrow\; g \text{ is a primitive root mod } p^k \text{ for every } k \ge 1
 ```
 
 **Read it aloud:** if g to the p minus 1 does not leave 1 on the p-squared clock, g is a primitive root on every power of p.
@@ -69,7 +71,7 @@ n = 1,\ 2,\ 4,\ p^k \text{ or } 2p^k
 
 The order of 3 is its count of steps back to 1. Leaving 1 on the 49-clock means leaving 1 on the 7-clock, so the order on the 49-clock is a multiple of 6.
 
-It also divides $`\varphi(49) = 42`$ ([Euler's theorem](04-eulers-theorem.md)), so it is 6 or 42. The test rules out 6.
+It also divides $`\varphi(49) = 42`$. [Euler's theorem](04-eulers-theorem.md) says $`3^{42}`$ leaves 1, and a run lands on 1 only at multiples of the order ([The order of a number and primitive roots](05-order-and-primitive-roots.md)). So it is 6 or 42. The test rules out 6.
 
 ### Step 1: if the test fails, add p
 
@@ -88,12 +90,12 @@ $`p`$ divides neither $`p - 1`$ nor $`g`$, so the added term is no multiple of $
 
 ### Step 2: from 49 to every power of 7
 
-Write 43 as a gap from 1: $`43 = 1 + 6 \times 7`$. Each 7th power adds exactly one 7 to the gap: $`3^{42}`$ leaves $`295 = 1 + 6 \times 49`$ on the 343-clock. So the gap never closes.
+Write 43 as a gap from 1: $`43 = 1 + 6 \times 7`$. Each 7th power adds exactly one more factor of 7 to the gap: $`3^{42}`$ leaves $`295 = 1 + 6 \times 49`$ on the 343-clock. So the gap never closes.
 
 Step 0's squeeze makes the order on a power of 7 six times a power of 7. Every candidate below phi divides a seventh of phi, where the gap is still open. So the order is phi: 294 on 343, 2058 on 2401.
 
 <details>
-<summary>The gap gains exactly one p</summary>
+<summary>The gap gains exactly one factor of p</summary>
 
 Let $`x = 1 + p^j t`$, $`j \ge 1`$, with $`p`$ not dividing $`t`$. Expand:
 
@@ -502,7 +504,7 @@ example : (∀ x, x < 15 → Nat.gcd x 15 = 1 → x ^ 4 % 15 = 1) ∧ Nat.totien
 - [Indices](10-discrete-logarithms-and-indices.md): a primitive root turns multiplying into adding exponents.
 - [Carmichael's function](11-carmichael-function.md): the best order on any clock, root or not.
 
-Left open: is 10 a primitive root on infinitely many prime clocks? This is Artin's conjecture, unproved as of 2026-11-23.
+Left open: is 10 a primitive root on infinitely many prime clocks? This is Artin's conjecture, unproved as of 2026-11-23, so the question points beyond this shelf. The next card puts primitive roots to work as the base of clock logarithms.
 
 ---
 

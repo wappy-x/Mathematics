@@ -75,7 +75,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 04 · Powers on the Clock · 13 cards
 
-*Fast powers by squaring, Fermat's little theorem, Euler's totient and theorem, orders and primitive roots, Wilson's theorem. First use of exponents from wing 01.*
+*Fast powers by squaring, Fermat's little theorem, Euler's totient and theorem, orders, Wilson's theorem, Lagrange's root bound, primitive roots, indices, Carmichael's function, Gauss's lemma and quadratic reciprocity. First use of exponents from wing 01.*
 
 1. [Powers on the clock: repeated squaring finds 7 to the 123 mod 1000 without ever writing a huge number](04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)
 2. [Fermat's little theorem: raise a number the prime dial does not divide to one below the dial size and it reads 1](04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)

@@ -14,7 +14,7 @@ In 1844 Eisenstein showed which happens by cutting a rectangle of dots with a li
 
 Swaps shrink the question: 29 on the 43-clock comes down to 4 on the 7-clock, plus a sign.
 
-**For two different odd primes, "is p a square on the q-clock?" and "is q a square on the p-clock?" have the same answer unless both primes leave 3 on division by 4, and counting the dots in one rectangle proves it.**
+**For two different odd primes, "is p a square on the q-clock?" and "is q a square on the p-clock?" agree unless both leave 3 on division by 4.**
 
 **What kind of fact this is:** a theorem, quadratic reciprocity, proved in Why it works from [Gauss's lemma](12-gauss-lemma.md).
 
@@ -418,9 +418,10 @@ example : (∑ x ∈ Finset.Icc 1 5, x * 19 / 11) = 23 ∧ (∑ y ∈ Finset.Icc
 
 - [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): a second, deeper proof, by Gauss sums.
 - [The Jacobi symbol](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md): flips without factoring.
-- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): matching Galois representations with automorphic forms, and the 2024 geometric proof.
+- [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): the far-reaching modern descendant of this law.
+- [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): the first card of the next shelf in this wing, where clock arithmetic catches typing errors in everyday codes.
 
-Left open: is there a law like this for cubes?
+Left open: is there a law like this for cubes? The Gauss-sums card above leads on to that question in wing 21. This shelf ends here, and the next shelf turns to everyday uses of the clock.
 
 ---
 

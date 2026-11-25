@@ -98,13 +98,13 @@ So 1 + 1 + 2 + 2 + 2 + 4 = 12. The same holds with p − 1 in place of 12.
 
 ### Step 3: no pile can fall short
 
-Each pile holds at most phi(d) (Step 1), and the phi(d) add up to 12 (Step 2). One short pile would leave the total below 12, so every pile is full, including the pile for order 12. phi(p − 1) is never 0.
+Each pile holds at most phi(d) (Step 1), and the phi(d) add up to 12 (Step 2). One short pile would leave the total below 12, so every pile is full, including the pile for order 12. phi(p − 1) is never 0, because 1 always shares no factor above 1 with p − 1.
 
 ### Step 4: testing one candidate
 
-A shorter order goes into p − 1 at least twice, so it divides (p − 1)/q for any prime q dividing that count. So a is a primitive root exactly when no a^((p − 1)/q) is 1.
+Suppose a has a shorter order d. Then (p − 1)/d is at least 2, so some prime q divides it, and d divides (p − 1)/q. That q also divides p − 1. So a is a primitive root exactly when a^((p − 1)/q) is not 1 for every prime q dividing p − 1.
 
-On the 13-clock, q is 2 or 3: test the 6th and 4th powers. 2^6 = 12 and 2^4 = 3, so 2 passes; 5, of order 4, fails.
+On the 13-clock, q is 2 or 3: test the 6th and 4th powers. 2^6 = 12 and 2^4 = 3, so 2 passes. 5 fails, because 5^4 = 1.
 
 ---
 
@@ -429,7 +429,7 @@ example : (univ.filter fun a : ZMod 15 => a ^ 8 = 1 ∧ ∀ m < 8, 0 < m → a ^
 - [Indices](10-discrete-logarithms-and-indices.md): logarithms on the clock, base a primitive root.
 - [Carmichael's function](11-carmichael-function.md): the longest order on any clock.
 
-Left open: is there a quick way to find the smallest primitive root?
+Left open: 3 is a primitive root on the 7-clock. Is it still one on the 49-clock, and on every power of 7?
 
 ---
 

@@ -10,11 +10,11 @@ Which numbers square to 1 on a 7-hour clock ([Congruence](../03-Clock%20Arithmet
 
 On an 8-hour clock, four work: 1, 3, 5 and 7; 3 × 3 = 9 reads 1.
 
-A **polynomial** is a sum of powers of an unknown x, each times a whole number (its **coefficient**), such as x^2 − 1. Its **degree** is the highest power whose coefficient does not read 0. A **root** is a value of x where it reads 0. On a prime clock, the roots never outnumber the degree. 8 is not prime.
+A **polynomial** is a sum of powers of an unknown x, each times a whole number, positive, negative or zero (its **coefficient**), such as x^2 − 1. Its **degree** is the highest power whose coefficient does not read 0. A **root** is a value of x where it reads 0. On a prime clock, the roots never outnumber the degree. 8 is not prime.
 
 The payoff: on the 7-clock, x^6 − 1 has six roots, the most allowed, so it splits into six pieces. Their constant terms prove [Wilson's theorem](06-wilsons-theorem.md) again.
 
-**On a prime clock, a polynomial of degree d has at most d roots, because each root splits off a factor and a prime clock never makes 0 from two pieces that are not 0.**
+**On a prime clock, a degree-d polynomial has at most d roots: each root splits off a factor, and two non-zero pieces never multiply to 0.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -96,9 +96,9 @@ On the 8-clock, (3 − 1)(3 + 1) = 2 × 4 = 8 reads 0 while neither piece does. 
 
 ### Step 5: x^6 − 1 splits completely, and Wilson follows
 
-By [Fermat's little theorem](02-fermats-little-theorem.md), each of 1 to 6 to the sixth power reads 1, so all six are roots of x^6 − 1. Peel off x − 1 to x − 6. Six peels leave 1: the second formula.
+By [Fermat's little theorem](02-fermats-little-theorem.md), each of 1 to 6 to the sixth power reads 1, so all six are roots of x^6 − 1. Peel off x − 1 to x − 6. Each peel keeps the leading coefficient 1, so six peels leave 1: the second formula.
 
-Compare constant terms. On the left it is −1. On the right it is (−1) × (−2) × … × (−6): six minus signs make a plus, so 720. So 720 ≡ −1 (mod 7): Wilson's theorem, and the same steps work on every prime clock.
+Compare constant terms. On the left it is −1. On the right it is (−1) × (−2) × … × (−6): six minus signs make a plus, so 720. So 720 ≡ −1 (mod 7): Wilson's theorem. The same steps work on every odd prime clock, where p − 1 is even. On the 2-clock, 1 is already −1.
 
 ---
 
@@ -127,7 +127,7 @@ So on the 7-clock, 1 × 2 × … × 6 reads −1.
 
 ## Code, from first principles, and it actually runs
 
-Three roads: try every number on the clock (all 294 quadratics too), multiply out (x − 1)…(x − 6) in full, and peel x − 1 to x − 6 off x^6 − 1 by division.
+Three roads. Try every number on the clock, all 294 quadratics too. Multiply out (x − 1)…(x − 6) in full. Peel x − 1 to x − 6 off x^6 − 1 by division.
 
 ### Python
 
@@ -448,9 +448,9 @@ end LagrangeRootBound
 - [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses this bound to find a number whose powers visit the whole clock.
 - [Gauss's lemma](12-gauss-lemma.md): uses the same count to sort squares on a prime clock.
 - [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): the full factor theorem for ordinary polynomials.
-- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): never re-read a character, or compare fingerprints.
+- [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): Rabin–Karp text search treats two words as polynomials on a prime clock. This bound keeps false matches rare.
 
-Left open: on other clocks, what decides the number of roots?
+Left open: on the 7-clock, all six nonzero numbers are roots of x^6 − 1. Is there one number whose powers reach all six?
 
 ---
 

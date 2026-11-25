@@ -12,7 +12,9 @@ The useful question is smaller: **what are the last two digits of 3 to the 2026?
 
 Last two digits means: divide by 100, keep the remainder. That is the 100-clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), where nothing gets big. Multiplying out one 3 at a time grinds through every power there; repeated squaring is far quicker but still walks the whole exponent ([Powers on the clock](01-modular-exponentiation.md)). Euler cuts the exponent first.
 
-Count the numbers below 100 sharing no factor with 100. That count is Euler's totient, written phi(n) ([Euler's totient](03-eulers-totient.md)): phi(100) = 40. Since 3 shares no factor with 100 (it is coprime to 100), 3 to the 40 ≡ 1 (mod 100): the 100-clock reads 1. Multiplying by 1 changes nothing, so whole 40s in the exponent can be thrown away. 2026 = 50 × 40 + 26, and 3 to the 26 ≡ 29 (mod 100).
+Count the numbers from 1 to 100 sharing no factor above 1 with 100. That count is Euler's totient, written phi(n) ([Euler's totient](03-eulers-totient.md)): phi(100) = 40.
+
+Since 3 shares no factor with 100 (it is coprime to 100), 3 to the 40 ≡ 1 (mod 100): the 100-clock reads 1. Multiplying by 1 changes nothing, so whole 40s in the exponent can be thrown away. 2026 = 50 × 40 + 26, and 3 to the 26 ≡ 29 (mod 100).
 
 **Raise anything coprime to the clock to the count of that clock's coprimes and the clock reads 1 — so the exponent can be cut by that count.**
 
@@ -45,7 +47,7 @@ On our clock, this is the whole thing:
 | phi(n), Euler's totient | how many numbers below the clock are coprime to it ([Euler's totient](03-eulers-totient.md)) | 40 |
 | the exponent | how many times the base is multiplied by itself | 2026, cut to 26 |
 
-Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock everything below is coprime, so the count is one less than the prime: Fermat's little theorem ([Fermat's little theorem](02-fermats-little-theorem.md)).
+Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock everything below is coprime, so the count is one less than the prime: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 ### When it holds
 
@@ -95,7 +97,7 @@ The numbers run on a 100-clock; the exponents run on a 40-clock.
 | --- | --- | --- |
 | coprime? | gcd(3, 100) | 1 |
 | count the coprimes | 50 odd, minus the 10 odd multiples of 5 | 40 |
-| the count from 2 × 2 x 5 × 5 | half of 100 is 50, four fifths of that | 40 |
+| the count from 2 × 2 × 5 × 5 | half of 100 is 50, four fifths of that | 40 |
 | Euler's promise | 3 to the 40 (mod 100) | 1 |
 | cut the exponent | 2026 ÷ 40 | 50 remainder 26 |
 | what is left | 3 to the 26 (mod 100) | 29 |
@@ -133,26 +135,26 @@ n, a, big = 100, 3, 2026
 units = [u for u in range(1, n) if gcd(u, n) == 1]         # the coprime residues
 phi = len(units)
 phi_factored = n // 2 * (2 - 1) // 5 * (5 - 1)             # half of 100, then four fifths
-shuffled = sorted(a * u % n for u in units)
+shuffled = [a * u % n for u in units]                      # each times 3, in list order
 q, rem = divmod(big, phi)
-row("gcd(3, 100)", gcd(a, n))
-row("phi(100), counted one by one", phi)
+row(f"gcd({a}, {n})", gcd(a, n))
+row(f"phi({n}), counted one by one", phi)
 row("phi(100), from 100 = 2 x 2 x 5 x 5", phi_factored)
-row("3 to the 40 (mod 100)", power_mod(a, phi, n))
-print(f"the same 40 come back, in a different order: {sum(1 for i in range(phi) if shuffled[i] == units[i])} of {phi} once sorted; multiplied, {product(units, n)} before and {product(shuffled, n)} after")
+row(f"{a} to the {phi} (mod {n})", power_mod(a, phi, n))
+print(f"the same {phi} come back, in a different order: {sum(1 for i in range(phi) if sorted(shuffled)[i] == units[i])} of {phi} once sorted; multiplied, {product(units, n)} before and {product(shuffled, n)} after")
 print(f"{big} = {q} x {phi} + {rem}")
-row("3 to the 26 (mod 100), the shortcut", power_mod(a, rem, n))
-row("3 to the 2026 (mod 100), ground out", power_mod(a, big, n))
-print(f"the mistakes: 10 to the {phi} gives {power_mod(10, phi, n)}, 2 to the {phi} gives {power_mod(2, phi, n)}, 3 to the {n - 1} gives {power_mod(a, n - 1, n)}, 3 to the {q} gives {power_mod(a, q, n)}")
-print(f"the wrong cut hides here but shows on the 7-clock: 3 to the 10 is {power_mod(a, 10 % 6, 7)} cut by 6, {power_mod(a, 10 % 7, 7)} cut by 7")
+row(f"{a} to the {rem} (mod {n}), the shortcut", power_mod(a, rem, n))
+row(f"{a} to the {big} (mod {n}), ground out", power_mod(a, big, n))
+print(f"the mistakes: 10 to the {phi} gives {power_mod(10, phi, n)}, 2 to the {phi} gives {power_mod(2, phi, n)}, {a} to the {n - 1} gives {power_mod(a, n - 1, n)}, {a} to the {q} gives {power_mod(a, q, n)}")
+print(f"the wrong cut hides here but shows on the 7-clock: {a} to the 10 is {power_mod(a, 10 % 6, 7)} cut by 6, {power_mod(a, 10 % 7, 7)} cut by 7")
 assert gcd(a, n) == 1 and phi == 40 and phi_factored == 40
-assert shuffled == units and product(units, n) == product(shuffled, n) and power_mod(a, phi, n) == 1
+assert sorted(shuffled) == units and power_mod(a, phi, n) == 1 and product(shuffled, n) == power_mod(a, phi, n) * product(units, n) % n == product(units, n)
 assert power_mod(a, big, n) == 29 and power_mod(a, rem, n) == 29
 assert power_mod(a, 10 % 6, 7) == power_mod(a, 10, 7) != power_mod(a, 10 % 7, 7)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 gcd(3, 100)                              1
@@ -189,32 +191,32 @@ fn main() {
     let units: Vec<i64> = (1..n).filter(|u| gcd(*u, n) == 1).collect();   // the coprime residues
     let phi = units.len() as i64;
     let phi_factored = n / 2 * (2 - 1) / 5 * (5 - 1);                     // half of 100, then four fifths
-    let mut shuffled: Vec<i64> = units.iter().map(|u| a * u % n).collect();
-    shuffled.sort();
+    let shuffled: Vec<i64> = units.iter().map(|u| a * u % n).collect();   // each times 3, in list order
+    let mut sorted = shuffled.clone(); sorted.sort();
     let (q, rem) = (big / phi, big % phi);
-    row("gcd(3, 100)", gcd(a, n));
-    row("phi(100), counted one by one", phi);
+    row(&format!("gcd({}, {})", a, n), gcd(a, n));
+    row(&format!("phi({}), counted one by one", n), phi);
     row("phi(100), from 100 = 2 x 2 x 5 x 5", phi_factored);
-    row("3 to the 40 (mod 100)", power_mod(a, phi, n));
-    println!("the same 40 come back, in a different order: {} of {} once sorted; multiplied, {} before and {} after",
-             (0..units.len()).filter(|i| shuffled[*i] == units[*i]).count(), phi,
+    row(&format!("{} to the {} (mod {})", a, phi, n), power_mod(a, phi, n));
+    println!("the same {} come back, in a different order: {} of {} once sorted; multiplied, {} before and {} after",
+             phi, (0..units.len()).filter(|i| sorted[*i] == units[*i]).count(), phi,
              product(&units, n), product(&shuffled, n));
     println!("{} = {} x {} + {}", big, q, phi, rem);
-    row("3 to the 26 (mod 100), the shortcut", power_mod(a, rem, n));
-    row("3 to the 2026 (mod 100), ground out", power_mod(a, big, n));
-    println!("the mistakes: 10 to the {} gives {}, 2 to the {} gives {}, 3 to the {} gives {}, 3 to the {} gives {}",
-             phi, power_mod(10, phi, n), phi, power_mod(2, phi, n), n - 1, power_mod(a, n - 1, n), q, power_mod(a, q, n));
-    println!("the wrong cut hides here but shows on the 7-clock: 3 to the 10 is {} cut by 6, {} cut by 7",
-             power_mod(a, 10 % 6, 7), power_mod(a, 10 % 7, 7));
+    row(&format!("{} to the {} (mod {}), the shortcut", a, rem, n), power_mod(a, rem, n));
+    row(&format!("{} to the {} (mod {}), ground out", a, big, n), power_mod(a, big, n));
+    println!("the mistakes: 10 to the {} gives {}, 2 to the {} gives {}, {} to the {} gives {}, {} to the {} gives {}",
+             phi, power_mod(10, phi, n), phi, power_mod(2, phi, n), a, n - 1, power_mod(a, n - 1, n), a, q, power_mod(a, q, n));
+    println!("the wrong cut hides here but shows on the 7-clock: {} to the 10 is {} cut by 6, {} cut by 7",
+             a, power_mod(a, 10 % 6, 7), power_mod(a, 10 % 7, 7));
     assert!(gcd(a, n) == 1 && phi == 40 && phi_factored == 40);
-    assert!(shuffled == units && product(&units, n) == product(&shuffled, n) && power_mod(a, phi, n) == 1);
+    assert!(sorted == units && power_mod(a, phi, n) == 1 && product(&shuffled, n) == power_mod(a, phi, n) * product(&units, n) % n && product(&shuffled, n) == product(&units, n));
     assert!(power_mod(a, big, n) == 29 && power_mod(a, rem, n) == 29);
     assert!(power_mod(a, 10 % 6, 7) == power_mod(a, 10, 7) && power_mod(a, 10, 7) != power_mod(a, 10 % 7, 7));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 gcd(3, 100)                              1
@@ -344,7 +346,7 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 
 > [!TIP]
 > **Try changing**
-> - **Break the coprime rule.** Set the base to 2. Guess first: 2 to the 40 is 76, not 1, and the first assert fires: the gcd line catches it before Euler is tested.
+> - **Break the coprime rule.** Set `a` to 2. Guess first: 2 to the 40 is 76, not 1, and the first assert fires: the gcd line catches it before Euler is tested.
 > - **Move to a prime clock.** Set `n` to 97, then delete the factored-totient line, its row, and the asserts holding 40 and 29. Everything below 97 is coprime, so the count is 96 and 3 to the 96 is 1: Euler back as Fermat.
 
 ---
@@ -382,7 +384,7 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 
 - [The order of a number and primitive roots](05-order-and-primitive-roots.md): the smallest exponent returning to 1, often below 40.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the theorem doing paid work.
-- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): lifting from 7 to 49 to every power of 7, and why the 8-clock and 15-clock have none.
+- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): which clocks have a base whose first return to 1 takes the full phi(n) steps, and why the 8-clock and 15-clock have none.
 - [Carmichael's function](11-carmichael-function.md): the smallest power that sends every coprime number home, often far below Euler's count.
 
 Left open: what is the smallest power that brings 3 back to 1?

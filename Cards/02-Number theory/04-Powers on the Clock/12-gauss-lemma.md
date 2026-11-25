@@ -12,7 +12,7 @@ For the huge primes inside elliptic-curve keys, listing squares is hopeless; Eul
 
 Multiply 3 by 1 to 5, half the ten nonzero hours. The readings are 3, 6, 9, 1, 4. Two readings, 6 and 9, sit in the top half, above 5.5. That count is even, so 3 is a square. Indeed 5 × 5 = 25 reads 3.
 
-**On the clock of an odd prime, multiply a number by 1, 2, … up to half of one below the prime, and count the readings in the top half: an even count means the number is a square, an odd count means it is not.**
+**For a number that an odd prime p does not divide, count how many of its first (p − 1)/2 multiples land in the top half: even means a square, odd means not.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -34,7 +34,7 @@ Two bars rise above the line at half the clock, 5.5: an even count.
 
 ## The formula
 
-The **Legendre symbol** $`(a/p)`$ is 1 if $`a`$ is a square on the $`p`$-clock, -1 if not.
+For a number $`a`$ that $`p`$ does not divide, the **Legendre symbol** $`(a/p)`$ is 1 if $`a`$ is a square on the $`p`$-clock, and -1 if not.
 
 ```math
 (a/p) \equiv a^{h} \equiv (-1)^{m} \pmod{p}

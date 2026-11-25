@@ -6,11 +6,11 @@
 
 ## General Overview
 
-A lock dial with 13 positions, numbered 0 to 12. Set it to 1 and double: 2, 4, 8, then 16, which runs off the end, so the dial comes round to 3 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Keep doubling. After twelve doublings it reads 1 again: 4,096 is 315 whole dials and 1 over.
+Picture a dial with 13 positions, numbered 0 to 12, like a clock face: a 13-dial. Set it to 1 and double: 2, 4, 8, then 16, which runs off the end, so the dial comes round to 3 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Keep doubling. After twelve doublings it reads 1 again: 4,096 is 315 whole dials and 1 over.
 
 Twelve is one less than 13, and 13 is **prime**: nothing divides it but itself and 1 ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Take any number 13 does not divide, start at 1 and multiply by it twelve times, and the dial reads 1.
 
-**On a prime-sized dial, take a number the dial size does not divide, start at 1 and multiply by it one time fewer than there are positions: the reading is 1.**
+**On a prime-sized dial, take a number the dial size does not divide and multiply 1 by it one time fewer than there are positions: the reading is 1.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -41,12 +41,18 @@ The dial is the statement:
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
-| the dial size | how many positions there are, and it must be prime | 13 |
-| the number | what you multiply by | 2 |
-| the power | one less than the dial size | 12 |
+| the dial size, p | how many positions there are, and it must be prime | 13 |
+| the number, a | what you multiply by | 2 |
+| the power, p − 1 | one less than the dial size | 12 |
 | the reading | what is left when whole dials come off | 1 |
 
-With letters, the dial size is p, for prime, and the number a, which p must not divide: a to the p − 1 ≡ 1 (mod p). The ≡ means the same reading on the dial; the (mod p) says which dial.
+With letters, the dial size is p, for prime, and the number is a, which p must not divide:
+
+```math
+a^{p-1} \equiv 1 \pmod{p}
+```
+
+The ≡ means the same reading on the dial; the (mod p) says which dial.
 
 One more doubling takes that 1 back to 2: 2 taken thirteen times over is 8,192, and the dial reads 2. That second form, a to the p ≡ a (mod p), needs no condition.
 
@@ -78,7 +84,7 @@ The row multiplied: 1 × 2 × 3 × … × 12 = 479,001,600. The doubled row, bef
 
 ### Step 4: cancel the row
 
-So 4,096 times the row's product reads the same as that product alone. It cancels: every factor, 1 up to 12, is smaller than the prime 13, so 13 cannot divide it ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), and what 13 does not divide has an undo ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Multiply both sides by it.
+So 4,096 times the row's product reads the same as that product alone. It cancels. Every factor, 1 up to 12, is smaller than the prime 13, so 13 cannot divide the product ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). What 13 does not divide has an undo ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Multiply both sides by it.
 
 What is left is 4,096 alone, reading 1. That is the theorem.
 
@@ -119,7 +125,7 @@ Nothing is imported. The dial is built by hand: multiply, take off whole dials, 
 
 ```python
 # Fermat's little theorem -- the check behind the card.  Nothing is imported.  A
-# 13-position lock dial, base 2: twelve doublings land on 1, the twelve doubled
+# 13-position dial, base 2: twelve doublings land on 1, the twelve doubled
 # positions are the twelve positions shuffled, and 2 to the 1000 collapses to 3.
 DIAL, BASE = 13, 2
 
@@ -133,16 +139,16 @@ whole, left = BASE ** (DIAL - 1), 1000 % (DIAL - 1)   # 4096 in full; 1000 split
 doubles = [(BASE * k) % DIAL for k in range(1, DIAL)]
 plain, shuffled = 1, 1                                # 1 x 2 x ... x 12, and each doubled
 for k in range(1, DIAL): plain, shuffled = plain * k, shuffled * (BASE * k)
-row("2 doubled twelve times", whole)
-row(f"{whole} = {whole // DIAL} x {DIAL} + 1, so the dial shows", whole % DIAL)
-row(f"2 to the {DIAL} = {BASE ** DIAL}, so the dial shows", turn(BASE, DIAL, DIAL))
-print("1 to 12, each doubled: " + " ".join(str(d) for d in doubles))
-row("1 to 12 multiplied", plain)
-row("the twelve doubles multiplied", shuffled)
-row("both of those, on the 13-dial", plain % DIAL)
+row(f"{BASE} to the {DIAL - 1}", whole)
+row(f"{whole} = {whole // DIAL} x {DIAL} + {whole % DIAL}, so the dial shows", whole % DIAL)
+row(f"{BASE} to the {DIAL} = {BASE ** DIAL}, so the dial shows", turn(BASE, DIAL, DIAL))
+print(f"1 to {DIAL - 1}, each doubled: " + " ".join(str(d) for d in doubles))
+row(f"1 to {DIAL - 1} multiplied", plain)
+row(f"the {DIAL - 1} doubles multiplied", shuffled)
+row(f"both of those, on the {DIAL}-dial", plain % DIAL)
 row(f"1000 = {1000 // (DIAL - 1)} x {DIAL - 1} + {left}, leftover exponent", left)
-row(f"2 to the {left} = {BASE ** left}, so the dial shows", turn(BASE, left, DIAL))
-row("2 to the 1000 the long way, on the 13-dial", turn(BASE, 1000, DIAL))
+row(f"{BASE} to the {left} = {BASE ** left}, so the dial shows", turn(BASE, left, DIAL))
+row(f"{BASE} to the 1000 the long way, on the {DIAL}-dial", turn(BASE, 1000, DIAL))
 print(f"gone wrong: cut by 13 -> {turn(BASE, 1000 % DIAL, DIAL)}, base 26 -> {turn(2 * DIAL, DIAL - 1, DIAL)}, 14 on a 15-dial ({BASE ** 14}) -> {turn(BASE, 14, 15)}")
 assert whole == 4096 and whole == 315 * DIAL + 1 and turn(BASE, DIAL - 1, DIAL) == 1
 assert sorted(doubles) == list(range(1, DIAL)) and shuffled % DIAL == plain % DIAL == 12
@@ -150,15 +156,15 @@ assert turn(BASE, 1000, DIAL) == turn(BASE, left, DIAL) == 16 % DIAL == 3
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-2 doubled twelve times                                4096
+2 to the 12                                           4096
 4096 = 315 x 13 + 1, so the dial shows                   1
 2 to the 13 = 8192, so the dial shows                    2
 1 to 12, each doubled: 2 4 6 8 10 12 1 3 5 7 9 11
 1 to 12 multiplied                               479001600
-the twelve doubles multiplied                1961990553600
+the 12 doubles multiplied                    1961990553600
 both of those, on the 13-dial                           12
 1000 = 83 x 12 + 4, leftover exponent                    4
 2 to the 4 = 16, so the dial shows                       3
@@ -173,7 +179,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
 // Fermat's little theorem -- the same check as the Python one, in Rust.  No crates.
-// A 13-position lock dial, base 2: twelve doublings land on 1, the twelve doubled
+// A 13-position dial, base 2: twelve doublings land on 1, the twelve doubled
 // positions are the twelve positions shuffled, and 2 to the 1000 collapses to 3.
 const DIAL: i64 = 13;
 const BASE: i64 = 2;
@@ -193,16 +199,16 @@ fn main() {
     let (mut plain, mut shuffled) = (1i64, 1i64);    // 1 x 2 x ... x 12, and each doubled
     for k in 1..DIAL { plain *= k; shuffled *= BASE * k; }
     let marks: Vec<String> = doubles.iter().map(|d| d.to_string()).collect();
-    row("2 doubled twelve times", whole);
-    row(&format!("{} = {} x {} + 1, so the dial shows", whole, whole / DIAL, DIAL), whole % DIAL);
-    row(&format!("2 to the {} = {}, so the dial shows", DIAL, BASE.pow(DIAL as u32)), turn(BASE, DIAL, DIAL));
-    println!("1 to 12, each doubled: {}", marks.join(" "));
-    row("1 to 12 multiplied", plain);
-    row("the twelve doubles multiplied", shuffled);
-    row("both of those, on the 13-dial", plain % DIAL);
+    row(&format!("{} to the {}", BASE, DIAL - 1), whole);
+    row(&format!("{} = {} x {} + {}, so the dial shows", whole, whole / DIAL, DIAL, whole % DIAL), whole % DIAL);
+    row(&format!("{} to the {} = {}, so the dial shows", BASE, DIAL, BASE.pow(DIAL as u32)), turn(BASE, DIAL, DIAL));
+    println!("1 to {}, each doubled: {}", DIAL - 1, marks.join(" "));
+    row(&format!("1 to {} multiplied", DIAL - 1), plain);
+    row(&format!("the {} doubles multiplied", DIAL - 1), shuffled);
+    row(&format!("both of those, on the {}-dial", DIAL), plain % DIAL);
     row(&format!("1000 = {} x {} + {}, leftover exponent", 1000 / (DIAL - 1), DIAL - 1, left), left);
-    row(&format!("2 to the {} = {}, so the dial shows", left, BASE.pow(left as u32)), turn(BASE, left, DIAL));
-    row("2 to the 1000 the long way, on the 13-dial", turn(BASE, 1000, DIAL));
+    row(&format!("{} to the {} = {}, so the dial shows", BASE, left, BASE.pow(left as u32)), turn(BASE, left, DIAL));
+    row(&format!("{} to the 1000 the long way, on the {}-dial", BASE, DIAL), turn(BASE, 1000, DIAL));
     println!("gone wrong: cut by 13 -> {}, base 26 -> {}, 14 on a 15-dial ({}) -> {}",
              turn(BASE, 1000 % DIAL, DIAL), turn(2 * DIAL, DIAL - 1, DIAL), BASE.pow(14), turn(BASE, 14, 15));
     let mut sorted = doubles.clone(); sorted.sort();
@@ -213,15 +219,15 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-2 doubled twelve times                                4096
+2 to the 12                                           4096
 4096 = 315 x 13 + 1, so the dial shows                   1
 2 to the 13 = 8192, so the dial shows                    2
 1 to 12, each doubled: 2 4 6 8 10 12 1 3 5 7 9 11
 1 to 12 multiplied                               479001600
-the twelve doubles multiplied                1961990553600
+the 12 doubles multiplied                    1961990553600
 both of those, on the 13-dial                           12
 1000 = 83 x 12 + 4, leftover exponent                    4
 2 to the 4 = 16, so the dial shows                       3
@@ -328,8 +334,8 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to house numbers, so expect one to fire.
-> - **Start from 3.** Set the base to 3: the row still shuffles, the twelfth power still reads 1, the thousandth still reads 3. Only the first assert fires.
-> - **Move to a 15-dial.** Set the dial to 15 and the power to 14: the reading is 4, the last wrong answer above.
+> - **Start from 3.** Set `BASE` to 3: the row still shuffles, the twelfth power still reads 1, the thousandth still reads 3. Only the first assert fires.
+> - **Move to a 15-dial.** Set `DIAL` to 15. The power, one less than the dial, becomes 14 by itself: the reading is 4, the last wrong answer above.
 
 ---
 
@@ -365,10 +371,11 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 
 ## Where this goes next
 
+- [Euler's totient](03-eulers-totient.md): next on this shelf. It counts the numbers a dial that is not prime can still undo, and that count replaces p − 1.
 - [Euler's theorem](04-eulers-theorem.md): the same statement without the word prime.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
-- [Lagrange's root bound](07-lagrange-root-bound.md): a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock.
-- [Gauss's lemma](12-gauss-lemma.md): count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square.
+- [Lagrange's root bound](07-lagrange-root-bound.md): this theorem gives x^(p − 1) − 1 a root at every nonzero position, so it splits fully and proves Wilson's theorem again.
+- [Gauss's lemma](12-gauss-lemma.md): takes half of Fermat's power, a to the (p − 1)/2, which reads 1 or −1 and tells squares from non-squares.
 
 Left open: on a dial that is not prime, like 15, what power brings the reading back to 1?
 

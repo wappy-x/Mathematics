@@ -1,5 +1,5 @@
-# Wilson's theorem -- the check behind the card.  Nothing is imported.  Six
-# dancers, 1 to 6, on a 7-hour clock: each pairs off with the partner that
+# Wilson's theorem -- the check behind the card.  Nothing is imported.  The six
+# numbers 1 to 6 on a 7-hour clock: each pairs off with the partner that
 # undoes it, so the whole product reads 6, one short of a clock, which is -1.
 CLOCK = 7
 def product(top, clock):        # 1 x 2 x ... x top, whole clocks taken off
@@ -18,7 +18,7 @@ for a, b in pairs: paired = (paired * a * b) % CLOCK                  # each pai
 for a in alone: paired = (paired * a) % CLOCK                         # 1 and 6 are left
 row("1 x 2 x 3 x 4 x 5 x 6", plain)
 row(f"{plain} = {plain // CLOCK} x {CLOCK} + {plain % CLOCK}, so the 7-clock reads", plain % CLOCK)
-print("who undoes who, dancers 1 to 6:  " + " ".join(str(b) for b in partners))
+print("who undoes who, numbers 1 to 6:  " + " ".join(str(b) for b in partners))
 print("the two pairs: " + ", ".join(f"{a} x {b} = {a * b} reads {a * b % CLOCK}" for a, b in pairs))
 print(f"their own partner: 1 x 1 = 1 and 6 x 6 = {alone[1] * alone[1]}, both read 1")
 row("the pairing road, 1 x 1 x 1 x 6, reads", paired)

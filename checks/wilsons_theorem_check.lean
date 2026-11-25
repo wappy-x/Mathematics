@@ -82,12 +82,12 @@ example : ((720 : ℕ) : ZMod 7) = -1 := by decide
 -- Who undoes who on the 7-clock: 2 × 4 = 8 and 3 × 5 = 15 read 1; 1 × 1 = 1 and 6 × 6 = 36 read 1.
 example : 2 * 4 = 8 ∧ 8 % 7 = 1 ∧ 3 * 5 = 15 ∧ 15 % 7 = 1 := by decide
 example : 1 * 1 % 7 = 1 ∧ 6 * 6 = 36 ∧ 36 % 7 = 1 := by decide
--- The partner table: dancers 1 to 6 have partners 1, 4, 5, 2, 3, 6.
+-- The partner table: numbers 1 to 6 have partners 1, 4, 5, 2, 3, 6.
 example : (1 * 1) % 7 = 1 ∧ (2 * 4) % 7 = 1 ∧ (3 * 5) % 7 = 1 ∧ (4 * 2) % 7 = 1 ∧
     (5 * 3) % 7 = 1 ∧ (6 * 6) % 7 = 1 := by decide
 -- The pairing road: 1 × (2 × 4) × (3 × 5) × 6 reads 6.
 example : (1 * (2 * 4) * (3 * 5) * 6) % 7 = 6 := by decide
--- Dancer 3: 3 × 3 - 1 = 8 = 2 × 4.
+-- Number 3: 3 × 3 - 1 = 8 = 2 × 4.
 example : 3 * 3 - 1 = 8 ∧ 8 = 2 * 4 := by decide
 -- An 8-clock: 7! = 5040 reads 0. A 4-clock: 3! = 6 reads 2.
 example : 7 ! = 5040 ∧ 5040 % 8 = 0 := by decide
