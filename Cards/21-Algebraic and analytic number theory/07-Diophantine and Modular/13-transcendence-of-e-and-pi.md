@@ -144,9 +144,9 @@ Every derivative of f at a whole number is a whole number. The deep zeros make m
 
 1. **At 1 and 2.** The factor $`(x-1)^p`$ makes $`f^{(j)}(1) = 0`$ for $`j < p`$. For $`j \ge p`$, the j-th derivative of a whole-number polynomial is j! times a whole number at every whole point, so it is divisible by $`p!`$. The same holds at 2.
 2. **At 0, almost the same.** The zero has depth $`p - 1`$, one less. All derivatives below $`p - 1`$ vanish, all above are divisible by $`p!`$, and the one in between is
-   ```math
-   f^{(p-1)}(0) = (p-1)!\,(-1)^p(-2)^p = (p-1)!\,2^p
-   ```
+
+   $`\displaystyle f^{(p-1)}(0) = (p-1)!\,(-1)^p(-2)^p = (p-1)!\,2^p`$
+
 3. **Add up.** So $`N = c \cdot (p-1)! \cdot 2^p + p! \times (\text{a whole number})`$. Divide by $`(p-1)!`$: what is left is $`c \cdot 2^p`$ plus a multiple of p.
 4. **Not divisible by p.** If p is a prime above 12, it divides neither c = 12 nor $`2^p`$. So $`N/(p-1)!`$ is not divisible by p, so it is not 0, and $`|N| \ge (p-1)!`$.
 
