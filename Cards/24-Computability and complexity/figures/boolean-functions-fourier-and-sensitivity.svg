@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 420" width="480" height="420" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <title>Huang's signed 3-cube: 8 vote patterns, 4 edges signed minus one, 5 chosen corners and the vector that forces a corner with 2 chosen neighbours</title>
+  <rect x="0" y="0" width="480" height="420" fill="#ffffff"/>
+  <g stroke="#1d1d1d" stroke-width="1.5" fill="none">
+    <line x1="80" y1="330" x2="280" y2="330"/>
+    <line x1="80" y1="330" x2="80" y2="130"/>
+    <line x1="80" y1="330" x2="170" y2="260"/>
+    <line x1="280" y1="330" x2="280" y2="130"/>
+    <line x1="280" y1="330" x2="370" y2="260"/>
+    <line x1="80" y1="130" x2="280" y2="130" stroke-dasharray="7 5"/>
+    <line x1="80" y1="130" x2="170" y2="60"/>
+    <line x1="280" y1="130" x2="370" y2="60"/>
+    <line x1="170" y1="260" x2="370" y2="260" stroke-dasharray="7 5"/>
+    <line x1="170" y1="260" x2="170" y2="60" stroke-dasharray="7 5"/>
+    <line x1="370" y1="260" x2="370" y2="60" stroke-dasharray="7 5"/>
+    <line x1="170" y1="60" x2="370" y2="60"/>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="4.5" fill="none" opacity="0.35">
+    <line x1="80" y1="130" x2="280" y2="130"/>
+    <line x1="280" y1="130" x2="280" y2="330"/>
+    <line x1="280" y1="330" x2="370" y2="260"/>
+    <line x1="370" y1="260" x2="170" y2="260"/>
+  </g>
+  <g stroke="#1d1d1d" stroke-width="2">
+    <circle cx="80" cy="330" r="7" fill="#ffffff"/>
+    <circle cx="280" cy="330" r="7" fill="#1d1d1d"/>
+    <circle cx="80" cy="130" r="7" fill="#1d1d1d"/>
+    <circle cx="280" cy="130" r="7" fill="#1d1d1d"/>
+    <circle cx="170" cy="260" r="7" fill="#1d1d1d"/>
+    <circle cx="370" cy="260" r="7" fill="#1d1d1d"/>
+    <circle cx="170" cy="60" r="7" fill="#ffffff"/>
+    <circle cx="370" cy="60" r="7" fill="#ffffff"/>
+    <circle cx="280" cy="330" r="13" fill="none"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="30" y="352">--- (out)</text>
+    <text x="250" y="358">+-- v = 1.0000</text>
+    <text x="40" y="122">-+-</text>
+    <text x="4" y="152">v = -0.5000</text>
+    <text x="290" y="150">++-</text>
+    <text x="290" y="166">v = 0.8660</text>
+    <text x="135" y="236">--+</text>
+    <text x="90" y="254">v = -0.5000</text>
+    <text x="380" y="278">+-+</text>
+    <text x="380" y="294">v = 0.8660</text>
+    <text x="120" y="44">-++ (out)</text>
+    <text x="350" y="44">+++ (out)</text>
+    <text x="20" y="385" font-size="12">Filled: the 5 chosen corners. Open: left out. Ring: biggest entry of v.</text>
+    <text x="20" y="403" font-size="12">Solid edge: +1. Dashed edge: -1. Shaded: edges between chosen corners.</text>
+  </g>
+</svg>
