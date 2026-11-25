@@ -65,10 +65,12 @@ example : (Finset.Icc (1 : ℤ) 30).filter (fun d => 30 % d = 0 ∧ d * d ≤ 30
 example : (-5 : ℤ) + -6 = -11 ∧ (-5 : ℤ) * -6 = 30 := by decide
 -- The patio, x^2 - 11x + 30 = (x - 5)(x - 6), agrees at all 20 whole x from -4 to 15.
 example : ∀ x ∈ Finset.Icc (-4 : ℤ) 15, x ^ 2 - 11 * x + 30 = (x - 5) * (x - 6) := by decide
--- The patio vanishes at x = 5 and x = 6, and leaves 30 square metres at x = 11 (6 m by 5 m).
+-- The patio's quadratic vanishes at x = 5 and x = 6 (a 5 m by 6 m patio: edging 2 * (5 + 6) = 22 m,
+-- area 30), and both forms give 30 at x = 11.
 example : (5 : ℤ) ^ 2 - 11 * 5 + 30 = 0 ∧ (6 : ℤ) ^ 2 - 11 * 6 + 30 = 0 ∧
     (11 : ℤ) ^ 2 - 11 * 11 + 30 = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by decide
--- The pond patio at x = 11, k = 3: 121 - 9 = 112 and 14 * 8 = 112.
+example : (2 : ℤ) * (5 + 6) = 22 ∧ (5 : ℤ) * (11 - 5) = 30 := by decide
+-- The courtyard at x = 11 with a pond k = 3: 121 - 9 = 112 and 14 * 8 = 112.
 example : (11 : ℤ) ^ 2 - 3 ^ 2 = 112 ∧ (11 + 3 : ℤ) * (11 - 3) = 112 := by decide
 -- x^2 + 9: no whole-number pair adds to 0 and multiplies to 9.
 example : ∀ p ∈ Finset.Icc (-9 : ℤ) 9, ∀ q ∈ Finset.Icc (-9 : ℤ) 9, ¬ (p + q = 0 ∧ p * q = 9) := by

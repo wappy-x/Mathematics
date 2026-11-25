@@ -55,4 +55,5 @@ assert [plain(BALL, t) for t in (1.0, 2.0, 3.0, 4.0)] == [15, 20, 15, 0]
 assert far == 0.0 and degree(BALL) == 2 and degree(d) == 1 and e == BALL
 assert d == [3, -8, 0] and mul([0, 5], [4, -1]) == mul([4, -1], [0, 5])
 assert all(plain(BALL, 2 + s) == 20 - 5 * s * s for s in (0.0, 1.0, 2.0))
+assert plain(BALL, 0.0) == 0.0 and plain(BALL, level) == plain(WALL, level)
 print("ALL CHECKS PASS")

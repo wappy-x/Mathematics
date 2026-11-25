@@ -1,11 +1,11 @@
 // Factoring quadratics -- the same check as the Python, in Rust.  No crates.
 // A football kicked straight up at 20 m/s stands 20t - 5t^2 metres high after
-// t seconds.  A square slab x metres a side, trimmed 5 m one way and 6 m the
-// other, leaves x^2 - 11x + 30 square metres.  Each is worked two ways: the
+// t seconds.  A patio with 22 m of edging and 30 square metres of area has
+// sides x and 11 - x, where x^2 - 11x + 30 = 0.  Each is worked two ways: the
 // sum form term by term, and the product form with the brackets multiplied.
 fn height_sum(t: f64) -> f64 { 20.0 * t - 5.0 * t * t }   // the football, as a sum
 fn height_prod(t: f64) -> f64 { 5.0 * t * (4.0 - t) }     // the same, as a product
-fn patio_sum(x: i64) -> i64 { x * x - 11 * x + 30 }       // the slab, as a sum
+fn patio_sum(x: i64) -> i64 { x * x - 11 * x + 30 }       // the patio, as a sum
 fn patio_prod(x: i64) -> i64 { (x - 5) * (x - 6) }        // the same, as a product
 
 fn pairs(c: i64) -> Vec<(i64, i64)> {                     // whole-number pairs multiplying to c
@@ -39,10 +39,12 @@ fn main() {
     let (p, q) = brackets(-11, 30).expect("x^2 - 11x + 30 must factor");
     println!("the pair adding to -11 is {} and {}, so x^2 - 11x + 30 = (x - {})(x - {})", p, q, -p, -q);
     println!("the brackets vanish at x = {} and x = {}", -p, -q);
+    println!("so the patio is {} m by {} m: edging 2 * ({} + {}) = {} m, area {} * {} = {} square metres",
+             -p, -q, -p, -q, 2 * (-p - q), -p, -q, p * q);
     let agree = (-4..16).filter(|&x| patio_sum(x) == patio_prod(x)).count();
     println!("sum and product forms agree at all {} whole x from -4 to 15", agree);
-    println!("patio at x = 11: sum form {}, product form 6 * 5 = {}", patio_sum(11), patio_prod(11));
-    println!("pond patio at x = 11: x^2 - 9 gives {}, (x + 3)(x - 3) gives 14 * 8 = {}",
+    println!("both forms at x = 11: sum form {}, product form 6 * 5 = {}", patio_sum(11), patio_prod(11));
+    println!("courtyard paving at x = 11: x^2 - 9 gives {}, (x + 3)(x - 3) gives 14 * 8 = {}",
              11 * 11 - 9, (11 + 3) * (11 - 3));
     println!("{}", if brackets(0, 9).is_none() { "x^2 + 9: no whole-number pair, so no brackets" }
                    else { "x^2 + 9 factors, which cannot happen" });
@@ -50,7 +52,7 @@ fn main() {
              patio_sum(35), (11 - 3) * (11 - 10), (11 + 3) * (11 - 3), 5 * (4 - 2));
     println!("against the right answers {}, {}, {} and {}",
              patio_sum(0), patio_sum(11), 11 * 11 + 9, height_sum(2.0) as i64);
-    assert!(brackets(-11, 30) == Some((-5, -6)) && p + q == -11 && p * q == 30);
+    assert!(brackets(-11, 30) == Some((-5, -6)) && p + q == -11 && p * q == 30 && -2 * (p + q) == 22);
     assert!(agree == 20 && same == 9);
     assert!(height_sum(0.0) == 0.0 && height_sum(4.0) == 0.0 && height_sum(2.0) == 20.0);
     assert!(brackets(0, 9).is_none() && patio_sum(0) == 30 && patio_sum(5) == 0 && patio_sum(6) == 0);

@@ -7,9 +7,7 @@ def root(v):                                   # square root, built from scratch
     for _ in range(60):                        # Newton: average a guess with v/guess
         g = (g + v / g) / 2.0
     return g
-
 def height(t): return 20 * t - 5 * t * t       # the ball, t seconds after the kick
-
 def poly(t): return 5 * t * t - 20 * t + 15    # 5t^2 - 20t + 15, the 15 m question
 
 def formula(a, b, c):                          # road one: the quadratic formula
@@ -57,4 +55,6 @@ assert abs(r15[0] - 1.0) < 1e-12 and abs(r15[1] - 3.0) < 1e-12
 assert abs(sq[0] - 1.0) < 1e-12 and abs(sq[1] - 3.0) < 1e-12 and abs(poly(r15[0])) < 1e-12
 assert abs(r15[0] + r15[1] - 20 / 5) < 1e-12 and abs(r15[0] * r15[1] - 15 / 5) < 1e-12
 assert [formula(5, -20, h)[0] for h in (15, 20, 25)] == [100, 0, -100]
+assert abs(poly(r15[1])) < 1e-12 and formula(5, -20, 20)[1] == [2.0] and formula(5, -20, 25)[1] == []
+assert [f"{x:.2f}" for x in formula(5, -20, 10)[1]] == ["0.59", "3.41"]
 print("ALL CHECKS PASS")

@@ -12,7 +12,7 @@ Put whole seconds in and the flight appears. One second: 15 metres. Two: 20. Thr
 
 That height rule is a **polynomial**: whole-number powers of one letter, each multiplied by a plain number, added up. The numbers out front, 20 and −5, are its **coefficients**. The biggest power, the 2, is its **degree**. And 4 is a **root**: putting 4 in makes it come out zero.
 
-**A polynomial is powers of one letter, each multiplied by a plain number and added together; its degree is the biggest power, and a root is an input that makes it come out zero.**
+**A polynomial is powers of one letter, each times a plain number, added together; its degree is the biggest power, and a root is an input that makes it zero.**
 
 **What kind of fact this is:** a definition: polynomial, coefficient, degree and root are names. The two products and the rule that degrees add are theorems, proved in Why it works.
 
@@ -71,7 +71,7 @@ A difference times a sum leaves the two squares: the middle terms cancel.
 
 - **Whole-number powers of the letter only.** Divide by the letter or take a half power, and the result is no longer a polynomial: 1 divided by t has no value at the kick, t = 0.
 - **Only during the flight.** The height rule fits while gravity alone acts, from 0 to 4 seconds. At 6 seconds it says −60.00 metres, but the ball is on the grass.
-- **Top terms that do not cancel.** Take one ball's height from the other's and the two −5t^2 terms cancel: the gap 3 − 8t is degree 1, not 2.
+- **Top terms that do not cancel.** Subtract two degree-2 polynomials with the same squared term, and the squared terms cancel. What is left is degree 1, not 2. Step 3 shows it with two balls.
 - **Ordinary numbers as coefficients.** Degrees add when multiplying because two non-zero top coefficients never multiply to zero: 5t times −t gives −5t^2. On a clock dial, two non-zero readings can multiply to zero, and then the degree can drop ([Rings](../09-Rings%20and%20Fields/01-rings.md)).
 
 ---
@@ -80,7 +80,7 @@ A difference times a sum leaves the two squares: the middle terms cancel.
 
 ### Step 0: only three moves are allowed
 
-Raise the letter to a whole-number power. Multiply by a number. Add. That is the whole kit, and the restriction is the point: nothing is ever divided by the letter and no half powers get in, so a polynomial never has a gap and never blows up. Put any number in, get a number out.
+Raise the letter to a whole-number power. Multiply by a number. Add. That is the whole kit, and the restriction is the point. Nothing is ever divided by the letter, and no half powers get in. So a polynomial never has a gap and never blows up. Put any number in, get a number out.
 
 1 divided by t is not a polynomial: the letter is underneath. The square root of t is not one either: a square root is a half power.
 
@@ -104,7 +104,7 @@ Look far out and the top power wins. At 10 seconds 20t is 200 but 5t^2 is 500, s
 | 1 | a number times the letter, plus a plain number | a straight line, no bends |
 | 2 | a squared term as well | one bend, up then down or down then up |
 
-Degree 3 adds a cubed term and a second bend, and so on up: a polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times — the job of [Roots and factors](05-roots-and-the-factor-theorem.md).
+Degree 3 adds a cubed term and a second bend, and so on up. A polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times. [Roots and factors](05-roots-and-the-factor-theorem.md) proves the second ceiling; the count of bends is a fact from calculus.
 
 ### Step 3: adding is collecting like terms, and the degree can fall
 
@@ -112,13 +112,13 @@ Someone on a 3-metre wall throws a second ball up at 12 metres a second. Its hei
 
 Take the first height from the second, one power at a time. The plain numbers give 3. The t terms give 12t − 20t = −8t. The t^2 terms cancel outright.
 
-The gap is **3 − 8t** — degree 1, a straight line. Both balls are pulled down by the same 5t^2, so gravity leaves the difference entirely: the gap closes at a steady 8 metres a second, from 3 metres at the kick to nothing at 0.375 seconds, where both are 6.796875 metres up.
+The gap is **3 − 8t** — degree 1, a straight line. Both balls are pulled down by the same 5t^2, so gravity drops out of the difference. The gap closes at a steady 8 metres a second. It is 3 metres at the kick and nothing at 0.375 seconds, where both balls are 6.796875 metres up.
 
 Adding never pushes the degree above the bigger of the two, and can pull it down, as it just did.
 
 ### Step 4: multiplying is every term against every term; degrees add
 
-Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the ball's height again. Degree 1 times degree 1 came out degree 2, and it always does — the top term of one times the top term of the other is the only product reaching that power, so the degrees add.
+Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the ball's height again. Degree 1 times degree 1 came out degree 2, and it always does. The top term of one times the top term of the other is the only product reaching that power, so the degrees add.
 
 Add two polynomials, or multiply them, and another polynomial comes back. The family is closed under both, which earns polynomials a name of their own in [Rings](../09-Rings%20and%20Fields/01-rings.md).
 
@@ -130,7 +130,9 @@ h(2 + s) = 20(2 + s) - 5(4 + 4s + s^2) = 40 + 20s - 20 - 20s - 5s^2 = 20 - 5s^2
 
 The $`s`$ terms cancel, and what is left depends on $`s`$ squared, which does not care which side of the top you stepped. One second before and one after both give 20 − 5 = 15 metres. That is why the heights read 15, 20, 15.
 
-The roots drop out of the second pattern. The ball is down when 20 − 5$`s`$^2 = 0, so when 4 − $`s`$^2 = 0, and a^2 − b^2 = (a − b)(a + b) turns that into (2 − $`s`$)(2 + $`s`$): zero when $`s`$ is 2 or −2, two seconds after the top or two before. In seconds since the kick, 4 and 0.
+The roots drop out of the second pattern. The ball is down when $`20 - 5s^2 = 0`$, which means $`4 - s^2 = 0`$. The pattern $`a^2 - b^2 = (a - b)(a + b)`$ turns that into $`(2 - s)(2 + s) = 0`$.
+
+That is zero when $`s`$ is 2 or −2: two seconds after the top, or two before. In seconds since the kick, that is 4 and 0.
 
 ### Step 5: a root is an input, not an output
 
@@ -162,7 +164,7 @@ To two decimals.
 | --- | --- | --- |
 | Reading 5t^2 as (5t)^2 | −165.00 at 3 seconds | The power sits on the letter alone: square the seconds, then multiply by 5 — 45.00 |
 | Multiplying 5t × (4 − t) as 5 × 4 and t × (−t) | 11.00 at 3 seconds | That reads 20 − t^2. Every term must meet every term: 5t × 4 = 20t, then 5t × (−t) = −5t^2 |
-| Reading (2 + $`s`$)^2 as 4 + $`s`$^2 | 35.00 at 3 seconds, where $`s`$ = 1 | The middle term 2ab is missing |
+| Reading $`(2 + s)^2`$ as $`4 + s^2`$ | 35.00 at 3 seconds, where $`s`$ = 1 | The middle term 2ab is missing |
 
 The code prints all three.
 
@@ -170,7 +172,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The ball is kept as a coefficient list, [0, 20, −5], read from the plain number upward. One road works out each power and adds the terms: the hand method. The second never raises anything to a power — it multiplies and adds down the list — and must land on the same heights. A third check rebuilds the ball from 5t times (4 − t).
+Nothing is imported. The ball is kept as a coefficient list, [0, 20, −5], read from the plain number upward.
+
+One road works out each power and adds the terms: the hand method. The second never raises anything to a power — it multiplies and adds down the list — and must land on the same heights. A third check rebuilds the ball from 5t times (4 − t).
 
 ### Python
 
@@ -232,10 +236,11 @@ assert [plain(BALL, t) for t in (1.0, 2.0, 3.0, 4.0)] == [15, 20, 15, 0]
 assert far == 0.0 and degree(BALL) == 2 and degree(d) == 1 and e == BALL
 assert d == [3, -8, 0] and mul([0, 5], [4, -1]) == mul([4, -1], [0, 5])
 assert all(plain(BALL, 2 + s) == 20 - 5 * s * s for s in (0.0, 1.0, 2.0))
+assert plain(BALL, 0.0) == 0.0 and plain(BALL, level) == plain(WALL, level)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 t, seconds         0.0    0.5    1.0    1.5    2.0    2.5    3.0    3.5    4.0    4.5    5.0    5.5    6.0
@@ -337,11 +342,12 @@ fn main() {
     assert!(far == 0.0 && degree(&BALL) == 2 && degree(&d) == 1 && e == BALL.to_vec());
     assert!(d == vec![3, -8, 0] && mul(&[0, 5], &[4, -1]) == mul(&[4, -1], &[0, 5]));
     assert!([0.0, 1.0, 2.0].iter().all(|&s| plain(&BALL, 2.0 + s) == 20.0 - 5.0 * s * s));
+    assert!(plain(&BALL, 0.0) == 0.0 && plain(&BALL, level) == plain(&WALL, level));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 t, seconds         0.0    0.5    1.0    1.5    2.0    2.5    3.0    3.5    4.0    4.5    5.0    5.5    6.0
@@ -489,7 +495,7 @@ example : (20 : ℤ) * 3 - 5 * 3 ^ 2 = 15 := by decide
 
 - **Anything thrown, dropped or fired.** Height against time is degree 2 whenever gravity is all that acts: same shape, different numbers.
 - **Spreadsheet trend lines.** The "polynomial fit" option is this: powers of one column, each with a number chosen to fit your data.
-- **Areas and volumes.** Write a shape's edges in one letter: its area is degree 2, its volume degree 3 — the box in [Polynomial long division](04-polynomial-division.md).
+- **Areas and volumes.** Write a shape's edges in one letter: its area is degree 2, its volume degree 3 — the folded tray in [Polynomial long division](04-polynomial-division.md).
 
 > **Say it back**
 > A polynomial is whole-number powers of one letter, each multiplied by a plain number, added up. The football's height 20t − 5t^2 is one: coefficients 20 and −5, degree 2. Put a number in and a number comes out: 15, 20, 15, 0 metres at 1, 2, 3 and 4 seconds. Add or multiply two of them and another polynomial comes back. A root is an input that makes the answer zero — here 0 and 4 seconds, the kick and the landing.
@@ -499,7 +505,7 @@ example : (20 : ℤ) * 3 - 5 * 3 ^ 2 = 15 := by decide
 ## What this builds on
 
 - [Letters for numbers](../01-Letters%20and%20Equations/01-letters-for-numbers.md): a letter standing for a number nobody has told you yet, and collecting like terms.
-- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what t^2 means, and why these powers must be whole numbers.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what whole-number powers like t^2 mean, and why a negative power turns into dividing — the move Step 0 rules out.
 - [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): the law that lets a bracket be multiplied out a term at a time.
 
 ## Where this goes next
@@ -508,7 +514,7 @@ example : (20 : ℤ) * 3 - 5 * 3 ^ 2 = 15 := by decide
 - [Polynomial long division](04-polynomial-division.md): dividing one polynomial by another, quotient and remainder, as with whole numbers.
 - [Rings](../09-Rings%20and%20Fields/01-rings.md): the name for a family closed under adding and multiplying, which is Step 4's last fact.
 
-Here the roots read off by inspection. The question this card leaves open: how do you find the roots of a polynomial that does not split so easily?
+Here the roots read off because the height came already split as 5t(4 − t). The question this card leaves open: handed a polynomial written out term by term, how do you find its brackets, and so its roots?
 
 ---
 

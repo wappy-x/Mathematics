@@ -60,34 +60,38 @@ theorem remainder_on_dividing_by_x_minus_r_is_p_of_r {R : Type*} [CommRing R]
 
 -- The whole-number original: 17 = 5 × 3 + 2, and 2 is smaller than 5.
 example : (17 : ℕ) = 5 * 3 + 2 ∧ 2 < 5 := by decide
--- The box: x^3 + 6x^2 + 11x + 6 divided by the edge x + 1 is x^2 + 5x + 6, remainder 0.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X + 6) + 0 := by
-  ring
--- The loop's leftovers: after x^2 lots of x + 1, then 5x lots, then 6 lots.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) - X ^ 2 * (X + 1) = 5 * X ^ 2 + 11 * X + 6 := by
-  ring
-example : (5 * X ^ 2 + 11 * X + 6 : ℤ[X]) - 5 * X * (X + 1) = 6 * X + 6 := by ring
-example : (6 * X + 6 : ℤ[X]) - 6 * (X + 1) = 0 := by ring
--- The face un-multiplies: x^2 + 5x + 6 = (x + 2)(x + 3).
-example : (X ^ 2 + 5 * X + 6 : ℤ[X]) = (X + 2) * (X + 3) := by ring
--- At x = 2 the box is 3 by 4 by 5, holding 60 cubic cm.
-example : (2 + 1 : ℤ) * (2 + 2) * (2 + 3) = 60 ∧ (3 * 4 * 5 : ℤ) = 60 := by decide
--- The same box divided by x - 2: quotient x^2 + 8x + 27, remainder 60.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X - 2) * (X ^ 2 + 8 * X + 27) + 60 := by
-  ring
--- The volume at the root -1 of x + 1 is 0, at 2 it is 60, and at 1 (the wrong sign) it is 24.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval (-1) = 0 ∧
-    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 2 = 60 ∧
-    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 1 = 24 := by norm_num
--- The chart: for r = -3 to 3, the volume at r is 0, 0, 0, 6, 24, 60, 120.
-example : [-3, -2, -1, 0, 1, 2, 3].map (fun x : ℤ => x ^ 3 + 6 * x ^ 2 + 11 * x + 6) =
-    [0, 0, 0, 6, 24, 60, 120] := by decide
--- Drop the degree rule and the pair is not unique: quotient x^2 + 5x, leftover 6x + 6.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X) + (6 * X + 6) := by
-  ring
--- Plain numbers at x = 10: the box is 11 by 12 by 13, and 1716 / 11 = 156 with nothing left.
-example : (11 * 12 * 13 : ℕ) = 1716 ∧ 1716 / 11 = 156 ∧ 1716 % 11 = 0 ∧
-    (10 ^ 2 + 5 * 10 + 6 : ℕ) = 156 := by decide
+-- The tray: x cm cut from each corner of a 30 by 20 card holds x(30 - 2x)(20 - 2x) cubic cm,
+-- and that minus one litre is p = 4x^3 - 100x^2 + 600x - 1000.
+example : (X * (30 - 2 * X) * (20 - 2 * X) - 1000 : ℤ[X]) =
+    4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 := by ring
+-- A 5 cm cut holds a litre: 5 by 20 by 10.
+example : (5 : ℤ) * (30 - 2 * 5) * (20 - 2 * 5) = 1000 := by decide
+-- p divided by x - 5 is 4x^2 - 80x + 200, remainder 0.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 5) * (4 * X ^ 2 - 80 * X + 200) + 0 := by ring
+-- The loop's leftovers: after 4x^2 lots of x - 5, then -80x lots, then 200 lots.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) - 4 * X ^ 2 * (X - 5) =
+    -80 * X ^ 2 + 600 * X - 1000 := by ring
+example : (-80 * X ^ 2 + 600 * X - 1000 : ℤ[X]) - (-80) * X * (X - 5) = 200 * X - 1000 := by ring
+example : (200 * X - 1000 : ℤ[X]) - 200 * (X - 5) = 0 := by ring
+-- The same p divided by x - 4: quotient 4x^2 - 84x + 264, remainder 56.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 4) * (4 * X ^ 2 - 84 * X + 264) + 56 := by ring
+-- p at 5 is 0, at 4 it is 56 (the 4 by 22 by 12 tray holds 1056), and at -5 (the wrong sign) -7000.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval 5 = 0 ∧
+    (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval 4 = 56 ∧
+    (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval (-5) = -7000 := by norm_num
+example : (4 * 22 * 12 : ℤ) = 1056 := by decide
+-- The chart: for r = 0 to 10, p(r) is -1000, -496, -168, 8, 56, 0, -136, -328, -552, -784, -1000.
+example : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map
+    (fun x : ℤ => 4 * x ^ 3 - 100 * x ^ 2 + 600 * x - 1000) =
+    [-1000, -496, -168, 8, 56, 0, -136, -328, -552, -784, -1000] := by decide
+-- Drop the degree rule and the pair is not unique: quotient 4x^2 - 80x, leftover 200x - 1000.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 5) * (4 * X ^ 2 - 80 * X) + (200 * X - 1000) := by ring
+-- Plain numbers at x = 20: p is 3000, x - 5 is 15, and 3000 / 15 = 200 with nothing left, the quotient at 20.
+example : (4 * 20 ^ 3 - 100 * 20 ^ 2 + 600 * 20 - 1000 : ℤ) = 3000 ∧ (3000 : ℤ) / 15 = 200 ∧
+    (3000 : ℤ) % 15 = 0 ∧ (4 * 20 ^ 2 - 80 * 20 + 200 : ℤ) = 200 := by decide
 
 #print axioms polynomial_division_with_remainder_exists_and_is_unique
 #print axioms dividing_by_x_minus_r_leaves_p_of_r

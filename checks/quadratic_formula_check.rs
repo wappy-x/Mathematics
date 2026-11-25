@@ -72,5 +72,7 @@ fn main() {
     assert!((sq[0] - 1.0).abs() < 1e-12 && (sq[1] - 3.0).abs() < 1e-12 && poly(r15[0]).abs() < 1e-12);
     assert!((r15[0] + r15[1] - 20.0 / 5.0).abs() < 1e-12 && (r15[0] * r15[1] - 15.0 / 5.0).abs() < 1e-12);
     assert_eq!([15i64, 20, 25].map(|h| formula(5, -20, h).0), [100, 0, -100]);
+    assert!(poly(r15[1]).abs() < 1e-12 && formula(5, -20, 20).1 == vec![2.0] && formula(5, -20, 25).1.is_empty());
+    assert!(formula(5, -20, 10).1.iter().map(|x| format!("{:.2}", x)).collect::<Vec<_>>() == ["0.59", "3.41"]);
     println!("ALL CHECKS PASS");
 }

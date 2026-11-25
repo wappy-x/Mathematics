@@ -1,11 +1,11 @@
 # Factoring quadratics -- the check behind the card.  Nothing is imported.
 # A football kicked straight up at 20 m/s stands 20t - 5t^2 metres high after
-# t seconds.  A square slab x metres a side, trimmed 5 m one way and 6 m the
-# other, leaves x^2 - 11x + 30 square metres.  Each is worked two ways: the
+# t seconds.  A patio with 22 m of edging and 30 square metres of area has
+# sides x and 11 - x, where x^2 - 11x + 30 = 0.  Each is worked two ways: the
 # sum form term by term, and the product form with the brackets multiplied.
 def height_sum(t): return 20 * t - 5 * t * t        # the football, as a sum
 def height_prod(t): return 5 * t * (4 - t)          # the same, as a product
-def patio_sum(x): return x * x - 11 * x + 30        # the slab, as a sum
+def patio_sum(x): return x * x - 11 * x + 30        # the patio, as a sum
 def patio_prod(x): return (x - 5) * (x - 6)         # the same, as a product
 
 def pairs(c):                                       # whole-number pairs multiplying to c
@@ -28,10 +28,12 @@ print("whole-number pairs multiplying to 30: "
 p, q = brackets(-11, 30)
 print(f"the pair adding to -11 is {p} and {q}, so x^2 - 11x + 30 = (x - {-p})(x - {-q})")
 print(f"the brackets vanish at x = {-p} and x = {-q}")
+print(f"so the patio is {-p} m by {-q} m: edging 2 * ({-p} + {-q}) = {2 * (-p - q)} m, "
+      f"area {-p} * {-q} = {p * q} square metres")
 agree = sum(1 for x in range(-4, 16) if patio_sum(x) == patio_prod(x))
 print(f"sum and product forms agree at all {agree} whole x from -4 to 15")
-print(f"patio at x = 11: sum form {patio_sum(11)}, product form 6 * 5 = {patio_prod(11)}")
-print(f"pond patio at x = 11: x^2 - 9 gives {11 * 11 - 9}, "
+print(f"both forms at x = 11: sum form {patio_sum(11)}, product form 6 * 5 = {patio_prod(11)}")
+print(f"courtyard paving at x = 11: x^2 - 9 gives {11 * 11 - 9}, "
       f"(x + 3)(x - 3) gives 14 * 8 = {(11 + 3) * (11 - 3)}")
 print("x^2 + 9: no whole-number pair, so no brackets" if brackets(0, 9) is None
       else "x^2 + 9 factors, which cannot happen")
@@ -39,7 +41,7 @@ print(f"the four mistakes come out at {patio_sum(35)}, {(11 - 3) * (11 - 10)}, "
       f"{(11 + 3) * (11 - 3)} and {5 * (4 - 2)}")
 print(f"against the right answers {patio_sum(0)}, {patio_sum(11)}, "
       f"{11 * 11 + 9} and {int(height_sum(2))}")
-assert brackets(-11, 30) == (-5, -6) and p + q == -11 and p * q == 30
+assert brackets(-11, 30) == (-5, -6) and p + q == -11 and p * q == 30 and -2 * (p + q) == 22
 assert agree == 20 and same == 9
 assert height_sum(0) == 0 and height_sum(4) == 0 and height_sum(2) == 20
 assert brackets(0, 9) is None and patio_sum(0) == 30 and patio_sum(5) == 0 and patio_sum(6) == 0

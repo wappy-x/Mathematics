@@ -1,7 +1,7 @@
-# Polynomial long division -- the check behind the card.  Nothing is imported.  A box
-# holds x^3 + 6x^2 + 11x + 6 cubic cm, one edge is x + 1 cm.  Coefficients are listed
-# highest power first: [1, 6, 11, 6] is the volume, [1, 1] the edge.  Both divisors start with 1.
-P, D, E = [1, 6, 11, 6], [1, 1], [1, -2]      # the volume, the edge x + 1, and x - 2
+# Polynomial long division -- the check behind the card.  Nothing is imported.  An open tray
+# folded from a 30 by 20 cm card, after cutting an x cm square from each corner, holds
+# x(30 - 2x)(20 - 2x) cubic cm: one litre where p(x) = 4x^3 - 100x^2 + 600x - 1000 is zero.
+P, D, E = [4, -100, 600, -1000], [1, -5], [1, -4]   # p highest power first, x - 5, x - 4
 
 def show(c):                                  # coefficients back into readable form
     out = ""
@@ -29,32 +29,32 @@ def mul(a, b):                                # multiply two polynomials back to
 def add(a, b): return [u + w for u, w in zip(a, [0] * (len(a) - len(b)) + b)]
 def line(name, text): print(f"{name:<30}{text}")
 
-q, s, steps = divide(P, D)                    # one road: divide by the edge x + 1
-q2, s2, _ = divide(P, E)                      # the same box divided by x - 2
-line("p(x), the volume", show(P))
-line("d(x), the edge", show(D))
+q, s, steps = divide(P, D)                    # one road: divide by x - 5
+q2, s2, _ = divide(P, E)                      # the same p divided by x - 4
+line("p(x), volume minus 1000", show(P))
 line("leftovers as the loop runs", " | ".join(steps))
-line("q(x), the cross-section", show(q))
+line("q(x), the quotient", show(q))
 line("s(x), the remainder", show(s))
 line("d(x) q(x) + s(x)", show(add(mul(D, q), s)))
-line("(x + 2)(x + 3) multiplied out", show(mul([1, 2], [1, 3])))
-line("p(-1), at the root of x + 1", value(P, -1))
-edge = [value(D, 2), value([1, 2], 2), value([1, 3], 2)]
-print(f"at x = 2 the box is {edge[0]} by {edge[1]} by {edge[2]}, volume {value(P, 2)}")
-ten = [value(D, 10), value([1, 2], 10), value([1, 3], 10)]   # second road: plain numbers
-print(f"at x = 10 the box is {ten[0]} by {ten[1]} by {ten[2]}: {value(P, 10)} / {ten[0]} = "
-      f"{value(P, 10) // ten[0]} remainder {value(P, 10) % ten[0]}")
-line("divide p(x) by x - 2", f"{show(q2)}   remainder {show(s2)}")
-line("p(2), at the root of x - 2", value(P, 2))
-roots = list(range(-3, 4))
-line("r", "".join(f"{r:>4}" for r in roots))
-line("remainder, dividing by x - r", "".join(f"{divide(P, [1, -r])[1][0]:>4}" for r in roots))
-line("p(r)", "".join(f"{value(P, r):>4}" for r in roots))
+print(f"a 5 cm cut: 5 by {30 - 2 * 5} by {20 - 2 * 5} cm, volume {5 * (30 - 2 * 5) * (20 - 2 * 5)}")
+disc = q[1] * q[1] - 4 * q[0] * q[2]          # the quotient's zeros, by the quadratic formula
+lo, hi = (-q[1] - disc ** 0.5) / (2 * q[0]), (-q[1] + disc ** 0.5) / (2 * q[0])
+print(f"q(x) = 0 at x = {lo:.2f} and x = {hi:.2f}; two {hi:.2f} cm squares do not fit across 20 cm")
+print(f"a {lo:.2f} cm cut: {lo:.2f} by {30 - 2 * lo:.2f} by {20 - 2 * lo:.2f} cm, "
+      f"volume {lo * (30 - 2 * lo) * (20 - 2 * lo):.2f}")
+print(f"at x = 20: p = {value(P, 20)}, x - 5 = 15, {value(P, 20)} / 15 = {value(P, 20) // 15} "
+      f"remainder {value(P, 20) % 15}, and q(20) = {value(q, 20)}")   # second road: plain numbers
+line("divide p(x) by x - 4", f"{show(q2)}   remainder {show(s2)}")
+line("p(4), at the root of x - 4", value(P, 4))
+roots = list(range(0, 11))
+line("r", "".join(f"{r:>6}" for r in roots))
+line("remainder, dividing by x - r", "".join(f"{divide(P, [1, -r])[1][0]:>6}" for r in roots))
+line("p(r)", "".join(f"{value(P, r):>6}" for r in roots))
 print(f"stopping a step early: quotient {show(q[:2] + [0])}, leftover {steps[1]}")
-print(f"dropping the remainder 60 leaves {value(mul(q2, E), 2)} at x = 2; "
-      f"the root of x + 1 read as 1 gives p(1) = {value(P, 1)}")
-assert q == mul([1, 2], [1, 3]) and s == [0]        # the cross-section, from the factors
-assert add(mul(D, q), s) == P and add(mul(E, q2), s2) == P
+print(f"dropping the remainder 56 leaves {value(mul(q2, E), 4)} at x = 4; "
+      f"the root of x - 5 read as -5 gives p(-5) = {value(P, -5)}")
+assert s == [0] and add(mul(D, q), s) == P and add(mul(E, q2), s2) == P
 assert [divide(P, [1, -r])[1][0] for r in roots] == [value(P, r) for r in roots]
-assert value(P, 10) == 1716 and value(P, 10) // ten[0] == value(q, 10) and value(P, 10) % ten[0] == 0
+assert s2 == [56] and value(P, 4) == 4 * 22 * 12 - 1000 and value(P, -5) == -7000
+assert abs(lo * (30 - 2 * lo) * (20 - 2 * lo) - 1000) < 1e-9 and 20 - 2 * hi < 0 and value(P, 20) == 15 * value(q, 20)
 print("ALL CHECKS PASS")

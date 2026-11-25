@@ -75,5 +75,6 @@ fn main() {
     assert!(far == 0.0 && degree(&BALL) == 2 && degree(&d) == 1 && e == BALL.to_vec());
     assert!(d == vec![3, -8, 0] && mul(&[0, 5], &[4, -1]) == mul(&[4, -1], &[0, 5]));
     assert!([0.0, 1.0, 2.0].iter().all(|&s| plain(&BALL, 2.0 + s) == 20.0 - 5.0 * s * s));
+    assert!(plain(&BALL, 0.0) == 0.0 && plain(&BALL, level) == plain(&WALL, level));
     println!("ALL CHECKS PASS");
 }

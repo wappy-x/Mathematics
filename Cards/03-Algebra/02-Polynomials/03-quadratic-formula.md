@@ -44,7 +44,7 @@ The arch is the ball's height, the flat line 15 metres. They meet at 1 second go
 
 ## The formula
 
-A **quadratic** is any equation written as a squared term, a plain term and a number, adding to zero:
+A **quadratic equation** is any equation written as a squared term, a plain term and a number, adding to zero:
 
 ```math
 a x^2 + b x + c = 0
@@ -67,7 +67,7 @@ The plus-or-minus sign is not a hedge: it is two answers on one line.
 | $`x`$ | the unknown being solved for | the time in seconds | — |
 | $`t`$ | seconds since the kick | 1 and 3 | — |
 | $`a`$ | the number in front of the squared term | 5 | the arch narrows, the answers close in |
-| $`b`$ | the number in front of the plain term | -20 | the pair slides sideways along the arch |
+| $`b`$ | the number in front of the plain term: minus the kick speed | -20 | a softer kick: the two answers close in and come earlier, then vanish |
 | $`c`$ | the number standing alone | 15 | both walk toward the middle, then vanish |
 | $`D`$ | the discriminant, under the square root | 100 | the answers pull further apart |
 
@@ -204,8 +204,9 @@ The ball at 15 metres is 5t^2 - 20t + 15 = 0, so a = 5, b = -20 and c = 15.
 
 15 metres is passed twice: at 1 second climbing, 3 seconds falling. Sum and product agree: 1 + 3 = 4 is -b/a = 20/5, and 1 × 3 = 3 is c/a = 15/5.
 
-Two more heights, only $`c`$ changing.
+Three more heights, only $`c`$ changing.
 
+- **10 metres.** 5t^2 - 20t + 10 = 0, discriminant 400 - 200 = 200. Above zero, so two answers. But 200 is not a perfect square, so no whole-number brackets exist and factoring goes quiet. The formula still works: t = (20 - √200) / 10 and (20 + √200) / 10, about 0.59 and 3.41 seconds.
 - **20 metres.** 5t^2 - 20t + 20 = 0, discriminant 400 - 400 = 0. One answer, t = 20/10 = 2: the top of the arch.
 - **25 metres.** 5t^2 - 20t + 25 = 0, discriminant 400 - 500 = -100. Below zero, no answer: this kick does not reach 25 metres.
 
@@ -223,7 +224,9 @@ Both checks print all three. The third is dangerous: 1.73 and 2.27 straddle the 
 
 ## Code, from first principles, and it actually runs
 
-Neither script imports anything, and neither gets a ready-made square root: both build one by Newton's method, averaging a guess with the number divided by that guess. Road one is the formula. Road two completes the square in arithmetic and must land on the same two times. Each answer then goes back into 5t^2 - 20t + 15 to watch zero come out, and the sum and product are checked against -b/a and c/a.
+Neither script imports anything, and neither gets a ready-made square root: both build one by Newton's method, averaging a guess with the number divided by that guess.
+
+Road one is the formula. Road two completes the square in arithmetic and must land on the same two times. Each answer then goes back into 5t^2 - 20t + 15 to watch zero come out, and the sum and product are checked against -b/a and c/a.
 
 ### Python
 
@@ -237,9 +240,7 @@ def root(v):                                   # square root, built from scratch
     for _ in range(60):                        # Newton: average a guess with v/guess
         g = (g + v / g) / 2.0
     return g
-
 def height(t): return 20 * t - 5 * t * t       # the ball, t seconds after the kick
-
 def poly(t): return 5 * t * t - 20 * t + 15    # 5t^2 - 20t + 15, the 15 m question
 
 def formula(a, b, c):                          # road one: the quadratic formula
@@ -287,10 +288,12 @@ assert abs(r15[0] - 1.0) < 1e-12 and abs(r15[1] - 3.0) < 1e-12
 assert abs(sq[0] - 1.0) < 1e-12 and abs(sq[1] - 3.0) < 1e-12 and abs(poly(r15[0])) < 1e-12
 assert abs(r15[0] + r15[1] - 20 / 5) < 1e-12 and abs(r15[0] * r15[1] - 15 / 5) < 1e-12
 assert [formula(5, -20, h)[0] for h in (15, 20, 25)] == [100, 0, -100]
+assert abs(poly(r15[1])) < 1e-12 and formula(5, -20, 20)[1] == [2.0] and formula(5, -20, 25)[1] == []
+assert [f"{x:.2f}" for x in formula(5, -20, 10)[1]] == ["0.59", "3.41"]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the ball's height, 20t - 5t^2 metres
@@ -386,11 +389,13 @@ fn main() {
     assert!((sq[0] - 1.0).abs() < 1e-12 && (sq[1] - 3.0).abs() < 1e-12 && poly(r15[0]).abs() < 1e-12);
     assert!((r15[0] + r15[1] - 20.0 / 5.0).abs() < 1e-12 && (r15[0] * r15[1] - 15.0 / 5.0).abs() < 1e-12);
     assert_eq!([15i64, 20, 25].map(|h| formula(5, -20, h).0), [100, 0, -100]);
+    assert!(poly(r15[1]).abs() < 1e-12 && formula(5, -20, 20).1 == vec![2.0] && formula(5, -20, 25).1.is_empty());
+    assert!(formula(5, -20, 10).1.iter().map(|x| format!("{:.2}", x)).collect::<Vec<_>>() == ["0.59", "3.41"]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the ball's height, 20t - 5t^2 metres
@@ -582,13 +587,14 @@ example : ((-20 : ℝ) - 10) / 10 = -3 ∧ ((-20 : ℝ) + 10) / 10 = -1 ∧
 
 ## Where this goes next
 
+- [Polynomial long division](04-polynomial-division.md): past degree 2 this formula stops. When one answer of a cubic is known, division strips it out and leaves a quadratic this formula can finish.
 - [Roots and factors](05-roots-and-the-factor-theorem.md): each answer r becomes a factor x - r, so a squared term gives at most two answers.
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): where the answers go when the discriminant is negative.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): degree 3 and 4 have formulas like this one; degree 5 provably has none.
 - [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): a 2 by 2 matrix hands you a quadratic; this formula finishes it.
-- [Decidable theories](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/14-decidable-theories-presburger-and-tarski.md): Presburger's arithmetic without times, and Tarski's real numbers.
+- [Decidable theories](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/14-decidable-theories-presburger-and-tarski.md): this card's discriminant test, b^2 - 4c ≥ 0 for x^2 + bx + c, is the opening example of Tarski's method, which decides questions about real numbers by machine.
 
-Left open: when the discriminant is below zero, as at 25 metres, are there truly no answers, or do they live off the number line?
+Left open: this formula stops at degree 2. When a cubic has one answer you already know, how do you get at the rest? The next card, [Polynomial long division](04-polynomial-division.md), starts there. The other open question waits for [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): when the discriminant is below zero, as at 25 metres, do the answers live off the number line?
 
 ---
 

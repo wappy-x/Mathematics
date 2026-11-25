@@ -6,19 +6,23 @@
 
 ## General Overview
 
-A builder measures a rectangular water tank and writes down three numbers. The three edge lengths add to 6 metres. The three pairwise products — length times width, length times height, width times height — add to 11 square metres. The volume, all three edges multiplied, is 6 cubic metres.
+An engineer designs a rectangular steel water tank from three limits. It must hold 6 cubic metres, which is 6,000 litres.
 
-What are the edges?
+Its twelve edges get 24 metres of welded corner strip, so length + width + height = 6 metres. Its six faces get 22 square metres of sheet steel. So the three face areas — length times width, length times height, width times height — add to 11 square metres.
 
-Call one edge x. Those three measurements collapse into one polynomial:
+What must the edges be?
+
+Call one edge x. Those three limits collapse into one polynomial:
 
 **x^3 - 6x^2 + 11x - 6 = 0**
 
-That comes straight from the measurements. Multiply out (x - first)(x - second)(x - third) for any three numbers and you get x^3, minus their sum times x^2, plus their pairwise products times x, minus their product. Take that on trust here; the two-number version is the sum-and-product check on [The quadratic formula](03-quadratic-formula.md).
+That comes straight from the limits. Multiply out (x - first)(x - second)(x - third) for any three numbers and you get x^3, minus their sum times x^2, plus their pairwise products times x, minus their product. Take that on trust here; the two-number version is the sum-and-product check on [The quadratic formula](03-quadratic-formula.md).
 
-So the edges are the inputs that make the cubic come out zero — its roots ([Polynomials](01-polynomials.md)). Try 1: that is 1 - 6 + 11 - 6, which is 0. A hit, and a hit buys more than one answer. Because 1 is a root, the bracket x - 1 divides the cubic exactly, leaving x^2 - 5x + 6 = (x - 2)(x - 3) ([Factoring](02-factoring-quadratics.md)). The tank is 1 metre by 2 metres by 3 metres.
+So the edges are the inputs that make the cubic come out zero — its roots ([Polynomials](01-polynomials.md)). Try 1: that is 1 - 6 + 11 - 6, which is 0.
 
-**A root and a factor are one fact in two costumes: the polynomial comes out zero at r exactly when x - r divides it, and since every root uses up one bracket and a polynomial whose highest power is n has only n brackets to give, n is the ceiling on how many different roots it can have.**
+A hit, and a hit buys more than one answer. Because 1 is a root, the bracket x - 1 divides the cubic exactly, leaving x^2 - 5x + 6 = (x - 2)(x - 3) ([Factoring](02-factoring-quadratics.md)). The tank is 1 metre by 2 metres by 3 metres.
+
+**A number r is a root of a polynomial exactly when x - r divides it; since each root uses up one degree, a degree-n polynomial has at most n different roots.**
 
 **What kind of fact this is:** two theorems, the factor theorem and the root ceiling, both proved on this card in Why it works.
 
@@ -45,7 +49,7 @@ Two statements. The first is the factor theorem:
 p(r) = 0 \quad\text{exactly when}\quad p(x) = (x - r)\,q(x) \text{ for some polynomial } q
 ```
 
-**Read it aloud:** if the polynomial comes out zero at the number r, then the bracket x - r divides it exactly with nothing left over — and if x - r divides it, the polynomial comes out zero at r.
+**Read it aloud:** if the polynomial comes out zero at the number r, then the bracket x - r divides it exactly, with nothing left over. And if x - r divides it, the polynomial comes out zero at r.
 
 The second is the ceiling that follows:
 
@@ -120,18 +124,20 @@ flowchart LR
 
 Three peels, three roots, and the cubic is spent.
 
-Note the wording: **at most** n, not exactly n. Change the tank's volume from 6 to 12 and the cubic becomes x^3 - 6x^2 + 11x - 12, zero at 4 and nowhere else — one root, degree 3, no such tank. Exactly-n needs numbers this wing has not built yet: [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md).
+Note the wording: **at most** n, not exactly n. Ask for 12 cubic metres from the same strip and steel, and the cubic becomes x^3 - 6x^2 + 11x - 12. It is zero at 4 and nowhere else — one root, degree 3, and no tank meets those limits. Exactly-n needs numbers this wing has not built yet: [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md).
 
 <details>
 <summary>Where to look for the first root</summary>
 
-Peeling needs a first root, and guessing is slow. If a whole number r is a root of the tank's cubic, then r^3 - 6r^2 + 11r = 6, and the left side is r times a whole number, so r divides 6 ([Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md)). Eight candidates instead of infinitely many: -6, -3, -2, -1, 1, 2, 3, 6. The cubic at those is -504, -120, -60, -24, 0, 0, 0 and 60. Three hits, and they are the whole answer.
+Peeling needs a first root, and guessing is slow. If a whole number r is a root of the tank's cubic, then r^3 - 6r^2 + 11r = 6. The left side is r times a whole number, so r divides 6 ([Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md)).
+
+Eight candidates instead of infinitely many: -6, -3, -2, -1, 1, 2, 3, 6. The cubic at those is -504, -120, -60, -24, 0, 0, 0 and 60. Three hits, and they are the whole answer.
 
 This is the rational-root test, stripped to the case where the highest power has a plain 1 in front of it. The full version: a fraction in lowest terms can only be a root if its top divides the constant term and its bottom divides the number in front of the highest power.
 
 </details>
 
-For a quadratic none of this is needed: the quadratic formula hands you both roots at once ([The quadratic formula](03-quadratic-formula.md)). Peeling earns its keep from degree 3 up, where no formula is coming.
+For a quadratic none of this is needed: the quadratic formula hands you both roots at once ([The quadratic formula](03-quadratic-formula.md)). Peeling earns its keep from degree 3 up. Degrees 3 and 4 do have formulas, but they are long and clumsy, and from degree 5 up no general formula exists ([Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md)).
 
 ---
 
@@ -466,7 +472,7 @@ example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 
 ## The usual mistake
 
 > [!warning]
-> **Believing a degree-3 polynomial has 3 roots.** It has at most 3. Move the tank's volume from 6 cubic metres to 12 and the cubic x^3 - 6x^2 + 11x - 12 is zero at 4 and nowhere else — one root, and no tank with those measurements exists. The ceiling is a ceiling, not a promise.
+> **Believing a degree-3 polynomial has 3 roots.** It has at most 3. Ask for 12 cubic metres instead of 6, with the same strip and steel, and the cubic x^3 - 6x^2 + 11x - 12 is zero at 4 and nowhere else — one root, and no tank meets those limits. The ceiling is a ceiling, not a promise.
 >
 > - Flipping the sign of the bracket. The root 1 gives the factor x - 1, not x + 1. Divide the tank's cubic by x + 1 and you get remainder -24.
 > - Counting a repeated root twice. x^3 - 6x^2 + 9x - 4 is (x - 1)(x - 1)(x - 4). Degree 3, but only 2 different numbers are roots.
@@ -501,8 +507,9 @@ example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): peeling factors off a polynomial is the same move as pulling primes out of a whole number.
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): what it takes to turn "at most n" into "exactly n".
 - [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
+- [Vectors](../03-Vectors/01-vectors.md): the next shelf of this wing. It starts a new track, lists of numbers that are also arrows. Polynomials come back when a matrix hands you one to solve, in [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md).
 
-The cubic for a volume of 12 has degree 3 but only one root, 4. Whether its missing roots live somewhere beyond the ordinary number line is the question this card leaves open.
+The cubic for a volume of 12 has degree 3 but only one root, 4. Whether its missing roots live somewhere beyond the ordinary number line is the question this card leaves open. [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md) answers it; the next shelf, [Vectors](../03-Vectors/01-vectors.md), turns to a new subject first.
 
 ---
 

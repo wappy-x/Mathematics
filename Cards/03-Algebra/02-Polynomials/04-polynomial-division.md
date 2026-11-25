@@ -6,28 +6,32 @@
 
 ## General Overview
 
-A cardboard box holds x^3 + 6x^2 + 11x + 6 cubic cm. One edge has been measured: x + 1 cm. Nobody measured the other two.
+A packaging maker folds an open tray from a sheet of card 30 cm by 20 cm. Cut a square x cm a side from each corner and fold up the sides. The tray is x cm deep, on a base (30 − 2x) by (20 − 2x) cm.
 
-The box stands on a face, and volume is that face's area times the height. So the face's area is the volume divided by the edge you know. That division is the job.
+The tray must hold one litre, 1000 cubic cm. Multiply out x(30 − 2x)(20 − 2x), take 1000 away, and the tray holds a litre exactly when
 
-Do it and the face, or cross-section, comes out at x^2 + 5x + 6 square cm, which un-multiplies into (x + 2)(x + 3) ([Factoring](02-factoring-quadratics.md)). So the other two edges are x + 2 and x + 3. Set x = 2 and the box is 3 by 4 by 5 cm, holding 60 cubic cm.
+4x^3 − 100x^2 + 600x − 1000 = 0.
+
+A first try hits: a 5 cm cut gives 5 × 20 × 10 = 1000. Is there a second cut that also gives a litre? Divide the cubic by x − 5. That strips out the answer you know and leaves a quadratic holding the rest. That division is the job.
+
+Do it and the quotient is 4x^2 − 80x + 200, with nothing left over. [The quadratic formula](03-quadratic-formula.md) finishes it: x is about 2.93 or 17.07. Two 17 cm squares do not fit across a 20 cm side, so the second tray has a 2.93 cm cut. It is shallower and wider, and it holds the same litre.
 
 Dividing 17 by 5 gives 3 with 2 left over, and the 2 stays put because it is smaller than 5 ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Polynomials do the same with one word swapped: the leftover has to be a *lower power* than the divisor, not a smaller number.
 
 **Divide one polynomial by another the way you divide whole numbers. Stop when what is left has a lower highest power than the thing you divided by. And if you divided by x minus a number, what is left is that polynomial worked out at that number.**
 
-**What kind of fact this is:** a theorem. Why it works proves that the division stops and that the remainder is the value at the root; that only one pair fits is proved in [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
+**What kind of fact this is:** a theorem. Why it works proves that the division stops, and that dividing by x − r leaves p(r), the polynomial's value at the divisor's root r. That only one pair fits is proved in [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
 
 ### The picture: the loop, one step at a time
 
 ```mermaid
 flowchart TD
-    A["left over: x^3 + 6x^2 + 11x + 6"] -->|"take x^2 lots of x + 1"| B["left over: 5x^2 + 11x + 6"]
-    B -->|"take 5x lots of x + 1"| C["left over: 6x + 6"]
-    C -->|"take 6 lots of x + 1"| D["left over: 0 -- nothing left to take, so stop"]
+    A["left over: 4x^3 - 100x^2 + 600x - 1000"] -->|"take 4x^2 lots of x - 5"| B["left over: -80x^2 + 600x - 1000"]
+    B -->|"take -80x lots of x - 5"| C["left over: 200x - 1000"]
+    C -->|"take 200 lots of x - 5"| D["left over: 0 -- nothing left to take, so stop"]
 ```
 
-Each arrow removes the biggest power still standing. The labels, added up, are the answer: x^2 + 5x + 6.
+Each arrow removes the biggest power still standing. The labels, added up, are the answer: 4x^2 − 80x + 200.
 
 ---
 
@@ -39,18 +43,18 @@ p(x) = d(x)\,q(x) + s(x)
 
 **Read it aloud:** what you started with is the divisor, times how many of it fit, plus a scrap too small to divide again.
 
-The size rule is half the formula: the scrap's degree must be lower than the divisor's. Degree is the highest power of x present ([Polynomials](01-polynomials.md)). Divide by a degree-1 thing like x + 1 and the scrap is a plain number. And only one pair fits: for a given p and d, one quotient and one scrap.
+The size rule is half the formula: the scrap is either zero, or its degree is lower than the divisor's. Degree is the highest power of x present ([Polynomials](01-polynomials.md)). Divide by a degree-1 thing like x − 5 and the scrap is a plain number. And only one pair fits: for a given p and d, one quotient and one scrap.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`x`$ | the number, in cm, that sets the box's size | 2 gives the 3 by 4 by 5 box | every edge grows with it: at 10 the box is 11 by 12 by 13 |
-| $`p(x)`$ | the polynomial you are cutting up | the volume, x^3 + 6x^2 + 11x + 6 | a higher power here means a longer quotient |
-| $`d(x)`$ | the divisor: what you divide by | the known edge, x + 1 | a higher power leaves a shorter quotient, a roomier scrap |
-| $`q(x)`$ | the quotient: how many of the divisor fit | the face, x^2 + 5x + 6 | its degree is p's degree minus d's |
-| $`s(x)`$ | the remainder, or scrap: what is left at the end, always lower degree than the divisor | 0 for this edge; 60 for x - 2 | raise d's degree and the scrap may keep an x |
-| $`r`$ | a root: the number that makes x - r equal zero | -1 for the edge x + 1; 2 for x - 2 | move r and the scrap traces the curve of p |
+| $`x`$ | the cut: the side of the square cut from each corner, in cm | 5 gives the 5 by 20 by 10 tray | a deeper, narrower tray; the volume rises, then falls |
+| $`p(x)`$ | the polynomial you are cutting up | the volume minus 1000, 4x^3 − 100x^2 + 600x − 1000 | a higher power here means a longer quotient |
+| $`d(x)`$ | the divisor: what you divide by | x − 5, from the cut you know | a higher power leaves a shorter quotient, a roomier scrap |
+| $`q(x)`$ | the quotient: how many of the divisor fit | 4x^2 − 80x + 200 | its degree is p's degree minus d's |
+| $`s(x)`$ | the remainder, or scrap: what is left at the end, zero or lower degree than the divisor | 0 for x − 5; 56 for x − 4 | raise d's degree and the scrap may keep an x |
+| $`r`$ | the divisor's root: the number that makes x − r equal zero. It is a root of p only when the scrap is 0 | 5 for x − 5; 4 for x − 4 | move r and the scrap traces the curve of p |
 
-Now the second formula. Divide by x - r and the scrap is a plain number — and that number is p worked out at r:
+Now the second formula. Divide by x − r and the scrap is a plain number — and that number is p worked out at r:
 
 ```math
 p(x) = (x - r)\,q(x) + p(r)
@@ -60,8 +64,8 @@ p(x) = (x - r)\,q(x) + p(r)
 
 ### When it holds
 
-- **You can divide by the divisor's leading number.** Each pass divides by it. Here it is 1, so every number stays whole. Divide by 2x + 1 and fractions turn up; allow whole numbers only and the division can get stuck.
-- **The scrap's degree is below the divisor's.** That rule makes the pair the only one. Drop it and quotient x^2 + 5x with leftover 6x + 6 also adds back to the volume.
+- **The divisor is not zero, and you can divide by its leading number.** Each pass divides by it. Here it is 1, so every number stays whole. Divide by 2x + 1 and fractions turn up; allow whole numbers only and the division can get stuck.
+- **The scrap's degree is below the divisor's.** That rule makes the pair the only one. Drop it, and quotient 4x^2 − 80x with leftover 200x − 1000 also adds back to p.
 - **A divisor of the form x minus a number, for the second formula.** Only then is the scrap a plain number to match with p(r). Divide by x^2 and the scrap may keep an x.
 
 ---
@@ -74,20 +78,20 @@ p(x) = (x - r)\,q(x) + p(r)
 
 ### Step 1: kill the biggest power, then look again
 
-Start with the volume, x^3 + 6x^2 + 11x + 6, and the edge x + 1. The biggest power is x^3, and to make an x^3 out of x + 1 you need x^2 lots of it. Multiply out: x^2 times (x + 1) is x^3 + x^2. Subtract. The x^3 cancels, and 6x^2 - x^2 leaves 5x^2 + 11x + 6.
+Start with p = 4x^3 − 100x^2 + 600x − 1000 and the divisor x − 5. The biggest power is 4x^3. To make 4x^3 out of x − 5 you need 4x^2 lots of it. Multiply out: 4x^2 times (x − 5) is 4x^3 − 20x^2. Subtract. The 4x^3 cancels, and −100x^2 − (−20x^2) leaves −80x^2 + 600x − 1000.
 
-Look again. The biggest power is 5x^2, so take 5x lots of x + 1, which is 5x^2 + 5x. Subtract: 6x + 6.
+Look again. The biggest power is −80x^2, so take −80x lots of x − 5, which is −80x^2 + 400x. Subtract: 200x − 1000.
 
-Look again. Take 6 lots of x + 1, which is 6x + 6 exactly. Subtract: nothing left.
+Look again. Take 200 lots of x − 5, which is 200x − 1000 exactly. Subtract: nothing left.
 
-Add up what you took: x^2 + 5x + 6. That is the quotient, the face of the box.
+Add up what you took: 4x^2 − 80x + 200. That is the quotient, the quadratic that holds the other cuts.
 
 <details>
 <summary>The short way once you trust it: synthetic division</summary>
 
-Dividing by x + 1 means r = -1. Write the coefficients, the numbers in front of each power: 1, 6, 11, 6. Bring the 1 down. Multiply by -1 and add to the 6: 5. Multiply by -1, add to the 11: 6. Multiply by -1, add to the 6: 0.
+Dividing by x − 5 means r = 5. Write the coefficients, the numbers in front of each power: 4, −100, 600, −1000. Bring the 4 down. Multiply by 5 and add to the −100: −80. Multiply by 5, add to the 600: 200. Multiply by 5, add to the −1000: 0.
 
-What you wrote is 1, 5, 6, then 0 — the quotient x^2 + 5x + 6, remainder 0. Same arithmetic, no x's on the page. It only works for a divisor of the form x minus a number.
+What you wrote is 4, −80, 200, then 0 — the quotient 4x^2 − 80x + 200, remainder 0. Same arithmetic, no x's on the page. It only works for a divisor of the form x minus a number.
 
 </details>
 
@@ -95,7 +99,7 @@ What you wrote is 1, 5, 6, then 0 — the quotient x^2 + 5x + 6, remainder 0. Sa
 
 Every pass cancels the leading term, so the highest power drops by at least one. Degrees are whole numbers going down, so within a few passes the degree falls below the divisor's. At that point there is no bite left to take, and what is sitting there is the remainder.
 
-One catch. Each pass divides the leading number by the divisor's leading number. Here that is 1 both times, so the arithmetic stays whole. Divide by 2x + 1 and you divide by 2 every pass, and fractions turn up. The method still works.
+One catch. Each pass divides the leading number by the divisor's leading number. Here that is 1 every time, so the arithmetic stays whole. Divide by 2x + 1 and you divide by 2 every pass, and fractions turn up. The method still works.
 
 ### Step 3: why dividing by x - r leaves p(r)
 
@@ -105,24 +109,26 @@ Put the number r in place of x:
 p(r) = (r - r)\,q(r) + s = 0 \times q(r) + s = s
 ```
 
-x - r was built to vanish at r, so whatever the quotient is worth there gets multiplied by zero and disappears. Only the scrap survives, and a degree-1 divisor leaves it a plain number.
+x − r was built to vanish at r, so whatever the quotient is worth there gets multiplied by zero and disappears. Only the scrap survives, and a degree-1 divisor leaves it a plain number.
 
-For the box: x + 1 is x - (-1), so r is -1. The volume at -1 is -1 + 6 - 11 + 6 = 0. Remainder zero, so x + 1 really is an edge.
+For the tray: r is 5, and p(5) = 500 − 2500 + 3000 − 1000 = 0. Remainder zero, so x − 5 really is a factor, and 5 cm really is a one-litre cut.
 
-Divide the same box by x - 2 and the remainder is 60 — the volume at x = 2, the 3 by 4 by 5 box.
+Divide the same p by x − 4 and the remainder is 56, which is p(4). A 4 cm cut gives a tray 4 by 22 by 12 cm, holding 1056 cubic cm: 56 more than the litre.
 
 ### The picture: the remainder, as the root moves
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
 xychart-beta
-    title "What dividing the box by x - r leaves over"
-    x-axis "r, the number in the divisor x - r" [-3, -2, -1, 0, 1, 2, 3]
-    y-axis "The remainder, in cubic cm" 0 --> 130
-    line [0, 0, 0, 6, 24, 60, 120]
+    title "What dividing p by x - r leaves over, for whole-number cuts r"
+    x-axis "r, the number in the divisor x - r, in cm" [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis "The remainder: tray volume minus 1000, cubic cm" -1000 --> 100
+    line [-1000, -496, -168, 8, 56, 0, -136, -328, -552, -784, -1000]
 ```
 
-The line is the remainder from the full division, and also the volume worked out at r: one line does for both. It sits on zero at r = -3, -2 and -1, where the divisor goes in exactly, matching the edges x + 3, x + 2 and x + 1. At r = 2 it is 60, the 3 by 4 by 5 box.
+The line is the remainder from the full division, and also p worked out at r: one line does for both. Here r is the divisor's root, a number you choose. It is a root of p only where the line sits on zero.
+
+The chart plots whole-number values of r only. The line is zero at r = 5, the cut you know. It also crosses zero between 2 and 3, at the second cut, 2.93 cm, which no whole number hits.
 
 A remainder of zero means a factor, and a factor means a root ([Roots and factors](05-roots-and-the-factor-theorem.md)).
 
@@ -130,28 +136,28 @@ A remainder of zero means a factor, and a factor means a root ([Roots and factor
 
 ## Worked numbers, by hand
 
-The box: volume x^3 + 6x^2 + 11x + 6, known edge x + 1.
+The tray: p = 4x^3 − 100x^2 + 600x − 1000, known cut 5 cm, so divide by x − 5.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| what you start with | the volume | x^3 + 6x^2 + 11x + 6 |
-| take x^2 lots of x + 1 | subtract x^3 + x^2 | 5x^2 + 11x + 6 |
-| take 5x lots of x + 1 | subtract 5x^2 + 5x | 6x + 6 |
-| take 6 lots of x + 1 | subtract 6x + 6 | **0** |
-| the quotient | x^2 and 5x and 6, added up | **x^2 + 5x + 6** |
-| check by multiplying back | (x + 1)(x^2 + 5x + 6) | **x^3 + 6x^2 + 11x + 6** |
+| what you start with | the volume minus 1000 | 4x^3 − 100x^2 + 600x − 1000 |
+| take 4x^2 lots of x − 5 | subtract 4x^3 − 20x^2 | −80x^2 + 600x − 1000 |
+| take −80x lots of x − 5 | subtract −80x^2 + 400x | 200x − 1000 |
+| take 200 lots of x − 5 | subtract 200x − 1000 | **0** |
+| the quotient | 4x^2 and −80x and 200, added up | **4x^2 − 80x + 200** |
+| check by multiplying back | (x − 5)(4x^2 − 80x + 200) | **4x^3 − 100x^2 + 600x − 1000** |
+| the quotient's zeros | the quadratic formula on 4, −80, 200 | **2.93** and 17.07 |
+| the second tray | 2.93 by 24.14 by 14.14 cm | **1000.00 cubic cm** |
 
-The face is x^2 + 5x + 6 square cm, which un-multiplies into (x + 2)(x + 3): the edges are x + 1, x + 2 and x + 3. At x = 2 that is the 3 by 4 by 5 box, 60 cubic cm.
-
-Divide the same volume by x - 2 and it does not go exactly: quotient x^2 + 8x + 27, remainder 60 — the volume at x = 2.
+Divide the same p by x − 4 and it does not go exactly: quotient 4x^2 − 84x + 264, remainder 56. That is p(4).
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Stopping while an x is still standing | quotient x^2 + 5x, leftover 6x + 6 | the leftover is degree 1, same as x + 1: one more bite left |
-| Dropping the remainder 60 | 0 at x = 2, not 60 | x - 2 is zero at x = 2, so the quotient contributes nothing there |
-| Reading the root of x + 1 as 1 | p(1) = 24, so x + 1 looks like no factor | the root is what makes the divisor zero, which is -1 |
+| Stopping while an x is still standing | quotient 4x^2 − 80x, leftover 200x − 1000 | the leftover is degree 1, same as x − 5: one more bite left |
+| Dropping the remainder 56 | 0 at x = 4, not 56 | x − 4 is zero at x = 4, so the quotient contributes nothing there |
+| Reading the root of x − 5 as −5 | p(−5) = −7000, so x − 5 looks like no factor | the root is what makes the divisor zero, which is 5 |
 
 The code prints all three.
 
@@ -159,17 +165,17 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The division is the loop from Step 1: kill the leading power, subtract, repeat. It runs on x + 1, then on x - 2.
+Nothing is imported. The division is the loop from Step 1: kill the leading power, subtract, repeat. It runs on x − 5, then on x − 4. The quotient's two zeros come from the quadratic formula.
 
-Two roads check it. The first multiplies the quotient back out against the volume, and against (x + 2)(x + 3). The second drops polynomials: at x = 10 the box is 11 by 12 by 13 cm, so 1716 divided by 11 gives 156, the face at 10. Last, the remainder for x - r is matched to the volume at r, at seven values of r.
+Two roads check it. The first multiplies the quotient back out against p. The second drops polynomials: at x = 20, p is 3000 and x − 5 is 15, and 3000 ÷ 15 = 200, the quotient at 20. Last, the remainder for x − r is matched to p(r), at eleven values of r.
 
 ### Python
 
 ```python
-# Polynomial long division -- the check behind the card.  Nothing is imported.  A box
-# holds x^3 + 6x^2 + 11x + 6 cubic cm, one edge is x + 1 cm.  Coefficients are listed
-# highest power first: [1, 6, 11, 6] is the volume, [1, 1] the edge.  Both divisors start with 1.
-P, D, E = [1, 6, 11, 6], [1, 1], [1, -2]      # the volume, the edge x + 1, and x - 2
+# Polynomial long division -- the check behind the card.  Nothing is imported.  An open tray
+# folded from a 30 by 20 cm card, after cutting an x cm square from each corner, holds
+# x(30 - 2x)(20 - 2x) cubic cm: one litre where p(x) = 4x^3 - 100x^2 + 600x - 1000 is zero.
+P, D, E = [4, -100, 600, -1000], [1, -5], [1, -4]   # p highest power first, x - 5, x - 4
 
 def show(c):                                  # coefficients back into readable form
     out = ""
@@ -197,57 +203,56 @@ def mul(a, b):                                # multiply two polynomials back to
 def add(a, b): return [u + w for u, w in zip(a, [0] * (len(a) - len(b)) + b)]
 def line(name, text): print(f"{name:<30}{text}")
 
-q, s, steps = divide(P, D)                    # one road: divide by the edge x + 1
-q2, s2, _ = divide(P, E)                      # the same box divided by x - 2
-line("p(x), the volume", show(P))
-line("d(x), the edge", show(D))
+q, s, steps = divide(P, D)                    # one road: divide by x - 5
+q2, s2, _ = divide(P, E)                      # the same p divided by x - 4
+line("p(x), volume minus 1000", show(P))
 line("leftovers as the loop runs", " | ".join(steps))
-line("q(x), the cross-section", show(q))
+line("q(x), the quotient", show(q))
 line("s(x), the remainder", show(s))
 line("d(x) q(x) + s(x)", show(add(mul(D, q), s)))
-line("(x + 2)(x + 3) multiplied out", show(mul([1, 2], [1, 3])))
-line("p(-1), at the root of x + 1", value(P, -1))
-edge = [value(D, 2), value([1, 2], 2), value([1, 3], 2)]
-print(f"at x = 2 the box is {edge[0]} by {edge[1]} by {edge[2]}, volume {value(P, 2)}")
-ten = [value(D, 10), value([1, 2], 10), value([1, 3], 10)]   # second road: plain numbers
-print(f"at x = 10 the box is {ten[0]} by {ten[1]} by {ten[2]}: {value(P, 10)} / {ten[0]} = "
-      f"{value(P, 10) // ten[0]} remainder {value(P, 10) % ten[0]}")
-line("divide p(x) by x - 2", f"{show(q2)}   remainder {show(s2)}")
-line("p(2), at the root of x - 2", value(P, 2))
-roots = list(range(-3, 4))
-line("r", "".join(f"{r:>4}" for r in roots))
-line("remainder, dividing by x - r", "".join(f"{divide(P, [1, -r])[1][0]:>4}" for r in roots))
-line("p(r)", "".join(f"{value(P, r):>4}" for r in roots))
+print(f"a 5 cm cut: 5 by {30 - 2 * 5} by {20 - 2 * 5} cm, volume {5 * (30 - 2 * 5) * (20 - 2 * 5)}")
+disc = q[1] * q[1] - 4 * q[0] * q[2]          # the quotient's zeros, by the quadratic formula
+lo, hi = (-q[1] - disc ** 0.5) / (2 * q[0]), (-q[1] + disc ** 0.5) / (2 * q[0])
+print(f"q(x) = 0 at x = {lo:.2f} and x = {hi:.2f}; two {hi:.2f} cm squares do not fit across 20 cm")
+print(f"a {lo:.2f} cm cut: {lo:.2f} by {30 - 2 * lo:.2f} by {20 - 2 * lo:.2f} cm, "
+      f"volume {lo * (30 - 2 * lo) * (20 - 2 * lo):.2f}")
+print(f"at x = 20: p = {value(P, 20)}, x - 5 = 15, {value(P, 20)} / 15 = {value(P, 20) // 15} "
+      f"remainder {value(P, 20) % 15}, and q(20) = {value(q, 20)}")   # second road: plain numbers
+line("divide p(x) by x - 4", f"{show(q2)}   remainder {show(s2)}")
+line("p(4), at the root of x - 4", value(P, 4))
+roots = list(range(0, 11))
+line("r", "".join(f"{r:>6}" for r in roots))
+line("remainder, dividing by x - r", "".join(f"{divide(P, [1, -r])[1][0]:>6}" for r in roots))
+line("p(r)", "".join(f"{value(P, r):>6}" for r in roots))
 print(f"stopping a step early: quotient {show(q[:2] + [0])}, leftover {steps[1]}")
-print(f"dropping the remainder 60 leaves {value(mul(q2, E), 2)} at x = 2; "
-      f"the root of x + 1 read as 1 gives p(1) = {value(P, 1)}")
-assert q == mul([1, 2], [1, 3]) and s == [0]        # the cross-section, from the factors
-assert add(mul(D, q), s) == P and add(mul(E, q2), s2) == P
+print(f"dropping the remainder 56 leaves {value(mul(q2, E), 4)} at x = 4; "
+      f"the root of x - 5 read as -5 gives p(-5) = {value(P, -5)}")
+assert s == [0] and add(mul(D, q), s) == P and add(mul(E, q2), s2) == P
 assert [divide(P, [1, -r])[1][0] for r in roots] == [value(P, r) for r in roots]
-assert value(P, 10) == 1716 and value(P, 10) // ten[0] == value(q, 10) and value(P, 10) % ten[0] == 0
+assert s2 == [56] and value(P, 4) == 4 * 22 * 12 - 1000 and value(P, -5) == -7000
+assert abs(lo * (30 - 2 * lo) * (20 - 2 * lo) - 1000) < 1e-9 and 20 - 2 * hi < 0 and value(P, 20) == 15 * value(q, 20)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-p(x), the volume              x^3 + 6x^2 + 11x + 6
-d(x), the edge                x + 1
-leftovers as the loop runs    5x^2 + 11x + 6 | 6x + 6 | 0
-q(x), the cross-section       x^2 + 5x + 6
+p(x), volume minus 1000       4x^3 - 100x^2 + 600x - 1000
+leftovers as the loop runs    -80x^2 + 600x - 1000 | 200x - 1000 | 0
+q(x), the quotient            4x^2 - 80x + 200
 s(x), the remainder           0
-d(x) q(x) + s(x)              x^3 + 6x^2 + 11x + 6
-(x + 2)(x + 3) multiplied out x^2 + 5x + 6
-p(-1), at the root of x + 1   0
-at x = 2 the box is 3 by 4 by 5, volume 60
-at x = 10 the box is 11 by 12 by 13: 1716 / 11 = 156 remainder 0
-divide p(x) by x - 2          x^2 + 8x + 27   remainder 60
-p(2), at the root of x - 2    60
-r                               -3  -2  -1   0   1   2   3
-remainder, dividing by x - r     0   0   0   6  24  60 120
-p(r)                             0   0   0   6  24  60 120
-stopping a step early: quotient x^2 + 5x, leftover 6x + 6
-dropping the remainder 60 leaves 0 at x = 2; the root of x + 1 read as 1 gives p(1) = 24
+d(x) q(x) + s(x)              4x^3 - 100x^2 + 600x - 1000
+a 5 cm cut: 5 by 20 by 10 cm, volume 1000
+q(x) = 0 at x = 2.93 and x = 17.07; two 17.07 cm squares do not fit across 20 cm
+a 2.93 cm cut: 2.93 by 24.14 by 14.14 cm, volume 1000.00
+at x = 20: p = 3000, x - 5 = 15, 3000 / 15 = 200 remainder 0, and q(20) = 200
+divide p(x) by x - 4          4x^2 - 84x + 264   remainder 56
+p(4), at the root of x - 4    56
+r                                  0     1     2     3     4     5     6     7     8     9    10
+remainder, dividing by x - r   -1000  -496  -168     8    56     0  -136  -328  -552  -784 -1000
+p(r)                           -1000  -496  -168     8    56     0  -136  -328  -552  -784 -1000
+stopping a step early: quotient 4x^2 - 80x, leftover 200x - 1000
+dropping the remainder 56 leaves 0 at x = 4; the root of x - 5 read as -5 gives p(-5) = -7000
 ALL CHECKS PASS
 ```
 
@@ -256,8 +261,9 @@ ALL CHECKS PASS
 Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Polynomial long division -- the same check as the Python, in Rust.  No crates.  A box holds
-// x^3 + 6x^2 + 11x + 6 cubic cm, edge x + 1 cm.  Highest power first; both divisors start with 1.
+// Polynomial long division -- the same check as the Python, in Rust.  No crates.  An open tray
+// folded from a 30 by 20 cm card, after cutting an x cm square from each corner, holds
+// x(30 - 2x)(20 - 2x) cubic cm: one litre where p(x) = 4x^3 - 100x^2 + 600x - 1000 is zero.
 fn show(c: &[i64]) -> String {                // coefficients back into readable form
     let mut out = String::new();
     for (i, &a) in c.iter().enumerate() {
@@ -299,28 +305,27 @@ fn add(a: &[i64], b: &[i64]) -> Vec<i64> {
     out
 }
 fn line(name: &str, text: &str) { println!("{:<30}{}", name, text); }
-fn row(v: &[i64]) -> String { v.iter().map(|n| format!("{:>4}", n)).collect() }
+fn row(v: &[i64]) -> String { v.iter().map(|n| format!("{:>6}", n)).collect() }
 fn main() {
-    let (p, d, e) = ([1i64, 6, 11, 6], [1i64, 1], [1i64, -2]);   // volume, x + 1, x - 2
-    let (q, s, steps) = divide(&p, &d);       // one road: divide by the edge x + 1
-    let (q2, s2, _) = divide(&p, &e);         // the same box divided by x - 2
-    line("p(x), the volume", &show(&p));
-    line("d(x), the edge", &show(&d));
+    let (p, d, e) = ([4i64, -100, 600, -1000], [1i64, -5], [1i64, -4]);   // p, x - 5, x - 4
+    let (q, s, steps) = divide(&p, &d);       // one road: divide by x - 5
+    let (q2, s2, _) = divide(&p, &e);         // the same p divided by x - 4
+    line("p(x), volume minus 1000", &show(&p));
     line("leftovers as the loop runs", &steps.join(" | "));
-    line("q(x), the cross-section", &show(&q));
+    line("q(x), the quotient", &show(&q));
     line("s(x), the remainder", &show(&s));
     line("d(x) q(x) + s(x)", &show(&add(&mul(&d, &q), &s)));
-    line("(x + 2)(x + 3) multiplied out", &show(&mul(&[1, 2], &[1, 3])));
-    line("p(-1), at the root of x + 1", &value(&p, -1).to_string());
-    println!("at x = 2 the box is {} by {} by {}, volume {}",
-             value(&d, 2), value(&[1, 2], 2), value(&[1, 3], 2), value(&p, 2));
-    let ten = value(&d, 10);                  // second road: plain numbers
-    println!("at x = 10 the box is {} by {} by {}: {} / {} = {} remainder {}",
-             ten, value(&[1, 2], 10), value(&[1, 3], 10), value(&p, 10), ten,
-             value(&p, 10) / ten, value(&p, 10) % ten);
-    line("divide p(x) by x - 2", &format!("{}   remainder {}", show(&q2), show(&s2)));
-    line("p(2), at the root of x - 2", &value(&p, 2).to_string());
-    let roots: Vec<i64> = (-3..4).collect();
+    println!("a 5 cm cut: 5 by {} by {} cm, volume {}", 30 - 2 * 5, 20 - 2 * 5, 5 * (30 - 2 * 5) * (20 - 2 * 5));
+    let (a, b, disc) = (q[0] as f64, q[1] as f64, (q[1] * q[1] - 4 * q[0] * q[2]) as f64);   // the formula
+    let (lo, hi) = ((-b - disc.sqrt()) / (2.0 * a), (-b + disc.sqrt()) / (2.0 * a));
+    println!("q(x) = 0 at x = {:.2} and x = {:.2}; two {:.2} cm squares do not fit across 20 cm", lo, hi, hi);
+    println!("a {:.2} cm cut: {:.2} by {:.2} by {:.2} cm, volume {:.2}",
+             lo, lo, 30.0 - 2.0 * lo, 20.0 - 2.0 * lo, lo * (30.0 - 2.0 * lo) * (20.0 - 2.0 * lo));
+    let p20 = value(&p, 20);                  // second road: plain numbers
+    println!("at x = 20: p = {}, x - 5 = 15, {} / 15 = {} remainder {}, and q(20) = {}", p20, p20, p20 / 15, p20 % 15, value(&q, 20));
+    line("divide p(x) by x - 4", &format!("{}   remainder {}", show(&q2), show(&s2)));
+    line("p(4), at the root of x - 4", &value(&p, 4).to_string());
+    let roots: Vec<i64> = (0..11).collect();
     let rems: Vec<i64> = roots.iter().map(|&r| divide(&p, &[1, -r]).1[0]).collect();
     let vals: Vec<i64> = roots.iter().map(|&r| value(&p, r)).collect();
     line("r", &row(&roots));
@@ -328,36 +333,35 @@ fn main() {
     line("p(r)", &row(&vals));
     let mut part = q[..2].to_vec(); part.push(0);
     println!("stopping a step early: quotient {}, leftover {}", show(&part), steps[1]);
-    println!("dropping the remainder 60 leaves {} at x = 2; the root of x + 1 read as 1 \
-              gives p(1) = {}", value(&mul(&q2, &e), 2), value(&p, 1));
-    assert!(q == mul(&[1, 2], &[1, 3]) && s == [0]);   // the cross-section, from the factors
-    assert!(add(&mul(&d, &q), &s) == p && add(&mul(&e, &q2), &s2) == p);
+    println!("dropping the remainder 56 leaves {} at x = 4; the root of x - 5 read as -5 \
+              gives p(-5) = {}", value(&mul(&q2, &e), 4), value(&p, -5));
+    assert!(s == [0] && add(&mul(&d, &q), &s) == p && add(&mul(&e, &q2), &s2) == p);
     assert!(rems == vals);
-    assert!(value(&p, 10) == 1716 && value(&p, 10) / ten == value(&q, 10) && value(&p, 10) % ten == 0);
+    assert!(s2 == [56] && value(&p, 4) == 4 * 22 * 12 - 1000 && value(&p, -5) == -7000);
+    assert!((lo * (30.0 - 2.0 * lo) * (20.0 - 2.0 * lo) - 1000.0).abs() < 1e-9 && 20.0 - 2.0 * hi < 0.0 && p20 == 15 * value(&q, 20));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-p(x), the volume              x^3 + 6x^2 + 11x + 6
-d(x), the edge                x + 1
-leftovers as the loop runs    5x^2 + 11x + 6 | 6x + 6 | 0
-q(x), the cross-section       x^2 + 5x + 6
+p(x), volume minus 1000       4x^3 - 100x^2 + 600x - 1000
+leftovers as the loop runs    -80x^2 + 600x - 1000 | 200x - 1000 | 0
+q(x), the quotient            4x^2 - 80x + 200
 s(x), the remainder           0
-d(x) q(x) + s(x)              x^3 + 6x^2 + 11x + 6
-(x + 2)(x + 3) multiplied out x^2 + 5x + 6
-p(-1), at the root of x + 1   0
-at x = 2 the box is 3 by 4 by 5, volume 60
-at x = 10 the box is 11 by 12 by 13: 1716 / 11 = 156 remainder 0
-divide p(x) by x - 2          x^2 + 8x + 27   remainder 60
-p(2), at the root of x - 2    60
-r                               -3  -2  -1   0   1   2   3
-remainder, dividing by x - r     0   0   0   6  24  60 120
-p(r)                             0   0   0   6  24  60 120
-stopping a step early: quotient x^2 + 5x, leftover 6x + 6
-dropping the remainder 60 leaves 0 at x = 2; the root of x + 1 read as 1 gives p(1) = 24
+d(x) q(x) + s(x)              4x^3 - 100x^2 + 600x - 1000
+a 5 cm cut: 5 by 20 by 10 cm, volume 1000
+q(x) = 0 at x = 2.93 and x = 17.07; two 17.07 cm squares do not fit across 20 cm
+a 2.93 cm cut: 2.93 by 24.14 by 14.14 cm, volume 1000.00
+at x = 20: p = 3000, x - 5 = 15, 3000 / 15 = 200 remainder 0, and q(20) = 200
+divide p(x) by x - 4          4x^2 - 84x + 264   remainder 56
+p(4), at the root of x - 4    56
+r                                  0     1     2     3     4     5     6     7     8     9    10
+remainder, dividing by x - r   -1000  -496  -168     8    56     0  -136  -328  -552  -784 -1000
+p(r)                           -1000  -496  -168     8    56     0  -136  -328  -552  -784 -1000
+stopping a step early: quotient 4x^2 - 80x, leftover 200x - 1000
+dropping the remainder 56 leaves 0 at x = 4; the root of x - 5 read as -5 gives p(-5) = -7000
 ALL CHECKS PASS
 ```
 
@@ -365,14 +369,14 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three general claims for every polynomial, and checks the box's numbers exactly.
+Lean proves the card's three general claims for every polynomial, and checks the tray's numbers exactly.
 
-- Divide by a divisor whose leading number you can divide by. Exactly one quotient and remainder fit, with the remainder of lower degree.
-- Divide p by x - r, and p(x) = (x - r) q(x) + p(r) for some quotient q.
-- Any division by x - r that leaves a remainder of lower degree than x - r leaves exactly p(r).
-- The box: x + 1 goes in exactly with quotient x^2 + 5x + 6, and x - 2 leaves 60.
+- Divide by a divisor that is not zero and whose leading number you can divide by. Exactly one quotient and remainder fit, with the remainder of lower degree.
+- Divide p by x − r, and p(x) = (x − r) q(x) + p(r) for some quotient q.
+- Any division by x − r that leaves a remainder of lower degree than x − r leaves exactly p(r).
+- The tray: x − 5 goes in exactly with quotient 4x^2 − 80x + 200, and x − 4 leaves 56.
 
-Running the loop step by step and printing each leftover is left to the Python and Rust checks.
+Running the loop step by step, printing each leftover, and the decimal cuts 2.93 and 17.07 are left to the Python and Rust checks.
 
 ```lean
 -- Polynomial long division: when the divisor is not zero and its leading number can be divided by, there is exactly one quotient and remainder with the remainder of lower degree, and dividing by x - r leaves the value p(r).
@@ -437,41 +441,45 @@ theorem remainder_on_dividing_by_x_minus_r_is_p_of_r {R : Type*} [CommRing R]
 
 -- The whole-number original: 17 = 5 × 3 + 2, and 2 is smaller than 5.
 example : (17 : ℕ) = 5 * 3 + 2 ∧ 2 < 5 := by decide
--- The box: x^3 + 6x^2 + 11x + 6 divided by the edge x + 1 is x^2 + 5x + 6, remainder 0.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X + 6) + 0 := by
-  ring
--- The loop's leftovers: after x^2 lots of x + 1, then 5x lots, then 6 lots.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) - X ^ 2 * (X + 1) = 5 * X ^ 2 + 11 * X + 6 := by
-  ring
-example : (5 * X ^ 2 + 11 * X + 6 : ℤ[X]) - 5 * X * (X + 1) = 6 * X + 6 := by ring
-example : (6 * X + 6 : ℤ[X]) - 6 * (X + 1) = 0 := by ring
--- The face un-multiplies: x^2 + 5x + 6 = (x + 2)(x + 3).
-example : (X ^ 2 + 5 * X + 6 : ℤ[X]) = (X + 2) * (X + 3) := by ring
--- At x = 2 the box is 3 by 4 by 5, holding 60 cubic cm.
-example : (2 + 1 : ℤ) * (2 + 2) * (2 + 3) = 60 ∧ (3 * 4 * 5 : ℤ) = 60 := by decide
--- The same box divided by x - 2: quotient x^2 + 8x + 27, remainder 60.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X - 2) * (X ^ 2 + 8 * X + 27) + 60 := by
-  ring
--- The volume at the root -1 of x + 1 is 0, at 2 it is 60, and at 1 (the wrong sign) it is 24.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval (-1) = 0 ∧
-    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 2 = 60 ∧
-    (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]).eval 1 = 24 := by norm_num
--- The chart: for r = -3 to 3, the volume at r is 0, 0, 0, 6, 24, 60, 120.
-example : [-3, -2, -1, 0, 1, 2, 3].map (fun x : ℤ => x ^ 3 + 6 * x ^ 2 + 11 * x + 6) =
-    [0, 0, 0, 6, 24, 60, 120] := by decide
--- Drop the degree rule and the pair is not unique: quotient x^2 + 5x, leftover 6x + 6.
-example : (X ^ 3 + 6 * X ^ 2 + 11 * X + 6 : ℤ[X]) = (X + 1) * (X ^ 2 + 5 * X) + (6 * X + 6) := by
-  ring
--- Plain numbers at x = 10: the box is 11 by 12 by 13, and 1716 / 11 = 156 with nothing left.
-example : (11 * 12 * 13 : ℕ) = 1716 ∧ 1716 / 11 = 156 ∧ 1716 % 11 = 0 ∧
-    (10 ^ 2 + 5 * 10 + 6 : ℕ) = 156 := by decide
+-- The tray: x cm cut from each corner of a 30 by 20 card holds x(30 - 2x)(20 - 2x) cubic cm,
+-- and that minus one litre is p = 4x^3 - 100x^2 + 600x - 1000.
+example : (X * (30 - 2 * X) * (20 - 2 * X) - 1000 : ℤ[X]) =
+    4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 := by ring
+-- A 5 cm cut holds a litre: 5 by 20 by 10.
+example : (5 : ℤ) * (30 - 2 * 5) * (20 - 2 * 5) = 1000 := by decide
+-- p divided by x - 5 is 4x^2 - 80x + 200, remainder 0.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 5) * (4 * X ^ 2 - 80 * X + 200) + 0 := by ring
+-- The loop's leftovers: after 4x^2 lots of x - 5, then -80x lots, then 200 lots.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) - 4 * X ^ 2 * (X - 5) =
+    -80 * X ^ 2 + 600 * X - 1000 := by ring
+example : (-80 * X ^ 2 + 600 * X - 1000 : ℤ[X]) - (-80) * X * (X - 5) = 200 * X - 1000 := by ring
+example : (200 * X - 1000 : ℤ[X]) - 200 * (X - 5) = 0 := by ring
+-- The same p divided by x - 4: quotient 4x^2 - 84x + 264, remainder 56.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 4) * (4 * X ^ 2 - 84 * X + 264) + 56 := by ring
+-- p at 5 is 0, at 4 it is 56 (the 4 by 22 by 12 tray holds 1056), and at -5 (the wrong sign) -7000.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval 5 = 0 ∧
+    (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval 4 = 56 ∧
+    (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]).eval (-5) = -7000 := by norm_num
+example : (4 * 22 * 12 : ℤ) = 1056 := by decide
+-- The chart: for r = 0 to 10, p(r) is -1000, -496, -168, 8, 56, 0, -136, -328, -552, -784, -1000.
+example : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map
+    (fun x : ℤ => 4 * x ^ 3 - 100 * x ^ 2 + 600 * x - 1000) =
+    [-1000, -496, -168, 8, 56, 0, -136, -328, -552, -784, -1000] := by decide
+-- Drop the degree rule and the pair is not unique: quotient 4x^2 - 80x, leftover 200x - 1000.
+example : (4 * X ^ 3 - 100 * X ^ 2 + 600 * X - 1000 : ℤ[X]) =
+    (X - 5) * (4 * X ^ 2 - 80 * X) + (200 * X - 1000) := by ring
+-- Plain numbers at x = 20: p is 3000, x - 5 is 15, and 3000 / 15 = 200 with nothing left, the quotient at 20.
+example : (4 * 20 ^ 3 - 100 * 20 ^ 2 + 600 * 20 - 1000 : ℤ) = 3000 ∧ (3000 : ℤ) / 15 = 200 ∧
+    (3000 : ℤ) % 15 = 0 ∧ (4 * 20 ^ 2 - 80 * 20 + 200 : ℤ) = 200 := by decide
 
 #print axioms polynomial_division_with_remainder_exists_and_is_unique
 #print axioms dividing_by_x_minus_r_leaves_p_of_r
 #print axioms remainder_on_dividing_by_x_minus_r_is_p_of_r
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'polynomial_division_with_remainder_exists_and_is_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -481,46 +489,46 @@ example : (11 * 12 * 13 : ℕ) = 1716 ∧ 1716 / 11 = 156 ∧ 1716 % 11 = 0 ∧
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to this box.
-> - **Divide by x + 2 instead.** Set `D` to `[1, 2]`. The remainder stays 0, since -2 is the chart's second zero, but the quotient is a different quadratic, so the first assert stops it.
-> - **Make the box bigger by one.** Set `P` to `[1, 6, 11, 7]`. The value at -1 is no longer zero, so x + 1 stops fitting, a remainder appears, and the first assert stops it.
-> - **Divide by x^2.** Set `E` to `[1, 0, 0]`. The scrap now only has to come in under degree 2, so it may keep an x. The loop stops a step earlier and the reconstruction assert still passes.
+> Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to this tray.
+> - **Divide by x − 3 instead.** Set `D` to `[1, -3]`. A 3 cm cut gives 1008 cubic cm, not a litre, so a remainder of 8 appears and the first assert stops it.
+> - **Ask for a bigger tray.** Set `P` to `[4, -100, 600, -1056]`, a tray of 1056 cubic cm. Now x − 4 fits exactly, x − 5 leaves −56, and the first assert stops it.
+> - **Divide by x^2.** Set `E` to `[1, 0, 0]`. The scrap now only has to come in under degree 2, so it may keep an x: it is 600x − 1000. The first two asserts pass. The third, which expects the remainder 56, stops it.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Flipping the sign of the root.** To test whether x + 1 is a factor, work the polynomial out at -1, not at 1. The divisor x + 1 is x - (-1), and the root is whatever makes the divisor zero. At 1 the box comes to 24, and you would throw away a divisor that fits perfectly.
+> **Flipping the sign of the root.** To test whether x − 5 is a factor, work the polynomial out at 5, not at −5. The root is whatever makes the divisor zero. At −5, p comes to −7000, and you would throw away a divisor that fits perfectly.
 >
-> - Stopping while the leftover still has an x in it. 6x + 6 is not lower degree than x + 1: one more bite is owed.
-> - Writing the answer as just the quotient. (x - 2) times x^2 + 8x + 27 comes to 0 at x = 2, not 60. A remainder is part of the answer, not a failure.
+> - Stopping while the leftover still has an x in it. 200x − 1000 is not lower degree than x − 5: one more bite is owed.
+> - Writing the answer as just the quotient. (x − 4) times 4x^2 − 84x + 264 comes to 0 at x = 4, not 56. A remainder is part of the answer, not a failure.
 > - Subtracting only the leading term of the divisor. Every term of it gets multiplied and subtracted.
-> - Missing a power. If the volume had no x^2 term, hold the place for it, the way 1002 holds two zeros.
+> - Missing a power. If p had no x^2 term, hold the place for it, the way 1002 holds two zeros.
 
 ---
 
 ## Where you meet it in real life
 
-- **Testing a factor without factoring.** Working the polynomial out at -1 takes one line and tells you x + 1 divides exactly. That is [Roots and factors](05-roots-and-the-factor-theorem.md).
-- **Ordinary long division.** The same loop with 10 in place of x: 1716 divided by 11 is 156, nothing left over. That is [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
-- **Sizing a part.** A container of known volume with one edge fixed by the shelf it sits on: divide, and the allowed face comes out at once.
+- **Finding the other answers.** Once one size that works is known, dividing it out leaves a smaller equation for the rest.
+- **Testing a factor without factoring.** Working p out at 5 takes one line and tells you x − 5 divides exactly. That is [Roots and factors](05-roots-and-the-factor-theorem.md).
+- **Ordinary long division.** Put a number in for x and the division turns into plain arithmetic: at x = 20, 3000 divided by 15 is 200, nothing left over. That link is [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
 - **Check digits on a disc or a network packet.** They are the remainder of a polynomial division, and the receiver divides again. A remainder of zero means the check passed.
 
 > **Say it back**
-> Polynomials divide like whole numbers. Take away multiples of the divisor, biggest power first, and stop when what is left has a lower highest power than the divisor. Divisor times quotient plus remainder is what you started with, and that pair is the only one that fits. The box of volume x^3 + 6x^2 + 11x + 6 with edge x + 1 has face x^2 + 5x + 6, which is (x + 2)(x + 3): at x = 2, the 3 by 4 by 5 box, 60 cubic cm. Divide by x minus a number and the remainder is the polynomial worked out at that number, so a remainder of zero means a factor.
+> Polynomials divide like whole numbers. Take away multiples of the divisor, biggest power first, and stop when what is left has a lower highest power than the divisor. Divisor times quotient plus remainder is what you started with, and that pair is the only one that fits. The tray's 4x^3 − 100x^2 + 600x − 1000, divided by x − 5, leaves 4x^2 − 80x + 200 with nothing over. The 5 cm cut is one answer, and the quadratic gives the other, 2.93 cm. Divide by x minus a number and the remainder is the polynomial worked out at that number, so a remainder of zero means a factor.
 
 ---
 
 ## What this builds on
 
 - [Polynomials](01-polynomials.md): what a polynomial is, and what degree means — the "size" that decides when the division stops.
-- [Factoring](02-factoring-quadratics.md): un-multiplying the face x^2 + 5x + 6 into (x + 2)(x + 3), the other two edges.
+- [The quadratic formula](03-quadratic-formula.md): finishes the quotient 4x^2 − 80x + 200, which no whole-number brackets split.
 - [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the whole-number original, where the leftover has to be smaller than the divisor.
 
 ## Where this goes next
 
-- [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x - r is a factor, which caps a degree-n polynomial at n roots.
+- [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x − r is a factor, which caps a degree-n polynomial at n roots.
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): greatest common divisors, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
 
 Left open: a remainder of zero finds one factor at a time. How many factors, and so how many roots, can a polynomial have?

@@ -18,7 +18,7 @@ The height is no longer a sum of two terms. It is one thing multiplied by anothe
 
 **Factoring is rewriting a sum of terms as a product of brackets, and a product hands you its zeros for free.**
 
-**What kind of fact this is:** a method resting on two facts: the bracket identities, proved by multiplying out in Why it works, and the rule that a product is zero only when a factor is, a basic property of ordinary numbers.
+**What kind of fact this is:** a method resting on two facts. The bracket identities are proved by multiplying out in Why it works. The rule that a product is zero only when a factor is zero is a basic property of ordinary numbers.
 
 ### The picture: the flight, and the two zeros
 
@@ -57,7 +57,9 @@ x^2 + bx + c = (x + p)(x + q) \quad\text{whenever}\quad p + q = b \;\text{ and }
 
 That x^2 is bare, no number in front. With a number there the hunt changes; [The quadratic formula](03-quadratic-formula.md) still works.
 
-Third, a square minus a square, with $`k`$ the number being squared:
+The card's example of this rewrite is a patio. It has 22 m of edging round it and must cover 30 square metres. Call one side x metres; the other side is 11 − x. Setting the area x(11 − x) to 30 gives x^2 − 11x + 30 = 0, which Step 2 solves.
+
+Third, a square minus a square, with $`k`$ the number being squared. Its example is a square courtyard x metres a side, with a square pond k metres a side cut from the middle. The paving left is x^2 − k^2 square metres:
 
 ```math
 x^2 - k^2 = (x + k)(x - k)
@@ -68,11 +70,11 @@ x^2 - k^2 = (x + k)(x - k)
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`t`$ | seconds since the kick | 0 to 4 | past 4 the height goes negative, meaning below the boot: the model has stopped |
-| $`x`$ | the side of the square slab, in metres | 11 | the patio grows both ways at once, so its area climbs faster than x |
+| $`x`$ | one side of the patio, in metres; in Step 3, the side of the courtyard | 5, so the other side is 6; the courtyard is 11 | the patio's other side, 11 − x, shrinks, so past 5.5 m the area falls |
 | $`b`$ | the middle number, stuck to x | −11 | the bracket numbers add to more, so the zeros slide |
-| $`c`$ | the last number, with no x | 30 | the bracket numbers multiply to more, and whole-number pairs get rarer |
+| $`c`$ | the last number, with no x | 30, the area wanted | the bracket numbers multiply to more, and whole-number pairs get rarer |
 | $`p`$, $`q`$ | the two numbers inside the brackets | −5 and −6 | the zeros sit at −p and −q, so both move |
-| $`k`$ | the number squared in a square-minus-a-square | 3 | the pond is wider, less paving left |
+| $`k`$ | the side of the square pond, in metres | 3 | the pond is wider, less paving left |
 | $`A`$, $`B`$ | two things multiplied | 5t and 4 − t | — |
 
 ### When it holds
@@ -109,15 +111,15 @@ Multiply two brackets out and watch where the pieces land:
 
 The middle number is p + q. The last is p × q. Run it backwards: hunt two numbers that add to the middle one and multiply to the last.
 
-Now a patio. A square slab, x metres a side. Trim 5 m off one side and 6 m off the other. What is left is (x − 5) by (x − 6) metres: x^2 - 11x + 30 square metres.
+Now the patio. Its 22 m of edging runs round four sides, so one long side plus one short side is 11 m. Call one side x; the other is 11 − x. The area must be 30 square metres: x(11 − x) = 30. Multiply out and move everything to one side: x^2 - 11x + 30 = 0.
 
-Handed x^2 - 11x + 30 cold, hunt two numbers adding to −11 and multiplying to +30. Both must be negative. The whole-number pairs multiplying to 30 are 1 and 30, 2 and 15, 3 and 10, 5 and 6. Only 5 and 6 add to 11, so −5 and −6:
+Hunt two numbers adding to −11 and multiplying to +30. Both must be negative. The whole-number pairs multiplying to 30 are 1 and 30, 2 and 15, 3 and 10, 5 and 6. Only 5 and 6 add to 11, so −5 and −6:
 
 ```math
 x^2 - 11x + 30 = (x - 5)(x - 6)
 ```
 
-At x = 11 the slab leaves 6 m by 5 m: 30 square metres, both forms agreeing. Same move as the football, on a quadratic with no common factor.
+Check the two forms at any x, say x = 11: the sum gives 121 − 121 + 30 = 30, and the brackets give 6 × 5 = 30. Same move as the football, on a quadratic with no common factor.
 
 <details>
 <summary>The four multiplications, written out</summary>
@@ -128,7 +130,7 @@ Every term of the first bracket times every term of the second: $`x \times x = x
 
 ### Step 3: a square minus a square collapses
 
-Same slab, different job: a square pond k metres a side, here 3, cut from the middle. The paving left is x^2 - k^2.
+Now the courtyard: x metres a side, with a square pond k metres a side, here 3, cut from the middle. The paving left is x^2 - k^2.
 
 Multiply (x + k)(x − k) out and the middle disappears: x^2 − kx + kx − k^2 = x^2 - k^2. The middle pieces are equal and opposite, so they cancel. At x = 11 with k = 3: 121 − 9 = 112 square metres, and 14 × 8 = 112.
 
@@ -136,7 +138,9 @@ A square *plus* a square does not split into brackets like these. That is the tr
 
 ### Step 4: set each bracket to zero
 
-5t(4 − t) = 0 needs 5t = 0 or 4 − t = 0, so t = 0 or t = 4. (x − 5)(x − 6) = 0 needs x = 5 or x = 6: the slab sizes at which nothing is left over.
+5t(4 − t) = 0 needs 5t = 0 or 4 − t = 0, so t = 0 or t = 4.
+
+(x − 5)(x − 6) = 0 needs x = 5 or x = 6. Both make sense. If x = 5 the other side is 6, and if x = 6 the other side is 5: the patio is 5 m by 6 m either way.
 
 ### Which move to try, and in what order
 
@@ -145,7 +149,9 @@ flowchart TD
     A["A polynomial equal to zero"] --> B{"Does every term share something?"}
     B -- yes --> C["Pull it out in front"]
     B -- no --> D{"Is it a square minus a square?"}
-    C --> D
+    C --> C2{"Is every bracket now degree 1?"}
+    C2 -- yes --> I
+    C2 -- no --> D
     D -- yes --> E["Write it as (x + k)(x - k)"]
     D -- no --> F{"Two numbers adding to b, multiplying to c?"}
     F -- yes --> G["Write it as (x + p)(x + q)"]
@@ -160,7 +166,7 @@ The bottom exit is not a failure. Most quadratics have no whole-number pair, and
 
 ## Worked numbers, by hand
 
-The football, then the patio.
+The football, then the patio and the courtyard.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -172,19 +178,20 @@ The football, then the patio.
 | pairs multiplying to 30 | 1 and 30, 2 and 15, 3 and 10, 5 and 6 | four pairs |
 | the pair adding to −11 | −5 + −6 = −11, −5 × −6 = 30 | −5 and −6 |
 | patio, factored | x^2 − 11x + 30 | **(x − 5)(x − 6)** |
-| patio at x = 11 | 121 − 121 + 30, and 6 × 5 | **30** |
-| pond patio at x = 11 | 121 − 9, and 14 × 8 | **112** |
+| the patio's sides | x = 5 or x = 6, the other side 11 − x | **5 m by 6 m** |
+| both forms at x = 11 | 121 − 121 + 30, and 6 × 5 | **30** |
+| courtyard paving at x = 11, k = 3 | 121 − 9, and 14 × 8 | **112** |
 
-The ball is in the air 4 seconds; an 11 m slab trimmed by 5 m and 6 m leaves a 30 square metre patio.
+The ball is in the air 4 seconds. The patio is 5 m by 6 m: 22 m of edging round 30 square metres.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Reading (x − 5)(x − 6) = 30 as x − 5 = 30 | 870, not 30 | The rule works against zero only; x = 35 solves nothing |
-| Taking −3 and −10, which multiply to 30 | 8, not 30 | They add to −13: wrong middle number |
-| Splitting x^2 + 9 into (x + 3)(x − 3) | 112, not 130 | That is x^2 − 9. A sum of squares has no brackets |
-| Pulling out 5 instead of 5t | 10, not 20 | The t was left behind, so the bracket is wrong |
+| Taking −3 and −10, which multiply to 30 | 8, not 30, at x = 11 | They add to −13: wrong middle number |
+| Splitting x^2 + 9 into (x + 3)(x − 3) | 112, not 130, at x = 11 | That is x^2 − 9. A sum of squares has no brackets |
+| Pulling out 5 instead of 5t, giving 5(4 − t) | 10, not 20, at t = 2 | The t was left behind, so the bracket is wrong |
 
 The code prints all four beside the right answers.
 
@@ -192,19 +199,21 @@ The code prints all four beside the right answers.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; a library that factors polynomials would do the one thing this card is about. Two roads to each answer: one adds the terms up, the other multiplies the brackets out. The code checks they agree at every point tested: nine times through the flight, twenty whole values of x across the patio. The brackets are found as a person finds them: list the whole-number pairs multiplying to the last number, keep the pair that adds to the middle one.
+Nothing is imported; a library that factors polynomials would do the one thing this card is about. Two roads to each answer: one adds the terms up, the other multiplies the brackets out. The code checks they agree at every point tested: nine times through the flight, twenty whole values of x for the patio.
+
+The brackets are found as a person finds them: list the whole-number pairs multiplying to the last number, keep the pair that adds to the middle one.
 
 ### Python
 
 ```python
 # Factoring quadratics -- the check behind the card.  Nothing is imported.
 # A football kicked straight up at 20 m/s stands 20t - 5t^2 metres high after
-# t seconds.  A square slab x metres a side, trimmed 5 m one way and 6 m the
-# other, leaves x^2 - 11x + 30 square metres.  Each is worked two ways: the
+# t seconds.  A patio with 22 m of edging and 30 square metres of area has
+# sides x and 11 - x, where x^2 - 11x + 30 = 0.  Each is worked two ways: the
 # sum form term by term, and the product form with the brackets multiplied.
 def height_sum(t): return 20 * t - 5 * t * t        # the football, as a sum
 def height_prod(t): return 5 * t * (4 - t)          # the same, as a product
-def patio_sum(x): return x * x - 11 * x + 30        # the slab, as a sum
+def patio_sum(x): return x * x - 11 * x + 30        # the patio, as a sum
 def patio_prod(x): return (x - 5) * (x - 6)         # the same, as a product
 
 def pairs(c):                                       # whole-number pairs multiplying to c
@@ -227,10 +236,12 @@ print("whole-number pairs multiplying to 30: "
 p, q = brackets(-11, 30)
 print(f"the pair adding to -11 is {p} and {q}, so x^2 - 11x + 30 = (x - {-p})(x - {-q})")
 print(f"the brackets vanish at x = {-p} and x = {-q}")
+print(f"so the patio is {-p} m by {-q} m: edging 2 * ({-p} + {-q}) = {2 * (-p - q)} m, "
+      f"area {-p} * {-q} = {p * q} square metres")
 agree = sum(1 for x in range(-4, 16) if patio_sum(x) == patio_prod(x))
 print(f"sum and product forms agree at all {agree} whole x from -4 to 15")
-print(f"patio at x = 11: sum form {patio_sum(11)}, product form 6 * 5 = {patio_prod(11)}")
-print(f"pond patio at x = 11: x^2 - 9 gives {11 * 11 - 9}, "
+print(f"both forms at x = 11: sum form {patio_sum(11)}, product form 6 * 5 = {patio_prod(11)}")
+print(f"courtyard paving at x = 11: x^2 - 9 gives {11 * 11 - 9}, "
       f"(x + 3)(x - 3) gives 14 * 8 = {(11 + 3) * (11 - 3)}")
 print("x^2 + 9: no whole-number pair, so no brackets" if brackets(0, 9) is None
       else "x^2 + 9 factors, which cannot happen")
@@ -238,14 +249,14 @@ print(f"the four mistakes come out at {patio_sum(35)}, {(11 - 3) * (11 - 10)}, "
       f"{(11 + 3) * (11 - 3)} and {5 * (4 - 2)}")
 print(f"against the right answers {patio_sum(0)}, {patio_sum(11)}, "
       f"{11 * 11 + 9} and {int(height_sum(2))}")
-assert brackets(-11, 30) == (-5, -6) and p + q == -11 and p * q == 30
+assert brackets(-11, 30) == (-5, -6) and p + q == -11 and p * q == 30 and -2 * (p + q) == 22
 assert agree == 20 and same == 9
 assert height_sum(0) == 0 and height_sum(4) == 0 and height_sum(2) == 20
 assert brackets(0, 9) is None and patio_sum(0) == 30 and patio_sum(5) == 0 and patio_sum(6) == 0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 football height 20t - 5t^2, t = 0.0 to 4.0 in half seconds: 0.00 8.75 15.00 18.75 20.00 18.75 15.00 8.75 0.00
@@ -254,9 +265,10 @@ sum and product forms agree at all 9 of those times
 whole-number pairs multiplying to 30: 1 and 30, 2 and 15, 3 and 10, 5 and 6
 the pair adding to -11 is -5 and -6, so x^2 - 11x + 30 = (x - 5)(x - 6)
 the brackets vanish at x = 5 and x = 6
+so the patio is 5 m by 6 m: edging 2 * (5 + 6) = 22 m, area 5 * 6 = 30 square metres
 sum and product forms agree at all 20 whole x from -4 to 15
-patio at x = 11: sum form 30, product form 6 * 5 = 30
-pond patio at x = 11: x^2 - 9 gives 112, (x + 3)(x - 3) gives 14 * 8 = 112
+both forms at x = 11: sum form 30, product form 6 * 5 = 30
+courtyard paving at x = 11: x^2 - 9 gives 112, (x + 3)(x - 3) gives 14 * 8 = 112
 x^2 + 9: no whole-number pair, so no brackets
 the four mistakes come out at 870, 8, 112 and 10
 against the right answers 30, 30, 130 and 20
@@ -270,12 +282,12 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 ```rust
 // Factoring quadratics -- the same check as the Python, in Rust.  No crates.
 // A football kicked straight up at 20 m/s stands 20t - 5t^2 metres high after
-// t seconds.  A square slab x metres a side, trimmed 5 m one way and 6 m the
-// other, leaves x^2 - 11x + 30 square metres.  Each is worked two ways: the
+// t seconds.  A patio with 22 m of edging and 30 square metres of area has
+// sides x and 11 - x, where x^2 - 11x + 30 = 0.  Each is worked two ways: the
 // sum form term by term, and the product form with the brackets multiplied.
 fn height_sum(t: f64) -> f64 { 20.0 * t - 5.0 * t * t }   // the football, as a sum
 fn height_prod(t: f64) -> f64 { 5.0 * t * (4.0 - t) }     // the same, as a product
-fn patio_sum(x: i64) -> i64 { x * x - 11 * x + 30 }       // the slab, as a sum
+fn patio_sum(x: i64) -> i64 { x * x - 11 * x + 30 }       // the patio, as a sum
 fn patio_prod(x: i64) -> i64 { (x - 5) * (x - 6) }        // the same, as a product
 
 fn pairs(c: i64) -> Vec<(i64, i64)> {                     // whole-number pairs multiplying to c
@@ -309,10 +321,12 @@ fn main() {
     let (p, q) = brackets(-11, 30).expect("x^2 - 11x + 30 must factor");
     println!("the pair adding to -11 is {} and {}, so x^2 - 11x + 30 = (x - {})(x - {})", p, q, -p, -q);
     println!("the brackets vanish at x = {} and x = {}", -p, -q);
+    println!("so the patio is {} m by {} m: edging 2 * ({} + {}) = {} m, area {} * {} = {} square metres",
+             -p, -q, -p, -q, 2 * (-p - q), -p, -q, p * q);
     let agree = (-4..16).filter(|&x| patio_sum(x) == patio_prod(x)).count();
     println!("sum and product forms agree at all {} whole x from -4 to 15", agree);
-    println!("patio at x = 11: sum form {}, product form 6 * 5 = {}", patio_sum(11), patio_prod(11));
-    println!("pond patio at x = 11: x^2 - 9 gives {}, (x + 3)(x - 3) gives 14 * 8 = {}",
+    println!("both forms at x = 11: sum form {}, product form 6 * 5 = {}", patio_sum(11), patio_prod(11));
+    println!("courtyard paving at x = 11: x^2 - 9 gives {}, (x + 3)(x - 3) gives 14 * 8 = {}",
              11 * 11 - 9, (11 + 3) * (11 - 3));
     println!("{}", if brackets(0, 9).is_none() { "x^2 + 9: no whole-number pair, so no brackets" }
                    else { "x^2 + 9 factors, which cannot happen" });
@@ -320,7 +334,7 @@ fn main() {
              patio_sum(35), (11 - 3) * (11 - 10), (11 + 3) * (11 - 3), 5 * (4 - 2));
     println!("against the right answers {}, {}, {} and {}",
              patio_sum(0), patio_sum(11), 11 * 11 + 9, height_sum(2.0) as i64);
-    assert!(brackets(-11, 30) == Some((-5, -6)) && p + q == -11 && p * q == 30);
+    assert!(brackets(-11, 30) == Some((-5, -6)) && p + q == -11 && p * q == 30 && -2 * (p + q) == 22);
     assert!(agree == 20 && same == 9);
     assert!(height_sum(0.0) == 0.0 && height_sum(4.0) == 0.0 && height_sum(2.0) == 20.0);
     assert!(brackets(0, 9).is_none() && patio_sum(0) == 30 && patio_sum(5) == 0 && patio_sum(6) == 0);
@@ -328,7 +342,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 football height 20t - 5t^2, t = 0.0 to 4.0 in half seconds: 0.00 8.75 15.00 18.75 20.00 18.75 15.00 8.75 0.00
@@ -337,9 +351,10 @@ sum and product forms agree at all 9 of those times
 whole-number pairs multiplying to 30: 1 and 30, 2 and 15, 3 and 10, 5 and 6
 the pair adding to -11 is -5 and -6, so x^2 - 11x + 30 = (x - 5)(x - 6)
 the brackets vanish at x = 5 and x = 6
+so the patio is 5 m by 6 m: edging 2 * (5 + 6) = 22 m, area 5 * 6 = 30 square metres
 sum and product forms agree at all 20 whole x from -4 to 15
-patio at x = 11: sum form 30, product form 6 * 5 = 30
-pond patio at x = 11: x^2 - 9 gives 112, (x + 3)(x - 3) gives 14 * 8 = 112
+both forms at x = 11: sum form 30, product form 6 * 5 = 30
+courtyard paving at x = 11: x^2 - 9 gives 112, (x + 3)(x - 3) gives 14 * 8 = 112
 x^2 + 9: no whole-number pair, so no brackets
 the four mistakes come out at 870, 8, 112 and 10
 against the right answers 30, 30, 130 and 20
@@ -428,10 +443,12 @@ example : (Finset.Icc (1 : ℤ) 30).filter (fun d => 30 % d = 0 ∧ d * d ≤ 30
 example : (-5 : ℤ) + -6 = -11 ∧ (-5 : ℤ) * -6 = 30 := by decide
 -- The patio, x^2 - 11x + 30 = (x - 5)(x - 6), agrees at all 20 whole x from -4 to 15.
 example : ∀ x ∈ Finset.Icc (-4 : ℤ) 15, x ^ 2 - 11 * x + 30 = (x - 5) * (x - 6) := by decide
--- The patio vanishes at x = 5 and x = 6, and leaves 30 square metres at x = 11 (6 m by 5 m).
+-- The patio's quadratic vanishes at x = 5 and x = 6 (a 5 m by 6 m patio: edging 2 * (5 + 6) = 22 m,
+-- area 30), and both forms give 30 at x = 11.
 example : (5 : ℤ) ^ 2 - 11 * 5 + 30 = 0 ∧ (6 : ℤ) ^ 2 - 11 * 6 + 30 = 0 ∧
     (11 : ℤ) ^ 2 - 11 * 11 + 30 = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by decide
--- The pond patio at x = 11, k = 3: 121 - 9 = 112 and 14 * 8 = 112.
+example : (2 : ℤ) * (5 + 6) = 22 ∧ (5 : ℤ) * (11 - 5) = 30 := by decide
+-- The courtyard at x = 11 with a pond k = 3: 121 - 9 = 112 and 14 * 8 = 112.
 example : (11 : ℤ) ^ 2 - 3 ^ 2 = 112 ∧ (11 + 3 : ℤ) * (11 - 3) = 112 := by decide
 -- x^2 + 9: no whole-number pair adds to 0 and multiplies to 9.
 example : ∀ p ∈ Finset.Icc (-9 : ℤ) 9, ∀ q ∈ Finset.Icc (-9 : ℤ) 9, ¬ (p + q = 0 ∧ p * q = 9) := by
@@ -447,7 +464,7 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 #print axioms square_minus_square_splits_square_plus_square_does_not
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'quadratic_factors_and_is_zero_only_at_brackets' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -479,12 +496,12 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 ## Where you meet it in real life
 
 - **Anything thrown, launched or dropped.** Height against time is a quadratic, and its zeros are when the thing is at ground level — usually the question being asked.
-- **Areas with a bit trimmed off.** Slabs, borders, margins, offcuts: an area in one unknown is nearly always a quadratic, and the zeros are where the shape runs out.
+- **Areas inside a fixed edge.** Patio edging, a fence, a picture frame: fix the length of the edge and the area is a quadratic in one side. Set it to the area you need, and the zeros are the sides that work.
 - **Break-even points.** Profit that rises then falls with price is a quadratic; its zeros are where the money is level.
 - **Reading a graph.** Where a curve crosses the bottom it has a bracket: [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 > **Say it back**
-> Factoring turns a sum of terms into a product of brackets. A product is zero only when one factor is zero, so a factored polynomial gives up its zeros with no searching. Three moves cover most of it: pull out what every term shares, spot a square minus a square, or find two numbers that add to the middle number and multiply to the last. The ball's 20t − 5t^2 is 5t(4 − t), so it lands at t = 4. The patio's x^2 − 11x + 30 is (x − 5)(x − 6), zero at x = 5 and x = 6. A sum of squares never factors, and a quadratic with no whole-number pair is a job for the formula, not a mistake.
+> Factoring turns a sum of terms into a product of brackets. A product is zero only when one factor is zero, so a factored polynomial gives up its zeros with no searching. Three moves cover most of it: pull out what every term shares, spot a square minus a square, or find two numbers that add to the middle number and multiply to the last. The ball's 20t − 5t^2 is 5t(4 − t), so it lands at t = 4. The patio's x^2 − 11x + 30 is (x − 5)(x − 6), zero at x = 5 and x = 6: a 5 m by 6 m patio. A sum of squares never factors, and a quadratic with no whole-number pair is a job for the formula, not a mistake.
 
 ---
 
