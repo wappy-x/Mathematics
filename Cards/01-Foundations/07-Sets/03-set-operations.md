@@ -398,7 +398,7 @@ example : watchlist.card - (serviceA ∩ serviceB).card = 10 := by decide
 
 ## Where this goes next
 
-- [Inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for three sets and more.
+- [Inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for two sets and three.
 - [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): every member of one set paired with every member of the other.
 - [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into piles that do not overlap and leave nothing out.
 - [Indexed families](07-indexed-families-of-sets.md): unions, intersections and products over any number of sets, and De Morgan for infinitely many.

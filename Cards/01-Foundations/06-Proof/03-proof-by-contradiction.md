@@ -6,7 +6,7 @@
 
 ## General Overview
 
-An 8-by-8 chessboard: 64 squares, striped dark and light, 32 of each. A box of dominoes, each covering two squares that share an edge. Lay 32 and the board is covered.
+An 8-by-8 chessboard: 64 squares, checkered dark and light, 32 of each. A box of dominoes, each covering two squares that share an edge. Lay 32 and the board is covered.
 
 Now saw off two opposite corners — row 1 column 1, and row 8 column 8. That leaves 62 squares, and 31 dominoes cover 62 squares, so the count fits.
 

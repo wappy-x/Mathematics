@@ -354,7 +354,7 @@ example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 12).filter (fun h => dial h 
 ## Where you meet it in real life
 
 - **Unit conversion.** Every converter is a pair of rules that undo each other: feet and metres, pounds and kilos.
-- **Passwords.** A login stores a scramble of your password, built so two inputs can collide and nothing walks back. Not undoable, on purpose.
+- **Passwords.** A login stores a fixed-length scramble of your password. Many inputs share each scramble, so nothing walks back. Not undoable, on purpose.
 - **Timestamps.** Store 13:00 and you can print 1 pm. Store 1 pm and the afternoon is gone — the dial's loss, in a column.
 
 

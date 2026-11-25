@@ -12,7 +12,7 @@ Sort every fraction into two piles: short of the diagonal, or past it. 1.4 goes 
 
 Dedekind's idea, from 1872: the split itself is the number. The left pile is a **cut**. Every fraction has one (all fractions below it), and so does root 2, though no fraction stands at its edge.
 
-**A real number is a left pile of fractions with no largest member. A bounded collection of piles has their union as least upper bound, so the no-gaps rule is a theorem.**
+**A real number is a left pile of fractions with no largest member. If a collection of piles all fit inside one pile, their union is the smallest pile that holds them all: their least upper bound. So the no-gaps rule is a theorem.**
 
 **What kind of fact this is:** a definition (a real number is a cut) and a theorem, proved below. [The real numbers have no gaps](04-real-numbers-no-gaps.md) had to assume it.
 

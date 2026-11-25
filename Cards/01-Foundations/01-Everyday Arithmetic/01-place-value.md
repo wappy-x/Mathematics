@@ -14,7 +14,7 @@ The job is decided by **where the mark sits**. That is why ten marks — 0 1 2 3
 
 **A digit's worth is the digit itself times the worth of the column it sits in, and each column is worth ten times the column on its right.**
 
-**What kind of fact this is:** a convention, the agreed rule for writing numbers down. Why it works shows why the rule never gives one numeral two meanings.
+**What kind of fact this is:** a convention, the agreed rule for writing numbers down. The picture below shows why the rule never gives one numeral two meanings.
 
 ### The picture: what a column is worth
 

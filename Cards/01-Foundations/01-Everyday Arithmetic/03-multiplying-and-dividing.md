@@ -329,7 +329,7 @@ example : ∀ q, q < 100 → (List.replicate q 0).sum ≠ 12 := by decide
 > [!TIP]
 > **Try changing**
 > Guess the answer first. Then run it.
-> - **Put the price up to 80 cents.** Set `price` to 80. The bill, the change and each share all move, and every cross-check still holds.
+> - **Put the price up to 80 cents.** Set `price` to 80. The cost, the change and each share all move, and every cross-check still holds.
 > - **Make it seven friends.** Set `friends` to 7. The money stops dividing evenly; the rebuild still holds.
 
 ---

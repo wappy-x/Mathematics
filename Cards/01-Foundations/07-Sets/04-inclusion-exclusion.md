@@ -135,22 +135,7 @@ The class of 30, start to finish.
 | at least one of the three | 18 + 12 + 10 − 7 − 4 − 3 + 2 | **28** |
 | does none of the three | 30 − 28 | **2** |
 
-### The class, sliced
-
-Every student sits in exactly one row.
-
-| Slice of the class | Students |
-| --- | --- |
-| football only | 9 |
-| chess only | 4 |
-| choir only | 5 |
-| football and chess only | 5 |
-| football and choir only | 2 |
-| chess and choir only | 1 |
-| all three | 2 |
-| none of the three | 2 |
-
-The formula reaches 28 without listing any of this; the last row is what is left of the class, the complement from [Set operations](03-set-operations.md).
+The formula reaches 28 without listing the eight piles in the picture above. The last pile, none of the three, is what is left of the class: the complement from [Set operations](03-set-operations.md).
 
 ### What breaks if you drop a piece
 

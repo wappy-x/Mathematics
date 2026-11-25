@@ -372,7 +372,7 @@ example : ¬ Injective crowded ∧ ¬ Surjective crowded := by decide
 >
 > - Saying onto without saying onto what. The guests are onto eight seats, not onto ten.
 > - Reading equal sizes as a pairing. Eight into eight can fail both tests: 7 seats of 8 filled.
-> - Reading this as a fact about every set. Shift every whole number up by one: nothing collides, but 0 is never reached — one-to-one and not onto, same numbers on both sides.
+> - Reading this as a fact about every set. Shift every counting number (0, 1, 2, …) up by one: nothing collides, but 0 is never reached — one-to-one and not onto, same numbers on both sides.
 > - Treating "one-to-one" and "one-to-one correspondence" as one phrase. The first is injective alone; the second is the whole pairing, a bijection.
 
 ---

@@ -342,7 +342,7 @@ example : (1 : ℚ) + 5 / 100 = 105 / 100 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first. The asserts hold the house numbers, so one will fire.
+> Guess first. The asserts are pinned to the jacket's numbers, so one will fire.
 > - **Make the sale 20% off.** Back to the March price? Change `after(rise, 1 - 0.25)` to `after(rise, 1 - 0.20)`: $80.00 exactly, and the first assert fires.
 > - **Break even after half off.** Change the half-on factor from `1 + 0.50` to `1 + 1.00`: $80.00 again, so climbing back takes a 100% rise, and the last assert fires.
 
