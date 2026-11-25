@@ -61,7 +61,7 @@ fn main() {
     println!("sieve running totals at n = 6: {}", running.join(", "));
     println!("recurrence at n = 6: 5 x ({} + {}) = 5 x {} = {}", listed[5], listed[4], listed[5] + listed[4], recurred[6]);
     println!("one-step form at n = 6: 6 x {} + 1 = {}", listed[5], 6 * listed[5] + 1);
-    println!("1/e by the alternating sum to 20 terms: {:.6}; by compounding a dollar 10000000 times: {:.6}", alt, 1.0 / compounded);
+    println!("1/e by the alternating sum to k = 20: {:.6}; by compounding a dollar 10000000 times: {:.6}", alt, 1.0 / compounded);
     println!("720 x (1/e) = {:.3}, nearest whole number {}", facts[6] as f64 * alt, (facts[6] as f64 * alt + 0.5) as i64);
     println!("e by the same compounding: {:.6}; the 7th and 8th terms of the share: {:.6} and {:.6}",
              compounded, 1.0 / facts[7] as f64, 1.0 / facts[8] as f64);

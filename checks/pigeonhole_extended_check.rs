@@ -1,7 +1,7 @@
 // Pigeonhole, extended -- the same check as the Python, in Rust.  No crates.  100
 // emails go into 12 folders and the fullest folder is found three ways: by the
 // formula, by dealing the emails out one at a time, and by trying every filing at
-// small sizes.  Then ten days of arrivals, and a run totalling a multiple of 10.
+// small sizes.  Then ten whole numbers, and a run totalling a multiple of 10.
 const N: i64 = 100;
 const K: i64 = 12;
 const M: i64 = 10;
@@ -36,13 +36,13 @@ fn runs(vals: &[i64], m: i64) -> Vec<(i64, i64, i64)> {  // road two: check ever
 }
 
 fn main() {
-    let arrivals: Vec<i64> = vec![23, 41, 17, 8, 36, 52, 12, 29, 4, 31];
+    let nums: Vec<i64> = vec![23, 41, 17, 8, 36, 52, 12, 29, 4, 31];
     let (mut loads, q, r) = (vec![0i64; K as usize], N / K, N % K);
     for i in 0..N { loads[(i % K) as usize] += 1 }        // road two: hand the emails out in turn
     let cases: Vec<(i64, i64)> = (1..9).flat_map(|n| (1..5).map(move |k| (n, k))).collect();
     let attained = cases.iter().all(|&(n, k)|
         (0..k.pow(n as u32)).map(|c| fullest(c, n, k)).min().unwrap() == ceil_div(n, k));
-    let (pre, found) = (prefixes(&arrivals), runs(&arrivals, M));
+    let (pre, found) = (prefixes(&nums), runs(&nums, M));
     let rems: Vec<i64> = pre.iter().map(|p| p % M).collect();
     let (i0, i1) = first_repeat(&rems).unwrap();
     let (mut seed, mut pig, mut hit) = (1i64, 0i64, 0i64);
@@ -60,11 +60,11 @@ fn main() {
     println!("dealt one at a time, folder loads: {:?}, fullest {}", loads, mx);
     println!("every filing of n items into k boxes, n = 1..8, k = 1..4: {} cases, bound met and attained: {}", cases.len(), if attained { "yes" } else { "no" });
     println!("mistake 1, whole part of n/k plus 1, on 120 emails in {} folders: {}, the truth is {}\nmistake 2, 13 folders counted instead of {}: {}, not {}", K, 120 / K + 1, ceil_div(120, K), K, ceil_div(N, 13), ceil_div(N, K));
-    println!("ten days of arrivals: {:?}\nrunning totals, starting with the empty one: {:?}\nremainders after dividing by {}: {:?}", arrivals, pre, M, rems);
-    println!("{} totals into {} remainder boxes: totals {} and {} both leave {}\ndays {} to {} sum to {} - {} = {}, a multiple of {}", pre.len(), M, pre[i0], pre[i1], rems[i1], i0 + 1, i1, pre[i1], pre[i0], pre[i1] - pre[i0], M);
+    println!("ten whole numbers: {:?}\nrunning totals, starting with the empty one: {:?}\nremainders after dividing by {}: {:?}", nums, pre, M, rems);
+    println!("{} totals into {} remainder boxes: totals {} and {} both leave {}\npositions {} to {} sum to {} - {} = {}, a multiple of {}", pre.len(), M, pre[i0], pre[i1], rems[i1], i0 + 1, i1, pre[i1], pre[i0], pre[i1] - pre[i0], M);
     println!("every run summing to a multiple of {}, by search: {:?}", M, found);
     println!("mistake 3, the empty total left out: {} totals, {} boxes, nothing forced", pre.len() - 1, M);
-    println!("2000 random ten-day lists: {} found a run by remainders, {} by search", pig, hit);
+    println!("2000 random ten-number lists: {} found a run by remainders, {} by search", pig, hit);
     assert!(ceil_div(N, K) == mx && loads.iter().filter(|&&x| x == q + 1).count() as i64 == r);
     assert!(attained && fullest(0, N, K) == N);
     assert!((i0, i1) == (4, 7) && found.contains(&(i0 as i64 + 1, i1 as i64, pre[i1] - pre[i0])));

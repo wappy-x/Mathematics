@@ -10,7 +10,9 @@ An inbox holds 100 emails. Twelve folders are open, and every email must go in o
 
 Nine, not two. The familiar version says only that more items than boxes force some box to take two ([Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md)) — far too weak here. Cap every folder at 8 and twelve folders hold 96 emails, leaving 4 standing. Share 100 over 12 folders and each gets 8.3333; folders hold whole emails, so round up.
 
-The principle is free; choosing what counts as an item and what counts as a box is where arguments are won. Ten days of email arrivals — 23, 41, 17, 8, 36, 52, 12, 29, 4, 31 — hide a run of consecutive days totalling an exact multiple of 10. Nothing in the list announces it; the right boxes make it certain, and they are not the days.
+The principle is free; choosing what counts as an item and what counts as a box is where arguments are won.
+
+Take a classic puzzle: any ten whole numbers — say 23, 41, 17, 8, 36, 52, 12, 29, 4, 31 — hide a consecutive run totalling an exact multiple of 10. Nothing in the list announces it; the right boxes make it certain, and they are not the numbers themselves.
 
 **Spread n items over k boxes in any way at all and the fullest box still holds at least n divided by k, rounded up; the skill is choosing what the boxes are.**
 
@@ -50,7 +52,7 @@ Two pieces of notation, in words first. Corner marks on either side of a number 
 | $`\max_i \lvert B_i \rvert`$ | the largest load, over every box | the fullest folder's 9 | — |
 | $`n/k`$ | the average load, spread perfectly evenly | 8.3333 | — |
 | $`\lceil n/k \rceil`$ | that average rounded up | 9 | — |
-| $`q`$, $`r`$ | how many whole times $`k`$ goes into $`n`$, and the leftover | 8 and 4 | one more crowded box |
+| $`q`$, $`r`$ | how many whole times $`k`$ goes into $`n`$, and the leftover | 8 and 4 | bigger q lifts the ceiling; bigger r adds another box at q + 1 |
 
 The even spread has its own formula: $`n = q \times k + r`$. Give $`r`$ boxes one more than $`q`$ and the rest $`q`$ each. For the inbox, 100 = 8 × 12 + 4.
 
@@ -58,7 +60,7 @@ The even spread has its own formula: $`n = q \times k + r`$. Give $`r`$ boxes on
 
 - **One box per item.** Cross-file an email into two folders and the count is of filings, not emails, and the bound moves to that larger number.
 - **Items that cannot be split.** Rounding up is the only place whole numbers enter; without it the claim weakens to "at least 8.3333 emails".
-- **Finitely many items.** Infinitely many in finitely many boxes force a box with infinitely many — a different theorem.
+- **Finitely many items, at least one box.** Zero boxes leave nowhere for items to go and n/k undefined; infinitely many items in finitely many boxes force an infinite box — a different theorem.
 - **A floor, on no named box.** One folder could hold all 100; the theorem never promises exactly 9, nor says which folder.
 
 ---
@@ -93,16 +95,18 @@ The bound is attained, not a cautious estimate. The code confirms it by trying e
 
 ### Step 4: the boxes are the invention — here, running totals
 
-Back to the ten days of arrivals, and the run that totals a multiple of 10.
+Back to the ten whole numbers, and the run that totals a multiple of 10.
 
-The items are not the days. They are the eleven **running totals**: 0 before any day has passed, 23 after one day, 64 after two, on to 253. The boxes are the ten remainders after dividing by 10 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+The items are not the ten numbers. They are the eleven **running totals**: 0 before the first number, 23 after one, 64 after two, on to 253. The boxes are the ten remainders after dividing by 10 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
-Eleven items, ten boxes, so two totals share a box: 89 and 189 both leave 9. Subtract, and equal remainders cancel: 189 − 89 = 100, a multiple of 10. The difference of two running totals is the total of the days between them, here days 5 to 7.
+Eleven items, ten boxes, so two totals share a box: 89 and 189 both leave 9. Subtract, and equal remainders cancel: 189 − 89 = 100, a multiple of 10. The difference of two running totals is the sum of the numbers between them, here positions 5 to 7 (36 + 52 + 12 = 100).
 
 <details>
 <summary>Detailed proof: any n whole numbers hide a run summing to a multiple of n</summary>
 
-Call the numbers a(1) up to a(n) in order and form the n + 1 running totals p(0) = 0, p(1) = a(1), p(2) = a(1) + a(2), on to p(n). Each leaves one of the n remainders 0 to n − 1 after division by n, so n + 1 items go into n boxes and two totals must share. Call them p(u) and p(v), with u below v: they leave the same remainder.
+Call the numbers a(1) up to a(n) in order. Form the n + 1 running totals p(0) = 0, p(1) = a(1), p(2) = a(1) + a(2), on to p(n).
+
+Each leaves one of the n remainders 0 to n − 1 after division by n, so n + 1 items go into n boxes and two totals must share. Call them p(u) and p(v), with u below v: they leave the same remainder.
 
 Equal remainders cancel, so p(v) − p(u) is a multiple of n. Running totals telescope: p(v) − p(u) = a(u+1) + … + a(v), the consecutive run from position u + 1 through v, non-empty because u is below v.
 
@@ -132,7 +136,7 @@ Some folder ends up with at least 9 of the 100 emails, however they are filed.
 | --- | --- | --- |
 | Whole part of the average, plus 1 | 11, for 120 emails in 12 folders | Adding 1 is right only when something is left over; 12 divides 120, so the forced load is 10 |
 | Counting 13 folders where there are 12 | 8, not 9 | One box too many lowers the forced load |
-| Leaving out the running total before day 1 | 10 totals, 10 boxes | As many boxes as items forces nothing, and the run argument collapses |
+| Leaving out the running total before the first number | 10 totals, 10 boxes | As many boxes as items forces nothing, and the run argument collapses |
 
 The code prints all three.
 
@@ -140,7 +144,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The fullest folder is reached three ways: the formula, dealing the emails out one at a time, and trying every possible filing at small sizes. The run of days is found twice, by remainders and by adding every run up directly. Then both roads run over 2,000 random ten-day lists from a generator the script writes itself.
+Nothing is imported. The fullest folder is reached three ways: the formula, dealing the emails out one at a time, and trying every possible filing at small sizes. The run of numbers is found twice, by remainders and by adding every run up directly. Then both roads run over 2,000 random ten-number lists from a generator the script writes itself.
 
 ### Python
 
@@ -148,9 +152,9 @@ Nothing is imported. The fullest folder is reached three ways: the formula, deal
 # Pigeonhole, extended -- the check behind the card.  Nothing is imported.  100
 # emails go into 12 folders and the fullest folder is found three ways: by the
 # formula, by dealing the emails out one at a time, and by trying every filing at
-# small sizes.  Then ten days of arrivals, and a run totalling a multiple of 10.
+# small sizes.  Then ten whole numbers, and a run totalling a multiple of 10.
 N, K, M = 100, 12, 10
-ARRIVALS = [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
+NUMS = [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
 
 def ceil_div(n, k):                          # road one: n divided by k, rounded up
     return -(-n // k)
@@ -177,7 +181,7 @@ loads, q, r = [0] * K, N // K, N % K
 for i in range(N): loads[i % K] += 1         # road two: hand the emails out in turn
 cases = [(n, k) for n in range(1, 9) for k in range(1, 5)]
 attained = all(min(fullest(c, n, k) for c in range(k ** n)) == ceil_div(n, k) for n, k in cases)
-pre, found = prefixes(ARRIVALS), runs(ARRIVALS, M)
+pre, found = prefixes(NUMS), runs(NUMS, M)
 rems = [p % M for p in pre]; i0, i1 = first_repeat(rems)
 seed, pig, hit = 1, 0, 0
 for _ in range(2000):                        # our own random numbers, nothing imported
@@ -193,11 +197,11 @@ print(f"{r} folders of {q + 1} and {K - r} folders of {q}: {r * (q + 1)} + {(K -
 print(f"dealt one at a time, folder loads: {loads}, fullest {max(loads)}")
 print(f"every filing of n items into k boxes, n = 1..8, k = 1..4: {len(cases)} cases, bound met and attained: {'yes' if attained else 'no'}")
 print(f"mistake 1, whole part of n/k plus 1, on 120 emails in {K} folders: {120 // K + 1}, the truth is {ceil_div(120, K)}\nmistake 2, 13 folders counted instead of {K}: {ceil_div(N, 13)}, not {ceil_div(N, K)}")
-print(f"ten days of arrivals: {ARRIVALS}\nrunning totals, starting with the empty one: {pre}\nremainders after dividing by {M}: {rems}")
-print(f"{len(pre)} totals into {M} remainder boxes: totals {pre[i0]} and {pre[i1]} both leave {rems[i1]}\ndays {i0 + 1} to {i1} sum to {pre[i1]} - {pre[i0]} = {pre[i1] - pre[i0]}, a multiple of {M}")
+print(f"ten whole numbers: {NUMS}\nrunning totals, starting with the empty one: {pre}\nremainders after dividing by {M}: {rems}")
+print(f"{len(pre)} totals into {M} remainder boxes: totals {pre[i0]} and {pre[i1]} both leave {rems[i1]}\npositions {i0 + 1} to {i1} sum to {pre[i1]} - {pre[i0]} = {pre[i1] - pre[i0]}, a multiple of {M}")
 print(f"every run summing to a multiple of {M}, by search: {found}")
 print(f"mistake 3, the empty total left out: {len(pre) - 1} totals, {M} boxes, nothing forced")
-print(f"2000 random ten-day lists: {pig} found a run by remainders, {hit} by search")
+print(f"2000 random ten-number lists: {pig} found a run by remainders, {hit} by search")
 assert ceil_div(N, K) == max(loads) and loads.count(q + 1) == r
 assert attained and fullest(0, N, K) == N
 assert (i0, i1) == (4, 7) and (i0 + 1, i1, pre[i1] - pre[i0]) in found
@@ -205,7 +209,7 @@ assert pig == 2000 and hit == 2000
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 100 emails into 12 folders: average load 100/12 = 8.3333, rounded up 9
@@ -215,14 +219,14 @@ dealt one at a time, folder loads: [9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8], fullest
 every filing of n items into k boxes, n = 1..8, k = 1..4: 32 cases, bound met and attained: yes
 mistake 1, whole part of n/k plus 1, on 120 emails in 12 folders: 11, the truth is 10
 mistake 2, 13 folders counted instead of 12: 8, not 9
-ten days of arrivals: [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
+ten whole numbers: [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
 running totals, starting with the empty one: [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253]
 remainders after dividing by 10: [0, 3, 4, 1, 9, 5, 7, 9, 8, 2, 3]
 11 totals into 10 remainder boxes: totals 89 and 189 both leave 9
-days 5 to 7 sum to 189 - 89 = 100, a multiple of 10
+positions 5 to 7 sum to 189 - 89 = 100, a multiple of 10
 every run summing to a multiple of 10, by search: [(2, 10, 230), (5, 7, 100)]
 mistake 3, the empty total left out: 10 totals, 10 boxes, nothing forced
-2000 random ten-day lists: 2000 found a run by remainders, 2000 by search
+2000 random ten-number lists: 2000 found a run by remainders, 2000 by search
 ALL CHECKS PASS
 ```
 
@@ -234,7 +238,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // Pigeonhole, extended -- the same check as the Python, in Rust.  No crates.  100
 // emails go into 12 folders and the fullest folder is found three ways: by the
 // formula, by dealing the emails out one at a time, and by trying every filing at
-// small sizes.  Then ten days of arrivals, and a run totalling a multiple of 10.
+// small sizes.  Then ten whole numbers, and a run totalling a multiple of 10.
 const N: i64 = 100;
 const K: i64 = 12;
 const M: i64 = 10;
@@ -269,13 +273,13 @@ fn runs(vals: &[i64], m: i64) -> Vec<(i64, i64, i64)> {  // road two: check ever
 }
 
 fn main() {
-    let arrivals: Vec<i64> = vec![23, 41, 17, 8, 36, 52, 12, 29, 4, 31];
+    let nums: Vec<i64> = vec![23, 41, 17, 8, 36, 52, 12, 29, 4, 31];
     let (mut loads, q, r) = (vec![0i64; K as usize], N / K, N % K);
     for i in 0..N { loads[(i % K) as usize] += 1 }        // road two: hand the emails out in turn
     let cases: Vec<(i64, i64)> = (1..9).flat_map(|n| (1..5).map(move |k| (n, k))).collect();
     let attained = cases.iter().all(|&(n, k)|
         (0..k.pow(n as u32)).map(|c| fullest(c, n, k)).min().unwrap() == ceil_div(n, k));
-    let (pre, found) = (prefixes(&arrivals), runs(&arrivals, M));
+    let (pre, found) = (prefixes(&nums), runs(&nums, M));
     let rems: Vec<i64> = pre.iter().map(|p| p % M).collect();
     let (i0, i1) = first_repeat(&rems).unwrap();
     let (mut seed, mut pig, mut hit) = (1i64, 0i64, 0i64);
@@ -293,11 +297,11 @@ fn main() {
     println!("dealt one at a time, folder loads: {:?}, fullest {}", loads, mx);
     println!("every filing of n items into k boxes, n = 1..8, k = 1..4: {} cases, bound met and attained: {}", cases.len(), if attained { "yes" } else { "no" });
     println!("mistake 1, whole part of n/k plus 1, on 120 emails in {} folders: {}, the truth is {}\nmistake 2, 13 folders counted instead of {}: {}, not {}", K, 120 / K + 1, ceil_div(120, K), K, ceil_div(N, 13), ceil_div(N, K));
-    println!("ten days of arrivals: {:?}\nrunning totals, starting with the empty one: {:?}\nremainders after dividing by {}: {:?}", arrivals, pre, M, rems);
-    println!("{} totals into {} remainder boxes: totals {} and {} both leave {}\ndays {} to {} sum to {} - {} = {}, a multiple of {}", pre.len(), M, pre[i0], pre[i1], rems[i1], i0 + 1, i1, pre[i1], pre[i0], pre[i1] - pre[i0], M);
+    println!("ten whole numbers: {:?}\nrunning totals, starting with the empty one: {:?}\nremainders after dividing by {}: {:?}", nums, pre, M, rems);
+    println!("{} totals into {} remainder boxes: totals {} and {} both leave {}\npositions {} to {} sum to {} - {} = {}, a multiple of {}", pre.len(), M, pre[i0], pre[i1], rems[i1], i0 + 1, i1, pre[i1], pre[i0], pre[i1] - pre[i0], M);
     println!("every run summing to a multiple of {}, by search: {:?}", M, found);
     println!("mistake 3, the empty total left out: {} totals, {} boxes, nothing forced", pre.len() - 1, M);
-    println!("2000 random ten-day lists: {} found a run by remainders, {} by search", pig, hit);
+    println!("2000 random ten-number lists: {} found a run by remainders, {} by search", pig, hit);
     assert!(ceil_div(N, K) == mx && loads.iter().filter(|&&x| x == q + 1).count() as i64 == r);
     assert!(attained && fullest(0, N, K) == N);
     assert!((i0, i1) == (4, 7) && found.contains(&(i0 as i64 + 1, i1 as i64, pre[i1] - pre[i0])));
@@ -306,7 +310,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 100 emails into 12 folders: average load 100/12 = 8.3333, rounded up 9
@@ -316,14 +320,14 @@ dealt one at a time, folder loads: [9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8], fullest
 every filing of n items into k boxes, n = 1..8, k = 1..4: 32 cases, bound met and attained: yes
 mistake 1, whole part of n/k plus 1, on 120 emails in 12 folders: 11, the truth is 10
 mistake 2, 13 folders counted instead of 12: 8, not 9
-ten days of arrivals: [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
+ten whole numbers: [23, 41, 17, 8, 36, 52, 12, 29, 4, 31]
 running totals, starting with the empty one: [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253]
 remainders after dividing by 10: [0, 3, 4, 1, 9, 5, 7, 9, 8, 2, 3]
 11 totals into 10 remainder boxes: totals 89 and 189 both leave 9
-days 5 to 7 sum to 189 - 89 = 100, a multiple of 10
+positions 5 to 7 sum to 189 - 89 = 100, a multiple of 10
 every run summing to a multiple of 10, by search: [(2, 10, 230), (5, 7, 100)]
 mistake 3, the empty total left out: 10 totals, 10 boxes, nothing forced
-2000 random ten-day lists: 2000 found a run by remainders, 2000 by search
+2000 random ten-number lists: 2000 found a run by remainders, 2000 by search
 ALL CHECKS PASS
 ```
 
@@ -334,12 +338,12 @@ Lean proves all three claims for any number of items and boxes, not just 100 ema
 - However n items are filed into k boxes, some box holds at least n/k rounded up.
 - Some filing keeps every box at or below n/k rounded up, so the bound cannot be sharpened.
 - Any n whole numbers in a row hide a run of consecutive ones totalling a multiple of n.
-- The card's own numbers come out exactly: the inbox, the even spread, the ten days of arrivals and the mistakes.
+- The card's own numbers come out exactly: the inbox, the even spread, the ten whole numbers and the mistakes.
 
-The 2,000 random ten-day lists and the search over every small filing are left to the Python and Rust checks.
+The 2,000 random ten-number lists and the search over every small filing are left to the Python and Rust checks.
 
 ```lean
--- Pigeonhole, extended: however n items are put into k boxes, some box holds at least n/k rounded up, some filing makes that the fullest box exactly, and any n whole numbers in a row hide a run of consecutive ones summing to a multiple of n, with the card's 100-email and ten-day numbers checked.
+-- Pigeonhole, extended: however n items are put into k boxes, some box holds at least n/k rounded up, some filing makes that the fullest box exactly, and any n whole numbers in a row hide a run of consecutive ones summing to a multiple of n, with the card's 100-email and ten-number examples checked.
 import Mathlib.Combinatorics.Pigeonhole
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Data.Rat.Floor
@@ -447,16 +451,16 @@ example : ⌈(120 : ℚ) / 12⌉₊ = 10 := by
 -- Mistake 2: 13 folders instead of 12 gives 8, not 9.
 example : ⌈(100 : ℚ) / 13⌉₊ = 8 := by
   rw [Nat.ceil_eq_iff (by norm_num)]; norm_num
--- The ten days of arrivals: the eleven running totals, starting with the empty one.
+-- The ten whole numbers: the eleven running totals, starting with the empty one.
 example : (List.range 11).map (fun j => ([23, 41, 17, 8, 36, 52, 12, 29, 4, 31].take j).sum)
     = [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253] := by decide
 -- Their remainders after dividing by 10.
 example : [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253].map (· % 10)
     = [0, 3, 4, 1, 9, 5, 7, 9, 8, 2, 3] := by decide
--- 89 and 189 share remainder 9; days 5 to 7 total 189 − 89 = 100, a multiple of 10.
+-- 89 and 189 share remainder 9; positions 5 to 7 total 189 − 89 = 100, a multiple of 10.
 example : 89 % 10 = 9 ∧ 189 % 10 = 9 ∧ 189 - 89 = 100 ∧ 36 + 52 + 12 = 100 ∧ 100 % 10 = 0 := by
   decide
--- The other run the search finds: days 2 to 10 total 230.
+-- The other run the search finds: positions 2 to 10 total 230.
 example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by decide
 
 #print axioms exists_box_with_at_least_ceil_div
@@ -476,8 +480,8 @@ example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by 
 > **Try changing**
 > Guess first, then run it.
 > - **One hundred and twenty emails.** Set `N` to 120. Nothing is left over, so every folder ends with 10 and the forced load is 10, not 11. All four asserts still pass.
-> - **Drop the empty running total.** In `prefixes`, start the range at 1. Ten totals meet ten boxes, nothing is forced, and the third assert stops the run.
-> - **Nine boxes instead of ten.** Set `M` to 9. Both roads still agree, but the forced run becomes days 1 to 3 and the third assert fails.
+> - **Drop the empty running total on a crafted list.** Set `NUMS` to `[10, 1, 1, 1, 1, 1, 1, 1, 1, 1]` and in `prefixes` start the range at `1`. The ten non-empty totals leave remainders `0, 1, …, 9` with no repeat, so `first_repeat` returns `None` and unpacking `(i0, i1)` fails — even though the first number alone is a multiple of 10.
+> - **Nine boxes instead of ten.** Set `M` to 9. Both roads still agree, but the forced run becomes positions 1 to 3 and the third assert fails.
 
 ---
 
@@ -500,7 +504,7 @@ example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by 
 - **Colouring arguments.** Colours as boxes give [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md).
 
 > **Say it back**
-> Put items into boxes and the fullest box holds at least the average, rounded up: no list has every member below its own average, and loads are whole numbers. One hundred emails in twelve folders force a folder with 9, and a filing reaching exactly 9 exists, so 9 cannot be sharpened. Choosing the items and boxes is the work: ten days of arrivals hide a run totalling a multiple of 10 once the running totals are the items and the remainders the boxes.
+> Put items into boxes and the fullest box holds at least the average, rounded up: no list has every member below its own average, and loads are whole numbers. One hundred emails in twelve folders force a folder with 9, and a filing reaching exactly 9 exists, so 9 cannot be sharpened. Choosing the items and boxes is the work: any ten whole numbers hide a run totalling a multiple of 10 once the running totals are the items and the remainders the boxes.
 
 ---
 
@@ -513,12 +517,13 @@ example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by 
 
 ## Where this goes next
 
+- [Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md): the next shelf, switching from forcing counts to building sequences one step at a time.
 - [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): three mutual friends or three mutual strangers among any six people.
 - [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): two labels at once as boxes, forcing a long run that only rises or only falls.
-- [Sunflowers and union-closed families](../../25-Frontier/04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md): questions of this shape nobody has settled. A sunflower is a group of sets that all overlap in exactly the same shared part, and the open question is how many sets force one. A union-closed family contains the union of any two of its sets, and the open question is whether some element always lies in at least half of them.
+- [Sunflowers and union-closed families](../../25-Frontier/04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md): two open set-system problems asking how large a family forces a common core (sunflower) or a popular element.
 - [Ramsey theory on the whole numbers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/09-schur-and-van-der-waerden.md): Schur's single-coloured x + y = z, van der Waerden's single-coloured progressions, and the Hales-Jewett theorem behind both.
 
-A crowded box is not yet a pattern, and forcing patterns rather than mere crowding is the Ramsey cards' work.
+A crowded box is not yet a pattern — forcing patterns waits on the Ramsey cards ([Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md)). Next on the wing, shelf 05 turns from forcing counts to building sequences one step at a time ([Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md)).
 
 ---
 

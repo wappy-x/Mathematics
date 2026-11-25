@@ -3,12 +3,9 @@
 // sieved by 2, 3, 5 and by 2, 3, 5, 7.  Every count is reached twice: by the signed
 // sum of overlaps, and by walking the members one at a time.
 const REGIONS: [(u8, i64); 8] = [(7, 5), (3, 15), (5, 10), (6, 5), (1, 20), (2, 15), (4, 10), (0, 20)];
+const DIVS: &[i64] = &[2, 3, 5, 7];
 
-fn roster() -> Vec<u8> {                              // one entry per guest: which amenities
-    let mut out = Vec::new();
-    for (mask, n) in REGIONS { for _ in 0..n { out.push(mask) } }
-    out
-}
+fn roster() -> Vec<u8> { REGIONS.iter().flat_map(|&(m, n)| vec![m; n as usize]).collect() }
 fn pick(items: &[i64], j: usize) -> Vec<Vec<i64>> {   // every j of the items, order kept
     if j == 0 { return vec![Vec::new()] }
     let mut out = Vec::new();
@@ -51,9 +48,11 @@ fn main() {
     let (hotel, walk) = (union(&th), all.iter().filter(|&&m| m != 0).count() as i64);
     let ones: Vec<i64> = (1..=8).map(|k| (1..=k).map(|j| if j % 2 == 1 { choose(k, j) } else { -choose(k, j) }).sum()).collect();
     let pascal: Vec<i64> = (0..=4).map(|j| choose(4, j)).collect();
-    let (t3, t4) = (overlaps(&[2, 3, 5], &multiples_of_all), overlaps(&[2, 3, 5, 7], &multiples_of_all));
+    let (t3, t4) = (overlaps(&[2, 3, 5], &multiples_of_all), overlaps(DIVS, &multiples_of_all));
     let (l3, l4) = (totals(&t3), totals(&t4));
     let (none3, none4) = (1000 - union(&t3), 1000 - union(&t4));
+    let d4 = DIVS.iter().map(|d| d.to_string()).collect::<Vec<String>>().join(", ");
+    let (quad, extra) = if t4.len() == 4 { ("all four", String::new()) } else { ("quadruples", format!(", all five {:?}", t4[4])) };
     let (blocks, per) = (1000 / 30, none_of(&[2, 3, 5], 30));
     let spare = (991..=1000).filter(|x: &i64| [2, 3, 5].iter().all(|d| x % d != 0)).count() as i64;
     println!("hotel: {} guests; singles {:?}, pairs {:?}, all three {:?}", all.len(), th[0], th[1], th[2]);
@@ -68,12 +67,12 @@ fn main() {
     println!("1 to 1000, none of 2, 3, 5: layers {:?}  ->  union {}, none {}", l3, union(&t3), none3);
     println!("1 to 1000, none of 2, 3, 5: by testing each number {}", none_of(&[2, 3, 5], 1000));
     println!("1 to 1000, none of 2, 3, 5: {} blocks of 30 x {} + {} left over = {}", blocks, per, spare, blocks * per + spare);
-    println!("1 to 1000, by 2, 3, 5, 7: singles {:?}, pairs {:?}, triples {:?}, all four {:?}", t4[0], t4[1], t4[2], t4[3]);
-    println!("1 to 1000, none of 2, 3, 5, 7: layers {:?}  ->  union {}, none {}", l4, union(&t4), none4);
-    println!("1 to 1000, none of 2, 3, 5, 7: by testing each number {}", none_of(&[2, 3, 5, 7], 1000));
+    println!("1 to 1000, by {}: singles {:?}, pairs {:?}, triples {:?}, {} {:?}{}", d4, t4[0], t4[1], t4[2], quad, t4[3], extra);
+    println!("1 to 1000, none of {}: layers {:?}  ->  union {}, none {}", d4, l4, union(&t4), none4);
+    println!("1 to 1000, none of {}: by testing each number {}", d4, none_of(DIVS, 1000));
     assert!(hotel == walk && hotel == 80);                              // sieve against a head count
     assert!(all.len() as i64 - hotel == 20 && hl == vec![120, 45, 5]);  // the layers, one at a time
     assert!(none3 == none_of(&[2, 3, 5], 1000) && none3 == blocks * per + spare);
-    assert!(none4 == none_of(&[2, 3, 5, 7], 1000) && ones == vec![1i64; 8]);
+    assert!(none4 == none_of(DIVS, 1000) && ones == vec![1i64; 8]);
     println!("ALL CHECKS PASS");
 }

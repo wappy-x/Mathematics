@@ -46,7 +46,7 @@ One shorthand is new: D(6) is the number of draws among six people with nobody o
 D(n) \;=\; \sum_{k=0}^{n} (-1)^k \, C(n,k)\,(n-k)! \;=\; \sum_{k=0}^{n} (-1)^k \, \frac{n!}{k!} \;=\; n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots \pm \frac{1}{n!}\right)
 ```
 
-**Read it aloud:** start with every draw, take off the ones where some chosen person holds their own name, put back the ones removed twice, and keep alternating up to all $`n`$: the sieve, also called inclusion-exclusion.
+**Read it aloud:** start with all draws, subtract those where one chosen person holds their own name, add back pairs, and alternate up to all $`n`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -115,9 +115,11 @@ Person one draws one of the five other names, say Ben's. Either Ben holds person
 <details>
 <summary>Detailed proof: the no-swap case is a smaller draw of the same kind</summary>
 
-In the no-swap case person one holds Ben's name and Ben does not hold person one's. Five remain: four barred from their own names, Ben barred from person one's name. Rename person one's name "Ben's name" and all five are barred from the name carrying their own label — a derangement of five. The renaming reverses, so nothing is double-counted and nothing missed. The two cases exclude each other and cover every clean draw, so their counts add, and the $`n-1`$ choices of whose name person one drew multiply: $`D(n) = (n-1)(D(n-1) + D(n-2))`$.
+In the no-swap case person one holds Ben's name and Ben does not hold person one's. Five remain: four barred from their own names, Ben barred from person one's name. Rename person one's name "Ben's name" and all five avoid their own label — a derangement of five. The renaming reverses, so nothing is double-counted or missed.
 
-Rewriting it as $`D(n) - n\,D(n-1) = -\bigl(D(n-1) - (n-1)D(n-2)\bigr)`$ gives the one-step form: the bracket is that same expression one step down, so it flips sign each step from $`D(1) - D(0) = -1`$.
+The two cases exclude each other and cover every clean draw, so their counts add. Multiply by the $`n-1`$ choices for person one's draw: $`D(n) = (n-1)(D(n-1) + D(n-2))`$.
+
+Rewrite this as $`D(n) - n\,D(n-1) = -\bigl(D(n-1) - (n-1)D(n-2)\bigr)`$. The bracket is the same expression one step down, so it flips sign each step from $`D(1) - D(0) = -1`$.
 
 </details>
 
@@ -214,7 +216,7 @@ print(f"pairs at n = 6: C(6,2) = {facts[6] // (facts[2] * facts[4])}, each leavi
 print("sieve running totals at n = 6: " + ", ".join(str(sum(terms[:k + 1])) for k in range(7)))
 print(f"recurrence at n = 6: 5 x ({listed[5]} + {listed[4]}) = 5 x {listed[5] + listed[4]} = {recurred[6]}")
 print(f"one-step form at n = 6: 6 x {listed[5]} + 1 = {6 * listed[5] + 1}")
-print(f"1/e by the alternating sum to 20 terms: {alt:.6f}; by compounding a dollar 10000000 times: {1 / compounded:.6f}")
+print(f"1/e by the alternating sum to k = 20: {alt:.6f}; by compounding a dollar 10000000 times: {1 / compounded:.6f}")
 print(f"720 x (1/e) = {facts[6] * alt:.3f}, nearest whole number {int(facts[6] * alt + 0.5)}")
 print(f"e by the same compounding: {compounded:.6f}; the 7th and 8th terms of the share: {1 / facts[7]:.6f} and {1 / facts[8]:.6f}")
 print(f"names put back after each draw, own name barred: 5^6 = {5 ** 6} lists, not {listed[6]} draws")
@@ -228,7 +230,7 @@ assert abs(alt - 1 / compounded) < 1e-6                    # two roads to 1/e
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 Secret Santa, 6 colleagues: 720 draws in all, 265 with nobody drawing their own name
@@ -243,7 +245,7 @@ pairs at n = 6: C(6,2) = 15, each leaving 4! = 24 draws, so the k = 2 term is 36
 sieve running totals at n = 6: 720, 0, 360, 240, 270, 264, 265
 recurrence at n = 6: 5 x (44 + 9) = 5 x 53 = 265
 one-step form at n = 6: 6 x 44 + 1 = 265
-1/e by the alternating sum to 20 terms: 0.367879; by compounding a dollar 10000000 times: 0.367879
+1/e by the alternating sum to k = 20: 0.367879; by compounding a dollar 10000000 times: 0.367879
 720 x (1/e) = 264.873, nearest whole number 265
 e by the same compounding: 2.718282; the 7th and 8th terms of the share: 0.000198 and 0.000025
 names put back after each draw, own name barred: 5^6 = 15625 lists, not 265 draws
@@ -319,7 +321,7 @@ fn main() {
     println!("sieve running totals at n = 6: {}", running.join(", "));
     println!("recurrence at n = 6: 5 x ({} + {}) = 5 x {} = {}", listed[5], listed[4], listed[5] + listed[4], recurred[6]);
     println!("one-step form at n = 6: 6 x {} + 1 = {}", listed[5], 6 * listed[5] + 1);
-    println!("1/e by the alternating sum to 20 terms: {:.6}; by compounding a dollar 10000000 times: {:.6}", alt, 1.0 / compounded);
+    println!("1/e by the alternating sum to k = 20: {:.6}; by compounding a dollar 10000000 times: {:.6}", alt, 1.0 / compounded);
     println!("720 x (1/e) = {:.3}, nearest whole number {}", facts[6] as f64 * alt, (facts[6] as f64 * alt + 0.5) as i64);
     println!("e by the same compounding: {:.6}; the 7th and 8th terms of the share: {:.6} and {:.6}",
              compounded, 1.0 / facts[7] as f64, 1.0 / facts[8] as f64);
@@ -334,7 +336,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 Secret Santa, 6 colleagues: 720 draws in all, 265 with nobody drawing their own name
@@ -349,7 +351,7 @@ pairs at n = 6: C(6,2) = 15, each leaving 4! = 24 draws, so the k = 2 term is 36
 sieve running totals at n = 6: 720, 0, 360, 240, 270, 264, 265
 recurrence at n = 6: 5 x (44 + 9) = 5 x 53 = 265
 one-step form at n = 6: 6 x 44 + 1 = 265
-1/e by the alternating sum to 20 terms: 0.367879; by compounding a dollar 10000000 times: 0.367879
+1/e by the alternating sum to k = 20: 0.367879; by compounding a dollar 10000000 times: 0.367879
 720 x (1/e) = 264.873, nearest whole number 265
 e by the same compounding: 2.718282; the 7th and 8th terms of the share: 0.000198 and 0.000025
 names put back after each draw, own name barred: 5^6 = 15625 lists, not 265 draws
@@ -589,14 +591,15 @@ example : 720 - 6 * 120 = 0 ∧ 265 - 1 = 264 ∧ 5 * 44 + 9 = 229 := by decide
 
 - [Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md): the alternating sum that counts each thing in overlapping blocks once.
 - [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the number 2.71828…, and the compounding road the code takes to it.
-- [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): shuffles as objects in their own right, and the name "fixed point".
+- [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): shuffles as reversible rearrangements, and why n places have n! of them.
 
 ## Where this goes next
 
+- [Onto functions](03-counting-surjections.md): the same sieve applied to handing out distinct items so nobody is left empty-handed.
 - [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): sorting shuffles by the loops they fall into, where derangements are those with no loop of length one.
 - [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): why the endless alternating sum of 1/k! comes to 1 divided by $`e`$.
 
-This card counts the draws with nobody on their own name; how many leave exactly two, and why those counts add back to 720, is what [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md) takes up.
+This card aims the sieve at shuffles where nothing stays in its own place. Next on the shelf, [Onto functions](03-counting-surjections.md) turns the same sieve on a different ban: leaving any recipient empty-handed.
 
 ---
 

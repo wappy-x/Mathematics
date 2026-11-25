@@ -66,7 +66,7 @@ For five jobs and three mechanics it runs to four terms:
 
 - **The items differ from one another.** Treat the jobs as alike and only the 6 share-out patterns remain.
 - **The recipients are named.** Make Ada, Ben and Cleo interchangeable and the count drops to 25, the groupings into piles.
-- **"At least one each" is the only restriction.** No capacity limit, no job Cleo cannot do; each extra restriction adds another term.
+- **"At least one each" is the only restriction.** Add a capacity cap or a job Cleo cannot do and the symmetry breaks: each layer no longer collapses to C(k, j) equal overlaps.
 - **Nothing is assumed about the sizes.** With fewer items than recipients the sum returns 0: two jobs cannot keep three mechanics busy.
 
 ---
@@ -94,7 +94,9 @@ The general shape is the same: naming $`j`$ of the $`k`$ recipients as empty can
 <details>
 <summary>Detailed proof: every handout weighed, and only the onto ones survive</summary>
 
-Take one handout and let m be how many of the $`k`$ recipients it leaves empty. In the term for $`j`$ it is counted once for every set of $`j`$ named-empty recipients it genuinely leaves empty. Those $`j`$ come from its own m, so it appears $`C(m, j)`$ times with the sign $`(-1)^j`$. Its weight across the whole sum is the alternating sum of $`C(m, j)`$ over $`j`$ from 0 to m, which the binomial theorem reads off as $`(1 - 1)^m`$.
+Take one handout and let m be how many of the $`k`$ recipients it leaves empty. In the term for $`j`$ it is counted once for every set of $`j`$ named-empty recipients it genuinely leaves empty. Those $`j`$ come from its own m, so it appears $`C(m, j)`$ times with the sign $`(-1)^j`$.
+
+Its weight across the whole sum is the alternating sum of $`C(m, j)`$ over $`j`$ from 0 to m, which the binomial theorem reads off as $`(1 - 1)^m`$.
 
 When m is 0 that is 1: a handout leaving nobody idle is counted exactly once. For any larger m it is 0. So the sum counts the onto handouts once each and everything else zero times.
 
@@ -195,25 +197,24 @@ def stirling(n, k):                          # road three's formula, by recurren
 layer = [choose(MECHANICS, j) * (MECHANICS - j) ** JOBS for j in range(MECHANICS + 1)]
 onto, s53 = sieve(JOBS, MECHANICS), stirling(JOBS, MECHANICS)
 by_used = [choose(MECHANICS, j) * sieve(JOBS, j) for j in range(1, MECHANICS + 1)]
-patterns = sum(1 for a in range(1, JOBS) for b in range(1, JOBS) if JOBS - a - b >= 1)
-sieve_row = [sieve(n, MECHANICS) for n in range(1, JOBS + 2)]
-listed_row = [listed(n, MECHANICS) for n in range(1, JOBS + 2)]
-all_row = [MECHANICS ** n for n in range(1, JOBS + 2)]
-k_row = [sieve(JOBS, k) for k in range(1, MECHANICS + 4)]
-
+patterns = choose(JOBS - 1, MECHANICS - 1)
+sieve_row, all_row = [sieve(n, MECHANICS) for n in range(1, JOBS + 2)], [MECHANICS ** n for n in range(1, JOBS + 2)]
+listed_row, k_row = [listed(n, MECHANICS) for n in range(1, JOBS + 2)], [sieve(JOBS, k) for k in range(1, MECHANICS + 4)]
+sieve_str = f"{layer[0]}" + "".join(f" {'-' if j % 2 else '+'} {layer[j]}" for j in range(1, MECHANICS + 1))
+split_str = " + ".join(f"{choose(MECHANICS, j)} x {sieve(JOBS, j)}" for j in range(1, MECHANICS + 1))
 print(f"{JOBS} jobs to {MECHANICS} named mechanics: all handouts {MECHANICS}^{JOBS} = {layer[0]}")
-print(f"one named mechanic left empty: 2^{JOBS} = {(MECHANICS - 1) ** JOBS} each, {choose(MECHANICS, 1)} mechanics to pick, layer 1 = {layer[1]}")
-print(f"two named mechanics left empty: 1^{JOBS} = {(MECHANICS - 2) ** JOBS} each, {choose(MECHANICS, 2)} pairs to pick, layer 2 = {layer[2]}")
-print(f"all {MECHANICS} left empty: 0^{JOBS} = {0 ** JOBS}, layer 3 = {layer[3]}")
-print(f"sieve: {layer[0]} - {layer[1]} + {layer[2]} - {layer[3]} = {onto}")
+print(f"one named mechanic left empty: {MECHANICS - 1}^{JOBS} = {(MECHANICS - 1) ** JOBS} each, {choose(MECHANICS, 1)} mechanics to pick, layer 1 = {layer[1]}")
+print(f"two named mechanics left empty: {MECHANICS - 2}^{JOBS} = {(MECHANICS - 2) ** JOBS} each, {choose(MECHANICS, 2)} pairs to pick, layer 2 = {layer[2]}")
+print(f"all {MECHANICS} left empty: 0^{JOBS} = {0 ** JOBS}, layer {MECHANICS} = {layer[MECHANICS]}")
+print(f"sieve: {sieve_str} = {onto}")
 print(f"listing all {MECHANICS ** JOBS} handouts, those reaching every mechanic: {listed(JOBS, MECHANICS)}")
 print(f"groupings of {JOBS} jobs into {MECHANICS} unnamed piles: {s53} by recurrence, {groupings(JOBS, MECHANICS)} by listing")
 print(f"naming the piles: {MECHANICS}! x {s53} = {factorial(MECHANICS)} x {s53} = {factorial(MECHANICS) * s53}")
-print(f"all handouts split by mechanics used: 3 x {sieve(JOBS, 1)} + 3 x {sieve(JOBS, 2)} + 1 x {sieve(JOBS, 3)} = {sum(by_used)}")
-print(f"second case, {JOBS + 1} jobs to {MECHANICS} mechanics: sieve {sieve(JOBS + 1, MECHANICS)}, listed {listed(JOBS + 1, MECHANICS)}, {MECHANICS}! x S(6,3) = 6 x {stirling(JOBS + 1, MECHANICS)} = {factorial(MECHANICS) * stirling(JOBS + 1, MECHANICS)}")
-print(f"jobs n = 1 to 6, onto handouts to {MECHANICS} mechanics: {sieve_row}")
-print(f"jobs n = 1 to 6, all handouts to {MECHANICS} mechanics:  {all_row}")
-print(f"mechanics k = 1 to 6, onto handouts of {JOBS} jobs: {k_row}")
+print(f"all handouts split by mechanics used: {split_str} = {sum(by_used)}")
+print(f"second case, {JOBS + 1} jobs to {MECHANICS} mechanics: sieve {sieve(JOBS + 1, MECHANICS)}, listed {listed(JOBS + 1, MECHANICS)}, {MECHANICS}! x S({JOBS + 1},{MECHANICS}) = {factorial(MECHANICS)} x {stirling(JOBS + 1, MECHANICS)} = {factorial(MECHANICS) * stirling(JOBS + 1, MECHANICS)}")
+print(f"jobs n = 1 to {JOBS + 1}, onto handouts to {MECHANICS} mechanics: {sieve_row}")
+print(f"jobs n = 1 to {JOBS + 1}, all handouts to {MECHANICS} mechanics:  {all_row}")
+print(f"mechanics k = 1 to {MECHANICS + 3}, onto handouts of {JOBS} jobs: {k_row}")
 print(f"mistake 1, stopping after the subtraction: {layer[0]} - {layer[1]} = {layer[0] - layer[1]}, not {onto}")
 print(f"mistake 2, mechanics treated as alike: {s53} groupings, not {onto} handouts")
 print(f"mistake 3, jobs treated as alike: {patterns} share-out patterns, not {onto} handouts")
@@ -224,7 +225,7 @@ assert sieve(JOBS + 1, MECHANICS) == listed(JOBS + 1, MECHANICS) == factorial(ME
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 5 jobs to 3 named mechanics: all handouts 3^5 = 243
@@ -257,9 +258,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 const JOBS: u32 = 5;
 const MECHANICS: u32 = 3;
 
-fn choose(n: i64, k: i64) -> i64 {                 // C(n, k), one factor at a time
-    (0..k).fold(1i64, |out, i| out * (n - i) / (i + 1))
-}
+fn choose(n: i64, k: i64) -> i64 { (0..k).fold(1i64, |out, i| out * (n - i) / (i + 1)) } // C(n, k)
 fn factorial(n: i64) -> i64 { (2..=n).product() }  // n! = 1 x 2 x ... x n
 fn sieve(n: u32, k: i64) -> i64 {                  // road one: inclusion-exclusion
     (0..=k).map(|j| (if j % 2 == 0 { 1i64 } else { -1 }) * choose(k, j) * (k - j).pow(n)).sum()
@@ -302,25 +301,26 @@ fn main() {
     let layer: Vec<i64> = (0..=mechanics).map(|j| choose(mechanics, j) * (mechanics - j).pow(JOBS)).collect();
     let (onto, s53) = (sieve(JOBS, mechanics), stirling(JOBS, MECHANICS as usize));
     let by_used: Vec<i64> = (1..=mechanics).map(|j| choose(mechanics, j) * sieve(JOBS, j)).collect();
-    let patterns = (1..jobs).flat_map(|a| (1..jobs).map(move |b| (a, b)))
-                            .filter(|(a, b)| jobs - a - b >= 1).count() as i64;
+    let patterns = choose(jobs - 1, mechanics - 1);
     let sieve_row: Vec<i64> = (1..=JOBS + 1).map(|n| sieve(n, mechanics)).collect();
     let listed_row: Vec<i64> = (1..=JOBS + 1).map(|n| listed(n, MECHANICS as usize)).collect();
     let all_row: Vec<i64> = (1..=JOBS + 1).map(|n| mechanics.pow(n)).collect();
     let k_row: Vec<i64> = (1..=mechanics + 3).map(|k| sieve(JOBS, k)).collect();
+    let sieve_str = (0..=MECHANICS as usize).map(|j| if j == 0 { layer[0].to_string() } else { format!("{} {}", if j % 2 == 1 { "-" } else { "+" }, layer[j]) }).collect::<Vec<_>>().join(" ");
+    let split_str = (1..=mechanics).map(|j| format!("{} x {}", choose(mechanics, j), sieve(JOBS, j))).collect::<Vec<_>>().join(" + ");
     println!("{} jobs to {} named mechanics: all handouts {}^{} = {}", jobs, mechanics, mechanics, jobs, layer[0]);
-    println!("one named mechanic left empty: 2^{} = {} each, {} mechanics to pick, layer 1 = {}", jobs, (mechanics - 1).pow(JOBS), choose(mechanics, 1), layer[1]);
-    println!("two named mechanics left empty: 1^{} = {} each, {} pairs to pick, layer 2 = {}", jobs, (mechanics - 2).pow(JOBS), choose(mechanics, 2), layer[2]);
-    println!("all {} left empty: 0^{} = {}, layer 3 = {}", mechanics, jobs, 0i64.pow(JOBS), layer[3]);
-    println!("sieve: {} - {} + {} - {} = {}", layer[0], layer[1], layer[2], layer[3], onto);
+    println!("one named mechanic left empty: {}^{} = {} each, {} mechanics to pick, layer 1 = {}", mechanics - 1, jobs, (mechanics - 1).pow(JOBS), choose(mechanics, 1), layer[1]);
+    println!("two named mechanics left empty: {}^{} = {} each, {} pairs to pick, layer 2 = {}", mechanics - 2, jobs, (mechanics - 2).pow(JOBS), choose(mechanics, 2), layer[2]);
+    println!("all {} left empty: 0^{} = {}, layer {} = {}", mechanics, jobs, 0i64.pow(JOBS), mechanics, layer[MECHANICS as usize]);
+    println!("sieve: {} = {}", sieve_str, onto);
     println!("listing all {} handouts, those reaching every mechanic: {}", mechanics.pow(JOBS), listed(JOBS, MECHANICS as usize));
     println!("groupings of {} jobs into {} unnamed piles: {} by recurrence, {} by listing", jobs, mechanics, s53, groupings(JOBS, MECHANICS as usize));
     println!("naming the piles: {}! x {} = {} x {} = {}", mechanics, s53, factorial(mechanics), s53, factorial(mechanics) * s53);
-    println!("all handouts split by mechanics used: 3 x {} + 3 x {} + 1 x {} = {}", sieve(JOBS, 1), sieve(JOBS, 2), sieve(JOBS, 3), by_used.iter().sum::<i64>());
-    println!("second case, {} jobs to {} mechanics: sieve {}, listed {}, {}! x S(6,3) = 6 x {} = {}", jobs + 1, mechanics, sieve(JOBS + 1, mechanics), listed(JOBS + 1, MECHANICS as usize), mechanics, stirling(JOBS + 1, MECHANICS as usize), factorial(mechanics) * stirling(JOBS + 1, MECHANICS as usize));
-    println!("jobs n = 1 to 6, onto handouts to {} mechanics: {:?}", mechanics, sieve_row);
-    println!("jobs n = 1 to 6, all handouts to {} mechanics:  {:?}", mechanics, all_row);
-    println!("mechanics k = 1 to 6, onto handouts of {} jobs: {:?}", jobs, k_row);
+    println!("all handouts split by mechanics used: {} = {}", split_str, by_used.iter().sum::<i64>());
+    println!("second case, {} jobs to {} mechanics: sieve {}, listed {}, {}! x S({},{}) = {} x {} = {}", jobs + 1, mechanics, sieve(JOBS + 1, mechanics), listed(JOBS + 1, MECHANICS as usize), mechanics, jobs + 1, mechanics, factorial(mechanics), stirling(JOBS + 1, MECHANICS as usize), factorial(mechanics) * stirling(JOBS + 1, MECHANICS as usize));
+    println!("jobs n = 1 to {}, onto handouts to {} mechanics: {:?}", jobs + 1, mechanics, sieve_row);
+    println!("jobs n = 1 to {}, all handouts to {} mechanics:  {:?}", jobs + 1, mechanics, all_row);
+    println!("mechanics k = 1 to {}, onto handouts of {} jobs: {:?}", mechanics + 3, jobs, k_row);
     println!("mistake 1, stopping after the subtraction: {} - {} = {}, not {}", layer[0], layer[1], layer[0] - layer[1], onto);
     println!("mistake 2, mechanics treated as alike: {} groupings, not {} handouts", s53, onto);
     println!("mistake 3, jobs treated as alike: {} share-out patterns, not {} handouts", patterns, onto);
@@ -333,7 +333,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 5 jobs to 3 named mechanics: all handouts 3^5 = 243
@@ -577,9 +577,10 @@ example : 3 * sieveSum 5 1 + 3 * sieveSum 5 2 + 1 * sieveSum 5 3 = 243 := by dec
 
 ## Where this goes next
 
+- [Stopping the sieve early](04-union-bound-and-bonferroni.md): why cutting the sieve off after one or two layers — like the 147 floor here — still gives a guaranteed bound.
 - [Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md): the 25 splits in their own right, the recurrence that builds them, and the identity 150 = 3! × S(5, 3).
 
-This card counts handouts to named recipients; strip the names and 150 collapses to 25, the count a later card takes on directly.
+Next on the shelf, [Stopping the sieve early](04-union-bound-and-bonferroni.md) asks what a partial sieve like 147 guarantees when all the layers cannot be summed. Later, [Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md) takes on the 25 unnamed splits directly.
 
 ---
 

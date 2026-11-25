@@ -1,4 +1,4 @@
--- Pigeonhole, extended: however n items are put into k boxes, some box holds at least n/k rounded up, some filing makes that the fullest box exactly, and any n whole numbers in a row hide a run of consecutive ones summing to a multiple of n, with the card's 100-email and ten-day numbers checked.
+-- Pigeonhole, extended: however n items are put into k boxes, some box holds at least n/k rounded up, some filing makes that the fullest box exactly, and any n whole numbers in a row hide a run of consecutive ones summing to a multiple of n, with the card's 100-email and ten-number examples checked.
 import Mathlib.Combinatorics.Pigeonhole
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Data.Rat.Floor
@@ -106,16 +106,16 @@ example : ⌈(120 : ℚ) / 12⌉₊ = 10 := by
 -- Mistake 2: 13 folders instead of 12 gives 8, not 9.
 example : ⌈(100 : ℚ) / 13⌉₊ = 8 := by
   rw [Nat.ceil_eq_iff (by norm_num)]; norm_num
--- The ten days of arrivals: the eleven running totals, starting with the empty one.
+-- The ten whole numbers: the eleven running totals, starting with the empty one.
 example : (List.range 11).map (fun j => ([23, 41, 17, 8, 36, 52, 12, 29, 4, 31].take j).sum)
     = [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253] := by decide
 -- Their remainders after dividing by 10.
 example : [0, 23, 64, 81, 89, 125, 177, 189, 218, 222, 253].map (· % 10)
     = [0, 3, 4, 1, 9, 5, 7, 9, 8, 2, 3] := by decide
--- 89 and 189 share remainder 9; days 5 to 7 total 189 − 89 = 100, a multiple of 10.
+-- 89 and 189 share remainder 9; positions 5 to 7 total 189 − 89 = 100, a multiple of 10.
 example : 89 % 10 = 9 ∧ 189 % 10 = 9 ∧ 189 - 89 = 100 ∧ 36 + 52 + 12 = 100 ∧ 100 % 10 = 0 := by
   decide
--- The other run the search finds: days 2 to 10 total 230.
+-- The other run the search finds: positions 2 to 10 total 230.
 example : 41 + 17 + 8 + 36 + 52 + 12 + 29 + 4 + 31 = 230 ∧ 230 % 10 = 0 := by decide
 
 #print axioms exists_box_with_at_least_ceil_div

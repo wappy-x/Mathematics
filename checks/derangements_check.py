@@ -46,7 +46,7 @@ print(f"pairs at n = 6: C(6,2) = {facts[6] // (facts[2] * facts[4])}, each leavi
 print("sieve running totals at n = 6: " + ", ".join(str(sum(terms[:k + 1])) for k in range(7)))
 print(f"recurrence at n = 6: 5 x ({listed[5]} + {listed[4]}) = 5 x {listed[5] + listed[4]} = {recurred[6]}")
 print(f"one-step form at n = 6: 6 x {listed[5]} + 1 = {6 * listed[5] + 1}")
-print(f"1/e by the alternating sum to 20 terms: {alt:.6f}; by compounding a dollar 10000000 times: {1 / compounded:.6f}")
+print(f"1/e by the alternating sum to k = 20: {alt:.6f}; by compounding a dollar 10000000 times: {1 / compounded:.6f}")
 print(f"720 x (1/e) = {facts[6] * alt:.3f}, nearest whole number {int(facts[6] * alt + 0.5)}")
 print(f"e by the same compounding: {compounded:.6f}; the 7th and 8th terms of the share: {1 / facts[7]:.6f} and {1 / facts[8]:.6f}")
 print(f"names put back after each draw, own name barred: 5^6 = {5 ** 6} lists, not {listed[6]} draws")

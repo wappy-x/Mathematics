@@ -5,17 +5,15 @@
 REGIONS = {("B", "P", "S"): 5, ("B", "P"): 15, ("B", "S"): 10, ("P", "S"): 5,
            ("B",): 20, ("P",): 15, ("S",): 10, (): 20}
 ROSTER = [set(r) for r, n in REGIONS.items() for _ in range(n)]
+DIVS = [2, 3, 5, 7]
 
 def pick(items, j):                      # every j of the items, order kept
     if j == 0: return [()]
     return [(x,) + r for i, x in enumerate(items) for r in pick(items[i + 1:], j - 1)]
-
 def overlaps(items, size):               # every j-at-a-time overlap, layer by layer
     return [[size(c) for c in pick(items, j)] for j in range(1, len(items) + 1)]
-
 def union(ls):                           # S_1 - S_2 + S_3 - ...
     return sum((-1) ** j * sum(layer) for j, layer in enumerate(ls))
-
 def choose(n, k):                        # Pascal's triangle, built here
     row = [1]
     for _ in range(n): row = [a + b for a, b in zip([0] + row, row + [0])]
@@ -33,9 +31,11 @@ th = overlaps(list("BPS"), guests_with)
 hl = [sum(layer) for layer in th]
 hotel, walk = union(th), sum(1 for g in ROSTER if g)
 ones = [sum((-1) ** (j + 1) * choose(k, j) for j in range(1, k + 1)) for k in range(1, 9)]
-t3, t4 = overlaps([2, 3, 5], multiples_of_all), overlaps([2, 3, 5, 7], multiples_of_all)
+t3, t4 = overlaps([2, 3, 5], multiples_of_all), overlaps(DIVS, multiples_of_all)
 l3, l4 = [sum(x) for x in t3], [sum(x) for x in t4]
 none3, none4 = 1000 - union(t3), 1000 - union(t4)
+d4 = ", ".join(str(d) for d in DIVS)
+quad, extra = ("all four", "") if len(t4) == 4 else ("quadruples", f", all five {t4[4]}")
 blocks, per, spare = 1000 // 30, none_of([2, 3, 5], 30), sum(1 for x in range(991, 1001) if all(x % d for d in (2, 3, 5)))
 print(f"hotel: {len(ROSTER)} guests; singles {th[0]}, pairs {th[1]}, all three {th[2]}")
 print(f"layers S1 {hl[0]}, S2 {hl[1]}, S3 {hl[2]}  ->  union {hl[0]} - {hl[1]} + {hl[2]} = {hotel}")
@@ -49,11 +49,11 @@ print(f"mistake 3, subtract the triple instead of adding: {hl[0] - hl[1] - hl[2]
 print(f"1 to 1000, none of 2, 3, 5: layers {l3}  ->  union {union(t3)}, none {none3}")
 print(f"1 to 1000, none of 2, 3, 5: by testing each number {none_of([2, 3, 5], 1000)}")
 print(f"1 to 1000, none of 2, 3, 5: {blocks} blocks of 30 x {per} + {spare} left over = {blocks * per + spare}")
-print(f"1 to 1000, by 2, 3, 5, 7: singles {t4[0]}, pairs {t4[1]}, triples {t4[2]}, all four {t4[3]}")
-print(f"1 to 1000, none of 2, 3, 5, 7: layers {l4}  ->  union {union(t4)}, none {none4}")
-print(f"1 to 1000, none of 2, 3, 5, 7: by testing each number {none_of([2, 3, 5, 7], 1000)}")
+print(f"1 to 1000, by {d4}: singles {t4[0]}, pairs {t4[1]}, triples {t4[2]}, {quad} {t4[3]}{extra}")
+print(f"1 to 1000, none of {d4}: layers {l4}  ->  union {union(t4)}, none {none4}")
+print(f"1 to 1000, none of {d4}: by testing each number {none_of(DIVS, 1000)}")
 assert hotel == walk and hotel == 80                       # sieve against a head count
 assert len(ROSTER) - hotel == 20 and hl == [120, 45, 5]    # the layers, one at a time
 assert none3 == none_of([2, 3, 5], 1000) and none3 == blocks * per + spare
-assert none4 == none_of([2, 3, 5, 7], 1000) and ones == [1] * 8
+assert none4 == none_of(DIVS, 1000) and ones == [1] * 8
 print("ALL CHECKS PASS")

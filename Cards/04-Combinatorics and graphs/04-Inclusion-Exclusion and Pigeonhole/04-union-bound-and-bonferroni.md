@@ -10,7 +10,9 @@ A small airfield publishes one line of weather a month. For a 30-day September: 
 
 Adding gives 25. As a count that is wrong: a day both rainy and windy sits in two totals, counted twice. As a limit it is sound: however the days overlap, the bad days cannot exceed 25.
 
-The pair counts arrive later: 4 days rainy and windy, 2 rainy and foggy, 1 windy and foggy. Take all 7 off and the answer reads 18. Wrong the other way: the day that was rainy, windy and foggy went in three times and came out three times, so it dropped out. But 18 is a floor: the answer sits between 18 and 25 before the log is opened, and the log gives 19.
+The pair counts arrive later: 4 days rainy and windy, 2 rainy and foggy, 1 windy and foggy. Take all 7 off and the answer reads 18. Wrong the other way: the day that was rainy, windy and foggy went in three times and came out three times, so it dropped out.
+
+But 18 is a floor: the answer sits between 18 and 25 before the log is opened, and the log gives 19.
 
 The exact sieve adds the sets, subtracts the pair overlaps, adds the triples and keeps flipping ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)). It can be cut off after any layer, and every cut-off is a bound.
 
@@ -36,7 +38,11 @@ The jagged line is the sieve stopped after one, two and three layers: 25, 18, 19
 
 ## The formula
 
-Bars count members: $`\lvert A_1 \rvert`$ is the number of days in the set $`A_1`$. The sign $`\cup`$ joins sets into their union, and the dots stand for the sets in between. $`N`$ is the size of the union: the days in at least one set. A layer total carries a number under the letter S: $`S_1`$ adds the set sizes, $`S_2`$ the sizes of every pair overlap, $`S_j`$ of every overlap j sets at a time.
+Notation first, in words.
+
+- Bars count members: $`\lvert A_1 \rvert`$ is the number of days in $`A_1`$. The sign $`\cup`$ joins sets into their union, and the dots stand for the sets in between.
+- $`N`$ is the size of the union: the days in at least one set.
+- A layer total carries a number under $`S`$: $`S_1`$ adds the set sizes, $`S_2`$ adds every pair overlap, and $`S_j`$ adds every overlap $`j`$ sets at a time.
 
 The shortest bound, written out in full:
 
@@ -65,14 +71,14 @@ These are the Bonferroni inequalities (Carlo Emilio Bonferroni, 1936); the first
 | $`A_1`$, $`A_i`$, $`n`$ | the sets, and how many | rainy, windy, foggy; $`n`$ = 3 | ceiling rises |
 | $`N`$ | the size of the union | 19 bad days | — |
 | $`S_1`$ | set sizes added, uncorrected | 12 + 8 + 5 = 25 | ceiling rises |
-| $`S_2`$, $`S_3`$, $`S_j`$ | overlap sizes, j sets at a time | 7, then 1 | floor drops |
-| $`m`$, $`j`$, $`k`$ | layers kept, which layer, a day's headings | m = 1, 2, 3; k = 3 | more layers tighten, more headings loosen |
+| $`S_2`$, $`S_3`$, $`S_j`$ | overlap sizes, j sets at a time | 7, then 1 | even layers lower the bound, odd layers lift it |
+| $`m`$, $`j`$, $`k`$ | layers kept, which layer, a day's headings | m = 1, 2, 3; k = 3 | odd m gives a ceiling, even m a floor; exact once m reaches the largest k, but not always tighter on the way |
 | $`\sum`$ | add as $`j`$ runs from below to above | j = 1 to m | — |
 
 ### When it holds
 
 - **Finite sets, any overlaps.** No independence (one set saying nothing about another) and no structure is assumed, and weights such as chances add as counts do; a set with infinitely many members has no count to put in a layer total.
-- **Whole layers, not part of one.** A partial layer guarantees nothing: removing only the largest overlap here gives 21, above the true 19 by luck.
+- **Whole layers, not part of one.** To guarantee the even-layer floor, subtract the whole second layer: removing only the 4 rainy-and-windy days gives 21, which fails as a floor because it still sits above 19.
 - **Parity sets the direction.** Odd layer counts bound from above, even ones from below; reading 18 as a ceiling claims the wrong side.
 
 ---
@@ -101,7 +107,7 @@ The tally after m layers collapses to one term.
 \sum_{j=1}^{m} (-1)^{j+1} C(k,\, j) \;=\; 1 - (-1)^{m}\, C(k-1,\, m) \qquad (k \ge 1)
 ```
 
-Counts of ways to choose are never negative, so the correction comes off when m is even and goes on when m is odd: at most 1 for even m, at least 1 for odd. C(k − 1, m) is 0 once m reaches k, which is why enough layers are exact.
+Counts of ways to choose are never negative, so the correction comes off when m is even and goes on when m is odd. That puts the tally at most 1 for even m, and at least 1 for odd. C(k − 1, m) is 0 once m reaches k, which is why enough layers are exact.
 
 <details>
 <summary>Detailed proof: the partial sum collapses to one coefficient</summary>
@@ -149,7 +155,9 @@ The code prints these three and the 21 from half a layer.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The bad-day count is reached twice, by roads sharing no arithmetic: listing the log, and running the sieve. The per-day tally is built twice too, by sieve and by Step 3's closed form. Both bounds are then tested on all 4096 families of three subsets of a four-day month; 256 have an exact ceiling, one for each way of sending four days to set 1, 2, 3 or nowhere.
+Nothing is imported. The bad-day count is reached twice, by roads sharing no arithmetic: listing the log, and running the sieve. The per-day tally is built twice too, by sieve and by Step 3's closed form.
+
+Both bounds are then tested on all 4096 families of three subsets of a four-day month. Exactly 256 have an exact ceiling, one for each way of sending four days to set 1, 2, 3 or nowhere.
 
 ### Python
 
@@ -524,7 +532,7 @@ example : (List.range 4).map (fun i => ∑ j ∈ Icc 1 (i + 1), (-1 : ℤ) ^ (j 
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this month's numbers, so expect one to fire.
 > - **No day under three headings.** Set `FOGGY` to `{20, 21, 22, 23, 24}`: the floor rises to 21, the truth, two layers being exact once nothing carries three.
-> - **Flip the signs.** Change `(-1) ** (j + 1)` to `(-1) ** j`: every truncation lands on the wrong side, and the sweep reports 8190 out of bounds.
+> - **Flip the signs.** Change `(-1) ** (j + 1)` to `(-1) ** j`: every odd truncation flips below the truth (the airfield reads −25, −18, −19), and the sweep reports 8190 out of bounds.
 > - **A wider sweep.** In the `pieces` line change `range(4)` to `range(5)` and `range(16)` to `range(32)`: 32768 families, still 0 out of bounds.
 
 ---
@@ -536,7 +544,7 @@ example : (List.range 4).map (fun i => ∑ j ∈ Icc 1 (i + 1), (-1 : ℤ) ^ (j 
 >
 > - **Reporting 18 after the pair overlaps.** That is a floor; the missing 1 is the day under all three headings.
 > - **Getting a layer's sign wrong.** Subtracting the triple overlap gives 17, neither the answer nor a bound.
-> - **Using part of a layer.** Removing only the 4 rainy-and-windy days gives 21, guaranteed by nothing. And each layer helps less: the third moved the floor by 1.
+> - **Using part of a layer.** Removing only the 4 rainy-and-windy days gives 21, which fails as an even-layer floor. Take off all three pair overlaps (7) and the result, 18, is a guaranteed floor at or below the true 19.
 
 ---
 
@@ -558,12 +566,13 @@ example : (List.range 4).map (fun i => ∑ j ∈ Icc 1 (i + 1), (-1 : ℤ) ^ (j 
 
 ## Where this goes next
 
+- [Pigeonhole, extended](05-pigeonhole-extended.md): the opposite guarantee from counts alone — forcing a crowded box rather than capping a union.
 - [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the bound proving an object exists without producing one.
 - [Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): the same inequality on chances.
 - [Tail bounds](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/02-tail-bounds-and-repeated-trials.md): capping the chance that any of many trials goes wrong.
 - [Learning with a guarantee](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/04-pac-learning-and-vc-dimension.md): bounding the chance that any rule in a large collection misleads.
 
-A ceiling from sizes alone is generous when the sets overlap heavily, and nothing here says how generous without opening the log; turning that slack into a proof is a later card's work.
+A union bound proves a clean case exists whenever the bad sets add to less than the whole pool ([Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)). Next on the shelf, [Pigeonhole, extended](05-pigeonhole-extended.md) turns to the opposite guarantee: forcing a crowded box from counts alone.
 
 ---
 

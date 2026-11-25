@@ -58,7 +58,7 @@ What lies in *none* of them is the pool of 100 minus that union: 20 guests.
 | --- | --- | --- | --- |
 | $`A_i`$ | one of the sets combined | breakfast, parking, spa | — |
 | $`n`$ | how many sets | 3 here, 4 in the sieve below | the overlap list doubles |
-| $`\lvert A\rvert`$ | the size of a set | breakfast holds 50 | the union grows, by less |
+| $`\lvert A\rvert`$ | the size of a set | breakfast holds 50 | the union grows by at most as much |
 | $`S_j`$ | layer j: the j-at-a-time overlaps, added | 120, 45, 5 | odd layers lift, even lower |
 | $`k`$ | how many sets a member sits in | all-three guest: k = 3 | more repairs, net 1 |
 
@@ -179,17 +179,15 @@ Nothing is imported, and every count is reached twice. The roster is built guest
 REGIONS = {("B", "P", "S"): 5, ("B", "P"): 15, ("B", "S"): 10, ("P", "S"): 5,
            ("B",): 20, ("P",): 15, ("S",): 10, (): 20}
 ROSTER = [set(r) for r, n in REGIONS.items() for _ in range(n)]
+DIVS = [2, 3, 5, 7]
 
 def pick(items, j):                      # every j of the items, order kept
     if j == 0: return [()]
     return [(x,) + r for i, x in enumerate(items) for r in pick(items[i + 1:], j - 1)]
-
 def overlaps(items, size):               # every j-at-a-time overlap, layer by layer
     return [[size(c) for c in pick(items, j)] for j in range(1, len(items) + 1)]
-
 def union(ls):                           # S_1 - S_2 + S_3 - ...
     return sum((-1) ** j * sum(layer) for j, layer in enumerate(ls))
-
 def choose(n, k):                        # Pascal's triangle, built here
     row = [1]
     for _ in range(n): row = [a + b for a, b in zip([0] + row, row + [0])]
@@ -207,9 +205,11 @@ th = overlaps(list("BPS"), guests_with)
 hl = [sum(layer) for layer in th]
 hotel, walk = union(th), sum(1 for g in ROSTER if g)
 ones = [sum((-1) ** (j + 1) * choose(k, j) for j in range(1, k + 1)) for k in range(1, 9)]
-t3, t4 = overlaps([2, 3, 5], multiples_of_all), overlaps([2, 3, 5, 7], multiples_of_all)
+t3, t4 = overlaps([2, 3, 5], multiples_of_all), overlaps(DIVS, multiples_of_all)
 l3, l4 = [sum(x) for x in t3], [sum(x) for x in t4]
 none3, none4 = 1000 - union(t3), 1000 - union(t4)
+d4 = ", ".join(str(d) for d in DIVS)
+quad, extra = ("all four", "") if len(t4) == 4 else ("quadruples", f", all five {t4[4]}")
 blocks, per, spare = 1000 // 30, none_of([2, 3, 5], 30), sum(1 for x in range(991, 1001) if all(x % d for d in (2, 3, 5)))
 print(f"hotel: {len(ROSTER)} guests; singles {th[0]}, pairs {th[1]}, all three {th[2]}")
 print(f"layers S1 {hl[0]}, S2 {hl[1]}, S3 {hl[2]}  ->  union {hl[0]} - {hl[1]} + {hl[2]} = {hotel}")
@@ -223,17 +223,17 @@ print(f"mistake 3, subtract the triple instead of adding: {hl[0] - hl[1] - hl[2]
 print(f"1 to 1000, none of 2, 3, 5: layers {l3}  ->  union {union(t3)}, none {none3}")
 print(f"1 to 1000, none of 2, 3, 5: by testing each number {none_of([2, 3, 5], 1000)}")
 print(f"1 to 1000, none of 2, 3, 5: {blocks} blocks of 30 x {per} + {spare} left over = {blocks * per + spare}")
-print(f"1 to 1000, by 2, 3, 5, 7: singles {t4[0]}, pairs {t4[1]}, triples {t4[2]}, all four {t4[3]}")
-print(f"1 to 1000, none of 2, 3, 5, 7: layers {l4}  ->  union {union(t4)}, none {none4}")
-print(f"1 to 1000, none of 2, 3, 5, 7: by testing each number {none_of([2, 3, 5, 7], 1000)}")
+print(f"1 to 1000, by {d4}: singles {t4[0]}, pairs {t4[1]}, triples {t4[2]}, {quad} {t4[3]}{extra}")
+print(f"1 to 1000, none of {d4}: layers {l4}  ->  union {union(t4)}, none {none4}")
+print(f"1 to 1000, none of {d4}: by testing each number {none_of(DIVS, 1000)}")
 assert hotel == walk and hotel == 80                       # sieve against a head count
 assert len(ROSTER) - hotel == 20 and hl == [120, 45, 5]    # the layers, one at a time
 assert none3 == none_of([2, 3, 5], 1000) and none3 == blocks * per + spare
-assert none4 == none_of([2, 3, 5, 7], 1000) and ones == [1] * 8
+assert none4 == none_of(DIVS, 1000) and ones == [1] * 8
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 hotel: 100 guests; singles [50, 40, 30], pairs [20, 15, 10], all three [5]
@@ -264,12 +264,9 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // sieved by 2, 3, 5 and by 2, 3, 5, 7.  Every count is reached twice: by the signed
 // sum of overlaps, and by walking the members one at a time.
 const REGIONS: [(u8, i64); 8] = [(7, 5), (3, 15), (5, 10), (6, 5), (1, 20), (2, 15), (4, 10), (0, 20)];
+const DIVS: &[i64] = &[2, 3, 5, 7];
 
-fn roster() -> Vec<u8> {                              // one entry per guest: which amenities
-    let mut out = Vec::new();
-    for (mask, n) in REGIONS { for _ in 0..n { out.push(mask) } }
-    out
-}
+fn roster() -> Vec<u8> { REGIONS.iter().flat_map(|&(m, n)| vec![m; n as usize]).collect() }
 fn pick(items: &[i64], j: usize) -> Vec<Vec<i64>> {   // every j of the items, order kept
     if j == 0 { return vec![Vec::new()] }
     let mut out = Vec::new();
@@ -312,9 +309,11 @@ fn main() {
     let (hotel, walk) = (union(&th), all.iter().filter(|&&m| m != 0).count() as i64);
     let ones: Vec<i64> = (1..=8).map(|k| (1..=k).map(|j| if j % 2 == 1 { choose(k, j) } else { -choose(k, j) }).sum()).collect();
     let pascal: Vec<i64> = (0..=4).map(|j| choose(4, j)).collect();
-    let (t3, t4) = (overlaps(&[2, 3, 5], &multiples_of_all), overlaps(&[2, 3, 5, 7], &multiples_of_all));
+    let (t3, t4) = (overlaps(&[2, 3, 5], &multiples_of_all), overlaps(DIVS, &multiples_of_all));
     let (l3, l4) = (totals(&t3), totals(&t4));
     let (none3, none4) = (1000 - union(&t3), 1000 - union(&t4));
+    let d4 = DIVS.iter().map(|d| d.to_string()).collect::<Vec<String>>().join(", ");
+    let (quad, extra) = if t4.len() == 4 { ("all four", String::new()) } else { ("quadruples", format!(", all five {:?}", t4[4])) };
     let (blocks, per) = (1000 / 30, none_of(&[2, 3, 5], 30));
     let spare = (991..=1000).filter(|x: &i64| [2, 3, 5].iter().all(|d| x % d != 0)).count() as i64;
     println!("hotel: {} guests; singles {:?}, pairs {:?}, all three {:?}", all.len(), th[0], th[1], th[2]);
@@ -329,18 +328,18 @@ fn main() {
     println!("1 to 1000, none of 2, 3, 5: layers {:?}  ->  union {}, none {}", l3, union(&t3), none3);
     println!("1 to 1000, none of 2, 3, 5: by testing each number {}", none_of(&[2, 3, 5], 1000));
     println!("1 to 1000, none of 2, 3, 5: {} blocks of 30 x {} + {} left over = {}", blocks, per, spare, blocks * per + spare);
-    println!("1 to 1000, by 2, 3, 5, 7: singles {:?}, pairs {:?}, triples {:?}, all four {:?}", t4[0], t4[1], t4[2], t4[3]);
-    println!("1 to 1000, none of 2, 3, 5, 7: layers {:?}  ->  union {}, none {}", l4, union(&t4), none4);
-    println!("1 to 1000, none of 2, 3, 5, 7: by testing each number {}", none_of(&[2, 3, 5, 7], 1000));
+    println!("1 to 1000, by {}: singles {:?}, pairs {:?}, triples {:?}, {} {:?}{}", d4, t4[0], t4[1], t4[2], quad, t4[3], extra);
+    println!("1 to 1000, none of {}: layers {:?}  ->  union {}, none {}", d4, l4, union(&t4), none4);
+    println!("1 to 1000, none of {}: by testing each number {}", d4, none_of(DIVS, 1000));
     assert!(hotel == walk && hotel == 80);                              // sieve against a head count
     assert!(all.len() as i64 - hotel == 20 && hl == vec![120, 45, 5]);  // the layers, one at a time
     assert!(none3 == none_of(&[2, 3, 5], 1000) && none3 == blocks * per + spare);
-    assert!(none4 == none_of(&[2, 3, 5, 7], 1000) && ones == vec![1i64; 8]);
+    assert!(none4 == none_of(DIVS, 1000) && ones == vec![1i64; 8]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 hotel: 100 guests; singles [50, 40, 30], pairs [20, 15, 10], all three [5]
@@ -545,7 +544,7 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 > Guess first, then run it. The asserts are pinned to the ledger and the two sieves, so expect one to stop the program.
 > - **Break the sign.** In `union`, change `(-1) ** j` to `(-1) ** (j + 1)`: every layer flips and the hotel reads −80.
 > - **Stop early.** Make `union` return the first layer minus the second: 75, below the truth — a Bonferroni bound, a cut-short sum that is sure to fall on one side of the answer ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
-> - **Sieve by 2, 3, 5, 7, 11.** Add 11 to the four-divisor list: 31 overlap counts replace 15, and the roads still agree, on 207 survivors.
+> - **Sieve by 2, 3, 5, 7, 11.** Add `11` to `DIVS`: 31 overlap counts replace 15, and both roads still agree on 207 survivors.
 
 ---
 
@@ -563,7 +562,7 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 ## Where you meet it in real life
 
 - **Audits and database counts.** "Matching at least one of these flags" is this sum; five flags means thirty-one overlaps, which is why query tools walk the rows instead.
-- **Number sieves.** What survives division by a list of primes is the same sum: 266 of the first thousand dodge 2, 3 and 5. Run over every prime below a bound, it is analytic number theory's oldest tool (Sieving by inclusion-exclusion).
+- **Number sieves.** What survives division by a list of primes is the same sum: 266 of the first thousand dodge 2, 3 and 5. Run over every prime below a bound, it is analytic number theory's oldest tool ([Sieving by inclusion-exclusion](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/01-the-legendre-sieve-and-the-parity-problem.md)).
 - **Shuffles that put nothing back in place.** Arrangements with no item in its own slot are counted by this sieve, one property per slot ([Derangements](02-derangements.md)).
 
 > **Say it back**
@@ -584,10 +583,10 @@ example : ((Icc 1 30).filter (fun x => ¬ 2 ∣ x ∧ ¬ 3 ∣ x ∧ ¬ 5 ∣ x)
 - [Onto functions](03-counting-surjections.md): the same layers, on onto functions.
 - [Stopping the sieve early](04-union-bound-and-bonferroni.md): what a truncated sum is worth.
 - [Sieving by inclusion-exclusion](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/01-the-legendre-sieve-and-the-parity-problem.md): the sieve run over the primes, and where it stalls.
-- [Sum-product](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/06-sum-product-and-additive-energy.md): counting overlaps far too many to list.
+- [Sum-product](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/06-sum-product-and-additive-energy.md): bounding a sumset from below by pair-sum coincidences (additive energy) when overlaps are far too many to list.
 - [Mobius inversion on an order](../15-Orders%20and%20Set%20Systems/03-mobius-inversion-on-posets.md): a sum over everything below can always be undone, and inclusion-exclusion and number theory's Mobius function are two cases.
 
-The formula is exact but doubles in length with each property added; what a partial sum is worth is the next question ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
+Next on the shelf, [Derangements](02-derangements.md) puts this sieve to work on shuffles where nothing lands in its own place. When the layers grow too long, [Stopping the sieve early](04-union-bound-and-bonferroni.md) asks what a partial sum is worth.
 
 ---
 

@@ -4,9 +4,7 @@
 const JOBS: u32 = 5;
 const MECHANICS: u32 = 3;
 
-fn choose(n: i64, k: i64) -> i64 {                 // C(n, k), one factor at a time
-    (0..k).fold(1i64, |out, i| out * (n - i) / (i + 1))
-}
+fn choose(n: i64, k: i64) -> i64 { (0..k).fold(1i64, |out, i| out * (n - i) / (i + 1)) } // C(n, k)
 fn factorial(n: i64) -> i64 { (2..=n).product() }  // n! = 1 x 2 x ... x n
 fn sieve(n: u32, k: i64) -> i64 {                  // road one: inclusion-exclusion
     (0..=k).map(|j| (if j % 2 == 0 { 1i64 } else { -1 }) * choose(k, j) * (k - j).pow(n)).sum()
@@ -49,25 +47,26 @@ fn main() {
     let layer: Vec<i64> = (0..=mechanics).map(|j| choose(mechanics, j) * (mechanics - j).pow(JOBS)).collect();
     let (onto, s53) = (sieve(JOBS, mechanics), stirling(JOBS, MECHANICS as usize));
     let by_used: Vec<i64> = (1..=mechanics).map(|j| choose(mechanics, j) * sieve(JOBS, j)).collect();
-    let patterns = (1..jobs).flat_map(|a| (1..jobs).map(move |b| (a, b)))
-                            .filter(|(a, b)| jobs - a - b >= 1).count() as i64;
+    let patterns = choose(jobs - 1, mechanics - 1);
     let sieve_row: Vec<i64> = (1..=JOBS + 1).map(|n| sieve(n, mechanics)).collect();
     let listed_row: Vec<i64> = (1..=JOBS + 1).map(|n| listed(n, MECHANICS as usize)).collect();
     let all_row: Vec<i64> = (1..=JOBS + 1).map(|n| mechanics.pow(n)).collect();
     let k_row: Vec<i64> = (1..=mechanics + 3).map(|k| sieve(JOBS, k)).collect();
+    let sieve_str = (0..=MECHANICS as usize).map(|j| if j == 0 { layer[0].to_string() } else { format!("{} {}", if j % 2 == 1 { "-" } else { "+" }, layer[j]) }).collect::<Vec<_>>().join(" ");
+    let split_str = (1..=mechanics).map(|j| format!("{} x {}", choose(mechanics, j), sieve(JOBS, j))).collect::<Vec<_>>().join(" + ");
     println!("{} jobs to {} named mechanics: all handouts {}^{} = {}", jobs, mechanics, mechanics, jobs, layer[0]);
-    println!("one named mechanic left empty: 2^{} = {} each, {} mechanics to pick, layer 1 = {}", jobs, (mechanics - 1).pow(JOBS), choose(mechanics, 1), layer[1]);
-    println!("two named mechanics left empty: 1^{} = {} each, {} pairs to pick, layer 2 = {}", jobs, (mechanics - 2).pow(JOBS), choose(mechanics, 2), layer[2]);
-    println!("all {} left empty: 0^{} = {}, layer 3 = {}", mechanics, jobs, 0i64.pow(JOBS), layer[3]);
-    println!("sieve: {} - {} + {} - {} = {}", layer[0], layer[1], layer[2], layer[3], onto);
+    println!("one named mechanic left empty: {}^{} = {} each, {} mechanics to pick, layer 1 = {}", mechanics - 1, jobs, (mechanics - 1).pow(JOBS), choose(mechanics, 1), layer[1]);
+    println!("two named mechanics left empty: {}^{} = {} each, {} pairs to pick, layer 2 = {}", mechanics - 2, jobs, (mechanics - 2).pow(JOBS), choose(mechanics, 2), layer[2]);
+    println!("all {} left empty: 0^{} = {}, layer {} = {}", mechanics, jobs, 0i64.pow(JOBS), mechanics, layer[MECHANICS as usize]);
+    println!("sieve: {} = {}", sieve_str, onto);
     println!("listing all {} handouts, those reaching every mechanic: {}", mechanics.pow(JOBS), listed(JOBS, MECHANICS as usize));
     println!("groupings of {} jobs into {} unnamed piles: {} by recurrence, {} by listing", jobs, mechanics, s53, groupings(JOBS, MECHANICS as usize));
     println!("naming the piles: {}! x {} = {} x {} = {}", mechanics, s53, factorial(mechanics), s53, factorial(mechanics) * s53);
-    println!("all handouts split by mechanics used: 3 x {} + 3 x {} + 1 x {} = {}", sieve(JOBS, 1), sieve(JOBS, 2), sieve(JOBS, 3), by_used.iter().sum::<i64>());
-    println!("second case, {} jobs to {} mechanics: sieve {}, listed {}, {}! x S(6,3) = 6 x {} = {}", jobs + 1, mechanics, sieve(JOBS + 1, mechanics), listed(JOBS + 1, MECHANICS as usize), mechanics, stirling(JOBS + 1, MECHANICS as usize), factorial(mechanics) * stirling(JOBS + 1, MECHANICS as usize));
-    println!("jobs n = 1 to 6, onto handouts to {} mechanics: {:?}", mechanics, sieve_row);
-    println!("jobs n = 1 to 6, all handouts to {} mechanics:  {:?}", mechanics, all_row);
-    println!("mechanics k = 1 to 6, onto handouts of {} jobs: {:?}", jobs, k_row);
+    println!("all handouts split by mechanics used: {} = {}", split_str, by_used.iter().sum::<i64>());
+    println!("second case, {} jobs to {} mechanics: sieve {}, listed {}, {}! x S({},{}) = {} x {} = {}", jobs + 1, mechanics, sieve(JOBS + 1, mechanics), listed(JOBS + 1, MECHANICS as usize), mechanics, jobs + 1, mechanics, factorial(mechanics), stirling(JOBS + 1, MECHANICS as usize), factorial(mechanics) * stirling(JOBS + 1, MECHANICS as usize));
+    println!("jobs n = 1 to {}, onto handouts to {} mechanics: {:?}", jobs + 1, mechanics, sieve_row);
+    println!("jobs n = 1 to {}, all handouts to {} mechanics:  {:?}", jobs + 1, mechanics, all_row);
+    println!("mechanics k = 1 to {}, onto handouts of {} jobs: {:?}", mechanics + 3, jobs, k_row);
     println!("mistake 1, stopping after the subtraction: {} - {} = {}, not {}", layer[0], layer[1], layer[0] - layer[1], onto);
     println!("mistake 2, mechanics treated as alike: {} groupings, not {} handouts", s53, onto);
     println!("mistake 3, jobs treated as alike: {} share-out patterns, not {} handouts", patterns, onto);
