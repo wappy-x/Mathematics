@@ -185,7 +185,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 11 · Duals, Quotients and Tensors · 3 cards
 
-*Building new vector spaces from old ones: direct sums and quotients, the dual space of price lists, and the tensor product that pairs two spaces. Rests on shelves 03 to 05.*
+*Building new vector spaces from old ones: direct sums and quotients, the dual space of price lists, and the tensor product that pairs two spaces. Rests on shelves 03 to 09.*
 
 1. [Direct sums and quotient spaces: split a space into independent pieces, or blur a subspace to a point and count what is left](11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md)
 2. [Dual spaces: the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map](11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md)

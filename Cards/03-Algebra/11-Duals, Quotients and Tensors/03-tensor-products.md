@@ -18,9 +18,9 @@ week 2         6      0      2      2 copies of (3, 0, 1)
 
 Another record is 1 loaf in week 1 and 1 milk in week 2. No list, repeated per week, makes it. The tensor product is the space of all such tables. Tables made from one list and one count of copies per week are the **simple** ones, a thin slice.
 
-The same split matters in quantum computing. Two qubits (quantum bits) have a 2-by-2 table of amplitudes (numbers whose squared sizes are the chances), and when it is not simple the qubits are **entangled**: neither has a state of its own.
+The same split matters in quantum computing. Two qubits (quantum bits) have a 2-by-2 table of amplitudes, numbers whose squared sizes are the chances. When that table is not simple, the qubits are **entangled**: neither has a state of its own.
 
-**The tensor product of a 2-space and a 3-space is the 6-space of 2-by-3 tables, built so that every rule on pairs that is linear in each slot becomes a linear rule on tables; a table is a single product exactly when its rank is at most 1.**
+**The tensor product of a 2-space and a 3-space is the 6-space of 2-by-3 tables; every rule on pairs, linear in each slot, becomes linear on tables; a table is one product exactly when its rank is at most 1.**
 
 **What kind of fact this is:** a construction with two theorems attached, the universal property and the rank test, both proved in Why it works.
 
@@ -395,7 +395,7 @@ Lean proves the card's three general facts for spaces of every size, and checks 
 - Av is (1, 3) and Bw is (3, 0, 12). A ⊗ B times the flat table gives (3, 0, 12, 9, 0, 36), the flat Av ⊗ Bw.
 - (e1 + e2) ⊗ (f1 + f2) is `[[1, 1, 0], [1, 1, 0]]`, not S.
 
-The product search, the 729-table count, the qubit test and mistake 3 are left to the Python and Rust checks.
+Lean checks the Kronecker rule $`(A \otimes B)(v \otimes w) = Av \otimes Bw`$ only on the shop's numbers, not in general. The general Kronecker rule, the product search, the 729-table count, the qubit test and mistake 3 are left to the Python and Rust checks.
 
 ```lean
 -- Tensor products: a table is a single product v ⊗ w exactly when its rank is at most 1, every bilinear map is one linear map on V ⊗ W, and V ⊗ W has dimension mn.
@@ -541,15 +541,16 @@ example : vecMulVec ![(1 : ℤ), 1] ![1, 1, 0] = !![1, 1, 0; 1, 1, 0] ∧
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): tensors that vary from point to point.
 - [Monoidal categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/09-monoidal-categories-and-string-diagrams.md): the tensor product as one case of placing things side by side.
 - [Two particles](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
-- [Universal coefficients and Kunneth](../../17-Topology/05-Homology/11-universal-coefficients-and-kunneth.md): change the number system, or multiply two spaces, and see what twists survive.
-- [Quasi-coherent sheaves](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a scheme, and the line bundles O(d) as shifted graded modules.
+- [Universal coefficients and Kunneth](../../17-Topology/05-Homology/11-universal-coefficients-and-kunneth.md): the same product for groups, used to change the number system of homology or to multiply two spaces.
+- [Quasi-coherent sheaves](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a space, read at one point by a tensor product with that point's field.
 - [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
-- [Kahler differentials](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone.
-- [Chern classes and Hirzebruch-Riemann-Roch](../../22-Algebraic%20geometry/09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): the Euler characteristic of a bundle from its classes.
-- [Spinors and the Dirac operator](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): a square root of the Laplacian, and the index theorem in outline.
-- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
+- [Kahler differentials](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone, read at a point by a tensor product.
+- [Chern classes and Hirzebruch-Riemann-Roch](../../22-Algebraic%20geometry/09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): classes of bundles that turn tensor products into products, and the Euler characteristic from them.
+- [Spinors and the Dirac operator](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): spinors twisted by a bundle through a tensor product, and the index theorem in outline.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): ladders of weights, where the tensor product of two ladders splits back into ladders.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): the next shelf, where a group acts on a space by matrices and the space splits as a direct sum.
 
-A weeks-by-goods-by-shops table has three indices and no row rank; what replaces rank there is the question this card leaves open.
+A weeks-by-goods-by-shops table has three indices and no row rank; what replaces rank there is left open. The next shelf, [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md), starts a new thread instead: groups acting by matrices.
 
 ---
 

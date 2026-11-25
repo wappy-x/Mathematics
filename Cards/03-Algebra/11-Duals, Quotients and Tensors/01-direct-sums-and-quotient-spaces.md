@@ -14,7 +14,7 @@ The $0 baskets form a plane through the empty basket. Blur that plane to a point
 
 The plane also splits the shop. Every basket is one $0 basket plus some milks, in exactly one way: (2, 3, 1) is (2, −5, 1) plus 8 milks. A negative amount is a return. That unique split is a **direct sum**. The blurred space is a **quotient space**.
 
-**A space splits as a direct sum when every vector breaks into one piece from each part in exactly one way; blurring a subspace to a point leaves a quotient space whose dimension is what was left over, and blurring what a linear map ignores leaves a copy of what it reaches.**
+**A direct sum splits every vector uniquely into one piece per part; a quotient blurs a subspace to a point, losing its dimensions; blurring what a map ignores leaves a copy of what it reaches.**
 
 **What kind of fact this is:** direct sum and quotient space are definitions; the dimension count and the first isomorphism theorem are theorems, proved in Why it works.
 
@@ -121,7 +121,7 @@ So the $16 class plus the $16 class is the $32 class: (2, 3, 1) + (4, 0, 1) = (6
 
 ### Step 3: the quotient keeps the dimensions $`U`$ did not use
 
-Take a basis of $`U`$, here (2, −3, 0) and (0, 2, −1). Add vectors until it is a basis of $`V`$ ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)). One milk, (0, 1, 0), finishes the job. The cosets of the added vectors are a basis of $`V/U`$, so its dimension is the number added: 3 − 2 = 1.
+Take a basis of $`U`$, here (2, −3, 0) and (0, 2, −1). Add vectors from outside its span until the list reaches all of $`V`$. The list stays independent, and an independent list never outgrows a basis of $`V`$ ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)), so this stops. One milk, (0, 1, 0), finishes the job. The cosets of the added vectors are a basis of $`V/U`$, so its dimension is the number added: 3 − 2 = 1.
 
 <details>
 <summary>Detailed proof: the added vectors' cosets are a basis of the quotient</summary>
@@ -138,7 +138,9 @@ The whole list is independent, so every $`c_i`$ is 0. Hence $`\dim(V/U) = m = \d
 
 </details>
 
-A second road counts. On a 7-hour clock, amounts and bills wrap at 7: $7 reads $0. Seven is prime, so division works on the clock ([Finite fields](../09-Rings%20and%20Fields/05-finite-fields.md)) and bases work as usual: each basis vector takes 7 amounts, multiplying the count by 7. Of 343 baskets, 49 cost $0. The cosets are equal blocks, as in [Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md): 343 ÷ 49 = 7. Sizes divide, so dimensions subtract: $`7^3 \div 7^2 = 7^1`$.
+A second road counts. On a 7-hour clock, amounts and bills wrap at 7: $7 reads $0. Seven is prime, so division works on the clock ([Finite fields](../09-Rings%20and%20Fields/05-finite-fields.md)) and bases work as usual: each basis vector takes 7 amounts, multiplying the count by 7.
+
+Of 343 baskets, 49 cost $0. The cosets are equal blocks, as in [Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md): 343 ÷ 49 = 7. Sizes divide, so dimensions subtract: $`7^3 \div 7^2 = 7^1`$.
 
 ### Step 4: blur what the bill ignores, and the bills are left
 
@@ -146,7 +148,7 @@ Label each coset by the bill of any member. Step 0 makes the label well-defined,
 
 So $`V/\ker T \cong \mathrm{im}\,T`$. Counting dimensions gives 3 − 2 = 1, which is [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md) again: what is kept plus what is killed is what went in.
 
-Each coset crosses the milk line once: the $16 class at 8 milks. By Step 1 any complement $`W`$ of $`U`$ does the same, so it is a copy of $`V/U`$. The quotient needs no choice of complement; the split does.
+Each coset crosses the milk line once: the $16 class at 8 milks. By Step 1 any **complement** $`W`$ of $`U`$, a subspace with $`V = U \oplus W`$, does the same, so it is a copy of $`V/U`$. The quotient needs no choice of complement; the split does.
 
 ---
 
@@ -178,7 +180,7 @@ One number, the bill, names a basket's coset, so the quotient is a line.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The split of (2, 3, 1) comes two ways: Cramer's rule, which solves with determinants, and the bill shared among milks. The quotient's dimension comes from a basis and from counting cosets on the 7-hour clock. Last, a determinant test that never reads a price sorts 125 small baskets into classes, one bill each.
+Nothing is imported. The split of (2, 3, 1) comes two ways: Cramer's rule, which solves with determinants, and the bill shared among milks. The quotient's dimension comes from a basis and from counting cosets on the 7-hour clock. Last, a determinant test sorts 125 small baskets into classes without reading a price. Two baskets share a class when the 3-by-3 determinant of $`U`$'s two basis vectors and their difference is 0, that is, when the difference lies in $`U`$. Each class has one bill.
 
 ### Python
 
@@ -367,7 +369,7 @@ Lean proves the card's three general claims for every space, not just baskets, a
 - The split: (2, 3, 1) is the $0 basket (2, −5, 1) plus 8 milks, and (6, 3, 2) costs $32.
 - The counts: on the 7-hour clock, 49 of the 343 baskets cost $0. A 0-to-4 box of 125 baskets shows only 35 bills.
 
-Cramer's rule, the determinant test and sorting the box into classes are left to the Python and Rust checks.
+The general formula for the dimension of a sum of two subspaces, Cramer's rule, the determinant test and sorting the box into classes are left to the Python and Rust checks.
 
 ```lean
 -- Direct sums and quotient spaces: blurring a subspace U of a finite-dimensional space V leaves a quotient of dimension dim V - dim U, a linear map's domain blurred by its kernel is a copy of its image, and a sum with zero overlap splits every vector in exactly one way.
@@ -479,7 +481,7 @@ example : ((Finset.range 5 ×ˢ Finset.range 5 ×ˢ Finset.range 5).image
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to this shop, so expect one to stop it.
 > - **Eggs at $5.** Change `4 * x[2]` to `5 * x[2]`. Does (0, 2, −1) still cost $0? No, it costs −$1. The determinant test still finds 35 classes, but the box shows 39 bills; the first assert stops it.
-> - **Eggs as the complement.** Change `milk` to `(0, 0, 1)`. Guess the split. Cramer's rule gives 4 dozen eggs plus (2, 3, −3), but the milk road still says 8 milks. The first assert stops it.
+> - **Eggs as the complement.** Change `milk` to `(0, 0, 1)`. Guess the split. Cramer's rule gives 4 dozen eggs plus (2, 3, −3), printed as milks; the milk road still says 8 milks. The first assert stops it.
 > - **A 5-hour clock.** Set `q = 5`. Guess the counts: 125 baskets, 25 costing $0, 5 cosets, still 3 − 2 = 1. The second assert, pinned to 7, stops it.
 
 ---
@@ -508,7 +510,7 @@ example : ((Finset.range 5 ×ˢ Finset.range 5 ×ˢ Finset.range 5).image
 
 ## What this builds on
 
-- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): extending a basis, which proves the dimension count.
+- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): bases, dimension, and why an independent list never outgrows a basis, which lets Step 3 extend one.
 - [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): rules that respect adding and scaling, like the bill.
 - [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): kept plus killed equals inputs, which the first isomorphism theorem explains.
 - [Normal subgroups and quotient groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): the same collapse for groups, where only normal subgroups pass.

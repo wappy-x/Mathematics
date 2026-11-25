@@ -97,13 +97,13 @@ On single items those values are prices, so every reading is a dot product with 
 
 ### Step 1: the dual basis exists, so the two spaces have the same size
 
-The counter $`f_1 = (x, y)`$ must read bundle 1 as 1 and bundle 2 as 0: $`2x + y = 1`$ and $`x + y = 0`$, so $`f_1 = (1, -1)`$. The same with 0 and 1 gives $`f_2 = (-1, 2)`$. These are the rows of the inverse of the bundle matrix (bundles as columns), since that inverse times the bundles is the identity.
+The counter $`f_1 = (x, y)`$ must read bundle 1 as 1 and bundle 2 as 0: $`2x + y = 1`$ and $`x + y = 0`$, so $`f_1 = (1, -1)`$. The same with 0 and 1 gives $`f_2 = (-1, 2)`$.
 
-The counters build every price list. The list (3, 2) reads the bundles as 8 and 5. So does $`8f_1 + 5f_2`$, so by Step 0 they are equal: 8(1, −1) + 5(−1, 2) = (3, 2).
+These are the rows of the inverse of the bundle matrix (bundles as columns), since that inverse times the bundles is the identity.
 
-They are independent: if $`c_1 f_1 + c_2 f_2`$ reads everything as 0, reading the bundles gives $`c_1 = c_2 = 0`$. So they are a basis of $`V^*`$, and $`\dim V^* = 2 = \dim V`$. The same steps work for any $`n`$.
-
-Each counter is a coordinate. The basket (2, 3) reads −1 under $`f_1`$ and 4 under $`f_2`$, and −1(2, 1) + 4(1, 1) = (2, 3).
+- **They span.** The counters build every price list. The list (3, 2) reads the bundles as 8 and 5. So does $`8f_1 + 5f_2`$, so by Step 0 they are equal: 8(1, −1) + 5(−1, 2) = (3, 2).
+- **They are independent.** If $`c_1 f_1 + c_2 f_2`$ reads everything as 0, reading the bundles gives $`c_1 = c_2 = 0`$. So they are a basis of $`V^*`$, and $`\dim V^* = 2 = \dim V`$. The same steps work for any $`n`$.
+- **They read coordinates.** Each counter is a coordinate. The basket (2, 3) reads −1 under $`f_1`$ and 4 under $`f_2`$, and −1(2, 1) + 4(1, 1) = (2, 3).
 
 ### Step 2: the transpose prices the hampers
 
@@ -177,7 +177,12 @@ The counters count bundles, the transpose prices the hampers, and one price chan
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Four pairs of independent roads: the dual basis by inverting and by search; the order's bill by items and by hamper prices; the annihilator by search and by 3 minus the rank; and row rank against column rank on 300 generated matrices.
+Nothing is imported. Four checks each take two independent roads:
+
+- the dual basis, by inverting and by search;
+- the order's bill, by items and by hamper prices;
+- the annihilator, by search and by 3 minus the rank;
+- row rank against column rank, on 300 generated matrices.
 
 ### Python
 
@@ -503,7 +508,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 > Guess first, then run it.
 > - **No basis.** Set `b2` to `(4, 2)`. The determinant is 0 and the run stops on a division by zero: no dual basis.
 > - **A hidden price change.** Set `q` to `[1, 3, 5]`, the old prices plus (−2, 1, 1). Hamper prices stay (16, 11); the order still costs $38.
-> - **Other entries.** Change `% 2` to `% 3 - 1`. Ranks seen become 2 and 3; row rank still equals column rank.
+> - **Other entries.** Change `65536 % 2` to `65536 % 3 - 1`. Ranks seen become 2 and 3; row rank still equals column rank.
 
 ---
 
@@ -523,7 +528,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 - **Manufacturing cost roll-ups.** A bill of materials lists the parts in each product. Its transpose turns part costs into product costs.
 - **Changing coordinates.** Software converting colours or sensor axes to a new basis reads each coordinate with a dual basis vector: a row of the inverse matrix.
 - **Shadow prices.** Linear programming prices each scarce resource, and those prices form a dual vector ([LP duality](../../15-Optimization/04-Linear%20Programming/04-lp-duality-and-complementary-slackness.md)).
-- **Gradients.** A slope reads a direction of travel and returns a rate of change: a covector ([Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md)).
+- **Differentials.** A function's differential reads a direction of travel and returns the rate of change that way: a covector. The gradient arrow is made from it only once a way to measure lengths is chosen ([Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md)).
 
 > **Say it back**
 > A linear reading turns a vector into a number, as a price list turns a basket into a bill. The readings form the dual space, of the same dimension. A basis gives a dual basis of counters, each depending on the whole basis. A linear map pulls readings back through its transpose. Counting the readings blind to a subspace proves that rows and columns have the same rank.
@@ -539,13 +544,13 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 
 ## Where this goes next
 
-- [Tensor products](03-tensor-products.md): pairs a space with another, and readings of pairs become tensors.
+- [Tensor products](03-tensor-products.md): pairs two spaces into a space of tables, so that readings of pairs, linear in each slot, become linear readings of tables.
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md) in functional analysis: the continuous readings of infinite-dimensional spaces.
 - [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): the dual of the dual.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): a dual space at every point of a curved space.
 - [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
 
-$`V`$ and $`V^*`$ have the same size, but matching them needs a chosen basis; what extra structure makes the match natural is the question this card leaves open.
+A linear reading takes one vector and returns a number. A bill can also read a pair, such as a week and a shopping list, linearly in each. What space turns such a reading of pairs into a reading of one thing is the question [Tensor products](03-tensor-products.md) answers next.
 
 ---
 
