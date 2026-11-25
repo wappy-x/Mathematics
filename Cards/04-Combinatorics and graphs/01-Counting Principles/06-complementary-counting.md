@@ -156,7 +156,7 @@ The code prints all three.
 
 Nothing is imported; no library counts anything. The password answer is reached twice: by the subtraction, and by adding the six "exactly k digits" terms, which share no arithmetic with it.
 
-The method is then tested against plain listing. A toy question of the same shape — 3 letters, 2 digits, strings of 4 — has all 625 strings built one at a time, and the squad all 1,048,576 of its subsets. Each listing is compared with its closed form: the count from one formula, such as C(18, 11).
+The method is then tested against plain listing. A toy question of the same shape — 3 letters, 2 digits, strings of 4 — builds all 625 strings one at a time. For the squad, the code lists all 1,048,576 subsets. Each listing is compared with its closed form: the count from one formula, such as C(18, 11).
 
 ### Python
 
@@ -482,7 +482,7 @@ example : 2 * Nat.choose 19 10 = 184756 := by decide +kernel
 ## The usual mistake
 
 > [!warning]
-> **Subtracting a pile that is not the complement.** The opposite of "at least one digit" is "no digit at all", and nothing else. Read it as "exactly one digit" and 712,882,560 comes off instead of 308,915,776, leaving 1,463,899,776 — which keeps the letters-only passwords it should have dropped and drops the one-digit ones it should have kept.
+> **Subtracting a pile that is not the complement.** The opposite of "at least one digit" is "no digit at all", and nothing else. Read it as "exactly one digit" and 712,882,560 comes off instead of 308,915,776, leaving 1,463,899,776. That keeps the letters-only passwords it should have dropped and drops the one-digit ones it should have kept.
 >
 > - **Building the wanted object feature-first.** A slot chosen for a digit, then the other five filled freely, gives 6 × 10 × 36^5 = 3,627,970,560 — more than the 2,176,782,336 that exist, because `a1b2cd` is built once from the 1 and again from the 2.
 > - **The squad version of the same slip.** Naming a goalkeeper and then picking ten from the remaining 19 gives 2 × C(19,10) = 184,756, against only 167,960 possible elevens: every eleven with both goalkeepers was built twice.
@@ -503,17 +503,19 @@ example : 2 * Nat.choose 19 10 = 184756 := by decide +kernel
 
 ## What this builds on
 
+- [The rules of sum and product](01-rules-of-sum-and-product.md): disjoint groups add to the whole — the rule of sum justifying subtraction.
 - [Strings with repetition](02-strings-and-powers.md): the counts 36^6 and 26^6, one factor per slot.
 - [Combinations, n choose k](05-n-choose-k.md): C(20,11) and C(18,11), the squad picks that get subtracted.
 - [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): the complement of a set, and why a set and its complement share nothing and cover everything.
 
 ## Where this goes next
 
-- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): "at least two people share a birthday" counted as everything minus the arrangements where all the birthdays differ.
+- [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): next on shelf 02, counting arrangements when some items are identical.
 - [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the repair when several forbidden features overlap, adding back what came off twice.
 - [Derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): clean draws counted as all draws minus the spoilt ones, with the spoilt pile counted by that repair.
+- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): "at least two people share a birthday" counted as everything minus the arrangements where all the birthdays differ.
 
-This card handles one forbidden feature, where the refused pile is a single clean set. What it leaves open is what to subtract when two forbidden features overlap and the objects caught by both would come off twice.
+This card handles one forbidden feature; overlapping forbidden features are repaired later on [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md). Next on shelf 02, counting moves to collections where some items are identical: [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
 
 ---
 

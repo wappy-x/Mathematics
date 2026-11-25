@@ -8,7 +8,7 @@
 
 A lottery machine holds 49 numbered balls and draws six. A ticket carries six numbers. The order the balls leave the drum changes nothing: 4, 11, 23, 28, 39 and 46 is one ticket however those six come out.
 
-Counting the draws in order is the easy part. The first ball can be any of the 49, the second any of the 48 still in the drum, down to 44 for the sixth: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws ([Ordered picks](04-ordered-picks.md)).
+Counting the draws in order is the easy part. The first ball can be any of the 49, the second any of the 48 still in the drum, down to 44 for the sixth. That gives 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws ([Ordered picks](04-ordered-picks.md)).
 
 Ten billion is far too many: it counts each ticket over and over. Those six numbers can leave the drum in 720 different orders, and all 720 are the same ticket. Divide the repeats out: 10,068,347,520 ÷ 720 = 13,983,816 tickets.
 
@@ -31,7 +31,7 @@ flowchart TB
 
 ## The formula
 
-Notation first, in words. The count of picks with the order thrown away is written C(n, k) and read "n choose k": the ways to take k things out of n when no order is recorded. Books often stack the two numbers in a tall bracket; this library writes C(n, k).
+Notation first, in words. The count of picks with the order thrown away is written C(n, k) and read "n choose k". It counts the ways to take k things out of n when no order is recorded. Books often stack the two numbers in a tall bracket; this library writes C(n, k).
 
 The factorial n! — the orders of n different things, n × (n−1) × … × 1 — comes from [Factorials](03-factorial.md).
 
@@ -126,13 +126,15 @@ flowchart LR
 
 Two names for one decision.
 
-Another road: mark one player. Every eleven either uses that player or does not, so the count splits into two smaller counts, added. Write the counts C(n, k) in rows, one row for each n, and each entry is the sum of the two above it. That layout is Pascal's triangle, built by addition alone. It is the second road the code takes, proved on [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md).
+Another road: mark one player. Every eleven either uses that player or does not, so the count splits into two smaller counts, added.
+
+Write the counts C(n, k) in rows, one row for each n, and each entry is the sum of the two above it. That layout is Pascal's triangle, built by addition alone. It is the second road the code takes, proved on [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The lottery, then the same arithmetic on the squad of 20.
+The lottery, then the same arithmetic on the squad of 20. For contrast, five penalty takers in order ([Ordered picks](04-ordered-picks.md)) give 1,860,480 lists; dropping their order divides by 5! = 120 to leave C(20, 5) = 15,504 five-player groups.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -162,7 +164,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the counts. One multiplies 49 down six times and divides by 720. One builds Pascal's triangle to row 49 by addition alone, nothing multiplied or divided, and reads the entry off. One lists all 1,048,576 ways to mark 20 players on or off the pitch, counts those with eleven on, and pairs each with the nine left out. A toy draw of 2 from 5 is listed in full, ten tickets to count by eye.
+Nothing is imported. Three roads reach the counts. One multiplies 49 down six times and divides by 720. One builds Pascal's triangle to row 49 by addition alone, nothing multiplied or divided, and reads the entry off.
+
+The third lists all 1,048,576 ways to mark 20 players on or off the pitch, counts those with eleven on, and pairs each with the nine left out. A toy draw of 2 from 5 is listed in full, ten tickets to count by eye.
 
 ### Python
 
@@ -485,7 +489,6 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 - **Team sheets and rotas.** 167,960 starting elevens from a squad of 20; the manager who picks the nine to rest counts the same thing.
 - **Testing a batch.** How many samples of a fixed size a delivery holds is a choose; which of them hold a stated number of faulty units is [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md).
 - **Computing.** A pick of k out of n is a pattern of on-and-off bits, which is how the code lists all 1,048,576 line-ups of the squad.
-- **Counting what is left out.** When the unwanted cases are the smaller pile, count those and subtract: [Counting the complement](06-complementary-counting.md).
 
 > **Say it back**
 > A combination is a pick with the order thrown away. Count in order first, since that is a plain product: 10,068,347,520 ordered lottery draws. Every ticket shows up once for each of its 720 orders, and every ticket has the same 720, so dividing is allowed: 13,983,816 tickets. Written out, C(n, k) = n!/(k!(n−k)!); in practice, k factors on top over k!. Picking eleven from twenty also picks the nine who sit out: C(20, 11) = C(20, 9) = 167,960.
@@ -494,8 +497,9 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 
 ## What this builds on
 
+- [Factorials](03-factorial.md): the $`k!`$ orderings inside each pick that get divided out.
 - [Ordered picks](04-ordered-picks.md): the count 10,068,347,520 this card divides, and the notation P(n, k).
-- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): dividing a count into equal piles, and why the answer is a whole number of them.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): dividing a count into equal piles with nothing left over.
 
 ## Where this goes next
 
@@ -508,13 +512,13 @@ example : 167960 * 11 ! = 6704425728000 := by decide
 - [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same count as routes across a grid.
 - [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): picks of two counting the possible lines between dots.
 - [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many such lines a network holds before a triangle is forced.
+- [Sperner's theorem](../15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md): the largest family of subsets where none contains another has the middle choose count.
+- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): the largest family of k-picks where every pair shares a member.
 - [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): favourable picks over possible picks, where lottery odds come from.
 - [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md): counting the picks holding a stated number of winners.
 - [Counting](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/02-counting-solutions-and-sharp-p.md): counting when no formula like this one exists.
-- [Sperner's theorem](../15-Orders%20and%20Set%20Systems/02-sperner-and-lym.md): a family of subsets in which none contains another has at most the middle binomial coefficient of members, by the LYM inequality.
-- [Erdos-Ko-Rado](../15-Orders%20and%20Set%20Systems/04-erdos-ko-rado-and-shadows.md): if every two k-sets in a family share a member, the family is no bigger than all k-sets through one point, provided n is at least 2k.
 
-Every count here assumed 49 different numbers, each taken once; what to do when some things are identical is [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
+Every count here picked directly from the allowed pool. When a rule asks for "at least one" and direct counting splits into many cases, count what the rule refuses and subtract — [Counting the complement](06-complementary-counting.md).
 
 ---
 

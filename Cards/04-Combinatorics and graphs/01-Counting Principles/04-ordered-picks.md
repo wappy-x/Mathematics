@@ -40,7 +40,9 @@ Three ways to hand out the gold, two runners left for the silver each time: 3 ×
 
 ## The formula
 
-Two pieces of notation first, in words. The factorial of a whole number, written $`n!`$ and read "n factorial", is that number times every whole number below it down to 1 ([Factorials](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120. This card's count is written $`P(n,k)`$, read "n permute k": the ways to fill $`k`$ places, in order, from a pool of $`n`$ things.
+Two pieces of notation first, in words. The factorial of a whole number, written $`n!`$ and read "n factorial", is that number times every whole number below it down to 1 ([Factorials](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120.
+
+This card's count is written $`P(n,k)`$, read "n permute k": the ways to fill $`k`$ places, in order, from a pool of $`n`$ things.
 
 ```math
 P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}
@@ -64,7 +66,7 @@ The left-hand product is the **falling factorial**: a factorial stopped early. T
 - **The things are tellable apart.** If two runners cannot be told apart, podiums the product counts twice are one podium, and 336 is too many.
 - **No repeats.** Every pick leaves the pool. Let one runner take two medals and the count is 8 × 8 × 8 = 512, the strings-with-repetition count ([Strings with repetition](02-strings-and-powers.md)), not 336.
 - **The places differ.** Gold, silver and bronze are different prizes. Swap them for three identical ribbons and each trio is counted 3! = 6 times over; the answer is then 336 ÷ 6 = 56 ([Combinations, n choose k](05-n-choose-k.md)).
-- **At most as many places as things.** Fill every place and the product runs to the end: the plain factorial, 8! = 40,320. Ask for more places than things and a factor hits zero — the right answer, since no such pick exists.
+- **At most as many places as things.** Fill every place and the product runs to the end: the plain factorial, 8! = 40,320. Ask for more places than things and a factor in the falling product hits zero — the right answer, since no such pick exists (the factorial ratio $`n!/(n-k)!`$ applies only when $`k \le n`$).
 
 ---
 
@@ -72,7 +74,7 @@ The left-hand product is the **falling factorial**: a factorial stopped early. T
 
 ### Step 0: fill one place at a time, and the pool shrinks as it goes
 
-The rule of product: if a first choice goes one number of ways and, for each of those, a second goes a fixed number of ways, the pair goes the product ([The rules of sum and product](01-rules-of-sum-and-product.md)).
+The rule of product counts choices made in stages ([The rules of sum and product](01-rules-of-sum-and-product.md)). If a first choice goes one number of ways and each leaves a fixed number of second choices, the pair goes their product.
 
 The only new thing here is that the second number is smaller. Gold: eight runners. For each of those, silver: seven, since one already holds a medal. For each of those, bronze: six. So 8 × 7 × 6 = 336.
 
@@ -103,7 +105,9 @@ The claim: for a pool of $`n`$ and $`k`$ places with $`0 \le k \le n`$, the orde
 
 **Base.** There is one way to fill no places: the empty list; a product of no factors is 1 by convention, so the two agree.
 
-**Step.** Suppose the claim holds for $`k-1`$ places from a pool of any size. Take $`k`$ places and a pool of $`n`$. The first place can be filled $`n`$ ways. Fix one, and the remaining $`k-1`$ places draw on a pool of $`n-1`$, which by supposition goes $`(n-1)(n-2)\cdots(n-k+1)`$ ways. That is still $`k-1`$ factors, starting one lower and ending at $`(n-1)-(k-1)+1 = n-k+1`$. That count is the same whichever thing went first, so the rule of product gives $`n(n-1)\cdots(n-k+1)`$. ∎
+**Step.** Suppose the claim holds for $`k-1`$ places from a pool of any size. Take $`k`$ places and a pool of $`n`$. The first place can be filled $`n`$ ways.
+
+Fix one, and the remaining $`k-1`$ places draw on a pool of $`n-1`$, which by supposition goes $`(n-1)(n-2)\cdots(n-k+1)`$ ways. That is $`k-1`$ factors, ending at $`(n-1)-(k-1)+1 = n-k+1`$. That count is the same whichever thing went first, so the rule of product gives $`n(n-1)\cdots(n-k+1)`$. ∎
 
 The step is an identity in its own right: $`P(n,k) = n \times P(n-1,k-1)`$, one place filled and a smaller pick left behind. It is the third road the code takes at the larger size: 20 × P(19, 4) = 1,860,480.
 
@@ -144,7 +148,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The 336 podiums are reached three ways, sharing no arithmetic: multiplying 8 × 7 × 6 down, dividing 8! by 5!, and writing every podium out and counting the lines. The squad of 20 is too large to write out, so it takes the falling product, the factorial ratio and the smaller-pick identity 20 × P(19, 4). The picture's tiny case and the three wrong answers above are printed too.
+Nothing is imported. The 336 podiums are reached three ways, sharing no arithmetic: multiplying 8 × 7 × 6 down, dividing 8! by 5!, and writing every podium out and counting the lines.
+
+The squad of 20 is too large to write out, so it takes the falling product, the factorial ratio and the smaller-pick identity 20 × P(19, 4). The picture's tiny case and the three wrong answers above are printed too.
 
 ### Python
 
@@ -444,7 +450,7 @@ example : (20 : ℕ) ^ 5 = 3200000 := by norm_num
 > **Try changing**
 > Guess first, then run it. An assert halts the program when two roads disagree, or when a pinned number moves.
 > - **A fourth medal.** Set `MEDALS` to 4. Counting down gains a factor, 8 × 7 × 6 × 5 = 1,680, the listing grows to match, and every assert still passes: nothing in the three roads is special to three medals. Only the labels, typed in by hand, go stale.
-> - **Let a runner win twice.** Where `podiums` is built, pass `True` for `False`. Both roads now describe strings, the count climbs from 336 to 512, and the first assert halts it.
+> - **Let a runner win twice.** Where `podiums` is built, pass `True` for `False`. The listing road now builds strings with repeats (512 of them) while the formula roads stay at 336, and the first assert halts it.
 > - **A larger squad.** Raise `SQUAD` by one. All three squad roads move together and agree, but the last assert is pinned to 1,860,480 and halts the run.
 
 ---
@@ -473,6 +479,7 @@ example : (20 : ℕ) ^ 5 = 3200000 := by norm_num
 
 ## What this builds on
 
+- [The rules of sum and product](01-rules-of-sum-and-product.md): equal branches multiply — the rule Step 0 uses at each shrinking stage.
 - [Strings with repetition](02-strings-and-powers.md): the count when repeats are allowed, 8 × 8 × 8 = 512 — the thing this count is not.
 - [Factorials](03-factorial.md): the full product 8! = 40,320, and the convention making a product of no factors 1.
 - [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one maps, which an ordered pick becomes once the places are named.
@@ -483,7 +490,7 @@ example : (20 : ℕ) ^ 5 = 3200000 := by norm_num
 - [The twelvefold way](../08-Partitions/06-twelvefold-way.md): the grid sorting every counting question by whether things and places can be told apart; this count is one cell.
 - [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): counts like this turned into chances, favourable over possible.
 
-The order of the medals was doing real work in the 336; dividing it back out, to count who is on the podium rather than what each won, is the content of [Combinations, n choose k](05-n-choose-k.md).
+The order of the medals did real work in the 336. Dividing that order back out — to count who is on the podium rather than what each won — is the content of [Combinations, n choose k](05-n-choose-k.md).
 
 ---
 

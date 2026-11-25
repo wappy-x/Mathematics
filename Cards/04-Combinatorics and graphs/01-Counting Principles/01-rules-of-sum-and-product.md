@@ -18,7 +18,7 @@ Multiply across stages, add across cases. Every later formula on this shelf is b
 
 **Options that come in stages multiply; options that fall into cases with nothing in common add.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, resting on one definition borrowed from set theory — the set of ordered pairs, written $`A \times B`$.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. It rests on one definition from set theory: the set of ordered pairs, written $`A \times B`$.
 
 ### The picture: two cases, three stages
 
@@ -41,7 +41,7 @@ Arrows in a row are stages and multiply; arrows forking from one box are cases a
 
 The notation first, in words.
 
-- A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}.
+- A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}, and the sauces are {chilli, mustard, none}.
 - Bars count it: $`\lvert A\rvert`$ is how many members the set $`A`$ has, read "the size of A".
 - Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $`A \cup B`$ holds everything in either, the **intersection** $`A \cap B`$ only what is in both.
 - The empty set, $`\varnothing`$, has no members.
@@ -80,7 +80,7 @@ Three stages of sizes $`n_1`$, $`n_2`$ and $`n_3`$ give $`n_1 \times n_2 \times 
 
 - **Every stage offers the same number of options, whatever came before.** Each of the 4 breads opens the same 5 fillings. Where that number varies with the earlier pick, count the branches one at a time and add.
 - **A stage that shrinks equally on every branch still multiplies.** Each of 20 captains leaves the same 19 vice-captains: 20 × 19 = 380.
-- **Cases must share nothing.** Rye sandwiches number 15 and chilli 20, but 5 are both, so adding gives 35 where the truth is 30; overlaps need a correction ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
+- **Cases must share nothing.** Taking rye bread gives 5 × 3 = 15 sandwiches and taking chilli sauce gives 4 × 5 = 20, but the 5 rye-and-chilli sandwiches sit in both. Adding gives 35 where the truth is 30; overlaps need a correction ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
 - **Cases must cover everything, and name each outcome once.** Drop the soups and the count is 60, not 63; print "no sauce" on two lines and every sauceless sandwich is counted twice.
 
 ---
@@ -102,7 +102,7 @@ Breads down the side, fillings across the top. Each cell is one pair. Count a ro
 | and sourdough | 5 more | 15 |
 | and flat | 5 more | 20 |
 
-Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)), so the pairs number 20: the rule of product with two stages, and the rectangle is $`A \times B`$ drawn out.
+Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)). That gives 20 pairs: the rule of product with two stages, with the rectangle showing $`A \times B`$.
 
 ### Step 2: each further stage repeats the whole count
 
@@ -119,7 +119,9 @@ Induction proves a claim for one stage, then shows that each added stage keeps i
 
 **One stage.** The choices are the options themselves: $`n_1`$ of them.
 
-**One more stage.** Say the stages so far give the product of their sizes; call that set of part-built choices $`A`$, and let $`B`$ hold the next stage's options. A longer choice is the ordered pair (part-built choice, option), so the longer choices are exactly $`A \times B`$: a rectangle of $`\lvert A\rvert`$ rows holding $`\lvert B\rvert`$ pairs each, every pair in one row only. Adding equal rows is multiplying, so the count picks up one factor, $`\lvert B\rvert`$. The equal-option condition is used just here: it keeps the same $`B`$ in every row.
+**One more stage.** Say the stages so far give the product of their sizes. Call that set of part-built choices $`A`$, and let $`B`$ hold the next stage's options. A longer choice is the ordered pair (part-built choice, option), so the longer choices are exactly $`A \times B`$.
+
+That set forms a rectangle of $`\lvert A\rvert`$ rows holding $`\lvert B\rvert`$ pairs each, with every pair in one row only. Adding equal rows is multiplying, so the count picks up one factor, $`\lvert B\rvert`$. The equal-option condition is used just here: it keeps the same $`B`$ in every row.
 
 So the count gains exactly one factor per stage, and after the last stage it is the product of them all.
 

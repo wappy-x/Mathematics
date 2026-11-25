@@ -49,7 +49,7 @@ n^k \;=\; \underbrace{n \times n \times \cdots \times n}_{k \text{ positions}}
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`n`$ | how many options one position offers | 10 digits; 26 letters; 2 for in-or-out | climbs steeply: every position gains at once |
-| $`k`$ | how many positions there are to fill | 4 in the PIN, 20 in the squad | each added position multiplies the count by $`n`$ |
+| $`k`$ | how many positions there are to fill | 4 in the PIN, 6 in the plate, 20 in the squad below | each added position multiplies the count by $`n`$ |
 | $`n^k`$ | the count of strings: $`n`$ multiplied in $`k`$ times | 10^4 = 10,000 PINs | — |
 
 ### When it holds
@@ -69,7 +69,7 @@ Spending the digit 7 on the first position does not take it off the menu. Whatev
 
 ### Step 1: one position at a time multiplies
 
-The rule of product says a choice made in stages, each stage offering a fixed number of options whatever came before, has as many outcomes as those numbers multiplied together ([The rules of sum and product](01-rules-of-sum-and-product.md)). Every stage here offers the same n.
+The rule of product counts choices made in stages ([The rules of sum and product](01-rules-of-sum-and-product.md)). When each stage offers a fixed number of options whatever came before, the outcomes number those sizes multiplied together. Every stage here offers the same n.
 
 So the PIN's stages give 10 × 10 = 100, then 1,000, then 10,000.
 
@@ -77,7 +77,9 @@ So the PIN's stages give 10 × 10 = 100, then 1,000, then 10,000.
 
 Filling no positions at all can be done exactly one way — write nothing down. So the empty string is one string, and n^0 is 1.
 
-Take the strings one position shorter and stick an entry on the end of each. Every short string yields n long ones, and every long string arises exactly once: chop off its last entry and the short string it grew from is what remains. So each added position multiplies the count by n. Starting at 1 and multiplying by n a total of k times gives n^k.
+Take the strings one position shorter and stick an entry on the end of each. Every short string yields n long ones, and every long string arises exactly once: chop off its last entry and the short string it grew from is what remains.
+
+So each added position multiplies the count by n. Starting at 1 and multiplying by n a total of k times gives n^k.
 
 <details>
 <summary>Detailed proof, written out as an induction</summary>
@@ -86,13 +88,18 @@ Fix a set of n options and write S(k) for the strings of length k drawn from it.
 
 **Base, k = 0.** There is one way to write nothing, so S(0) has 1 member and n^0 = 1.
 
-**Step.** Suppose S(k−1) has n^(k−1) members. Match each string in S(k) to the pair made of its first k−1 entries and its last entry. One-to-one (no two strings give the same pair): two strings with the same front and the same last entry agree entry by entry. Onto (every pair comes from some string): any short string and any option glue into a string of length k, because nothing restricts the last entry — the step that fails the moment repeats are banned. So S(k) has as many members as those pairs, n^(k−1) × n = n^k, and the induction closes. It never asked what the options were, so it holds for digits, letters and the words "in" and "out" alike.
+**Step.** Suppose S(k−1) has n^(k−1) members. Match each string in S(k) to the pair made of its first k−1 entries and its last entry.
+
+- **One-to-one** (no two strings give the same pair): two strings with the same front and the same last entry agree entry by entry.
+- **Onto** (every pair comes from some string): any short string and any option glue into a string of length k, because nothing restricts the last entry. That step fails the moment repeats are banned.
+
+So S(k) has as many members as those pairs, n^(k−1) × n = n^k, and the induction closes. It never asked what the options were, so it holds for digits, letters and the words "in" and "out" alike.
 
 </details>
 
 ### Step 3: a string is a function
 
-A function hands each input exactly one output ([Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)). Take the k positions as the inputs and the n options as the outputs. A string is then a rule giving each position one option, which is a function; and every such function writes out as a string, its output at position 1, then at position 2, and so on.
+A function hands each input exactly one output ([Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)). Take the k positions as the inputs and the n options as the outputs. A string gives each position one option, so it is a function. Every such function also writes out as a string: its output at position 1, then at position 2, and so on.
 
 The two collections are one collection described twice, so counting either counts both. **A set of k members has n^k functions into a set of n members.**
 
@@ -100,11 +107,15 @@ Nothing extra is demanded: two positions may receive the same option, which is r
 
 ### Step 4: subsets are strings of yes and no
 
-A 20-player squad must name a travelling party. Each player is in or out, and the ruling on the goalkeeper uses up no ruling on anyone else. Walk the squad in a fixed order and write "in" or "out" for each: a string of length 20 over 2 options. So 2^20 = 1,048,576 possible parties, the empty one and the whole squad included.
+A 20-player squad must name a travelling party. Each player is in or out, and the ruling on the goalkeeper uses up no ruling on anyone else.
+
+Walk the squad in a fixed order and write "in" or "out" for each: a string of length 20 over 2 options. That gives 2^20 = 1,048,576 possible parties, the empty one and the whole squad included.
 
 That is the count wing 01 reaches for the subsets of a set ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)): every subset is a yes-or-no string, and every yes-or-no string a subset.
 
-A second road reaches the same total without multiplying. Split the parties by size: nobody, one player, two, out to twenty. Each count is the sum of two from the row above, since a party of a given size either takes the newest player or leaves him behind, so the row is built by addition alone. Totalled for 20 players it lands on 1,048,576. Splitting by size is [Combinations, n choose k](05-n-choose-k.md).
+A second road reaches the same total without multiplying. Split the parties by size: nobody, one player, two, out to twenty. Each count is the sum of two from the row above, since a party of a given size either takes the newest player or leaves him behind.
+
+So the row is built by addition alone. Totalled for 20 players it lands on 1,048,576. Splitting by size is [Combinations, n choose k](05-n-choose-k.md).
 
 Stack these rows, one for each squad size from 0 players up, and they form the sum triangle the code builds. Its usual name is Pascal's triangle ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
@@ -140,7 +151,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads run to the same counts. The first builds every string, a position at a time, and counts the list at each stage: the nine small strings, the 10,000 PINs and the plate's two blocks are counted, not assumed. The second multiplies whole numbers. The third reaches the squad's total by addition alone, building the row of party counts by size and totalling it. Listing all 1,048,576 parties would mean a million strings, so the building and adding roads are tied together at 12 players, where both give 4,096.
+Nothing is imported. Three roads run to the same counts. The first builds every string, a position at a time, and counts the list at each stage. The nine small strings, the 10,000 PINs and the plate's two blocks are counted, not assumed.
+
+The second road multiplies whole numbers. The third reaches the squad's total by addition alone, building the row of party counts by size and totalling it. Listing all 1,048,576 parties would mean a million strings, so the building and adding roads are tied together at 12 players, where both give 4,096.
 
 ### Python
 
@@ -452,7 +465,7 @@ example : (36 : ℕ) ^ 6 = 2176782336 ∧ (36 : ℕ) ^ 6 ≠ 26 ^ 3 * 10 ^ 3 := 
 ## The usual mistake
 
 > [!warning]
-> **Swapping the options and the positions.** The PIN count is 10^4 = 10,000, not 4^10 = 1,048,576 — over a hundredfold out, and equal to the squad's total only by accident, since 4^10 and 2^20 are both twenty 2s multiplied. The base is what one position may hold; the raised number is how many positions there are. The menu of ten digits is used again at each of four positions, so ten is the base.
+> **Swapping the options and the positions.** The PIN count is 10^4 = 10,000, not 4^10 = 1,048,576 — over a hundredfold out. That 1,048,576 equals the squad's total only by accident, since 4^10 and 2^20 are both twenty 2s multiplied. The base is what one position may hold; the raised number is how many positions there are. The menu of ten digits is used again at each of four positions, so ten is the base.
 >
 > - **Adding the options.** 10 + 10 + 10 + 10 = 40 counts digit choices, not PINs. Stages of one choice multiply; alternatives that rule each other out add.
 > - **Banning repeats without meaning to.** 10 × 9 × 8 × 7 = 5,040 answers a different question: PINs whose four digits all differ ([Ordered picks](04-ordered-picks.md)).
@@ -482,6 +495,7 @@ example : (36 : ℕ) ^ 6 = 2176782336 ∧ (36 : ℕ) ^ 6 ≠ 26 ^ 3 * 10 ^ 3 := 
 
 ## Where this goes next
 
+- [Factorials](03-factorial.md): when repeats are banned and every option is used once, turning $`n^n`$ into $`n!`$.
 - [Ordered picks](04-ordered-picks.md): when each pick uses an option up, so the factors fall.
 - [Counting the complement](06-complementary-counting.md): counting the unwanted strings and subtracting them.
 - [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): matching collections to move a count, as Step 3 does.
@@ -489,7 +503,7 @@ example : (36 : ℕ) ^ 6 = 2176782336 ∧ (36 : ℕ) ^ 6 ≠ 26 ^ 3 * 10 ^ 3 := 
 - [The twelvefold way](../08-Partitions/06-twelvefold-way.md): which rule applies when positions or options are interchangeable.
 - [De Bruijn sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): one cyclic string carrying every string of a length exactly once.
 
-n^k counts every string there is, repetitive and wasteful alike, and each card above answers the same next question: how to count only the strings that meet a condition.
+Here every position may reuse any option. Ban repeats and use every option once, and the product counts down to 1 instead of staying constant — [Factorials](03-factorial.md).
 
 ---
 

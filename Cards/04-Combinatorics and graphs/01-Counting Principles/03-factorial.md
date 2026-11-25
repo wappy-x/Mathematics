@@ -8,7 +8,7 @@
 
 A playlist holds ten songs. Play them in a different order and the evening sounds different, so order is part of the playlist. How many orders are there?
 
-The picks come in stages, and stage sizes multiply ([The rules of sum and product](01-rules-of-sum-and-product.md)). The first slot offers ten songs, the second the nine left, the third eight. The last has one song and no choice at all. So the count is 10 x 9 x 8 x 7 x 6 x 5 x 4 x 3 x 2 x 1 = 3,628,800.
+The picks come in stages, and stage sizes multiply ([The rules of sum and product](01-rules-of-sum-and-product.md)). The first slot offers ten songs, the second the nine left, the third eight. The last has one song and no choice at all. So the count is 10 × 9 × 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1 = 3,628,800.
 
 Over three and a half million orders, out of ten songs. Eight runners cross a finish line in 40,320 orders. Twenty songs give 2,432,902,008,176,640,000.
 
@@ -33,7 +33,7 @@ xychart-beta
     line [1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
 ```
 
-The climbing line is the orderings, n!. The middle is 2^n, a doubling at each step. The flat one is n^2. All three are level at four things; by twenty the orderings need nineteen digits, the doublings seven, the squares three.
+The climbing line is the orderings, n!. The middle is 2^n, a doubling at each step. The flat one is n^2. All three still sit at two digits at four things; by twenty the orderings need nineteen digits, the doublings seven, the squares three.
 
 ---
 
@@ -93,26 +93,28 @@ Each stage offers one fewer thing than the last, because what is placed is gone.
 | B | A and C | BAC, BCA |
 | C | A and B | CAB, CBA |
 
-Three openers, two orders of the remainder, six orderings: 3 x 2 x 1 = 6. Ten songs, same shape: 10 x 9 x 8 x 7 x 6 x 5 x 4 x 3 x 2 x 1 = 3,628,800.
+Three openers, two orders of the remainder, six orderings: 3 × 2 × 1 = 6. Ten songs, same shape: 10 × 9 × 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1 = 3,628,800.
 
 ### Step 2: the recurrence is that table in one line
 
-The table holds one block per opener, every block the same size: the orderings of what is left. That is the whole content of n! = n x (n-1)!, a recurrence: each value built from the one below. Ten songs make 10 blocks, each holding the 362,880 orderings of the other nine, so 3,628,800.
+The table holds one block per opener, every block the same size: the orderings of what is left. That is the whole content of n! = n × (n-1)!, a recurrence: each value built from the one below. Ten songs make 10 blocks, each holding the 362,880 orderings of the other nine, so 3,628,800.
 
 ### Step 3: what 0! has to be
 
-A line of nothing is still a line — the empty one — and there is exactly one of it, so zero things have one ordering. The recurrence agrees: n = 1 in n! = n x (n-1)! reads 1! = 1 x 0!, and one song lines up in one way, so 0! = 1.
+A line of nothing is still a line — the empty one — and there is exactly one of it, so zero things have one ordering. The recurrence agrees: n = 1 in n! = n × (n-1)! reads 1! = 1 × 0!, and one song lines up in one way, so 0! = 1.
 
-Setting 0! = 0 knocks the bottom out: 1! becomes 0, then 2! = 2 x 0 = 0, and every factorial reads 0. The check prints that collapse.
+Setting 0! = 0 knocks the bottom out: 1! becomes 0, then 2! = 2 × 0 = 0, and every factorial reads 0. The check prints that collapse.
 
 <details>
 <summary>Detailed proof: the product counts the orderings, for every n</summary>
 
-Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n x (n-1)!. The method is induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n × (n-1)!. The method is induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 **Base case.** With nothing to line up there is one ordering, the empty one: L(0) = 1 = 0!.
 
-**Step.** Take n at least 1 and suppose L(n-1) = (n-1)!. Sort the orderings of n things into blocks by which thing stands first: n blocks, none overlapping. In the block headed by x, deleting x leaves an ordering of the other n-1 things and putting x back recovers the original, so that block holds L(n-1) orderings. Blocks that do not overlap are counted by adding, so L(n) = n x (n-1)! = n!.
+**Step.** Take n at least 1 and suppose L(n-1) = (n-1)!. Sort the orderings of n things into blocks by which thing stands first: n blocks, none overlapping.
+
+In the block headed by x, deleting x leaves an ordering of the other n-1 things, and putting x back recovers the original. So that block holds L(n-1) orderings. Blocks that do not overlap are counted by adding, so L(n) = n × (n-1)! = n!.
 
 The claim holds at 0 and passes from n-1 to n, so it holds for every n. The check tests that step numerically.
 
@@ -124,7 +126,9 @@ Nine songs to ten multiplies the count by 10; ten to eleven, by 11. The multipli
 
 ### Step 5: an estimate that skips the multiplying
 
-Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million. Dividing gives 0.995842: low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $`2\pi`$ come from is answered on [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
+Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million.
+
+Dividing gives 0.995842: low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $`2\pi`$ come from is answered on [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
 
 A second road reaches the same counts without multiplying: tally the orderings of every subset of the ten songs, that is, every group drawn from them. Each tally is built by asking which song comes last and adding the tallies of the smaller subsets. The full set tallies 3,628,800.
 
@@ -137,14 +141,14 @@ The ladder, one rung at a time: each rung is the rung below times its own number
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | 0! | the empty product | 1 |
-| 1! | 1 x 1 | 1 |
-| 2! | 2 x 1 | 2 |
-| 3! | 3 x 2 | 6 |
-| 4! | 4 x 6 | 24 |
-| 8!, the eight runners | 8 x 5,040 | **40,320** |
-| 10!, the ten-song playlist | 10 x 362,880 | **3,628,800** |
+| 1! | 1 × 1 | 1 |
+| 2! | 2 × 1 | 2 |
+| 3! | 3 × 2 | 6 |
+| 4! | 4 × 6 | 24 |
+| 8!, the eight runners | 8 × 5,040 | **40,320** |
+| 10!, the ten-song playlist | 10 × 362,880 | **3,628,800** |
 | 20!, a twenty-song playlist | keep climbing to twenty | **2,432,902,008,176,640,000** |
-| Stirling's estimate at 20 | root of 2 x pi x 20, times 20-divided-by-e twenty times over | **2.422787 million million million** |
+| Stirling's estimate at 20 | root of 2 × pi × 20, times 20-divided-by-e twenty times over | **2.422787 million million million** |
 | the estimate divided by 20! | 2.422787 / 2.432902 | **0.995842** |
 
 Ten songs on shuffle come out 3,628,800 ways, which is why a shuffle rarely repeats.
@@ -153,7 +157,7 @@ Ten songs on shuffle come out 3,628,800 ways, which is why a shuffle rarely repe
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Taking 0! to be 0 | 0, and so does every factorial | 1! is 1 x 0!, so a zero at the bottom wipes out the ladder |
+| Taking 0! to be 0 | 0, and so does every factorial | 1! is 1 × 0!, so a zero at the bottom wipes out the ladder |
 | Letting songs repeat: ten slots, any of ten songs in each | 10,000,000,000 | that counts lists with repeats, a different question |
 | Two copies of one song treated as different | 3,628,800, where the truth is 1,814,400 | swapping the copies makes no new playlist, so each is counted twice |
 
@@ -163,7 +167,9 @@ The code prints all three; lists with repeats are counted on [Strings with repet
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads sharing no arithmetic reach the count: multiplying the stage sizes down from n to 1; tallying orderings subset by subset, adding only; and building every ordering of a small set, then counting them. Stirling's estimate calls no library: its power is a loop, and its square root is [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md). That method starts from a guess and replaces it, again and again, by the average of the guess and the number divided by the guess.
+Nothing is imported. Three roads sharing no arithmetic reach the count: multiplying the stage sizes down from n to 1, tallying orderings subset by subset by adding only, and listing every ordering of a small set.
+
+Stirling's estimate calls no library: its power is a loop, and its square root is [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md). That method starts from a guess and replaces it, again and again, by the average of the guess and the number divided by the guess.
 
 ### Python
 
@@ -463,7 +469,7 @@ example : 10 ! / 2 = 1814400 := by decide
 > [!warning]
 > **Reaching for n! whenever things are being counted.** It counts one thing: the orderings of n things all different, all used, in a line with a first place and a last. Change any of those and the answer changes.
 >
-> - **Writing 0! = 0.** The ladder stands on 1! = 1 x 0!, so a zero at the bottom makes every factorial read 0.
+> - **Writing 0! = 0.** The ladder stands on 1! = 1 × 0!, so a zero at the bottom makes every factorial read 0.
 > - **Allowing repeats without noticing.** Ten slots, each free to hold any of the ten songs, is 10,000,000,000 — not 3,628,800.
 > - **Treating identical things as different.** One song on the playlist twice gives 1,814,400 playlists, not 3,628,800.
 > - **Expecting the estimate to be close in plain size.** At n = 20 it is 0.416 percent low, and 0.416 percent of a nineteen-digit number is not small.
