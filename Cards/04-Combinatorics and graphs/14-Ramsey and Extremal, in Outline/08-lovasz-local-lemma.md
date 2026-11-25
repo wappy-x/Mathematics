@@ -14,7 +14,7 @@ Flip a fair coin for every switch. Each clause then fails with chance 1/1024. [E
 
 The local lemma looks closer. Each clause shares a switch with at most 365 others here, and nothing with the rest. That is enough: when each clause fails rarely and touches few others, some setting satisfies all 3800.
 
-**When each bad event has chance at most p and depends on at most d others, and e × p × (d + 1) is at most 1, with e = 2.718281828…, there is an outcome where none of them happens.**
+**If each bad event has chance at most p, depends on at most d others, and e × p × (d + 1) ≤ 1, some outcome avoids them all.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works. Erdos and Lovasz published it in 1975 with the condition 4 × p × d ≤ 1; the sharper form here, with e, is the one textbooks now state.
 
@@ -38,10 +38,12 @@ Notation first, in words. A **bad event** is something we want to avoid, here "c
 Two events are **independent** when knowing one gives no information about the other. The lemma needs more: each $`A_i`$ is independent of everything its non-neighbours do together. Clauses that share no variable meet this, because they read disjoint coins.
 
 ```math
-e\,p\,(d+1) \le 1 \quad\Longrightarrow\quad \Pr\big(\overline{A_1} \text{ and } \overline{A_2} \text{ and } \dots \text{ and } \overline{A_m}\big) \;\ge\; \Big(1 - \frac{1}{d+1}\Big)^{m} \;>\; 0
+e\,p\,(d+1) \le 1 \quad\Longrightarrow\quad \Pr\big(\overline{A_1} \text{ and } \overline{A_2} \text{ and } \dots \text{ and } \overline{A_m}\big) \;\ge\; \Big(1 - \frac{1}{d+1}\Big)^{m}
 ```
 
-**Read it aloud:** if e times the chance times one more than the number of neighbours is at most 1, then all the bad events are avoided together with positive chance.
+**Read it aloud:** if e times p times (d + 1) is at most 1, all bad events are avoided with chance at least $`(1 - 1/(d+1))^m`$.
+
+That floor is positive for $`d \ge 1`$. For $`d = 0`$, independence gives $`(1 - p)^m > 0`$ directly.
 
 On the formula: $`e \times (1/1024) \times 376 = 0.99812`$, under 1. At 376 neighbours it would be 1.00077, over. So 375 is the largest neighbour count the rule allows for 10-SAT.
 
@@ -68,7 +70,9 @@ On the formula: $`e \times (1/1024) \times 376 = 0.99812`$, under 1. At 376 neig
 
 ### Step 0: avoid the events one at a time
 
-Order the events. The chance that all are avoided is the chance the first is avoided, times the chance the second is avoided given the first was, and so on. So it is enough to show: **once any collection of other events is avoided, each remaining event still has chance at most $`x = 1/(d+1)`$.** Then every factor is at least $`1 - x`$, and the product is at least $`(1-x)^m > 0`$.
+Order the events. The chance that all are avoided is the chance the first is avoided, times the chance the second is avoided given the first was, and so on.
+
+So it is enough to show: **with any other events avoided, each remaining event still has chance at most $`x = 1/(d+1)`$.** Each factor is at least $`1 - x`$, giving product at least $`(1 - x)^m`$ (positive for $`d \ge 1`$; at $`d = 0`$, independence gives $`(1 - p)^m > 0`$).
 
 ### Step 1: split the conditions into neighbours and strangers
 
@@ -106,7 +110,9 @@ using $`(1-x)^d = (d/(d+1))^d \ge 1/e`$. Step 0's product finishes the proof. �
 
 </details>
 
-The ring in the code tests Steps 0 to 2 directly. Six 4-variable clauses sit in a circle, each sharing one variable with each neighbour, so $`d = 2`$ and $`e \times 3/16 = 0.50968`$. Listing all 262144 settings, the worst chance of a clause failing, given any others hold, is 0.07180. That is above its plain 1/16, since neighbours push it up, but far below the cap 1/3.
+The ring in the code tests Steps 0 to 2 directly. Six 4-variable clauses sit in a circle, each sharing one variable with each neighbour, so $`d = 2`$ and $`e \times 3/16 = 0.50968`$.
+
+Listing all 262144 settings, the worst chance of a clause failing, given any others hold, is 0.07180. That is above its plain 1/16, since neighbours push it up, but far below the cap 1/3.
 
 ---
 
@@ -126,7 +132,9 @@ All 3800 rules can be met at once, though a random setting breaks 3.71 of them o
 
 **2-colouring sets.** Colour 1000 points red or blue at random. A set of 10 is bad if all one colour, chance $`2/1024`$. The rule allows $`d`$ up to 187. The code builds 1900 ten-sets where each meets at most 180 others, so a colouring with no one-colour set exists. Resampling finds one.
 
-**Ramsey lower bounds.** Colour the edges of $`K(n)`$, the complete graph on $`n`$ dots ([Ramsey numbers](02-ramsey-numbers.md)). The bad event for a k-set is "all its edges one colour", chance $`2^{1 - C(k,2)}`$, where $`C(k,2) = k(k-1)/2`$ is the number of edges among k dots. Two k-sets depend only if they share an edge, so at least 2 dots. Then $`d`$ is the count of k-sets meeting a given one in 2 to $`k-1`$ dots. Any $`n`$ passing the rule gives $`R(k,k) > n`$.
+**Ramsey lower bounds.** Colour the edges of $`K(n)`$, the complete graph on $`n`$ dots ([Ramsey numbers](02-ramsey-numbers.md)). The bad event for a k-set is "all its edges one colour", with chance $`2^{1 - C(k,2)}`$, where $`C(k,2) = k(k-1)/2`$ counts the edges among k dots.
+
+Two k-sets depend only if they share an edge, so at least 2 dots. Then $`d`$ is the count of k-sets meeting a given one in 2 to $`k-1`$ dots. Any $`n`$ passing the rule gives $`R(k,k) > n`$.
 
 | k | Largest n, counting (Erdos 1947) | Largest n, local lemma | Ratio |
 | --- | --- | --- | --- |
@@ -149,7 +157,9 @@ Spencer (1975) showed the ratio tends to 2 as k grows.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Four roads: the largest allowed $`d`$ by formula and by stepping up; a real 10-SAT formula solved by resampling, which Moser and Tardos proved ends fast under the same rule; the ring listed in full and recounted, worst chance included, by 2 × 2 matrix powers; and the Ramsey table, with whole-number binomials in Python and floating point in Rust.
+Nothing is imported. Road one finds the largest allowed $`d`$ by formula and by stepping up. Road two solves a real 10-SAT formula by resampling, which Moser and Tardos proved ends fast under the same rule.
+
+Road three lists the ring in full and recounts it, worst chance included, by 2 × 2 matrix powers. Road four builds the Ramsey table, using whole-number binomials in Python and floating point in Rust.
 
 ### Python
 
@@ -646,9 +656,10 @@ example : ¬ 2 * Nat.choose 101 10 < 2 ^ Nat.choose 10 2 := by decide
 
 ## Where this goes next
 
-- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same style of proof with expected values and averages, which places this lemma among its tools.
+- [Ramsey theory on the whole numbers](09-schur-and-van-der-waerden.md): next on this shelf, moving Ramsey patterns from graphs to sums and progressions.
+- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same style of proof with expected values and averages, placing this lemma among its tools.
 
-The lemma's general form (in Alon and Spencer) handles events with different chances; still open is whether any lower bound for $`R(k,k)`$ grows exponentially faster than Erdos's $`2^{k/2}`$.
+The general form (in Alon and Spencer) handles events with different chances, and beating $`2^{k/2}`$ exponentially for $`R(k,k)`$ stays open. The shelf's last card moves Ramsey theory onto the whole numbers.
 
 ---
 

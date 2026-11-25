@@ -14,7 +14,7 @@ This was not luck. Any ten different numbers, in any order, hold a rising run of
 
 Paul Erdős and George Szekeres proved it in 1935, as a lemma (a stepping-stone result) about convex polygons (many-sided shapes with no dents).
 
-**Ten different numbers in any order hold four that rise or four that fall, because each number carries a pair of run lengths as its label and only nine pairs avoid both.**
+**Ten different numbers in any order hold four that rise or four that fall, because each carries a unique pair of run lengths and only nine pairs avoid both.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -79,7 +79,9 @@ Day 1 has nothing before it: labels 1 and 1. Day 2, at 42.10, is below 43.20, so
 
 ### Step 1: no two positions share a pair of labels
 
-Take an earlier position i and a later position j. Their numbers differ, so one of two things holds. If $`x_j`$ is larger, any rising run ending at i extends to j, so $`a_j`$ is at least $`a_i`$ + 1. If $`x_j`$ is smaller, the same argument gives $`b_j`$ at least $`b_i`$ + 1. One label strictly grows, so the pairs differ. Ten days, ten different pairs.
+Take an earlier position i and a later position j. Their numbers differ, so one of two things holds. If $`x_j`$ is larger, any rising run ending at i extends to j, so $`a_j`$ is at least $`a_i`$ + 1.
+
+If $`x_j`$ is smaller, the same argument gives $`b_j`$ at least $`b_i`$ + 1. One label strictly grows, so the pairs differ. Ten days, ten different pairs.
 
 ### Step 2: count the pairs a list without a run of four may use
 
@@ -99,7 +101,9 @@ The two arrows from the top box are the argument's two halves; they meet at the 
 
 ### Step 3: read the run off the labels
 
-Day 9 carries rising label 4, so an earlier, lower day carries 3: day 6 at 46.30. Before it, a lower day carries 2: day 3 at 44.60. Then day 1 at 43.20. The run is days 1, 3, 6, 9. The same walk down the falling labels gives days 1, 2, 4 at 43.20 > 42.10 > 41.65: three, not four.
+Day 9 carries rising label 4, so an earlier, lower day carries 3: day 6 at 46.30. Before it, a lower day carries 2: day 3 at 44.60. Then day 1 at 43.20. The run is days 1, 3, 6, 9.
+
+The same walk down the falling labels gives days 1, 2, 4 at 43.20 > 42.10 > 41.65: three, not four.
 
 ### Step 4: nine numbers are not enough
 
@@ -110,7 +114,9 @@ A rising run takes at most one number per block, so it stops at 3. A falling run
 <details>
 <summary>Detailed proof: any two lengths</summary>
 
-Take $`n`$ different numbers, labelled as in Step 0. By Step 1 the $`n`$ label pairs are all different. Each $`a_i`$ lies in 1 up to $`A`$ and each $`b_i`$ in 1 up to $`B`$, so there are at most $`A \times B`$ pairs, and $`n`$ is at most $`A \times B`$. With no rising run of $`r`$ and no falling run of $`s`$, $`A \times B`$ is at most (r − 1)(s − 1), so a list one longer holds a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
+Take $`n`$ different numbers, labelled as in Step 0. By Step 1 the $`n`$ label pairs are all different. Each $`a_i`$ lies in 1 up to $`A`$, and each $`b_i`$ lies in 1 up to $`B`$. That leaves at most $`A \times B`$ pairs, so $`n \le A \times B`$.
+
+With no rising run of $`r`$ and no falling run of $`s`$, the product $`A \times B`$ is at most (r − 1)(s − 1). A list one longer must hold a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
 
 </details>
 
@@ -727,11 +733,12 @@ example : ∀ t : Finset (Fin 9), (∀ i ∈ t, ∀ j ∈ t, i < j → nineDays 
 
 ## Where this goes next
 
+- [Mantel and Turan](05-mantel-and-turan.md): next on this shelf, shifting from forced runs in lists to how many links force a triangle or clique.
+- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
 - [Erdos problems](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/07-erdos-problems-and-computer-search.md): more of Erdős's questions, many with no exact threshold known.
 - [The unit-distance problem](../../25-Frontier/04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): another Erdős question about points in the plane; his guess was refuted in 2026, and the true answer is still open.
-- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
 
-The lemma was built to force a convex polygon out of enough scattered points, and exactly how many points that takes is still open. The frontier cards pick up Erdős's questions about points in the plane.
+The lemma was built to force a convex polygon out of enough scattered points, and exactly how many points that takes is still open. Meanwhile, the next card on this shelf asks how many links alone force a triangle.
 
 ---
 

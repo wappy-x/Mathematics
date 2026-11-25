@@ -11,7 +11,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /-! A two-colouring of the complete graph K(n) is a simple graph `G` on `Fin n`: the edges of
-`G` get the first colour (copper), the edges of its complement `Gᶜ` the second (fibre).
+`G` get the first colour (Carrier A), the edges of its complement `Gᶜ` the second (Carrier B).
 A one-colour K(k) is a k-clique in `G` or in `Gᶜ`, so "no one-colour K(k)" is
 `G.CliqueFree k ∧ Gᶜ.CliqueFree k`, and "R(k,k) > n" is the existence of such a `G`. -/
 
@@ -208,7 +208,7 @@ theorem good_colouring_of_two_mul_choose_lt (n k : ℕ) (h : 2 * n.choose k < 2 
     ∃ G : SimpleGraph (Fin n), G.CliqueFree k ∧ Gᶜ.CliqueFree k := by
   exact good_colouring_aux n k h
 
--- The server hall: 32 machines, 496 cables, 2^496 plans, 64512240 ten-sets, 45 cables in each.
+-- The network: 32 sites, 496 routes, 2^496 plans, 64512240 ten-sets, 45 routes in each.
 example : Nat.choose 32 2 = 496 := by decide
 example : Nat.choose 32 10 = 64512240 := by
   rw [Nat.choose_eq_descFactorial_div_factorial]; decide
@@ -229,7 +229,7 @@ example : 2 ^ (1 + 10 / 2) = 64 ∧ Nat.factorial 10 = 3628800 ∧ 64 < 3628800 
 -- k = 3 for the clean fraction: 2^5 = 32 < 36 = (3!)^2; at k = 2 the fraction 2^2 / 2! = 2 is over 1.
 example : 2 ^ 5 < (Nat.factorial 3) ^ 2 ∧ (Nat.factorial 3) ^ 2 = 36 := by decide
 example : ¬ (2 ^ (1 + 2 / 2) < Nat.factorial 2) := by decide
--- The exact test clears 100 machines at k = 10 and fails at 101.
+-- The exact test clears 100 sites at k = 10 and fails at 101.
 example : 2 * Nat.choose 100 10 < 2 ^ Nat.choose 10 2 := by
   norm_num [Nat.choose_eq_factorial_div_factorial, Nat.factorial]
 example : ¬ (2 * Nat.choose 101 10 < 2 ^ Nat.choose 10 2) := by
@@ -240,7 +240,7 @@ example : 2 * Nat.choose 5 4 * 2 ^ (Nat.choose 5 2 - Nat.choose 4 2) = 160 := by
 example : 2 * Nat.choose 5 3 * 2 ^ (Nat.choose 5 2 - Nat.choose 3 2) = 2560 := by decide
 example : 2 ^ Nat.choose 4 2 = 64 ∧ 2 ^ Nat.choose 5 2 = 1024 := by decide
 example : 1024 - 132 = 892 ∧ 1024 - 1012 = 12 := by decide
--- Rings on five labelled machines: 5!/(5 x 2) = 12.
+-- Rings on five labelled sites: 5!/(5 x 2) = 12.
 example : Nat.factorial 5 / (5 * 2) = 12 := by decide
 -- Ordered lists of ten: 32 x 31 x ... x 23 = 234102016512000 = 10! x C(32,10).
 example : Nat.descFactorial 32 10 = 234102016512000 := by decide

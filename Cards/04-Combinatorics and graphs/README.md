@@ -239,7 +239,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 14 · Ramsey and Extremal, in Outline · 9 cards
 
-*Friends and strangers, Ramsey numbers and the theorem in outline, Erdos's counting lower bound as the first probabilistic-method argument, Erdos-Szekeres with Dilworth folded, and Mantel and Turan on triangle-free and clique-free graphs.*
+*Friends and strangers, Ramsey numbers and the theorem in outline, Erdos's counting lower bound as the first probabilistic-method argument, Erdos-Szekeres, Mantel and Turan on clique-free graphs, Erdos-Stone and Kovari-Sos-Turan for general forbidden graphs, Szemeredi's regularity lemma, the Lovasz local lemma, and Ramsey theory on the whole numbers (Schur, van der Waerden, Hales-Jewett).*
 
 1. [Friends and strangers: among any six people, three all know each other or three are all strangers, and five is not enough](14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md)
 2. [Ramsey numbers: the size at which a pattern is forced, known exactly for only a handful of cases](14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)

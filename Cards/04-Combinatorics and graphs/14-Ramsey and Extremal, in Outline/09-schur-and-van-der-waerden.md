@@ -10,11 +10,13 @@ Paint 1, 2, 5 and 6 red and 3, 4, 7 and 8 blue. No three equally spaced numbers,
 
 Add 9 and no colouring escapes; the code tries them all. So 9 is the threshold, written $`W(3; 2) = 9`$: progressions of 3 terms, 2 colours.
 
-Sums behave the same way. Colour 1 and 4 red, 2 and 3 blue: no colour holds a sum $`x + y = z`$, with $`x = y`$ allowed. Add 5 and it fails: red 5 gives 1 + 4 = 5, blue 5 gives 2 + 3 = 5. Issai Schur proved in 1917 that this always happens, for any number of colours.
+Sums behave the same way. Colour 1 and 4 red, 2 and 3 blue: no colour holds a sum $`x + y = z`$, with $`x = y`$ allowed. Add 5 and it fails: red 5 gives 1 + 4 = 5, blue 5 gives 2 + 3 = 5.
+
+Issai Schur proved in 1917 that this always happens, for any number of colours.
 
 These are the Ramsey facts of [Friends and strangers](01-friends-and-strangers.md) and [Ramsey numbers](02-ramsey-numbers.md), moved onto the whole numbers.
 
-**Colour enough consecutive whole numbers with a fixed number of colours and one colour must hold a sum x + y = z (Schur) and a progression of any chosen length (van der Waerden); the Hales-Jewett theorem on many-dimensional noughts and crosses is the pattern behind the progressions, and its extension by Graham and Rothschild lies behind both.**
+**Finitely colour enough consecutive whole numbers and one colour holds a sum x + y = z (Schur) and any chosen progression length (van der Waerden, via Hales-Jewett).**
 
 **What kind of fact this is:** three theorems. Schur's is proved here, and $`W(3; 2) = 9`$ by hand and by search. Van der Waerden's and Hales-Jewett are stated, with the link between them proved.
 
@@ -133,7 +135,7 @@ Number the rows and columns of a noughts-and-crosses board 0, 1, 2, so each cell
 - Template $`**`$ gives 00, 11, 22: a diagonal.
 - The other diagonal, 02, 11, 20, needs one place rising while the other falls. No template does that.
 
-Each place is 0, 1, 2 or moving, minus the all-fixed case, so there are $`4^n - 3^n`$ Hales-Jewett lines in $`n`$ dimensions: 7 on the paper board, against the game's 8 winning lines.
+Each place is 0, 1, 2 or moving, minus the all-fixed case. That leaves $`4^n - 3^n`$ Hales-Jewett lines in $`n`$ dimensions: 7 on the paper board, against the game's 8 winning lines.
 
 **The Hales-Jewett theorem** (Alfred Hales and Robert Jewett, 1963): for any alphabet size and number of colours, a board of high enough dimension forces a single-coloured Hales-Jewett line. In game terms, noughts and crosses in enough dimensions cannot be drawn.
 
@@ -628,7 +630,9 @@ example : ∀ c : Fin 9 → Bool, ∃ a d : Fin 9,
 > [!warning]
 > **Expecting the pattern in a fixed colour.** The colouring chooses which colour holds it. Colour 1 to 9 all blue and red holds nothing.
 >
-> - **Forgetting that x may equal y**, **taking the triangle ceiling as exact** and **counting every winning line**: see the table above.
+> - **Forgetting that x may equal y.** Requiring different numbers stretches the 2-colour Schur dodge from 4 to 8.
+> - **Taking the triangle ceiling as exact.** For 3 colours, R(3,3,3) − 2 = 15, but S(3) = 13.
+> - **Counting every winning line as a Hales-Jewett line.** The 3 × 3 × 3 cube has 49 winning lines (0 dodges), but only 37 Hales-Jewett lines (1644 dodges).
 
 ---
 
@@ -651,9 +655,10 @@ example : ∀ c : Fin 9 → Bool, ∃ a d : Fin 9,
 
 ## Where this goes next
 
+- [Dilworth's theorem](../15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the first card of the next shelf, turning from forced patterns in colourings to chains, antichains, and set systems.
 - [Long progressions](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/05-szemeredi-and-green-tao-in-outline.md): Szemerédi's density theorem and progressions in the primes.
 
-$`W(3; 2) = 9`$ falls to a hand argument, but how fast $`W(k; 2)`$ grows with $`k`$ is far from settled.
+$`W(3; 2) = 9`$ falls to a hand argument, while how fast $`W(k; 2)`$ grows with $`k`$ is far from settled. The next shelf moves from Ramsey patterns to partial orders and set systems, opening with Dilworth's theorem.
 
 ---
 

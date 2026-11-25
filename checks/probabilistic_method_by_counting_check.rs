@@ -1,7 +1,7 @@
 // Erdos's counting trick -- the same check as the Python, in Rust, std only, no
-// crates.  A server hall of 32 machines, every pair joined by copper or by fibre.
-// The plans with ten machines joined all one way are over-counted by formula, then
-// the same argument is re-run by listing every plan of K(4) and K(5).
+// crates.  A network of 32 sites, every pair routed over Carrier A or Carrier B.
+// The plans with ten sites linked all over one carrier are over-counted by formula,
+// then the same argument is re-run by listing every plan of K(4) and K(5).
 const K: u32 = 10;
 const N: u32 = 32;
 
@@ -49,7 +49,7 @@ fn main() {
     let exact = share(N, K);
     let loose = 2f64.powi(1 + K as i32 / 2) / falling(K as u128, K) as f64;
     let mut top = N;
-    while share(top + 1, K) < 1.0 { top += 1 }        // the largest hall the exact test still clears
+    while share(top + 1, K) < 1.0 { top += 1 }        // the largest network the exact test still clears
     let ((b44, a44), (b54, a54), (b53, a53)) = (bad_by_listing(4, 4), bad_by_listing(5, 4), bad_by_listing(5, 3));
     let passes = (3..17).all(|k| 2 * choose(root(k), k) < 1u128 << choose(k as u128, 2));
     let digits = (cn2 as f64 * 2f64.log10()).floor() as u32 + 1;
@@ -61,7 +61,7 @@ fn main() {
     println!("loose form 2^{}/{}! = {}/{} = {:.8}", 1 + K / 2, K, 1u32 << (1 + K / 2), falling(K as u128, K), loose);
     println!("loose form under 1 from k = 3 on: 2^5 = {} < (3!)^2 = {}", 1u32 << 5, falling(3, 3).pow(2));
     println!("good plans at least {:.8} x 2^{}, so one exists: {}", 1.0 - exact, cn2, yn(exact < 1.0));
-    println!("largest hall the exact test clears at k = {}: {} (share {:.4}); {} gives {:.4}", K, top, share(top, K), top + 1, share(top + 1, K));
+    println!("largest network the exact test clears at k = {}: {} (share {:.4}); {} gives {:.4}", K, top, share(top, K), top + 1, share(top + 1, K));
     println!("listed, k = 4 on K(4): {} plans, {} bad, bound {}", a44, b44, bound(4, 4, 2));
     println!("listed, k = 4 on K(5): {} plans, {} bad, bound {}, so {} good", a54, b54, bound(5, 4, 2), a54 - b54);
     println!("listed, k = 3 on K(5): {} plans, {} bad, {} good = 5!/(5 x 2); bound {}, over the total", a53, b53, a53 - b53, bound(5, 3, 2));

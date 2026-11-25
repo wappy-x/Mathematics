@@ -10,9 +10,11 @@ Ten sensor stations are to be wired with direct links, each merging the readings
 
 How many links fit? The Petersen graph has ten points, three links at each, 15 links in all, and no 4-cycle. A counting argument in the style of Kővári, Sós and Turán (1954) caps every such network at 17.7 links, so at most 17. The true maximum is 16.
 
-With no triangle, half of all pairs can be linked ([Mantel and Turan](05-mantel-and-turan.md)). With no 4-cycle the share shrinks as the network grows: about 3 pairs in 100 for 1,000 stations. The Erdős–Stone theorem (1946) explains the split: it sets the cap for any forbidden network H by H's colour count, and a 4-cycle needs only 2 colours, the case where its answer is zero.
+With no triangle, half of all pairs can be linked ([Mantel and Turan](05-mantel-and-turan.md)). With no 4-cycle the share shrinks as the network grows: about 3 pairs in 100 for 1,000 stations.
 
-**Forbid any network H and the most links on n points is, for large n, the share 1 − 1/(χ(H) − 1) of all pairs, give or take a vanishing share, where χ(H) is the fewest colours H needs; for a two-sided H that share is zero, and a cherry count caps a network with no 4-cycle at (n/4)(1 + √(4n − 3)) links, about n^(3/2)/2.**
+The Erdős–Stone theorem (1946) explains the split. It sets the cap for any forbidden network H by H's colour count, and a 4-cycle needs only 2 colours, where the share is zero.
+
+**Forbid H and its colour count sets the large-n link share to 1 − 1/(χ(H) − 1); for two-sided H that share vanishes, and 4-cycle-free networks stay near n^(3/2)/2 links.**
 
 **What kind of fact this is:** two theorems. The 4-cycle cap is proved on this card in Why it works. Erdős–Stone is stated; its easy half is proved here, its hard half left to [The regularity lemma](07-szemeredi-regularity-lemma.md) and the sources.
 
@@ -20,7 +22,7 @@ With no triangle, half of all pairs can be linked ([Mantel and Turan](05-mantel-
 
 ```mermaid
 flowchart TB
-    H["Forbid a network H on n points"] --> Q{"Fewest colours H needs"}
+    H["Forbid H inside an n-point network"] --> Q{"Fewest colours H needs"}
     Q -->|"3 or more"| ES["Erdos-Stone: the share 1 - 1/(chi - 1) of all pairs, up to a vanishing share"]
     Q -->|"2: H is two-sided"| Z["Erdos-Stone: share 0, no count"]
     Z --> K["Cherry count: no 4-cycle, at most (n/4)(1 + sqrt(4n - 3)) links"]
@@ -42,7 +44,7 @@ The cap for no 4-cycle:
 
 **Read it aloud:** a network on n points with no 4-cycle has at most n over four, times one plus the square root of 4n minus 3, links.
 
-For 10 stations: 2.5 × 7.08 = 17.71, so at most 17. For large n the square root is close to $`2\sqrt{n}`$, so the cap nears its leading term $`n^{3/2}/2`$, which is 15.81 at n = 10.
+For 10 stations: 2.5 × 7.083 ≈ 17.71, so at most 17. For large n the square root is close to $`2\sqrt{n}`$, so the cap nears its leading term $`n^{3/2}/2`$, which is 15.81 at n = 10.
 
 The Erdős–Stone theorem, for any forbidden network H:
 
@@ -50,7 +52,7 @@ The Erdős–Stone theorem, for any forbidden network H:
 \mathrm{ex}(n, H) = \left(1 - \frac{1}{\chi(H) - 1}\right)\frac{n^2}{2} + o(n^2)
 ```
 
-**Read it aloud:** the most links with no copy of H is one minus one over (chi of H minus one), times n squared over two, plus a remainder that is a vanishing share of n squared.
+**Read it aloud:** the most links avoiding H is 1 − 1/(chi(H) − 1) of n squared over two, plus a vanishing share of n squared.
 
 Here $`\chi(H)`$, chi, is the fewest colours that colour H with linked points different ([Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)). A **two-sided** (bipartite) network splits into two sides with links only across: exactly $`\chi(H) = 2`$.
 
@@ -123,7 +125,8 @@ For 10 points, a ≤ 3.54, where a(a − 1) = 9.00 = 10 − 1, so e ≤ 17.71. T
 
 - **Small n, by search.** Searching every network on 1 to 8 points gives maxima 0, 1, 3, 4, 6, 7, 9, 11. The cap, rounded down, gives 0, 1, 3, 4, 6, 8, 10, 12: never below, at most one above.
 - **Ten points.** The published maximum is 16 (Sources); the code checks a 16-link network listed by hand. The Petersen graph cannot grow: each of its 30 missing links closes a 4-cycle. So stuck is not largest.
-- **The polarity graph.** Its points are triples of whole numbers 0 to q − 1, not all zero, for a prime q; a triple and its multiples count as one point. Two triples are linked when the sum of their coordinate products leaves remainder 0 on division by q; a point is never linked to itself. Two points share at most one neighbour: no 4-cycle. q = 2 gives 7 points, 9 links, cap 10; q = 3 gives 13 points, 24 links, cap 26. In general q² + q + 1 points carry q(q + 1)²/2 links, which grows like $`n^{3/2}/2`$: the true rate, not only a cap.
+- **The polarity graph.** Its points are non-zero triples of numbers 0 to q − 1 for a prime q, with multiples counted as one point. Two distinct points are linked when the sum of their coordinate products leaves remainder 0 on division by q. Two points share at most one neighbour, so no 4-cycle appears.
+- **Polarity graph sizes.** Prime q = 2 gives 7 points, 9 links (cap 10); q = 3 gives 13 points, 24 links (cap 26). In general q² + q + 1 points carry q(q + 1)²/2 links, growing like $`n^{3/2}/2`$: the true rate, not only a cap.
 
 ### Step 5: Erdős–Stone, the easy half
 
@@ -156,12 +159,12 @@ The same count, with larger stars in place of cherries, caps every two-sided H a
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| one plus the square root | 1 + √(4 × 10 − 3) = 1 + √37 | 7.08 |
-| the cap | 10/4 × 7.08 | **17.71, so at most 17** |
+| one plus the square root | 1 + √(4 × 10 − 3) = 1 + √37 | 7.083 |
+| the cap | 10/4 × 7.083 | **17.71, so at most 17** |
 | cherries in the Petersen graph | 10 points × C(3, 2) | 30 |
 | pairs of ends available | C(10, 2) | 45 |
 | average-degree test | 3 × 2 = 6 against 10 − 1 = 9 | 6 ≤ 9 |
-| largest allowed average | 7.08/2 | 3.54 |
+| largest allowed average | 7.083/2 | 3.54 |
 | leading term | 10^1.5 / 2 | 15.81 |
 | Erdős–Stone share for χ = 3 and χ = 2 | 1 − 1/2; 1 − 1/1 | 0.500; 0 |
 
@@ -180,7 +183,9 @@ No 10-point network without a 4-cycle has more than 17 links; the Petersen graph
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Four roads: the cap formula; a scan of every walk a–b–c–d–a for 4-cycles; cherries counted by middles and by ends; and a search of every network on up to 8 points. Chi comes from trying every colouring. The asserts tie the cap to Step 3's quadratic up to n = 10,000 and the search to published values, and demand no 4-cycle in the Petersen and polarity graphs.
+Nothing is imported. Four roads run: the cap formula, a scan of every walk a–b–c–d–a for 4-cycles, cherries counted by middles and ends, and a search of every network on up to 8 points.
+
+Chi comes from trying every colouring. The asserts tie the cap to Step 3's quadratic up to n = 10,000, match the search to published values, and confirm no 4-cycle in the Petersen and polarity graphs.
 
 ### Python
 
@@ -224,7 +229,7 @@ found = net(10, [(0, 1), (0, 2), (1, 2), (0, 3), (0, 4), (3, 4), (1, 5), (1, 6),
 brute, pol = [search(n) for n in range(1, 9)], {q: polarity(q) for q in (2, 3)}
 x = {"triangle": chi(3, [(0, 1), (1, 2), (0, 2)]), "Petersen": chi(10, pet_links), "4-cycle": chi(4, [(0, 1), (1, 2), (2, 3), (0, 3)])}
 a, tri = (1 + 37 ** 0.5) / 2, 1000 * 1000 // 4
-print(f"cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {1 + 37 ** 0.5:.2f} = {cap(10):.2f}, rounded down {int(cap(10))}; 10^1.5 / 2 = {10 ** 1.5 / 2:.2f}")
+print(f"cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {1 + 37 ** 0.5:.3f} ~= {cap(10):.2f}, rounded down {int(cap(10))}; 10^1.5 / 2 = {10 ** 1.5 / 2:.2f}")
 print(f"Petersen graph: {len(pet)} points, {links(pet)} links, degrees {sorted(set(deg))}, 4-cycles found {four_cycles(pet)}")
 print(f"cherries by middles 10 x C(3,2) = {cherries}; distinct end pairs {len(ends)} of C(10,2) = 45")
 print(f"average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = {a:.2f}, a(a - 1) = {a * (a - 1):.2f}")
@@ -247,10 +252,10 @@ assert list(x.values()) == [3, 3, 2] and links(found) == 16 and four_cycles(foun
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x 7.08 = 17.71, rounded down 17; 10^1.5 / 2 = 15.81
+cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x 7.083 ~= 17.71, rounded down 17; 10^1.5 / 2 = 15.81
 Petersen graph: 10 points, 15 links, degrees [3], 4-cycles found 0
 cherries by middles 10 x C(3,2) = 30; distinct end pairs 30 of C(10,2) = 45
 average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = 3.54, a(a - 1) = 9.00
@@ -332,7 +337,7 @@ fn main() {
     let x = [("triangle", chi(3, &[(0, 1), (1, 2), (0, 2)])), ("Petersen", chi(10, &pet_links)), ("4-cycle", chi(4, &[(0, 1), (1, 2), (2, 3), (0, 3)]))];
     let (a, tri) = ((1.0 + 37f64.sqrt()) / 2.0, 1000 * 1000 / 4);
     let mut dset = deg.clone(); dset.sort(); dset.dedup();
-    println!("cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {:.2} = {:.2}, rounded down {}; 10^1.5 / 2 = {:.2}", 1.0 + 37f64.sqrt(), cap(10), cap(10) as usize, 10f64.powf(1.5) / 2.0);
+    println!("cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {:.3} ~= {:.2}, rounded down {}; 10^1.5 / 2 = {:.2}", 1.0 + 37f64.sqrt(), cap(10), cap(10) as usize, 10f64.powf(1.5) / 2.0);
     println!("Petersen graph: {} points, {} links, degrees {:?}, 4-cycles found {}", pet.len(), links(&pet), dset, four_cycles(&pet));
     println!("cherries by middles 10 x C(3,2) = {}; distinct end pairs {} of C(10,2) = 45", cherries, ends.len());
     println!("average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = {:.2}, a(a - 1) = {:.2}", a, a * (a - 1.0));
@@ -356,10 +361,10 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x 7.08 = 17.71, rounded down 17; 10^1.5 / 2 = 15.81
+cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x 7.083 ~= 17.71, rounded down 17; 10^1.5 / 2 = 15.81
 Petersen graph: 10 points, 15 links, degrees [3], 4-cycles found 0
 cherries by middles 10 x C(3,2) = 30; distinct end pairs 30 of C(10,2) = 45
 average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = 3.54, a(a - 1) = 9.00
@@ -592,10 +597,10 @@ example : #(turanGraph 10 2).edgeFinset = 25 := by decide
 
 ## Where this goes next
 
-- [The regularity lemma](07-szemeredi-regularity-lemma.md): the tool that proves the hard half of Erdős–Stone.
+- [The regularity lemma](07-szemeredi-regularity-lemma.md): the tool that proves the hard half of Erdős–Stone in outline.
 - [Finite planes and orthogonal Latin squares](../16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): the planes behind the polarity graph of Step 4.
 
-For many two-sided networks H, such as the 8-cycle, the right power of n in the most links is still unknown.
+For many two-sided networks H, such as the 8-cycle, the right power of n stays open. The next card builds the regularity lemma that backs the hard half of Erdős–Stone.
 
 ---
 

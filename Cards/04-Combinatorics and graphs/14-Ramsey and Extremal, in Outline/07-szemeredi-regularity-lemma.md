@@ -62,7 +62,7 @@ Fix an allowed error ε (epsilon). A pair of parts (A, B) is **ε-regular** when
 
 The depots fail for every ε below 1/2: {a1, a2} and {b1, b2} hold half of each part and show a gap of 0.5.
 
-The **regularity lemma**: for every ε > 0 and whole number m there is a number M(ε, m) such that every graph with at least m vertices splits into k parts, $`m \le k \le M(\varepsilon, m)`$, of sizes differing by at most one, with all but at most $`\varepsilon k^2`$ pairs of parts ε-regular.
+The **regularity lemma**: for every ε > 0 and whole number m, there is a ceiling M(ε, m). Every graph with at least m vertices splits into k parts, with $`m \le k \le M(\varepsilon, m)`$, whose sizes differ by at most one. At most $`\varepsilon k^2`$ pairs of parts fail to be ε-regular.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -125,7 +125,9 @@ If more than $`\varepsilon k^2`$ pairs are irregular, cut every part along all i
 <details>
 <summary>Why the part count becomes a tower of 2s</summary>
 
-In one round, each part is cut by up to k − 1 witnesses, so it can fall into $`2^{k-1}`$ pieces, and the count jumps from k to about $`k\,2^k`$. Up to $`\varepsilon^{-5}`$ such jumps make a tower of 2s. Each round also chops the pieces into equal blocks, which costs far less energy than it gains. Gowers showed in 1997 that some graphs really need a tower.
+In one round, each part is cut by up to k − 1 witnesses, so it can fall into $`2^{k-1}`$ pieces. The part count jumps from k to about $`k\,2^k`$.
+
+Up to $`\varepsilon^{-5}`$ such jumps make a tower of 2s. Each round also chops the pieces into equal blocks, which costs far less energy than it gains. Gowers showed in 1997 that some graphs really need a tower.
 
 </details>
 
@@ -145,7 +147,7 @@ Three parts of 16 at density 0.5 predict 0.5³ × 16³ = 512 triangles. Random l
 
 ### Step 6: the triangle removal lemma
 
-For every ε > 0 there is a δ > 0 such that a graph on n vertices with fewer than $`\delta n^3`$ triangles becomes triangle-free after deleting at most $`\varepsilon n^2`$ edges: few triangles means close to none.
+For every ε > 0 there is a δ > 0 with the following guarantee. Any graph on n vertices with fewer than $`\delta n^3`$ triangles becomes triangle-free after deleting at most $`\varepsilon n^2`$ edges: few triangles means close to none.
 
 Apply the regularity lemma with error ε/4 and at least 4/ε parts. Delete:
 
@@ -168,7 +170,7 @@ triangles. So δ can be any number below $`\varepsilon^3 / (1024\,M^3)`$: tiny, 
 
 ### Step 7: Erdős–Stone, in outline
 
-[Beyond Turan](06-erdos-stone-and-kovari-sos-turan.md) states it for any forbidden graph. With t its vertex count and r + 1 its colour count, colouring it puts it inside r + 1 groups of t vertices with every cross pair linked, so it suffices that at least $`(1 - 1/r + \gamma)\,n^2/2`$ edges, for fixed γ > 0 and large n, force such groups.
+[Beyond Turan](06-erdos-stone-and-kovari-sos-turan.md) states it for any forbidden graph with t vertices and r + 1 colours. Colouring it puts it inside r + 1 groups of t vertices with every cross pair linked. So it suffices that at least $`(1 - 1/r + \gamma)\,n^2/2`$ edges, for fixed γ > 0 and large n, force such groups.
 
 1. Take a regular partition and delete the edges of Step 6.
 2. Form the **reduced graph**: one point per part, linked when the pair is regular and dense. It keeps over $`(1 - 1/r)\,k^2/2`$ links, so Turán's theorem ([Mantel and Turan](05-mantel-and-turan.md)) gives r + 1 points all linked.
@@ -203,7 +205,9 @@ The depots pass only from ε = 0.500 up, which allows a gap of half the whole ra
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The depots' worst gap comes by two roads: all 121 sub-pairs with at least two vertices a side, and a sort that fixes Y and takes the best- and worst-linked X of each size; they also agree on a random 5 + 5 corner. The energy gain is found twice, as a difference and as squared gaps. A 16 + 16 random pair from a hand-written generator is set against the blocks, and triangles are counted edge by edge.
+Nothing is imported. The depots' worst gap comes by two roads: all 121 sub-pairs with at least two vertices a side, and a sort that fixes Y and takes the best- and worst-linked X of each size. Both roads also agree on a random 5 + 5 corner.
+
+The energy gain is found twice, as a difference and as squared gaps. A 16 + 16 random pair from a hand-written generator is set against the blocks, and triangles are counted edge by edge.
 
 ### Python
 
@@ -722,10 +726,11 @@ example : ((1 / 2) ^ 3 * 16 ^ 3 : ℚ) = 512 := by norm_num
 
 ## Where this goes next
 
-- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): random graphs, the model regular pairs imitate.
+- [The Lovasz local lemma](08-lovasz-local-lemma.md): next on this shelf, a probabilistic tool for avoiding many rare, locally tied bad events at once.
+- [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): Erdős–Rényi random graphs, the model regular pairs imitate.
 - [Long progressions](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/05-szemeredi-and-green-tao-in-outline.md): Szemerédi's theorem on progressions, where the lemma was born.
 
-The lemma needs dense graphs and a tower of parts; regularity for sparse networks with sane bounds is still an open field.
+The lemma needs dense graphs and a tower of parts; regularity for sparse networks with sane bounds stays open. The next card returns to proving good structures exist when bad events overlap only locally.
 
 ---
 

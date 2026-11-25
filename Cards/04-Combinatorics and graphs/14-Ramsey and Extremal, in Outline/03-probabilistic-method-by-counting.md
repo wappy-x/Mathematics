@@ -6,15 +6,17 @@
 
 ## General Overview
 
-A server hall holds 32 machines. Every pair is joined by one cable, copper or fibre. There are 496 pairs, so 496 cables, each settled by a choice of two. That gives 2^496 wiring plans, a number of 150 digits.
+A network connects 32 regional sites. Every pair routes direct traffic over one of two independent transit carriers, Carrier A or Carrier B. There are 496 pairs, so 496 pairwise routes, each assigned to one carrier. That gives 2^496 routing plans, a number of 150 digits.
 
-Call a plan **bad** if some ten machines have all 45 cables among them in one material. Call it **good** otherwise. Is there a good plan?
+Call a plan **bad** if some ten sites route all 45 links among them over one carrier, leaving that group exposed to a single-carrier outage. Call it **good** otherwise. Is there a good plan?
 
-Paul Erdos, in 1947, counted instead of searching. Every bad plan has a ten-set and a material to blame. Fix the blame and the 45 cables inside the ten-set are forced; the other 451 are free. With 64512240 ten-sets and two materials, the bad plans number at most 2 x 64512240 x 2^451, a share of at most 0.00000367. The rest are good. Not one has been named.
+Paul Erdos, in 1947, counted instead of searching. Every bad plan has a ten-set and a carrier to blame. Fix the blame and the 45 routes inside the ten-set are forced; the other 451 are free.
 
-In graph language the machines are dots, the cables edges, the materials two colours, and the hall the complete graph K(32). A clique is a set of dots all joined to each other.
+With 64512240 ten-sets and two carriers, the bad plans number at most 2 × 64512240 × 2^451, a share of at most 0.00000367. The rest are good. Not one has been named.
 
-R(k,k) is the smallest hall size at which every plan has k machines joined all one way ([Ramsey numbers](02-ramsey-numbers.md)). The same count for any clique size k gives R(k,k) > 2^(k/2). Each step up in k multiplies the guaranteed hall size by the square root of 2, so the guarantee grows exponentially.
+In graph language the sites are dots, the routes edges, the carriers two colours, and the network the complete graph K(32). A clique is a set of dots all joined to each other.
+
+R(k,k) is the smallest network size at which every plan has k sites linked all over one carrier ([Ramsey numbers](02-ramsey-numbers.md)). The same count for any clique size k gives R(k,k) > 2^(k/2). Each step up in k multiplies the guaranteed size by the square root of 2, so the guarantee grows exponentially.
 
 **Count the bad cases, even roughly from above; if the count falls short of all cases, a good case exists, though the count shows none.**
 
@@ -24,9 +26,9 @@ R(k,k) is the smallest hall size at which every plan has k machines joined all o
 
 ```mermaid
 flowchart TB
-    A["All wiring plans of K(32)<br/>one choice of two per cable: 2^496"]
-    A --> B["Blamed on some ten-set and a material<br/>at most 2 x 64512240 x 2^451"]
-    A --> C["Left over: no ten machines all one way<br/>at least 0.99999633 x 2^496"]
+    A["All routing plans of K(32)<br/>one choice of two per route: 2^496"]
+    A --> B["Blamed on some ten-set and a carrier<br/>at most 2 x 64512240 x 2^451"]
+    A --> C["Left over: no ten sites all on one carrier<br/>at least 0.99999633 x 2^496"]
     B --> D["a share of 64512240/2^44 = 0.00000367"]
 ```
 
@@ -62,7 +64,7 @@ With $`n`$ at 2^(k/2) the test collapses to one fraction:
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`n`$ | dots, or machines | 32 | more k-sets, so a larger bad share |
+| $`n`$ | dots, or sites | 32 | more k-sets, so a larger bad share |
 | $`k`$ | size of the one-colour clique to avoid | 10 | more edges forced, so a far smaller bad share |
 | $`K(n)`$ | the complete graph: n dots, every pair joined | K(32), 496 edges | — |
 | $`C(n,k)`$ | k-sets among n things, order ignored | C(32,10) = 64512240 | — |
@@ -87,11 +89,11 @@ A count of bad plans under the total forces a good plan to exist. The count may 
 
 ### Step 1: count every plan
 
-Each of the 496 cables is settled on its own, two ways: 2^496 plans.
+Each of the 496 routes is assigned on its own, two ways: 2^496 plans.
 
 ### Step 2: over-count the bad plans by blame
 
-In a bad plan, pick one ten-set joined all one way, and its material: the plan's **witness**. A fixed witness forces 45 cables and frees 451, so 2^451 plans carry it. There are 2 x 64512240 witnesses, so at most 2 x 64512240 x 2^451 bad plans.
+In a bad plan, pick one ten-set linked all over one carrier, and that carrier: the plan's **witness**. A fixed witness forces 45 routes and frees 451, so 2^451 plans carry it. There are 2 × 64512240 witnesses, so at most 2 × 64512240 × 2^451 bad plans.
 
 A plan with two offending ten-sets is counted twice. That is allowed. Adding the sizes of overlapping collections always gives at least the size of their union, which is the union bound ([Stopping the sieve early](../04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)).
 
@@ -107,7 +109,9 @@ So a good plan exists, and R(10,10) > 32.
 
 ### Step 4: why the threshold is 2^(k/2)
 
-Now let $`n`$ and $`k`$ vary. The k-set count C(n, k) grows with $`n`$; the shrink factor $`2^{\,1-C(k,2)}`$ ignores $`n`$. The cheap bound C(n, k) ≤ n^k / k! ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance. At $`n`$ = 2^(k/2), n^k = 2^(k^2/2) almost exactly cancels the shrink factor, leaving $`2^{\,1+k/2}/k!`$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
+Now let $`n`$ and $`k`$ vary. The k-set count C(n, k) grows with $`n`$; the shrink factor $`2^{\,1-C(k,2)}`$ ignores $`n`$. The cheap bound C(n, k) ≤ n^k / k! ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance.
+
+At $`n`$ = 2^(k/2), n^k = 2^(k^2/2) almost cancels the shrink factor, leaving $`2^{\,1+k/2}/k!`$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
 
 <details>
 <summary>Detailed proof, for every clique size at once</summary>
@@ -116,7 +120,9 @@ Let $`k`$ be 3 or more and $`n`$ the whole part of 2^(k/2). Steps 1 to 3, with $
 
 $`\displaystyle C(n,k)\,2^{\,1-C(k,2)} \;\le\; \frac{2^{\,k^2/2}}{k!} \times 2^{\,1 - k^2/2 + k/2} \;=\; \frac{2^{\,1+k/2}}{k!}.`$
 
-This is under 1 when $`2^{\,1+k/2} < k!`$, which squared reads 2^(k+2) < (k!)^2. At k = 3 that is 32 < 36. Raising k by one doubles the left side and multiplies the right by (k + 1)^2, which is larger, so the inequality holds from k = 3 on. Some colouring of K(n) has no one-colour K(k), and R(k,k) > n. ∎
+This is under 1 when $`2^{\,1+k/2} < k!`$, which squared reads 2^(k+2) < (k!)^2. At k = 3 that is 32 < 36.
+
+Raising k by one doubles the left side and multiplies the right by (k + 1)^2, which is larger, so the inequality holds from k = 3 on. Some colouring of K(n) has no one-colour K(k), and R(k,k) > n. ∎
 
 </details>
 
@@ -128,50 +134,52 @@ The argument is often told with a coin flipped for each edge; with a chance read
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| pairs among 32 machines | C(32,2) | 496 |
-| all wiring plans | two choices per cable | 2^496 |
+| pairs among 32 sites | C(32,2) | 496 |
+| all routing plans | two choices per route | 2^496 |
 | ten-sets | C(32,10) | 64512240 |
-| cables inside one ten-set | C(10,2) | 45 |
-| cables a witness leaves free | 496 − 45 | 451 |
-| bad share, at most | 2 x 64512240 x 2^451 / 2^496 = 64512240 / 2^44 | **0.00000367** |
+| routes inside one ten-set | C(10,2) | 45 |
+| routes a witness leaves free | 496 − 45 | 451 |
+| bad share, at most | 2 × 64512240 × 2^451 / 2^496 = 64512240 / 2^44 | **0.00000367** |
 | the loose form | 2^6 / 10! = 64 / 3628800 | 0.00001764 |
-| good plans, at least | 0.99999633 x 2^496 | **more than none** |
+| good plans, at least | 0.99999633 × 2^496 | **more than none** |
 
-So 32 machines can be wired with no ten joined all one way: R(10,10) > 32.
+So 32 sites can be routed with no ten linked all over one carrier: R(10,10) > 32.
 
-The exact test reaches further than the clean threshold. It clears every hall up to 100 machines, where the share is 0.9840, and fails at 101, where it is 1.0921. So the same count gives R(10,10) > 100.
+The exact test reaches further than the clean threshold. It clears every network up to 100 sites, where the share is 0.9840, and fails at 101, where it is 1.0921. So the same count gives R(10,10) > 100.
 
 ### The argument, small enough to list
 
-| Hall | Clique | Plans | Bad, by listing | Bound | Verdict |
+| Network | Clique | Plans | Bad, by listing | Bound | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| K(4) | 4 | 64 | 2 | 2 | exact: all-copper and all-fibre |
+| K(4) | 4 | 64 | 2 | 2 | exact: all Carrier A and all Carrier B |
 | K(5) | 4 | 1024 | 132 | 160 | an over-count, still under 1024: 892 good |
 | K(5) | 3 | 1024 | 1012 | 2560 | bound over the total, so silent |
 
-In the last row the count proves nothing, yet 12 good plans exist: a five-machine ring in one material, the other five cables forming a second ring in the other. Rings on five labelled machines number 5!/(5 x 2) = 12.
+In the last row the count proves nothing, yet 12 good plans exist: a five-site ring on one carrier, the other five routes forming a second ring on the other. Rings on five labelled sites number 5!/(5 × 2) = 12.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Blame ordered lists of ten machines | 234102016512000/2^44 = 13.31 | Each ten-set is named 10! times; the division by 10! in C(32,10) is what brings the share under 1 |
-| Count one material only | 0.00000183; on K(4), 1 allowed where 2 exist | Plans with an all-fibre ten-set go uncounted, so the bound is false |
-| Push the hall to 101 machines | share 1.0921 | Past the crossing the k-set count beats the fixed shrink, and nothing follows |
+| Blame ordered lists of ten sites | 234102016512000/2^44 = 13.31 | Each ten-set is named 10! times; the division by 10! in C(32,10) is what brings the share under 1 |
+| Count one carrier only | 0.00000183; on K(4), 1 allowed where 2 exist | Plans with an all-Carrier-B ten-set go uncounted, so the bound is false |
+| Push the network to 101 sites | share 1.0921 | Past the crossing the k-set count beats the fixed shrink, and nothing follows |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads that share no arithmetic reach the ten-set count: a falling product over a factorial, and Pascal's rule. Then brute force re-runs the argument: every plan of K(4) and K(5) is searched for a one-colour clique and set against the bound. Last, the exact test runs at the whole part of 2^(k/2) for k from 3 to 16.
+Nothing is imported. Two roads that share no arithmetic reach the ten-set count: a falling product over a factorial, and Pascal's rule.
+
+Then brute force re-runs the argument: every plan of K(4) and K(5) is searched for a one-colour clique and set against the bound. Last, the exact test runs at the whole part of 2^(k/2) for k from 3 to 16.
 
 ### Python
 
 ```python
 # Erdos's counting trick -- the check behind the card.  Nothing is imported.  A
-# server hall of 32 machines, every pair joined by copper or by fibre.  The plans
-# with ten machines joined all one way are over-counted by formula, then the same
-# argument is re-run by listing every plan of K(4) and K(5).
+# network of 32 sites, every pair routed over Carrier A or Carrier B.  The plans
+# with ten sites linked all over one carrier are over-counted by formula, then the
+# same argument is re-run by listing every plan of K(4) and K(5).
 K, N = 10, 32
 
 def falling(n, k):                        # n x (n-1) x ... x (n-k+1); falling(k, k) is k!
@@ -202,7 +210,7 @@ cn2, ck2 = choose(N, 2), choose(K, 2)
 c_fall, c_pas = choose(N, K), pascal(N, K)
 exact, loose = share(N, K), 2 ** (1 + K // 2) / falling(K, K)
 top = N
-while share(top + 1, K) < 1: top += 1   # the largest hall the exact test still clears
+while share(top + 1, K) < 1: top += 1   # the largest network the exact test still clears
 (b44, a44), (b54, a54), (b53, a53) = bad_by_listing(4, 4), bad_by_listing(5, 4), bad_by_listing(5, 3)
 ks = range(3, 17)
 
@@ -212,7 +220,7 @@ print(f"bad plans at most 2 x {c_fall} x 2^{cn2 - ck2}, a share of {c_fall}/2^{c
 print(f"loose form 2^{1 + K // 2}/{K}! = {2 ** (1 + K // 2)}/{falling(K, K)} = {loose:.8f}")
 print(f"loose form under 1 from k = 3 on: 2^5 = {2 ** 5} < (3!)^2 = {falling(3, 3) ** 2}")
 print(f"good plans at least {1 - exact:.8f} x 2^{cn2}, so one exists: {yn(exact < 1)}")
-print(f"largest hall the exact test clears at k = {K}: {top} (share {share(top, K):.4f}); {top + 1} gives {share(top + 1, K):.4f}")
+print(f"largest network the exact test clears at k = {K}: {top} (share {share(top, K):.4f}); {top + 1} gives {share(top + 1, K):.4f}")
 print(f"listed, k = 4 on K(4): {a44} plans, {b44} bad, bound {bound(4, 4)}")
 print(f"listed, k = 4 on K(5): {a54} plans, {b54} bad, bound {bound(5, 4)}, so {a54 - b54} good")
 print(f"listed, k = 3 on K(5): {a53} plans, {b53} bad, {a53 - b53} good = 5!/(5 x 2); bound {bound(5, 3)}, over the total")
@@ -227,7 +235,7 @@ assert all(root(k) ** 2 <= 1 << k < (root(k) + 1) ** 2 and bound(root(k), k) < 2
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 k = 10, n = 32: 496 pairs, 45 inside a ten-set, 2^496 plans, a number of 150 digits
@@ -236,7 +244,7 @@ bad plans at most 2 x 64512240 x 2^451, a share of 64512240/2^44 = 0.00000367
 loose form 2^6/10! = 64/3628800 = 0.00001764
 loose form under 1 from k = 3 on: 2^5 = 32 < (3!)^2 = 36
 good plans at least 0.99999633 x 2^496, so one exists: yes
-largest hall the exact test clears at k = 10: 100 (share 0.9840); 101 gives 1.0921
+largest network the exact test clears at k = 10: 100 (share 0.9840); 101 gives 1.0921
 listed, k = 4 on K(4): 64 plans, 2 bad, bound 2
 listed, k = 4 on K(5): 1024 plans, 132 bad, bound 160, so 892 good
 listed, k = 3 on K(5): 1024 plans, 1012 bad, 12 good = 5!/(5 x 2); bound 2560, over the total
@@ -253,9 +261,9 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`. Counts are 128-
 
 ```rust
 // Erdos's counting trick -- the same check as the Python, in Rust, std only, no
-// crates.  A server hall of 32 machines, every pair joined by copper or by fibre.
-// The plans with ten machines joined all one way are over-counted by formula, then
-// the same argument is re-run by listing every plan of K(4) and K(5).
+// crates.  A network of 32 sites, every pair routed over Carrier A or Carrier B.
+// The plans with ten sites linked all over one carrier are over-counted by formula,
+// then the same argument is re-run by listing every plan of K(4) and K(5).
 const K: u32 = 10;
 const N: u32 = 32;
 
@@ -303,7 +311,7 @@ fn main() {
     let exact = share(N, K);
     let loose = 2f64.powi(1 + K as i32 / 2) / falling(K as u128, K) as f64;
     let mut top = N;
-    while share(top + 1, K) < 1.0 { top += 1 }        // the largest hall the exact test still clears
+    while share(top + 1, K) < 1.0 { top += 1 }        // the largest network the exact test still clears
     let ((b44, a44), (b54, a54), (b53, a53)) = (bad_by_listing(4, 4), bad_by_listing(5, 4), bad_by_listing(5, 3));
     let passes = (3..17).all(|k| 2 * choose(root(k), k) < 1u128 << choose(k as u128, 2));
     let digits = (cn2 as f64 * 2f64.log10()).floor() as u32 + 1;
@@ -315,7 +323,7 @@ fn main() {
     println!("loose form 2^{}/{}! = {}/{} = {:.8}", 1 + K / 2, K, 1u32 << (1 + K / 2), falling(K as u128, K), loose);
     println!("loose form under 1 from k = 3 on: 2^5 = {} < (3!)^2 = {}", 1u32 << 5, falling(3, 3).pow(2));
     println!("good plans at least {:.8} x 2^{}, so one exists: {}", 1.0 - exact, cn2, yn(exact < 1.0));
-    println!("largest hall the exact test clears at k = {}: {} (share {:.4}); {} gives {:.4}", K, top, share(top, K), top + 1, share(top + 1, K));
+    println!("largest network the exact test clears at k = {}: {} (share {:.4}); {} gives {:.4}", K, top, share(top, K), top + 1, share(top + 1, K));
     println!("listed, k = 4 on K(4): {} plans, {} bad, bound {}", a44, b44, bound(4, 4, 2));
     println!("listed, k = 4 on K(5): {} plans, {} bad, bound {}, so {} good", a54, b54, bound(5, 4, 2), a54 - b54);
     println!("listed, k = 3 on K(5): {} plans, {} bad, {} good = 5!/(5 x 2); bound {}, over the total", a53, b53, a53 - b53, bound(5, 3, 2));
@@ -331,7 +339,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 k = 10, n = 32: 496 pairs, 45 inside a ten-set, 2^496 plans, a number of 150 digits
@@ -340,7 +348,7 @@ bad plans at most 2 x 64512240 x 2^451, a share of 64512240/2^44 = 0.00000367
 loose form 2^6/10! = 64/3628800 = 0.00001764
 loose form under 1 from k = 3 on: 2^5 = 32 < (3!)^2 = 36
 good plans at least 0.99999633 x 2^496, so one exists: yes
-largest hall the exact test clears at k = 10: 100 (share 0.9840); 101 gives 1.0921
+largest network the exact test clears at k = 10: 100 (share 0.9840); 101 gives 1.0921
 listed, k = 4 on K(4): 64 plans, 2 bad, bound 2
 listed, k = 4 on K(5): 1024 plans, 132 bad, bound 160, so 892 good
 listed, k = 3 on K(5): 1024 plans, 1012 bad, 12 good = 5!/(5 x 2); bound 2560, over the total
@@ -355,12 +363,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three facts for every hall size n and clique size k, not just 32 and 10.
+Lean proves the card's three facts for every network size n and clique size k, not just 32 and 10.
 
 - For every clique size k of 3 or more, K(n) has a colouring with no one-colour K(k) whenever n is at most 2^(k/2). So R(k,k) > 2^(k/2).
 - For every n and k, the bad colourings of K(n) number at most 2 x C(n,k) x 2^(C(n,2) − C(k,2)).
 - The exact test: if 2 x C(n,k) is under 2^C(k,2), K(n) has a colouring with no one-colour K(k), so R(k,k) > n.
-- It also re-checks the card's numbers: 496 cables, 64512240 ten-sets, 150 digits, the crossing between 100 and 101, and the whole parts of 2^(k/2).
+- It also re-checks the card's numbers: 496 routes, 64512240 ten-sets, 150 digits, the crossing between 100 and 101, and the whole parts of 2^(k/2).
 
 Listing every plan of K(4) and K(5), and printing the output, is left to the Python and Rust checks.
 
@@ -378,7 +386,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /-! A two-colouring of the complete graph K(n) is a simple graph `G` on `Fin n`: the edges of
-`G` get the first colour (copper), the edges of its complement `Gᶜ` the second (fibre).
+`G` get the first colour (Carrier A), the edges of its complement `Gᶜ` the second (Carrier B).
 A one-colour K(k) is a k-clique in `G` or in `Gᶜ`, so "no one-colour K(k)" is
 `G.CliqueFree k ∧ Gᶜ.CliqueFree k`, and "R(k,k) > n" is the existence of such a `G`. -/
 
@@ -575,7 +583,7 @@ theorem good_colouring_of_two_mul_choose_lt (n k : ℕ) (h : 2 * n.choose k < 2 
     ∃ G : SimpleGraph (Fin n), G.CliqueFree k ∧ Gᶜ.CliqueFree k := by
   exact good_colouring_aux n k h
 
--- The server hall: 32 machines, 496 cables, 2^496 plans, 64512240 ten-sets, 45 cables in each.
+-- The network: 32 sites, 496 routes, 2^496 plans, 64512240 ten-sets, 45 routes in each.
 example : Nat.choose 32 2 = 496 := by decide
 example : Nat.choose 32 10 = 64512240 := by
   rw [Nat.choose_eq_descFactorial_div_factorial]; decide
@@ -596,7 +604,7 @@ example : 2 ^ (1 + 10 / 2) = 64 ∧ Nat.factorial 10 = 3628800 ∧ 64 < 3628800 
 -- k = 3 for the clean fraction: 2^5 = 32 < 36 = (3!)^2; at k = 2 the fraction 2^2 / 2! = 2 is over 1.
 example : 2 ^ 5 < (Nat.factorial 3) ^ 2 ∧ (Nat.factorial 3) ^ 2 = 36 := by decide
 example : ¬ (2 ^ (1 + 2 / 2) < Nat.factorial 2) := by decide
--- The exact test clears 100 machines at k = 10 and fails at 101.
+-- The exact test clears 100 sites at k = 10 and fails at 101.
 example : 2 * Nat.choose 100 10 < 2 ^ Nat.choose 10 2 := by
   norm_num [Nat.choose_eq_factorial_div_factorial, Nat.factorial]
 example : ¬ (2 * Nat.choose 101 10 < 2 ^ Nat.choose 10 2) := by
@@ -607,7 +615,7 @@ example : 2 * Nat.choose 5 4 * 2 ^ (Nat.choose 5 2 - Nat.choose 4 2) = 160 := by
 example : 2 * Nat.choose 5 3 * 2 ^ (Nat.choose 5 2 - Nat.choose 3 2) = 2560 := by decide
 example : 2 ^ Nat.choose 4 2 = 64 ∧ 2 ^ Nat.choose 5 2 = 1024 := by decide
 example : 1024 - 132 = 892 ∧ 1024 - 1012 = 12 := by decide
--- Rings on five labelled machines: 5!/(5 x 2) = 12.
+-- Rings on five labelled sites: 5!/(5 x 2) = 12.
 example : Nat.factorial 5 / (5 * 2) = 12 := by decide
 -- Ordered lists of ten: 32 x 31 x ... x 23 = 234102016512000 = 10! x C(32,10).
 example : Nat.descFactorial 32 10 = 234102016512000 := by decide
@@ -625,7 +633,7 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 #print axioms good_colouring_of_two_mul_choose_lt
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'clique_count_le_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -643,7 +651,7 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 > **Try changing**
 > - **Remove one colour.** Guess first: does the bound still cover K(4)? Set the default `colours` in `bound` to 1. It allows 1 bad plan where listing finds 2; the second assert stops the run.
 > - **Forget the order is ignored.** Guess first: does the share stay small? Replace `choose(n, k)` inside `share` with `falling(n, k)`. The share prints above 13, "so one exists" reads no, and the third assert stops the run.
-> - **Search one material only.** Guess first: which assert notices? Change `c & m in (0, m)` to `c & m == m`. K(4) shows 1 bad plan, and the second assert stops the run.
+> - **Search one carrier only.** Guess first: which assert notices? Change `c & m in (0, m)` to `c & m == m`. K(4) shows 1 bad plan, and the second assert stops the run.
 
 ---
 
@@ -652,7 +660,7 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 > [!warning]
 > **Reading the count as a construction.** The argument shows good plans vastly outnumber bad ones and hands over none; checking even one plan means inspecting 64512240 ten-sets. Existence and construction are separate results, and this card proves only the first.
 >
-> - **Taking 2^(k/2) as the true crossing.** It is where the algebra comes out clean; the exact test at k = 10 clears 100 machines.
+> - **Taking 2^(k/2) as the true crossing.** It is where the algebra comes out clean; the exact test at k = 10 clears 100 sites.
 
 ---
 
@@ -662,7 +670,7 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 - **Error-correcting codes.** The Gilbert-Varshamov bound is this argument on strings of bits: count the failing codes, find them fewer than all.
 
 > **Say it back**
-> 32 machines with two cable materials have 2^496 wiring plans. A plan is bad if ten machines are joined all one way. Blaming each bad plan on a ten-set and a material over-counts them at a share of 0.00000367. Less than all, so a good plan exists, though none is shown. With 2^(k/2) dots the share is at most 2^(1+k/2)/k!, under 1 from k = 3, so R(k,k) > 2^(k/2).
+> 32 sites with two transit carriers have 2^496 routing plans. A plan is bad if ten sites route all links among them over one carrier. Blaming each bad plan on a ten-set and a carrier over-counts them at a share of 0.00000367. Less than all, so a good plan exists, though none is shown. With 2^(k/2) dots the share is at most 2^(1+k/2)/k!, under 1 from k = 3, so R(k,k) > 2^(k/2).
 
 ---
 
@@ -674,11 +682,12 @@ example : ∀ p ∈ List.zip (List.range' 3 14) [2, 4, 5, 8, 11, 16, 22, 32, 45,
 
 ## Where this goes next
 
+- [Erdos-Szekeres](04-erdos-szekeres.md): next on this shelf, a forced-pattern theorem on lists of numbers whose threshold is exact, proved by labelling rather than counting.
 - [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same argument with chance and averages, where the count becomes an expected number of bad cliques and reaches results this form cannot.
 - [The Lovasz local lemma](08-lovasz-local-lemma.md): many bad events, each rare and each tied to few others, can all be avoided at once.
 - [Diagonal Ramsey numbers](../../25-Frontier/04-Geometry%20and%20Combinatorics/10-diagonal-ramsey-numbers.md): R(k, k) between root 2 to the k and 4 to the k, and the first exponential improvement in 88 years.
 
-The count shows a good wiring plan exists but names none; how to write one down for every k, with 2^(k/2) machines, is the question this card leaves open.
+The count shows a good routing plan exists without naming one; writing one down for every k on 2^(k/2) sites stays open. Meanwhile, the next card on this shelf turns to forced runs in lists of numbers, where the threshold is exact.
 
 ---
 

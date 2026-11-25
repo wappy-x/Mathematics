@@ -112,7 +112,9 @@ Nothing else can happen, so six guests always hold a trio: $`R(3,3) \le 6`$ (at 
 <details>
 <summary>Detailed proof: the strangers case, and why extra guests cannot help</summary>
 
-Fix any guest v. Split the other five into A, those v knows, and S, those v does not; one holds at least three. If A does, Step 2 applies as written. If S holds a, b and c, swap the words: any stranger pair among them makes three mutual strangers with v; otherwise all three pairs are acquainted, and a, b, c all know one another.
+Fix any guest v. Split the other five into A (those v knows) and S (those v does not). One set holds at least three.
+
+If A does, Step 2 applies as written. If S holds a, b and c, swap the words. Any stranger pair among them makes three mutual strangers with v. Otherwise all three pairs are acquainted, so a, b and c all know one another.
 
 A party of seven or more contains six guests whose labels are already fixed, so the forced trio is still there. That is why $`R(3,3) = 6`$ settles every party of 6 or more at once.
 
@@ -164,7 +166,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each of the 32768 labellings of six guests is reached by two roads: a scan of all 20 trios for one all alike, and the card's proof, which reads one guest's five relationships and tests the three pairs inside the fuller kind. The proof's trio must be one the scan also holds. The five-guest count is doubled the same way: a search of all 1024 labellings against a count of ring seatings.
+Nothing is imported. Each of the 32768 labellings of six guests is reached by two roads. Road one scans all 20 trios for one all alike. Road two follows the proof: read one guest's five relationships and test the three pairs inside the fuller kind.
+
+The proof's trio must appear in the scan. The five-guest count is doubled the same way: a search of all 1024 labellings against a count of ring seatings.
 
 ### Python
 
@@ -586,7 +590,7 @@ example : (twoTeams.cliqueFinset 3).card = 0 ∧ (twoTeams.indepSetFinset 3).car
 - **Any relation with two labels.** Six chemicals, each pair reacting or not. Six papers, each pair sharing an author or not. The proof never mentions people, so each forces a trio all alike.
 - **Guarantees that survive adversaries.** A network designer who wants six machines with no three mutually fast links and no three mutually slow ones cannot have it: the search over all 32768 labellings says no design exists.
 - **Reading too much into a small pattern.** Three mutual acquaintances among six people are not evidence of anything: they were forced before anyone looked. The same holds for small patterns in large data sets.
-- **Where the small cases end.** Bigger trios need far more guests: [Ramsey numbers](02-ramsey-numbers.md). Related forcings: two labels on a sequence give [Erdos-Szekeres](04-erdos-szekeres.md), and counting lines gives [Mantel and Turan](05-mantel-and-turan.md).
+- **Where the small cases end.** Bigger groups need far more guests: [Ramsey numbers](02-ramsey-numbers.md). Related forcings: two labels on a sequence give [Erdos-Szekeres](04-erdos-szekeres.md), and counting lines gives [Mantel and Turan](05-mantel-and-turan.md).
 
 > **Say it back**
 > Label every pair of six people acquainted or strangers. Fix one guest: five relationships in two kinds, so one kind holds at least three. If a pair among those three is of the same kind, that pair and the fixed guest are a trio all alike; if none is, the three are a trio of the other kind. Five guests escape: seat them in a ring where each knows only the two beside them, and both kinds of pair form rings of five, which hold no triangle.
@@ -601,7 +605,7 @@ example : (twoTeams.cliqueFinset 3).card = 0 ∧ (twoTeams.indepSetFinset 3).car
 
 ## Where this goes next
 
-- [Ramsey numbers](02-ramsey-numbers.md): the same question for trios of any two sizes, what is known about those numbers, and why so little is.
+- [Ramsey numbers](02-ramsey-numbers.md): the same question for groups of any two sizes, what is known about those numbers, and why so little is.
 - [Ramsey theory on the whole numbers](09-schur-and-van-der-waerden.md): Schur's single-coloured x + y = z, van der Waerden's single-coloured progressions, and the Hales-Jewett theorem behind both.
 
 Exhaustive search does not survive a bigger party: the labellings number 2 multiplied in C(n, 2) times. The next card needs arguments that never list them.

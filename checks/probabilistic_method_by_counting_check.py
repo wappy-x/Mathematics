@@ -1,7 +1,7 @@
 # Erdos's counting trick -- the check behind the card.  Nothing is imported.  A
-# server hall of 32 machines, every pair joined by copper or by fibre.  The plans
-# with ten machines joined all one way are over-counted by formula, then the same
-# argument is re-run by listing every plan of K(4) and K(5).
+# network of 32 sites, every pair routed over Carrier A or Carrier B.  The plans
+# with ten sites linked all over one carrier are over-counted by formula, then the
+# same argument is re-run by listing every plan of K(4) and K(5).
 K, N = 10, 32
 
 def falling(n, k):                        # n x (n-1) x ... x (n-k+1); falling(k, k) is k!
@@ -32,7 +32,7 @@ cn2, ck2 = choose(N, 2), choose(K, 2)
 c_fall, c_pas = choose(N, K), pascal(N, K)
 exact, loose = share(N, K), 2 ** (1 + K // 2) / falling(K, K)
 top = N
-while share(top + 1, K) < 1: top += 1   # the largest hall the exact test still clears
+while share(top + 1, K) < 1: top += 1   # the largest network the exact test still clears
 (b44, a44), (b54, a54), (b53, a53) = bad_by_listing(4, 4), bad_by_listing(5, 4), bad_by_listing(5, 3)
 ks = range(3, 17)
 
@@ -42,7 +42,7 @@ print(f"bad plans at most 2 x {c_fall} x 2^{cn2 - ck2}, a share of {c_fall}/2^{c
 print(f"loose form 2^{1 + K // 2}/{K}! = {2 ** (1 + K // 2)}/{falling(K, K)} = {loose:.8f}")
 print(f"loose form under 1 from k = 3 on: 2^5 = {2 ** 5} < (3!)^2 = {falling(3, 3) ** 2}")
 print(f"good plans at least {1 - exact:.8f} x 2^{cn2}, so one exists: {yn(exact < 1)}")
-print(f"largest hall the exact test clears at k = {K}: {top} (share {share(top, K):.4f}); {top + 1} gives {share(top + 1, K):.4f}")
+print(f"largest network the exact test clears at k = {K}: {top} (share {share(top, K):.4f}); {top + 1} gives {share(top + 1, K):.4f}")
 print(f"listed, k = 4 on K(4): {a44} plans, {b44} bad, bound {bound(4, 4)}")
 print(f"listed, k = 4 on K(5): {a54} plans, {b54} bad, bound {bound(5, 4)}, so {a54 - b54} good")
 print(f"listed, k = 3 on K(5): {a53} plans, {b53} bad, {a53 - b53} good = 5!/(5 x 2); bound {bound(5, 3)}, over the total")

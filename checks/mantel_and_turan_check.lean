@@ -148,31 +148,31 @@ theorem turanGraph_clique_free_and_edges_le (n r : ℕ) (hr : 0 < r) :
   rw [le_div_iff₀ (by positivity)]
   linarith
 
--- The rack of ten servers: 45 pairs, Mantel's cap 10 × 10 / 4 = 25, two groups of five give 5 × 5 = 25.
+-- The ten jobs: 45 pairs, Mantel's cap 10 × 10 / 4 = 25, two batches of five give 5 × 5 = 25.
 example : Nat.choose 10 2 = 45 := by decide
 example : 10 ^ 2 / 4 = 25 ∧ 5 * 5 = 25 := by decide
--- T(10, 2), the two groups of five, has 25 links and no closed trio among its 120 trios.
+-- T(10, 2), the two batches of five, has 25 links and no three-way conflict among its 120 trios.
 example : (turanGraph 10 2).edgeFinset.card = 25 := by decide
 example : ∀ a b c : Fin 10, ¬ ((turanGraph 10 2).Adj a b ∧ (turanGraph 10 2).Adj b c ∧
     (turanGraph 10 2).Adj a c) := by decide
--- A 26th link inside one group, say between servers 0 and 2: they share all five of the other
--- group as neighbours, so it closes five triangles.
+-- A 26th conflict inside one batch, say between jobs 0 and 2: they share all five of the other
+-- batch as neighbours, so it closes five triangles.
 example : (Finset.univ.filter fun w : Fin 10 =>
     (turanGraph 10 2).Adj 0 w ∧ (turanGraph 10 2).Adj 2 w).card = 5 := by decide
 -- The degree squeeze: 4 × 25 × 25 / 10 = 250, ten degrees of 5 squared = 250, 10 × 25 = 250.
 example : 4 * 25 * 25 / 10 = 250 ∧ 10 * 5 ^ 2 = 250 ∧ 10 * 25 = 250 := by decide
--- No four all linked, groups 4, 3, 3: 45 − 6 − 3 − 3 = 33 links, and T(10, 3) has 33.
+-- No four-way conflict, batches 4, 3, 3: 45 − 6 − 3 − 3 = 33 links, and T(10, 3) has 33.
 example : Nat.choose 10 2 - Nat.choose 4 2 - Nat.choose 3 2 - Nat.choose 3 2 = 33 := by decide
 example : (turanGraph 10 3).edgeFinset.card = 33 := by decide
 -- Turán's share bound (1 − 1/3) × 100 / 2 = 100/3, just above 33.
 example : (1 - 1 / (3 : ℚ)) * 100 / 2 = 100 / 3 ∧ (33 : ℚ) ≤ 100 / 3 := by norm_num
--- What breaks: splits 1+9 to 5+5 give 9, 16, 21, 24, 25; two groups with four forbidden give 25,
--- 8 short of 33; 9 servers give 81 / 4 rounded down = 20, groups of 4 and 5 give 20.
+-- What breaks: splits 1+9 to 5+5 give 9, 16, 21, 24, 25; two batches with four-way conflicts forbidden
+-- give 25, 8 short of 33; 9 jobs give 81 / 4 rounded down = 20, batches of 4 and 5 give 20.
 example : 1 * 9 = 9 ∧ 2 * 8 = 16 ∧ 3 * 7 = 21 ∧ 4 * 6 = 24 ∧ 5 * 5 = 25 := by decide
 example : 33 - 25 = 8 := by decide
 example : 9 ^ 2 / 4 = 20 ∧ 4 * 5 = 20 := by decide
--- The search over every network on 1 to 6 servers: the most links with no triangle are
--- 0, 1, 2, 4, 6, 9 = n^2/4 rounded down, and with no four all linked 0, 1, 3, 5, 8, 12 = links of T(n, 3).
+-- The search over every conflict graph on 1 to 6 jobs: the most links with no triangle are
+-- 0, 1, 2, 4, 6, 9 = n^2/4 rounded down, and with no four-way conflict 0, 1, 3, 5, 8, 12 = links of T(n, 3).
 example : [1, 2, 3, 4, 5, 6].map (fun n => n ^ 2 / 4) = [0, 1, 2, 4, 6, 9] := by decide
 example : (turanGraph 1 3).edgeFinset.card = 0 ∧ (turanGraph 2 3).edgeFinset.card = 1 ∧
     (turanGraph 3 3).edgeFinset.card = 3 ∧ (turanGraph 4 3).edgeFinset.card = 5 ∧

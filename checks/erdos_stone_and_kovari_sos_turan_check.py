@@ -37,7 +37,7 @@ found = net(10, [(0, 1), (0, 2), (1, 2), (0, 3), (0, 4), (3, 4), (1, 5), (1, 6),
 brute, pol = [search(n) for n in range(1, 9)], {q: polarity(q) for q in (2, 3)}
 x = {"triangle": chi(3, [(0, 1), (1, 2), (0, 2)]), "Petersen": chi(10, pet_links), "4-cycle": chi(4, [(0, 1), (1, 2), (2, 3), (0, 3)])}
 a, tri = (1 + 37 ** 0.5) / 2, 1000 * 1000 // 4
-print(f"cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {1 + 37 ** 0.5:.2f} = {cap(10):.2f}, rounded down {int(cap(10))}; 10^1.5 / 2 = {10 ** 1.5 / 2:.2f}")
+print(f"cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {1 + 37 ** 0.5:.3f} ~= {cap(10):.2f}, rounded down {int(cap(10))}; 10^1.5 / 2 = {10 ** 1.5 / 2:.2f}")
 print(f"Petersen graph: {len(pet)} points, {links(pet)} links, degrees {sorted(set(deg))}, 4-cycles found {four_cycles(pet)}")
 print(f"cherries by middles 10 x C(3,2) = {cherries}; distinct end pairs {len(ends)} of C(10,2) = 45")
 print(f"average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = {a:.2f}, a(a - 1) = {a * (a - 1):.2f}")

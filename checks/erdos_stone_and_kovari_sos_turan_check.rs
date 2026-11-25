@@ -56,7 +56,7 @@ fn main() {
     let x = [("triangle", chi(3, &[(0, 1), (1, 2), (0, 2)])), ("Petersen", chi(10, &pet_links)), ("4-cycle", chi(4, &[(0, 1), (1, 2), (2, 3), (0, 3)]))];
     let (a, tri) = ((1.0 + 37f64.sqrt()) / 2.0, 1000 * 1000 / 4);
     let mut dset = deg.clone(); dset.sort(); dset.dedup();
-    println!("cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {:.2} = {:.2}, rounded down {}; 10^1.5 / 2 = {:.2}", 1.0 + 37f64.sqrt(), cap(10), cap(10) as usize, 10f64.powf(1.5) / 2.0);
+    println!("cap on 10 points: 2.5 x (1 + sqrt(37)) = 2.5 x {:.3} ~= {:.2}, rounded down {}; 10^1.5 / 2 = {:.2}", 1.0 + 37f64.sqrt(), cap(10), cap(10) as usize, 10f64.powf(1.5) / 2.0);
     println!("Petersen graph: {} points, {} links, degrees {:?}, 4-cycles found {}", pet.len(), links(&pet), dset, four_cycles(&pet));
     println!("cherries by middles 10 x C(3,2) = {}; distinct end pairs {} of C(10,2) = 45", cherries, ends.len());
     println!("average degree 3: 3 x 2 = 6 <= 10 - 1 = 9; at the cap a = {:.2}, a(a - 1) = {:.2}", a, a * (a - 1.0));
