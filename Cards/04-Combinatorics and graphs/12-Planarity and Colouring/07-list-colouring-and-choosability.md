@@ -56,7 +56,7 @@ Here $`\chi(K(2,4)) = 2`$ but $`\mathrm{ch}(K(2,4)) = 3`$.
 | $`c`$, $`k`$ | the colouring; the list length on offer | $`c`$(P) = 1; 2 | at $`k`$ = 3 every licence set works |
 | $`\chi`$, $`\Delta`$ | fewest colours from one shared box; most lines at one vertex | 2; 4, at each mast | — |
 | $`\mathrm{ch}`$ | choice number: shortest list length that always works | 3 | — |
-| $`C`$, $`x`$, $`y`$ | outer cycle of a flat drawing; two neighbours on it, coloured first | P A Q D; P and A | — |
+| $`x`$, $`y`$ | two neighbours on the outer cycle of a flat drawing, coloured first | P and A (on P A Q D) | — |
 | $`w`$, $`u`$, $`u_1, \dots, u_m`$, $`a`$, $`b`$ | the other outer neighbour of $`x`$; the other outer neighbour of $`w`$; inner neighbours of $`w`$; two colours $`w`$ keeps | D; Q; C; 2 and 4 | — |
 
 ### When it holds
@@ -96,15 +96,15 @@ The proof on [Colouring maps](05-five-and-four-colour-theorems.md) swaps two col
 
 ### Step 3: prove something stronger, so the induction carries itself
 
-A **near-triangulation** is a graph drawn flat whose outer boundary is a cycle $`C`$ and whose inner faces (regions) are all triangles. Thomassen proves:
+A **near-triangulation** is a graph drawn flat whose outer boundary is a cycle and whose inner faces (regions) are all triangles. Thomassen proves:
 
-> Let $`x`$ and $`y`$ be neighbours on $`C`$, already coloured differently. Give every other vertex of $`C`$ a list of at least 3, and every inner vertex a list of at least 5. Then the colouring extends to the whole graph.
+> Let $`x`$ and $`y`$ be neighbours on the outer cycle, already coloured differently. Give every other outer vertex a list of at least 3, and every inner vertex a list of at least 5. Then the colouring extends to the whole graph.
 
 The numbers 3 and 5 reproduce themselves: an inner vertex that moves onto the outer cycle loses 2 colours, and 5 − 2 = 3.
 
 ### Step 4: case one, a chord
 
-A **chord** is a line joining two vertices of $`C`$ that are not neighbours on $`C`$. It cuts the graph into two smaller near-triangulations. Colour the side holding $`x`$ and $`y`$ first, by induction. The chord's two ends are now coloured neighbours on the other side's cycle, so that side follows by induction too.
+A **chord** is a line joining two vertices on the outer cycle that are not neighbours on it. It cuts the graph into two smaller near-triangulations. Colour the side holding $`x`$ and $`y`$ first, by induction. The chord's two ends are now coloured neighbours on the other side's cycle, so that side follows by induction too.
 
 ### Step 5: case two, no chord
 
@@ -646,7 +646,9 @@ example : (∀ u v, K24.Adj u v → plan u ≠ plan v) ∧
 
 - [Perfect graphs](08-perfect-and-chordal-graphs.md): graphs where the largest all-joined group always sets the number of colours.
 
-One question left open, the list colouring conjecture, looks back to [Edge colouring](06-edge-colouring-and-round-robin.md): does the choice number of line colouring always equal its chromatic index? Galvin proved it for two-sided graphs in 1995; in general it is unproved. Next on this shelf, [Perfect graphs](08-perfect-and-chordal-graphs.md) asks the opposite question for ordinary colouring: which graphs never need more colours than their largest all-joined group?
+One open question, the list colouring conjecture, looks back to [Edge colouring](06-edge-colouring-and-round-robin.md). Does line colouring's choice number always equal its chromatic index, the fewest colours for the lines? Galvin proved it for two-sided graphs in 1995; in general it is unproved.
+
+Next on this shelf, [Perfect graphs](08-perfect-and-chordal-graphs.md) asks the opposite question for ordinary colouring: which graphs never need more colours than their largest all-joined group?
 
 ---
 

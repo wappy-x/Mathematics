@@ -51,7 +51,7 @@ C(n; n_1, n_2, \ldots, n_k) = \frac{n!}{n_1!\,n_2!\cdots n_k!}
 
 For the session: $`C(9; 3, 3, 3) = 9! / (3!\,3!\,3!) = 362,880 / 216 = 1,680`$.
 
-Take the names off and one more division follows. Where $`m`$ piles share a size and carry no names:
+Take the names off, with no pile empty, and one more division follows. Where $`m`$ non-empty piles share a size and carry no names:
 
 ```math
 \text{unnamed count} = \frac{1}{m!} \cdot C(n; n_1, n_2, \ldots, n_k)
@@ -74,6 +74,7 @@ All three piles are trios, so $`m`$ is 3 and the count is 1,680 / 6 = 280. With 
 - **The sizes are fixed in advance and add up to $`n`$.** Let the pile sizes vary and each player picks any named table freely: $`3^9 = 19,683`$ ways, or [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md) if no table is empty. For unnamed non-empty piles, see [Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md). Counting only the possible size lists is [Stars and bars](02-stars-and-bars.md).
 - **Order inside a pile does not count.** Rank each table's three as first, second and third in the serving order, and the divisions are wrong: the count is 362,880.
 - **Only equal-sized unnamed piles get the extra division.** Piles of 4, 3 and 2 cannot be mistaken for each other, so named and unnamed agree at 1,260; dividing anyway gives 210.
+- **For unnamed piles, every pile holds at least one thing.** Two empty piles are identical, not distinct groups, so dividing by their $`m!`$ breaks the count.
 
 ---
 
@@ -115,7 +116,7 @@ So the 1,680 named splits fall into blocks of 6 sharing a set of trios, and the 
 
 Take a split with no names: piles of the stated sizes, disjoint, covering everyone. Naming it means deciding which pile is called 1, which 2, and so on. A pile of four cannot take a label reserved for a pile of three without changing the sizes, so the free choices lie among piles that already share a size.
 
-Suppose $`m`$ piles share a size. Those $`m`$ labels can be dealt out in $`m!`$ ways, and every deal gives a different named split, since two equal-sized piles are still different sets of people.
+Suppose $`m`$ non-empty piles share a size. Those $`m`$ labels can be dealt out in $`m!`$ ways, and every deal gives a different named split, since two equal-sized non-empty piles are still different sets of people.
 
 Do that for each repeated size and every unnamed split holds the product of those factorials as its named versions. No named split belongs to two unnamed ones, since rubbing the names out is forced. So the named splits sit in equal blocks, and the block count is the named count over the block size — here 6, and the check confirms all 280 blocks hold six.
 

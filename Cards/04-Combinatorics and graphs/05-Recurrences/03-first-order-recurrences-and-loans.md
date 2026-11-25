@@ -28,7 +28,7 @@ xychart-beta
     line [20000, 17500, 15000, 12500, 10000, 7500, 5000, 2500, 0]
 ```
 
-The bowed line is the balance; the straight line shares the debt evenly, $416.67 a month. Early payments put less against the debt, so the balance stays above.
+The bowed line is the balance; the straight line shares the debt evenly, about $416.67 a month. Early payments put less against the debt, so the balance stays above.
 
 ---
 
@@ -50,7 +50,7 @@ a^* = \frac{c}{1-r}, \qquad a(n) = r^n\left(a(0) - a^*\right) + a^*
 
 **Read it aloud:** the fixed point never moves; the gap to it multiplies by the factor once per step.
 
-A loan is that rule with the factor 1.005 and minus the payment added, starting from $`B_0`$ borrowed. Setting the balance to zero at month n and freeing the payment gives the first month's interest, multiplied by $`r^n`$ and divided by $`r^n - 1`$:
+A loan is that rule with the factor 1.005 and minus the payment added, starting from $`B_0`$ borrowed. Setting the balance to zero at month n ($`n \ge 1`$) and freeing the payment gives the first month's interest, multiplied by $`r^n`$ and divided by $`r^n - 1`$:
 
 ```math
 P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}
@@ -153,7 +153,7 @@ Forty-eight payments clear the debt; $2,545.63 of the $22,545.63 was interest.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Sharing the debt evenly, $416.67 a month | $2,869.02 still owing | No allowance for interest |
+| Sharing the debt evenly, a 48th a month (about $416.67) | $2,869.02 still owing | No allowance for interest |
 | Reading 6% a year as 6% a month | a payment of $1,277.95 | Step and rate must match |
 | Billing $469.00 instead of $469.70 | $37.90 still owing | Seventy cents a month, grown |
 
@@ -386,7 +386,7 @@ Lean proves the closed form and the fixed point for every factor other than 1, a
 
 - The fixed point is the one value a step leaves unchanged: the amount added divided by one minus the factor.
 - After n steps the value is the factor to the n, times the starting gap to the fixed point, plus the fixed point.
-- A loan's balance is zero after n months exactly when the payment is $`P`$, the level payment. So one payment, and only one, clears the debt on time.
+- A loan's balance is zero after n months, for n at least 1, exactly when the payment is $`P`$, the level payment. So one payment, and only one, clears the debt on time.
 - This loan's figures, worked in exact fractions, match the card to the cent: the payment $469.70 and the fixed point $93,940.12.
 - Month 1 charges $100.00 of interest and leaves $19,630.30; month 2 charges $98.15 and leaves $19,258.75.
 - Paying only the $100.00 interest leaves $20,000.00 where it is. Left unpaid, the debt grows to $25,409.78.
@@ -532,7 +532,7 @@ example : (7579 / 200 : ℚ) ≤ (fun b : ℚ => b * (201 / 200) - 469)^[48] 200
 ## The usual mistake
 
 > [!warning]
-> **Treating the whole payment as debt repaid.** $20,000 over 48 months looks like $416.67 a month. It is not: $100.00 of the first payment is rent on money owed. Pay $416.67 and $2,869.02 is still owing.
+> **Treating the whole payment as debt repaid.** $20,000 over 48 months looks like about $416.67 a month. It is not: $100.00 of the first payment is rent on money owed. Pay a 48th of the debt each month (about $416.67) and $2,869.02 is still owing.
 >
 > - **A yearly rate on a monthly step.** 6% a year read as 6% a month gives $1,277.95, nearly three times the truth.
 > - **Rounding part-way.** Billing $469.00 leaves $37.90 owing after four years.

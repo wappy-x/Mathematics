@@ -43,7 +43,7 @@ c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1
 
 **Read it aloud:** the last key either slips into a rehang of the other n − 1, in any of n − 1 places, or hangs on its own beside a rehang making one loop fewer.
 
-Outside 1 to $`n`$, $`c(n,k) = 0`$.
+For $`n \ge 1`$, $`c(n,k) = 0`$ outside 1 to $`n`$ (at zero keys, $`c(0,0) = 1`$).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -98,7 +98,7 @@ So c(5,k) = 4 c(4,k) + c(4,k−1), and at three loops 4 × 6 + 11 = 35. The mult
 
 Inserting 5 after any of the four hooks lengthens that hook's loop and makes or loses none, so k holds. The four results differ because a different hook sends its key to hook 5 in each. Deleting 5 undoes the insertion, so the two sides stand one to four: the term (n − 1) c(n − 1, k).
 
-Seeds: c(1,1) = 1, and c(n,k) = 0 for k above n or below 1.
+Seeds: c(1,1) = 1, and for n ≥ 1, c(n,k) = 0 for k above n or below 1.
 
 </details>
 

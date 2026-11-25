@@ -76,7 +76,7 @@ k(k-1)(k-2)\cdots(k-n+1)
 
 - **The label questions are about the answer, not the metal.** The same vans differ when the manifest names them and are alike when it does not.
 - **Three holding rules, no others.** A cap of two parcels a van is none of the twelve, and no cell counts it.
-- **Nothing is ordered inside a box.** Stack each van in a fixed order and every count in the grid is too small.
+- **Nothing is ordered inside a box.** Record the stacking order inside each van, and every cell where two or more different parcels can share a van is too small.
 - **At least one thing and one box ($`n \ge 1, k \ge 1`$).** At zero things or zero boxes, the choose formulas and the Stirling sum starting at 1 need edge-case rules.
 
 ---

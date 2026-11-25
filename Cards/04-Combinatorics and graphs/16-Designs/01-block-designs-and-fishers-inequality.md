@@ -75,6 +75,7 @@ The second statement is **Fisher's inequality**. For the blends, $`NN^T = 2I + J
 - **Blocks all the same size.** Mixed sizes break $`bk = vr`$, since there is no single $`k`$ to multiply by.
 - **Blocks smaller than the whole set, $`k < v`$.** Then $`r > \lambda`$ and the determinant is not 0. One taster given all 7 blends is a design with $`r = \lambda = 1`$, and $`b = 1 < 7`$.
 - **λ at least 1.** With $`\lambda = 0`$ no block can hold two points, so the pair rule says nothing, and Step 4's ratio $`r/\lambda`$ divides by 0.
+- **At least 2 points ($`v \ge 2`$).** With fewer than two points there are no pairs to test. One point with no blocks and $`k = 0`$ meets $`k < v`$ and $`\lambda \ge 1`$, yet has $`b = 0 < v`$.
 
 ---
 
@@ -369,10 +370,10 @@ The two outputs match line for line.
 
 Lean proves the card's general facts for every 2-(v, k, λ) design, and re-checks the Fano plane's numbers.
 
-- Take a 2-(v, k, λ) design with λ at least 1. Then every point lies in the same number $`r`$ of blocks.
+- Take a 2-(v, k, λ) design with at least 2 points and λ at least 1. Then every point lies in the same number $`r`$ of blocks.
 - Take that same design. Then $`bk = vr`$ and $`r(k-1) = \lambda(v-1)`$.
 - Suppose every point lies in $`r`$ blocks and every pair in $`\lambda`$ blocks. Then $`NN^T = (r-\lambda)I + \lambda J`$.
-- Take a 2-(v, k, λ) design with $`k < v`$ and λ at least 1. Then $`b \ge v`$: Fisher's inequality.
+- Take a 2-(v, k, λ) design with at least 2 points, $`k < v`$ and λ at least 1. Then $`b \ge v`$: Fisher's inequality.
 - In the Fano plane: 3 blends per taster, 3 tasters per blend, and each pair together once.
 - It also re-checks the Fano plane's counts: 21 = 21, 6 = 6, and all 21 pairs covered.
 - Take the Fano plane. Then $`NN^T = 2I + J`$ and $`\det N = 24`$, and 24 × 24 = 576.

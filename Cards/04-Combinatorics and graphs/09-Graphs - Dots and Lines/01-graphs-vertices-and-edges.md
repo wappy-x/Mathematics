@@ -94,7 +94,7 @@ By listing: A pairs with five others, B with four not yet counted, then three, t
 ### Step 2: the families worth learning by name
 
 - **K(n), complete:** every pair joined, C(n, 2) edges. K(6) has 15.
-- **C(n), the cycle:** n vertices in a closed ring, n edges — one number in the brackets, not the two of C(n, 2). C(6), 6.
+- **C(n), the cycle:** n vertices (3 or more) in a closed ring, n edges — one number in the brackets, not the two of C(n, 2). C(6), 6.
 - **P(n), the path:** n in a row, ends loose, n − 1 edges. P(6), 5.
 - **K(m, n), complete bipartite:** two groups, every cross pair joined, none inside a group, m × n edges. K(3, 3), 9.
 - **Q(3), the 3-cube:** the 8 corners of a cube, joined when they differ in one coordinate. Each corner has 3 coordinates to flip and each line has two ends: 8 × 3 / 2 = 12 lines, 4 per direction.
