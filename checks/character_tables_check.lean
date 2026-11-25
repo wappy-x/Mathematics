@@ -357,7 +357,7 @@ theorem card_one_dim_pieces_eq_index_commutator
 
 /-- **The table is a fingerprint, not proof of sameness.** The tile group (the eight moves of a
 square, `DihedralGroup 4`) and Q8 (the eight quaternions ±1, ±i, ±j, ±k, `QuaternionGroup 2`)
-share one character table (checked entry by entry below), yet no relabelling turns one group
+share one character table (checked entry by entry in the Python and Rust scripts), yet no relabelling turns one group
 into the other. -/
 theorem tile_group_not_iso_quaternion :
     IsEmpty (DihedralGroup 4 ≃* QuaternionGroup 2) := by
@@ -430,7 +430,7 @@ example :
   refine ⟨?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [r, f, pow_succ, Matrix.mul_apply, Fin.sum_univ_two]
 
-/-- The 2-by-2 row of the tile's table from the house matrices: traces 2 at `e`, −2 at `r²`,
+/-- The 2-by-2 row of the tile's table from the tile's 2-by-2 matrices: traces 2 at `e`, −2 at `r²`,
 0 at `r`, at `f` and at `r f`. -/
 example :
     let r : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]

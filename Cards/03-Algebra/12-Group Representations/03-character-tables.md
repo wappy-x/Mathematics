@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A square tile fits its recess eight ways: four quarter turns and four flips. As 2-by-2 matrices, with the corners on the axes, the quarter turn is `[[0, -1], [1, 0]]` and the diagonal flip is `[[1, 0], [0, -1]]`. Giving each move a matrix this way is a **representation** ([Representations](01-representations-and-maschkes-theorem.md)).
+A square tile fits its recess eight ways: four turns and four flips. As 2-by-2 matrices, with the corners on the axes, the quarter turn is `[[0, -1], [1, 0]]` and the diagonal flip is `[[1, 0], [0, -1]]`. Giving each move a matrix this way is a **representation** ([Representations](01-representations-and-maschkes-theorem.md)).
 
 Representations split into pieces; one that cannot split again is **irreducible**, and its **dimension** is the size of its matrices.
 
@@ -127,9 +127,11 @@ The tile has generators $`r`$ (quarter turn) and $`f`$ (flip across a diagonal) 
 
 1. **Dimension-1 pieces.** A 1-by-1 matrix is a number. Send $`r`$ to a number $`a`$ and $`f`$ to $`b`$. Numbers commute, so $`f r f = r^{-1}`$ gives $`a = a^{-1}`$ and $`f^2 = e`$ gives $`b^2 = 1`$: both are signs, $`\pm 1`$. All four choices work: four pieces.
 2. **What is left.** They use 4 of the 8. The remaining 4 is $`2^2`$: exactly one more piece, of dimension 2.
-3. **The dimension-2 piece.** The house matrices, with traces 2 at $`e`$, $`-2`$ at the half turn, 0 elsewhere.
+3. **The dimension-2 piece.** The overview's 2-by-2 matrices, with traces 2 at $`e`$, $`-2`$ at the half turn, 0 elsewhere.
 
-Second road to the four dimension-1 pieces. The **commutators** $`x y x^{-1} y^{-1}`$ generate a normal subgroup (conjugates of commutators are commutators), the **commutator subgroup**, here $`e`$ and $`r^2`$. Numbers commute, so dimension-1 pieces send every commutator to 1 and are exactly those of the group of cosets. There $`x y`$ and $`y x`$ differ by a commutator, so order never matters, each class is one member, and Steps 1 to 3 give one piece per member, all of dimension 1: 8 / 2 = 4.
+Second road to the four dimension-1 pieces. The **commutators** $`x y x^{-1} y^{-1}`$ generate a normal subgroup (conjugates of commutators are commutators), the **commutator subgroup**, here $`e`$ and $`r^2`$. Numbers commute, so dimension-1 pieces send every commutator to 1 and are exactly those of the group of cosets.
+
+In that group of cosets, $`x y`$ and $`y x`$ differ by a commutator, so order never matters and each class is one member. Steps 1 to 3 then give one piece per member, all of dimension 1: 8 / 2 = 4.
 
 ### Step 5: the triangle group S3, and Q8
 
@@ -137,7 +139,9 @@ Second road to the four dimension-1 pieces. The **commutators** $`x y x^{-1} y^{
 
 Second road: shuffling the three corners has trace (3, 0, 1), the corners left in place. Remove the trivial piece (1, 1, 1) and (2, −1, 0) remains.
 
-**Q8.** The eight quaternions ±1, ±i, ±j, ±k multiply by $`i^2 = j^2 = k^2 = -1`$ and $`i j = k`$. Classes, in the tile's column order: $`1`$; $`-1`$; $`\pm i`$; $`\pm j`$; $`\pm k`$. Signs for $`i`$ and $`j`$ give four dimension-1 pieces. The quaternion $`q_0 + q_1 i + q_2 j + q_3 k`$, with numbers $`q_0`$ to $`q_3`$, acts on pairs of complex numbers by the matrix `[[q0 + q1 i, q2 + q3 i], [-q2 + q3 i, q0 - q1 i]]`, where this i is the complex number, with trace $`2 q_0`$: the row (2, −2, 0, 0, 0).
+**Q8.** The eight quaternions ±1, ±i, ±j, ±k multiply by $`i^2 = j^2 = k^2 = -1`$ and $`i j = k`$. Classes, in the tile's column order: $`1`$; $`-1`$; $`\pm i`$; $`\pm j`$; $`\pm k`$. The commutator $`i j i^{-1} j^{-1}`$ is $`-1`$, so dimension-1 pieces send $`-1`$ to 1. Then $`i^2 = j^2 = -1`$ sends $`i`$ and $`j`$ to signs: four pieces.
+
+The quaternion $`q_0 + q_1 i + q_2 j + q_3 k`$ acts on pairs of complex numbers by the matrix `[[q0 + q1 i, q2 + q3 i], [-q2 + q3 i, q0 - q1 i]]`, where this i is the complex number. Its trace is $`2 q_0`$: the row (2, −2, 0, 0, 0).
 
 That is the tile's table, entry for entry. Yet the tile has 5 members of order 2 (done twice they give $`e`$), and Q8 has only $`-1`$.
 
@@ -182,26 +186,26 @@ So the table alone splits the corner shuffle into pieces of dimensions 1, 1 and 
 
 ## Code, from first principles, and it actually runs
 
-The tile and S3 are integer matrices, Q8 quaternions. Three roads build each table: classes by conjugating, dimension-1 pieces by trying signs, the dimension-2 row from traces. Independent counts check it: the regular representation's fixed points, the commutator subgroup, and fixed corners.
+The tile and S3 are integer matrices, Q8 quaternions, also written as complex 2-by-2 matrices. Three roads build each table: classes by conjugating, dimension-1 pieces by trying signs, the dimension-2 row from traces. Independent counts check it: the regular representation's fixed points, the commutator subgroup, and fixed corners.
 
 ### Python
 
 ```python
-# Character tables -- the check behind the card.  Nothing is imported.  Each group is the
-# list r^k f^m built from two generators.  Road one finds the classes by conjugating; road
-# two finds the one-dimensional pieces by trying signs for r and f; road three is the trace
-# of a 2-by-2 action.  Orthogonality, the regular representation and commutators cross-check.
+# Character tables -- the check behind the card.  Nothing is imported.  Each group is the list r^k f^m built from
+# two generators.  Road one finds the classes by conjugating; road two finds the one-dimensional pieces by trying
+# signs for r and f; road three is the trace of a 2-by-2 action.  Orthogonality, the regular representation and commutators cross-check.
 def mat(p, q):                                  # 2-by-2 matrices, stored row by row
     return (p[0]*q[0] + p[1]*q[2], p[0]*q[1] + p[1]*q[3], p[2]*q[0] + p[3]*q[2], p[2]*q[1] + p[3]*q[3])
 def quat(p, q):                                 # quaternions a + b i + c j + d k
     return (p[0]*q[0] - p[1]*q[1] - p[2]*q[2] - p[3]*q[3], p[0]*q[1] + p[1]*q[0] + p[2]*q[3] - p[3]*q[2],
             p[0]*q[2] - p[1]*q[3] + p[2]*q[0] + p[3]*q[1], p[0]*q[3] + p[1]*q[2] - p[2]*q[1] + p[3]*q[0])
+def qmat(q): return (complex(q[0], q[1]), complex(q[2], q[3]), complex(-q[2], q[3]), complex(q[0], -q[1]))   # q0 + q1 i + q2 j + q3 k, complex
 def fixed(g, corners):                          # corners a matrix sends to themselves
     return sum((g[0]*x + g[1]*y, g[2]*x + g[3]*y) == (x, y) for x, y in corners)
 def ip(sizes, u, v):                            # sum over classes of size x row u x row v
     return sum(s * a * b for s, a, b in zip(sizes, u, v))
 yn = lambda c: "yes" if c else "no"
-def table(name, r, f, n, mul, one, chi2):
+def table(name, r, f, n, mul, one, act2):  # act2: a member's 2-by-2 matrix
     pw = lambda x, k: one if k == 0 else mul(pw(x, k - 1), x)
     G = [mul(pw(r, k), pw(f, m)) for m in (0, 1) for k in range(n)]
     inv = {x: next(y for y in G if mul(x, y) == one) for x in G}
@@ -215,8 +219,8 @@ def table(name, r, f, n, mul, one, chi2):
         val = {G[m * n + k]: a**k * b**m for m in (0, 1) for k in range(n)}
         if all(val[mul(x, y)] == val[x] * val[y] for x in G for y in G):
             rows.append([val[x] for x in reps])
-    ones = len(rows)
-    rows.append([chi2(x) for x in reps])        # road three: trace of the 2-by-2 action
+    ones = len(rows); rows.append([int((act2(x)[0] + act2(x)[3]).real) for x in reps])   # road three: trace of the 2-by-2 action
+    hom2 = all(mat(act2(x), act2(y)) == act2(mul(x, y)) for x in G for y in G)            # ... and it respects products
     dims, big = [row[0] for row in rows], len(G)
     orth = all(ip(sizes, u, v) == (big if i == j else 0) for i, u in enumerate(rows) for j, v in enumerate(rows))
     reg = [sum(mul(h, x) == x for x in G) for h in reps]        # the regular representation
@@ -230,26 +234,26 @@ def table(name, r, f, n, mul, one, chi2):
           f"one-dim {ones} = {big} / {len(comm)}; rows orthonormal: {yn(orth)}; regular = dims x rows: {yn(reg == split)}")
     assert len(rows) == len(reps) and sum(d * d for d in dims) == big   # pieces = classes, squares add to |G|
     assert orth and reg == split and ones * len(comm) == big and all(mul(mul(x, y), z) == mul(x, mul(y, z)) for x in G for y in G for z in G)
-    return reps, sizes, rows, sum(mul(x, x) == one for x in G) - 1
-tr, ts, trows, t2 = table("tile", (0, -1, 1, 0), (1, 0, 0, -1), 4, mat, (1, 0, 0, 1), lambda g: g[0] + g[3])
-sr, ss, srows, _ = table("S3", (0, -1, 1, -1), (0, 1, 1, 0), 3, mat, (1, 0, 0, 1), lambda g: g[0] + g[3])
-qr, qs, qrows, q2 = table("Q8", (0, 1, 0, 0), (0, 0, 1, 0), 4, quat, (1, 0, 0, 0), lambda q: 2 * q[0])
+    return reps, sizes, rows, sum(mul(x, x) == one for x in G) - 1, hom2
+tr, ts, trows, t2, _ = table("tile", (0, -1, 1, 0), (1, 0, 0, -1), 4, mat, (1, 0, 0, 1), lambda g: g)
+sr, ss, srows, _, _ = table("S3", (0, -1, 1, -1), (0, 1, 1, 0), 3, mat, (1, 0, 0, 1), lambda g: g)
+qr, qs, qrows, q2, qhom = table("Q8", (0, 1, 0, 0), (0, 0, 1, 0), 4, quat, (1, 0, 0, 0), qmat)
 by_corners = [fixed(g, [(1, 0), (0, 1), (-1, -1)]) - 1 for g in sr]
 shuffle = [fixed(g, [(1, 0), (0, 1), (-1, 0), (0, -1)]) for g in tr]   # corners on the axes
 holds = [ip(ts, shuffle, row) // 8 for row in trows]
 rebuilt = [sum(h * row[c] for h, row in zip(holds, trows)) for c in range(5)]
 print(f"S3 two-dim row by fixed corners minus 1: {by_corners}")
 print(f"tile 4-by-4 corner shuffle by fixed corners: {shuffle}; copies of each piece: {holds}")
-print(f"tile and Q8 tables identical: {yn(trows == qrows and ts == qs)}; members of order 2: tile {t2}, Q8 {q2}")
+print(f"Q8's complex 2-by-2 matrices multiply like Q8: {yn(qhom)}; tile and Q8 tables identical: {yn(trows == qrows and ts == qs)}; members of order 2: tile {t2}, Q8 {q2}")
 print(f"mistake 1, dimensions added, not squared: tile {sum(r[0] for r in trows)}, S3 {sum(r[0] for r in srows)}")
 print(f"mistake 2, S3 trivial against sign without class sizes: {sum(a * b for a, b in zip(srows[0], srows[1]))}/6, not {ip(ss, srows[0], srows[1])}")
 print(f"mistake 3, one piece per member: 8 one-dim pieces needed, {sum(r[0] == 1 for r in trows)} found")
 assert by_corners == srows[-1] and rebuilt == shuffle            # two roads to the same rows
-assert trows == qrows and ts == qs and (t2, q2) == (5, 1)          # one table, two different groups
+assert qhom and trows == qrows and ts == qs and (t2, q2) == (5, 1)   # one table, two different groups
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 tile: 8 members, 5 classes of sizes [1, 1, 2, 2, 2], commutator subgroup of size 2
@@ -263,7 +267,7 @@ Q8 table: [1, 1, 1, 1, 1] [1, 1, 1, -1, -1] [1, 1, -1, 1, -1] [1, 1, -1, -1, 1] 
 Q8: 5 pieces, 1 + 1 + 1 + 1 + 4 = 8; one-dim 4 = 8 / 2; rows orthonormal: yes; regular = dims x rows: yes
 S3 two-dim row by fixed corners minus 1: [2, -1, 0]
 tile 4-by-4 corner shuffle by fixed corners: [4, 0, 0, 2, 0]; copies of each piece: [1, 0, 1, 0, 1]
-tile and Q8 tables identical: yes; members of order 2: tile 5, Q8 1
+Q8's complex 2-by-2 matrices multiply like Q8: yes; tile and Q8 tables identical: yes; members of order 2: tile 5, Q8 1
 mistake 1, dimensions added, not squared: tile 6, S3 4
 mistake 2, S3 trivial against sign without class sizes: 1/6, not 0
 mistake 3, one piece per member: 8 one-dim pieces needed, 4 found
@@ -273,11 +277,13 @@ ALL CHECKS PASS
 ### Rust
 
 ```rust
-// Character tables -- the same check as the Python, in Rust.  No crates.  Each group is the
-// list r^k f^m built from two generators.  Road one finds the classes by conjugating; road
-// two finds the one-dimensional pieces by trying signs for r and f; road three is the trace
-// of a 2-by-2 action.  Orthogonality, the regular representation and commutators cross-check.
-type E = [i64; 4];                                // a 2-by-2 matrix row by row, or a quaternion
+// Character tables -- the same check as the Python, in Rust.  No crates.  Each group is the list r^k f^m built from
+// two generators.  Road one finds the classes by conjugating; road two finds the one-dimensional pieces by trying
+// signs for r and f; road three is the trace of a 2-by-2 action.  Orthogonality, the regular representation and commutators cross-check.
+type E = [i64; 4]; type C = [(i64, i64); 4];     // E: a 2-by-2 matrix row by row, or a quaternion; C: complex 2-by-2, (re, im)
+fn cmat(p: C, q: C) -> C {
+    let e = |i: usize, j: usize| (0..2).fold((0, 0), |(re, im), k| { let (a, b) = (p[2 * i + k], q[2 * k + j]); (re + a.0 * b.0 - a.1 * b.1, im + a.0 * b.1 + a.1 * b.0) });
+    [e(0, 0), e(0, 1), e(1, 0), e(1, 1)] }
 fn mat(p: E, q: E) -> E { [p[0]*q[0] + p[1]*q[2], p[0]*q[1] + p[1]*q[3], p[2]*q[0] + p[3]*q[2], p[2]*q[1] + p[3]*q[3]] }
 fn quat(p: E, q: E) -> E {                        // quaternions a + b i + c j + d k
     [p[0]*q[0] - p[1]*q[1] - p[2]*q[2] - p[3]*q[3], p[0]*q[1] + p[1]*q[0] + p[2]*q[3] - p[3]*q[2],
@@ -288,8 +294,8 @@ fn fixed(g: E, corners: &[(i64, i64)]) -> i64 {   // corners a matrix sends to t
 }
 fn ip(sizes: &[i64], u: &[i64], v: &[i64]) -> i64 { (0..sizes.len()).map(|c| sizes[c] * u[c] * v[c]).sum() }
 fn yn(c: bool) -> &'static str { if c { "yes" } else { "no" } }
-struct T { reps: Vec<E>, sizes: Vec<i64>, rows: Vec<Vec<i64>>, twos: i64 }
-fn table(name: &str, r: E, f: E, n: usize, mul: fn(E, E) -> E, one: E, chi2: fn(E) -> i64) -> T {
+struct T { reps: Vec<E>, sizes: Vec<i64>, rows: Vec<Vec<i64>>, twos: i64, hom2: bool }
+fn table(name: &str, r: E, f: E, n: usize, mul: fn(E, E) -> E, one: E, act2: fn(E) -> C) -> T {
     let pw = |x: E, k: usize| (0..k).fold(one, |acc, _| mul(acc, x));
     let mut g: Vec<E> = vec![];
     for m in 0..2 { for k in 0..n { g.push(mul(pw(r, k), pw(f, m))) } }
@@ -310,33 +316,31 @@ fn table(name: &str, r: E, f: E, n: usize, mul: fn(E, E) -> E, one: E, chi2: fn(
             rows.push(reps.iter().map(|&x| val(x)).collect());
         }
     }
-    let ones = rows.len();
-    rows.push(reps.iter().map(|&x| chi2(x)).collect());   // road three: trace of the 2-by-2 action
+    let ones = rows.len(); rows.push(reps.iter().map(|&x| act2(x)[0].0 + act2(x)[3].0).collect());   // road three: trace of the 2-by-2 action
+    let hom2 = g.iter().all(|&x| g.iter().all(|&y| cmat(act2(x), act2(y)) == act2(mul(x, y))));      // ... and it respects products
     let (dims, big): (Vec<i64>, i64) = (rows.iter().map(|row| row[0]).collect(), g.len() as i64);
     let orth = (0..rows.len()).all(|i| (0..rows.len()).all(|j| ip(&sizes, &rows[i], &rows[j]) == if i == j { big } else { 0 }));
     let reg: Vec<i64> = reps.iter().map(|&h| g.iter().filter(|&&x| mul(h, x) == x).count() as i64).collect();
     let split: Vec<i64> = (0..reps.len()).map(|c| (0..rows.len()).map(|i| dims[i] * rows[i][c]).sum()).collect();
     let mut comm: Vec<E> = vec![];
     for &x in &g { for &y in &g { let z = mul(mul(x, y), mul(inv(x), inv(y))); if !comm.contains(&z) { comm.push(z) } } }
-    loop {
+    loop {                                        // close up under products
         let before = comm.len();
         for i in 0..before { for j in 0..before { let z = mul(comm[i], comm[j]); if !comm.contains(&z) { comm.push(z) } } }
-        if comm.len() == before { break }
-    }
-    let (sq, tab): (Vec<String>, Vec<String>) = (dims.iter().map(|d| (d * d).to_string()).collect(), rows.iter().map(|row| format!("{:?}", row)).collect());
-    let total: i64 = dims.iter().map(|d| d * d).sum();
+        if comm.len() == before { break } }
+    let (sq, tab, total): (Vec<String>, Vec<String>, i64) = (dims.iter().map(|d| (d * d).to_string()).collect(), rows.iter().map(|row| format!("{:?}", row)).collect(), dims.iter().map(|d| d * d).sum());
     println!("{}: {} members, {} classes of sizes {:?}, commutator subgroup of size {}", name, big, reps.len(), sizes, comm.len());
     println!("{} table: {}", name, tab.join(" "));
     println!("{}: {} pieces, {} = {}; one-dim {} = {} / {}; rows orthonormal: {}; regular = dims x rows: {}",
              name, rows.len(), sq.join(" + "), total, ones, big, comm.len(), yn(orth), yn(reg == split));
     assert!(rows.len() == reps.len() && total == big);           // pieces = classes, squares add to |G|
     assert!(orth && reg == split && ones * comm.len() == g.len() && g.iter().all(|&x| g.iter().all(|&y| g.iter().all(|&z| mul(mul(x, y), z) == mul(x, mul(y, z))))));
-    T { reps, sizes, rows, twos: g.iter().filter(|&&x| mul(x, x) == one).count() as i64 - 1 }
+    T { reps, sizes, rows, twos: g.iter().filter(|&&x| mul(x, x) == one).count() as i64 - 1, hom2 }
 }
 fn main() {
-    let t = table("tile", [0, -1, 1, 0], [1, 0, 0, -1], 4, mat, [1, 0, 0, 1], |g| g[0] + g[3]);
-    let s = table("S3", [0, -1, 1, -1], [0, 1, 1, 0], 3, mat, [1, 0, 0, 1], |g| g[0] + g[3]);
-    let q = table("Q8", [0, 1, 0, 0], [0, 0, 1, 0], 4, quat, [1, 0, 0, 0], |q| 2 * q[0]);
+    let t = table("tile", [0, -1, 1, 0], [1, 0, 0, -1], 4, mat, [1, 0, 0, 1], |g| [(g[0], 0), (g[1], 0), (g[2], 0), (g[3], 0)]);
+    let s = table("S3", [0, -1, 1, -1], [0, 1, 1, 0], 3, mat, [1, 0, 0, 1], |g| [(g[0], 0), (g[1], 0), (g[2], 0), (g[3], 0)]);
+    let q = table("Q8", [0, 1, 0, 0], [0, 0, 1, 0], 4, quat, [1, 0, 0, 0], |q| [(q[0], q[1]), (q[2], q[3]), (-q[2], q[3]), (q[0], -q[1])]);   // q0 + q1 i + q2 j + q3 k, complex
     let by_corners: Vec<i64> = s.reps.iter().map(|&g| fixed(g, &[(1, 0), (0, 1), (-1, -1)]) - 1).collect();
     let shuffle: Vec<i64> = t.reps.iter().map(|&g| fixed(g, &[(1, 0), (0, 1), (-1, 0), (0, -1)])).collect();   // corners on the axes
     let holds: Vec<i64> = t.rows.iter().map(|row| ip(&t.sizes, &shuffle, row) / 8).collect();
@@ -344,18 +348,18 @@ fn main() {
     let dimsum = |rows: &Vec<Vec<i64>>| rows.iter().map(|r| r[0]).sum::<i64>();
     println!("S3 two-dim row by fixed corners minus 1: {:?}", by_corners);
     println!("tile 4-by-4 corner shuffle by fixed corners: {:?}; copies of each piece: {:?}", shuffle, holds);
-    println!("tile and Q8 tables identical: {}; members of order 2: tile {}, Q8 {}", yn(t.rows == q.rows && t.sizes == q.sizes), t.twos, q.twos);
+    println!("Q8's complex 2-by-2 matrices multiply like Q8: {}; tile and Q8 tables identical: {}; members of order 2: tile {}, Q8 {}", yn(q.hom2), yn(t.rows == q.rows && t.sizes == q.sizes), t.twos, q.twos);
     println!("mistake 1, dimensions added, not squared: tile {}, S3 {}", dimsum(&t.rows), dimsum(&s.rows));
     println!("mistake 2, S3 trivial against sign without class sizes: {}/6, not {}",
              (0..3).map(|c| s.rows[0][c] * s.rows[1][c]).sum::<i64>(), ip(&s.sizes, &s.rows[0], &s.rows[1]));
     println!("mistake 3, one piece per member: 8 one-dim pieces needed, {} found", t.rows.iter().filter(|r| r[0] == 1).count());
     assert!(by_corners == s.rows[2] && rebuilt == shuffle);             // two roads to the same rows
-    assert!(t.rows == q.rows && t.sizes == q.sizes && (t.twos, q.twos) == (5, 1));   // one table, two groups
+    assert!(q.hom2 && t.rows == q.rows && t.sizes == q.sizes && (t.twos, q.twos) == (5, 1));   // one table, two groups
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 tile: 8 members, 5 classes of sizes [1, 1, 2, 2, 2], commutator subgroup of size 2
@@ -369,7 +373,7 @@ Q8 table: [1, 1, 1, 1, 1] [1, 1, 1, -1, -1] [1, 1, -1, 1, -1] [1, 1, -1, -1, 1] 
 Q8: 5 pieces, 1 + 1 + 1 + 1 + 4 = 8; one-dim 4 = 8 / 2; rows orthonormal: yes; regular = dims x rows: yes
 S3 two-dim row by fixed corners minus 1: [2, -1, 0]
 tile 4-by-4 corner shuffle by fixed corners: [4, 0, 0, 2, 0]; copies of each piece: [1, 0, 1, 0, 1]
-tile and Q8 tables identical: yes; members of order 2: tile 5, Q8 1
+Q8's complex 2-by-2 matrices multiply like Q8: yes; tile and Q8 tables identical: yes; members of order 2: tile 5, Q8 1
 mistake 1, dimensions added, not squared: tile 6, S3 4
 mistake 2, S3 trivial against sign without class sizes: 1/6, not 0
 mistake 3, one piece per member: 8 one-dim pieces needed, 4 found
@@ -388,7 +392,7 @@ Lean proves the two counts and the dimension-1 count for every finite group, and
 - The commutator subgroups have size 2 for the tile and Q8, and size 3 for S3.
 - The squared dimensions add to 8 for the tile and 6 for S3.
 - The tile has 5 members of order 2, and Q8 has 1.
-- The house matrices obey $`r^4 = e`$, $`f^2 = e`$ and $`f r f = r^3`$. Their traces give the 2-by-2 row: 2, −2, 0, 0, 0.
+- The tile's 2-by-2 matrices obey $`r^4 = e`$, $`f^2 = e`$ and $`f r f = r^3`$. Their traces give the 2-by-2 row: 2, −2, 0, 0, 0.
 - Weighted by class sizes, the tile's rows give 8 for a row against itself and 0 for two different rows.
 - The tile's rows, weighted by dimension, add to 8 at $`e`$ and 0 at every other class.
 - The corner shuffle's traces (4, 0, 0, 2, 0) give one trivial, one diagonal sign and one 2-by-2 piece.
@@ -758,7 +762,7 @@ theorem card_one_dim_pieces_eq_index_commutator
 
 /-- **The table is a fingerprint, not proof of sameness.** The tile group (the eight moves of a
 square, `DihedralGroup 4`) and Q8 (the eight quaternions ±1, ±i, ±j, ±k, `QuaternionGroup 2`)
-share one character table (checked entry by entry below), yet no relabelling turns one group
+share one character table (checked entry by entry in the Python and Rust scripts), yet no relabelling turns one group
 into the other. -/
 theorem tile_group_not_iso_quaternion :
     IsEmpty (DihedralGroup 4 ≃* QuaternionGroup 2) := by
@@ -831,7 +835,7 @@ example :
   refine ⟨?_, ?_, ?_⟩ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [r, f, pow_succ, Matrix.mul_apply, Fin.sum_univ_two]
 
-/-- The 2-by-2 row of the tile's table from the house matrices: traces 2 at `e`, −2 at `r²`,
+/-- The 2-by-2 row of the tile's table from the tile's 2-by-2 matrices: traces 2 at `e`, −2 at `r²`,
 0 at `r`, at `f` and at `r f`. -/
 example :
     let r : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
@@ -886,7 +890,7 @@ example : (3 - 1, 0 - 1, 1 - 1) = ((2 : ℤ), (-1 : ℤ), (0 : ℤ)) := by norm_
 end CharacterTables
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'CharacterTables.mem_center_monoidAlgebra_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -908,7 +912,7 @@ end CharacterTables
 > **Try changing**
 > Guess first, then run it.
 > - **Use the other flip.** Give the tile `(0, 1, 1, 0)` in place of `(1, 0, 0, -1)`. Does the table change? No: same group, same table, every check passes. Only the corner shuffle moves, to `[4, 0, 0, 0, 2]`, as the flip classes trade columns.
-> - **Forget the factor 2 for Q8.** Change `2 * q[0]` to `q[0]`. Is (1, −1, 0, 0, 0) a piece? No: squares add to 5, not 8, and an assert stops the run.
+> - **Drop half of Q8's trace.** In `qmat`, change the last entry `complex(q[0], -q[1])` to `0`. Is (1, −1, 0, 0, 0) a piece? No: squares add to 5, not 8, and an assert stops the run.
 > - **Drop the class sizes.** In `ip`, change `s * a * b` to `a * b`. Which test fails? The tile's rows stop being orthonormal.
 
 ---
@@ -942,11 +946,13 @@ end CharacterTables
 - [Conjugacy and the class equation](../08-Groups/10-conjugacy-and-the-class-equation.md): the tile's five classes of look-alike moves.
 
 ## Where this goes next
+
 - [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
 - [Highest weights](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/04-highest-weight-theorem-and-weyl-dimension-formula.md): every irreducible representation is fixed by its top weight, and Weyl's formula gives its size.
 
-
 Natural next topics: building a group's pieces from a subgroup's (induced representations), and extra data that separates equal tables, such as where a member's square lands.
+
+This card closes Algebra. The two links above carry representations into later wings. The reading order goes on with [The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md), the first card of Combinatorics and graphs, which starts counting from scratch.
 
 The open question: what, beyond the table, pins down a finite group completely?
 

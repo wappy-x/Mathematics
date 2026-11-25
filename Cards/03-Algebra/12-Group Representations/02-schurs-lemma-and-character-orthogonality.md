@@ -10,7 +10,9 @@ A square tile drops into a square recess eight ways: four turns and four flips (
 
 [Representations](01-representations-and-maschkes-theorem.md) splits it by hand into three pieces that cannot split further: the height line, the twist line and the 2-dimensional tilt plane. Here they are called trivial, diagonal sign and floor.
 
-This card finds them with one number per move: the **trace**, the sum of a matrix's diagonal. For a corner shuffle it counts the corners left in place: 4 for doing nothing, 2 for a diagonal flip, 0 otherwise. Average that list against each piece's own list to count how often the piece appears: 1, 1 and 1.
+This card finds them with one number per move: the **trace**, the sum of a matrix's diagonal. For a corner shuffle it counts the corners left in place. Average that list against each piece's own list to count how often the piece appears: 1, 1 and 1.
+
+Look-alike moves have equal traces. They form five **conjugacy classes**: doing nothing (1 move), the half turn (1), quarter turns (2), diagonal flips (2) and edge flips (2). In that order, the corner traces are 4, 0, 0, 2, 0.
 
 **A map that respects the moves between two irreducible pieces is zero or an isomorphism, so the trace lists of different pieces are perpendicular, and averaging any representation's trace list against them counts its pieces.**
 
@@ -26,7 +28,7 @@ flowchart LR
     C -.->|"average 0"| X["flip sign, edge sign<br/>absent"]
 ```
 
-Dimensions add 1 + 1 + 2 = 4. Trivial: every move acts as 1. Diagonal sign: quarter turns and edge flips act as −1.
+Dimensions add 1 + 1 + 2 = 4. Trivial: every move acts as 1. Diagonal sign: quarter turns and edge flips act as −1. Flip sign: flips act as −1. Edge sign: quarter turns and diagonal flips act as −1.
 
 ---
 
@@ -39,7 +41,7 @@ Dimensions add 1 + 1 + 2 = 4. Trivial: every move acts as 1. Diagonal sign: quar
 **Schur's lemma** is two sentences:
 
 ```math
-T\rho_V(g) = \rho_W(g)\,T \text{ for every } g, \ V \text{ and } W \text{ irreducible} \;\Longrightarrow\; T = 0 \text{ or } T \text{ is invertible}; \quad \text{and if } V = W, \ T = \lambda I
+T\rho_V(g) = \rho_W(g)\,T \text{ for every } g, \ V \text{ and } W \text{ irreducible} \;\Longrightarrow\; T = 0 \text{ or } T \text{ is invertible}; \quad \text{and if } \rho_W = \rho_V, \ T = \lambda I
 ```
 
 **Read it aloud:** a respectful map between two irreducible pieces is nothing or a perfect match; from a piece to itself it is a multiple of the identity matrix.
@@ -52,7 +54,7 @@ The **character** of a representation is its trace list, $`\chi_V(g) = \mathrm{t
 
 **Read it aloud:** average one character times the other at the undo, over all moves; two irreducible characters give 1 if they are the same piece and 0 if not, so this average counts a piece's copies.
 
-On the tile every move shares a class with its undo, so $`\psi(g^{-1}) = \psi(g)`$, and the corner character (4, 0, 0, 2, 0) against the trivial one (1, 1, 1, 1, 1) gives (4 + 2 × 2)/8 = 1. For groups with complex characters, $`\psi(g^{-1})`$ is the complex conjugate of $`\psi(g)`$ (the sign of its imaginary part flipped).
+On the tile every move shares a class with its undo, so $`\psi(g^{-1}) = \psi(g)`$. Weighting each class by its size, the corner character (4, 0, 0, 2, 0) against the trivial one (1, 1, 1, 1, 1) gives (1 × 4 + 2 × 2)/8 = 1. For groups with complex characters, $`\psi(g^{-1})`$ is the complex conjugate of $`\psi(g)`$ (the sign of its imaginary part flipped).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -89,11 +91,11 @@ Otherwise only zero is lost, and the image is a non-zero subspace of $`W`$ kept 
 
 ### Step 2: from a piece to itself, a plain number
 
-Now let $`V = W`$. Over the complex numbers every square matrix has an eigenvalue $`\lambda`$ (a number with $`Tv = \lambda v`$ for some non-zero vector $`v`$), because its characteristic polynomial $`\det(T - \lambda I)`$ has a root ([The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md), [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+Now let $`\rho_W = \rho_V`$: one piece on both sides. Over the complex numbers every square matrix has an eigenvalue $`\lambda`$: a number with $`Tv = \lambda v`$ for some non-zero vector $`v`$. It exists because the characteristic polynomial $`\det(T - \lambda I)`$ has a root ([The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md), [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 
 Then $`T - \lambda I`$ also respects the moves and sends an eigenvector to zero, so it is not invertible. By Step 1, $`T - \lambda I = 0`$.
 
-On the floor plane, a matrix commuting with the quarter turn `[[0, -1], [1, 0]]` has the form `[[p, -q], [q, p]]`, and commuting with the flip `[[1, 0], [0, -1]]` forces $`q = 0`$. Only $`pI`$ survives: of the 625 matrices with entries from −2 to 2, exactly 5 commute with all 8 floor moves.
+On the floor plane, a matrix commuting with the quarter turn `[[0, -1], [1, 0]]` has the form `[[p, -q], [q, p]]`. Commuting with the flip `[[1, 0], [0, -1]]` then forces $`q = 0`$. Only $`pI`$ survives: of the 625 matrices with entries from −2 to 2, exactly 5 commute with all 8 floor moves.
 
 ### Step 3: a character is the same on look-alike moves
 
@@ -133,7 +135,7 @@ If $`V`$ and $`W`$ are different irreducible pieces, Step 4 makes this 0. Put $`
 
 $`\displaystyle \frac{1}{\lvert G\rvert}\sum_{g} \chi_W(g)\,\chi_V(g^{-1}) = 0`$
 
-If $`V = W`$ with dimension $`d`$, the average of $`E`$ is $`(\mathrm{tr}\,E/d)\,I`$, so entry $`(a, b)`$ is $`1/d`$ when $`a = b`$ and 0 otherwise. Adding the $`d`$ diagonal terms gives $`d \times 1/d`$:
+If $`\rho_W = \rho_V`$ with dimension $`d`$, the average of $`E`$ is $`(\mathrm{tr}\,E/d)\,I`$. Putting $`k = a`$, $`l = b`$ again, entry $`(a, b)`$ is $`1/d`$ when $`a = b`$ and 0 otherwise. Adding the $`d`$ diagonal terms gives $`d \times 1/d`$:
 
 $`\displaystyle \frac{1}{\lvert G\rvert}\sum_{g} \chi_V(g)\,\chi_V(g^{-1}) = 1`$
 
@@ -157,7 +159,7 @@ So the trace list alone decides the split. The corner character gives 24/8 = 3 =
 
 ## Worked numbers, by hand
 
-Classes in order: doing nothing (1 move), half turn (1), quarter turns (2), diagonal flips (2), edge flips (2). Each value is weighted by its class size.
+Classes in the overview's order, sizes 1, 1, 2, 2, 2. Each value is weighted by its class size.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |

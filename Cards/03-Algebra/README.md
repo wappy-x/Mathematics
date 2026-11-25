@@ -197,7 +197,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 12 · Group Representations · 3 cards
 
-*A group acting by matrices: Maschke's splitting into irreducible pieces, Schur's lemma, and characters, the traces that identify every representation. Rests on shelves 07 and 08.*
+*A group acting by matrices: Maschke's splitting into irreducible pieces, Schur's lemma and character orthogonality, and character tables: as many pieces as conjugacy classes, squared dimensions adding to the group's size, and a table that fingerprints the group. Rests on shelves 07, 08, 10 and 11.*
 
 1. [Representations: a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further](12-Group%20Representations/01-representations-and-maschkes-theorem.md)
 2. [Schur's lemma and orthogonality: a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular](12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md)

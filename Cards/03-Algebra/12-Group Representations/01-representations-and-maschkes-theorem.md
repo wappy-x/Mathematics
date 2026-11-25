@@ -6,9 +6,9 @@
 
 ## General Overview
 
-A square tile drops into a square recess eight ways: four quarter turns r0 to r3, and the same four after a flip, r0f to r3f ([Group actions](../08-Groups/08-group-actions-and-counting.md)). Its corners are numbered 0 to 3, clockwise from the top left.
+A square tile drops into a square recess eight ways: four turns r0 to r3 (by 0, 1, 2 and 3 quarters), and the same four after a flip, r0f to r3f ([Group actions](../08-Groups/08-group-actions-and-counting.md)). Its corners are numbered 0 to 3, clockwise from the top left.
 
-A tiler measures each corner's height above a laser line: 6, 2, 4 and 0 mm. Lay the tile another way and the same heights land on other corners. So each move shuffles a list of four numbers, and a shuffle of a list is a matrix ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). A group acting by matrices like this is a **representation**.
+A hand-cut stone tile varies in thickness. With its back on a flat bench, a tiler measures each corner's height above the thinnest corner: 6, 2, 4 and 0 mm. Each height is extra thickness, so it travels with its corner. Turn the tile, or flip it face down, and the same heights land on other corners. So each move shuffles a list of four numbers, and a shuffle of a list is a matrix ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). A group acting by matrices like this is a **representation**.
 
 The heights split into three parts that no move can mix:
 
@@ -72,7 +72,7 @@ For the tile, 4 = 1 + 1 + 2.
 | $`V`$, $`x`$, $`x_0`$ | the lists of corner numbers; one list; its corner-0 entry | $`x`$ = (6, 2, 4, 0) mm, $`x_0`$ = 6 | more corners, more pieces |
 | $`e_0`$ to $`e_3`$, $`u`$, $`w`$ | the list with 1 at one corner, 0 elsewhere; $`u = e_0 - e_2`$, $`w = e_1 - e_3`$ | $`u + w`$ = (1, 1, −1, −1), the tilt | — |
 | $`\rho(g)`$ | the matrix of move $`g`$ | r1 sends (6, 2, 4, 0) to (0, 6, 2, 4) | — |
-| $`W`$, $`W'`$, $`W_1`$ to $`W_k`$, $`\oplus`$ | kept subspaces; the $`k`$ final pieces; ⊕ joins pieces sharing only zero | height line, twist line, tilt plane | — |
+| $`W`$, $`y`$, $`W'`$, $`W_1`$ to $`W_k`$, $`\oplus`$ | a kept subspace and a member of it; its kept partner; the $`k`$ final pieces; ⊕ joins pieces sharing only zero | height line, twist line, tilt plane | — |
 | $`P`$, $`P^{\circ}`$, $`\sum`$ | a projection onto $`W`$; its average; Σ adds over every move | copy $`x_0`$ to every corner; put the mean, 3, on every corner | — |
 | $`c`$, $`i`$ | the line through (1, $`c`$) in the tilt plane; the complex number with $`i^2 = -1`$ | $`c = i`$ or $`c = -i`$ | — |
 
@@ -80,7 +80,7 @@ For the tile, 4 = 1 + 1 + 2.
 
 - **A finite group.** The average needs a count. The shears `[[1, 1], [0, 1]]`, `[[1, 2], [0, 1]]` and so on keep the horizontal line, and no other line, so it has no kept partner.
 - **Division by the group's size.** In arithmetic mod 2, where 1 + 1 = 0, swapping two coordinates keeps the line through (1, 1) and neither of its 2 partner lines.
-- **Complex numbers, for "cannot split further".** The split works over the real numbers too, but a real piece may split again once complex numbers are allowed. The four quarter turns alone keep no real line in the tilt plane, yet keep the complex lines through (1, −i) and (1, i). Over the complex numbers, every equation like 1 + c² = 0 has a root, so a piece found irreducible there stays irreducible.
+- **Complex numbers, for "cannot split further".** The split works over the real numbers too, but a real piece may split again once complex numbers are allowed. The four turns alone keep no real line in the tilt plane, yet keep the complex lines through (1, −i) and (1, i). Over the complex numbers, every equation like 1 + c² = 0 has a root, so a piece found irreducible there stays irreducible.
 
 ---
 
@@ -97,7 +97,7 @@ Doing h then g carries each corner first where h puts it, then where g puts that
 ### Step 2: three kept pieces in the tile
 
 - **Height.** A list with all corners equal stays equal under any shuffle.
-- **Twist.** Corners 0 and 2 form one diagonal, 1 and 3 the other. Quarter turns and edge flips swap the diagonals, so they act on (1, −1, 1, −1) as −1. The half turn and diagonal flips act as +1.
+- **Twist.** Corners 0 and 2 form one diagonal, 1 and 3 the other. Quarter turns and edge flips swap the diagonals, so they act on (1, −1, 1, −1) as −1. Doing nothing, the half turn and the diagonal flips act as +1.
 - **Tilt.** The lists at right angles to both are the mixes of u and w. In the diagonal basis u, w, the quarter turn acts as `[[0, -1], [1, 0]]` and the diagonal flip r0f as `[[1, 0], [0, -1]]`: the tile's own 2 by 2 matrices on the floor.
 
 The traces agree. The trace of ρ(g), the sum of its diagonal, counts the corners g leaves put: 4, 0, 0, 0, 2, 0, 2, 0. Move by move, that is 1 plus the twist sign plus the trace on the tilt plane. Reading pieces from traces alone is [Schur's lemma and orthogonality](02-schurs-lemma-and-character-orthogonality.md).
@@ -115,7 +115,7 @@ In general, the average still maps into W and fixes W. By Step 0 it also commute
 
 Into W: each term first lands in W by P, then stays there, since ρ(g) keeps W.
 
-Fixes W: for w in W, the undo of g keeps w in W, P leaves it alone, and ρ(g) brings it back. Every term is w, so the mean is w. With the line above, the average squared is itself.
+Fixes W: for y in W, the undo of g keeps y in W, P leaves it alone, and ρ(g) brings it back. Every term is y, so the mean is y. With the line above, the average squared is itself.
 
 Commutes: as g runs over G, so does hg, once each, so
 
@@ -123,7 +123,7 @@ $`\displaystyle \rho(h)\, P^{\circ}\, \rho(h)^{-1} = \frac{1}{\lvert G\rvert} \s
 
 Kept zero set: if $`P^{\circ} x = 0`$, then $`P^{\circ} \rho(h) x = \rho(h) P^{\circ} x = 0`$.
 
-Direct sum: $`x = P^{\circ} x + (x - P^{\circ} x)`$, and the second part goes to zero. A list in both W and W′ is $`w = P^{\circ} w = 0`$.
+Direct sum: $`x = P^{\circ} x + (x - P^{\circ} x)`$, and the second part goes to zero. A list y in both W and W′ is $`y = P^{\circ} y = 0`$.
 
 The only division is by the group's size, so that number must be invertible.
 
@@ -560,6 +560,8 @@ example : (![3, 3, 3, 3] : Fin 4 → ℤ) + ![2, -2, 2, -2] + ![1, 1, -1, -1] = 
 example : (∑ i, (![3, 3, 3, 3] : Fin 4 → ℤ) i * ![2, -2, 2, -2] i) = 0 ∧
     (∑ i, (![3, 3, 3, 3] : Fin 4 → ℤ) i * ![1, 1, -1, -1] i) = 0 ∧
     (∑ i, (![2, -2, 2, -2] : Fin 4 → ℤ) i * ![1, 1, -1, -1] i) = 0 ∧
+    (∑ i, (![3, 3, 3, 3] : Fin 4 → ℤ) i ^ 2) = 36 ∧ (∑ i, (![2, -2, 2, -2] : Fin 4 → ℤ) i ^ 2) = 16 ∧
+    (∑ i, (![1, 1, -1, -1] : Fin 4 → ℤ) i ^ 2) = 4 ∧
     (36 + 16 + 4 : ℤ) = ∑ i, (![6, 2, 4, 0] : Fin 4 → ℤ) i ^ 2 := by
   decide
 
@@ -594,7 +596,7 @@ example : (!![2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2] : Matrix (Fin 4) (
 #print axioms averaged_projection_commutes
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'avg_proj_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
