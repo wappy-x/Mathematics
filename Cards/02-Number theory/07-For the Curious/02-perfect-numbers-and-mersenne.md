@@ -6,11 +6,11 @@
 
 ## General Overview
 
-A double-six domino set has 28 tiles. Deal them into equal piles, every tile used: 1, 2, 4, 7 or 14 all work, and the whole box as one pile of 28.
+In October 2024 volunteers announced the largest prime known: 136,279,841 twos multiplied together, then 1 taken off. Primes of that shape are hunted because of a 2,300-year-old recipe for numbers like 28.
 
-Ignore that last one and add the rest: 1 + 2 + 4 + 7 + 14 = 28. The pile sizes rebuild the set.
+Take 28. The numbers that go into it with nothing left over are 1, 2, 4, 7, 14 and 28. Each is a **divisor** ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). Every divisor but 28 itself is a **proper divisor**.
 
-Each of those goes into 28 with nothing left over — a **divisor** ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). Every divisor but 28 itself is a **proper divisor**.
+Add the proper divisors: 1 + 2 + 4 + 7 + 14 = 28. They rebuild the number exactly.
 
 **A number is perfect when its proper divisors — everything that goes into it, except itself — add back up to it.**
 
@@ -81,7 +81,7 @@ That is Euclid, around 300 BC. Euler proved the return trip in the 1700s, publis
 
 ## Worked numbers, by hand
 
-The 28 dominoes, end to end:
+28, end to end:
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -104,7 +104,7 @@ The 28 dominoes, end to end:
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but a logarithm and a rounding-down, and only to count digits. 28 is done the plain way — list what goes in, add — then again by Euclid's two brackets, then the recipe on the first four Mersenne primes, each answer checked against a by-hand divisor sum.
+Nothing is imported but a logarithm and a rounding-down, and only to count digits. 28 is done the plain way — list what goes in, add — then again by Euclid's two brackets. Then the recipe runs on the first four Mersenne primes, and each answer is checked against a by-hand divisor sum.
 
 ### Python
 
@@ -141,7 +141,7 @@ assert digit_count(136279841) == 41024320 and digit_count(2 * 136279841 - 1) == 
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 28 = 1 + 2 + 4 + 7 + 14
@@ -204,7 +204,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 28 = 1 + 2 + 4 + 7 + 14
@@ -244,7 +244,9 @@ open Nat
 
 open ArithmeticFunction in
 open scoped ArithmeticFunction.sigma in
-theorem helper_sum_divisors (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
+/-- Counting the number itself too: when the Mersenne number `2 ^ (k + 1) - 1` is prime, every
+divisor of `2 ^ k * (2 ^ (k + 1) - 1)`, the number included, adds to exactly twice the number. -/
+theorem sum_all_divisors_is_twice (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
   have h2 : σ 1 (2 ^ k) = mersenne (k + 1) := by
     simp_rw [sigma_one_apply, mersenne, ← one_add_one_eq_two, ← geom_sum_mul_add 1 (k + 1)]
@@ -254,8 +256,6 @@ theorem helper_sum_divisors (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     h2]
   simp [hp, sigma_one_apply]
 
-#print axioms helper_sum_divisors
-
 /-- Euclid's recipe. Double 1 along `k + 1` times to reach `2 ^ (k + 1)`, and take one off to get
 the Mersenne number `mersenne (k + 1) = 2 ^ (k + 1) - 1`. If that Mersenne number is prime, then
 it times the doubling just below, `2 ^ k`, is perfect: its proper divisors (every divisor except
@@ -263,13 +263,7 @@ the number itself) add back up to it. -/
 theorem euclid_mersenne_prime_gives_perfect (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     Nat.Perfect (2 ^ k * mersenne (k + 1)) := by
   rw [Nat.perfect_iff_sum_divisors_eq_two_mul (by positivity)]
-  exact helper_sum_divisors k hp
-
-/-- Counting the number itself too: when the Mersenne number `2 ^ (k + 1) - 1` is prime, every
-divisor of `2 ^ k * (2 ^ (k + 1) - 1)`, the number included, adds to exactly twice the number. -/
-theorem sum_all_divisors_is_twice (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
-    ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
-  exact helper_sum_divisors k hp
+  exact sum_all_divisors_is_twice k hp
 
 /-- The count of doublings has to be prime too: if `2 ^ p - 1` is prime, then `p` is prime.
 (Required, not sufficient: `p = 11` is prime but `2 ^ 11 - 1 = 2047 = 23 × 89` is not.) -/
@@ -309,10 +303,9 @@ example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
 #print axioms mersenne_prime_needs_prime_count
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
-'helper_sum_divisors' depends on axioms: [propext, Classical.choice, Quot.sound]
 'euclid_mersenne_prime_gives_perfect' depends on axioms: [propext, Classical.choice, Quot.sound]
 'sum_all_divisors_is_twice' depends on axioms: [propext, Classical.choice, Quot.sound]
 'mersenne_prime_needs_prime_count' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -338,7 +331,7 @@ example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
 ## Where you meet it in real life
 
 - **A record-prime headline.** On 21 October 2024 the Great Internet Mersenne Prime Search announced the largest known prime: 136,279,841 twos multiplied together, then 1 taken off — 41,024,320 digits, only the 52nd Mersenne prime found. Euclid's recipe turns it into the 52nd known perfect number, 82,048,640 digits long.
-- **The machines hunting it.** Volunteers run Lucas–Lehmer, a test built for this shape: start at 4, square and take 2 off, two fewer times than the count of doublings, on a clock the size of the Mersenne number ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Land on 0 and it is prime.
+- **The machines hunting it.** Volunteers run Lucas–Lehmer, a test built for this shape when the count of doublings is an odd prime. Start at 4. Square and take 2 off, two fewer times than the count of doublings, on a clock the size of the Mersenne number ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Land on 0 and it is prime.
 - **Sorting numbers by their divisors.** Overshoot and a number is abundant, fall short and it is deficient; perfect is the knife edge.
 
 > **Say it back**
@@ -354,14 +347,15 @@ example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
 
 ## Where this goes next
 
-Nothing depends on this card; shelf 7 is detours. Its neighbours:
+Nothing later depends on this card. Next on this shelf:
 
-- [Pythagorean triples](01-pythagorean-triples.md): another recipe that turns two small numbers into whole numbers with a hidden pattern.
 - [How primes thin out](03-how-primes-thin-out.md): how many primes there are on average, where this card hunts single huge ones.
 - [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md): where the odd perfect number's unproven cousins live.
 - [Continued fractions](05-continued-fractions-and-leap-years.md): Euclid again, his algorithm read as nested fractions.
 
-The question this card leaves open: is there an odd perfect number, and do the Mersenne primes ever run out?
+Earlier on this shelf, [Pythagorean triples](01-pythagorean-triples.md) is another recipe that turns two small numbers into whole numbers with a hidden pattern.
+
+The question this card leaves open: is there an odd perfect number, and do the Mersenne primes ever run out? Nobody knows, so no card answers it. The next card asks a question that does have an answer: how many primes there are, on average.
 
 ---
 

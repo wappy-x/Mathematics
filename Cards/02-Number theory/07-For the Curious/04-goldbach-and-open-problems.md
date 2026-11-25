@@ -89,6 +89,8 @@ In 2013 Harald Helfgott proved the odd cousin: every odd number from 7 up is thr
 
 Walk up the primes, subtract each from 100, ask whether what is left is prime. Stop at the middle: past it the pairs repeat, halves swapped.
 
+The table shows the six hits and one miss, 5. The other primes up to 47 miss too: 2, 7, 13, 19, 23, 31, 37 and 43 all leave a number that is not prime.
+
 | Prime tried | 100 minus it | Prime too? |
 | --- | --- | --- |
 | 3 | 97 | yes: 3 + 97 |
@@ -133,12 +135,12 @@ for p in range(2, 15):
 def by_division(n):                  # road two: hunt for a divisor, up to the square root
     d = 2
     while d * d <= n and n % d: d += 1
-    return d * d > n
+    return n >= 2 and d * d > n
 def pairs(n, is_prime):              # every way n = p + q, both prime, smaller one first
     return [(p, n - p) for p in range(2, n // 2 + 1) if is_prime(p) and is_prime(n - p)]
 
 by_sieve = lambda m: flag[m]
-six = pairs(100, by_sieve)
+six, ordered = pairs(100, by_sieve), sum(1 for p in range(2, 99) if flag[p] and flag[100 - p])
 for p, q in six: print(f"100 = {p} + {q}")
 counts = [len(pairs(n, by_sieve)) for n in (4, 98, 100, 102)]
 checked = [len(pairs(n, by_division)) for n in (4, 98, 100, 102)]
@@ -147,14 +149,14 @@ print("ways to write it as two primes: 4 has {}, 98 has {}, 100 has {}, 102 has 
 print("the sieve and trial division agree on all four counts" if counts == checked else "the two roads disagree")
 print(f"twin primes just above 100: {twins[0][0]} and {twins[0][1]}")
 print("Goldbach checked to 4,000,000,000,000,000,000 by computer (published, not checked here)")
-print(f"the three mistakes come out at {2 * len(six)} ordered pairs, {len(pairs(11, by_sieve))} ways for 11, {len(pairs(2, by_sieve))} for 2")
-assert six == [(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)]
-assert counts == [1, 3, 6, 8] and checked == [1, 3, 6, 8] and all(flag[m] == by_division(m) for m in range(2, 201))
-assert twins[0] == (101, 103) and by_division(101) and by_division(103)
+print(f"the three mistakes come out at {ordered} ordered pairs, {len(pairs(11, by_sieve))} ways for 11, {len(pairs(2, by_sieve))} for 2")
+assert six == [(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)] and ordered == 12
+assert counts == [1, 3, 6, 8] and checked == [1, 3, 6, 8] and all(flag[m] == by_division(m) for m in range(201))
+assert twins[0] == (101, 103) and by_division(101) and by_division(103) and pairs(11, by_sieve) == pairs(2, by_sieve) == []
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 100 = 3 + 97
@@ -180,7 +182,7 @@ ALL CHECKS PASS
 fn by_division(n: usize) -> bool {   // road two: hunt for a divisor, up to the square root
     let mut d = 2;
     while d * d <= n && n % d != 0 { d += 1; }
-    d * d > n
+    n >= 2 && d * d > n
 }
 fn pairs(n: usize, is_prime: &dyn Fn(usize) -> bool) -> Vec<(usize, usize)> {
     (2..=n / 2).filter(|&p| is_prime(p) && is_prime(n - p)).map(|p| (p, n - p)).collect()
@@ -194,6 +196,7 @@ fn main() {
     }
     let by_sieve = |m: usize| flag[m];
     let six = pairs(100, &by_sieve);
+    let ordered = (2..99).filter(|&p| flag[p] && flag[100 - p]).count();   // 3 + 97 and 97 + 3 as two
     for (p, q) in &six { println!("100 = {} + {}", p, q); }
     let counts: Vec<usize> = [4, 98, 100, 102].iter().map(|&n| pairs(n, &by_sieve).len()).collect();
     let checked: Vec<usize> = [4, 98, 100, 102].iter().map(|&n| pairs(n, &by_division).len()).collect();
@@ -205,15 +208,15 @@ fn main() {
     println!("twin primes just above 100: {} and {}", twins[0].0, twins[0].1);
     println!("Goldbach checked to 4,000,000,000,000,000,000 by computer (published, not checked here)");
     println!("the three mistakes come out at {} ordered pairs, {} ways for 11, {} for 2",
-             2 * six.len(), pairs(11, &by_sieve).len(), pairs(2, &by_sieve).len());
-    assert!(six == vec![(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)]);
-    assert!(counts == vec![1, 3, 6, 8] && checked == vec![1, 3, 6, 8] && (2..201).all(|m| flag[m] == by_division(m)));
-    assert!(twins[0] == (101, 103) && by_division(101) && by_division(103));
+             ordered, pairs(11, &by_sieve).len(), pairs(2, &by_sieve).len());
+    assert!(six == vec![(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)] && ordered == 12);
+    assert!(counts == vec![1, 3, 6, 8] && checked == vec![1, 3, 6, 8] && (0..201).all(|m| flag[m] == by_division(m)));
+    assert!(twins[0] == (101, 103) && by_division(101) && by_division(103) && pairs(11, &by_sieve).is_empty() && pairs(2, &by_sieve).is_empty());
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 100 = 3 + 97
@@ -364,9 +367,14 @@ example : 101 + 2 = 103 := by decide
 
 ## Where this goes next
 
-This shelf is a detour from the main line. The neighbours are [How primes thin out](03-how-primes-thin-out.md), which shows how fast primes get rarer on average, and [Continued fractions](05-continued-fractions-and-leap-years.md), which ends the shelf on a question that has an answer.
+- [Continued fractions](05-continued-fractions-and-leap-years.md): next on this shelf, and it ends the shelf on a question that has an answer.
+- [Goldbach](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/07-goldbach-and-chens-theorem.md): how much of Goldbach is proved, from Chen's theorem to Helfgott's odd cousin.
+- [Bounded gaps](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/05-bounded-gaps-zhang-maynard.md): how Zhang's gap between primes came down to 246.
+- [Twin primes](../../25-Frontier/03-Primes%20and%20Numbers/01-twin-primes-and-bounded-gaps.md) and [Goldbach](../../25-Frontier/03-Primes%20and%20Numbers/02-goldbach-conjecture.md): where the two open questions stand, and how the computer check to 4,000,000,000,000,000,000 works.
 
-The question this card leaves open: is there an even number from 4 up with no pair? Nobody knows.
+Earlier on this shelf, [How primes thin out](03-how-primes-thin-out.md) shows how fast primes get rarer on average.
+
+The question this card leaves open: is there an even number from 4 up with no pair? Nobody knows, so the next card does not answer it. It turns instead to a question that has an answer.
 
 ---
 

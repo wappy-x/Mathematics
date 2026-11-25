@@ -8,7 +8,9 @@
 
 A year is not 365 days. It is 365.2422 days, near enough: 365 whole days and a leftover of 0.2422 of a day. Leap days are how the calendar swallows it. So: what is the cheapest fraction close to 0.2422? Cheap means a small bottom number — how many years until the rule repeats.
 
-[Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) answers it. Run it on 0.2422 written as a fraction, 1211/5000, and it returns whole numbers: 0, 4, 7, 1, 3, 4, 1, 1, 1, 2. The leading 0 is step 0 — no whole days in the leftover. Cut the list short after step 1, then 2, 3, 4, and you get 1/4, 7/29, 8/33, 31/128 — each the best fraction of its size. The first, one leap day every four years, is Julius Caesar's rule.
+[Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) answers it. Run it on 0.2422 written as a fraction, 1211/5000, and it returns whole numbers: 0, 4, 7, 1, 3, 4, 1, 1, 1, 2. The leading 0 is step 0 — no whole days in the leftover.
+
+Cut the list short after step 1, then 2, 3, 4, and you get 1/4, 7/29, 8/33, 31/128 — each the best fraction of its size. The first, one leap day every four years, is Julius Caesar's rule.
 
 **Euclid's algorithm on a fraction returns a list of whole numbers; cutting the list short gives the best cheap approximations, cheapest first.**
 
@@ -149,7 +151,7 @@ assert abs(97 / 400 - LEFT) > 20 * abs(31 / 128 - LEFT)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 a year, in days                         365.2422
@@ -195,7 +197,7 @@ fn best_upto(cap: i64) -> (i64, i64) {                  // closest fraction, bot
     (bp, bq)
 }
 fn main() {
-    let steps = euclid_steps(1211, 5000); let four = stops(&steps)[1..5].to_vec();
+    let steps = euclid_steps(1211, 5000); let all = stops(&steps); let four = all[1..all.len().min(5)].to_vec();
     let leaps = (1..=400).filter(|y| y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)).count() as i64;
     println!("{:<40}365.2422", "a year, in days");
     println!("{:<40}0.2422 = 1211/5000", "the leftover after 365 whole days");
@@ -213,7 +215,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 a year, in days                         365.2422
@@ -593,7 +595,7 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the real year, so expect one to fire.
-> - **Feed it the Gregorian year.** Change 1211/5000 to 2425/10000, which is 0.2425. The steps come out 0, 4, 8, 12, the last stop is 97/400 exactly, drift zero.
+> - **Feed it the Gregorian year.** Change 1211/5000 to 2425/10000, which is 0.2425, in both places: `LEFT` and the `euclid_steps` call. The steps come out 0, 4, 8, 12, the last stop is 97/400 exactly, drift zero, and the first assert fires.
 > - **Widen the search.** Change the 400 fed to `best_upto` to 545, three places, not the 400-year figures. The winner jumps to 132/545, the next stop on the list, and the assert fires.
 
 ---
@@ -628,12 +630,14 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 
 ## Where this goes next
 
-- [Pell's equation](../../03-Algebra/10-For%20the%20Curious/04-pell-equation-and-root-two.md): the same steps on root 2, where every second stop solves an equation in whole numbers.
+This is the last card on the shelf. The next shelf opens with [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md) and [Reduced forms](../08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md), which sort numbers by the shapes like x × x + 5 × y × y that can reach them. Continued fractions return at its third card:
+
 - [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a pattern that repeats forever is exactly the mark of a quadratic irrational.
 - [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
-- [Hurwitz's theorem](../08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md): every irrational has infinitely many fractions within 1/(root 5 q^2), and the golden ratio shows root 5 cannot be beaten.
+- [Hurwitz's theorem](../08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md): every irrational has infinitely many fractions within 1 over root 5 times the bottom number squared, and the golden ratio shows root 5 cannot be beaten.
+- [Pell's equation](../../03-Algebra/10-For%20the%20Curious/04-pell-equation-and-root-two.md): the same steps on root 2, where every second stop solves an equation in whole numbers.
 
-The rest of the shelf: [Pythagorean triples](01-pythagorean-triples.md), [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md).
+Earlier on this shelf: [Pythagorean triples](01-pythagorean-triples.md), [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md).
 
 This card leaves one question open: why does the list for a square root repeat forever? [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md) answers it.
 

@@ -8,11 +8,11 @@
 
 A builder wants a square corner and has no set square. She pegs out a knotted rope with sides of 3, 4 and 5 knot-lengths. The corner between the 3 and the 4 comes out square. Every time.
 
-Behind the rope is arithmetic: 3 × 3 = 9, 4 × 4 = 16, and 9 + 16 = 25, which is 5 × 5. Three whole numbers where the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself are a **Pythagorean triple**. Why that squares a corner is geometry, a later wing.
+Behind the rope is arithmetic: 3 × 3 = 9, 4 × 4 = 16, and 9 + 16 = 25, which is 5 × 5. Three whole numbers where the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself are a **Pythagorean triple**. Why that squares a corner is geometry: [Pythagoras](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md).
 
 The rope has company: 5, 12, 13 works, and so does 8, 15, 17. Not luck.
 
-**Pick two whole numbers, bigger first, and multiply each by itself. The difference of those answers, twice the two numbers multiplied together, and the sum of those answers are always a triple — and every triple comes out of that recipe, scaled up if need be.**
+**Pick two whole numbers, bigger first, and multiply each by itself. The difference of those answers, twice the two numbers multiplied together, and the sum of those answers always form a triple. Every triple comes out of that recipe, scaled up if need be.**
 
 **What kind of fact this is:** a theorem. Why it works proves that the recipe always gives a triple, and sketches why every triple comes from it.
 
@@ -78,11 +78,19 @@ Now read the brackets in seeds: the long side is 9 + 4 and the odd leg 9 − 4, 
 
 ### Step 3: one leg is always even
 
-The recipe's even leg is 2 × bigger × smaller, so it is even by construction. Stronger: no triple has two odd legs. An odd number multiplied by itself sits one above a multiple of 4 — 9 and 25 do — so two of them add to an even number sitting 2 above a multiple of 4. The long side would then be even, and even numbers multiplied by themselves are multiples of 4 ([Even and odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md)). But a multiple of 4 is not 2 above a multiple of 4. So two odd legs is impossible.
+The recipe's even leg is 2 × bigger × smaller, so it is even by construction. Stronger: no triple has two odd legs.
+
+An odd number multiplied by itself sits one above a multiple of 4 — 9 and 25 do. So two of them add to an even number sitting 2 above a multiple of 4.
+
+The long side would then be even, and even numbers multiplied by themselves are multiples of 4 ([Even and odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md)). But a multiple of 4 is not 2 above a multiple of 4. So two odd legs is impossible.
 
 ### Step 4: nothing is missing from the list
 
-A sketch. Copies first: 6, 8, 10 is the rope doubled, so keep to primitive triples ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Run Step 2 backwards: 12 × 12 = 18 × 8. A primitive triple has one even leg, so the odd leg and the long side are both odd and both brackets halve cleanly: 9 and 4. Those share no factor but 1, and multiply to 6 × 6, half the even leg multiplied by itself. Two coprime numbers whose product is a square are squares themselves ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)): 9 is 3 × 3 and 4 is 2 × 2 — the seeds, recovered.
+A sketch. Copies first: 6, 8, 10 is the rope doubled, so keep to primitive triples ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Run Step 2 backwards: 12 × 12 = 18 × 8.
+
+A primitive triple has one even leg, so the odd leg and the long side are both odd and both brackets halve cleanly: 9 and 4. Those share no factor but 1, and multiply to 6 × 6, half the even leg multiplied by itself.
+
+Two coprime numbers whose product is a square are squares themselves ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)): 9 is 3 × 3 and 4 is 2 × 2 — the seeds, recovered.
 
 ---
 
@@ -116,7 +124,7 @@ Nothing comes from a library. The recipe runs on three pairs of seeds. The secon
 ```python
 # Pythagorean triples -- the check behind the card.  Nothing is imported.  The
 # builder's 3-4-5 rope, then the recipe: two whole numbers, bigger first, giving
-# bigger x bigger - smaller x smaller, 2 x bigger x smaller, and the two sums.
+# bigger x bigger - smaller x smaller, 2 x bigger x smaller, and bigger x bigger + smaller x smaller.
 def triple(big, small):                  # the recipe, straight off the card
     legs = sorted((big * big - small * small, 2 * big * small))
     return (legs[0], legs[1], big * big + small * small)
@@ -145,7 +153,7 @@ assert triple(3, 1) == (6, 8, 10) and share == 2 and (13 + 5) * (13 - 5) == 144
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the rope: 3 x 3 + 4 x 4                          9 + 16 = 25 = 5 x 5
@@ -169,7 +177,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 ```rust
 // Pythagorean triples -- the same check as pythagorean_triples_check.py, in Rust.
 // No crates.  The builder's 3-4-5 rope, then the recipe: two whole numbers,
-// bigger first, giving bigger x bigger - smaller x smaller and 2 x bigger x small.
+// bigger first, giving the difference and the sum of their squares, and 2 x bigger x smaller.
 fn triple(big: i64, small: i64) -> (i64, i64, i64) {   // the recipe, as on the card
     let (p, q) = (big * big - small * small, 2 * big * small);
     (p.min(q), p.max(q), big * big + small * small)
@@ -207,7 +215,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the rope: 3 x 3 + 4 x 4                          9 + 16 = 25 = 5 x 5
@@ -248,7 +256,10 @@ smaller). The recipe's three sides are `m * m - n * n` (the odd leg), `2 * m * n
 and `m * m + n * n` (the long side). A triple is `a`, `b`, `c` with `a * a + b * b = c * c`,
 where `a` and `b` are the legs, in either order. -/
 
-theorem recipe_gives_triple_aux (m n : ℕ) (h : n < m) :
+/-- The recipe always gives a triple. Pick any two whole numbers, bigger first. The difference
+of their squares, twice their product, and the sum of their squares pass the test: the first
+two, each multiplied by itself, add to the third multiplied by itself. -/
+theorem recipe_gives_triple (m n : ℕ) (h : n < m) :
     (m * m - n * n) * (m * m - n * n) + (2 * m * n) * (2 * m * n) =
       (m * m + n * n) * (m * m + n * n) := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_lt h
@@ -258,9 +269,8 @@ theorem recipe_gives_triple_aux (m n : ℕ) (h : n < m) :
   rw [e]
   ring
 
-#print axioms recipe_gives_triple_aux
-
-theorem triple_has_even_leg_aux (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
+/-- One leg is always even: no triple has two odd legs. -/
+theorem triple_has_even_leg (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
   by_contra hc
   simp only [not_or, Nat.not_even_iff_odd] at hc
   obtain ⟨⟨x, hx⟩, ⟨y, hy⟩⟩ := hc
@@ -271,8 +281,6 @@ theorem triple_has_even_leg_aux (a b c : ℕ) (h : a * a + b * b = c * c) : Even
   rw [e1] at h4
   have hm := Nat.mul_mod c c 4
   rcases this with h0 | h0 | h0 | h0 <;> rw [h0] at hm <;> omega
-
-#print axioms triple_has_even_leg_aux
 
 theorem prim_aux (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hco : Nat.Coprime a b) (hodd : a % 2 = 1)
     (h : a * a + b * b = c * c) :
@@ -365,7 +373,7 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
       have : (g * g) * (a' * a' + b' * b') = (g * g) * (c' * c') := by
         rw [← hcc, hc']; ring
       exact Nat.eq_of_mul_eq_mul_left (Nat.mul_pos hgpos hgpos) this
-    have heven := triple_has_even_leg_aux a' b' c' hsum
+    have heven := triple_has_even_leg a' b' c' hsum
     have hnotboth : ¬ (Even a' ∧ Even b') := by
       rintro ⟨⟨x, hx⟩, ⟨y, hy⟩⟩
       have h2 : 2 ∣ Nat.gcd a' b' := Nat.dvd_gcd ⟨x, by omega⟩ ⟨y, by omega⟩
@@ -390,7 +398,7 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
       · rw [hb', e2]
       · rw [hc', e3]
   · rintro ⟨k, m, n, hk, hn, hnm, hmn, hpar, hab, hc⟩
-    have key := recipe_gives_triple_aux m n hnm
+    have key := recipe_gives_triple m n hnm
     generalize m * m - n * n = X at *
     generalize 2 * m * n = Y at *
     generalize m * m + n * n = Z at *
@@ -402,32 +410,6 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
     · calc k * Y * (k * Y) + k * X * (k * X) = k * k * (X * X + Y * Y) := by ring
         _ = k * k * (Z * Z) := by rw [key]
         _ = k * Z * (k * Z) := by ring
-
-/-- The recipe always gives a triple. Pick any two whole numbers, bigger first. The difference
-of their squares, twice their product, and the sum of their squares pass the test: the first
-two, each multiplied by itself, add to the third multiplied by itself. -/
-theorem recipe_gives_triple (m n : ℕ) (h : n < m) :
-    (m * m - n * n) * (m * m - n * n) + (2 * m * n) * (2 * m * n) =
-      (m * m + n * n) * (m * m + n * n) := by
-  obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_lt h
-  have e : (n + d + 1) * (n + d + 1) - n * n = (d + 1) * (d + 1) + 2 * n * (d + 1) := by
-    apply Nat.sub_eq_of_eq_add
-    ring
-  rw [e]
-  ring
-
-/-- One leg is always even: no triple has two odd legs. -/
-theorem triple_has_even_leg (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
-  by_contra hc
-  simp only [not_or, Nat.not_even_iff_odd] at hc
-  obtain ⟨⟨x, hx⟩, ⟨y, hy⟩⟩ := hc
-  subst hx hy
-  have h4 := congrArg (· % 4) h
-  have : c % 4 = 0 ∨ c % 4 = 1 ∨ c % 4 = 2 ∨ c % 4 = 3 := by omega
-  have e1 : (2 * x + 1) * (2 * x + 1) + (2 * y + 1) * (2 * y + 1) = 4 * (x*x + x + y*y + y) + 2 := by ring
-  rw [e1] at h4
-  have hm := Nat.mul_mod c c 4
-  rcases this with h0 | h0 | h0 | h0 <;> rw [h0] at hm <;> omega
 
 -- The rope: 3 × 3 + 4 × 4 = 9 + 16 = 25 = 5 × 5.
 example : 3 * 3 = 9 ∧ 4 * 4 = 16 ∧ 9 + 16 = 25 ∧ 5 * 5 = 25 := by decide
@@ -477,11 +459,9 @@ example : 45 * 45 + 60 * 60 = 75 * 75 ∧ 45 = 15 * 3 ∧ 60 = 15 * 4 ∧ 75 = 1
 #print axioms triple_has_even_leg
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
-'recipe_gives_triple_aux' depends on axioms: [propext]
-'triple_has_even_leg_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
 'prim_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
 'pythagorean_triple_iff_scaled_recipe' depends on axioms: [propext, Classical.choice, Quot.sound]
 'recipe_gives_triple' depends on axioms: [propext]
@@ -526,15 +506,20 @@ example : 45 * 45 + 60 * 60 = 75 * 75 ∧ 45 = 15 * 3 ∧ 60 = 15 * 4 ∧ 75 = 1
 
 ## Where this goes next
 
-Nothing depends on this card, a detour. The rest of the shelf:
+Next on this shelf:
 
 - [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md): another old hunt for whole numbers with a special pattern.
 - [How primes thin out](03-how-primes-thin-out.md): how many primes lie below a number, on average.
 - [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md): simple questions about whole numbers that nobody has answered.
 - [Continued fractions](05-continued-fractions-and-leap-years.md): Euclid's algorithm read as nested fractions.
-- [Kummer and Artin-Schreier](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/11-kummer-theory-and-hilbert-90.md): every cyclic extension is a root extraction, once the roots of unity are there.
 
-The question this card leaves open: which whole numbers can be the long side of a triple? 5, 13 and 17 can, but the recipe alone does not say which others.
+Later cards use this recipe:
+
+- [Conics](../../22-Algebraic%20geometry/03-Plane%20Curves/01-conics-and-rational-parametrisation.md): where the recipe comes from, as straight lines through one point of a circle.
+- [Fermat's last theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md): the recipe and Step 4, used twice to show that no two fourth powers add up to a fourth power.
+- [Kummer and Artin-Schreier](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/11-kummer-theory-and-hilbert-90.md): the same recipe, rebuilt from a general rule about number systems called Hilbert's Theorem 90.
+
+The question this card leaves open: which whole numbers can be the long side of a triple? 5, 13 and 17 can, but the recipe alone does not say which others. No card on this shelf answers it; the next card starts a different hunt, for numbers built from their own divisors.
 
 ---
 

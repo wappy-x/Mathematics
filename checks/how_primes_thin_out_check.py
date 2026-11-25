@@ -11,7 +11,7 @@ def sieve(n):                       # doors 2..n; slam every multiple of every d
 def is_prime(k):                    # second road: divide k by everything up to its root
     d = 2
     while d * d <= k and k % d: d += 1
-    return d * d > k
+    return k >= 2 and d * d > k
 def com(v): return f"{v:,}"         # 78498 -> 78,498
 
 flags = sieve(1000000)

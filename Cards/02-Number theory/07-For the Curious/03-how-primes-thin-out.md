@@ -43,7 +43,7 @@ At a million:
 
 **pi(1,000,000) = 78,498, while 1,000,000 ÷ ln 1,000,000 = 1,000,000 ÷ 13.8155 = 72,382**
 
-**ln x** is the natural log of x: the question [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md) asks, with e (about 2.718) as the base, not 10 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) — ln 1,000,000 = 13.8155 means e reaches a million after 13.8155 multiplies. It climbs painfully slowly, which is the point.
+**ln x** is the natural log of x: the question [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md) asks, with e (about 2.718) as the base, not 10 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)). ln 1,000,000 = 13.8155 means e reaches a million after 13.8155 multiplies. It climbs painfully slowly, which is the point.
 
 | Piece | Plain meaning | In our corridor | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -69,11 +69,11 @@ Every number that is not prime has a smaller prime dividing it; that is what the
 
 ### Step 1: near x, about one number in ln x is prime
 
-At a million, ln 1,000,000 = 13.8155, so about one locker in fourteen is prime that far along. A real count agrees: the hundred just under a million hold 8 primes.
+At a million, ln 1,000,000 = 13.8155, so about one locker in fourteen is prime that far along. A real count agrees: the hundred lockers just under a million hold 8 primes.
 
 ### Step 2: add the shares up, and that is the rule
 
-One in ln x prime, across x numbers, is about x ÷ ln x primes. Which also says how it goes wrong: the whole corridor is charged the log from the far end, where primes are thinnest, so the estimate lands low at every size in this card, and at every size past 17.
+One in ln x prime, across x numbers, is about x ÷ ln x primes. That also says how it goes wrong. The whole corridor is charged the log from the far end, where primes are thinnest. So the estimate lands low at every size in this card, and at every size past 17.
 
 ### Step 3: what was proved
 
@@ -109,7 +109,7 @@ At 100 the miss is 3 and the ratio 1.151; at 1,000, 23 and 1.161. Those ratios d
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but the log. The corridor of a million is sieved and the open doors counted, then counted again by a slower road: dividing every number by everything up to its own square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)), at both ends of the corridor. Both counts are set against x ÷ ln x.
+Nothing is imported but the log. The corridor of a million is sieved and the open doors counted. Then a slower road counts them again: dividing every number by everything up to its own square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)), at both ends of the corridor. Both counts are set against x ÷ ln x.
 
 ### Python
 
@@ -127,7 +127,7 @@ def sieve(n):                       # doors 2..n; slam every multiple of every d
 def is_prime(k):                    # second road: divide k by everything up to its root
     d = 2
     while d * d <= k and k % d: d += 1
-    return d * d > k
+    return k >= 2 and d * d > k
 def com(v): return f"{v:,}"         # 78498 -> 78,498
 
 flags = sieve(1000000)
@@ -146,7 +146,7 @@ assert round(100 / log(100)) == 22 and round(1000 / log(1000)) == 145 and round(
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
         x  primes up to x      ln x    x / ln x    miss   ratio
@@ -178,7 +178,7 @@ fn sieve(n: usize) -> Vec<bool> {          // doors 2..n; slam every multiple of
 fn is_prime(k: usize) -> bool {            // second road: divide k by everything up to its root
     let mut d = 2;
     while d * d <= k && k % d != 0 { d += 1; }
-    d * d > k
+    k >= 2 && d * d > k
 }
 fn com(v: i64) -> String {                 // 78498 -> 78,498
     let s = v.to_string(); let mut o = String::new();
@@ -206,7 +206,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
         x  primes up to x      ln x    x / ln x    miss   ratio
@@ -312,7 +312,7 @@ example : 78498 - 72382 = 6116 ∧ 25 * 10000 = 250000 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Make the corridor ten times longer.** Change both millions to ten million. Which way does the ratio move? Down, nearer 1, while the miss grows. The asserts still pass: they ask only about the first million.
+> - **Make the corridor ten times longer.** Change 1000000 to 10000000 in two places: `sieve(1000000)` and the first `for x` line, the one that prints the table. Which way does the ratio move? Down, nearer 1, while the miss grows. The asserts still pass: they ask only about the first million.
 > - **Open locker 1.** Drop the line shutting doors 0 and 1. Both swing open, so every count rises by two — 27 up to 100, 78,500 to a million — and the first assert fires.
 
 ---
@@ -347,11 +347,13 @@ example : 78498 - 72382 = 6116 ∧ 25 * 10000 = 250000 := by decide
 
 ## Where this goes next
 
-- [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): the sharper estimate, and the shape of the proof.
+- [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md): next on this shelf, asking the questions about pairs of primes that this average cannot answer.
+- [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): the sharper estimate, called the logarithmic integral, and the shape of the proof.
+- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): the full proof of the 1896 theorem.
 
-Nothing else needs this card; shelf 7 is detours. Sideways: [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) asks what this average cannot answer, and [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
+Earlier on this shelf, [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
 
-The question left open: how close does pi(x) stay to its estimate?
+The question left open: how close does pi(x) stay to its estimate? The next card does not answer it. [Zeta's zeros and the primes](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md) takes it up: the answer depends on where zeta's zeros lie, the question called the Riemann hypothesis.
 
 ---
 

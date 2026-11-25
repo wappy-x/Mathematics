@@ -9,7 +9,10 @@ smaller). The recipe's three sides are `m * m - n * n` (the odd leg), `2 * m * n
 and `m * m + n * n` (the long side). A triple is `a`, `b`, `c` with `a * a + b * b = c * c`,
 where `a` and `b` are the legs, in either order. -/
 
-theorem recipe_gives_triple_aux (m n : ℕ) (h : n < m) :
+/-- The recipe always gives a triple. Pick any two whole numbers, bigger first. The difference
+of their squares, twice their product, and the sum of their squares pass the test: the first
+two, each multiplied by itself, add to the third multiplied by itself. -/
+theorem recipe_gives_triple (m n : ℕ) (h : n < m) :
     (m * m - n * n) * (m * m - n * n) + (2 * m * n) * (2 * m * n) =
       (m * m + n * n) * (m * m + n * n) := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_lt h
@@ -19,9 +22,8 @@ theorem recipe_gives_triple_aux (m n : ℕ) (h : n < m) :
   rw [e]
   ring
 
-#print axioms recipe_gives_triple_aux
-
-theorem triple_has_even_leg_aux (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
+/-- One leg is always even: no triple has two odd legs. -/
+theorem triple_has_even_leg (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
   by_contra hc
   simp only [not_or, Nat.not_even_iff_odd] at hc
   obtain ⟨⟨x, hx⟩, ⟨y, hy⟩⟩ := hc
@@ -32,8 +34,6 @@ theorem triple_has_even_leg_aux (a b c : ℕ) (h : a * a + b * b = c * c) : Even
   rw [e1] at h4
   have hm := Nat.mul_mod c c 4
   rcases this with h0 | h0 | h0 | h0 <;> rw [h0] at hm <;> omega
-
-#print axioms triple_has_even_leg_aux
 
 theorem prim_aux (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hco : Nat.Coprime a b) (hodd : a % 2 = 1)
     (h : a * a + b * b = c * c) :
@@ -126,7 +126,7 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
       have : (g * g) * (a' * a' + b' * b') = (g * g) * (c' * c') := by
         rw [← hcc, hc']; ring
       exact Nat.eq_of_mul_eq_mul_left (Nat.mul_pos hgpos hgpos) this
-    have heven := triple_has_even_leg_aux a' b' c' hsum
+    have heven := triple_has_even_leg a' b' c' hsum
     have hnotboth : ¬ (Even a' ∧ Even b') := by
       rintro ⟨⟨x, hx⟩, ⟨y, hy⟩⟩
       have h2 : 2 ∣ Nat.gcd a' b' := Nat.dvd_gcd ⟨x, by omega⟩ ⟨y, by omega⟩
@@ -151,7 +151,7 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
       · rw [hb', e2]
       · rw [hc', e3]
   · rintro ⟨k, m, n, hk, hn, hnm, hmn, hpar, hab, hc⟩
-    have key := recipe_gives_triple_aux m n hnm
+    have key := recipe_gives_triple m n hnm
     generalize m * m - n * n = X at *
     generalize 2 * m * n = Y at *
     generalize m * m + n * n = Z at *
@@ -163,32 +163,6 @@ theorem pythagorean_triple_iff_scaled_recipe (a b c : ℕ) (ha : 0 < a) (hb : 0 
     · calc k * Y * (k * Y) + k * X * (k * X) = k * k * (X * X + Y * Y) := by ring
         _ = k * k * (Z * Z) := by rw [key]
         _ = k * Z * (k * Z) := by ring
-
-/-- The recipe always gives a triple. Pick any two whole numbers, bigger first. The difference
-of their squares, twice their product, and the sum of their squares pass the test: the first
-two, each multiplied by itself, add to the third multiplied by itself. -/
-theorem recipe_gives_triple (m n : ℕ) (h : n < m) :
-    (m * m - n * n) * (m * m - n * n) + (2 * m * n) * (2 * m * n) =
-      (m * m + n * n) * (m * m + n * n) := by
-  obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_lt h
-  have e : (n + d + 1) * (n + d + 1) - n * n = (d + 1) * (d + 1) + 2 * n * (d + 1) := by
-    apply Nat.sub_eq_of_eq_add
-    ring
-  rw [e]
-  ring
-
-/-- One leg is always even: no triple has two odd legs. -/
-theorem triple_has_even_leg (a b c : ℕ) (h : a * a + b * b = c * c) : Even a ∨ Even b := by
-  by_contra hc
-  simp only [not_or, Nat.not_even_iff_odd] at hc
-  obtain ⟨⟨x, hx⟩, ⟨y, hy⟩⟩ := hc
-  subst hx hy
-  have h4 := congrArg (· % 4) h
-  have : c % 4 = 0 ∨ c % 4 = 1 ∨ c % 4 = 2 ∨ c % 4 = 3 := by omega
-  have e1 : (2 * x + 1) * (2 * x + 1) + (2 * y + 1) * (2 * y + 1) = 4 * (x*x + x + y*y + y) + 2 := by ring
-  rw [e1] at h4
-  have hm := Nat.mul_mod c c 4
-  rcases this with h0 | h0 | h0 | h0 <;> rw [h0] at hm <;> omega
 
 -- The rope: 3 × 3 + 4 × 4 = 9 + 16 = 25 = 5 × 5.
 example : 3 * 3 = 9 ∧ 4 * 4 = 16 ∧ 9 + 16 = 25 ∧ 5 * 5 = 25 := by decide

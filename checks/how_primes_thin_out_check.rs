@@ -11,7 +11,7 @@ fn sieve(n: usize) -> Vec<bool> {          // doors 2..n; slam every multiple of
 fn is_prime(k: usize) -> bool {            // second road: divide k by everything up to its root
     let mut d = 2;
     while d * d <= k && k % d != 0 { d += 1; }
-    d * d > k
+    k >= 2 && d * d > k
 }
 fn com(v: i64) -> String {                 // 78498 -> 78,498
     let s = v.to_string(); let mut o = String::new();

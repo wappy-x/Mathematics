@@ -1,6 +1,6 @@
 # Pythagorean triples -- the check behind the card.  Nothing is imported.  The
 # builder's 3-4-5 rope, then the recipe: two whole numbers, bigger first, giving
-# bigger x bigger - smaller x smaller, 2 x bigger x smaller, and the two sums.
+# bigger x bigger - smaller x smaller, 2 x bigger x smaller, and bigger x bigger + smaller x smaller.
 def triple(big, small):                  # the recipe, straight off the card
     legs = sorted((big * big - small * small, 2 * big * small))
     return (legs[0], legs[1], big * big + small * small)

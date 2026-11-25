@@ -1,6 +1,6 @@
 // Pythagorean triples -- the same check as pythagorean_triples_check.py, in Rust.
 // No crates.  The builder's 3-4-5 rope, then the recipe: two whole numbers,
-// bigger first, giving bigger x bigger - smaller x smaller and 2 x bigger x small.
+// bigger first, giving the difference and the sum of their squares, and 2 x bigger x smaller.
 fn triple(big: i64, small: i64) -> (i64, i64, i64) {   // the recipe, as on the card
     let (p, q) = (big * big - small * small, 2 * big * small);
     (p.min(q), p.max(q), big * big + small * small)

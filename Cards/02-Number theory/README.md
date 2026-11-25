@@ -126,7 +126,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 07 · For the Curious · 5 cards
 
-*Detours with no later dependents: Pythagorean triples, perfect numbers and record primes, how primes thin out, the famous open problems, continued fractions behind the leap-year rule. Analytic proofs live in wing 06.*
+*Detours and foundations for later work: Pythagorean triples, perfect numbers and record primes, how primes thin out, the famous open problems, and continued fractions behind the leap-year rule. Analytic prime proofs live in wings 07 and 21.*
 
 1. [Pythagorean triples: every whole-number right triangle comes from two smaller numbers](07-For%20the%20Curious/01-pythagorean-triples.md)
 2. [Perfect numbers and Mersenne primes: 6, 28, 496 and the record-prime hunt](07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md)

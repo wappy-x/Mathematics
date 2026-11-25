@@ -8,7 +8,9 @@ open Nat
 
 open ArithmeticFunction in
 open scoped ArithmeticFunction.sigma in
-theorem helper_sum_divisors (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
+/-- Counting the number itself too: when the Mersenne number `2 ^ (k + 1) - 1` is prime, every
+divisor of `2 ^ k * (2 ^ (k + 1) - 1)`, the number included, adds to exactly twice the number. -/
+theorem sum_all_divisors_is_twice (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
   have h2 : σ 1 (2 ^ k) = mersenne (k + 1) := by
     simp_rw [sigma_one_apply, mersenne, ← one_add_one_eq_two, ← geom_sum_mul_add 1 (k + 1)]
@@ -18,8 +20,6 @@ theorem helper_sum_divisors (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     h2]
   simp [hp, sigma_one_apply]
 
-#print axioms helper_sum_divisors
-
 /-- Euclid's recipe. Double 1 along `k + 1` times to reach `2 ^ (k + 1)`, and take one off to get
 the Mersenne number `mersenne (k + 1) = 2 ^ (k + 1) - 1`. If that Mersenne number is prime, then
 it times the doubling just below, `2 ^ k`, is perfect: its proper divisors (every divisor except
@@ -27,13 +27,7 @@ the number itself) add back up to it. -/
 theorem euclid_mersenne_prime_gives_perfect (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
     Nat.Perfect (2 ^ k * mersenne (k + 1)) := by
   rw [Nat.perfect_iff_sum_divisors_eq_two_mul (by positivity)]
-  exact helper_sum_divisors k hp
-
-/-- Counting the number itself too: when the Mersenne number `2 ^ (k + 1) - 1` is prime, every
-divisor of `2 ^ k * (2 ^ (k + 1) - 1)`, the number included, adds to exactly twice the number. -/
-theorem sum_all_divisors_is_twice (k : ℕ) (hp : (mersenne (k + 1)).Prime) :
-    ∑ i ∈ (2 ^ k * mersenne (k + 1)).divisors, i = 2 * (2 ^ k * mersenne (k + 1)) := by
-  exact helper_sum_divisors k hp
+  exact sum_all_divisors_is_twice k hp
 
 /-- The count of doublings has to be prime too: if `2 ^ p - 1` is prime, then `p` is prime.
 (Required, not sufficient: `p = 11` is prime but `2 ^ 11 - 1 = 2047 = 23 × 89` is not.) -/

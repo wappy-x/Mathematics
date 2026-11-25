@@ -4,7 +4,7 @@
 fn by_division(n: usize) -> bool {   // road two: hunt for a divisor, up to the square root
     let mut d = 2;
     while d * d <= n && n % d != 0 { d += 1; }
-    d * d > n
+    n >= 2 && d * d > n
 }
 fn pairs(n: usize, is_prime: &dyn Fn(usize) -> bool) -> Vec<(usize, usize)> {
     (2..=n / 2).filter(|&p| is_prime(p) && is_prime(n - p)).map(|p| (p, n - p)).collect()
@@ -18,6 +18,7 @@ fn main() {
     }
     let by_sieve = |m: usize| flag[m];
     let six = pairs(100, &by_sieve);
+    let ordered = (2..99).filter(|&p| flag[p] && flag[100 - p]).count();   // 3 + 97 and 97 + 3 as two
     for (p, q) in &six { println!("100 = {} + {}", p, q); }
     let counts: Vec<usize> = [4, 98, 100, 102].iter().map(|&n| pairs(n, &by_sieve).len()).collect();
     let checked: Vec<usize> = [4, 98, 100, 102].iter().map(|&n| pairs(n, &by_division).len()).collect();
@@ -29,9 +30,9 @@ fn main() {
     println!("twin primes just above 100: {} and {}", twins[0].0, twins[0].1);
     println!("Goldbach checked to 4,000,000,000,000,000,000 by computer (published, not checked here)");
     println!("the three mistakes come out at {} ordered pairs, {} ways for 11, {} for 2",
-             2 * six.len(), pairs(11, &by_sieve).len(), pairs(2, &by_sieve).len());
-    assert!(six == vec![(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)]);
-    assert!(counts == vec![1, 3, 6, 8] && checked == vec![1, 3, 6, 8] && (2..201).all(|m| flag[m] == by_division(m)));
-    assert!(twins[0] == (101, 103) && by_division(101) && by_division(103));
+             ordered, pairs(11, &by_sieve).len(), pairs(2, &by_sieve).len());
+    assert!(six == vec![(3, 97), (11, 89), (17, 83), (29, 71), (41, 59), (47, 53)] && ordered == 12);
+    assert!(counts == vec![1, 3, 6, 8] && checked == vec![1, 3, 6, 8] && (0..201).all(|m| flag[m] == by_division(m)));
+    assert!(twins[0] == (101, 103) && by_division(101) && by_division(103) && pairs(11, &by_sieve).is_empty() && pairs(2, &by_sieve).is_empty());
     println!("ALL CHECKS PASS");
 }

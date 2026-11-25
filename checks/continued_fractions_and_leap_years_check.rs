@@ -22,7 +22,7 @@ fn best_upto(cap: i64) -> (i64, i64) {                  // closest fraction, bot
     (bp, bq)
 }
 fn main() {
-    let steps = euclid_steps(1211, 5000); let four = stops(&steps)[1..5].to_vec();
+    let steps = euclid_steps(1211, 5000); let all = stops(&steps); let four = all[1..all.len().min(5)].to_vec();
     let leaps = (1..=400).filter(|y| y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)).count() as i64;
     println!("{:<40}365.2422", "a year, in days");
     println!("{:<40}0.2422 = 1211/5000", "the leftover after 365 whole days");
