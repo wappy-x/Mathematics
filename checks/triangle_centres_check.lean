@@ -179,7 +179,7 @@ theorem perpendicular_bisectors_meet_at_one_point (A B C : Plane)
 a = |BC|, b = |CA|, c = |AB|. Let K be the area (half base times height, base AB) and
 s = (a + b + c) / 2 half the perimeter. The point I = (aA + bB + cC) / (a + b + c) lies inside
 the triangle, on all three angle bisectors, at distance K / s from every road, and no point of
-the triangle is more than K / s from its nearest road, so the largest pond has radius K / s. -/
+the triangle is more than K / s from its nearest road, so the largest lake has radius K / s. -/
 theorem angle_bisectors_meet_at_incentre (A B C : Plane)
     (h : ¬ Collinear ℝ ({A, B, C} : Set Plane)) :
     let a := dist B C

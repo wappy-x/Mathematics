@@ -16,7 +16,7 @@ Here the altitudes cut the sides in the ratios 1/2, 3 and 2/3. The product is 1,
 
 A twin test answers the opposite question. Take one point on each side line. The points lie on one straight line exactly when the same kind of product is −1. The minus sign records that a straight line always meets at least one side line outside the triangle.
 
-**Lines from a triangle's three corners to the opposite sides meet in one point exactly when the side ratios multiply to 1 (Ceva's theorem); three points on the side lines lie on one straight line exactly when their signed ratios multiply to −1 (Menelaus' theorem).**
+**Lines from a triangle's corners to non-corner points on the opposite side lines meet (or are parallel) exactly when the signed side ratios multiply to 1 (Ceva's theorem); three non-corner points on the side lines line up exactly when their signed ratios multiply to −1 (Menelaus' theorem).**
 
 **What kind of fact this is:** two theorems and their converses, proved on this card in Why it works; the signed ratio is a definition.
 
@@ -36,7 +36,7 @@ Name the three points where the lines from the corners land: D on side BC, E on 
 \frac{AF}{FB}\cdot\frac{BD}{DC}\cdot\frac{CE}{EA} = 1
 ```
 
-**Read it aloud:** going round from A to B to C, divide the piece before each cut by the piece after it; AD, BE and CF meet exactly when the product is 1.
+**Read it aloud:** going round from A to B to C, divide the piece before each cut by the piece after it; for non-corner points on the side segments, AD, BE and CF meet exactly when the product is 1.
 
 Now name three points to test for lining up: L on line BC, M on line CA, N on line AB.
 
@@ -94,7 +94,7 @@ At the orthocentre the areas are [ABH] = 6, [BCH] = 4 and [CAH] = 2, which add t
 
 ### Step 3: the converse, product 1 forces a meeting
 
-Suppose the product is 1. Let AD and BE meet at P, and line CP hit AB at F′. By Step 2, F′ also gives product 1, so AF′/F′B = AF/FB. By Step 1, F′ = F, so CF passes through P.
+Suppose the product is 1. If AD and BE meet at P, line CP hits AB at some F′ (otherwise CP ∥ AB forces AF/FB = −1, impossible by Step 1). By Step 2, F′ gives product 1, so AF′/F′B = AF/FB and F′ = F: CF passes through P. (If AD ∥ BE, a similar check makes CF parallel to both.)
 
 ### Step 4: the altitudes always meet
 
@@ -103,7 +103,7 @@ Here the ratios are 1/2, 3 and 2/3 (Worked numbers), product 1. The fold shows t
 <details>
 <summary>Why every triangle's altitudes meet</summary>
 
-Let $`a`$, $`b`$, $`c`$ be the sides facing A, B, C, and A, B, C also the angles there. Each altitude foot splits a side into two adjacent sides times cosines: AF = b cos A and FB = a cos B, and likewise round the triangle. So
+At a 90° corner, two altitudes are the sides there, so all three meet at that corner. Otherwise no cosine is zero. Let $`a`$, $`b`$, $`c`$ be the sides facing A, B, C, and A, B, C the angles there. Each altitude foot splits a side: AF = b cos A, FB = a cos B, and likewise round the triangle. So
 
 $`\displaystyle \frac{AF}{FB}\cdot\frac{BD}{DC}\cdot\frac{CE}{EA} = \frac{b\cos A}{a\cos B}\cdot\frac{c\cos B}{b\cos C}\cdot\frac{a\cos C}{c\cos A} = 1.`$
 
@@ -624,9 +624,11 @@ example : (3 : ℚ) / 9 = 1/3 ∧ (9 : ℚ) / 9 = 1 := by norm_num
 
 ## Where this goes next
 
-[The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md) reuses this photo: H, G and the circumcentre lie on one line.
+- [The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md): reuses this photo to put H, G and the circumcentre on one line.
+- [Perspective](../05-Vectors%20in%20Space/05-perspective-and-projective-coordinates.md): photos like this one, which keep lines straight but change plain length ratios.
+- [Cross-ratio](../05-Vectors%20in%20Space/07-cross-ratio-and-harmonic-points.md): the number built from lengths that a perspective photo keeps unchanged.
 
-[Perspective](../05-Vectors%20in%20Space/05-perspective-and-projective-coordinates.md) studies photos like this one, which keep lines straight but change length ratios. The question this card leaves open: what number built from lengths do they keep?
+Next, [The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md) asks how H lines up with G and the circumcentre.
 
 ---
 

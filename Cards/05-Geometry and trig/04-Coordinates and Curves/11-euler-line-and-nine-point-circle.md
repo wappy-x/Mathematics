@@ -97,7 +97,7 @@ Measured from O, the midpoint of O and H is N = (A + B + C)/2. Two of the nine p
 
 Both are A/2 away from N, a distance of R/2. They are opposite ends of one diameter of the circle about N with radius R/2.
 
-The foot of the altitude from A completes the trio. From that foot, one end of the diameter lies along side BC, and the other lies up the altitude. Those two directions are square to each other. An angle of 90° that spans a diameter puts its corner on the circle (the angle in a semicircle, [Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). So the foot is on the circle too.
+The foot of the altitude from A completes the trio. If it coincides with either end of that diameter (as in an isosceles or right triangle), it is already on the circle. Otherwise, from that foot, one end of the diameter lies along side BC, and the other lies up the altitude. Those two directions are square to each other. An angle of 90° that spans a diameter puts its corner on the circle (the angle in a semicircle, [Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). So the foot is on the circle too.
 
 Repeat for corners B and C: 3 × 3 = 9 points on one circle.
 
@@ -567,7 +567,10 @@ example :
 
 ## Where this goes next
 
-The incentre, centre of the largest circle inside the triangle, is usually off the Euler line, yet the nine-point circle touches the incircle and the three circles outside the triangle that touch all three side lines: Feuerbach's theorem. Why such a circle should touch all four is the question this card leaves open.
+- [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): starts the next shelf, taking vectors, right angles and areas from the plane into three-dimensional space.
+- [Perspective](../05-Vectors%20in%20Space/05-perspective-and-projective-coordinates.md): the projective geometry behind the building-corner vanishing points used in this card.
+
+This card closes the Coordinates and Curves shelf before [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md) opens Vectors in Space. Left open in triangle geometry: the incentre, centre of the largest circle inside the triangle, is usually off the Euler line, yet the nine-point circle touches the incircle and the three circles outside the triangle that touch all three side lines (Feuerbach's theorem); why should one circle touch all four?
 
 ---
 

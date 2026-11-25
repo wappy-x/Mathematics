@@ -73,7 +73,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 04 · Coordinates and Curves · 11 cards
 
-*Points, lines and curves as equations in Cartesian, polar, cylindrical and spherical coordinates*
+*Points, lines, conics and parametric curves in Cartesian, polar, cylindrical and spherical coordinates, plus triangle centres, Ceva and Menelaus, and the Euler line and nine-point circle*
 
 1. [Distance and midpoint: Pythagoras on a grid](04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)
 2. [Lines: slope, intercept, and three ways to write the same line](04-Coordinates%20and%20Curves/02-lines-slopes-and-intersections.md)

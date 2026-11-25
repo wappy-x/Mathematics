@@ -9,11 +9,11 @@ def halve(f, lo, hi):                         # road two: find where f changes s
     return (lo + hi) / 2
 def name(A, B, C, F):                         # A x^2 + B xy + C y^2 + F = 0, centred
     d, (P, _, Q) = B*B - 4*A*C, turn(A, B, C, atan2(B, A - C) / 2)
-    kd = "parabola or parallel lines" if d == 0 else "two crossing lines" if F == 0 else "hyperbola" if d > 0 else "ellipse" if -F / P > 0 else "no points"
+    kd = "parabola or parallel lines" if d == 0 else ("two crossing lines" if d > 0 else "one point") if F == 0 else "hyperbola" if d > 0 else "ellipse" if -F / P > 0 else "no points"
     return d, kd, P, Q
 def scan(A, B, C, F):                         # road five, no B^2 - 4AC: the signs A x^2 + B xy + C y^2 takes over a half-turn
     g = {(v > 1e-9) - (v < -1e-9) for v in (A*cos(f)*cos(f) + B*cos(f)*sin(f) + C*sin(f)*sin(f) for f in (rad(i / 10) for i in range(1800)))}
-    return ("two crossing lines" if F == 0 else "hyperbola") if {1, -1} <= g else "parabola or parallel lines" if 0 in g else "ellipse" if g == {(F < 0) - (F > 0)} else "no points"
+    return ("two crossing lines" if F == 0 else "hyperbola") if {1, -1} <= g else "parabola or parallel lines" if 0 in g else "one point" if F == 0 else "ellipse" if g == {(F < 0) - (F > 0)} else "no points"
 t = atan2(1, 1 - 1) / 2                       # road one: cot 2t = (A - C)/B
 P, B2, Q = turn(1, 1, 1, t); th = halve(lambda u: turn(1, 1, 1, u)[1], 0, pi / 2)
 sa, la = sqrt(3 / P), sqrt(3 / Q); c = sqrt(la**2 - sa**2)   # semi-axes; centre to each peg
@@ -31,13 +31,13 @@ print("2x^2 + 4xy + 5y^2 turned 0, 20, 45, 63.43, 100 deg: B'^2 - 4A'C' =", " ".
       "| A' + C' =", " ".join(f"{a + cc:.2f}" for a, b, cc in inv))
 k = tan(rad(30)); cs = [(m, round(-4 * (1 - k*k*m*m), 9) + 0) for m in (1, 1 / k, 3)]   # cone x^2 + y^2 = k^2 z^2 cut by the plane z = m x + 1
 print("cone slice, plane slope m: " + "; ".join(f"m = {m:.3f}: B^2 - 4AC = {v:.3f}" for m, v in cs))
-al, be = rad(30), rad(45)                     # the lamp: beam half-angle, tilt of the beam's axis from vertical
-H = 2 * la / (tan(be + al) - tan(be - al)); x1, x2 = H * tan(be - al), H * tan(be + al)   # height that makes the lit patch 2a long
+al, be = rad(30), rad(45); tilt = pi / 2 - be  # the lamp: beam half-angle, ground's angle to axis, tilt from vertical
+H = 2 * la / (tan(tilt + al) - tan(tilt - al)); x1, x2 = H * tan(tilt - al), H * tan(tilt + al)   # height that makes the lit patch 2a long
 print(f"lamp: height {H:.3f}, lit patch from {x1:.3f} to {x2:.3f}, length {x2 - x1:.3f}, e = cos 45 / cos 30 = {cos(be) / cos(al):.4f}")
-ds = [H / (cos(be) + s * sin(al)) for s in (1, -1)]; sph = [(d * sin(be), H - d * cos(be), d * sin(al), d * cos(al)) for d in ds]   # the two Dandelin spheres: centre x, z; radius; touch distance
+ds = [H / (cos(tilt) + s * sin(al)) for s in (1, -1)]; sph = [(d * sin(tilt), H - d * cos(tilt), d * sin(al), d * cos(al)) for d in ds]   # the two Dandelin spheres: centre x, z; radius; touch distance
 print("spheres: " + "; ".join(f"centre ({x:.3f}, {z:.3f}), radius {q:.3f}, touches the beam {g:.3f} from the lamp" for x, z, q, g in sph)
       + f"; gap {sph[1][3] - sph[0][3]:.3f}")
-u, e1, sums, half, tang = (sin(be), 0, -cos(be)), (cos(be), 0, sin(be)), [], 0, 0   # beam axis; a direction square to it
+u, e1, sums, half, tang = (sin(tilt), 0, -cos(tilt)), (cos(tilt), 0, sin(tilt)), [], 0, 0   # beam axis; a direction square to it
 for i in range(3600):                         # road four: 3600 points on the lit patch's rim, in 3-D
     f = rad(i / 10); w = [cos(al) * u[j] + sin(al) * (cos(f) * e1[j] + (j == 1) * sin(f)) for j in range(3)]
     L = -H / w[2]; Px, Py = L * w[0], L * w[1]
@@ -46,7 +46,7 @@ for i in range(3600):                         # road four: 3600 points on the li
 print(f"3600 rim points: PF1 + PF2 from {min(sums):.3f} to {max(sums):.3f}, half-width {half:.3f}")
 print("mistakes: turn -45 deg gives {:.2f} X^2 + {:.2f} Y^2; ".format(*turn(1, 1, 1, -t)[::2]) + f"(1.732, 1.732) gives {3 * sqrt(3)**2:.2f}; "
       f"drop xy: circle radius {sqrt(3):.3f}; B^2 - AC = {1 - 1}; r1 + r2 = {sph[0][2] + sph[1][2]:.3f}")
-X, Z, gen = lambda x: 30 + 40 * x, lambda z: 90 - 40 * z, [(sin(be + s * al), -cos(be + s * al)) for s in (-1, 1)]
+X, Z, gen = lambda x: 30 + 40 * x, lambda z: 90 - 40 * z, [(sin(tilt + s * al), -cos(tilt + s * al)) for s in (-1, 1)]
 print(f"figure, 1 m = 40 units: lamp ({X(0):.2f}, {Z(H):.2f}), patch ({X(x1):.2f}, 90.00) ({X(x2):.2f}, 90.00), pegs "
       + " ".join(f"({X(x):.2f}, 90.00)" for x, *_ in sph) + ", circles " + " ".join(f"({X(x):.2f}, {Z(z):.2f}) r {40 * q:.2f}" for x, z, q, _ in sph))
 print("figure, beam ends and touch points: " + " ".join(f"({X(L * a):.2f}, {Z(H + L * b):.2f})" for a, b in gen for L in (8.6, sph[0][3], sph[1][3])))

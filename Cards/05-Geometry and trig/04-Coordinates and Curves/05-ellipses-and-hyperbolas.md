@@ -55,14 +55,14 @@ The comet shares the foci, (±20, 0), and its distances differ by 32 million km,
 | $`P`$, $`Q`$ | the numbers multiplying $`x^2`$ and $`y^2`$ | 24 and 25 | their signs name the curve |
 | $`U`$, $`V`$, $`W`$ | the numbers multiplying $`x`$ and $`y`$, and the constant | 960, 0, −230400 | move the curve, not its shape |
 
-**Telling the four apart.** With its axes along the x- and y-axes, each is $`Px^2 + Qy^2 + Ux + Vy + W = 0`$. Equal $`P`$ and $`Q`$ of one sign: circle, $`e`$ = 0. Unequal, one sign: ellipse, $`e`$ below 1. One of them 0: parabola, $`e`$ = 1. Opposite signs: hyperbola, $`e`$ above 1.
+**Telling the four apart.** With its axes along the x- and y-axes, each is $`Px^2 + Qy^2 + Ux + Vy + W = 0`$. Equal nonzero $`P`$ and $`Q`$ of one sign: circle, $`e`$ = 0. Unequal, one sign: ellipse, $`e`$ below 1. Exactly one of them 0 (with a nonzero straight term in that variable): parabola, $`e`$ = 1. Opposite signs: hyperbola, $`e`$ above 1.
 
 ### When it holds
 
-- **No tilt.** A tilted curve gains a term in x times y and the sign test fails; OpenStax 10.4 (Sources) gives the tilted test.
+- **No tilt.** A tilted curve gains a term in x times y and the sign test fails; [Every conic](09-general-conics-and-dandelin-spheres.md) gives the tilted test.
 - **The right gap.** An ellipse needs $`2a`$ longer than the gap between the foci, $`2c`$, or it flattens to a segment or vanishes; a hyperbola needs $`2a`$ between 0 and $`2c`$.
 - **Which axis is long.** A larger denominator under $`y^2`$ stands the ellipse upright, foci at (0, ±c); a hyperbola opens along whichever square is positive.
-- **A real curve left over.** $`x^2 + y^2 + 1 = 0`$ passes the sign test and has no points; completing squares shows it.
+- **A real curve left over.** Degenerate equations pass the sign test without giving a curve: $`x^2 + y^2 + 1 = 0`$ has no points, $`x^2 + y^2 = 0`$ is a single point, $`x^2 - y^2 = 0`$ is two crossing lines, and $`y^2 - 1 = 0`$ is two parallel lines. Completing squares shows which.
 
 ---
 
@@ -94,7 +94,9 @@ Set $`R = a - ex`$ equal to its distance-formula value and square: $`(x - c)^2 +
 
 ### Step 3: a fixed difference flips one sign
 
-On the comet's arm $`L - R = 2a`$. The same factoring gives $`L + R = 2cx/a`$ and $`R = ex - a`$. Squaring as before gives $`x^2(c^2/a^2 - 1) - y^2 = c^2 - a^2`$. Now $`c`$ exceeds $`a`$, so $`b^2 = c^2 - a^2`$ = 400 − 256 = 144 is positive and the minus lands in the equation. The other arm, $`L - R = -2a`$, is its mirror image. Far out the arms hug the lines $`y = \pm(b/a)x`$, the asymptotes: at y = 3000, y ÷ x = 0.7500 = 12 ÷ 16.
+On the comet's arm $`L - R = 2a`$. The same factoring gives $`L + R = 2cx/a`$ and $`R = ex - a`$. Squaring as before gives $`x^2(c^2/a^2 - 1) - y^2 = c^2 - a^2`$. Now $`c`$ exceeds $`a`$, so $`b^2 = c^2 - a^2`$ = 400 − 256 = 144 is positive and the minus lands in the equation. The other arm, $`L - R = -2a`$, is its mirror image.
+
+Far out the arms hug the lines $`y = \pm(b/a)x`$, the asymptotes: at y = 3000, y ÷ x = 0.7500 = 12 ÷ 16.
 
 ### The picture: the comet's hyperbola, to scale
 
@@ -104,7 +106,9 @@ Drawn at 1 million km = 3 units. The comet's arm bends round the sun, 4 million 
 
 ### Step 4: eccentricity is one ratio for all four curves
 
-Step 1 gave $`R = a - ex = e(a/e - x)`$. The bracket is the distance to the upright line $`x = a/e`$ = 500, the **directrix**. So the sun's distance is always $`e`$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $`x`$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500. Equal distances, $`e`$ = 1, is the parabola of [Circles and parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $`c`$ = 0 and so $`e`$ = 0.
+Step 1 gave $`R = a - ex = e(a/e - x)`$. The bracket is the distance to the upright line $`x = a/e`$ = 500, the **directrix**. So the sun's distance is always $`e`$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $`x`$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500.
+
+Equal distances, $`e`$ = 1, is the parabola of [Circles and parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $`c`$ = 0 and so $`e`$ = 0.
 
 ### Step 5: read the curve off a general equation
 
@@ -117,11 +121,11 @@ Squaring can add points, so the reverse needs checking.
 
 - **Ellipse.** The equation forces $`x^2 \le a^2`$, so $`a - ex \ge a - c > 0`$. Substituting $`y^2 = b^2(1 - x^2/a^2)`$ into $`(x - c)^2 + y^2`$ gives exactly $`(a - ex)^2`$, so $`R = a - ex`$; likewise $`L = a + ex`$. They add to $`2a`$.
 - **Hyperbola.** The equation forces $`x^2 \ge a^2`$. On the right arm $`ex - a \ge c - a > 0`$, and the same substitution gives $`R = ex - a`$, $`L = ex + a`$, differing by $`2a`$. The left arm mirrors it.
-- **The sign test.** Completed, the equation is $`P`$ times a square plus $`Q`$ times a square equals a constant, and the denominators are the constant over $`P`$ and over $`Q`$. Same signs throughout give an ellipse with $`e^2 = 1 - P/Q`$ (taking $`P < Q`$); opposite signs a hyperbola with $`e^2 = 1 + |P/Q|`$ (opening along $`x`$); a zero leaves one variable unsquared, a parabola.
+- **The sign test.** Completed, the equation is $`P`$ times a square plus $`Q`$ times a square equals a constant, and the denominators are the constant over $`P`$ and over $`Q`$. Same signs throughout give an ellipse with $`e^2 = 1 - P/Q`$ (taking $`0 < |P| < |Q|`$); opposite signs a hyperbola with $`e^2 = 1 + |P/Q|`$ (opening along $`x`$); exactly one zero, with a nonzero straight term in that variable, gives a parabola.
 
 </details>
 
-Another route names them: each is a flat slice of a double cone, hence "conic" ([Every conic](09-general-conics-and-dandelin-spheres.md) proves it with Dandelin spheres); Projective varieties makes the four one curve.
+Another route names them: each is a flat slice of a double cone, hence "conic" ([Every conic](09-general-conics-and-dandelin-spheres.md) proves it with Dandelin spheres); [Projective varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/04-projective-varieties-and-closure.md) makes the four one curve.
 
 ---
 
@@ -180,7 +184,7 @@ def halve(f, target, lo, hi):                 # road two: find t with f(t) = tar
         lo, hi = (mid, hi) if f(mid) < target else (lo, mid)
     return (lo + hi) / 2
 def classify(P, Q, U, V, W):                  # P x^2 + Q y^2 + U x + V y + W = 0, no xy term
-    if P * Q == 0: return "parabola", 0.0, 0.0
+    if P * Q == 0: return ("parabola" if (P == 0 and Q != 0 and U != 0) or (Q == 0 and P != 0 and V != 0) else "no curve, a point or lines"), 0.0, 0.0
     K = -W + U * U / (4 * P) + V * V / (4 * Q)                 # after completing both squares
     s, t = K / P, K / Q                                        # the two denominators
     if s > 0 and t > 0: return ("circle" if s == t else "ellipse"), max(s, t), min(s, t)
@@ -226,7 +230,7 @@ assert abs(ecc["orbit"] - c / va) + abs(ecc["comet"] - c / hv) + abs(sqrt(ax["or
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 orbit: a = 100.00, e = 0.20, c = ae = 20.00, b = sqrt(a^2 - c^2) = 97.98
@@ -274,7 +278,10 @@ fn halve(f: impl Fn(f64) -> f64, target: f64, mut lo: f64, mut hi: f64) -> f64 {
 }
 
 fn classify(p: f64, q: f64, u: f64, v: f64, w: f64) -> (&'static str, f64, f64) { // no xy term
-    if p * q == 0.0 { return ("parabola", 0.0, 0.0); }
+    if p * q == 0.0 {
+        let ok = (p == 0.0 && q != 0.0 && u != 0.0) || (q == 0.0 && p != 0.0 && v != 0.0);
+        return (if ok { "parabola" } else { "no curve, a point or lines" }, 0.0, 0.0);
+    }
     let k = -w + u * u / (4.0 * p) + v * v / (4.0 * q); // after completing both squares
     let (s, t) = (k / p, k / q); // the two denominators
     if s > 0.0 && t > 0.0 { return (if s == t { "circle" } else { "ellipse" }, s.max(t), s.min(t)); }
@@ -333,7 +340,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 orbit: a = 100.00, e = 0.20, c = ae = 20.00, b = sqrt(a^2 - c^2) = 97.98
@@ -619,11 +626,12 @@ example : 1 + (9 : ℚ) / 16 = (5 / 4) ^ 2 := by norm_num
 
 ## Where this goes next
 
+- [Parametric curves](06-parametric-curves.md): next on this shelf, stepping a moving point round a curve or orbit with one parameter, such as time.
 - [Orbits](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md): why an inverse-square pull sends a body along exactly these curves, sun at a focus.
 - [Projective varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/04-projective-varieties-and-closure.md): points at infinity, where a hyperbola's two arms join and the four conics become one.
 - [Every conic](09-general-conics-and-dandelin-spheres.md): untangle a tilted equation by turning the axes, and the spheres that show a cone's slice is an ellipse.
 
-This card gives an orbit's shape, not the reason for it; why gravity produces a conic at all is the orbital mechanics card's result.
+Next on this shelf, [Parametric curves](06-parametric-curves.md) tracks a point moving along a curve with time. This card gives an orbit's shape, not the reason for it; why gravity produces a conic at all is the [Orbits](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md) card's result.
 
 ---
 

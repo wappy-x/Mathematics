@@ -14,7 +14,7 @@ def halve(f, target, lo, hi):                 # road two: find t with f(t) = tar
         lo, hi = (mid, hi) if f(mid) < target else (lo, mid)
     return (lo + hi) / 2
 def classify(P, Q, U, V, W):                  # P x^2 + Q y^2 + U x + V y + W = 0, no xy term
-    if P * Q == 0: return "parabola", 0.0, 0.0
+    if P * Q == 0: return ("parabola" if (P == 0 and Q != 0 and U != 0) or (Q == 0 and P != 0 and V != 0) else "no curve, a point or lines"), 0.0, 0.0
     K = -W + U * U / (4 * P) + V * V / (4 * Q)                 # after completing both squares
     s, t = K / P, K / Q                                        # the two denominators
     if s > 0 and t > 0: return ("circle" if s == t else "ellipse"), max(s, t), min(s, t)

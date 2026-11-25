@@ -104,7 +104,7 @@ Every point P on the line from A to B is A plus a fraction $`t`$ of the whole mo
 
 The two are equal only when $`t = 1/2`$: A plus half the move, the average of Step 2. So the midpoint is the one point on the line equally far from both ends.
 
-Off the line, a whole line of points is equally far from A and B, the perpendicular bisector ([Lines](02-lines-slopes-and-intersections.md)).
+Off the line, a whole line of points is equally far from A and B, the perpendicular bisector ([Triangle centres](08-triangle-centres.md)).
 
 </details>
 
@@ -509,7 +509,7 @@ example : ((9 : ℤ) - 3) ^ 2 + ((12 : ℤ) - 4) ^ 2 = 10 ^ 2 := by decide
 
 ## Where this goes next
 
-- [Lines](02-lines-slopes-and-intersections.md): the line through A and B as an equation, and the perpendicular bisector.
+- [Lines](02-lines-slopes-and-intersections.md): the line through A and B as an equation, its slope, and where two lines meet or cross square.
 - [Polar coordinates](03-polar-coordinates.md): a point named by its distance from the origin and a direction.
 - [Circles and parabolas](04-circles-and-parabolas.md): a circle is this formula set equal to one number.
 - [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): distance and averaging over many points, to find groups.

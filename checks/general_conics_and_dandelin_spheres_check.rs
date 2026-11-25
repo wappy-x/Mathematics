@@ -13,14 +13,14 @@ fn name(co: [i64; 4]) -> (i64, &'static str, f64, f64, f64) { // A x^2 + B xy + 
     let [a, b, c, f] = co; let d = b * b - 4 * a * c;
     let t = (b as f64).atan2((a - c) as f64) / 2.0;
     let (p, _, q) = turn(a as f64, b as f64, c as f64, t);
-    let kd = if d == 0 { "parabola or parallel lines" } else if f == 0 { "two crossing lines" } else if d > 0 { "hyperbola" } else if -(f as f64) / p > 0.0 { "ellipse" } else { "no points" };
+    let kd = if d == 0 { "parabola or parallel lines" } else if f == 0 { if d > 0 { "two crossing lines" } else { "one point" } } else if d > 0 { "hyperbola" } else if -(f as f64) / p > 0.0 { "ellipse" } else { "no points" };
     (d, kd, p, q, t.to_degrees())
 }
 fn scan(co: [i64; 4]) -> &'static str { // road five, no B^2 - 4AC: the signs A x^2 + B xy + C y^2 takes over a half-turn
     let [a, b, c, f] = co.map(|v| v as f64);
     let g: Vec<i32> = (0..1800).map(|i| (i as f64 / 10.0).to_radians()).map(|t| a * t.cos() * t.cos() + b * t.cos() * t.sin() + c * t.sin() * t.sin()).map(|v| (v > 1e-9) as i32 - (v < -1e-9) as i32).collect();
     if g.contains(&1) && g.contains(&-1) { if f == 0.0 { "two crossing lines" } else { "hyperbola" } } else if g.contains(&0) { "parabola or parallel lines" }
-    else if g[0] == (f < 0.0) as i32 - (f > 0.0) as i32 { "ellipse" } else { "no points" }
+    else if f == 0.0 { "one point" } else if g[0] == (f < 0.0) as i32 - (f > 0.0) as i32 { "ellipse" } else { "no points" }
 }
 fn main() {
     let t = 1f64.atan2(0.0) / 2.0; let s2 = 2f64.sqrt(); // road one: cot 2t = (A - C)/B
@@ -45,14 +45,14 @@ fn main() {
     let cv: Vec<(f64, f64)> = [1.0, 1.0 / k, 3.0].iter().map(|&m: &f64| (m, (-4.0 * (1.0 - k * k * m * m) * 1e9).round() / 1e9 + 0.0)).collect();
     let cs: Vec<String> = cv.iter().map(|&(m, v)| format!("m = {:.3}: B^2 - 4AC = {:.3}", m, v)).collect();
     println!("cone slice, plane slope m: {}", cs.join("; "));
-    let (al, be) = (30f64.to_radians(), 45f64.to_radians()); // the lamp: beam half-angle, tilt of the beam's axis from vertical
-    let hh = 2.0 * la / ((be + al).tan() - (be - al).tan()); let (x1, x2) = (hh * (be - al).tan(), hh * (be + al).tan()); // patch 2a long
+    let (al, be) = (30f64.to_radians(), 45f64.to_radians()); let tilt = PI / 2.0 - be; // beam half-angle, ground's angle to axis, tilt from vertical
+    let hh = 2.0 * la / ((tilt + al).tan() - (tilt - al).tan()); let (x1, x2) = (hh * (tilt - al).tan(), hh * (tilt + al).tan()); // patch 2a long
     println!("lamp: height {:.3}, lit patch from {:.3} to {:.3}, length {:.3}, e = cos 45 / cos 30 = {:.4}", hh, x1, x2, x2 - x1, be.cos() / al.cos());
-    let sph: Vec<(f64, f64, f64, f64)> = [1.0, -1.0].iter().map(|&s: &f64| hh / (be.cos() + s * al.sin())) // the two Dandelin spheres
-        .map(|d| (d * be.sin(), hh - d * be.cos(), d * al.sin(), d * al.cos())).collect(); // centre x, z; radius; touch distance
+    let sph: Vec<(f64, f64, f64, f64)> = [1.0, -1.0].iter().map(|&s: &f64| hh / (tilt.cos() + s * al.sin())) // the two Dandelin spheres
+        .map(|d| (d * tilt.sin(), hh - d * tilt.cos(), d * al.sin(), d * al.cos())).collect(); // centre x, z; radius; touch distance
     let sp: Vec<String> = sph.iter().map(|&(x, z, q, g)| format!("centre ({:.3}, {:.3}), radius {:.3}, touches the beam {:.3} from the lamp", x, z, q, g)).collect();
     println!("spheres: {}; gap {:.3}", sp.join("; "), sph[1].3 - sph[0].3);
-    let (u, e1) = ([be.sin(), 0.0, -be.cos()], [be.cos(), 0.0, be.sin()]); let (mut lo, mut hi, mut half, mut tang) = (f64::MAX, f64::MIN, 0f64, 0f64); // beam axis; a direction square to it
+    let (u, e1) = ([tilt.sin(), 0.0, -tilt.cos()], [tilt.cos(), 0.0, tilt.sin()]); let (mut lo, mut hi, mut half, mut tang) = (f64::MAX, f64::MIN, 0f64, 0f64); // beam axis; a direction square to it
     for i in 0..3600 { // road four: 3600 points on the lit patch's rim, in 3-D
         let f = (i as f64 / 10.0).to_radians();
         let w: Vec<f64> = (0..3).map(|j| al.cos() * u[j] + al.sin() * (f.cos() * e1[j] + if j == 1 { f.sin() } else { 0.0 })).collect();
@@ -67,7 +67,7 @@ fn main() {
     let (fx, fz) = (|x: f64| 30.0 + 40.0 * x, |z: f64| 90.0 - 40.0 * z);
     let (pg, ci): (Vec<String>, Vec<String>) = sph.iter().map(|s| (format!("({:.2}, 90.00)", fx(s.0)), format!("({:.2}, {:.2}) r {:.2}", fx(s.0), fz(s.1), 40.0 * s.2))).unzip();
     println!("figure, 1 m = 40 units: lamp ({:.2}, {:.2}), patch ({:.2}, 90.00) ({:.2}, 90.00), pegs {}, circles {}", fx(0.0), fz(hh), fx(x1), fx(x2), pg.join(" "), ci.join(" "));
-    let mut ends = Vec::new(); for s in [-1.0, 1.0] { let (a, b) = ((be + s * al).sin(), -(be + s * al).cos()); for l in [8.6, sph[0].3, sph[1].3] { ends.push(format!("({:.2}, {:.2})", fx(l * a), fz(hh + l * b))); } }
+    let mut ends = Vec::new(); for s in [-1.0, 1.0] { let (a, b) = ((tilt + s * al).sin(), -(tilt + s * al).cos()); for l in [8.6, sph[0].3, sph[1].3] { ends.push(format!("({:.2}, {:.2})", fx(l * a), fz(hh + l * b))); } }
     println!("figure, beam ends and touch points: {}", ends.join(" "));
     assert!((th - t).abs() < 1e-12 && b2.abs() < 1e-12); // halving agrees with cot 2t; xy term gone
     assert!((mn.0 - sa).abs() + (mx.0 - la).abs() < 1e-9); // polar scan meets the turned semi-axes

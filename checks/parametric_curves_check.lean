@@ -1,11 +1,11 @@
--- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of each arch, a second formula on the falling half, and a circle for the valve seen from the hub.
+-- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of the first arch, a second formula on the falling half, and a circle for the valve seen from the hub.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
 open Real
 
 /-- The valve of a wheel of radius `R`, sitting `b` from the hub, is at
 `x = Rθ − b sin θ`, `y = R − b cos θ` after a turn of `θ` radians. On the rising half of
-each arch, `0 ≤ θ ≤ π`, the turn can be removed: `x = R arccos((R − y)/b) − √(b² − (R − y)²)`. -/
+the first arch, `0 ≤ θ ≤ π`, the turn can be removed: `x = R arccos((R − y)/b) − √(b² − (R − y)²)`. -/
 theorem valve_x_from_y_rising_half (R b θ : ℝ) (hb : 0 < b) (h0 : 0 ≤ θ) (hπ : θ ≤ π) :
     R * θ - b * sin θ =
       R * arccos ((R - (R - b * cos θ)) / b) - √(b ^ 2 - (R - (R - b * cos θ)) ^ 2) := by

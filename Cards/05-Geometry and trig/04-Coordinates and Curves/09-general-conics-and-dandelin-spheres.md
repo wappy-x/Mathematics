@@ -34,7 +34,7 @@ Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
 
 **Read it aloud:** squared terms, a cross term, straight terms and a constant add to zero.
 
-Turn the axes by the angle θ (theta) given by
+When $`B \ne 0`$ (if $`B = 0`$, no turn is needed), turn the axes by the angle θ (theta) given by
 
 ```math
 \cot 2\theta = \frac{A - C}{B}, \qquad B^2 - 4AC \;\begin{cases} < 0 & \text{ellipse (or circle)} \\ = 0 & \text{parabola} \\ > 0 & \text{hyperbola} \end{cases}
@@ -106,13 +106,13 @@ In the middle step the cosine-sine cross terms cancel, and $`\cos^2 + \sin^2 = 1
 
 ### Step 4: so the sign names the curve
 
-After the turn $`B'`$ = 0, so the unchanged number is $`-4A'C'`$. Negative: $`A'`$ and $`C'`$ share a sign, an ellipse. Positive: a hyperbola. Zero: a parabola. That is the sign test of [Ellipses and hyperbolas](05-ellipses-and-hyperbolas.md); the straight terms only shift the curve.
+After the turn $`B'`$ = 0, so the unchanged number is $`-4A'C'`$. Negative: $`A'`$ and $`C'`$ share a sign, an ellipse. Positive: a hyperbola. Zero: a parabola. That is the sign test of [Ellipses and hyperbolas](05-ellipses-and-hyperbolas.md). For an ellipse or hyperbola, completing the squares only shifts the centre (and changes the constant, which decides whether a real curve remains); for a parabola, the straight term in the unsquared variable sets its focal length.
 
 The hyperbola $`xy = 1`$ has $`B^2 - 4AC`$ = 1. The same 45° turn gives $`0.5X^2 - 0.5Y^2 = 1`$, that is $`X^2/2 - Y^2/2 = 1`$.
 
 ### Step 5: the same test is the cone-slice test
 
-Stand a cone of half-angle α on its tip, axis vertical. A point at height $`z`$ is on it when its distance from the axis is $`z\tan\alpha`$. Cut it with the plane $`z = mx + 1`$ and substitute:
+Stand a double cone of half-angle $`\alpha`$ ($`0° < \alpha < 90°`$) on its tip, axis vertical. A point at height $`z`$ is on it when its distance from the axis is $`|z|\tan\alpha`$. Cut it with the plane $`z = mx + 1`$ and substitute:
 
 ```math
 (1 - m^2\tan^2\alpha)\,x^2 + y^2 + (\text{straight terms}) = 0, \qquad B^2 - 4AC = -4\,(1 - m^2\tan^2\alpha)
@@ -205,11 +205,11 @@ def halve(f, lo, hi):                         # road two: find where f changes s
     return (lo + hi) / 2
 def name(A, B, C, F):                         # A x^2 + B xy + C y^2 + F = 0, centred
     d, (P, _, Q) = B*B - 4*A*C, turn(A, B, C, atan2(B, A - C) / 2)
-    kd = "parabola or parallel lines" if d == 0 else "two crossing lines" if F == 0 else "hyperbola" if d > 0 else "ellipse" if -F / P > 0 else "no points"
+    kd = "parabola or parallel lines" if d == 0 else ("two crossing lines" if d > 0 else "one point") if F == 0 else "hyperbola" if d > 0 else "ellipse" if -F / P > 0 else "no points"
     return d, kd, P, Q
 def scan(A, B, C, F):                         # road five, no B^2 - 4AC: the signs A x^2 + B xy + C y^2 takes over a half-turn
     g = {(v > 1e-9) - (v < -1e-9) for v in (A*cos(f)*cos(f) + B*cos(f)*sin(f) + C*sin(f)*sin(f) for f in (rad(i / 10) for i in range(1800)))}
-    return ("two crossing lines" if F == 0 else "hyperbola") if {1, -1} <= g else "parabola or parallel lines" if 0 in g else "ellipse" if g == {(F < 0) - (F > 0)} else "no points"
+    return ("two crossing lines" if F == 0 else "hyperbola") if {1, -1} <= g else "parabola or parallel lines" if 0 in g else "one point" if F == 0 else "ellipse" if g == {(F < 0) - (F > 0)} else "no points"
 t = atan2(1, 1 - 1) / 2                       # road one: cot 2t = (A - C)/B
 P, B2, Q = turn(1, 1, 1, t); th = halve(lambda u: turn(1, 1, 1, u)[1], 0, pi / 2)
 sa, la = sqrt(3 / P), sqrt(3 / Q); c = sqrt(la**2 - sa**2)   # semi-axes; centre to each peg
@@ -227,13 +227,13 @@ print("2x^2 + 4xy + 5y^2 turned 0, 20, 45, 63.43, 100 deg: B'^2 - 4A'C' =", " ".
       "| A' + C' =", " ".join(f"{a + cc:.2f}" for a, b, cc in inv))
 k = tan(rad(30)); cs = [(m, round(-4 * (1 - k*k*m*m), 9) + 0) for m in (1, 1 / k, 3)]   # cone x^2 + y^2 = k^2 z^2 cut by the plane z = m x + 1
 print("cone slice, plane slope m: " + "; ".join(f"m = {m:.3f}: B^2 - 4AC = {v:.3f}" for m, v in cs))
-al, be = rad(30), rad(45)                     # the lamp: beam half-angle, tilt of the beam's axis from vertical
-H = 2 * la / (tan(be + al) - tan(be - al)); x1, x2 = H * tan(be - al), H * tan(be + al)   # height that makes the lit patch 2a long
+al, be = rad(30), rad(45); tilt = pi / 2 - be  # the lamp: beam half-angle, ground's angle to axis, tilt from vertical
+H = 2 * la / (tan(tilt + al) - tan(tilt - al)); x1, x2 = H * tan(tilt - al), H * tan(tilt + al)   # height that makes the lit patch 2a long
 print(f"lamp: height {H:.3f}, lit patch from {x1:.3f} to {x2:.3f}, length {x2 - x1:.3f}, e = cos 45 / cos 30 = {cos(be) / cos(al):.4f}")
-ds = [H / (cos(be) + s * sin(al)) for s in (1, -1)]; sph = [(d * sin(be), H - d * cos(be), d * sin(al), d * cos(al)) for d in ds]   # the two Dandelin spheres: centre x, z; radius; touch distance
+ds = [H / (cos(tilt) + s * sin(al)) for s in (1, -1)]; sph = [(d * sin(tilt), H - d * cos(tilt), d * sin(al), d * cos(al)) for d in ds]   # the two Dandelin spheres: centre x, z; radius; touch distance
 print("spheres: " + "; ".join(f"centre ({x:.3f}, {z:.3f}), radius {q:.3f}, touches the beam {g:.3f} from the lamp" for x, z, q, g in sph)
       + f"; gap {sph[1][3] - sph[0][3]:.3f}")
-u, e1, sums, half, tang = (sin(be), 0, -cos(be)), (cos(be), 0, sin(be)), [], 0, 0   # beam axis; a direction square to it
+u, e1, sums, half, tang = (sin(tilt), 0, -cos(tilt)), (cos(tilt), 0, sin(tilt)), [], 0, 0   # beam axis; a direction square to it
 for i in range(3600):                         # road four: 3600 points on the lit patch's rim, in 3-D
     f = rad(i / 10); w = [cos(al) * u[j] + sin(al) * (cos(f) * e1[j] + (j == 1) * sin(f)) for j in range(3)]
     L = -H / w[2]; Px, Py = L * w[0], L * w[1]
@@ -242,7 +242,7 @@ for i in range(3600):                         # road four: 3600 points on the li
 print(f"3600 rim points: PF1 + PF2 from {min(sums):.3f} to {max(sums):.3f}, half-width {half:.3f}")
 print("mistakes: turn -45 deg gives {:.2f} X^2 + {:.2f} Y^2; ".format(*turn(1, 1, 1, -t)[::2]) + f"(1.732, 1.732) gives {3 * sqrt(3)**2:.2f}; "
       f"drop xy: circle radius {sqrt(3):.3f}; B^2 - AC = {1 - 1}; r1 + r2 = {sph[0][2] + sph[1][2]:.3f}")
-X, Z, gen = lambda x: 30 + 40 * x, lambda z: 90 - 40 * z, [(sin(be + s * al), -cos(be + s * al)) for s in (-1, 1)]
+X, Z, gen = lambda x: 30 + 40 * x, lambda z: 90 - 40 * z, [(sin(tilt + s * al), -cos(tilt + s * al)) for s in (-1, 1)]
 print(f"figure, 1 m = 40 units: lamp ({X(0):.2f}, {Z(H):.2f}), patch ({X(x1):.2f}, 90.00) ({X(x2):.2f}, 90.00), pegs "
       + " ".join(f"({X(x):.2f}, 90.00)" for x, *_ in sph) + ", circles " + " ".join(f"({X(x):.2f}, {Z(z):.2f}) r {40 * q:.2f}" for x, z, q, _ in sph))
 print("figure, beam ends and touch points: " + " ".join(f"({X(L * a):.2f}, {Z(H + L * b):.2f})" for a, b in gen for L in (8.6, sph[0][3], sph[1][3])))
@@ -256,7 +256,7 @@ assert [(v > 0) - (v < 0) for m, v in cs] == [(m > 1 / k) - (m < 1 / k) for m, v
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 bed: B^2 - 4AC = -3 -> ellipse; cot 2t = 0, t = 45.00 deg; halving on B' = 0: 45.00 deg
@@ -300,14 +300,14 @@ fn name(co: [i64; 4]) -> (i64, &'static str, f64, f64, f64) { // A x^2 + B xy + 
     let [a, b, c, f] = co; let d = b * b - 4 * a * c;
     let t = (b as f64).atan2((a - c) as f64) / 2.0;
     let (p, _, q) = turn(a as f64, b as f64, c as f64, t);
-    let kd = if d == 0 { "parabola or parallel lines" } else if f == 0 { "two crossing lines" } else if d > 0 { "hyperbola" } else if -(f as f64) / p > 0.0 { "ellipse" } else { "no points" };
+    let kd = if d == 0 { "parabola or parallel lines" } else if f == 0 { if d > 0 { "two crossing lines" } else { "one point" } } else if d > 0 { "hyperbola" } else if -(f as f64) / p > 0.0 { "ellipse" } else { "no points" };
     (d, kd, p, q, t.to_degrees())
 }
 fn scan(co: [i64; 4]) -> &'static str { // road five, no B^2 - 4AC: the signs A x^2 + B xy + C y^2 takes over a half-turn
     let [a, b, c, f] = co.map(|v| v as f64);
     let g: Vec<i32> = (0..1800).map(|i| (i as f64 / 10.0).to_radians()).map(|t| a * t.cos() * t.cos() + b * t.cos() * t.sin() + c * t.sin() * t.sin()).map(|v| (v > 1e-9) as i32 - (v < -1e-9) as i32).collect();
     if g.contains(&1) && g.contains(&-1) { if f == 0.0 { "two crossing lines" } else { "hyperbola" } } else if g.contains(&0) { "parabola or parallel lines" }
-    else if g[0] == (f < 0.0) as i32 - (f > 0.0) as i32 { "ellipse" } else { "no points" }
+    else if f == 0.0 { "one point" } else if g[0] == (f < 0.0) as i32 - (f > 0.0) as i32 { "ellipse" } else { "no points" }
 }
 fn main() {
     let t = 1f64.atan2(0.0) / 2.0; let s2 = 2f64.sqrt(); // road one: cot 2t = (A - C)/B
@@ -332,14 +332,14 @@ fn main() {
     let cv: Vec<(f64, f64)> = [1.0, 1.0 / k, 3.0].iter().map(|&m: &f64| (m, (-4.0 * (1.0 - k * k * m * m) * 1e9).round() / 1e9 + 0.0)).collect();
     let cs: Vec<String> = cv.iter().map(|&(m, v)| format!("m = {:.3}: B^2 - 4AC = {:.3}", m, v)).collect();
     println!("cone slice, plane slope m: {}", cs.join("; "));
-    let (al, be) = (30f64.to_radians(), 45f64.to_radians()); // the lamp: beam half-angle, tilt of the beam's axis from vertical
-    let hh = 2.0 * la / ((be + al).tan() - (be - al).tan()); let (x1, x2) = (hh * (be - al).tan(), hh * (be + al).tan()); // patch 2a long
+    let (al, be) = (30f64.to_radians(), 45f64.to_radians()); let tilt = PI / 2.0 - be; // beam half-angle, ground's angle to axis, tilt from vertical
+    let hh = 2.0 * la / ((tilt + al).tan() - (tilt - al).tan()); let (x1, x2) = (hh * (tilt - al).tan(), hh * (tilt + al).tan()); // patch 2a long
     println!("lamp: height {:.3}, lit patch from {:.3} to {:.3}, length {:.3}, e = cos 45 / cos 30 = {:.4}", hh, x1, x2, x2 - x1, be.cos() / al.cos());
-    let sph: Vec<(f64, f64, f64, f64)> = [1.0, -1.0].iter().map(|&s: &f64| hh / (be.cos() + s * al.sin())) // the two Dandelin spheres
-        .map(|d| (d * be.sin(), hh - d * be.cos(), d * al.sin(), d * al.cos())).collect(); // centre x, z; radius; touch distance
+    let sph: Vec<(f64, f64, f64, f64)> = [1.0, -1.0].iter().map(|&s: &f64| hh / (tilt.cos() + s * al.sin())) // the two Dandelin spheres
+        .map(|d| (d * tilt.sin(), hh - d * tilt.cos(), d * al.sin(), d * al.cos())).collect(); // centre x, z; radius; touch distance
     let sp: Vec<String> = sph.iter().map(|&(x, z, q, g)| format!("centre ({:.3}, {:.3}), radius {:.3}, touches the beam {:.3} from the lamp", x, z, q, g)).collect();
     println!("spheres: {}; gap {:.3}", sp.join("; "), sph[1].3 - sph[0].3);
-    let (u, e1) = ([be.sin(), 0.0, -be.cos()], [be.cos(), 0.0, be.sin()]); let (mut lo, mut hi, mut half, mut tang) = (f64::MAX, f64::MIN, 0f64, 0f64); // beam axis; a direction square to it
+    let (u, e1) = ([tilt.sin(), 0.0, -tilt.cos()], [tilt.cos(), 0.0, tilt.sin()]); let (mut lo, mut hi, mut half, mut tang) = (f64::MAX, f64::MIN, 0f64, 0f64); // beam axis; a direction square to it
     for i in 0..3600 { // road four: 3600 points on the lit patch's rim, in 3-D
         let f = (i as f64 / 10.0).to_radians();
         let w: Vec<f64> = (0..3).map(|j| al.cos() * u[j] + al.sin() * (f.cos() * e1[j] + if j == 1 { f.sin() } else { 0.0 })).collect();
@@ -354,7 +354,7 @@ fn main() {
     let (fx, fz) = (|x: f64| 30.0 + 40.0 * x, |z: f64| 90.0 - 40.0 * z);
     let (pg, ci): (Vec<String>, Vec<String>) = sph.iter().map(|s| (format!("({:.2}, 90.00)", fx(s.0)), format!("({:.2}, {:.2}) r {:.2}", fx(s.0), fz(s.1), 40.0 * s.2))).unzip();
     println!("figure, 1 m = 40 units: lamp ({:.2}, {:.2}), patch ({:.2}, 90.00) ({:.2}, 90.00), pegs {}, circles {}", fx(0.0), fz(hh), fx(x1), fx(x2), pg.join(" "), ci.join(" "));
-    let mut ends = Vec::new(); for s in [-1.0, 1.0] { let (a, b) = ((be + s * al).sin(), -(be + s * al).cos()); for l in [8.6, sph[0].3, sph[1].3] { ends.push(format!("({:.2}, {:.2})", fx(l * a), fz(hh + l * b))); } }
+    let mut ends = Vec::new(); for s in [-1.0, 1.0] { let (a, b) = ((tilt + s * al).sin(), -(tilt + s * al).cos()); for l in [8.6, sph[0].3, sph[1].3] { ends.push(format!("({:.2}, {:.2})", fx(l * a), fz(hh + l * b))); } }
     println!("figure, beam ends and touch points: {}", ends.join(" "));
     assert!((th - t).abs() < 1e-12 && b2.abs() < 1e-12); // halving agrees with cot 2t; xy term gone
     assert!((mn.0 - sa).abs() + (mx.0 - la).abs() < 1e-9); // polar scan meets the turned semi-axes
@@ -367,7 +367,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 bed: B^2 - 4AC = -3 -> ellipse; cot 2t = 0, t = 45.00 deg; halving on B' = 0: 45.00 deg
@@ -558,11 +558,12 @@ example : (1 : ℤ) ^ 2 - 1 * 1 = 0 := by decide
 
 ## Where this goes next
 
+- [Ceva and Menelaus](10-ceva-and-menelaus.md): next on this shelf, returning to triangles to test when three corner lines meet or three side points line up.
 - [Moving shapes with matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md): Step 0's turn as one rotation matrix.
 - [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): the same $`B^2 - 4AC`$ test sorts the equations of heat, waves and steady states.
 - [Projective varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/04-projective-varieties-and-closure.md): points at infinity, where the three conics become one curve.
 
-Left open: the turn for an equation in three or more variables.
+This card wraps up conics before [Ceva and Menelaus](10-ceva-and-menelaus.md) returns to triangles on this shelf. Left open: the turn for an equation in three or more variables.
 
 ---
 

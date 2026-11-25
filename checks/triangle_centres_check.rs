@@ -53,7 +53,7 @@ fn main() {
     println!("circumcentre O: by two bisectors {}; by equal-distance search {}", pt(o), pt(o2));
     println!("incentre I: by side weights {}; by furthest-from-roads search {}", pt(i), pt(i2));
     println!("O to farms A, B, C: {} km", three(farms(o)));
-    println!("I to roads AB, BC, CA: {} km; largest pond found: radius {:.4} km", three(roads(i)), r2);
+    println!("I to roads AB, BC, CA: {} km; largest lake found: radius {:.4} km", three(roads(i)), r2);
     println!("G to farms A, B, C: {} km", three(farms(g)));
     println!("G to roads AB, BC, CA: {} km", three(roads(g)));
     println!("total squared distance to the farms: at G {:.2}, at O {:.2}, at I {:.2}", sq(g), sq(o), sq(i));
@@ -69,7 +69,7 @@ fn main() {
     println!("figure, 1 km = 22 units: A {}, B {}, C {}, G {}, O {}, I {}, R {:.2}, r {:.2}",
              svg(fa), svg(fb), svg(fc), svg(g), svg(o), svg(i), 22.0 * dist(o, fa), 22.0 * k / s);
     assert!(dist(g, g2) < 1e-6 && dist(o, o2) < 1e-6 && dist(i, i2) < 1e-6); // two routes each
-    assert!((r2 - k / s).abs() < 1e-6); // largest pond = area / half-perimeter
+    assert!((r2 - k / s).abs() < 1e-6); // largest lake = area / half-perimeter
     let d3 = f3(o3);
     assert!(d3.iter().cloned().fold(f64::MIN, f64::max) - d3.iter().cloned().fold(f64::INFINITY, f64::min) < 1e-9);
     assert!(dist(o3, o4) < 1e-6 && side(o3, a3, b3) < 0.0); // obtuse: the well leaves the triangle

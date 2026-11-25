@@ -39,7 +39,7 @@ print(f"centroid G: by averaging {pt(G)}; by least total squared distance {pt(G2
 print(f"circumcentre O: by two bisectors {pt(O)}; by equal-distance search {pt(O2)}")
 print(f"incentre I: by side weights {pt(I)}; by furthest-from-roads search {pt(I2)}")
 print(f"O to farms A, B, C: {three(dist(O, F) for F in (A, B, C))} km")
-print(f"I to roads AB, BC, CA: {three(roads(I))} km; largest pond found: radius {min(roads(I2)):.4f} km")
+print(f"I to roads AB, BC, CA: {three(roads(I))} km; largest lake found: radius {min(roads(I2)):.4f} km")
 print(f"G to farms A, B, C: {three(dist(G, F) for F in (A, B, C))} km")
 print(f"G to roads AB, BC, CA: {three(roads(G))} km")
 print(f"total squared distance to the farms: at G {sq(G):.2f}, at O {sq(O):.2f}, at I {sq(I):.2f}")
@@ -54,7 +54,7 @@ svg = lambda p: f"({80 + 22 * p[0]:.2f}, {178 - 22 * p[1]:.2f})"
 print(f"figure, 1 km = 22 units: A {svg(A)}, B {svg(B)}, C {svg(C)}, G {svg(G)}, O {svg(O)}, I {svg(I)}, "
       f"R {22 * dist(O, A):.2f}, r {22 * K / s:.2f}")
 assert dist(G, G2) < 1e-6 and dist(O, O2) < 1e-6 and dist(I, I2) < 1e-6   # two routes each
-assert abs(min(roads(I2)) - K / s) < 1e-6                 # largest pond = area / half-perimeter
+assert abs(min(roads(I2)) - K / s) < 1e-6                 # largest lake = area / half-perimeter
 assert max(dist(O3, F) for F in (A3, B3, C3)) - min(dist(O3, F) for F in (A3, B3, C3)) < 1e-9
 assert dist(O3, O4) < 1e-6 and side(O3, A3, B3) < 0      # obtuse: the well leaves the triangle
 print("ALL CHECKS PASS")

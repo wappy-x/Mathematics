@@ -58,7 +58,7 @@ With the vertex moved to $`(h, k)`$ it is $`(x-h)^2 = 4p(y-k)`$: focus $`(h, k+p
 ### When it holds
 
 - **Flat, square grid.** The distance formula is Pythagoras: same unit on both axes, meeting at a right angle.
-- **Axis along a grid line.** A tilted parabola has an extra term in xy, handled in Conics.
+- **Axis along a grid line.** A tilted parabola has an extra term in xy, handled in [Every conic](09-general-conics-and-dandelin-spheres.md).
 - **A positive radius, a nonzero focal length.** A tidied circle equation with 0 on the right is one point; with a negative number, no point. With $`p = 0`$ the focus lies on the directrix and there is no parabola.
 - **Rays parallel to the axis.** Rays arriving at a slant do not meet at one point; they blur beside F, which is why the dish is aimed.
 
@@ -107,7 +107,7 @@ P is equally far from F and D, so it lies on the bisector: the line of points eq
 
 Any other point R on the bisector has RF = RD. Its drop to the directrix is shorter than RD unless R sits directly above D, and only P does. So R is nearer the directrix than F: outside the parabola. The bisector meets the curve only at P, without crossing: it is the tangent.
 
-Triangles FPM and DPM have PF = PD, MF = MD and the shared side PM, so they are congruent (side-side-side) and their angles at P are equal. The falling ray continues line DP beyond P, so it meets the tangent at the same angle as PD, which equals the angle PF makes. Equal angles in and out is the mirror law.
+At the vertex V, M = V and the ray hits the level tangent square, bouncing straight back to F. Elsewhere, triangles FPM and DPM have PF = PD, MF = MD and the shared side PM, so they are congruent (side-side-side) and their angles at P are equal. The falling ray continues line DP beyond P, so it meets the tangent at the same angle as PD, which equals the angle PF makes. Equal angles in and out is the mirror law.
 
 </details>
 
@@ -145,7 +145,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord: a straight line joining two nearby points of the curve. A **discriminant** $`b^2 - 4c`$ of 0 in $`x^2 + bx + c = 0`$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord: a straight line joining two nearby points of the curve. A **discriminant** $`b^2 - 4c`$ of 0 in $`x^2 + bx + c = 0`$ means one repeated root.
+
+The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 ### Python
 
@@ -532,6 +534,7 @@ example : (-80 : ℤ) ^ 2 - 4 * 1600 = 0 := by norm_num
 ## Where this goes next
 
 - [Ellipses and hyperbolas](05-ellipses-and-hyperbolas.md): two foci, with a fixed sum or a fixed difference of distances.
+- [Every conic](09-general-conics-and-dandelin-spheres.md): turning the axes to remove an xy term from a tilted conic, and Dandelin's spheres.
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve where a line through two points meets a third.
 - [Conics](../../22-Algebraic%20geometry/03-Plane%20Curves/01-conics-and-rational-parametrisation.md): every curve of degree two, tilted or not, and its points listed by one parameter.
 - [Osculating circle](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/03-osculating-circle.md): the circle that hugs a curve best at a point; at the dish's vertex its radius is 2p.

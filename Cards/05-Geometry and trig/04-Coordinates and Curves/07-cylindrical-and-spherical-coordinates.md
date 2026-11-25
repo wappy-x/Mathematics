@@ -57,7 +57,7 @@ x = r\cos\theta, \qquad y = r\sin\theta, \qquad r = \rho\sin\phi
 Back from the grid:
 
 ```math
-\rho = \sqrt{x^2 + y^2 + z^2}, \qquad \theta = \mathrm{atan2}(y, x), \qquad \phi = \mathrm{atan2}(r, z)
+r = \sqrt{x^2 + y^2}, \qquad \rho = \sqrt{x^2 + y^2 + z^2}, \qquad \theta = \mathrm{atan2}(y, x), \qquad \phi = \mathrm{atan2}(r, z)
 ```
 
 Here atan2(y, x) is the sign-aware arctangent of polar coordinates, given above −180° and up to 180°: it reads the signs of x and y separately, so it knows which quarter of the circle the direction lies in.
@@ -110,7 +110,11 @@ Pythagoras in the plane gives r = √(x^2 + y^2); in the meridian triangle, ρ =
 <details>
 <summary>Detailed proof: every point off the axis has exactly one address</summary>
 
-Ranges: ρ > 0, θ above −180° and up to 180°, φ from 0° to 180°. Step 4's recipe gives every point an address; the question is whether it is the only one. Take a point with r = √(x^2 + y^2) > 0. The formulas give x^2 + y^2 + z^2 = ρ^2 (sin^2φ (cos^2θ + sin^2θ) + cos^2φ) = ρ^2, using sin^2 + cos^2 = 1 twice, so ρ is forced. Then cos φ = z/ρ, and between 0° and 180° the cosine takes each value from −1 to 1 exactly once, so φ is forced; sin φ > 0 there matches r > 0. Last, cos θ = x/r fixes θ up to its sign, and the sign of y picks one. So each point off the axis has exactly one address.
+Ranges: ρ > 0, θ above −180° and up to 180°, φ from 0° to 180°. Step 4's recipe gives every point an address; the question is whether it is the only one.
+
+Take a point with r = √(x^2 + y^2) > 0. The formulas give x^2 + y^2 + z^2 = ρ^2 (sin^2φ (cos^2θ + sin^2θ) + cos^2φ) = ρ^2, using sin^2 + cos^2 = 1 twice, so ρ is forced.
+
+Then cos φ = z/ρ, and between 0° and 180° the cosine takes each value from −1 to 1 exactly once, so φ is forced; sin φ > 0 there matches r > 0. Last, cos θ = x/r fixes θ up to its sign, and the sign of y picks one. So each point off the axis has exactly one address.
 
 On the axis r = 0, so φ is 0° or 180° and x = y = 0 whatever θ is: every longitude gives the same pole. At the centre both angles are free.
 
@@ -501,12 +505,13 @@ theorem spherical_sum_of_squares (ρ θ φ : ℝ) :
 
 ## Where this goes next
 
+- [Triangle centres](08-triangle-centres.md): next on this shelf, returning to flat coordinates to locate a triangle's centroid, circumcentre and incentre.
 - [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): distances along the surface, not through it, from the same two angles.
 - [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md): volumes of balls and cylinders, summed slice by slice in these coordinates.
 - [Hydrogen in outline](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/07-the-hydrogen-atom-in-outline.md): an atom's electron shapes, written in a radius and two angles.
 - [The Laplacian in round coordinates, and the modes it splits into](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/07-laplacian-in-polar-and-spherical-coordinates.md): the equations of heat and gravity rewritten for round problems.
 
-Left open: the tunnel from Tokyo to Rio is 12660.0 km, but a ship or a plane stays on the surface; how far is the trip along the sphere?
+This card finishes the coordinate-systems run on this shelf before [Triangle centres](08-triangle-centres.md) turns to flat triangle geometry. Left open for [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the tunnel from Tokyo to Rio is 12660.0 km, but a ship or a plane stays on the surface; how far is the trip along the sphere?
 
 ---
 

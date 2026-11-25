@@ -88,7 +88,7 @@ The two offsets are the legs of a right triangle whose long side is the range ([
 
 Dividing, $`y/x = \tan\theta`$. But (−30, −40) and (30, 40) share the ratio 4/3 and point opposite ways. A plain arctangent answers only between −90° and 90°, the eastern half, so a western point comes back reversed. The repair reads the signs: $`x`$ negative, add 180°; $`x`$ positive and $`y`$ negative, add 360°.
 
-A second road never divides. Cosine is $`x/r`$. Arccosine undoes cosine and returns an angle from 0° to 180°, the northern half. If $`y`$ is negative the point is the mirror image in the southern half: 360° minus the arccosine. The code runs both roads.
+A second road never divides by $`x`$, so due north and due south need no special case. Cosine is $`x/r`$. Arccosine undoes cosine and returns an angle from 0° to 180°, the northern half. If $`y`$ is negative the point is the mirror image in the southern half: 360° minus the arccosine. The code runs both roads.
 
 <details>
 <summary>Detailed proof: the two conversions undo each other</summary>
@@ -140,7 +140,7 @@ Toward plane 1, at 330°, the reach is 46.65 km, beyond its 40 km range: inside.
 
 <p align="center"><img src="../figures/polar-coordinates-2.svg" alt="The coverage curve r = 25(1 + cos theta) around the radar, a heart shape reaching 50 km east, with plane 1 inside it and plane 2 outside to the south-west; drawn to scale" width="420"></p>
 
-Drawn to scale: 1 km = 3 units, radar at the crossing of the axes. The shaded heart is the coverage; dashed lines run from the radar to each plane; plane 1 is inside, plane 2 outside. Its point at 60° from east, 37.5 km out, sits at (176.250, 7.572) on the drawing.
+Drawn to scale: 1 km = 3 units, radar at the crossing of the axes. The shaded heart is the coverage; dashed lines run from the radar to each plane; plane 1 is inside, plane 2 outside.
 
 ### What breaks if you drop a piece
 
@@ -632,6 +632,7 @@ example : (40 : ℤ) ^ 2 = 1600 := by decide
 
 ## Where this goes next
 
+- [Circles and parabolas](04-circles-and-parabolas.md): next on this shelf, returning to grid equations for curves defined by a distance rule.
 - [Parametric curves](06-parametric-curves.md): range and angle changing with time trace a path.
 - [Cylindrical and spherical coordinates](07-cylindrical-and-spherical-coordinates.md): range and bearing plus height or elevation, for points in space.
 - [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying becomes multiplying sizes, adding angles.
@@ -639,7 +640,7 @@ example : (40 : ℤ) ^ 2 = 1600 := by decide
 - [Limit cycles](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): a range that settles while the angle keeps turning.
 - [Orbits](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/09-orbital-mechanics-and-the-kepler-problem.md): an orbit in one polar line.
 
-Left open: when the range and the angle both change with time, what path does the point trace?
+Next on this shelf, [Circles and parabolas](04-circles-and-parabolas.md) returns to grid equations for curves before [Parametric curves](06-parametric-curves.md) takes up moving points. Left open: when the range and the angle both change with time, what path does the point trace?
 
 ---
 

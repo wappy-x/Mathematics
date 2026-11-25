@@ -18,7 +18,10 @@ fn halve(f: impl Fn(f64) -> f64, target: f64, mut lo: f64, mut hi: f64) -> f64 {
 }
 
 fn classify(p: f64, q: f64, u: f64, v: f64, w: f64) -> (&'static str, f64, f64) { // no xy term
-    if p * q == 0.0 { return ("parabola", 0.0, 0.0); }
+    if p * q == 0.0 {
+        let ok = (p == 0.0 && q != 0.0 && u != 0.0) || (q == 0.0 && p != 0.0 && v != 0.0);
+        return (if ok { "parabola" } else { "no curve, a point or lines" }, 0.0, 0.0);
+    }
     let k = -w + u * u / (4.0 * p) + v * v / (4.0 * q); // after completing both squares
     let (s, t) = (k / p, k / q); // the two denominators
     if s > 0.0 && t > 0.0 { return (if s == t { "circle" } else { "ellipse" }, s.max(t), s.min(t)); }

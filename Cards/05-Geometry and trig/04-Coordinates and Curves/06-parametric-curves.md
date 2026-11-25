@@ -49,7 +49,7 @@ Removing the parameter leaves one shape per moving part.
 
 - **The hub,** (Rθ, R): the height never involves θ, so y = 0.35, a line ([Lines](02-lines-slopes-and-intersections.md)).
 - **The valve seen from the hub,** (−b sinθ, −b cosθ): across^2 + up^2 = b^2, a circle of radius 0.30 m ([Circles and parabolas](04-circles-and-parabolas.md)).
-- **The valve seen from the kerb,** on the rising half of each arch:
+- **The valve seen from the kerb** ($`b > 0`$), on the rising half of the first arch:
 
 ```math
 x = R\arccos\!\Big(\frac{R - y}{b}\Big) - \sqrt{b^2 - (R - y)^2}, \qquad \text{for } 0 \le \theta \le \pi
@@ -64,7 +64,7 @@ A definition asks nothing: any two formulas in one number make a parametric curv
 - **No slipping.** A wheel spinning on ice advances less than the tyre turned, so the arches squash and can loop.
 - **A flat road, a round wheel.** A kerb or a buckled rim lifts the hub off the line y = 0.35.
 - **Radians.** Radius times angle is the arc rolled only in radians; in degrees a quarter turn "rolls" 31.5 m.
-- **Half a turn at a time.** Arccos answers only from 0 to π, so the x-from-y equation covers the rising half of each arch.
+- **Half a turn at a time.** Arccos answers only from 0 to π, so the x-from-y equation covers only the rising half of the first arch (later arches add multiples of $`2\pi R`$).
 
 ---
 
@@ -101,7 +101,7 @@ For θ from π to 2π the sine is negative and θ = 2π − arccos((R − y)/b),
 
 ### Step 5: the cycloid, and why the top of a wheel blurs
 
-Put b = R: a pebble in the tread. Its lowest height is 0, so it touches the road once a turn at a sharp point, a **cusp**. One arch is 8R = 2.80 m long while the bike covers 2.1991 m; Christopher Wren found that length in 1658. The proof needs [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md); the code checks it with 100,000 short straight pieces.
+Put b = R: a pebble in the tread. Its lowest height is 0, so it touches the road once a turn at a sharp point, a **cusp**. One arch is 8R = 2.80 m long while the bike covers 2.1991 m; Christopher Wren found that length in 1658. The proof needs [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md) and [Arc length](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/02-arc-length.md); the code checks it with 100,000 short straight pieces.
 
 Without slipping, the point touching the road is still for an instant. So over a small turn the wheel pivots about that point: a point straight above it, h metres up, moves h/R times as far as the hub. The valve at the top moves 1.8571 times as far, at the bottom 0.1429 times; the pebble at the bottom stops dead. Hence the blurred top of a wheel in photographs.
 
@@ -340,14 +340,14 @@ Lean proves the eliminated equations and the spoke's circle for every wheel radi
 The worked numbers, the 100,000-click turn, the pebble's 8R arch and the pivot rule are left to the Python and Rust checks.
 
 ```lean
--- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of each arch, a second formula on the falling half, and a circle for the valve seen from the hub.
+-- Parametric curves: removing the turn θ from the rolling-wheel formulas x = Rθ − b sin θ, y = R − b cos θ gives x from y alone on the rising half of the first arch, a second formula on the falling half, and a circle for the valve seen from the hub.
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
 open Real
 
 /-- The valve of a wheel of radius `R`, sitting `b` from the hub, is at
 `x = Rθ − b sin θ`, `y = R − b cos θ` after a turn of `θ` radians. On the rising half of
-each arch, `0 ≤ θ ≤ π`, the turn can be removed: `x = R arccos((R − y)/b) − √(b² − (R − y)²)`. -/
+the first arch, `0 ≤ θ ≤ π`, the turn can be removed: `x = R arccos((R − y)/b) − √(b² − (R − y)²)`. -/
 theorem valve_x_from_y_rising_half (R b θ : ℝ) (hb : 0 < b) (h0 : 0 ≤ θ) (hπ : θ ≤ π) :
     R * θ - b * sin θ =
       R * arccos ((R - (R - b * cos θ)) / b) - √(b ^ 2 - (R - (R - b * cos θ)) ^ 2) := by
@@ -437,11 +437,13 @@ theorem valve_from_hub_on_circle (b θ : ℝ) :
 
 ## Where this goes next
 
-- [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md): velocity and arch length, exactly.
+- [Cylindrical and spherical coordinates](07-cylindrical-and-spherical-coordinates.md): next on this shelf, lifting polar coordinates into three-dimensional space.
+- [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md): velocity, speed and slope at every instant.
+- [Arc length](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/02-arc-length.md): the exact length of a curve, such as the cycloid's 8R arch.
 - [The brachistochrone](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/02-the-brachistochrone-and-the-beltrami-identity.md): the upside-down cycloid as the fastest slide.
 - [Elimination](../../22-Algebraic%20geometry/01-Polynomial%20Systems/05-elimination-and-implicitisation.md): when a parameter can be removed exactly.
 
-This card measured the arch by short pieces and the speed by one small click; getting both exactly, at every instant, is what a later card does.
+Next on this shelf, [Cylindrical and spherical coordinates](07-cylindrical-and-spherical-coordinates.md) carries coordinates into three dimensions. Meanwhile, this card measured the arch by short pieces and the speed by one small click; getting both exactly, at every instant, waits for [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md) and [Arc length](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/02-arc-length.md).
 
 ---
 

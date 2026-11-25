@@ -8,17 +8,17 @@
 
 Three farms share one new well. On a map grid in kilometres, farm A sits at (0, 0), B at (8, 0) and C at (2, 6); straight roads join them. Each pays an equal share, so each wants the same length of pipe. Where does the well go?
 
-"The middle of the triangle" is at least three places. Equal pipes need the well at (4.00, 2.00), the **circumcentre**, every pipe 4.47 km. The average of the farm positions, (3.33, 2.00), is the **centroid**, where equal weights on the farms would balance; as a well it gives pipes of 3.89, 5.08 and 4.22 km. The inside point whose nearest road is furthest away, (2.92, 2.10), is the **incentre**, centre of the largest round pond that fits between them, radius 2.10 km.
+"The middle of the triangle" is at least three places. Equal pipes need the well at (4.00, 2.00), the **circumcentre**, every pipe 4.47 km. The average of the farm positions, (3.33, 2.00), is the **centroid**, where equal weights on the farms would balance; as a well it gives pipes of 3.89, 5.08 and 4.22 km. The inside point whose nearest road is furthest away, (2.92, 2.10), is the **incentre**, centre of the largest round lake that fits between them, radius 2.10 km.
 
-**The centroid averages the corners, the circumcentre is where the perpendicular bisectors cross (lines through each side's midpoint, square to it), and the incentre is where the angle bisectors cross (lines halving each corner angle); each time two lines fix the point and the third passes through it for free.**
+**The centroid averages the corners (where the medians, each joining a corner to the opposite midpoint, cross), the circumcentre is where the perpendicular bisectors cross (lines through each side's midpoint, square to it), and the incentre is where the angle bisectors cross (lines halving each corner angle); each time two lines fix the point and the third passes through it for free.**
 
 **What kind of fact this is:** a theorem, three times over (each kind of line meets at one point), proved on this card in Why it works; the names are definitions.
 
-### The picture: the farms, the pipe circle and the pond
+### The picture: the farms, the pipe circle and the lake
 
 <p align="center"><img src="../figures/triangle-centres.svg" alt="Three farms at A, B and C joined by roads; the dashed circle through all three is centred at O, the solid circle inside touching all three roads is centred at I, and G is the average of the corners" width="420"></p>
 
-Drawn at 1 km = 22 units. Dashed: the circle through the farms, centre O. Solid: the largest pond, centre I.
+Drawn at 1 km = 22 units. Dashed: the circle through the farms, centre O. Solid: the largest lake, centre I.
 
 ---
 
@@ -52,8 +52,8 @@ I = \frac{aA + bB + cC}{a + b + c}, \qquad r = \frac{K}{s}
 | $`O`$ | circumcentre: equally far from the corners | (4.00, 2.00) | — |
 | $`R`$ | the circumradius: the common pipe length | 4.47 km | longer pipes |
 | $`I`$ | incentre: equally far from the roads | (2.92, 2.10) | — |
-| $`r`$ | the inradius: the pond's radius | 2.1044 km | a bigger pond |
-| $`K`$, $`s`$ | the area, and half the perimeter | 24.00 km^2 and 11.4049 km | K up: bigger pond; s up: smaller |
+| $`r`$ | the inradius: the lake's radius | 2.1044 km | a bigger lake |
+| $`K`$, $`s`$ | the area, and half the perimeter | 24.00 km^2 and 11.4049 km | K up: bigger lake; s up: smaller |
 
 ### When it holds
 
@@ -101,7 +101,9 @@ For the farms, A and B give 16x = 64, so x = 4; A and C give 4x + 12y = 40, so y
 
 ### Step 3: equal distance from two roads is an angle bisector
 
-Distance to a road means the shortest distance, at right angles to it. From a point inside the triangle, equally far from the two roads at farm A, drop those two shortest lines. The two right triangles share their hypotenuse and have another side equal, so they are congruent by RHS (right angle, hypotenuse, side; [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): the point lies on the **angle bisector**, halving angle A. Run backwards, the same congruence shows every point of that bisector is equally far from both roads. Two bisectors cross at I, the third passes too, and every road is 2.10 km away.
+Distance to a road means the shortest distance, at right angles to it. From a point inside the triangle, equally far from the two roads at farm A, drop those two shortest lines. The two right triangles share their hypotenuse and have another side equal, so they are congruent by RHS (right angle, hypotenuse, side; [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): the point lies on the **angle bisector**, halving angle A.
+
+Run backwards, the same congruence shows every point of that bisector is equally far from both roads. Two bisectors cross at I, the third passes too, and every road is 2.10 km away.
 
 The weights come from the point D where the bisector from A meets road $`a`$: it splits that road in the ratio c to b.
 
@@ -116,9 +118,9 @@ The weights come from the point D where the bisector from A meets road $`a`$: it
 
 </details>
 
-### Step 4: the largest pond has radius area over half-perimeter
+### Step 4: the largest lake has radius area over half-perimeter
 
-Join any inside point P to the three farms. Each of the three pieces has area half its road times P's distance to that road ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). A pond centred at P fits only if every distance is at least its radius, so K is at least radius times s, and no radius exceeds K over s. At I all three distances equal r, so the pond there reaches that ceiling: 2.1044 km.
+Join any inside point P to the three farms. Each of the three pieces has area half its road times P's distance to that road ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). A lake centred at P fits only if every distance is at least its radius, so K is at least radius times s, and no radius exceeds K over s. At I all three distances equal r, so the lake there reaches that ceiling: 2.1044 km.
 
 ---
 
@@ -133,7 +135,7 @@ Join any inside point P to the three farms. Each of the three pieces has area ha
 | equal pipes | distance from (4, 2) to each farm | **R = 4.47 km** |
 | area and half-perimeter | 8 × 6 / 2; (8.49 + 6.32 + 8.00)/2 | 24.00 km^2; 11.4049 km |
 | incentre | (8.49 × A + 6.32 × B + 8.00 × C) / (a + b + c) | **I = (2.92, 2.10)** |
-| largest pond | 24.00 / 11.4049 | **r = 2.1044 km** |
+| largest lake | 24.00 / 11.4049 | **r = 2.1044 km** |
 
 The well goes at (4.00, 2.00), with 4.47 km of pipe to each farm.
 
@@ -142,16 +144,15 @@ The well goes at (4.00, 2.00), with 4.47 km of pipe to each farm.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Well at the centroid | pipes 3.89, 5.08, 4.22 km | averaging does not equalise distances |
-| Pond at the centroid | clearances 2.00, 1.89, 2.53 km | averaging ignores the roads |
+| Lake at the centroid | clearances 2.00, 1.89, 2.53 km | averaging ignores the roads |
 | Equal pipes, obtuse farms | O at (4.00, −2.00), 2.00 km outside road AB | O may leave the triangle |
 | O as least total | 60.00 at O, 58.67 at G | that is the centroid's job |
-
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each centre is found twice. Route one is the card's formulas, with Cramer's rule (a ratio of cross-multiplied coefficients) solving the bisector equations. Route two is a blind zoom search: score a grid of trial points on the centre's defining property, keep the best, shrink the grid round it, repeat. For the incentre it seeks the point whose nearest road is furthest away, testing the largest-pond claim directly.
+Nothing is imported. Each centre is found twice. Route one is the card's formulas, with Cramer's rule (a ratio of cross-multiplied coefficients) solving the bisector equations. Route two is a blind zoom search: score a grid of trial points on the centre's defining property, keep the best, shrink the grid round it, repeat. For the incentre it seeks the point whose nearest road is furthest away, testing the largest-lake claim directly.
 
 ### Python
 
@@ -197,7 +198,7 @@ print(f"centroid G: by averaging {pt(G)}; by least total squared distance {pt(G2
 print(f"circumcentre O: by two bisectors {pt(O)}; by equal-distance search {pt(O2)}")
 print(f"incentre I: by side weights {pt(I)}; by furthest-from-roads search {pt(I2)}")
 print(f"O to farms A, B, C: {three(dist(O, F) for F in (A, B, C))} km")
-print(f"I to roads AB, BC, CA: {three(roads(I))} km; largest pond found: radius {min(roads(I2)):.4f} km")
+print(f"I to roads AB, BC, CA: {three(roads(I))} km; largest lake found: radius {min(roads(I2)):.4f} km")
 print(f"G to farms A, B, C: {three(dist(G, F) for F in (A, B, C))} km")
 print(f"G to roads AB, BC, CA: {three(roads(G))} km")
 print(f"total squared distance to the farms: at G {sq(G):.2f}, at O {sq(O):.2f}, at I {sq(I):.2f}")
@@ -212,13 +213,13 @@ svg = lambda p: f"({80 + 22 * p[0]:.2f}, {178 - 22 * p[1]:.2f})"
 print(f"figure, 1 km = 22 units: A {svg(A)}, B {svg(B)}, C {svg(C)}, G {svg(G)}, O {svg(O)}, I {svg(I)}, "
       f"R {22 * dist(O, A):.2f}, r {22 * K / s:.2f}")
 assert dist(G, G2) < 1e-6 and dist(O, O2) < 1e-6 and dist(I, I2) < 1e-6   # two routes each
-assert abs(min(roads(I2)) - K / s) < 1e-6                 # largest pond = area / half-perimeter
+assert abs(min(roads(I2)) - K / s) < 1e-6                 # largest lake = area / half-perimeter
 assert max(dist(O3, F) for F in (A3, B3, C3)) - min(dist(O3, F) for F in (A3, B3, C3)) < 1e-9
 assert dist(O3, O4) < 1e-6 and side(O3, A3, B3) < 0      # obtuse: the well leaves the triangle
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-11 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 farms A (0.00, 0.00), B (8.00, 0.00), C (2.00, 6.00) km; sides a = 8.49, b = 6.32, c = 8.00 km
@@ -227,7 +228,7 @@ centroid G: by averaging (3.33, 2.00); by least total squared distance (3.33, 2.
 circumcentre O: by two bisectors (4.00, 2.00); by equal-distance search (4.00, 2.00)
 incentre I: by side weights (2.92, 2.10); by furthest-from-roads search (2.92, 2.10)
 O to farms A, B, C: 4.47, 4.47, 4.47 km
-I to roads AB, BC, CA: 2.10, 2.10, 2.10 km; largest pond found: radius 2.1044 km
+I to roads AB, BC, CA: 2.10, 2.10, 2.10 km; largest lake found: radius 2.1044 km
 G to farms A, B, C: 3.89, 5.08, 4.22 km
 G to roads AB, BC, CA: 2.00, 1.89, 2.53 km
 total squared distance to the farms: at G 58.67, at O 60.00, at I 59.21
@@ -298,7 +299,7 @@ fn main() {
     println!("circumcentre O: by two bisectors {}; by equal-distance search {}", pt(o), pt(o2));
     println!("incentre I: by side weights {}; by furthest-from-roads search {}", pt(i), pt(i2));
     println!("O to farms A, B, C: {} km", three(farms(o)));
-    println!("I to roads AB, BC, CA: {} km; largest pond found: radius {:.4} km", three(roads(i)), r2);
+    println!("I to roads AB, BC, CA: {} km; largest lake found: radius {:.4} km", three(roads(i)), r2);
     println!("G to farms A, B, C: {} km", three(farms(g)));
     println!("G to roads AB, BC, CA: {} km", three(roads(g)));
     println!("total squared distance to the farms: at G {:.2}, at O {:.2}, at I {:.2}", sq(g), sq(o), sq(i));
@@ -314,7 +315,7 @@ fn main() {
     println!("figure, 1 km = 22 units: A {}, B {}, C {}, G {}, O {}, I {}, R {:.2}, r {:.2}",
              svg(fa), svg(fb), svg(fc), svg(g), svg(o), svg(i), 22.0 * dist(o, fa), 22.0 * k / s);
     assert!(dist(g, g2) < 1e-6 && dist(o, o2) < 1e-6 && dist(i, i2) < 1e-6); // two routes each
-    assert!((r2 - k / s).abs() < 1e-6); // largest pond = area / half-perimeter
+    assert!((r2 - k / s).abs() < 1e-6); // largest lake = area / half-perimeter
     let d3 = f3(o3);
     assert!(d3.iter().cloned().fold(f64::MIN, f64::max) - d3.iter().cloned().fold(f64::INFINITY, f64::min) < 1e-9);
     assert!(dist(o3, o4) < 1e-6 && side(o3, a3, b3) < 0.0); // obtuse: the well leaves the triangle
@@ -322,7 +323,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-11 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 farms A (0.00, 0.00), B (8.00, 0.00), C (2.00, 6.00) km; sides a = 8.49, b = 6.32, c = 8.00 km
@@ -331,7 +332,7 @@ centroid G: by averaging (3.33, 2.00); by least total squared distance (3.33, 2.
 circumcentre O: by two bisectors (4.00, 2.00); by equal-distance search (4.00, 2.00)
 incentre I: by side weights (2.92, 2.10); by furthest-from-roads search (2.92, 2.10)
 O to farms A, B, C: 4.47, 4.47, 4.47 km
-I to roads AB, BC, CA: 2.10, 2.10, 2.10 km; largest pond found: radius 2.1044 km
+I to roads AB, BC, CA: 2.10, 2.10, 2.10 km; largest lake found: radius 2.1044 km
 G to farms A, B, C: 3.89, 5.08, 4.22 km
 G to roads AB, BC, CA: 2.00, 1.89, 2.53 km
 total squared distance to the farms: at G 58.67, at O 60.00, at I 59.21
@@ -350,7 +351,7 @@ Lean proves each centre's main facts for any farms not in a row, not just the th
 
 - The three perpendicular bisectors meet at exactly one point: the one point equally far from all three farms.
 - The incentre, $`I = (aA + bB + cC)/(a + b + c)`$, lies inside the triangle and on all three angle bisectors.
-- I is K/s from every road, and no point of the triangle is more than K/s from its nearest road. So the largest pond has radius K over s.
+- I is K/s from every road, and no point of the triangle is more than K/s from its nearest road. So the largest lake has radius K over s.
 - For any three corners, even in a row, G is two-thirds of the way along every median.
 - For every point P, the total of squared distances to the corners is $`3\lvert P - G\rvert^2`$ plus the same total at G. So that total is least at G.
 - The farms' numbers come out exactly: G = (10/3, 2), O = (4, 2) with squared distance 20 to each farm, and area 24 km^2. The totals of squared distances are 176/3 at G and 60 at O.
@@ -540,7 +541,7 @@ theorem perpendicular_bisectors_meet_at_one_point (A B C : Plane)
 a = |BC|, b = |CA|, c = |AB|. Let K be the area (half base times height, base AB) and
 s = (a + b + c) / 2 half the perimeter. The point I = (aA + bB + cC) / (a + b + c) lies inside
 the triangle, on all three angle bisectors, at distance K / s from every road, and no point of
-the triangle is more than K / s from its nearest road, so the largest pond has radius K / s. -/
+the triangle is more than K / s from its nearest road, so the largest lake has radius K / s. -/
 theorem angle_bisectors_meet_at_incentre (A B C : Plane)
     (h : ¬ Collinear ℝ ({A, B, C} : Set Plane)) :
     let a := dist B C
@@ -770,7 +771,7 @@ example : ((4 : ℤ) - 0) ^ 2 + 0 ^ 2 = 16 ∧ ((4 : ℤ) - 8) ^ 2 + 0 ^ 2 = 16 
 > **Calling one point "the centre" before naming the question.** The average of the farms is the natural guess for a fair well, and gives pipes of 3.89, 5.08 and 4.22 km. Balance, equal distance to the corners and equal distance to the sides are different demands, met by one point only when all three sides are equal.
 >
 > - **Equal pipes read as short pipes.** For the obtuse farms, O's pipes are all 4.47 km, but a well at the midpoint of road AB, (4.00, 0.00), needs at most 4.00 km.
-> - **Averaging the corners for the pond.** The centroid clears road $`a`$ by 1.89 km, less than the 2.1044 km pond at I.
+> - **Averaging the corners for the lake.** The centroid clears road $`a`$ by 1.89 km, less than the 2.1044 km lake at I.
 
 ---
 
@@ -790,18 +791,18 @@ example : ((4 : ℤ) - 0) ^ 2 + 0 ^ 2 = 16 ∧ ((4 : ℤ) - 8) ^ 2 + 0 ^ 2 = 16 
 - [Lines](02-lines-slopes-and-intersections.md): two non-parallel lines cross at exactly one point, found by solving two equations.
 - [Distance and midpoint](01-distance-and-midpoint.md): the distance formula behind every pipe length, road length and midpoint.
 - [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md): the RHS test that puts I on each angle bisector.
-- [Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md): half base times height, which gives the pond's radius as K over s.
+- [Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md): half base times height, which gives the lake's radius as K over s.
 
 ## Where this goes next
+
+- [Every conic](09-general-conics-and-dandelin-spheres.md): next on this shelf, finishing conics by turning tilted equations before the shelf returns to triangles.
 - [Ceva and Menelaus](10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
 - [The Euler line and the nine-point circle](11-euler-line-and-nine-point-circle.md): four centres on one line and nine points on one circle.
+- [Circles and parabolas](04-circles-and-parabolas.md): writes the circumcircle as an equation.
+- [Nearest-neighbour maps](../07-Points%2C%20Convexity%20and%20Fractals/04-voronoi-and-delaunay.md): every corner of a nearest-site map is a circumcentre, built from perpendicular bisectors.
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): every answer here assumed flat ground; on the curved Earth, "equally far" has different answers.
 
-
-The sibling [Circles and parabolas](04-circles-and-parabolas.md) writes the circumcircle as an equation.
-
-Every corner of a nearest-site map is a circumcentre; [Nearest-neighbour maps](../07-Points%2C%20Convexity%20and%20Fractals/04-voronoi-and-delaunay.md) builds the whole map from perpendicular bisectors.
-
-Every answer here assumed flat ground; asked of three towns on the curved Earth, "equally far" has different answers, which is where [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md) takes geometry off the plane.
+Next on this shelf, [Every conic](09-general-conics-and-dandelin-spheres.md) closes out conics before [Ceva and Menelaus](10-ceva-and-menelaus.md) returns to triangles and adds the orthocentre. Left open: how can one product of side ratios tell whether any three lines from a triangle's corners meet in one point?
 
 ---
 

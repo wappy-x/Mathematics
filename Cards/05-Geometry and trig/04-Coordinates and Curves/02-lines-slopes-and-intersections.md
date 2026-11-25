@@ -12,7 +12,7 @@ Route A runs straight from the depot to E at (10, 5). Route B runs from Q at (3,
 
 One idea answers all three: a straight road climbs the same amount for every kilometre east. That fixed climb is the **slope**. With it a line becomes an equation, and a crossing becomes two equations solved at once.
 
-**A straight line is fixed by its slope and one point on it; two lines meet once unless their slopes are equal, and they cross square exactly when their slopes multiply to −1.**
+**Any non-vertical straight line is fixed by its slope and one point on it; two non-vertical lines meet once unless their slopes are equal, and they cross square exactly when their slopes multiply to −1.**
 
 **What kind of fact this is:** three definitions (the ways to write a line) and two theorems (the parallel and perpendicular tests), all proved on this card in Why it works.
 
@@ -26,7 +26,7 @@ Drawn at 1 km = 20 units, depot at the lower left. J, the junction of routes A a
 
 ## The formula
 
-Reminder: a point (x, y) is $`x`$ km east of the depot and $`y`$ km north. The slope $`m`$ is rise over run between two points of the line:
+Reminder: a point (x, y) is $`x`$ km east of the depot and $`y`$ km north. The slope $`m`$ is rise over run between two points of a non-vertical line (with $`x_2 \ne x_1`$):
 
 ```math
 m = \frac{y_2 - y_1}{x_2 - x_1}
@@ -42,13 +42,15 @@ y = mx + k \qquad\qquad ax + by = p \qquad\qquad (x, y) = (x_0, y_0) + t\,(u, v)
 
 **Read it aloud:** north equals slope times east plus a starting height; or a fixed mix of east and north; or a start point plus some multiple of one step.
 
-These are the **slope-intercept form** ($`k`$ is where the line crosses the north axis), the **general form**, and the **parametric form**, where one dial, $`t`$, walks along the line. Route A is y = 0.5x, x − 2y = 0, and (0, 0) + t(10, 5), with t = 0 at the depot and t = 1 at E. Route B is y = −2x + 15, 2x + y = 15, and (3, 9) + s(4, −8).
+These are the **slope-intercept form** ($`k`$ is where the line crosses the north axis), the **general form** (with $`a`$ and $`b`$ not both zero), and the **parametric form** (with a nonzero step $`(u, v)`$, where one dial, $`t`$, walks along the line).
+
+Route A is y = 0.5x, x − 2y = 0, and (0, 0) + t(10, 5), with t = 0 at the depot and t = 1 at E. Route B is y = −2x + 15, 2x + y = 15, and (3, 9) + s(4, −8).
 
 For two lines with slopes $`m_1`$ and $`m_2`$:
 
 - **Parallel** (never meeting): $`m_1 = m_2`$ and different $`k`$.
 - **Perpendicular** (crossing square): $`m_1 m_2 = -1`$.
-- **Where they meet**, for ax + by = p and cx + dy = q:
+- **Where they meet**, for ax + by = p and cx + dy = q with $`ad - bc \ne 0`$:
 
 ```math
 x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}
@@ -88,7 +90,7 @@ Take a known point on the line, $`(x_1, y_1)`$. Any other point (x, y) is on the
 
 Move the letters to one side for the general form: y = −2x + 15 becomes 2x + y = 15. Going back, the slope is −a/b, here −2/1; when $`b`$ is 0 the line is vertical.
 
-For the parametric form, start at $`(x_0, y_0)`$ and add $`t`$ copies of the step (u, v). Each step has rise over run v/u, which is the slope: 5/10 = 0.5 for route A.
+For the parametric form, start at $`(x_0, y_0)`$ and add $`t`$ copies of the step (u, v). When $`u \ne 0`$, each step has rise over run v/u, which is the slope: 5/10 = 0.5 for route A.
 
 ### Step 2: equal slopes never meet, unless they are one line
 
@@ -338,7 +340,7 @@ The two outputs match line for line.
 
 Lean proves the three line tests for any lines on axes at right angles, same unit both ways, not just routes A, B and C.
 
-- Two lines through one point cross square exactly when their slopes multiply to −1.
+- Two non-vertical lines through one point cross square exactly when their slopes multiply to −1.
 - With a nonzero crossing number, ax + by = p and cx + dy = q meet at exactly the one point the formula gives.
 - Lines with equal slopes and different north-axis crossings never meet.
 - The card's sums hold: slopes 0.5 and −2, crossing number 5, junction (6, 3), dials 0.6 and 0.75, and 45 + 45 = 90.
@@ -473,7 +475,7 @@ example : (1 : ℚ) / (-2) = -1 / 2 ∧ (1 : ℚ) * 1 + (-2) * (-1 / 2) = 2 := b
 - **Routing and maps.** Road segments are stored as a start and a step; a junction is Step 4, with both dials checked.
 - **Computer graphics.** Rays and shadows use the parametric form, a dial kept inside the segment.
 - **Surveying.** A plot corner is where two boundary lines meet, checked square by the slope product.
-- **Reading between data points.** The line through two readings, read in the middle, is Linear interpolation.
+- **Reading between data points.** The line through two readings, read in the middle, is [Linear interpolation](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/01-linear-interpolation-and-extrapolation.md).
 
 > **Say it back**
 > A straight line climbs the same amount per step east: its slope. It can be written as slope and crossing height, as ax + by = p, or as a start plus multiples of a step. Equal slopes never meet unless they are one line. Slopes multiplying to −1 cross square. Two lines meet where both equations hold.
@@ -487,13 +489,15 @@ example : (1 : ℚ) / (-2) = -1 / 2 ∧ (1 : ℚ) * 1 + (-2) * (-1 / 2) = 2 := b
 
 ## Where this goes next
 
+- [Polar coordinates](03-polar-coordinates.md): naming a point by distance from the origin and direction instead of east and north.
+- [Circles and parabolas](04-circles-and-parabolas.md): curves defined by a distance rule, written as equations on this grid.
 - [Triangle centres](08-triangle-centres.md): special lines of a triangle, intersected, locate its centres.
 - [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a line through two points of a curve meets it in a third, which defines an addition.
 - [Linear interpolation](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/01-linear-interpolation-and-extrapolation.md): the line through two readings, used to estimate between them.
-- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): builds on this card.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): uses lines as mirrors to classify every distance-keeping move of the plane.
 - [Radon, Helly and Carathéodory](../07-Points%2C%20Convexity%20and%20Fractals/06-radon-helly-and-caratheodory.md): three counting facts about convex sets in the plane.
 
-Two distinct lines meet once or never; a line meeting a curve, possibly twice, is where [Circles and parabolas](04-circles-and-parabolas.md) begins.
+So far every point has been named by east and north on a square grid; next on this shelf, [Polar coordinates](03-polar-coordinates.md) switches to distance and direction, before [Circles and parabolas](04-circles-and-parabolas.md) writes curves defined by a distance rule as equations.
 
 ---
 
