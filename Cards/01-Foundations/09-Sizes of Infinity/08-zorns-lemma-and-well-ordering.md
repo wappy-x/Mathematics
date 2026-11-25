@@ -12,7 +12,7 @@ Build an independent set one arrow at a time. Take a, then b. Try c: refused, be
 
 Four arrows can be checked by hand. In a space too big to list, the climb never ends on its own. **Zorn's lemma** says a maximal set exists anyway.
 
-**If every climb in a collection has a ceiling inside the collection, some member has nothing above it; this, the well-ordering theorem and the axiom of choice each prove the others.**
+**If every climb in a collection has a ceiling inside it, some member has nothing above it; this, the well-ordering theorem and the axiom of choice each prove the others.**
 
 **What kind of fact this is:** a theorem: the three are equivalent, proved in Why it works without assuming any of them, quoting Hartogs' theorem. Zorn and well-ordering hold once choice is an axiom.
 
@@ -46,14 +46,14 @@ The order is "inside", written $`\subseteq`$. It passes the three tests on [Orde
 | $`\subseteq`$ | "is inside" | {a} inside {a, b} | — |
 | chain | members that all compare: one climb | {a}, {a, b}, {a, b, d} | — |
 | upper bound | a member of $`P`$ above the whole chain: its ceiling | the union {a, b, d} | — |
-| maximal element | nothing in $`P`$ strictly above it | abd, acd, bcd | — |
+| maximal element | nothing in $`P`$ strictly above it | {a, b, d}, {a, c, d}, {b, c, d} | — |
 | well-ordering | a line-up where every non-empty part has a first member | a, b, c, d | — |
 
 The **well-ordering theorem** says every set has a well-ordering. The **axiom of choice** says every pile of non-empty boxes has a choice function: one pick from every box ([The axiom of choice](05-axiom-of-choice.md)).
 
 ### When it holds
 
-- **The ceiling must be in the collection.** {a, b, c, d} sits above every chain, but c = a + b, so only 3 of its 4 arrows are independent (its **rank** is 3 of 4) and it is out.
+- **The ceiling must be in the collection.** {a, b, c, d} sits above every chain, but c = a + b. At most 3 of its 4 arrows are independent: its **rank**, the most independent arrows inside it, is 3 of 4. So it is out.
 - **Maximal is not biggest.** Three sets are maximal; 0 sit above all others.
 - **A refusal is not the top.** Stopping when c is refused leaves {a, b}, and d still fits.
 - **Arbitrary infinite collections need choice.** Finite ones can be searched.
@@ -76,7 +76,7 @@ Choice picks a member of the set: that is first. It picks again from what is lef
 
 Line up everything in all the boxes. From each box, take its first member.
 
-The hotel's rooms 1, 2, 3, … are already well-ordered, so "take the lowest room number" picks from any set of rooms, no axiom spent ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)).
+The hotel's rooms 1, 2, 3, … are already well-ordered. So "take the lowest room number" picks from any set of rooms, no axiom spent ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)).
 
 ### Step 3: choice gives Zorn's lemma
 
@@ -88,7 +88,7 @@ Every step lands on a new member. So the climb would pair every ordinal with a d
 
 Let $`P`$ hold the **partial picks**: one pick from each of some of the boxes. One is below another when the second keeps its picks and adds more.
 
-A chain of partial picks agree where they overlap, so their union is its ceiling. Zorn gives a maximal partial pick. If it missed a box, one more pick would extend it. So it covers every box: a choice function.
+The partial picks in a chain agree where they overlap, so their union is the chain's ceiling. Zorn gives a maximal partial pick. If it missed a box, one more pick would extend it. So it covers every box: a choice function.
 
 ### Step 5: the arrows at any size
 
@@ -106,7 +106,7 @@ That is a **basis** ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-
 | independent, by size 0 to 4 | 1 + 4 + 6 + 3 + 0 | 14 |
 | ceiling of {a}, {a, b}, {a, b, d} | their union | {a, b, d} |
 | add c | c − a − b = (0, 0, 0) | refused |
-| maximal sets | triples, none built from the others | abd, acd, bcd |
+| maximal sets | triples, none built from the others | {a, b, d}, {a, c, d}, {b, c, d} |
 | line-ups ending at each | 24 ÷ 3: the last of a, b, c to arrive is refused | **8** |
 
 The climb in the order a, b, c, d ends at **{a, b, d}**, a basis of 3D space.
@@ -363,7 +363,7 @@ example : Nat.factorial 4 = 24 ∧ 24 / 3 = 8 := by decide
 ## Where you meet it in real life
 
 - **Bases.** Every vector space has one, by Step 5, including spaces of functions.
-- **Maximal ideals.** Every ring (a number system with adding and multiplying) with 1 ≠ 0 has a largest-possible ideal short of the whole ring ([Ideals and quotient rings](../../03-Algebra/09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md)), by Zorn on ideals ordered by "inside".
+- **Maximal ideals.** Every ring (a number system with adding and multiplying) with 1 ≠ 0 has a largest-possible ideal short of the whole ring ([Ideals and quotient rings](../../03-Algebra/09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md)). Zorn on ideals ordered by "inside" gives it.
 - **Tychonoff's theorem.** A product of compact spaces (every cover by open sets has a finite sub-cover) is compact ([Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md)).
 
 > **Say it back**

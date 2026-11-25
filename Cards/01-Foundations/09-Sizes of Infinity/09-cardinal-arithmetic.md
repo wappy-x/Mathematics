@@ -95,7 +95,9 @@ Beyond the counting numbers, the set must first stand in a **well-order**: a que
 
 Suppose $`\kappa`$ is the smallest infinite cardinal with $`\kappa \times \kappa`$ bigger than $`\kappa`$. Queue its pairs in shells.
 
-Pairs ahead of a pair use only members up to its larger member. Those are fewer than $`\kappa`$, as $`\kappa`$ is the least ordinal of its size. Their pairs are then finite in number, or no more than those members, as $`\kappa`$ was the smallest failure. Every pair has fewer than $`\kappa`$ ahead, so its place is below $`\kappa`$ (a place at $`\kappa`$ or later has at least $`\kappa`$ ahead), and the pairs fit inside $`\kappa`$: a contradiction.
+Pairs ahead of a pair use only members up to its larger member. Those are fewer than $`\kappa`$, as $`\kappa`$ is the least ordinal of its size. Their pairs are then finite in number, or no more than those members, as $`\kappa`$ was the smallest failure.
+
+Every pair has fewer than $`\kappa`$ ahead, so its place is below $`\kappa`$ (a place at $`\kappa`$ or later has at least $`\kappa`$ ahead). So the pairs fit inside $`\kappa`$: a contradiction.
 
 </details>
 
@@ -113,9 +115,9 @@ Fitting both ways means equal ([Comparing infinities](04-comparing-infinities.md
 
 A 0-1 list is a guest list: which rooms are in. Guest lists outnumber rooms ([Comparing infinities](04-comparing-infinities.md), built on [Cantor's diagonal](03-cantors-diagonal-argument.md)). So $`2^{\aleph_0} > \aleph_0`$.
 
-Read a list as binary digits after a point: 0.0101… is 0.333333. A few points get two lists: 1000… and 0111… both give 0.500000. Those doubles are countable, and Step 4 absorbs them. So the lists match the points from 0 to 1, and that stretch fits the whole line both ways.
+Read a list as binary digits after a point: 0.0101… is 1/3 (0.333333…). A few points get two lists: 0.1000… and 0.0111… both give 0.500000. Those doubles are countable, and Step 4 absorbs them. So the lists match the points from 0 to 1, and that stretch fits the whole line both ways.
 
-Is $`2^{\aleph_0}`$ equal to $`\aleph_1`$? Standard set theory cannot say.
+$`\aleph_1`$ is the next size after $`\aleph_0`$, so it is at most the line. Is $`2^{\aleph_0}`$ equal to $`\aleph_1`$? Standard set theory cannot say.
 
 ---
 
@@ -382,6 +384,8 @@ example : 3 + 4 = 7 ∧ 3 * 4 = 12 ∧ Fintype.card (Fin 3 → Bool) = 8 := by d
 
 - [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether $`2^{\aleph_0} = \aleph_1`$, and why it cannot be settled.
 - [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
+
+This card closes Foundations. The two links above carry sizes of infinity further, into later wings. The reading order goes on with [Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md), the first card of Number theory, which starts again from whole numbers.
 
 Left open: which aleph is the line?
 

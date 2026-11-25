@@ -15,7 +15,7 @@ def row(name, values):
     print(f"{name}: " + ", ".join(str(v) for v in values))
 row("the hotel, rooms 1 to 8 shown, every room full", guests)
 row("a new guest: everyone moves up one, room n to room n+1", shift)
-print(f"room 1 is now empty: {len(set(shift))} guests in {len(set(shift))} different rooms, none lost")
+print(f"room 1 is now empty: {len(guests)} guests in {len(set(shift))} different rooms, none lost")
 row("every guest into an even room, room n to room 2n", even)
 row("the same pairing backwards, each even room halved", back)
 row("the even rooms up to 16, listed straight", listed)

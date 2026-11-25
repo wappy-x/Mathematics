@@ -1,7 +1,7 @@
 // The axiom of choice -- the same check as the Python one, in Rust.  No crates.
 // Ten lost-property boxes, two socks in each.  Count every full pick -- one sock
 // out of every box, all at once -- twice: by multiplying, and by building them.
-const SOCKS: [&str; 2] = ["left", "right"];
+const SOCKS: [&str; 2] = ["left", "right"];   // labels the code needs; real socks have none, shoes do
 fn full_picks(boxes: &[Vec<&'static str>]) -> Vec<Vec<&'static str>> {
     let mut picks: Vec<Vec<&'static str>> = vec![Vec::new()];
     for b in boxes {                    // every way to take one thing out of every box

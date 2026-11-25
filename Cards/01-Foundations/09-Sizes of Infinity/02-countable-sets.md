@@ -12,7 +12,9 @@ The clerk does not count them. He queues them: 0, 1, −1, 2, −2, 3, −3, 4, 
 
 Then the fractions arrive, and they look worse: between any two sit more, forever. He houses them anyway: a grid, top number down the side, bottom across, walked along the diagonals, not the rows. 1/2 takes room 3, 2/1 room 4.
 
-**A set is countable when the whole of it fits in one queue — a first, a second, a third — with every member in it once. Finite sets count too; the queue just stops. The interesting case is the one that never does. The integers manage it. So do the fractions.**
+Finite sets fit in a queue too; theirs just stops. The interesting case is the queue that never stops. The integers manage it. So do the fractions.
+
+**A set is countable when the whole of it fits in one queue — a first, a second, a third — with every member in it once.**
 
 **What kind of fact this is:** "countable" is a definition; that the integers and the fractions are countable is a theorem, proved in Why it works.
 
@@ -43,7 +45,7 @@ The fractions, the first ten rooms:
 
 **Room 1: 0. Room 2: 1/1. Room 3: 1/2. Room 4: 2/1. Room 5: 1/3. Room 6: 3/1. Room 7: 1/4. Room 8: 2/3. Room 9: 3/2. Room 10: 4/1.**
 
-**Read it aloud:** 0 goes in room 1; then take the fractions whose top and bottom add to 2, then 3, then 4, and on; inside a batch go by rising top, skip any already queued.
+**Read it aloud:** 0 goes in room 1. Then take the fractions whose top and bottom add to 2, then 3, then 4, and on. Inside a batch go by rising top, and skip any already queued.
 
 | Piece | Plain meaning | At the hotel |
 | --- | --- | --- |
@@ -65,11 +67,15 @@ The fractions, the first ten rooms:
 
 ### A queue is a pairing
 
-The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([Same size means pairable](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so a queue pairs the set with them. The rule sending guest to room is a function ([Functions](../08-Relations%20and%20Functions/02-functions.md)); one each, none missed, none shared, is a bijection ([One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
+The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([Same size means pairable](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so a queue pairs the set with them.
+
+The rule sending guest to room is a function ([Functions](../08-Relations%20and%20Functions/02-functions.md)); one each, none missed, none shared, is a bijection ([One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
 
 ### The integers bounce out from zero
 
-Walk the number line from the far negative end and you never start: there is no first integer. Bounce out from the middle instead. Then the room can be worked out from the guest — a positive gets its double, so 2 is in room 4; a negative gets 1 minus its double, so −2 is in room 5. Read back that way and the nine guests land in rooms 1 to 9.
+Walk the number line from the far negative end and you never start: there is no first integer. Bounce out from the middle instead.
+
+Then the room can be worked out from the guest. A positive gets its double, so 2 is in room 4. A negative gets 1 minus its double, so −2 is in room 5. Read back that way and the nine guests land in rooms 1 to 9.
 
 ### The fractions lie in a grid, and the diagonals cut across it
 
@@ -83,7 +89,9 @@ Tops down the side, bottoms across, so every positive fraction is in there somew
 
 Do not read along a row: row 1 alone is 1/1, 1/2, 1/3 and on forever, so 2/1 never gets a room. Read the diagonals instead — cells whose top and bottom add to the same total. That total starts at 2, and each diagonal is short: one finishes, the next starts.
 
-Two repairs make it exact. 0 goes at the front, in room 1. Any cell that is an earlier guest renamed — 2/2 is 1/1, 3/3 is 1/1 — gets skipped. So 1/2 is in room 3 and 2/1 in room 4. Negative fractions fit by the integers' trick, each behind its positive; the code queues 0 and the positives, and the bounce takes the rest.
+Two repairs make it exact. 0 goes at the front, in room 1. Any cell that is an earlier guest renamed — 2/2 is 1/1, 3/3 is 1/1 — gets skipped. So 1/2 is in room 3 and 2/1 in room 4.
+
+Negative fractions fit by the integers' bounce: each negative stands right behind its positive. The code queues 0 and the positives, and the bounce takes the rest.
 
 ---
 
@@ -113,7 +121,7 @@ The code prints the last two.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The integers are queued, then read back guest to room. The fractions are walked off the grid a diagonal at a time, and hcf 1 — top and bottom sharing no factor — is the skip test for renames. Each room is found again by counting the earlier diagonals.
+Nothing is imported. The integers are queued, then read back guest to room. The fractions are walked off the grid a diagonal at a time. The skip test for renames is highest common factor (hcf) 1: top and bottom share no factor above 1. Each room is found again by counting the earlier diagonals.
 
 ### Python
 
@@ -234,7 +242,7 @@ Lean proves that the integers and the fractions each fit in one queue, and that 
 - Room numbers check out: 2 in room 4, −2 in room 5, 1/2 in room 3, 2/1 in room 4, 2/3 in room 8.
 - With the repeats left in, 2/2 takes room 6; with the 0 dropped, 1/2 takes room 2 and 2/1 room 3.
 
-The card's own diagonal walk is checked only by Python and Rust, over its first 60 rooms.
+Lean checks the card's diagonal walk over its first 10 rooms. It does not prove the walk itself pairs off with the counting numbers; it uses Mathlib's own pairing for that. Python and Rust check the walk over its first 60 rooms.
 
 ```lean
 -- Countable sets: the integers and the fractions each pair off exactly with the counting numbers, a set fits in one queue exactly when it is finite or pairs off with the counting numbers, the card's bounce-out-from-zero rule gives every integer exactly one room, and the card's room numbers for integers and fractions come out as it says.
@@ -318,7 +326,7 @@ example : fractionQueue 4 =
 -- 1/2 is in room 3, 2/1 in room 4, 2/3 in room 8.
 example : (fractionQueue 4)[2]? = some (1, 2) ∧ (fractionQueue 4)[3]? = some (2, 1) ∧
     (fractionQueue 4)[7]? = some (2, 3) := by decide
--- The grid, rows 1 to 3.
+-- The first three diagonals of the grid: top and bottom adding to 2, 3 and 4.
 example : diagonal 2 = [(1, 1)] ∧ diagonal 3 = [(1, 2), (2, 1)] ∧
     diagonal 4 = [(1, 3), (2, 2), (3, 1)] := by decide
 -- Repeats left in: 2/2 takes room 6.
@@ -332,7 +340,7 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 #print axioms every_integer_gets_exactly_one_room
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'integers_and_fractions_fit_in_one_queue' depends on axioms: [propext, Classical.choice, Quot.sound]

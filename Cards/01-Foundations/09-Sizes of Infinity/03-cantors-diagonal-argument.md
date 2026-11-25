@@ -6,7 +6,7 @@
 
 ## General Overview
 
-The hotel has a room for every counting number: room 1, room 2, room 3, on forever. Tonight every real number between 0 and 1 turns up and asks for a room. A real number is an endless string of digits behind a point.
+The hotel has a room for every counting number: room 1, room 2, room 3, on forever. Tonight every real number between 0 and 1 turns up and asks for a room. Each one is an endless string of digits behind a decimal point.
 
 The clerk says the list is complete: nobody left standing. Write it out, one guest's decimals per row.
 
@@ -14,7 +14,7 @@ Read down the diagonal: first digit of the first number, second digit of the sec
 
 That number is not in room 1: it disagrees there in the first place. Not room 2: it disagrees in the second. It disagrees with every room at that room's own place, so it is nobody's.
 
-**Take any list of the reals, change the digits down its diagonal by that rule, and you have built a real the list left out: the reals cannot be queued.** The counting numbers are infinite; the reals are a strictly bigger infinity.
+**Change the digits down the diagonal of any list of the reals by that rule, and you build a real the list left out.** So the reals cannot be queued. The counting numbers are infinite; the reals are a strictly bigger infinity.
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -52,7 +52,7 @@ The rule is the whole thing:
 ### When it holds
 
 - **One row per counting number.** That is what a list is; without it there is no diagonal to read.
-- **Digits with one spelling.** Add 1 instead and rows reading 0.4999… give 0.50000, a number already listed.
+- **Digits with one spelling.** Add 1 instead and rows reading 0.4999… give 0.5000…, a number already listed.
 - **The built number belongs to the set.** On a list of fractions it is no fraction, so nothing is missed.
 
 ---
@@ -65,13 +65,15 @@ Countable means the members deal out as row one, row two, row three, everybody r
 
 ### Step 1: the diagonal beats each row at its own place
 
-Row one gives its first digit, row two its second, row three its third: every row visited at a different place. Change that digit and what you build disagrees with that row there. Digits that disagree almost always mean different numbers — almost, because a few have two spellings. That is why the rule writes 4s and 5s; Step 2 shows the hole they plug. So what you built is no row at all. That is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, produce what it missed.
+Row one gives its first digit, row two its second, row three its third: every row visited at a different place. Change that digit and what you build disagrees with that row there.
+
+Digits that disagree almost always mean different numbers — almost, because a few have two spellings. That is why the rule writes 4s and 5s; Step 2 shows the hole they plug. So what you built is no row at all. That is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, produce what it missed.
 
 And it is an ordinary real, between 0 and 1. Most reals run on with no pattern: [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
 
 ### Step 2: the repair the popular version skips
 
-The popular telling says add 1 to every digit, 9 coming round to 0. It leaks. Some numbers have two spellings: 0.4999… and 0.5000… are one number written twice, so different digits need not mean a different number. Give the clerk rows all reading 0.4999… and adding 1 builds 0.50000 — that same number, already listed.
+The popular telling says add 1 to every digit, 9 coming round to 0. It leaks. Some numbers have two spellings: 0.4999… and 0.5000… are one number written twice, so different digits need not mean a different number. Give the clerk rows all reading 0.4999… and adding 1 builds 0.5000… — that same number, already listed.
 
 Writing 4s and 5s closes it: never a 0, never a 9, and such a string has one spelling only.
 
@@ -106,7 +108,7 @@ The picture lies in one place: a finite table misses many rows by ordinary count
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Copying the diagonal, not changing it | 0.10350 | It agrees with every row it touched |
+| Copying the diagonal, not changing it | 0.10350 | It matches each row at the digit it read, so it dodges none |
 | Adding 1 across room 1, not down | 0.25396 | Room 1 dodged, the rest untouched |
 | Adding 1 on rows all reading 0.4999… | 0.50000 | Same number, other spelling |
 
@@ -230,7 +232,14 @@ The outputs match line for line.
 
 ### Lean
 
-Lean proves the 4-or-5 diagonal number is on no list, so the reals outnumber the counting numbers; Python and Rust run the long division.
+Lean proves these for every list, not just the five guests:
+
+- Every list of reals, one per counting number, misses some real between 0 and 1.
+- The 4-or-5 diagonal number is on no row of the list.
+- So the reals are a strictly bigger infinity than the counting numbers.
+- The worked numbers check out: the diagonal 10350, the 4-or-5 number 0.44444…, the add-1 number 21461, and the three mistakes.
+
+The long division, digit by digit, and the printed table are left to the Python and Rust checks.
 
 ```lean
 -- Cantor's diagonal: every list of real numbers, one per counting number, misses a real between 0 and 1, the 4-or-5 diagonal number is one it misses, and so the reals are a strictly bigger infinity than the counting numbers.
@@ -429,7 +438,7 @@ example : [1, 0, 3, 5, 5].map (fun d => (d + 1) % 10) = [2, 1, 4, 6, 6] := by de
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the hotel numbers, so one will fire.
 > - **Subtract 1 instead of adding it**, 0 coming round to 9. The diagonal 10350 gives 0.09249, which escapes every room here — but subtracting puts 9s back and reopens the 0.4999… hole. The assert pinned to 21461 fires.
-> - **Swap guest 1 and guest 5.** Same rooms, diagonal 10355, escapee 0.21466. Somebody is left out either way.
+> - **Swap guest 1 and guest 5.** Same rooms, diagonal 10355. The 4-or-5 rule still builds 0.44444, but the add-1 rule now builds 0.21466, so the assert pinned to 21461 fires. Somebody is left out either way.
 
 ---
 

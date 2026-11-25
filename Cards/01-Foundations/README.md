@@ -159,7 +159,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 09 · Sizes of Infinity · 9 cards
 
-*Same size by pairing, countable sets, Cantor's diagonal, comparing infinities, the axiom of choice.*
+*Same size by pairing, countable sets, Cantor's diagonal, comparing infinities, the axiom of choice, ordinals, transfinite induction, Zorn's lemma and well-ordering, cardinal arithmetic.*
 
 1. [Same size means pairable: comparing sets without counting](09-Sizes%20of%20Infinity/01-same-size-by-pairing.md)
 2. [Countable sets: anything you can put in a queue, fractions included](09-Sizes%20of%20Infinity/02-countable-sets.md)

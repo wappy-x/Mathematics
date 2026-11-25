@@ -23,7 +23,7 @@ fn main() {
     let small_even: Vec<i64> = small.iter().cloned().filter(|r| r % 2 == 0).collect();
     row("the hotel, rooms 1 to 8 shown, every room full", &guests);
     row("a new guest: everyone moves up one, room n to room n+1", &shift);
-    println!("room 1 is now empty: {} guests in {} different rooms, none lost", distinct(&shift), distinct(&shift));
+    println!("room 1 is now empty: {} guests in {} different rooms, none lost", guests.len(), distinct(&shift));
     row("every guest into an even room, room n to room 2n", &even);
     row("the same pairing backwards, each even room halved", &back);
     row("the even rooms up to 16, listed straight", &listed);

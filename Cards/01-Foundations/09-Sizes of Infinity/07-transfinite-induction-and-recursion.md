@@ -14,7 +14,7 @@ No step leads into ω: it has no position just before it. Such a position is a l
 
 Does it ever pass 1, at any ordinal? Three checks answer for every ordinal at once.
 
-**Check a claim at 0, at each step, and at each limit, and it holds at every ordinal; define a sequence by the same three cases, and exactly one sequence fits.**
+**Check a claim at 0, at each step and at each limit, and it holds at every ordinal; define a sequence by those three cases, and exactly one fits.**
 
 **What kind of fact this is:** two theorems, in Why it works: transfinite induction with a full proof, the recursion theorem with a sketch.
 
@@ -92,7 +92,7 @@ So the claim never fails. This is the counting-number argument of [Strong induct
 - **Successor:** if a(α) ≤ 1, then 1 + a(α) ≤ 2, and half of that is at most 1.
 - **Limit:** every earlier value is at most 1, so 1 is an upper bound. The least upper bound is at most any upper bound.
 
-At ω the value is exactly 1. Ordinary induction ([Induction](../06-Proof/04-proof-by-induction.md)) gives a(n) = 1 − 1/2^n, since (2 − 1/2^n) ÷ 2 = 1 − 1/2^(n+1). So 1 bounds every a(n), and every number below 1 is passed: 0.999 at a(10).
+At ω the value is exactly 1. Ordinary induction ([Induction](../06-Proof/04-proof-by-induction.md)) gives a(n) = 1 − 1/2^n, since (2 − 1/2^n) ÷ 2 = 1 − 1/2^(n+1). So 1 bounds every a(n). The gap 1/2^n shrinks below any positive size, so every number below 1 is passed: 0.999 at a(10).
 
 ### Step 3: the recursion theorem
 
@@ -125,14 +125,14 @@ Our three cases form one such rule.
 | a(ω + 5) | four more halvings of a gap of 0 | 1 |
 | a(ω + ω) | least upper bound of a run of 1s | **1** |
 
-The number climbs toward 1, reaches it at ω and stays there.
+The number climbs toward 1, reaches it at ω and stays there. This run goes still after ω; the point-thinning under Where you meet it in real life keeps changing past ω.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| a(ω) as the biggest of the first ten values | 0.998046875 | No value is biggest: the run keeps climbing |
-| a(ω) as the sum of the first ten values | 8.001953125 | That limit rule breaks the bound |
+| a(ω) as the biggest of the first ten values, a(0) to a(9) | 0.998046875 | No value is biggest: the run keeps climbing |
+| a(ω) as the sum of a(0) to a(9) | 8.001953125 | That limit rule breaks the bound |
 | Dropping the halving: a(α + 1) = 1 + a(α) | a(3) = 3 | The successor case fails |
 
 ---
@@ -141,7 +141,7 @@ The number climbs toward 1, reaches it at ω and stays there.
 
 Nothing is imported. Values are whole numbers over 2^60, so every step is exact. The pair `(w, n)` means `w` copies of ω, then `n` steps. The run checks a ≤ 1 at 1 zero stage, 120 successor stages and 2 limits.
 
-Three roads meet: the step rule against 1 − 1/2^n, and at each limit, a search for the least upper bound in thousandths against the halving tail (when gaps halve, the steps to come add up to the last step).
+Three roads meet: the step rule against 1 − 1/2^n, and at each limit, a search for the least upper bound in thousandths against the halving tail. When gaps halve, the steps to come add up to the last step.
 
 ### Python
 
@@ -370,8 +370,8 @@ example : (1 - 1 / 2 ^ 9 : ℚ) = 511 / 512 ∧
 > [!warning]
 > **Checking 0 and the step, then claiming every ordinal.** That is ordinary induction, and it stops before ω. No step leads into ω, so limits need their own check.
 >
-> - Taking a(ω) as the biggest earlier value. None exists; the biggest of the first ten is 0.998046875.
-> - Taking a(ω) as the sum of earlier values. The first ten add to 8.001953125.
+> - Taking a(ω) as the biggest earlier value. None exists; the biggest of a(0) to a(9) is 0.998046875.
+> - Taking a(ω) as the sum of earlier values. The values a(0) to a(9) add to 8.001953125.
 > - Skipping the zero case. Start at 2: every value stays above 1.
 
 ---

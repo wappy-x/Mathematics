@@ -10,7 +10,7 @@ A hotel has a room for every counting number: room 1, room 2, room 3, on forever
 
 A guest arrives with no booking. The clerk asks everyone to move up one: room 1 to room 2, room 2 to room 3, on down the corridor. Nobody is turned out, room 1 is empty, and the new guest checks in.
 
-Then the strange part. The clerk could instead have sent everyone to an even-numbered room — room 1 to room 2, room 2 to room 4, room 3 to room 6 — and every guest would still be alone in a room, every odd room empty. The even rooms alone hold the whole hotel.
+Then the strange part. The clerk could instead have sent everyone to an even-numbered room: room 1 to room 2, room 2 to room 4, room 3 to room 6. Every guest would still be alone in a room, and every odd room empty. The even rooms alone hold the whole hotel.
 
 A hotel with 8 rooms can do neither.
 
@@ -72,19 +72,25 @@ A shepherd with no words for numbers drops a pebble in a bag as each sheep leave
 
 ### Step 1: the full hotel takes one more
 
-Everyone moves up one: room n to room n+1. Different rooms give different next rooms, so nobody collides; every room from 2 on is somebody's next room, so no target room is left empty. Across the first 8 rooms the guests land in rooms 2 through 9; room 1 receives nobody. The hotel is now paired with the hotel minus room 1: same size.
+Everyone moves up one: room n to room n+1. Different rooms give different next rooms, so nobody collides. Every room from 2 on is somebody's next room, so no target room is left empty.
+
+Across the first 8 rooms the guests land in rooms 2 through 9; room 1 receives nobody. The hotel is now paired with the hotel minus room 1: same size.
 
 ### Step 2: the even rooms alone hold everybody
 
 Now doubling: room n to room 2n. One-to-one, because doubling two different numbers gives two different answers. Onto, because you can name any even room, halve it, and have the guest in it: room 16 holds the guest from room 8.
 
-Both tests pass, so this is a bijection. **The even numbers are the same size as all the counting numbers, with half of them apparently missing.** The code checks this a second way: it lists the even rooms up to 16 without doubling and gets the same 8.
+Both tests pass, so this is a bijection. **The even numbers are the same size as all the counting numbers, with half of them apparently missing.**
+
+The code checks this a second way: it lists the even rooms up to 16 without doubling and gets the same 8.
 
 ### Step 3: a finite hotel cannot do either
 
 8 rooms, 8 guests. Move everyone up one and the guest from room 8 has no room 9: 7 housed, 1 outside. Even rooms only leaves rooms 2, 4, 6, 8: 4 housed, 4 outside.
 
-Turn that around and you have Dedekind's test: with the usual set-theory assumptions ([The axiom of choice](05-axiom-of-choice.md)), a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself. Same size then behaves like equality — reflexive (every set pairs with itself), symmetric (a pairing runs backwards), transitive (two pairings chain into one): [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
+Turn that around and you have Dedekind's test. Assume you may pick one member from each of endlessly many sets ([The axiom of choice](05-axiom-of-choice.md)). Then a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself.
+
+Same size then behaves like equality — reflexive (every set pairs with itself), symmetric (a pairing runs backwards), transitive (two pairings chain into one): [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
 
 ---
 
@@ -131,7 +137,7 @@ def row(name, values):
     print(f"{name}: " + ", ".join(str(v) for v in values))
 row("the hotel, rooms 1 to 8 shown, every room full", guests)
 row("a new guest: everyone moves up one, room n to room n+1", shift)
-print(f"room 1 is now empty: {len(set(shift))} guests in {len(set(shift))} different rooms, none lost")
+print(f"room 1 is now empty: {len(guests)} guests in {len(set(shift))} different rooms, none lost")
 row("every guest into an even room, room n to room 2n", even)
 row("the same pairing backwards, each even room halved", back)
 row("the even rooms up to 16, listed straight", listed)
@@ -145,7 +151,7 @@ assert housed == 7 and small_even == [2, 4, 6, 8] and len(small_even) == 4
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the hotel, rooms 1 to 8 shown, every room full: 1, 2, 3, 4, 5, 6, 7, 8
@@ -191,7 +197,7 @@ fn main() {
     let small_even: Vec<i64> = small.iter().cloned().filter(|r| r % 2 == 0).collect();
     row("the hotel, rooms 1 to 8 shown, every room full", &guests);
     row("a new guest: everyone moves up one, room n to room n+1", &shift);
-    println!("room 1 is now empty: {} guests in {} different rooms, none lost", distinct(&shift), distinct(&shift));
+    println!("room 1 is now empty: {} guests in {} different rooms, none lost", guests.len(), distinct(&shift));
     row("every guest into an even room, room n to room 2n", &even);
     row("the same pairing backwards, each even room halved", &back);
     row("the even rooms up to 16, listed straight", &listed);
@@ -208,7 +214,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the hotel, rooms 1 to 8 shown, every room full: 1, 2, 3, 4, 5, 6, 7, 8
@@ -406,7 +412,7 @@ example : ((Finset.Icc 1 8).filter Even).card = 4 := by decide
 
 - [Countable sets](02-countable-sets.md): everything that pairs with the counting numbers, fractions included.
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
-- [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set, from [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
+- [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set.
 - [The axiom of choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
 - [Ordinals](06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
 

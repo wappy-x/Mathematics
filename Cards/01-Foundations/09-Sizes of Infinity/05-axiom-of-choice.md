@@ -73,9 +73,11 @@ The axiom allows it anyway: the picks exist as one set, with nothing naming them
 
 The pile can dwarf the hotel: a box for every non-empty set of real numbers is more boxes than there are rooms ([Comparing infinities](04-comparing-infinities.md)). Both claims here need that size.
 
-**Every set can be lined up so that every non-empty part of it has a first member.** That is a well-ordering; the counting numbers are the model ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)). You cannot list the real numbers 1st, 2nd, 3rd and reach them all ([Cantor's diagonal](03-cantors-diagonal-argument.md)) — yet the axiom says an order exists where every non-empty part has a first member, and nobody can write it down.
+**Every set can be lined up so that every non-empty part of it has a first member.** That is a well-ordering; the counting numbers are the model ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)). You cannot list the real numbers 1st, 2nd, 3rd and reach them all ([Cantor's diagonal](03-cantors-diagonal-argument.md)).
 
-**Every vector space has a basis.** A vector space is a collection of arrows you can add and stretch; a basis is a small set of them that builds all the rest. In wilder spaces nobody can exhibit a basis; the axiom says there is one.
+Yet the axiom says the reals have an order where every non-empty part has a first member. Nobody can write that order down.
+
+**Every vector space has a basis.** A vector space is a collection of arrows you can add and stretch. A basis is a set of them, with none spare, that builds all the rest. In wilder spaces nobody can exhibit a basis; the axiom says there is one.
 
 ### Step 3: one strange consequence
 
@@ -91,7 +93,7 @@ Ten boxes out of the pile.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| socks in one box | left, right | 2 |
+| things in one box | a left and a right shoe, or two socks | 2 |
 | boxes in the pile | rooms 1 to 10 | 10 |
 | three boxes, by hand | 2 × 2 × 2 | 8 |
 | ten boxes, every full pick | ten twos multiplied | 1024 |
@@ -113,7 +115,7 @@ The shoe rule points at one pick out of 1024. Take the rule away and the 1024 ar
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Ten boxes, two socks each, every full pick counted twice: by multiplying the box sizes, and by building each pick a box at a time. Two roads, one number. The code sees only the finite corridor.
+Nothing is imported. Ten boxes, two socks each, labelled "left" and "right" only so the code can tell them apart. Every full pick is counted twice: by multiplying the box sizes, and by building each pick a box at a time. Two roads, one number. The code sees only the finite corridor.
 
 ### Python
 
@@ -121,7 +123,7 @@ Nothing is imported. Ten boxes, two socks each, every full pick counted twice: b
 # The axiom of choice -- the check behind the card.  Nothing is imported.  Ten
 # lost-property boxes, two socks in each.  Count every full pick -- one sock out
 # of every box, all at once -- twice: by multiplying, and by building them all.
-SOCKS = ("left", "right")
+SOCKS = ("left", "right")       # labels the code needs; real socks have none, shoes do
 def full_picks(boxes):          # every way to take one thing out of every box
     picks = [()]
     for box in boxes:
@@ -150,7 +152,7 @@ assert picks.count(shoe_rule) == 1 and shoe_rule in picks
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 boxes of socks                                 10
@@ -172,7 +174,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // The axiom of choice -- the same check as the Python one, in Rust.  No crates.
 // Ten lost-property boxes, two socks in each.  Count every full pick -- one sock
 // out of every box, all at once -- twice: by multiplying, and by building them.
-const SOCKS: [&str; 2] = ["left", "right"];
+const SOCKS: [&str; 2] = ["left", "right"];   // labels the code needs; real socks have none, shoes do
 fn full_picks(boxes: &[Vec<&'static str>]) -> Vec<Vec<&'static str>> {
     let mut picks: Vec<Vec<&'static str>> = vec![Vec::new()];
     for b in boxes {                    // every way to take one thing out of every box
@@ -211,7 +213,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 boxes of socks                                 10
@@ -339,9 +341,11 @@ example : (Fintype.piFinset fun i : Fin 10 =>
 
 ## Where this goes next
 
-Zorn's lemma, the axiom in working clothes and equivalent to it: [Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md), then [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md). Behind it: [Same size means pairable](01-same-size-by-pairing.md), [Countable sets](02-countable-sets.md), [Cantor's diagonal](03-cantors-diagonal-argument.md).
+- [Ordinals](06-ordinals.md): counting past infinity, the step numbers a line-up of any set needs.
+- [Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md): the axiom in two working forms, each equivalent to it.
+- [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md): a topology theorem that leans on the axiom.
 
-The question this card leaves open: which theorems truly need the axiom?
+The question this card leaves open: lining up the reals runs past 1st, 2nd, 3rd, so what place comes after every counting number?
 
 ---
 

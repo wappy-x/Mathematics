@@ -10,7 +10,7 @@ The hotel has a room for every counting number, all full. At breakfast the guest
 
 A late guest arrives. At the back, he becomes the last person. At the front, he is just the new first person: shift every place number back by one and the line looks unchanged.
 
-**An ordinal measures the shape of a line-up, not the size of the crowd; adding at the back of an endless line makes it longer, adding at the front does not.**
+**An ordinal measures the shape of a line-up, not its size; adding at the back of an endless line makes it longer, adding at the front does not.**
 
 **What kind of fact this is:** a definition (ordinal, ordinal sum and product), then two theorems: $`1 + \omega = \omega`$, and $`\omega < \omega + 1`$.
 
@@ -52,7 +52,9 @@ The hotel queue has the ordinal $`\omega`$ (omega). Adding puts one line-up behi
 
 α (alpha) and β (beta) are any ordinals.
 
-**The rule for sums.** Every line-up here is full hotels, then extra people. Put β behind α. If β has a hotel, α's extra people are absorbed and the hotels add; if not, the extra people add. So 1 then ω gives ω, ω then 1 gives ω + 1, and ω then ω gives ω·2. A line-up has a last person exactly when it ends in extra people.
+**The rule for sums.** Every line-up here is full hotels, then extra people. Put β behind α. If β has a hotel, α's extra people are absorbed and the hotels add; if not, the extra people add.
+
+So 1 then ω gives ω, ω then 1 gives ω + 1, and ω then ω gives ω·2. A line-up has a last person exactly when it ends in extra people.
 
 ### When it holds
 
@@ -88,7 +90,7 @@ Von Neumann's standard construction makes each ordinal the set of all ordinals b
 
 So "smaller than" means "is a member of". [The ZFC axioms](../07-Sets/08-zfc-axioms.md) guarantee these sets.
 
-Ordinals compare (Step 2), so every non-empty set of ordinals has a least member: take any member α; if nothing lies below it, it is least; otherwise take the first of those below, inside α.
+Ordinals compare (Step 2), so every non-empty set of ordinals has a least member. Take any member α. If nothing in the set lies below it, α is least. Otherwise those below α are a group inside α, and α's own line-up gives them a front-most member.
 
 A **successor ordinal** has a last member, like 3 or ω + 1. A **limit ordinal** is not 0 and has none, like ω or ω·2.
 
@@ -124,7 +126,9 @@ $`2 \cdot \omega`$ is ω copies of 2: guests in pairs. Pair k takes places 2k �
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. An ordinal below ω·ω is two whole numbers: full hotels, then extra people. Road 1 applies the addition rule to whole shapes. Road 2 walks the line-up piece by piece, noting any last person; it catches code slips, not a wrong rule. The independent checks are the order-keeping pairings, listed place by place, and the order ω < ω + 1 < ω·2, fixed in advance. It also builds von Neumann 0 to 3 and the three mistakes.
+Nothing is imported. An ordinal below ω·ω is two whole numbers: full hotels, then extra people. Road 1 applies the addition rule to whole shapes. Road 2 walks the line-up piece by piece, noting any last person; it catches code slips, not a wrong rule.
+
+The independent checks are the order-keeping pairings, listed place by place, and the order ω < ω + 1 < ω·2, fixed in advance. It also builds von Neumann 0 to 3 and the three mistakes.
 
 ### Python
 
@@ -372,9 +376,9 @@ example : List.flatMap (fun k => [2 * k - 1, 2 * k]) [1, 2, 3] = [1, 2, 3, 4, 5,
 - [Transfinite induction](07-transfinite-induction-and-recursion.md): proof step by step along any ordinal.
 - [Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md): with choice, every set can be well-ordered.
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): sizes, where 1 + ω and ω + 1 are equal.
-- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): aleph one, the first uncountable ordinal.
+- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether any infinite size lies between the counting numbers and the line, and why standard set theory cannot settle it.
 
-Left open: is there an ordinal whose crowd cannot pair with the counting numbers?
+Left open: induction climbs one step at a time, but nothing stands just before ω, so how does a proof reach it and go on past it?
 
 ---
 

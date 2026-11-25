@@ -1,7 +1,7 @@
 # The axiom of choice -- the check behind the card.  Nothing is imported.  Ten
 # lost-property boxes, two socks in each.  Count every full pick -- one sock out
 # of every box, all at once -- twice: by multiplying, and by building them all.
-SOCKS = ("left", "right")
+SOCKS = ("left", "right")       # labels the code needs; real socks have none, shoes do
 def full_picks(boxes):          # every way to take one thing out of every box
     picks = [()]
     for box in boxes:

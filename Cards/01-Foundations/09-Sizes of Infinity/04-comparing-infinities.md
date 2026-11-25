@@ -70,7 +70,7 @@ Room 1 to {1}, room 2 to {2}, room 5 to {5}. No slot shared, so the rooms are no
 
 ### Step 2: no handout covers the guest lists
 
-Shrink the hotel to four rooms and hand each room a list, picked at random: room 1 gets {1,2}, room 2 gets {1,3,4}, room 3 gets {} (the list with nobody on it), room 4 gets {2,4}.
+Shrink the hotel to four rooms and hand each room a list, picked at random. Room 1 gets {1,2}, room 2 gets {1,3,4}, room 3 gets {} (the list with nobody on it), room 4 gets {2,4}.
 
 Walk the corridor. That walk is the **diagonal**. One question at each door: **is this room on its own list?** Yes, leave it out of the list you are building. No, put it in. The table below builds {2,3}.
 
@@ -78,13 +78,19 @@ Room 1 did not get {2,3}: they disagree about room 1. Room 2 did not: they disag
 
 ### Step 3: the hotel could have been anything
 
-Step 2 never used the number four, or the order of the rooms. Any collection, any handout of its subsets: the missed list is built the same way. Step 1 generalises too: each member to the list naming just it. So every collection is strictly smaller than its power set — the rooms, the lists of rooms, the lists of lists of rooms, a bigger infinity every time.
+Step 2 never used the number four, or the order of the rooms. Any collection, any handout of its subsets: the missed list is built the same way.
+
+Step 1 generalises too: each member to the list naming just it. So every collection is strictly smaller than its power set — the rooms, the lists of rooms, the lists of lists of rooms, a bigger infinity every time.
 
 ### Step 4: fitting both ways means equal
 
 Cantor–Bernstein: two fittings, one each way, sew into a single pairing. No extra assumption is needed — no axiom of choice (one pick from each of endlessly many boxes).
 
-A segment fits inside a square: lay it along the bottom edge. The square fits inside the segment — a square point is two decimals, so shuffle their digits together, first of one, first of the other, and out comes a single decimal. Write each decimal so it never ends in all 9s, and no two collide. So a segment holds as many points as a whole square. Cantor wrote to Dedekind: I see it, but I do not believe it.
+Take the points from 0 up to, but not including, 1, so every one is a decimal starting 0. A segment fits inside a square: lay it along the bottom edge.
+
+The square fits inside the segment. A square point is two decimals, so shuffle their digits together: first of one, first of the other, and on. Out comes a single decimal. Write each decimal so it never ends in all 9s, and no two collide.
+
+So a segment holds as many points as a whole square. Cantor wrote to Dedekind: I see it, but I do not believe it.
 
 <details>
 <summary>The question nobody could answer</summary>
@@ -107,9 +113,9 @@ The four-room hotel, handout from Step 2.
 | 4 on {2,4}? | yes | out |
 | the missed list | those four answers | **{2,3}** |
 | handouts that miss | all 65536 of the 65536 | **65536** |
-| square points, and their shuffles | 100 × 100, all different | **10000** |
+| square points (2 digits a side), shuffled to 4 digits | 100 × 100, all different | **10000** |
 
-Four rooms cannot cover sixteen lists, and no cleverness closes the gap.
+Four rooms cannot cover sixteen lists, and no cleverness closes the gap. Two 2-digit sides shuffle into one 4-digit segment point; endless decimals never run out of places for both.
 
 ### What breaks if you drop a piece
 
@@ -366,7 +372,7 @@ example : ∀ a < 100, ∀ b < 100,
 - [The axiom of choice](05-axiom-of-choice.md): one pick from each of endlessly many boxes — not needed for anything above, and not everybody wants it.
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line.
 
-The question this card leaves open: is there a size strictly between the rooms and their guest lists?
+The question this card leaves open: with endlessly many boxes and no rule to say which, can you still take one thing from every box?
 
 ---
 

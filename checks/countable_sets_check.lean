@@ -79,7 +79,7 @@ example : fractionQueue 4 =
 -- 1/2 is in room 3, 2/1 in room 4, 2/3 in room 8.
 example : (fractionQueue 4)[2]? = some (1, 2) ∧ (fractionQueue 4)[3]? = some (2, 1) ∧
     (fractionQueue 4)[7]? = some (2, 3) := by decide
--- The grid, rows 1 to 3.
+-- The first three diagonals of the grid: top and bottom adding to 2, 3 and 4.
 example : diagonal 2 = [(1, 1)] ∧ diagonal 3 = [(1, 2), (2, 1)] ∧
     diagonal 4 = [(1, 3), (2, 2), (3, 1)] := by decide
 -- Repeats left in: 2/2 takes room 6.
