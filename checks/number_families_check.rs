@@ -24,7 +24,7 @@ fn main() {
     row("tile diagonal, times itself, 900 + 900", &dsq.to_string());
     row("tile diagonal, squeezed, in cm", &format!("{:.9}", lo));
     row("tile diagonal, second road, in cm", &format!("{:.9}", guess));
-    row("rounding that third down to 33 loses", &(whole * 3).to_string());
+    row("three 33 cm pieces add up to", &(whole * 3).to_string());
     row("tape mark below, 42.42 x 42.42", &format!("{:.4}", 4242.0 * 4242.0 / 10000.0));
     row("tape mark above, 42.43 x 42.43", &format!("{:.4}", 4243.0 * 4243.0 / 10000.0));
     assert!(short == -15 && want + short == got);

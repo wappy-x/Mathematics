@@ -8,13 +8,15 @@
 
 A market stall's tab keeps two counts: dollars paid in and dollars owed. One customer paid $3 of a $5 bill. Another paid $0 of a $2 bill. Each is $2 short.
 
-Counting numbers (0, 1, 2, 3, …) cannot write "$2 short": 3 take away 5 has no answer among them. A pair can. Write each tab as (paid in, owed): (3, 5) and (0, 2). They are the same integer, −2, because 3 + 2 = 0 + 5, which is 3 − 5 = 0 − 2 with 5 + 2 added to both sides. The test uses addition only.
+Counting numbers (0, 1, 2, 3, …) cannot write "$2 short": 3 take away 5 has no answer among them. A pair can.
 
-Fractions repeat the move. A pair of integers (top, bottom) names a fraction, and (1, 2), (2, 4) and (3, 6) are all one half, because 1 × 4 = 2 × 2 and 2 × 6 = 4 × 3. The test uses multiplication only.
+Write each tab as (paid in, owed): (3, 5) and (0, 2). They are the same integer, −2, because 3 + 2 = 0 + 5. That is 3 − 5 = 0 − 2 with 5 + 2 added to both sides. The test uses addition only.
 
-The key check: (1, 2) + (1, 3) gives (5, 6), and (2, 4) + (2, 6) gives (20, 24), the same fraction, since 20 × 6 = 120 = 24 × 5.
+Fractions repeat the move. A pair of integers (top, bottom) names a fraction. (1, 2), (2, 4) and (3, 6) are all one half, because 1 × 4 = 2 × 2 and 2 × 6 = 4 × 3. The test uses multiplication only.
 
-**An integer is a family of pairs of counting numbers, a fraction is a family of pairs of integers, and the arithmetic works because each rule gives the same answer whichever pair is picked.**
+The key check: (1, 2) + (1, 3) gives (5, 6). (2, 4) + (2, 6) gives (20, 24), the same fraction, since 20 × 6 = 120 = 24 × 5.
+
+**An integer is a family of pairs of counting numbers, and a fraction is a family of pairs of integers. The arithmetic works because each rule gives the same answer whichever pair is picked.**
 
 **What kind of fact this is:** definitions (the pairs and the rules) and a theorem (the rules do not depend on the pick), proved in Why it works.
 
@@ -55,13 +57,13 @@ A rule is **well defined** when its answer does not depend on which pair is pick
 | (c, d), (e, f), (a′, b′) | further pairs, read the same way | (0, 2) | — |
 | $`\sim`$ | is the same number as | (3, 5) $`\sim`$ (0, 2) | — |
 | a + d = c + b | integer test, addition only | 3 + 2 = 0 + 5 | — |
-| (a, b), a fraction | top a, bottom b; worth a ÷ b | (1, 2), one half | raise b: toward 0 |
+| (a, b), a fraction | top a, bottom b; worth a ÷ b | (1, 2), one half | raise a positive b: toward 0 |
 | a × d = b × c | fraction test, multiplication only | 1 × 4 = 2 × 2 | — |
 
 ### When it holds
 
 - **The test is a sameness rule**: every pair matches itself, a match works both ways, and two matches in a chain give a third (transitive). Otherwise families overlap.
-- **Every rule is well defined.** Tops plus tops gives one sum two answers.
+- **Every rule is well defined.** Adding tops to tops and bottoms to bottoms fails this: one sum gets two answers.
 - **No bottom is 0.** (0, 0) passes the test with every pair.
 
 ---

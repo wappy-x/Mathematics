@@ -6,13 +6,15 @@
 
 ## General Overview
 
-Throw a dart at a one-metre tape measure. It sticks somewhere. Not on a millimetre mark — between two of them.
+Throw a dart at a two-metre tape measure. It sticks somewhere. Not on a millimetre mark — between two of them.
 
 Buy a finer tape, marked every tenth of a millimetre. Same hole, still between marks. No tape ever marks the spot.
 
 So is the landing place a number?
 
-Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two sits another, halfway. They still miss things. [Irrational numbers](03-irrational-numbers.md) showed one: root 2, the number that gives 2 when multiplied by itself — about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can.
+Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two sits another, halfway.
+
+They still miss things. [Irrational numbers](03-irrational-numbers.md) showed one: root 2, the number that gives 2 when multiplied by itself. It is about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can, so say this one did.
 
 The **real numbers** are the fractions plus every landing place they miss.
 
@@ -40,7 +42,7 @@ Rising line: the nearest mark below the dart. Falling line: the nearest above. T
 
 One promise carries the card:
 
-**If a collection of numbers has a member, and some one number sits above everything in it, then there is a lowest such number — and it is a real number too.**
+**Take a collection of numbers with a member, and some one number above everything in it. Then there is a lowest such number, and it is a real number too.**
 
 **Read it aloud:** a collection with a member and a ceiling has a lowest ceiling, and it is a real number.
 
@@ -90,7 +92,7 @@ The reals close that hole: wherever a squeeze like this happens, a number sits a
 
 That is **completeness**: what makes the reals the reals instead of the fractions, which obey every other rule of arithmetic and fail this one.
 
-Richard Dedekind, in 1872, took another route: split all the fractions into a left pile and a right pile so the left pile has no largest member, and call the split itself (a cut) a number. [Dedekind cuts](07-dedekind-cuts.md) builds the whole line this way.
+Richard Dedekind, in 1872, took another route. Split all the fractions into a left pile and a right pile, so the left pile has no largest member. Call the split itself (a cut) a number. [Dedekind cuts](07-dedekind-cuts.md) builds the whole line this way.
 
 ---
 
@@ -106,7 +108,7 @@ In metres.
 | two places, above | 1.42 × 1.42 | 2.0164 |
 | four places, below | 1.4142 × 1.4142 | 1.99996164 |
 | four places, above | 1.4143 × 1.4143 | 2.00024449 |
-| the lowest ceiling | both ends agree to eight places | **1.41421356** |
+| the lowest ceiling | both ends agree to eight places | **1.41421356...** |
 
 The dart landed at 1.41421356... metres. No fraction sits there; the tape does.
 
@@ -411,12 +413,12 @@ example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
 
 ## Where this goes next
 
-- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the same promise in symbols. The lowest ceiling is named the supremum and used to prove that roots exist.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the same promise in symbols. The lowest ceiling is named the supremum and used to prove the counting numbers have no ceiling.
 - [Dedekind cuts](07-dedekind-cuts.md): build the real numbers from fractions, and the no-gaps rule becomes a theorem.
 
-Nothing else on this shelf needs this card. It finishes with [Absolute value](05-absolute-value-and-distance.md), which does not need completeness.
+Next on this shelf is [Absolute value](05-absolute-value-and-distance.md): how far apart two spots on the line sit. It does not need completeness. The shelf's last card, [Dedekind cuts](07-dedekind-cuts.md), comes back to this card and proves its promise.
 
-The question this card leaves open: how does calculus use the lowest ceiling to prove a number exists?
+The question this card leaves open points past the next card, into calculus: how does the lowest ceiling prove that a number exists? [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md) starts that work.
 
 ---
 

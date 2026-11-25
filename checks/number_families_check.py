@@ -21,7 +21,7 @@ row("check, three of those back together", whole * 3 + rest)
 row("tile diagonal, times itself, 900 + 900", dsq)
 row("tile diagonal, squeezed, in cm", f"{lo:.9f}")
 row("tile diagonal, second road, in cm", f"{guess:.9f}")
-row("rounding that third down to 33 loses", whole * 3)
+row("three 33 cm pieces add up to", whole * 3)
 row("tape mark below, 42.42 x 42.42", f"{4242 * 4242 / 10000:.4f}")
 row("tape mark above, 42.43 x 42.43", f"{4243 * 4243 / 10000:.4f}")
 assert short == -15 and want + short == got

@@ -49,6 +49,8 @@ The band the thermostat holds:
 
 `<=` lets both ends count as inside. `>=` is its mirror: the same spot, or further right. A stretch of line written that way is an **interval**.
 
+A statement built from any of these marks is an **inequality**.
+
 And the move in the title:
 
 **17 < 19, but multiply both by -1 and it becomes -17 > -19.**
@@ -149,7 +151,6 @@ def halfway(a, b, c, d):             # halfway between a/b and c/d, as a fractio
     x, y = top, bot
     while y: x, y = y, x % y         # x ends as the biggest common divisor
     return top // x, bot // x
-
 night = sorted(READINGS + [OUTSIDE])
 inside = [t for t in READINGS if LOW <= t <= HIGH]
 ends_out = [t for t in READINGS if LOW < t < HIGH]
@@ -165,11 +166,12 @@ for a, b, c, d in [(18, 1, 22, 1), (18, 1, 20, 1), (18, 1, 19, 1), (18, 1, 37, 2
     row(f"halfway between {a}/{b} and {c}/{d}", f"{t}/{u} = {t / u:.2f}")
 assert len(inside) == 5 and len(ends_out) == 3 and night[0] < 17 < LOW
 assert flipped == sorted(flipped, reverse=True)
-assert halfway(18, 1, 19, 1) == (37, 2) and 18 < 37 / 2 < 19
+t, u = halfway(18, 1, 19, 1)
+assert (t, u) == (37, 2) and 18 * u < t < 19 * u
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the night, left to right          -2, 17, 18, 19, 20, 21, 22
@@ -193,8 +195,7 @@ Same numbers, same labels.
 // The number line and inequalities -- the same check as
 // number_line_and_inequalities_check.py, in Rust.  No crates.  A thermostat holds
 // a room between 18 and 22 degrees: six readings, and -2 outside.
-const LOW: i64 = 18;
-const HIGH: i64 = 22;
+const LOW: i64 = 18; const HIGH: i64 = 22; const OUTSIDE: i64 = -2;
 const READINGS: [i64; 6] = [22, 20, 18, 17, 19, 21];
 
 fn row(name: &str, value: String) { println!("{:<34}{}", name, value); }
@@ -211,7 +212,7 @@ fn main() {
     let mut sorted = READINGS.to_vec(); sorted.sort();
     let inside = READINGS.iter().filter(|&&t| LOW <= t && t <= HIGH).count();
     let ends_out = READINGS.iter().filter(|&&t| LOW < t && t < HIGH).count();
-    let mut night = vec![-2i64]; night.extend(&sorted);
+    let mut night = READINGS.to_vec(); night.push(OUTSIDE); night.sort();
     let flipped: Vec<i64> = sorted.iter().map(|t| -t).collect();
     row("the night, left to right", list(&night));
     row("17 and 18, each doubled", format!("{}, {}", 2 * 17, 2 * 18));
@@ -227,12 +228,13 @@ fn main() {
     let mut down = flipped.clone(); down.sort(); down.reverse();
     assert!(inside == 5 && ends_out == 3 && night[0] < 17 && 17 < LOW);
     assert!(flipped == down);
-    assert!(halfway(18, 1, 19, 1) == (37, 2) && 18.0 < 37.0 / 2.0 && 37.0 / 2.0 < 19.0);
+    let (t, u) = halfway(18, 1, 19, 1);
+    assert!((t, u) == (37, 2) && 18 * u < t && t < 19 * u);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the night, left to right          -2, 17, 18, 19, 20, 21, 22
@@ -381,7 +383,7 @@ example : Finset.Ioo (18 : ℤ) 19 = ∅ := by decide
 - [Absolute value](05-absolute-value-and-distance.md): how far apart two spots are, rather than which is left.
 - [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md): when things cannot all be laid on one line, and some pairs do not compare.
 
-The question this card leaves open: fractions crowd every gap and still miss root 2, so what does it take to fill the line?
+The question this card leaves open: fractions crowd every gap, so why does none of them land on root 2? The next card proves it. What it takes to fill the line comes after, in [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 
 ---
 

@@ -45,7 +45,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 02 · The Number Line · 7 cards
 
-*The nested number families, order and inequalities, irrationals, why the reals have no gaps, absolute value as distance.*
+*The nested number families, order and inequalities, irrationals, why the reals have no gaps, absolute value as distance, and building integers, fractions and reals from scratch.*
 
 1. [The number families: counting numbers, integers, fractions, reals, and what forced each one](02-The%20Number%20Line/01-number-families.md)
 2. [The number line and inequalities: left is smaller, and what flips when you multiply by a negative](02-The%20Number%20Line/02-number-line-and-inequalities.md)

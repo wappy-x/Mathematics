@@ -342,7 +342,7 @@ example : (40 : ℤ) + 65 = 105 := by decide
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the street's numbers, so expect one to fire.
 > - **Take the bars off.** Change `gap` to `return x - y`. Bakery to chemist comes out at −25, the counted road disagrees, the second assert fires.
-> - **Move the laundrette to 30,** the near side. Bakery to laundrette drops from 70 to 10; the walks are untouched, so the third assert lives.
+> - **Move the laundrette to 30,** the near side. Bakery to laundrette drops from 70 to 10, so the second assert fires. The out-and-back walk lines print as before; the third assert is never reached.
 
 ---
 
@@ -375,10 +375,11 @@ example : (40 : ℤ) + 65 = 105 := by decide
 
 ## Where this goes next
 
+- [Building the integers and fractions](06-constructing-integers-and-fractions.md): the next card on this shelf. It builds the negatives and fractions used here out of counting numbers.
 - [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the same size of a difference, measured between two points on a grid.
 - [Limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): 'within 0.001 of' is an absolute value, and every limit is built on it.
 
-Wherever something later measures how far apart two things sit, it is this size of a difference. The question this card leaves open: how far apart are two points that do not sit on one line?
+Wherever something later measures how far apart two things sit, it is this size of a difference. The question this card leaves open points off this shelf: how far apart are two points that do not sit on one line? [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md) answers it. The next card here digs under the line instead: what is a negative number, or a fraction, actually made of?
 
 ---
 

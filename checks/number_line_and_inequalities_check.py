@@ -10,7 +10,6 @@ def halfway(a, b, c, d):             # halfway between a/b and c/d, as a fractio
     x, y = top, bot
     while y: x, y = y, x % y         # x ends as the biggest common divisor
     return top // x, bot // x
-
 night = sorted(READINGS + [OUTSIDE])
 inside = [t for t in READINGS if LOW <= t <= HIGH]
 ends_out = [t for t in READINGS if LOW < t < HIGH]
@@ -26,5 +25,6 @@ for a, b, c, d in [(18, 1, 22, 1), (18, 1, 20, 1), (18, 1, 19, 1), (18, 1, 37, 2
     row(f"halfway between {a}/{b} and {c}/{d}", f"{t}/{u} = {t / u:.2f}")
 assert len(inside) == 5 and len(ends_out) == 3 and night[0] < 17 < LOW
 assert flipped == sorted(flipped, reverse=True)
-assert halfway(18, 1, 19, 1) == (37, 2) and 18 < 37 / 2 < 19
+t, u = halfway(18, 1, 19, 1)
+assert (t, u) == (37, 2) and 18 * u < t < 19 * u
 print("ALL CHECKS PASS")

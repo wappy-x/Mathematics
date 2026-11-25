@@ -1,8 +1,7 @@
 // The number line and inequalities -- the same check as
 // number_line_and_inequalities_check.py, in Rust.  No crates.  A thermostat holds
 // a room between 18 and 22 degrees: six readings, and -2 outside.
-const LOW: i64 = 18;
-const HIGH: i64 = 22;
+const LOW: i64 = 18; const HIGH: i64 = 22; const OUTSIDE: i64 = -2;
 const READINGS: [i64; 6] = [22, 20, 18, 17, 19, 21];
 
 fn row(name: &str, value: String) { println!("{:<34}{}", name, value); }
@@ -19,7 +18,7 @@ fn main() {
     let mut sorted = READINGS.to_vec(); sorted.sort();
     let inside = READINGS.iter().filter(|&&t| LOW <= t && t <= HIGH).count();
     let ends_out = READINGS.iter().filter(|&&t| LOW < t && t < HIGH).count();
-    let mut night = vec![-2i64]; night.extend(&sorted);
+    let mut night = READINGS.to_vec(); night.push(OUTSIDE); night.sort();
     let flipped: Vec<i64> = sorted.iter().map(|t| -t).collect();
     row("the night, left to right", list(&night));
     row("17 and 18, each doubled", format!("{}, {}", 2 * 17, 2 * 18));
@@ -35,6 +34,7 @@ fn main() {
     let mut down = flipped.clone(); down.sort(); down.reverse();
     assert!(inside == 5 && ends_out == 3 && night[0] < 17 && 17 < LOW);
     assert!(flipped == down);
-    assert!(halfway(18, 1, 19, 1) == (37, 2) && 18.0 < 37.0 / 2.0 && 37.0 / 2.0 < 19.0);
+    let (t, u) = halfway(18, 1, 19, 1);
+    assert!((t, u) == (37, 2) && 18 * u < t && t < 19 * u);
     println!("ALL CHECKS PASS");
 }

@@ -37,13 +37,13 @@ Each arrow is an operation the family on its left cannot do.
 
 **the tile's diagonal = 42.426406871… — the reals, written R**
 
-**Read it aloud:** each line after the first is a sum the family above it cannot do.
+**Read it aloud:** each line after the first is a calculation the family above it cannot do.
 
 | Piece | Plain meaning | In the job |
 | --- | --- | --- |
 | N, the counting numbers | 0, 1, 2, 3, … — counting, zero for an empty bench | 3 planks |
 | Z, the integers | those and their negatives; German *Zahlen*, "numbers" | −15 cm |
-| Q, the fractions | one whole number over another, bottom not zero; Q for *quotient* | 33 + 1/3 cm |
+| Q, the fractions | one integer over another, bottom not zero; Q for *quotient* | 33 + 1/3 cm |
 | R, the reals | every point on the tape, marked or not | 42.426406871… cm |
 
 The dots mean the digits go on without end. They also never repeat, which is what puts the number outside the fractions.
@@ -52,7 +52,7 @@ The dots mean the digits go on without end. They also never repeat, which is wha
 
 - **Exact numbers, not tape readings.** The families sort exact values. Take the reading 42.43 as the diagonal and, times itself, it gives 1800.3049, not 1800.
 - **A fraction's bottom is never zero.** Division by zero has no answer in any family, so the fractions leave it out.
-- **A square corner on the tile.** Pythagoras' rule, 900 + 900 = 1800, needs a right angle. Skew the tile and the diagonal changes.
+- **A square corner on the tile.** Pythagoras' rule (Step 3: 30 × 30 + 30 × 30 = 900 + 900 = 1800) needs a right angle. Skew the tile and the diagonal changes.
 - **Where N starts.** This card counts from zero, the empty bench. Some books leave zero out of N; then zero first appears in the integers.
 
 ---
@@ -61,7 +61,7 @@ The dots mean the digits go on without end. They also never repeat, which is wha
 
 ### Step 0: a family is a list of numbers you may write down
 
-Pick a list. Ask whether the sums you need have answers inside it. If not, widen the list.
+Pick a list. Ask whether the calculations you need have answers inside it. If not, widen the list.
 
 ### Step 1: counting runs out at subtraction
 
@@ -149,7 +149,7 @@ row("check, three of those back together", whole * 3 + rest)
 row("tile diagonal, times itself, 900 + 900", dsq)
 row("tile diagonal, squeezed, in cm", f"{lo:.9f}")
 row("tile diagonal, second road, in cm", f"{guess:.9f}")
-row("rounding that third down to 33 loses", whole * 3)
+row("three 33 cm pieces add up to", whole * 3)
 row("tape mark below, 42.42 x 42.42", f"{4242 * 4242 / 10000:.4f}")
 row("tape mark above, 42.43 x 42.43", f"{4243 * 4243 / 10000:.4f}")
 assert short == -15 and want + short == got
@@ -158,7 +158,7 @@ assert dsq == 1800 and lo * lo < dsq < hi * hi and abs(lo - guess) < 1e-9
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 planks on the job                                    3
@@ -169,7 +169,7 @@ check, three of those back together                100
 tile diagonal, times itself, 900 + 900            1800
 tile diagonal, squeezed, in cm            42.426406871
 tile diagonal, second road, in cm         42.426406871
-rounding that third down to 33 loses                99
+three 33 cm pieces add up to                        99
 tape mark below, 42.42 x 42.42               1799.4564
 tape mark above, 42.43 x 42.43               1800.3049
 ALL CHECKS PASS
@@ -206,7 +206,7 @@ fn main() {
     row("tile diagonal, times itself, 900 + 900", &dsq.to_string());
     row("tile diagonal, squeezed, in cm", &format!("{:.9}", lo));
     row("tile diagonal, second road, in cm", &format!("{:.9}", guess));
-    row("rounding that third down to 33 loses", &(whole * 3).to_string());
+    row("three 33 cm pieces add up to", &(whole * 3).to_string());
     row("tape mark below, 42.42 x 42.42", &format!("{:.4}", 4242.0 * 4242.0 / 10000.0));
     row("tape mark above, 42.43 x 42.43", &format!("{:.4}", 4243.0 * 4243.0 / 10000.0));
     assert!(short == -15 && want + short == got);
@@ -216,7 +216,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 planks on the job                                    3
@@ -227,7 +227,7 @@ check, three of those back together                100
 tile diagonal, times itself, 900 + 900            1800
 tile diagonal, squeezed, in cm            42.426406871
 tile diagonal, second road, in cm         42.426406871
-rounding that third down to 33 loses                99
+three 33 cm pieces add up to                        99
 tape mark below, 42.42 x 42.42               1799.4564
 tape mark above, 42.43 x 42.43               1800.3049
 ALL CHECKS PASS
@@ -385,10 +385,10 @@ example : (((3 : ℕ) : ℤ) : ℚ) = (3 : ℚ) / 1 := by norm_num
 
 - [The number line and inequalities](02-number-line-and-inequalities.md): all four families on one line, left meaning smaller.
 - [Peano's three rules](../06-Proof/07-peano-and-one-plus-one.md): the bottom rung built from "start at zero and take one more step".
-- [Countable sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, and strictly more reals.
+- [Countable sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, all fitting in one queue. [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md) then shows the reals do not fit.
 - [Building the integers and fractions](06-constructing-integers-and-fractions.md): a debt as a pair of counts, a fraction as a pair with a sameness rule.
 
-The question this card leaves open: the reals were added to fill every spot the fractions miss, so what guarantees that no spot is still empty?
+The question this card leaves open: with all four families on one tape, how do you tell which of two numbers is smaller, and what can flip that order? The next card answers it. The deeper question, what guarantees no spot is still empty, waits for [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 
 ---
 

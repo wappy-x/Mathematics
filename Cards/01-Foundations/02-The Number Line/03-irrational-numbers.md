@@ -53,6 +53,7 @@ Saw-tooth: five elevenths, 0.45454545…, two digits over and over. Ragged: root
 - **Whole numbers, top and bottom.** "Irrational" means no ratio of two whole numbers. Allow any number on top and root 2 over 1 counts as a "fraction", so the word means nothing.
 - **The whole decimal, not a few places.** The eight places 1.41421356 stop, so on their own they are a fraction. Only the proof below rules out a block.
 - **Lowest terms, in the proof.** The contradiction is "both even, yet nothing shared is left". Skip the cutting down and "both even" contradicts nothing.
+
 ---
 
 ## Why it works
@@ -92,7 +93,7 @@ The tile in millimetres, so everything stays whole.
 | a mark at 1414 mm, 604 short | 1414 × 1414 | 1999396 |
 | the next mark, 1415 mm, 2225 over | 1415 × 1415 | 2002225 |
 | the diagonal, eight places | dug out one at a time | **1.41421356** |
-| five elevenths | 5 divided by 11 | **0.45454545** |
+| five elevenths | 5 divided by 11 | **0.45454545…** |
 | that decimal turned back | 45/99, cut by 9 | **5/11** |
 
 ### What breaks if you drop a piece
@@ -100,7 +101,7 @@ The tile in millimetres, so everything stays whole.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Trusting the tape | 1999396 | a 1414 mm diagonal is 604 square mm short |
-| Calling 0.45454545 irrational | “no fraction gives it” | it repeats in twos: it is 5/11 |
+| Calling 0.45454545… irrational | “no fraction gives it” | it repeats in twos: it is 5/11 |
 
 ---
 
@@ -344,7 +345,7 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
-> - **A tape ten times finer.** Change both 1000s to 10000, the area line and the row that prints it. New marks: 14142 short, 14143 over, still no whole number. The assert fires because 1414 and 1415 are pinned.
+> - **A tape ten times finer.** Change all three 1000s to 10000: two on the area line, one in the row below it. The first assert fires, because 1414 and 1415 are pinned. Now change every 1414 to 14142 and every 1415 to 14143. It passes again: 3836 short, 24449 over, still no whole number on the mark.
 > - **Divide by 8, not 11.** Change the 11 in the long division. The block? There is none: a remainder hits zero, the division stops, the assert fires.
 
 ---
@@ -355,7 +356,7 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 > **Thinking "irrational" means "the decimal goes on forever".** Five elevenths goes on forever — 0.45454545… — and it is a plain fraction. Forever is not the test; a block that comes back is.
 >
 > - Shifting by the wrong number of places. The block 45 is two digits, so the shift is two places; shift by one and the tails do not line up.
-> - Treating irrationals as rare. Nearly every point on the tape is one, in a sense the next cards make exact: [The real numbers have no gaps](04-real-numbers-no-gaps.md).
+> - Treating irrationals as rare. Nearly every point on the tape is one, in a sense [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md) makes exact.
 
 ---
 

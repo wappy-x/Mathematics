@@ -12,7 +12,7 @@ Sort every fraction into two piles: short of the diagonal, or past it. 1.4 goes 
 
 Dedekind's idea, from 1872: the split itself is the number. The left pile is a **cut**. Every fraction has one (all fractions below it), and so does root 2, though no fraction stands at its edge.
 
-**A real number is a left pile of fractions with no largest member; a bounded collection of piles has their union as least upper bound, so the no-gaps rule is a theorem.**
+**A real number is a left pile of fractions with no largest member. A bounded collection of piles has their union as least upper bound, so the no-gaps rule is a theorem.**
 
 **What kind of fact this is:** a definition (a real number is a cut) and a theorem, proved below. [The real numbers have no gaps](04-real-numbers-no-gaps.md) had to assume it.
 
@@ -48,7 +48,7 @@ A cut M is at most a cut N when M sits inside N, and M + N is every sum of one m
 | $`L`$ | the cut for the diagonal | root 2 | — |
 | $`M`$, $`N`$, $`B`$, $`U`$ | any cuts: left piles of fractions | the cut at 1.4 | — |
 | $`\{\, q : \ldots \}`$ | every q such that … | q below 0 or squaring under 2 | — |
-| $`M + N`$, $`M \times N`$ | sums, or products, of members | L + L, L × L | reaches further |
+| $`M + N`$, $`M \times N`$ | sums of members; for positive cuts, products of positive members plus all fractions 0 or below | L + L, L × L | reaches further |
 
 ### When it holds
 
@@ -77,7 +77,7 @@ From 1.4: 24/17, 41/29, 140/99, squaring to 1.99308, 1.99881, 1.99980.
 <details>
 <summary>Why it is bigger and still squares under 2</summary>
 
-It beats q by (2 − q × q) ÷ (q + 2), which is positive. Its square minus 2 is 2 × (q × q − 2) ÷ ((q + 2) × (q + 2)): negative, and at most half of q × q − 2 in size.
+It beats q by (2 − q × q) ÷ (q + 2), which is positive. Its square minus 2 is 2 × (q × q − 2) ÷ ((q + 2) × (q + 2)). That is negative, and at most half of q × q − 2 in size.
 
 </details>
 
@@ -89,7 +89,10 @@ Suppose M holds a fraction a that N lacks. Every member of N is below a, or clos
 
 Half a sum of two members is at most the larger, so in L. So 2.829 is not in L + L: its half, 1.4145, squares to 2.00081025.
 
-To multiply positive cuts (those holding a positive fraction), take every product of positive members, plus every fraction 0 or below. L × L is the cut at 2. No product reaches 2: each is at most the larger member times itself. Any t between 0 and 2 is r × (t ÷ r), where a member r squares above t (Step 1's chain at least halves the gap to 2) and t ÷ r, below r, is in L.
+To multiply positive cuts (those holding a positive fraction), take every product of positive members, plus every fraction 0 or below. L × L is the cut at 2:
+
+- **No product reaches 2.** Each is at most the larger member times itself, which is under 2.
+- **Every t between 0 and 2 is reached.** Step 1's chain at least halves the gap to 2, so some member r of L squares above t. Then t is r × (t ÷ r), and t ÷ r is below r, so it is in L.
 
 ### Step 4: the union is the least upper bound
 
@@ -101,9 +104,9 @@ Take one or more cuts inside one cut B; let U be their union (every fraction in 
 
 ### Step 5: root 2 arrives as a theorem
 
-The cuts at 1.4, 1.41, 1.414, … each sit inside the next and inside the cut at 1.5. Their union is L: each member q of L sits below another member r (Step 1), and once the decimal places are finer than the gap r − q, the decimal cut reaches past q.
+The cuts at 1.4, 1.41, 1.414, … each sit inside the next and inside the cut at 1.5. Their union is L. Each member q of L sits below another member r (Step 1). Once the decimal places are finer than the gap r − q, the decimal cut reaches past q.
 
-L is no fraction's cut. Were it the cut at t, t is not in L, so t × t is at least 2. Not exactly 2 ([Irrational numbers](03-irrational-numbers.md)). Over 2, the Step 1 formula gives a smaller fraction still squaring over 2: in the cut at t, not in L. So L is a new number: root 2.
+L is no fraction's cut. Were it the cut at t, t is not in L, so t is 0 or more and t × t is at least 2. Not exactly 2 ([Irrational numbers](03-irrational-numbers.md)). Over 2, the Step 1 formula gives a smaller fraction still squaring over 2: in the cut at t, not in L. So L is a new number: root 2.
 
 ---
 
@@ -479,10 +482,12 @@ end DedekindCuts
 
 ## Where this goes next
 
-- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): least upper bounds, called suprema, prove limits exist.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): least upper bounds, called suprema, in symbols, and used to prove the counting numbers have no ceiling.
 - [Complete space](../../17-Topology/01-Metric%20Spaces/05-completeness-and-completion.md): the other route to the reals, through fraction sequences that close in.
 
-Left open: why must the two routes give the same real numbers?
+This is the last card on The Number Line shelf. The next shelf opens with [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): repeated multiplication, and why zero and negative powers make sense. The two links above point further ahead, to where cuts get used.
+
+Left open, for those later wings: why must the two routes give the same real numbers?
 
 ---
 
