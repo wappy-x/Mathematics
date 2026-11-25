@@ -59,7 +59,7 @@ example : (Finset.univ.filter
 example : (Finset.univ.filter
     (fun r : Bool × Bool × Bool => ((!r.1 || !r.2.1) && !r.2.2) = true)).card = 3 := by decide
 
--- The three off rows: override down and no motion or a lit room (MDO = 000, 010, 100).
+-- The three off rows: override down and no motion or daylight (MDO = 000, 010, 100).
 example : Finset.univ.filter
     (fun r : Bool × Bool × Bool => ((!r.1 || !r.2.1) && !r.2.2) = true) =
     {(false, false, false), (false, true, false), (true, false, false)} := by decide
@@ -107,7 +107,7 @@ example : Finset.univ.filter (fun r : Bool × Bool × Bool =>
     {(false, false, true), (true, false, true)} := by decide
 
 -- Not every lattice is Boolean: on the divisors of 12 (meet gcd, join lcm, bottom 1,
--- top 12), neither 2 nor 6 has an opposite.
+-- top 12), neither 2 nor 6 has a complement.
 example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 2 c = 1 ∧ Nat.lcm 2 c = 12 := by decide
 example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := by decide
 

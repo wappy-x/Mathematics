@@ -69,12 +69,12 @@ fn main() {
         assert!(roots.iter().all(|&r| value_at(coeffs, r) == (0, 0))
             && back == coeffs.iter().map(|&c| (c, 0)).collect::<Vec<C>>());
     }
-    let bad = value_at(&examples[0].1, (1, 0)).0;   // t = 1, from misreading the root
+    let (bad, bad3) = (value_at(&examples[0].1, (1, 0)).0, value_at(&examples[0].1, (3, 0)).0);
     let wrong = (from_roots(1, &[r1, r2])[0].0, bad, 25 - bad);
     println!("mistakes: leading 5 dropped leaves constant {} not 25; times 1 and 3 \
               give {} not 0, a height of {} m not 25 m", wrong.0, wrong.1, wrong.2);
     assert!(mul(I, I) == (-1, 0));
     assert!(max_h == 2000 && max_h + min_p == 2500 && disc == alt);
-    assert!(real_hits == 0 && wrong == (5, 10, 15));
+    assert!(real_hits == 0 && wrong == (5, 10, 15) && bad3 == bad);
     println!("ALL CHECKS PASS");
 }

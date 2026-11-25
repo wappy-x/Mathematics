@@ -171,7 +171,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 10 · For the Curious · 5 cards
 
-*Detours with no later dependents: the fundamental theorem of algebra with i glossed, why the quintic has no formula, Gaussian integers and sums of two squares, Pell's equation and root 2, Boolean algebra and lattices. Complex arithmetic proper is wing 06; Galois theory proper is held.*
+*Five stand-alone excursions: the fundamental theorem of algebra with i glossed, why the quintic has no formula, Gaussian integers and sums of two squares, Pell's equation and root 2, and Boolean algebra and lattices. Complex arithmetic proper is wing 07; Galois theory and deeper number theory live in wing 21.*
 
 1. [The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots](10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)
 2. [Why there is no quintic formula: degrees 2, 3 and 4 have one, degree 5 provably cannot, because the roots' symmetries are too tangled](10-For%20the%20Curious/02-why-no-quintic-formula.md)

@@ -82,9 +82,11 @@ P(x) = a_n (x - r_1)(x - r_2) \ldots (x - r_n)
 
 The hard content is one sentence: **every polynomial of degree at least 1 with complex coefficients has at least one complex root.** It is not proved here; no known proof of it stays inside algebra.
 
-Here is the shape of one argument. Draw a + bi as the point (a, b) on a plane. On a large circle of inputs, the outputs trace a loop that wraps around zero n times, since the highest power dominates. Shrink the circle and the loop shrinks to the constant term, wrapping none. Going from n wraps to none means crossing zero, so some input is a root.
+Here is the shape of one argument. Draw a + bi as the point (a, b) on a plane. On a large circle of inputs, the outputs trace a loop that wraps around zero n times, since the highest power dominates.
 
-That count is made exact on Homology of spheres, and degree; the shorter route is [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md). Granted, the rest is bookkeeping.
+If the constant term is 0, then 0 is already a root. Otherwise shrink the circle, and the loop shrinks to the constant term, wrapping none. Going from n wraps to none means crossing zero, so some input is a root.
+
+That count is made exact on [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md); the shorter route is [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md). Granted, the rest is bookkeeping.
 
 ### Step 1: one root buys one bracket
 
@@ -162,7 +164,11 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported and no built-in complex number is used: a + bi is the integer pair (a, b), and i × i = -1 is written into the multiplication by hand. Every root then gets two independent roads. Road one puts it into the polynomial and demands the pair (0, 0). Road two ignores the polynomial: it multiplies the brackets (x - root) together and compares the coefficients it builds against those given. A separate walk along the flight, in whole hundredths of a metre, reports the peak and finds 5t^2 - 20t + 25 never at 0 on that grid.
+Nothing is imported and no built-in complex number is used: a + bi is the integer pair (a, b), and i × i = -1 is written into the multiplication by hand.
+
+Every root then gets two independent roads. Road one puts it into the polynomial and demands the pair (0, 0). Road two ignores the polynomial: it multiplies the brackets (x - root) together and compares the coefficients it builds against those given.
+
+A separate walk along the flight, in whole hundredths of a metre, reports the peak and finds 5t^2 - 20t + 25 never at 0 on that grid.
 
 ### Python
 
@@ -219,17 +225,17 @@ for lead, coeffs, roots, label in EXAMPLES:
     print(f"  road two, brackets multiplied back, constant first: {road_two}")
     assert (all(value_at(coeffs, r) == (0, 0) for r in roots)
             and from_roots(lead, roots) == [(c, 0) for c in coeffs])
-bad = value_at(EXAMPLES[0][1], (1, 0))[0]   # t = 1, from misreading the root
+bad, bad3 = (value_at(EXAMPLES[0][1], (t, 0))[0] for t in (1, 3))   # misread roots
 wrong = (from_roots(1, [r1, r2])[0][0], bad, 25 - bad)
 print(f"mistakes: leading 5 dropped leaves constant {wrong[0]} not 25; times 1 "
       f"and 3 give {wrong[1]} not 0, a height of {wrong[2]} m not 25 m")
 assert mul(I, I) == (-1, 0)
 assert max_h == 2000 and max_h + min_p == 2500 and disc == alt
-assert real_hits == 0 and wrong == (5, 10, 15)
+assert real_hits == 0 and wrong == (5, 10, 15) and bad3 == bad
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 i times i, as the pair (real part, i part): (-1, 0)
@@ -327,18 +333,18 @@ fn main() {
         assert!(roots.iter().all(|&r| value_at(coeffs, r) == (0, 0))
             && back == coeffs.iter().map(|&c| (c, 0)).collect::<Vec<C>>());
     }
-    let bad = value_at(&examples[0].1, (1, 0)).0;   // t = 1, from misreading the root
+    let (bad, bad3) = (value_at(&examples[0].1, (1, 0)).0, value_at(&examples[0].1, (3, 0)).0);
     let wrong = (from_roots(1, &[r1, r2])[0].0, bad, 25 - bad);
     println!("mistakes: leading 5 dropped leaves constant {} not 25; times 1 and 3 \
               give {} not 0, a height of {} m not 25 m", wrong.0, wrong.1, wrong.2);
     assert!(mul(I, I) == (-1, 0));
     assert!(max_h == 2000 && max_h + min_p == 2500 && disc == alt);
-    assert!(real_hits == 0 && wrong == (5, 10, 15));
+    assert!(real_hits == 0 && wrong == (5, 10, 15) && bad3 == bad);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 i times i, as the pair (real part, i part): (-1, 0)
@@ -521,7 +527,7 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 - [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): the missing existence proof.
 - [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): the wrap count of Step 0, made into a tool.
 - [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): the property stated above has a name there, **algebraically closed**.
-- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular.
+- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): uses a complex root of a characteristic polynomial, which this theorem guarantees, to make every symmetry-respecting map on an irreducible piece a plain scalar.
 
 The n roots exist; finding them is another matter — [Why there is no quintic formula](02-why-no-quintic-formula.md).
 

@@ -16,7 +16,7 @@ A **quintic** is a degree-five polynomial equation, and it is where the school f
 
 **A radical formula would take the shuffles of an equation's roots apart one order-free layer at a time; the shuffles of five roots stop coming apart at a core of 60, so no radical formula solves every quintic — while the roots are all still there to be found.**
 
-**What kind of fact this is:** a theorem. Its group half is proved here and computed in the code; the bridge from radicals to peelable groups is stated here, proved in Solvable by radicals.
+**What kind of fact this is:** a theorem. Its group half is proved here and computed in the code; the bridge from radicals to peelable groups is stated here, proved in [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md).
 
 ### The picture: two questions about one equation
 
@@ -135,9 +135,9 @@ The two quintics, then the chains.
 
 | Step | Arithmetic or check | Value |
 | --- | --- | --- |
-| the radical quintic, x^5 - 2 | 50 halvings, then 8 Newton steps | **1.1486983550** |
+| the radical quintic, x^5 - 2 | 50 halvings, or 8 Newton steps from 1.2 | **1.1486983550** |
 | bracket the other, x^5 - x - 1 | its value at x = 1 and at x = 2 | -1.00 and 29.00 |
-| the root inside | 50 halvings, then 8 Newton steps | **1.1673039783** |
+| the root inside | 50 halvings, or 8 Newton steps from 1.2 | **1.1673039783** |
 | peel three roots, then four | 6 → 3 → 1; 24 → 12 → 4 → 1 | **both reach 1** |
 | peel five roots | 120 → 60 → 60 → 60 | **stuck at 60** |
 
@@ -658,12 +658,15 @@ example : (Finset.univ.filter fun σ : Perm (Fin 5) => σ.support.card = 3).card
 - [Permutations](../08-Groups/03-permutations-and-the-symmetric-group.md): shuffles, how they compose, and even-or-odd as a property of the shuffle.
 - [Normal subgroups and quotient groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): throwing part of a group away and having a group left, as each peel does.
 - [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the argument's shape — assume the formula, reach a chain that cannot exist.
+- [The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md): why all five roots exist before we ask how to write them.
 
 ## Where this goes next
 
 - [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge proved, and how to test one equation rather than a whole degree.
 
 This card takes that bridge on trust: the one thing left to earn.
+
+This shelf is a set of detours, so the next card on it returns to i and puts it to work on whole numbers: [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md) factors 5 and 13 and settles which numbers are sums of two squares.
 
 ---
 

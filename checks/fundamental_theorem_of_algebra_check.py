@@ -50,11 +50,11 @@ for lead, coeffs, roots, label in EXAMPLES:
     print(f"  road two, brackets multiplied back, constant first: {road_two}")
     assert (all(value_at(coeffs, r) == (0, 0) for r in roots)
             and from_roots(lead, roots) == [(c, 0) for c in coeffs])
-bad = value_at(EXAMPLES[0][1], (1, 0))[0]   # t = 1, from misreading the root
+bad, bad3 = (value_at(EXAMPLES[0][1], (t, 0))[0] for t in (1, 3))   # misread roots
 wrong = (from_roots(1, [r1, r2])[0][0], bad, 25 - bad)
 print(f"mistakes: leading 5 dropped leaves constant {wrong[0]} not 25; times 1 "
       f"and 3 give {wrong[1]} not 0, a height of {wrong[2]} m not 25 m")
 assert mul(I, I) == (-1, 0)
 assert max_h == 2000 and max_h + min_p == 2500 and disc == alt
-assert real_hits == 0 and wrong == (5, 10, 15)
+assert real_hits == 0 and wrong == (5, 10, 15) and bad3 == bad
 print("ALL CHECKS PASS")

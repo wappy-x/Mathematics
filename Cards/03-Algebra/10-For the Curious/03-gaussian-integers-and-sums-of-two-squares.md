@@ -18,7 +18,7 @@ A point a across and b up is written a + bi. These are the **Gaussian integers**
 
 **A whole number is a sum of two squares exactly when it splits into a Gaussian integer times its mirror image, and which numbers split is settled by their ordinary prime factors.**
 
-**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule, on which primes are sums of two squares, is stated here and proved on Two squares.
+**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule, on which primes are sums of two squares, is stated here and proved on [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 
 ### The picture: norms in one corner of the grid
 
@@ -75,7 +75,7 @@ So a sum of two squares times a sum of two squares is another.
 
 - **Coordinates stay whole.** One point divides another exactly when both coordinates of the exact quotient are whole.
 - **The norm test runs one way.** Divisibility makes norms divide, never the reverse: 2 + i and 2 - i share norm 5, yet neither divides the other.
-- **Fermat's rule is about primes.** For a composite the exponents decide; 21 leaves remainder 1 and still fails.
+- **Fermat's rule (Step 4) is about primes.** A composite, a whole number with more than one prime factor, is decided by the exponents of its primes. So 21 = 3 × 7 leaves remainder 1 on division by 4 and still fails.
 - **Zero and negatives are dull.** 0 = 0^2 + 0^2; nothing negative qualifies.
 
 ---
@@ -125,7 +125,7 @@ Round each coordinate of the exact quotient to the nearest whole number: each is
 
 So 5 = 2^2 + 1^2 and 13 = 3^2 + 2^2, both remainder 1, while 3 and 7 leave remainder 3 and have none. A remainder-1 prime splits into a point times its mirror; a remainder-3 prime stays prime; and 2 = (1 + i)(1 - i).
 
-The fold below proves the easy half. The hard half, that every remainder-1 prime splits, is proved on Two squares.
+The fold below proves the easy half. The hard half, that every remainder-1 prime splits, is proved on [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 
 <details>
 <summary>Detailed proof: no number leaving remainder 3 on division by 4 is a sum of two squares</summary>
@@ -150,7 +150,7 @@ flowchart TD
 
 One more: 65 = 5 × 13, both remainder-1 primes, so 65 is in twice over, as 1^2 + 8^2 and as 4^2 + 7^2.
 
-An even power is a perfect square, itself a sum of two squares with a zero coordinate, so Step 1 multiplies the pieces together. The reverse direction needs one more fact, proved on Two squares.
+An even power is a perfect square, itself a sum of two squares with a zero coordinate, so Step 1 multiplies the pieces together. The reverse direction needs one more fact, proved on [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 
 ---
 
@@ -173,7 +173,7 @@ The 65 came from multiplying, not searching.
 | Trusting the norm test | ratio 1, so 2 - i passes for a divisor | the quotient is three fifths, four fifths |
 | Using the prime rule on 21 | 21 mod 4 = 1 (remainder 1 on division by 4), so 21 passes | composites need the exponents |
 
-The code prints all three, and 25, the norm of 5 + 0i.
+The code prints all three. It also prints 25, the norm of 5 + 0i, for the trap in The usual mistake.
 
 ---
 
@@ -389,7 +389,7 @@ The two outputs match line for line.
 Lean proves the card's main facts for every whole number and every Gaussian integer, not just the examples.
 
 - A whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image.
-- A whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power. This includes the half the card leaves to Two squares.
+- A whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power. This includes the half the card leaves to [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 - The norm of a + bi is a^2 + b^2, and the norm of a product is the product of the norms.
 - The only units are 1, -1, i and -i.
 - It also re-checks the card's numbers: 5, 13, 21, 45 and 65, the two divisions, and the norm grid.
@@ -550,7 +550,7 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 ## Where you meet it in real life
 
 - **Square grids.** Squared distances between corners of a tiled floor or a pixel grid are exactly the sums of two squares: 5 and 13 occur, 21 never does.
-- **An old question in a bigger system.** [Pell's equation](04-pell-equation-and-root-two.md) makes the same move with another new number.
+- **Phone and Wi-Fi signals.** A common radio scheme packs 4 bits into each pulse by choosing one of 16 points on a square grid, at coordinates ±1 and ±3. Each point's energy is its norm: 1 + 1 = 2, 1 + 9 = 10 or 9 + 9 = 18.
 
 > **Say it back**
 > A Gaussian integer is a grid point a + bi with whole coordinates, where i × i = -1, and its norm is a^2 + b^2. A point times its mirror image is its norm, so a whole number is a sum of two squares exactly when it splits that way: 5 = (2 + i)(2 - i), 13 = (3 + 2i)(3 - 2i). Norms multiply, so those two combine into 65 = 4^2 + 7^2, leaving only the primes to settle. Fermat's rule settles them: 2 and the remainder-1 primes qualify, the rest do not. For a composite, every remainder-3 prime must appear an even number of times — why 45 qualifies and 21 does not.
@@ -567,9 +567,12 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 ## Where this goes next
 
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): proves the half stated here, and counts representations.
-- [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): Jacobi sums, primes in the Eisenstein integers, and when 2 is a cube.
+- [Pell's equation](04-pell-equation-and-root-two.md): the same norm trick with root 2 in place of i, where the units never run out.
+- [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): the same norm-and-split idea on a triangular grid of whole numbers, used to decide when 2 is a perfect cube on a prime clock.
 
-This card says which whole numbers are sums of two squares; it cannot say why remainder 1 suffices, nor why 65 has two representations and 45 one.
+This card says which whole numbers are sums of two squares; it cannot say why remainder 1 suffices, nor why 65 has two representations and 45 one. [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md) answers both.
+
+Next on this shelf, [Pell's equation](04-pell-equation-and-root-two.md) asks the norm question with root 2: which whole numbers x and y make x^2 - 2y^2 exactly 1?
 
 ---
 

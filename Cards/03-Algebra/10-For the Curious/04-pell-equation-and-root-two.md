@@ -80,7 +80,9 @@ Flip the sign before the root for the mirror image, properly the **conjugate**: 
 (x + y\sqrt{2})(x - y\sqrt{2}) = x^2 - 2y^2
 ```
 
-So the equation says more than it appears to: x + y root 2 times its conjugate is 1, making the conjugate its reciprocal. A member whose reciprocal is also a member is a **unit**, so the equation hunts the units of a + b root 2. The quantity x^2 - 2y^2 is the **norm** of x + y root 2.
+So the equation says more than it appears to: x + y root 2 times its conjugate is 1, making the conjugate its reciprocal. A member whose reciprocal is also a member is a **unit**. The quantity x^2 - 2y^2 is the **norm** of x + y root 2, so the equation hunts the units of norm 1.
+
+Units of norm -1 exist too, such as 1 + root 2, whose reciprocal is -1 + root 2; they solve the minus-one equation instead.
 
 ### Step 1: two solutions multiply into a third
 
@@ -104,7 +106,9 @@ The new bottom number, 2x + 3y, beats y whenever both are above zero, so every s
 
 ### Step 3: nothing is missed
 
-An endless list could still have gaps; this one does not, because the multiplication runs backwards. By Step 0, 3 - 2 root 2 is the reciprocal of 3 + 2 root 2, so multiplying by it undoes a step: from (x, y) it gives (3x - 4y, 3y - 2x), norm 1 × 1 again. On (17, 12): 51 - 48 = 3, 36 - 34 = 2, so (3, 2); on (3, 2) it gives (1, 0), the end of the line.
+An endless list could still have gaps; this one does not, because the multiplication runs backwards. By Step 0, 3 - 2 root 2 is the reciprocal of 3 + 2 root 2, so multiplying by it undoes a step: from (x, y) it gives (3x - 4y, 3y - 2x), norm 1 × 1 again.
+
+On (17, 12): 51 - 48 = 3, 36 - 34 = 2, so (3, 2); on (3, 2) it gives (1, 0), the end of the line.
 
 Each backward step lands on a smaller solution, still above zero; whole numbers cannot shrink for ever, so the steps reach (1, 0), and read forwards that path is the chain.
 
@@ -186,7 +190,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one multiplies: from (1, 0), apply the step rule until the bottom number passes 10,000 — five pairs. Road two multiplies nothing: it walks every bottom number to 10,000, asking whether 1 + 2y^2 is a perfect square, with a square root it writes itself. One road knows the algebra, the other only the equation, and their lists must agree. The script also steps backwards and checks each overshoot against Step 4's bound.
+Nothing is imported. Road one multiplies: from (1, 0), apply the step rule until the bottom number passes 10,000 — five pairs. Road two multiplies nothing: it walks every bottom number to 10,000, asking whether 1 + 2y^2 is a perfect square, with a square root it writes itself.
+
+One road knows the algebra, the other only the equation, and their lists must agree. The script also steps backwards and checks each overshoot against Step 4's bound.
 
 ### Python
 
@@ -634,10 +640,10 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 ## Where you meet it in real life
 
 - **A4 paper.** Its long side over its short side is 297 over 210, exactly 99/70 — step three of the list. Fold it in half and the shape returns almost, not quite, unchanged.
-- **How many units a family has.** Among whole numbers built with the square root of -1, four hold their reciprocal inside the family ([Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md)). With root 2 there are endlessly many.
+- **Photocopier zoom.** Enlarging A4 to A3 is preset as 141%, the two-place fraction 141/100 for root 2. It is close enough for paper, yet 141^2 - 2 × 100^2 = -119, so it is no solution.
 
 > **Say it back**
-> A 17 by 17 square of counters is one more than two 12 by 12 squares, and pairs like that never run out. The left side of x^2 - 2y^2 = 1 is x + y root 2 times its conjugate, so a solution is a number whose reciprocal is still whole. Norms multiply, so multiplying by 3 + 2 root 2 turns any solution into the next, for ever. Backwards it shrinks the bottom number, and shrinking whole numbers must stop, so nothing is missed. Each fraction sits just above root 2: 99/70 is right to four places.
+> A 17 by 17 square of counters is one more than two 12 by 12 squares, and pairs like that never run out. The left side of x^2 - 2y^2 = 1 is x + y root 2 times its conjugate, so a solution is a number whose conjugate is its reciprocal, still whole. Norms multiply, so multiplying by 3 + 2 root 2 turns any solution into the next, for ever. Backwards it shrinks the bottom number, and shrinking whole numbers must stop, so nothing is missed. Each fraction sits just above root 2: 99/70 is right to four places.
 
 ---
 
@@ -647,13 +653,16 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): a new arithmetic as a system in its own right.
 - [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): why no fraction equals root 2.
 - [Continued fractions](../../02-Number%20theory/07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the stops of root 2, the best fractions of their size.
+- [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md): the same norm, a number times its conjugate, with i in place of root 2; there only four units exist, against endlessly many here.
 
 ## Where this goes next
 
 - [The unit theorem](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/07-dirichlets-unit-theorem.md): how many units a number family has, in general.
 - [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md): any whole number under the root, the continued fraction supplying the first solution.
 
-This card starts from (3, 2) and never says where that pair came from: finding the first solution is a later card's job.
+This card starts from (3, 2) and never says where that pair came from. Finding the first solution is the job of wing 21's [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md) card.
+
+This shelf is a set of detours, and its last one leaves numbers for logic and sets: [Boolean algebra](05-boolean-algebra-and-lattices.md) shows true and false, sets and switches obeying one list of laws.
 
 ---
 

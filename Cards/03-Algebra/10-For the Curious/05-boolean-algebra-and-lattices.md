@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A porch light follows one rule: come on when there is motion and the room is dark, or whenever the override switch is thrown. Three inputs, each a plain yes or no, make eight situations. The light is on in five of them and off in three.
+A porch light follows one rule: come on when there is motion and it is dark outside, or whenever the override switch is thrown. Three inputs, each a plain yes or no, make eight situations. The light is on in five of them and off in three.
 
 A record filter has the same shape: in both the staff list and the on-shift list, or in the always-allowed list. So does a switch network, where series means both and parallel means either.
 
@@ -14,7 +14,7 @@ One list of laws governs all three. Boolean algebra is that list stripped of sub
 
 An order hides underneath. "Is inside" orders sets, but only partly: neither {a, b} nor {b, c} is inside the other. Draw the eight subsets of {a, b, c}, an arrow per added member, and the picture is a cube. The meet of two sets is the highest set below both, the join the lowest above both; an order giving every pair both is a **lattice**.
 
-**Truth values, the subsets of a fixed collection and switch networks obey one list of laws; drawn as an order, a Boolean algebra is a lattice whose operations spread across each other, with an opposite for every element.**
+**Truth values, the subsets of a fixed collection and switch networks obey one list of laws; drawn as an order, a Boolean algebra is a lattice whose operations spread across each other, with a complement for every element.**
 
 **What kind of fact this is:** a definition — both names stand for lists of laws, and Why it works shows the light rule, the subsets and the switches obeying them.
 
@@ -42,7 +42,7 @@ Eight vertices, twelve upward edges, one added member per edge. An upward path m
 
 ## The formula
 
-Write M for "there is motion", D for "the room is dark", O for "the override is on". A row such as MDO = 110 lists the three answers in that order, 1 for yes and 0 for no. The rule, then the override multiplied into both halves:
+Write M for "there is motion", D for "it is dark outside", O for "the override is on". A row such as MDO = 110 lists the three answers in that order, 1 for yes and 0 for no. The rule, then the override multiplied into both halves:
 
 ```math
 L = (M \land D) \lor O = (M \lor O) \land (D \lor O)
@@ -118,11 +118,13 @@ For the light to be off, neither branch may succeed: the override must be off an
 
 The intersection of A and B is inside both, so it is a lower bound; and any set inside both is inside the intersection, which therefore sits above every other lower bound. Greatest lower bound: the meet. Union contains both and sits inside anything containing both: least upper bound, the join.
 
-So every pair has both and the cube is a lattice, empty set at the bottom, {a, b, c} at the top. The meet of A = {a, b} and B = {b, c} is {b}, the join {a, b, c}, though neither contains the other. Nine of the twenty-eight pairs are like this, and they have meets and joins all the same. The code checks intersection against a search for the greatest lower bound, on all sixty-four pairs.
+So every pair has both and the cube is a lattice, empty set at the bottom, {a, b, c} at the top. The meet of A = {a, b} and B = {b, c} is {b}, the join {a, b, c}, though neither contains the other. Nine of the twenty-eight pairs are like this, and they have meets and joins all the same. The code checks intersection against a search for the greatest lower bound, on all sixty-four ordered pairs, each set paired with itself included.
 
 ### Step 5: what makes an algebra Boolean
 
-A **lattice** is a partial order where every pair has a meet and a join. A **Boolean algebra** adds a bottom 0, a top 1, distributivity both ways, and for every element a complement meeting it at 0 and joining it at 1. Truth values are the smallest case, a universe's subsets the everyday one. Order the divisors of 12 by which divides which: meet is the greatest common divisor, join is the smallest common multiple, and 2 and 6 have no opposite.
+A **lattice** is a partial order where every pair has a meet and a join. A **Boolean algebra** adds a bottom 0, a top 1, distributivity both ways, and for every element a complement meeting it at 0 and joining it at 1.
+
+Truth values are the smallest case, a universe's subsets the everyday one. Order the divisors of 12 by which divides which: meet is the greatest common divisor, join is the smallest common multiple, and 2 and 6 have no complement.
 
 <details>
 <summary>The same algebra written as a ring</summary>
@@ -137,7 +139,7 @@ An alternative route is the truth table. Its eight rows settle this rule and not
 
 ## Worked numbers, by hand
 
-Read the inputs as motion, dark, override: MDO = 110 is motion yes, room dark, override down.
+Read the inputs as motion, dark, override: MDO = 110 is motion yes, dark outside, override down.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -147,7 +149,7 @@ Read the inputs as motion, dark, override: MDO = 110 is motion yes, room dark, o
 | all eight rows counted | on, off | **5 on, 3 off** |
 | meet, join and complement of {a, b} | against {b, c}, inside U | **{b}, {a, b, c}, {c}** |
 
-The three off rows have the override down and no motion or a lit room.
+The three off rows have the override down and no motion or daylight.
 
 ### What breaks if you drop a piece
 
@@ -439,7 +441,7 @@ example : (Finset.univ.filter
 example : (Finset.univ.filter
     (fun r : Bool × Bool × Bool => ((!r.1 || !r.2.1) && !r.2.2) = true)).card = 3 := by decide
 
--- The three off rows: override down and no motion or a lit room (MDO = 000, 010, 100).
+-- The three off rows: override down and no motion or daylight (MDO = 000, 010, 100).
 example : Finset.univ.filter
     (fun r : Bool × Bool × Bool => ((!r.1 || !r.2.1) && !r.2.2) = true) =
     {(false, false, false), (false, true, false), (true, false, false)} := by decide
@@ -487,7 +489,7 @@ example : Finset.univ.filter (fun r : Bool × Bool × Bool =>
     {(false, false, true), (true, false, true)} := by decide
 
 -- Not every lattice is Boolean: on the divisors of 12 (meet gcd, join lcm, bottom 1,
--- top 12), neither 2 nor 6 has an opposite.
+-- top 12), neither 2 nor 6 has a complement.
 example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 2 c = 1 ∧ Nat.lcm 2 c = 12 := by decide
 example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := by decide
 
@@ -496,7 +498,7 @@ example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := 
 #print axioms complement_is_unique
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'subsets_form_boolean_lattice' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -529,7 +531,7 @@ example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := 
 
 - **Home automation.** A rule engine takes this condition as written; the distributed form shows the override in every branch.
 - **Digital circuits.** Series and parallel switches were Shannon's point in 1938: a network is an expression, so shortening it removes gates.
-- **The rest of this shelf**: [The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md), [Why there is no quintic formula](02-why-no-quintic-formula.md), [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md), [Pell's equation](04-pell-equation-and-root-two.md).
+- **Search and database filters.** A query such as staff AND on shift, OR always allowed, is the record filter above. Query engines rewrite such filters with these same laws before they run them.
 
 > **Say it back**
 > A light rule, a list filter and a switch network obey one list of laws: a meet (and, intersection, series), a join (or, union, parallel), and a complement that swaps them. The light is off when the override is off and motion or darkness is missing. The eight subsets of {a, b, c} draw a cube where meet is intersection and join is union; nine of the twenty-eight pairs have no order between them. A lattice needs meets and joins; Boolean adds a bottom, a top, distributivity and complements.
@@ -548,7 +550,9 @@ example : ¬ ∃ c ∈ Nat.divisors 12, Nat.gcd 6 c = 1 ∧ Nat.lcm 6 c = 12 := 
 - [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md): whether some row of a formula comes out true — one question standing in for every problem with quickly checked answers.
 - [Boolean circuits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/01-boolean-circuits-and-formulas.md): the gates a network needs, a formula as cost rather than truth.
 
-Eight rows can be read by hand. The laws say nothing about the cost of finding whether some row of a large rule comes out true — a later card's question.
+Eight rows can be read by hand. The laws say nothing about the cost of finding whether some row of a large rule comes out true. That is the question of [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md).
+
+This card closes the detours shelf. The next shelf in Algebra returns to vector spaces: [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md) splits a space into independent pieces.
 
 ---
 
