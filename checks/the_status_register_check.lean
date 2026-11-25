@@ -1,4 +1,4 @@
--- The status register: replaying a date-ordered correction log from all-open succeeds exactly when every entry starts from the word its row holds, and then rebuilds every row's status on any date; the card's 44-row register, its 31-entry log, the JAC3 counterexample and its small cases check exactly.
+-- The status register: replaying a date-ordered correction log from all-open succeeds exactly when every entry starts from the word its row holds, and then rebuilds every row's status on any date; the card's 64-row register, its 47-entry log, the JAC3 counterexample and its small cases check exactly.
 import Mathlib.Algebra.MvPolynomial.PDeriv
 import Mathlib.Algebra.Field.Rat
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
@@ -14,7 +14,7 @@ inductive Status
   deriving DecidableEq, Repr
 
 /-- One correction-log entry: the date of its source (written YYYYMMDD, with DD = 00 for a
-source dated to the month), the row it changes, the word it replaces and the new word. -/
+source dated to the month, MMDD = 0000 for one dated to the year), the row it changes, the word it replaces and the new word. -/
 structure Entry (R : Type*) where
   date : ℕ
   row : R
@@ -236,14 +236,15 @@ theorem jac3_det_neg_two_and_three_points_one_image :
     funext i
     fin_cases i <;> simp [jac3Map] <;> norm_num
 
-/-! ## The card's register as of 2026-11-23 -/
+/-! ## The card's register as of 2026-11-25 -/
 
-/-- The register's 44 rows. -/
+/-- The register's 64 rows. -/
 inductive Row
   | RH | BSD | PNP | NS | HODGE | YM | POINC | TWIN | GOLD | LEG | NSQ | ABC | BEAL | FLT
-  | DIST | UNIT | KAK3 | KAKN | HN | CDC | ER | ES | UC | SP8 | SP24 | COLL | Z23 | JAC3
-  | JAC2 | SOFIC | KOTHE | PERC | IGP | M23 | CH | UGC | GI | BQP | ROUGH | OT | GEN | DDES
-  | MF | SGD
+  | DIST | SCH | UNIT | KAK3 | KAKN | HN | CDC | ER | ES | UC | SP8 | SP24 | SPZ | SPR | S6
+  | CARA | RAM | SPC4 | HADW | SOFA | RUP | HSC | COLL | Z23 | JAC3 | JAC2 | SOFIC | KOTHE
+  | PERC | HILB6B | HILB6F | IGP | M23 | CH | UGC | GI | LANG | GLANG | H10K | H10Q | AOC
+  | AOS | CONN | BQP | ROUGH | OT | GEN | DDES | MF | SGD
   deriving DecidableEq, Repr
 
 /-- A claim's kind. -/
@@ -280,7 +281,7 @@ structure RegRow where
 
 open Row Kind Status Claim Accept
 
-/-- The register as of 2026-11-23, as typed in the card's checks. -/
+/-- The register as of 2026-11-25, as typed in the card's checks. -/
 def register : List RegRow :=
   [⟨RH, conjecture, proved, proof, independent⟩, ⟨BSD, conjecture, «open», noClaim, nobody⟩,
    ⟨PNP, conjecture, «open», noClaim, nobody⟩, ⟨NS, conjecture, claimed, disproof, authors⟩,
@@ -289,42 +290,61 @@ def register : List RegRow :=
    ⟨GOLD, conjecture, «open», noClaim, nobody⟩, ⟨LEG, conjecture, «open», noClaim, nobody⟩,
    ⟨NSQ, conjecture, «open», noClaim, nobody⟩, ⟨ABC, conjecture, claimed, proof, disputed⟩,
    ⟨BEAL, conjecture, «open», noClaim, nobody⟩, ⟨FLT, conjecture, proved, proof, independent⟩,
-   ⟨DIST, conjecture, «open», noClaim, nobody⟩, ⟨UNIT, conjecture, refuted, disproof, independent⟩,
+   ⟨DIST, conjecture, «open», noClaim, nobody⟩, ⟨SCH, conjecture, «open», noClaim, nobody⟩,
+   ⟨UNIT, conjecture, refuted, disproof, independent⟩,
    ⟨KAK3, conjecture, proved, proof, independent⟩, ⟨KAKN, conjecture, «open», noClaim, nobody⟩,
    ⟨HN, conjecture, «open», noClaim, nobody⟩, ⟨CDC, conjecture, claimed, proof, authors⟩,
    ⟨ER, conjecture, «open», noClaim, nobody⟩, ⟨ES, conjecture, claimed, proof, authors⟩,
    ⟨UC, conjecture, «open», noClaim, nobody⟩, ⟨SP8, conjecture, proved, proof, independent⟩,
-   ⟨SP24, conjecture, proved, proof, independent⟩, ⟨COLL, conjecture, «open», noClaim, nobody⟩,
+   ⟨SP24, conjecture, proved, proof, independent⟩, ⟨SPZ, conjecture, «open», noClaim, nobody⟩,
+   ⟨SPR, conjecture, claimed, disproof, authors⟩, ⟨S6, «theorem», claimed, proof, authors⟩,
+   ⟨CARA, conjecture, «open», noClaim, nobody⟩, ⟨RAM, conjecture, «open», noClaim, nobody⟩,
+   ⟨SPC4, conjecture, «open», noClaim, nobody⟩, ⟨HADW, conjecture, «open», noClaim, nobody⟩,
+   ⟨SOFA, «theorem», claimed, proof, authors⟩, ⟨RUP, conjecture, refuted, disproof, independent⟩,
+   ⟨HSC, conjecture, «open», noClaim, nobody⟩, ⟨COLL, conjecture, «open», noClaim, nobody⟩,
    ⟨Z23, «theorem», claimed, proof, authors⟩, ⟨JAC3, conjecture, refuted, disproof, independent⟩,
    ⟨JAC2, conjecture, «open», noClaim, nobody⟩, ⟨SOFIC, conjecture, claimed, disproof, authors⟩,
    ⟨KOTHE, conjecture, claimed, disproof, authors⟩, ⟨PERC, conjecture, claimed, proof, authors⟩,
+   ⟨HILB6B, «theorem», proved, proof, independent⟩, ⟨HILB6F, «theorem», claimed, proof, authors⟩,
    ⟨IGP, conjecture, «open», noClaim, nobody⟩, ⟨M23, conjecture, claimed, proof, authors⟩,
    ⟨CH, «theorem», proved, proof, independent⟩, ⟨UGC, conjecture, «open», noClaim, nobody⟩,
-   ⟨GI, «theorem», proved, proof, independent⟩, ⟨BQP, conjecture, «open», noClaim, nobody⟩,
-   ⟨ROUGH, model, «open», noClaim, nobody⟩, ⟨OT, «theorem», proved, proof, independent⟩,
-   ⟨GEN, conjecture, «open», noClaim, nobody⟩, ⟨DDES, conjecture, «open», noClaim, nobody⟩,
-   ⟨MF, «theorem», proved, proof, independent⟩, ⟨SGD, conjecture, «open», noClaim, nobody⟩]
+   ⟨GI, «theorem», proved, proof, independent⟩, ⟨LANG, conjecture, «open», noClaim, nobody⟩,
+   ⟨GLANG, «theorem», proved, proof, independent⟩, ⟨H10K, «theorem», proved, proof, independent⟩,
+   ⟨H10Q, conjecture, «open», noClaim, nobody⟩, ⟨AOC, «theorem», proved, proof, independent⟩,
+   ⟨AOS, «theorem», claimed, proof, authors⟩, ⟨CONN, conjecture, refuted, disproof, independent⟩,
+   ⟨BQP, conjecture, «open», noClaim, nobody⟩, ⟨ROUGH, model, «open», noClaim, nobody⟩,
+   ⟨OT, «theorem», proved, proof, independent⟩, ⟨GEN, conjecture, «open», noClaim, nobody⟩,
+   ⟨DDES, conjecture, «open», noClaim, nobody⟩, ⟨MF, «theorem», proved, proof, independent⟩,
+   ⟨SGD, conjecture, «open», noClaim, nobody⟩]
 
-/-- The correction log, oldest first; dates YYYYMMDD, DD = 00 for a month-precision source. -/
+/-- The correction log, oldest first; dates YYYYMMDD, DD = 00 for a month-precision source,
+MMDD = 0000 for a year. -/
 def cardLog : List (Entry Row) :=
-  [⟨19631200, CH, «open», proved⟩, ⟨19910600, OT, «open», proved⟩,
-   ⟨19930600, FLT, «open», claimed⟩, ⟨19950500, FLT, claimed, proved⟩,
-   ⟨20021111, POINC, «open», claimed⟩, ⟨20060725, POINC, claimed, proved⟩,
+  [⟨19631200, CH, «open», proved⟩, ⟨19910600, OT, «open», proved⟩, ⟨19930600, FLT, «open», claimed⟩,
+   ⟨19950500, FLT, claimed, proved⟩, ⟨20021111, POINC, «open», claimed⟩,
+   ⟨20060725, POINC, claimed, proved⟩, ⟨20110000, AOC, «open», proved⟩,
    ⟨20120800, ABC, «open», claimed⟩, ⟨20151211, GI, «open», claimed⟩,
    ⟨20160314, SP8, «open», claimed⟩, ⟨20160321, SP24, «open», claimed⟩,
-   ⟨20160619, GI, claimed, proved⟩, ⟨20170104, GI, proved, «open»⟩,
-   ⟨20170109, GI, «open», claimed⟩, ⟨20170116, GI, claimed, proved⟩,
-   ⟨20170501, SP8, claimed, proved⟩, ⟨20170501, SP24, claimed, proved⟩,
-   ⟨20180418, MF, «open», claimed⟩, ⟨20180727, MF, claimed, proved⟩,
-   ⟨20250224, KAK3, «open», claimed⟩, ⟨20260520, UNIT, «open», refuted⟩,
-   ⟨20260710, CDC, «open», claimed⟩, ⟨20260720, JAC3, «open», refuted⟩,
+   ⟨20160619, GI, claimed, proved⟩, ⟨20170104, GI, proved, «open»⟩, ⟨20170109, GI, «open», claimed⟩,
+   ⟨20170116, GI, claimed, proved⟩, ⟨20170501, SP8, claimed, proved⟩,
+   ⟨20170501, SP24, claimed, proved⟩, ⟨20180418, MF, «open», claimed⟩,
+   ⟨20180727, MF, claimed, proved⟩, ⟨20200100, CONN, «open», claimed⟩,
+   ⟨20210918, AOS, «open», claimed⟩, ⟨20240506, GLANG, «open», claimed⟩,
+   ⟨20240814, HILB6B, «open», claimed⟩, ⟨20241129, SOFA, «open», claimed⟩,
+   ⟨20241202, H10K, «open», claimed⟩, ⟨20250000, GLANG, claimed, proved⟩,
+   ⟨20250224, KAK3, «open», claimed⟩, ⟨20250303, HILB6F, «open», claimed⟩,
+   ⟨20250825, RUP, «open», claimed⟩, ⟨20251031, HILB6B, claimed, proved⟩,
+   ⟨20251201, H10K, claimed, proved⟩, ⟨20260520, UNIT, «open», refuted⟩,
+   ⟨20260527, SPR, «open», claimed⟩, ⟨20260710, CDC, «open», claimed⟩,
+   ⟨20260713, RUP, claimed, refuted⟩, ⟨20260720, JAC3, «open», refuted⟩,
    ⟨20260723, KAK3, claimed, proved⟩, ⟨20260801, SOFIC, «open», claimed⟩,
    ⟨20260809, M23, «open», claimed⟩, ⟨20260810, Z23, «open», claimed⟩,
    ⟨20260828, PERC, «open», claimed⟩, ⟨20260907, KOTHE, «open», claimed⟩,
-   ⟨20260908, NS, «open», claimed⟩, ⟨20261019, ES, «open», claimed⟩,
+   ⟨20260908, NS, «open», claimed⟩, ⟨20260929, S6, «open», claimed⟩,
+   ⟨20261016, CONN, claimed, refuted⟩, ⟨20261019, ES, «open», claimed⟩,
    ⟨20261121, RH, «open», proved⟩]
 
-/-- All 44 rows, in register order. -/
+/-- All 64 rows, in register order. -/
 def allRows : List Row := register.map RegRow.row
 
 /-- How many rows of a state hold each word: (open, claimed, proved, refuted). -/
@@ -332,40 +352,40 @@ def tally (S : Row → Status) : ℕ × ℕ × ℕ × ℕ :=
   ((allRows.filter (fun r => S r = «open»)).length, (allRows.filter (fun r => S r = claimed)).length,
    (allRows.filter (fun r => S r = proved)).length, (allRows.filter (fun r => S r = refuted)).length)
 
--- 44 rows, 31 log entries; kinds: conjecture 38, theorem 5, model 1.
-example : register.length = 44 ∧ cardLog.length = 31 := by decide
+-- 64 rows, 47 log entries; kinds: conjecture 50, theorem 13, model 1.
+example : register.length = 64 ∧ cardLog.length = 47 := by decide
 example : ((register.filter (·.kind = conjecture)).length, (register.filter (·.kind = «theorem»)).length,
-    (register.filter (·.kind = model)).length) = (38, 5, 1) := by decide
+    (register.filter (·.kind = model)).length) = (50, 13, 1) := by decide
 -- The log is listed in date order, so the main theorem applies to it.
 example : cardLog.Pairwise (fun a b => a.date ≤ b.date) := by decide
 -- Road 1 = road 2: the status rule applied to each row's evidence gives the status typed in it.
 example : ∀ x ∈ register, rule x.claim x.accept = x.status := by decide
--- Road 3 = road 2: the log replayed from all-open to 2026-11-23 gives every typed status.
-example : ∀ x ∈ register, (replayTo cardLog 20261123).map (· x.row) = some x.status := by decide
--- The register as of 2026-11-23: 23 open, 9 claimed, 10 proved, 2 refuted.
-example : (replayTo cardLog 20261123).map tally = some (23, 9, 10, 2) := by decide
-example : 23 + 9 + 10 + 2 = 44 ∧ 10 + 2 = 12 := by norm_num
--- Between the 2026-09-13 snapshot and 2026-11-23 exactly two rows changed: RH and ES.
+-- Road 3 = road 2: the log replayed from all-open to 2026-11-25 gives every typed status.
+example : ∀ x ∈ register, (replayTo cardLog 20261125).map (· x.row) = some x.status := by decide
+-- The register as of 2026-11-25: 32 open, 14 claimed, 14 proved, 4 refuted.
+example : (replayTo cardLog 20261125).map tally = some (32, 14, 14, 4) := by decide
+example : 32 + 14 + 14 + 4 = 64 ∧ 14 + 4 = 18 := by norm_num
+-- Between the 2026-09-13 snapshot and 2026-11-25 exactly four rows changed: RH, ES, S6, CONN.
 example : (do
     let a ← replayTo cardLog 20260913
-    let b ← replayTo cardLog 20261123
-    pure (allRows.filter (fun r => a r ≠ b r))) = some [RH, ES] := by decide
--- The snapshot's age: 17 days left in September, then 31 and 23.
-example : (30 - 13) + 31 + 23 = 71 := by norm_num
+    let b ← replayTo cardLog 20261125
+    pure (allRows.filter (fun r => a r ≠ b r))) = some [RH, ES, S6, CONN] := by decide
+-- The snapshot's age: 17 days left in September, then 31 and 25.
+example : (30 - 13) + 31 + 25 = 73 := by norm_num
 -- The chart: rows claimed, and rows proved or refuted, at the end of 1995, 2000, …, 2025,
--- then on 2026-11-23.
-example : [19951231, 20001231, 20051231, 20101231, 20151231, 20201231, 20251231, 20261123].map
+-- then on 2026-11-25.
+example : [19951231, 20001231, 20051231, 20101231, 20151231, 20201231, 20251231, 20261125].map
     (fun d => (replayTo cardLog d).map (fun S => let t := tally S; (t.2.1, t.2.2.1 + t.2.2.2))) =
-    [some (0, 3), some (0, 3), some (1, 3), some (0, 4), some (2, 4), some (1, 8), some (2, 8),
-     some (9, 12)] := by decide
--- What breaks: counting every claim as accepted settles 21 rows, not 12.
+    [some (0, 3), some (0, 3), some (1, 3), some (0, 4), some (2, 5), some (2, 9), some (7, 12),
+     some (14, 18)] := by decide
+-- What breaks: counting every claim as accepted settles 32 rows, not 18.
 example : (register.filter (fun x =>
     rule x.claim (if x.accept = authors ∨ x.accept = disputed then independent else x.accept) = proved ∨
     rule x.claim (if x.accept = authors ∨ x.accept = disputed then independent else x.accept) = refuted)).length
-    = 21 := by decide
--- What breaks: counting abc's journal and ignoring the dispute gives 11 proved rows, not 10.
+    = 32 := by decide
+-- What breaks: counting abc's journal and ignoring the dispute gives 15 proved rows, not 14.
 example : (register.filter (fun x =>
-    rule x.claim (if x.accept = disputed then independent else x.accept) = proved)).length = 11 := by
+    rule x.claim (if x.accept = disputed then independent else x.accept) = proved)).length = 15 := by
   decide
 -- What breaks: on 2017-01-05 GI is open; a replay that never moves a row down says proved.
 example : (replayTo cardLog 20170105).map (· GI) = some «open» ∧

@@ -31,7 +31,7 @@ flowchart LR
 
 Every arrow is one line in the correction log, with a date and a source.
 
-### The register as of 2026-11-23
+### The register as of 2026-11-25
 
 The four status words come from [Kinds of claim](../01-How%20Research%20Works/02-theorem-conjecture-model-approximation.md):
 
@@ -40,56 +40,76 @@ The four status words come from [Kinds of claim](../01-How%20Research%20Works/02
 - **proved:** refereed, or accepted in a source independent of the authors.
 - **refuted:** a counterexample or disproof is accepted the same way.
 
-"Since" is the date of the source that set the status, at that source's precision. Every source below was opened on 2026-11-23. A write-up by others that says it checked the proof counts as independent acceptance; an exposition that only explains the proof, or a new proof by others that is not refereed, is evidence and leaves the row claimed (Step 1). The problem cards draw the same line. Where an AI lab made a claim first (CDC, SOFIC, Z23, PERC, NS), the row names that artifact and its date and links the write-ups by others that cite it, as the problem cards do.
+"Since" is the date of the source that set the status, at that source's precision. Every source below was opened on its row's Checked date. A write-up by others that says it checked the proof counts as independent acceptance; an exposition that only explains the proof, or a new proof by others that is not refereed, is evidence and leaves the row claimed (Step 1). The problem cards draw the same line. Where an AI lab made a claim first (CDC, SOFIC, Z23, PERC, NS), the row names that artifact and its date and links the write-ups by others that cite it, as the problem cards do.
 
-Which problems get a row: each problem card's problem, with one row per sub-case the card separates (KAK3 and KAKN, JAC3 and JAC2, IGP and M23). Survey cards add the problems they follow: Landau's four give LEG and NSQ, and the Erdős problems give DIST beside UNIT and ER. Hilbert's and Smale's lists keep their marks on their own card. On this shelf each card names the rows it sends (BQP; ROUGH; OT with its learning-theory lines GEN, DDES, MF and SGD); its other dated lines, such as an experiment's run, stay on that card.
+Which problems get a row: each problem card's problem, with one row per sub-case the card separates (KAK3 and KAKN, SPZ and SPR, HILB6B and HILB6F, H10K and H10Q, AOC and AOS). An old claim its card reports as set aside (SPC4, HSC), or two claims that contradict each other (CARA), leave the row open, as those cards rule. Survey cards add the problems they follow: Landau's four give LEG and NSQ, and the Erdős problems give DIST beside UNIT and ER. Hilbert's and Smale's lists keep their marks on their own card. On this shelf each card names the rows it sends (BQP; ROUGH; OT with its learning-theory lines GEN, DDES, MF and SGD); its other dated lines, such as an experiment's run, stay on that card.
 
 | Row | Problem | Kind | Status | Since | Checked | Primary source |
 | --- | --- | --- | --- | --- | --- | --- |
 | RH | [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md) | conjecture | proved | 2026-11-21 | 2026-11-23 | [Lean community statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/); [verification files](https://math.mit.edu/~drew/grh/). Clay's word: "Active" |
 | BSD | [Birch and Swinnerton-Dyer](../02-The%20Millennium%20Problems/02-birch-and-swinnerton-dyer.md) | conjecture | open | — | 2026-11-23 | [Clay problem list](https://www.claymath.org/millennium-problems/) |
 | PNP | [P versus NP](../02-The%20Millennium%20Problems/03-p-versus-np.md) | conjecture | open | — | 2026-11-23 | [Clay problem list](https://www.claymath.org/millennium-problems/) |
-| NS | [Navier-Stokes](../02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md): blow-up claimed for versions C and D ([The September 2026 Navier-Stokes claim](../05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md)) | conjecture | claimed | 2026-09-08 | 2026-11-23 | an AI lab's manuscript of 2026-09-08, read through the exposition [arXiv:2609.35406](https://arxiv.org/abs/2609.35406); not refereed. Clay's word: "Active" |
+| NS | [Navier-Stokes](../02-The%20Millennium%20Problems/04-navier-stokes-existence-and-smoothness.md): blow-up claimed for versions C and D ([The September 2026 Navier-Stokes claim](../05-Analysis%20and%20Dynamics/01-navier-stokes-blow-up-claim-2026.md)) | conjecture | claimed | 2026-09-08 | 2026-11-23 | an AI lab's manuscript of 2026-09-08, read through the exposition [preprint](https://arxiv.org/abs/2609.35406); not refereed. Clay's word: "Active" |
 | HODGE | [The Hodge conjecture](../02-The%20Millennium%20Problems/05-hodge-conjecture.md) | conjecture | open | — | 2026-11-23 | [Clay problem list](https://www.claymath.org/millennium-problems/) |
 | YM | [Yang-Mills existence and mass gap](../02-The%20Millennium%20Problems/06-yang-mills-and-the-mass-gap.md) | conjecture | open | — | 2026-11-23 | [Clay problem list](https://www.claymath.org/millennium-problems/) |
-| POINC | [The Poincare conjecture, solved](../02-The%20Millennium%20Problems/07-poincare-conjecture-solved.md) | conjecture | proved | 2006-07-25 | 2026-11-23 | full check by others, [arXiv:math/0607607](https://arxiv.org/abs/math/0607607); [Clay prize, 2010-03-18](https://www.claymath.org/millennium/poincare-conjecture/) |
-| TWIN | [Twin primes](../03-Primes%20and%20Numbers/01-twin-primes-and-bounded-gaps.md) | conjecture | open | — | 2026-11-23 | gap 246 proved: [doi:10.1186/s40687-014-0012-7](https://doi.org/10.1186/s40687-014-0012-7) |
-| GOLD | [Goldbach](../03-Primes%20and%20Numbers/02-goldbach-conjecture.md) | conjecture | open | — | 2026-11-23 | checked to 4 × 10^18: [doi:10.1090/S0025-5718-2013-02787-1](https://doi.org/10.1090/S0025-5718-2013-02787-1) |
-| LEG | Legendre: a prime between consecutive squares ([Landau's four problems](../03-Primes%20and%20Numbers/03-landau-problems.md)) | conjecture | open | — | 2026-11-23 | best interval proved: [doi:10.1112/plms/83.3.532](https://doi.org/10.1112/plms/83.3.532) |
-| NSQ | infinitely many primes of the form n² + 1 ([Landau's four problems](../03-Primes%20and%20Numbers/03-landau-problems.md)) | conjecture | open | — | 2026-11-23 | two prime factors at most, proved: [doi:10.1007/bf01578070](https://doi.org/10.1007/bf01578070) |
-| ABC | [The abc conjecture](../03-Primes%20and%20Numbers/04-abc-conjecture.md) | conjecture | claimed | 2012-08 | 2026-11-23 | [RIMS preprints 1756 to 1759](https://www.kurims.kyoto-u.ac.jp/preprint/preprint_y2012.html), published 2021: [doi:10.4171/PRIMS/57-1-1](https://doi.org/10.4171/PRIMS/57-1-1); disputed: [Scholze and Stix, 2018](https://www.math.uni-bonn.de/people/scholze/WhyABCisStillaConjecture.pdf) |
+| POINC | [The Poincare conjecture, solved](../02-The%20Millennium%20Problems/07-poincare-conjecture-solved.md) | conjecture | proved | 2006-07-25 | 2026-11-23 | full check by others, [preprint](https://arxiv.org/abs/math/0607607); [Clay prize, 2010-03-18](https://www.claymath.org/millennium/poincare-conjecture/) |
+| TWIN | [Twin primes](../03-Primes%20and%20Numbers/01-twin-primes-and-bounded-gaps.md) | conjecture | open | — | 2026-11-23 | gap 246 proved: [paper](https://doi.org/10.1186/s40687-014-0012-7) |
+| GOLD | [Goldbach](../03-Primes%20and%20Numbers/02-goldbach-conjecture.md) | conjecture | open | — | 2026-11-23 | checked to 4 × 10^18: [paper](https://doi.org/10.1090/S0025-5718-2013-02787-1) |
+| LEG | Legendre: a prime between consecutive squares ([Landau's four problems](../03-Primes%20and%20Numbers/03-landau-problems.md)) | conjecture | open | — | 2026-11-23 | best interval proved: [paper](https://doi.org/10.1112/plms/83.3.532) |
+| NSQ | infinitely many primes of the form n² + 1 ([Landau's four problems](../03-Primes%20and%20Numbers/03-landau-problems.md)) | conjecture | open | — | 2026-11-23 | two prime factors at most, proved: [paper](https://doi.org/10.1007/bf01578070) |
+| ABC | [The abc conjecture](../03-Primes%20and%20Numbers/04-abc-conjecture.md) | conjecture | claimed | 2012-08 | 2026-11-23 | [RIMS preprints 1756 to 1759](https://www.kurims.kyoto-u.ac.jp/preprint/preprint_y2012.html), published 2021: [paper](https://doi.org/10.4171/PRIMS/57-1-1); disputed: [Scholze and Stix, 2018](https://www.math.uni-bonn.de/people/scholze/WhyABCisStillaConjecture.pdf) |
 | BEAL | [Beal's conjecture](../03-Primes%20and%20Numbers/05-beal-conjecture.md) | conjecture | open | — | 2026-11-23 | [AMS prize page](https://www.ams.org/profession/prizes-awards/ams-supported/beal-prize) |
-| FLT | [Fermat's last theorem, proved in 1995 and reported formalised in 2026](../03-Primes%20and%20Numbers/06-fermats-last-theorem-formalised.md) | conjecture | proved | 1995-05 | 2026-11-23 | [doi:10.2307/2118559](https://doi.org/10.2307/2118559); claimed in lectures of 1993-06, [doi:10.1090/S0273-0979-1994-00512-9](https://doi.org/10.1090/S0273-0979-1994-00512-9). The 2026 Lean proof: compiled independently, [2026-09-04](https://wp.me/p9bxpM-10G) |
-| DIST | Distinct distances ([Erdos problems](../03-Primes%20and%20Numbers/07-erdos-problems-selected.md)): n points make at least about n/sqrt(log n) distances | conjecture | open | — | 2026-11-23 | at least c n/log n, proved: [doi:10.4007/annals.2015.181.1.2](https://doi.org/10.4007/annals.2015.181.1.2) |
-| UNIT | [The unit-distance problem](../04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): unit distances among many points grow barely faster than the number of points | conjecture | refuted | 2026-05-20 | 2026-11-23 | [arXiv:2605.20695](https://arxiv.org/abs/2605.20695): a write-up checked by nine mathematicians outside the announcement |
+| FLT | [Fermat's last theorem, proved in 1995 and reported formalised in 2026](../03-Primes%20and%20Numbers/06-fermats-last-theorem-formalised.md) | conjecture | proved | 1995-05 | 2026-11-23 | [paper](https://doi.org/10.2307/2118559); claimed in lectures of 1993-06, [paper](https://doi.org/10.1090/S0273-0979-1994-00512-9). The 2026 Lean proof: compiled independently, [2026-09-04](https://wp.me/p9bxpM-10G) |
+| DIST | Distinct distances ([Erdos problems](../03-Primes%20and%20Numbers/07-erdos-problems-selected.md)): n points make at least about n/sqrt(log n) distances | conjecture | open | — | 2026-11-23 | at least c n/log n, proved: [paper](https://doi.org/10.4007/annals.2015.181.1.2) |
+| SCH | [Schanuel's conjecture](../03-Primes%20and%20Numbers/08-schanuels-conjecture.md) | conjecture | open | — | 2026-11-25 | strongest proved case: [paper](https://doi.org/10.1070/SM1996v187n09ABEH000158) |
+| UNIT | [The unit-distance problem](../04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md): unit distances among many points grow barely faster than the number of points | conjecture | refuted | 2026-05-20 | 2026-11-23 | [preprint](https://arxiv.org/abs/2605.20695): a write-up checked by nine mathematicians outside the announcement |
 | KAK3 | [Kakeya](../04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md) in three dimensions | conjecture | proved | 2026-07-23 | 2026-11-23 | [Fields Medal 2026 citation](https://www.mathunion.org/imu-awards/fields-medal/fields-medals-2026) |
-| KAKN | [Kakeya](../04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md) in four or more dimensions | conjecture | open | — | 2026-11-23 | [arXiv:2502.17655](https://arxiv.org/abs/2502.17655) proves three only |
-| HN | [Colouring the plane](../04-Geometry%20and%20Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane.md): the exact number, 5, 6 or 7 | conjecture | open | — | 2026-11-23 | at least 5: [arXiv:1804.02385](https://arxiv.org/abs/1804.02385) |
-| CDC | [Cycle double cover](../04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md) | conjecture | claimed | 2026-07-10 | 2026-11-23 | an AI lab's note "A proof of the cycle double cover conjecture", file dated 2026-07-10, listed as reference 22 of the exposition [arXiv:2607.16356](https://arxiv.org/abs/2607.16356); exposition [arXiv:2607.15399](https://arxiv.org/abs/2607.15399); a separate claim, [arXiv:2607.14140](https://arxiv.org/abs/2607.14140), 2026-07-13; not refereed |
-| ER | Erdős–Rado sunflowers ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | open | — | 2026-11-23 | best bound: [doi:10.4007/annals.2021.194.3.5](https://doi.org/10.4007/annals.2021.194.3.5) |
-| ES | Erdős–Szemerédi sunflowers ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | claimed | 2026-10-19 | 2026-11-23 | [arXiv:2610.26686](https://arxiv.org/abs/2610.26686); not refereed |
-| UC | union-closed families ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | open | — | 2026-11-23 | constant fraction: [arXiv:2211.09055](https://arxiv.org/abs/2211.09055) |
-| SP8 | [Sphere packing, solved in dimensions 8 and 24](../04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): dimension 8 | conjecture | proved | 2017-05-01 | 2026-11-23 | [doi:10.4007/annals.2017.185.3.7](https://doi.org/10.4007/annals.2017.185.3.7) |
-| SP24 | [Sphere packing, solved in dimensions 8 and 24](../04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): dimension 24 | conjecture | proved | 2017-05-01 | 2026-11-23 | [doi:10.4007/annals.2017.185.3.8](https://doi.org/10.4007/annals.2017.185.3.8) |
-| COLL | [Collatz](../05-Analysis%20and%20Dynamics/02-collatz-conjecture.md) | conjecture | open | — | 2026-11-23 | almost all orbits: [doi:10.1017/fmp.2022.8](https://doi.org/10.1017/fmp.2022.8) |
-| Z23 | [The August 2026 zeta-zeros claim](../05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md): more than 67.25% of zeros are simple and on the line, proved without the Riemann hypothesis | theorem | claimed | 2026-08-10 | 2026-11-23 | the manuscript, dated 2026-08-10 and posted as [arXiv:2608.13637](https://arxiv.org/abs/2608.13637) on 2026-08-13, with Lean files reported; second proof [arXiv:2609.02882](https://arxiv.org/abs/2609.02882); not refereed |
+| KAKN | [Kakeya](../04-Geometry%20and%20Combinatorics/02-kakeya-and-restriction.md) in four or more dimensions | conjecture | open | — | 2026-11-23 | [preprint](https://arxiv.org/abs/2502.17655) proves three only |
+| HN | [Colouring the plane](../04-Geometry%20and%20Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane.md): the exact number, 5, 6 or 7 | conjecture | open | — | 2026-11-23 | at least 5: [preprint](https://arxiv.org/abs/1804.02385) |
+| CDC | [Cycle double cover](../04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md) | conjecture | claimed | 2026-07-10 | 2026-11-23 | an AI lab's note dated 2026-07-10, cited by the exposition [preprint](https://arxiv.org/abs/2607.16356); exposition [preprint](https://arxiv.org/abs/2607.15399); a separate claim of 2026-07-13, [preprint](https://arxiv.org/abs/2607.14140); not refereed |
+| ER | Erdős–Rado sunflowers ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | open | — | 2026-11-23 | best bound: [paper](https://doi.org/10.4007/annals.2021.194.3.5) |
+| ES | Erdős–Szemerédi sunflowers ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | claimed | 2026-10-19 | 2026-11-23 | [preprint](https://arxiv.org/abs/2610.26686); not refereed |
+| UC | union-closed families ([Sunflowers and union-closed families](../04-Geometry%20and%20Combinatorics/05-sunflower-and-union-closed-conjectures.md)) | conjecture | open | — | 2026-11-23 | constant fraction: [preprint](https://arxiv.org/abs/2211.09055) |
+| SP8 | [Sphere packing, solved in dimensions 8 and 24](../04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): dimension 8 | conjecture | proved | 2017-05-01 | 2026-11-23 | [paper](https://doi.org/10.4007/annals.2017.185.3.7) |
+| SP24 | [Sphere packing, solved in dimensions 8 and 24](../04-Geometry%20and%20Combinatorics/06-sphere-packing-and-viazovska.md): dimension 24 | conjecture | proved | 2017-05-01 | 2026-11-23 | [paper](https://doi.org/10.4007/annals.2017.185.3.8) |
+| SPZ | [The sum-product problem](../04-Geometry%20and%20Combinatorics/07-sum-product-problem.md) over the whole numbers | conjecture | open | — | 2026-11-25 | best refereed bound: [paper](https://doi.org/10.1017/S0305004121000633) |
+| SPR | [The sum-product problem](../04-Geometry%20and%20Combinatorics/07-sum-product-problem.md) over the real numbers | conjecture | claimed (no) | 2026-05-27 | 2026-11-25 | [preprint](https://arxiv.org/abs/2605.28781); not refereed |
+| S6 | [The six-sphere](../04-Geometry%20and%20Combinatorics/08-complex-structures-on-the-six-sphere.md) has a complex structure | theorem | claimed | 2026-09-29 | 2026-11-25 | an AI system's manuscript of 2026, read through the proof by others [preprint](https://arxiv.org/abs/2609.38442); not refereed |
+| CARA | [Caratheodory's conjecture](../04-Geometry%20and%20Combinatorics/09-caratheodory-conjecture.md): two round points on every convex surface | conjecture | open | — | 2026-11-25 | opposite claims, neither accepted: [preprint](https://arxiv.org/abs/0808.0851), [preprint](https://arxiv.org/abs/2610.34036) |
+| RAM | [Diagonal Ramsey numbers](../04-Geometry%20and%20Combinatorics/10-diagonal-ramsey-numbers.md): the growth base of R(k, k) | conjecture | open | — | 2026-11-25 | base below 4: [paper](https://doi.org/10.4007/annals.2026.203.3.4) |
+| SPC4 | [The smooth Poincare conjecture in dimension four](../04-Geometry%20and%20Combinatorics/11-smooth-four-dimensional-poincare-conjecture.md) | conjecture | open | — | 2026-11-25 | an outline, not accepted: [preprint](https://arxiv.org/abs/2209.09968) |
+| HADW | [Hadwiger's conjecture](../04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md) | conjecture | open | — | 2026-11-25 | t log log t colours: [paper](https://doi.org/10.1090/jams/1047) |
+| SOFA | moving sofa ([Two shape puzzles settled](../04-Geometry%20and%20Combinatorics/13-moving-sofa-and-ruperts-problem.md)): Gerver's sofa is largest | theorem | claimed | 2024-11-29 | 2026-11-25 | [preprint](https://arxiv.org/abs/2411.19826); not refereed |
+| RUP | Rupert ([Two shape puzzles settled](../04-Geometry%20and%20Combinatorics/13-moving-sofa-and-ruperts-problem.md)): every convex polyhedron is Rupert | conjecture | refuted | 2026-07-13 | 2026-11-25 | [preprint](https://arxiv.org/abs/2508.18475); [Lean proof](https://github.com/jcreedcmu/Noperthedron) by others |
+| HSC | [The Hilbert-Smith conjecture](../04-Geometry%20and%20Combinatorics/14-hilbert-smith-conjecture.md), dimension 4 and up | conjecture | open | — | 2026-11-25 | dimension 3 proved: [paper](https://doi.org/10.1090/S0894-0347-2013-00766-3) |
+| COLL | [Collatz](../05-Analysis%20and%20Dynamics/02-collatz-conjecture.md) | conjecture | open | — | 2026-11-23 | almost all orbits: [paper](https://doi.org/10.1017/fmp.2022.8) |
+| Z23 | [The August 2026 zeta-zeros claim](../05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md): more than 67.25% of zeros are simple and on the line, proved without the Riemann hypothesis | theorem | claimed | 2026-08-10 | 2026-11-23 | the manuscript, dated 2026-08-10 and posted as [preprint](https://arxiv.org/abs/2608.13637) on 2026-08-13, with Lean files reported; second proof [preprint](https://arxiv.org/abs/2609.02882); not refereed |
 | JAC3 | [The Jacobian conjecture](../05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md), three or more variables | conjecture | refuted | 2026-07-20 | 2026-11-23 | [Isabelle formal check](https://isa-afp.org/entries/Jacobian_Counterexample.html) by others; its three points with one image rechecked exactly by the code below |
 | JAC2 | [The Jacobian conjecture](../05-Analysis%20and%20Dynamics/04-jacobian-conjecture.md), two variables | conjecture | open | — | 2026-11-23 | the same entry makes no claim here |
-| SOFIC | [Two algebra questions](../05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): every group is sofic | conjecture | claimed (no) | 2026-08-01 | 2026-11-23 | an AI lab's announcement of 2026-08-01, dated by [arXiv:2608.02025](https://arxiv.org/abs/2608.02025); follow-up [arXiv:2608.06222](https://arxiv.org/abs/2608.06222); not refereed |
-| KOTHE | [Two algebra questions](../05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): Köthe | conjecture | claimed (no) | 2026-09-07 | 2026-11-23 | [arXiv:2609.07996](https://arxiv.org/abs/2609.07996); not refereed |
-| PERC | [Percolation](../05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): none at the threshold, dimensions 3 to 10 | conjecture | claimed | 2026-08-28 | 2026-11-23 | a Lean proof with a 15-page summary, posted by an AI lab on 2026-08-28 (repository formal-math, commit 795efb86); notes by others [arXiv:2610.10502](https://arxiv.org/abs/2610.10502), [arXiv:2610.30063](https://arxiv.org/abs/2610.30063); not refereed |
-| IGP | [The inverse Galois problem](../06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md) | conjecture | open | — | 2026-11-23 | [doi:10.1007/978-3-662-55420-3](https://doi.org/10.1007/978-3-662-55420-3) |
-| M23 | [The inverse Galois problem](../06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md) for the Mathieu group M23 | conjecture | claimed | 2026-08-09 | 2026-11-23 | [arXiv:2608.08538](https://arxiv.org/abs/2608.08538); not refereed |
-| CH | [The continuum hypothesis](../06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): independent of ZFC | theorem | proved | 1963-12 | 2026-11-23 | Gödel, [doi:10.1073/pnas.24.12.556](https://doi.org/10.1073/pnas.24.12.556), and Cohen, [doi:10.1073/pnas.50.6.1143](https://doi.org/10.1073/pnas.50.6.1143) |
-| UGC | [The unique games conjecture](../06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md) | conjecture | open | — | 2026-11-23 | the 2-to-2 case proved: [doi:10.4007/annals.2023.198.1.1](https://doi.org/10.4007/annals.2023.198.1.1) |
-| GI | [Graph isomorphism](../06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md) in quasipolynomial time | theorem | proved | 2017-01-16 | 2026-11-23 | [arXiv:1512.03547](https://arxiv.org/abs/1512.03547); independent check [arXiv:1701.04372](https://arxiv.org/abs/1701.04372) |
-| BQP | [Quantum advantage](01-quantum-supremacy-and-bqp.md): BPP differs from BQP | conjecture | open | — | 2026-11-23 | [doi:10.1137/S0097539796300921](https://doi.org/10.1137/S0097539796300921) |
-| ROUGH | [Open questions in finance mathematics](03-rough-volatility-and-open-finance-questions.md): volatility is rough | model | open | — | 2026-11-23 | for: [doi:10.1080/14697688.2017.1393551](https://doi.org/10.1080/14697688.2017.1393551); against: [doi:10.1007/s13571-024-00322-2](https://doi.org/10.1007/s13571-024-00322-2) |
-| OT | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): if the starting distribution has a density, the best plan for squared distance is a map | theorem | proved | 1991-06 | 2026-11-23 | [doi:10.1002/cpa.3160440402](https://doi.org/10.1002/cpa.3160440402) |
-| GEN | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why networks that can fit random labels predict well on real ones | conjecture | open | — | 2026-11-23 | the question: [doi:10.1145/3446776](https://doi.org/10.1145/3446776) |
-| DDES | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why test error falls again once a model fits every training example (double descent) | conjecture | open | — | 2026-11-23 | the curve, seen in experiments: [doi:10.1073/pnas.1903070116](https://doi.org/10.1073/pnas.1903070116) |
-| MF | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): under the paper's assumptions, training a two-layer network tends, as its width grows, to a gradient flow in the Wasserstein geometry | theorem | proved | 2018-07-27 | 2026-11-23 | [doi:10.1073/pnas.1806579115](https://doi.org/10.1073/pnas.1806579115); preprint [arXiv:1804.06561](https://arxiv.org/abs/1804.06561), 2018-04-18 |
-| SGD | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why training by stochastic gradient descent (small downhill steps on random batches of data) finds good networks | conjecture | open | — | 2026-11-23 | the question: [doi:10.1073/pnas.1806579115](https://doi.org/10.1073/pnas.1806579115) |
+| SOFIC | [Two algebra questions](../05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): every group is sofic | conjecture | claimed (no) | 2026-08-01 | 2026-11-23 | an AI lab's announcement of 2026-08-01, dated by [preprint](https://arxiv.org/abs/2608.02025); follow-up [preprint](https://arxiv.org/abs/2608.06222); not refereed |
+| KOTHE | [Two algebra questions](../05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): Köthe | conjecture | claimed (no) | 2026-09-07 | 2026-11-23 | [preprint](https://arxiv.org/abs/2609.07996); not refereed |
+| PERC | [Percolation](../05-Analysis%20and%20Dynamics/06-dying-percolation-and-critical-phenomena.md): none at the threshold, dimensions 3 to 10 | conjecture | claimed | 2026-08-28 | 2026-11-23 | a Lean proof with a 15-page summary, posted by an AI lab on 2026-08-28; notes by others [preprint](https://arxiv.org/abs/2610.10502), [preprint](https://arxiv.org/abs/2610.30063); not refereed |
+| HILB6B | [Hilbert's sixth problem](../05-Analysis%20and%20Dynamics/07-hilberts-sixth-problem-boltzmann-and-fluids.md): Newton to Boltzmann in all of space | theorem | proved | 2025-10-31 | 2026-11-25 | [Annals page](https://annals.math.princeton.edu/articles/22284); [preprint](https://arxiv.org/abs/2408.07818) |
+| HILB6F | [Hilbert's sixth problem](../05-Analysis%20and%20Dynamics/07-hilberts-sixth-problem-boltzmann-and-fluids.md): periodic box, and the fluid chain | theorem | claimed | 2025-03-03 | 2026-11-25 | [preprint](https://arxiv.org/abs/2503.01800); not refereed |
+| IGP | [The inverse Galois problem](../06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md) | conjecture | open | — | 2026-11-23 | [paper](https://doi.org/10.1007/978-3-662-55420-3) |
+| M23 | [The inverse Galois problem](../06-Algebra%2C%20Logic%20and%20Computation/01-inverse-galois-problem.md) for the Mathieu group M23 | conjecture | claimed | 2026-08-09 | 2026-11-23 | [preprint](https://arxiv.org/abs/2608.08538); not refereed |
+| CH | [The continuum hypothesis](../06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): independent of ZFC | theorem | proved | 1963-12 | 2026-11-23 | Gödel, [paper](https://doi.org/10.1073/pnas.24.12.556), and Cohen, [paper](https://doi.org/10.1073/pnas.50.6.1143) |
+| UGC | [The unique games conjecture](../06-Algebra%2C%20Logic%20and%20Computation/03-unique-games-conjecture.md) | conjecture | open | — | 2026-11-23 | the 2-to-2 case proved: [paper](https://doi.org/10.4007/annals.2023.198.1.1) |
+| GI | [Graph isomorphism](../06-Algebra%2C%20Logic%20and%20Computation/04-graph-isomorphism.md) in quasipolynomial time | theorem | proved | 2017-01-16 | 2026-11-23 | [preprint](https://arxiv.org/abs/1512.03547); independent check [preprint](https://arxiv.org/abs/1701.04372) |
+| LANG | [The Langlands program](../06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): reciprocity over the rationals | conjecture | open | — | 2026-11-25 | [paper](https://doi.org/10.1007/BFb0079065) |
+| GLANG | [The Langlands program](../06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): geometric, characteristic 0 | theorem | proved | 2025 | 2026-11-25 | [preprint](https://arxiv.org/abs/2405.03599) and four sequels; [2025 Breakthrough Prize](https://breakthroughprize.org/Laureates/3/L3979) |
+| H10K | [Hilbert's tenth problem beyond the integers](../06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md) over every ring of integers: no method | theorem | proved | 2025-12-01 | 2026-11-25 | [paper](https://doi.org/10.1007/s00222-025-01392-3); [paper](https://doi.org/10.1090/jams/1081) |
+| H10Q | [Hilbert's tenth problem beyond the integers](../06-Algebra%2C%20Logic%20and%20Computation/07-hilberts-tenth-problem-over-number-fields.md) over the rationals | conjecture | open | — | 2026-11-25 | [paper](https://doi.org/10.1090/S0894-0347-03-00433-8) |
+| AOC | [Andre-Oort and o-minimality](../06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md) for any number of coordinates | theorem | proved | 2011 | 2026-11-25 | [paper](https://doi.org/10.4007/annals.2011.173.3.11) |
+| AOS | [Andre-Oort and o-minimality](../06-Algebra%2C%20Logic%20and%20Computation/08-andre-oort-and-o-minimality.md) for all Shimura varieties | theorem | claimed | 2021-09-18 | 2026-11-25 | [preprint](https://arxiv.org/abs/2109.08788); no journal version |
+| CONN | Connes' embedding problem, answered no by [MIP* = RE](../06-Algebra%2C%20Logic%20and%20Computation/09-mip-star-equals-re-and-connes-embedding.md) | conjecture | refuted | 2026-10-16 | 2026-11-25 | [preprint](https://arxiv.org/abs/2001.04383), version 4: accepted by the *Annals of Mathematics* |
+| BQP | [Quantum advantage](01-quantum-supremacy-and-bqp.md): BPP differs from BQP | conjecture | open | — | 2026-11-23 | [paper](https://doi.org/10.1137/S0097539796300921) |
+| ROUGH | [Open questions in finance mathematics](03-rough-volatility-and-open-finance-questions.md): volatility is rough | model | open | — | 2026-11-23 | for: [paper](https://doi.org/10.1080/14697688.2017.1393551); against: [paper](https://doi.org/10.1007/s13571-024-00322-2) |
+| OT | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): if the starting distribution has a density, the best plan for squared distance is a map | theorem | proved | 1991-06 | 2026-11-23 | [paper](https://doi.org/10.1002/cpa.3160440402) |
+| GEN | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why networks that can fit random labels predict well on real ones | conjecture | open | — | 2026-11-23 | the question: [paper](https://doi.org/10.1145/3446776) |
+| DDES | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why test error falls again once a model fits every training example (double descent) | conjecture | open | — | 2026-11-23 | the curve, seen in experiments: [paper](https://doi.org/10.1073/pnas.1903070116) |
+| MF | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): under the paper's assumptions, training a wide two-layer network tends to a Wasserstein gradient flow | theorem | proved | 2018-07-27 | 2026-11-23 | [paper](https://doi.org/10.1073/pnas.1806579115); [preprint](https://arxiv.org/abs/1804.06561), 2018-04-18 |
+| SGD | [Optimal transport](04-optimal-transport-and-machine-learning-theory.md): why training by stochastic gradient descent (small downhill steps on random batches of data) finds good networks | conjecture | open | — | 2026-11-23 | the question: [paper](https://doi.org/10.1073/pnas.1806579115) |
 
 "Claimed (no)" means the claim is a disproof: the answer claimed is no. The register stores it as the status word claimed.
 
@@ -133,15 +153,15 @@ Each row is checked again after a fixed period that depends on its status:
 | $`s_r`$ | the status of row $`r`$ now | claimed, for NS | — |
 | $`L(s_r)`$ | the recheck period for that status | 30 days for claimed | rows go stale for longer |
 | $`\mathrm{due}(r)`$ | the date of the next check | 2026-12-23 for NS | — |
-| $`k`$ | a count of log entries, read oldest first, in the fold below | 12, up to the GI withdrawal | — |
-| $`S_k`$ | the state of every row after the first $`k`$ log entries; $`S_0`$ is all open | $`S_{31}`$ equals the table | — |
+| $`k`$ | a count of log entries, read oldest first, in the fold below | 13, up to the GI withdrawal | — |
+| $`S_k`$ | the state of every row after the first $`k`$ log entries; $`S_0`$ is all open | $`S_{47}`$ equals the table | — |
 
 ### When it holds
 
-- **Every status has a primary source.** Without one, a row gets no status, only "no primary source found as of" a date. The syllabus's "claimed" for dying percolation lacked a source until the 2026-08-28 Lean proof was found.
+- **Every status has a primary source.** Without one, a row gets no status, only "no primary source found as of" a date.
 - **A log entry carries the date of its source, not the date it was typed.** Otherwise replay puts events in the order someone noticed them, and the 2017 withdrawal of graph isomorphism could land after its restoration.
 - **Only the four words are used.** A fifth word such as "essentially solved" cannot be counted, compared or replayed.
-- **The rule is applied as written.** If an announcement counts as acceptance, the register reports 21 settled rows instead of 12.
+- **The rule is applied as written.** If an announcement counts as acceptance, the register reports 32 settled rows instead of 18.
 - **Custodians' words stay theirs.** Clay's "Active" is quoted beside RH; it is not translated into a status.
 
 ---
@@ -156,7 +176,7 @@ Each row is checked again after a fixed period that depends on its status:
 
 The rule reads two fields: what is claimed, and who accepted it. The first is a fact about the sources. The second is a judgement, so the register fixes the test it uses. A source counts as independent acceptance when it is a refereed paper, a prize, a certification that reruns a formal proof and matches its statement (RH), or a write-up by people outside the claim who say they checked the original argument (Morgan and Tian for POINC, the nine mathematicians for UNIT). A new proof by others that is not refereed is a second claim: evidence, not acceptance (the notes on PERC, the second proof for Z23).
 
-Two people who apply this test to the same sources write the same word. A reader with a stricter test, one who waits for a refereed paper, writes open for RH. The code applies the rule to all 44 rows and compares the result with the status typed in each row. They agree.
+Two people who apply this test to the same sources write the same word. A reader with a stricter test, one who waits for a refereed paper, writes open for RH. The code applies the rule to all 64 rows and compares the result with the status typed in each row. They agree.
 
 ### Step 2: the table is a summary of the log
 
@@ -175,7 +195,7 @@ Suppose instead someone adds an entry whose old word is wrong, for example "open
 
 ### Step 3: replaying to an earlier date rebuilds the past
 
-Stop the replay at any date and the result is the register as it stood then, by the sources it cites: a row turns claimed at its first primary claim and proved or refuted at its first independent acceptance. CH and OT enter at the refereed papers cited, with no claimed stage before them. Stopping at 2026-09-13 gives two rows that differ from today: RH and ES. PERC was already claimed then: its Lean proof was posted on 2026-08-28. Statuses can go down as well as up: graph isomorphism went from proved, by a refereed conference paper, back to open on 2017-01-04. So replay must apply every entry, not only upgrades.
+Stop the replay at any date and the result is the register as it stood then, by the sources it cites: a row turns claimed at its first primary claim and proved or refuted at its first independent acceptance. CH and OT enter at the refereed papers cited, with no claimed stage before them. Stopping at 2026-09-13 gives four rows that differ from today: RH, ES, S6 and CONN. Statuses can go down as well as up: graph isomorphism went from proved, by a refereed conference paper, back to open on 2017-01-04. So replay must apply every entry, not only upgrades.
 
 ### Step 4: claims move fast, so they are checked often
 
@@ -187,25 +207,25 @@ A claimed row can change within days, as graph isomorphism did. Open and proved 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| rows | one per problem or case, shelves 02 to 07 | 44 |
-| open | BSD, PNP, HODGE, YM, TWIN, GOLD, LEG, NSQ, BEAL, DIST, KAKN, HN, ER, UC, COLL, JAC2, IGP, UGC, BQP, ROUGH, GEN, DDES, SGD | 23 |
-| claimed | NS, ABC, CDC, ES, Z23, SOFIC, KOTHE, PERC, M23 | 9 |
-| proved | RH, POINC, FLT, KAK3, SP8, SP24, CH, GI, OT, MF | 10 |
-| refuted | UNIT, JAC3 | 2 |
-| age of the 2026-09-13 snapshot | 17 days left in September + 31 + 23 | 71 days |
-| changes since that snapshot | RH open to proved, ES open to claimed | 2 |
-| next check, claimed rows | 2026-11-23 + 30 days | 2026-12-23 |
-| next check, other rows | 2026-11-23 + 365 days, no 29 February in between | 2027-11-23 |
-| **the register** | 23 + 9 + 10 + 2 | **44 rows: 23 open, 9 claimed, 10 proved, 2 refuted** |
+| rows | one per problem or case, shelves 02 to 07 | 64 |
+| open | BSD, PNP, HODGE, YM, TWIN, GOLD, LEG, NSQ, BEAL, DIST, SCH, KAKN, HN, ER, UC, SPZ, CARA, RAM, SPC4, HADW, HSC, COLL, JAC2, IGP, UGC, LANG, H10Q, BQP, ROUGH, GEN, DDES, SGD | 32 |
+| claimed | NS, ABC, CDC, ES, SPR, S6, SOFA, Z23, SOFIC, KOTHE, PERC, HILB6F, M23, AOS | 14 |
+| proved | RH, POINC, FLT, KAK3, SP8, SP24, HILB6B, CH, GI, GLANG, H10K, AOC, OT, MF | 14 |
+| refuted | UNIT, RUP, JAC3, CONN | 4 |
+| age of the 2026-09-13 snapshot | 17 days left in September + 31 + 25 | 73 days |
+| changes since that snapshot | RH open to proved, ES and S6 open to claimed, CONN claimed to refuted | 4 |
+| next check, claimed rows checked 2026-11-23 | 2026-11-23 + 30 days | 2026-12-23 |
+| next check, other rows checked 2026-11-23 | 2026-11-23 + 365 days, no 29 February in between | 2027-11-23 |
+| **the register** | 32 + 14 + 14 + 4 | **64 rows: 32 open, 14 claimed, 14 proved, 4 refuted** |
 
-So as of 2026-11-23, 12 of the 44 rows are settled, and the 9 claimed rows are due again on 2026-12-23.
+So as of 2026-11-25, 18 of the 64 rows are settled. The 9 claimed rows checked 2026-11-23 are due again on 2026-12-23; the 5 checked 2026-11-25, two days later.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Count every claim as accepted | 21 rows proved or refuted, not 12 | An announcement, a preprint or the authors' own Lean file is not independent acceptance |
-| Count abc's journal and ignore the published dispute | 11 rows proved, not 10 | A refereed paper with a named, published objection stays claimed |
+| Count every claim as accepted | 32 rows proved or refuted, not 18 | An announcement, a preprint or the authors' own Lean file is not independent acceptance |
+| Count abc's journal and ignore the published dispute | 15 rows proved, not 14 | A refereed paper with a named, published objection stays claimed |
 | Never let a status go down | GI on 2017-01-05 reads proved; it was open | The author withdrew the claim on 2017-01-04 |
 | One 365-day recheck period for every row | claimed rows due 2027-11-23, 335 days late | Claims change in days; a year-old "claimed" may be withdrawn or accepted |
 
@@ -229,24 +249,32 @@ Five days passed between withdrawal and repair. A register checked once a year w
 
 | Date | Row | Change | Date | Row | Change |
 | --- | --- | --- | --- | --- | --- |
-| 1963-12 | CH | open → proved | 2018-04-18 | MF | open → claimed |
-| 1991-06 | OT | open → proved | 2018-07-27 | MF | claimed → proved |
+| 1963-12 | CH | open → proved | 2024-12-02 | H10K | open → claimed |
+| 1991-06 | OT | open → proved | 2025 | GLANG | claimed → proved |
 | 1993-06 | FLT | open → claimed | 2025-02-24 | KAK3 | open → claimed |
-| 1995-05 | FLT | claimed → proved | 2026-05-20 | UNIT | open → refuted |
-| 2002-11-11 | POINC | open → claimed | 2026-07-10 | CDC | open → claimed |
-| 2006-07-25 | POINC | claimed → proved | 2026-07-20 | JAC3 | open → refuted |
-| 2012-08 | ABC | open → claimed | 2026-07-23 | KAK3 | claimed → proved |
-| 2015-12-11 | GI | open → claimed | 2026-08-01 | SOFIC | open → claimed |
-| 2016-03-14 | SP8 | open → claimed | 2026-08-09 | M23 | open → claimed |
-| 2016-03-21 | SP24 | open → claimed | 2026-08-10 | Z23 | open → claimed |
-| 2016-06-19 | GI | claimed → proved | 2026-08-28 | PERC | open → claimed |
-| 2017-01-04 | GI | proved → open | 2026-09-07 | KOTHE | open → claimed |
-| 2017-01-09 | GI | open → claimed | 2026-09-08 | NS | open → claimed |
-| 2017-01-16 | GI | claimed → proved | 2026-10-19 | ES | open → claimed |
-| 2017-05-01 | SP8 | claimed → proved | 2026-11-21 | RH | open → proved |
-| 2017-05-01 | SP24 | claimed → proved | | | |
+| 1995-05 | FLT | claimed → proved | 2025-03-03 | HILB6F | open → claimed |
+| 2002-11-11 | POINC | open → claimed | 2025-08-25 | RUP | open → claimed |
+| 2006-07-25 | POINC | claimed → proved | 2025-10-31 | HILB6B | claimed → proved |
+| 2011 | AOC | open → proved | 2025-12-01 | H10K | claimed → proved |
+| 2012-08 | ABC | open → claimed | 2026-05-20 | UNIT | open → refuted |
+| 2015-12-11 | GI | open → claimed | 2026-05-27 | SPR | open → claimed |
+| 2016-03-14 | SP8 | open → claimed | 2026-07-10 | CDC | open → claimed |
+| 2016-03-21 | SP24 | open → claimed | 2026-07-13 | RUP | claimed → refuted |
+| 2016-06-19 | GI | claimed → proved | 2026-07-20 | JAC3 | open → refuted |
+| 2017-01-04 | GI | proved → open | 2026-07-23 | KAK3 | claimed → proved |
+| 2017-01-09 | GI | open → claimed | 2026-08-01 | SOFIC | open → claimed |
+| 2017-01-16 | GI | claimed → proved | 2026-08-09 | M23 | open → claimed |
+| 2017-05-01 | SP8 | claimed → proved | 2026-08-10 | Z23 | open → claimed |
+| 2017-05-01 | SP24 | claimed → proved | 2026-08-28 | PERC | open → claimed |
+| 2018-04-18 | MF | open → claimed | 2026-09-07 | KOTHE | open → claimed |
+| 2018-07-27 | MF | claimed → proved | 2026-09-08 | NS | open → claimed |
+| 2020-01 | CONN | open → claimed | 2026-09-29 | S6 | open → claimed |
+| 2021-09-18 | AOS | open → claimed | 2026-10-16 | CONN | claimed → refuted |
+| 2024-05-06 | GLANG | open → claimed | 2026-10-19 | ES | open → claimed |
+| 2024-08-14 | HILB6B | open → claimed | 2026-11-21 | RH | open → proved |
+| 2024-11-29 | SOFA | open → claimed | | | |
 
-CH and OT enter at the refereed papers this register cites. FLT enters claimed at the lectures of 1993-06 and proved at the refereed papers of 1995-05. POINC becomes proved at the first full check by others, 2006-07-25, not at the 2010 prize.
+CH and OT enter at the refereed papers this register cites. FLT enters claimed at the lectures of 1993-06 and proved at the refereed papers of 1995-05. POINC becomes proved at the first full check by others, 2006-07-25, not at the 2010 prize. AOC enters at Pila's refereed paper of 2011, and GLANG turns proved at its 2025 prize, dated to the year.
 
 ### How long a claim waits
 
@@ -258,7 +286,7 @@ SP8    2016-03-14 to 2017-05-01  ██████████                 
 GI     2017-01-04 to 2017-01-09  ▏                                    5
 ```
 
-Poincaré's row waited 1,352 days, from the first preprint to the first full check by others; the Clay prize followed in 2010. Every 2026 claim in this register is younger than one year, so a claimed row is not a stalled one.
+Poincaré's row waited 1,352 days. Every 2026 claim in this register is younger than one year, so a claimed row is not a stalled one.
 
 ### The whole register over time
 
@@ -266,28 +294,26 @@ Poincaré's row waited 1,352 days, from the first preprint to the first full che
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
 xychart-beta
     title "Rows claimed and rows settled, replaying the log"
-    x-axis "End of year (last point: 2026-11-23)" ["1995", "2000", "2005", "2010", "2015", "2020", "2025", "2026-11-23"]
-    y-axis "Rows" 0 --> 14
-    line [0, 0, 1, 0, 2, 1, 2, 9]
-    line [3, 3, 3, 4, 4, 8, 8, 12]
+    x-axis "End of year (last point: 2026-11-25)" ["1995", "2000", "2005", "2010", "2015", "2020", "2025", "2026-11-25"]
+    y-axis "Rows" 0 --> 20
+    line [0, 0, 1, 0, 2, 2, 7, 14]
+    line [3, 3, 3, 4, 5, 9, 12, 18]
 ```
 
-Orange: rows claimed. Green: rows proved or refuted. Each point is the log replayed to that date. In 2026 claims jump to 9, while settled rows move from 8 to 12.
+Orange: rows claimed. Green: rows proved or refuted. Each point is the log replayed to that date. Claims rise from 2 in 2020 to 14 now, while settled rows move from 9 to 18.
 
 ### Corrections to labels found while building the register
 
-- **The "dying percolation" lead.** The syllabus called it claimed with no source. The word was right; only the source was missing. It is now found: a Lean proof with a 15-page summary, commit 795efb86 of 2026-08-28 in an AI lab's public repository. Row PERC is claimed from that date, not from a second lab's preprints of 2026-09-24.
-- **Dates moved to the first primary source.** abc is claimed from 2012-08, when the IUT preprints were posted, not from their 2021-03-04 journal date. Cycle double cover is claimed from 2026-07-10, the AI lab's own note, not from 2026-07-16, the first exposition. Poincaré is proved from 2006-07-25, the first full check by others, not from the 2010-03-18 prize.
-- **The zeta-zeros claim.** Claimed from 2026-08-10, the date printed on the manuscript posted on 2026-08-13, not from 2026-09-02, the second proof. The statement now follows from row RH through Montgomery and Taylor's bound; the row tracks the August proof, which avoids the hypothesis and is unrefereed. So it stays claimed, as on [The August 2026 zeta-zeros claim](../05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md).
-- **The unit-distance problem.** A write-up checked by nine mathematicians outside the announcement is independent acceptance, so row UNIT is refuted, as on [The unit-distance problem](../04-Geometry%20and%20Combinatorics/01-unit-distance-problem.md).
-- **Graph isomorphism.** The refereed STOC paper of 2016-06-19 made the row proved before the 2017 withdrawal, so the withdrawal moved a proved row back to open.
-- **The Riemann hypothesis.** Open until 2026-11-21, then proved: the certification of that day reruns the formal proof and matches it to Mathlib's statement, the kind of independent acceptance the rule names. [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md) records the same. Clay's "Active" stays quoted beside the row, not translated.
+- **The "dying percolation" lead.** The syllabus called it claimed with no source. The word was right; only the source was missing. It is now found: a Lean proof with a 15-page summary, commit 795efb86 of 2026-08-28 in an AI lab's public repository. Row PERC is claimed from that date.
+- **Dates moved to the first primary source.** abc is claimed from 2012-08, when the IUT preprints were posted, not from their 2021-03-04 journal date. Cycle double cover is claimed from 2026-07-10, the AI lab's own note, not from 2026-07-16, the first exposition.
+- **The zeta-zeros claim.** Claimed from 2026-08-10, the manuscript's date. The statement now follows from row RH, but the row tracks the unrefereed August proof, which avoids the hypothesis. So it stays claimed, as on [The August 2026 zeta-zeros claim](../05-Analysis%20and%20Dynamics/03-zeta-zero-proportion-2026.md).
+- **The Riemann hypothesis.** Proved from 2026-11-21, the certification that reruns the formal proof, as [The Riemann hypothesis](../02-The%20Millennium%20Problems/01-riemann-hypothesis.md) records.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The register is typed in twice: once as rows with their evidence, once as a dated log. The code takes **three independent roads** to the 44 statuses and checks they agree: the rule applied to the evidence, the status typed in each row, and the log replayed from all-open. Day counts are computed two ways, by a closed formula and by adding up months. Replaying the log to the end of every fifth year gives the chart's points. Then it checks a slice of small cases that rows rest on, and recomputes the Jacobian counterexample of row JAC3 exactly: three points with one image, a determinant of −2 at 343 grid points by worked derivatives, and the same determinant again by central differences. Every assert checks an instance or an agreement, never a conjecture.
+The register is typed in twice: once as rows with their evidence, once as a dated log. The code takes **three independent roads** to the 64 statuses and checks they agree: the rule applied to the evidence, the status typed in each row, and the log replayed from all-open. Day counts are computed two ways, by a closed formula and by adding up months. Replaying the log to the end of every fifth year gives the chart's points. Then it checks a slice of small cases that rows rest on, and recomputes the Jacobian counterexample of row JAC3 exactly: three points with one image, a determinant of −2 at 343 grid points by worked derivatives, and the same determinant again by central differences. Every assert checks an instance or an agreement, never a conjecture.
 
 ### Python
 
@@ -297,25 +323,29 @@ The register is typed in twice: once as rows with their evidence, once as a date
 # Roads: status rule vs rows, log replay vs rows, two day counts, small cases.
 from fractions import Fraction as Fr
 
-TODAY, SNAP = "2026-11-23", "2026-09-13"
+TODAY, SNAP, CHK = "2026-11-25", "2026-09-13", "2026-11-23"
 # id kind status claim accept.  kind: C conjecture, T theorem, M model.
 # status: o open, c claimed, p proved, r refuted.  claim: - none, P proof, D disproof.
 # accept: - none, A authors only, X disputed, I independent (refereed, prize, formal rerun).
-ROWS = """RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -
-POINC C p P I  TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X
-BEAL C o - -  FLT C p P I  DIST C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -
-HN C o - -  CDC C c P A  ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I
-COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A
-PERC C c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+ROWS = """RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -  POINC C p P I
+TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X  BEAL C o - -  FLT C p P I
+DIST C o - -  SCH C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -  HN C o - -  CDC C c P A
+ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I  SPZ C o - -  SPR C c D A  S6 T c P A
+CARA C o - -  RAM C o - -  SPC4 C o - -  HADW C o - -  SOFA T c P A  RUP C r D I  HSC C o - -
+COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A  PERC C c P A
+HILB6B T p P I  HILB6F T c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+LANG C o - -  GLANG T p P I  H10K T p P I  H10Q C o - -  AOC T p P I  AOS T c P A  CONN C r D I
 BQP C o - -  ROUGH M o - -  OT T p P I  GEN C o - -  DDES C o - -  MF T p P I  SGD C o - -"""
-LOG = """1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p
-2002-11-11 POINC o c|2006-07-25 POINC c p|2012-08 ABC o c|2015-12-11 GI o c
-2016-03-14 SP8 o c|2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o
-2017-01-09 GI o c|2017-01-16 GI c p|2017-05-01 SP8 c p|2017-05-01 SP24 c p
-2018-04-18 MF o c|2018-07-27 MF c p|2025-02-24 KAK3 o c|2026-05-20 UNIT o r
-2026-07-10 CDC o c|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c
-2026-08-09 M23 o c|2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c
-2026-09-08 NS o c|2026-10-19 ES o c|2026-11-21 RH o p"""
+LOG = """1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p|2002-11-11 POINC o c
+2006-07-25 POINC c p|2011 AOC o p|2012-08 ABC o c|2015-12-11 GI o c|2016-03-14 SP8 o c
+2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o|2017-01-09 GI o c|2017-01-16 GI c p
+2017-05-01 SP8 c p|2017-05-01 SP24 c p|2018-04-18 MF o c|2018-07-27 MF c p|2020-01 CONN o c
+2021-09-18 AOS o c|2024-05-06 GLANG o c|2024-08-14 HILB6B o c|2024-11-29 SOFA o c
+2024-12-02 H10K o c|2025 GLANG c p|2025-02-24 KAK3 o c|2025-03-03 HILB6F o c|2025-08-25 RUP o c
+2025-10-31 HILB6B c p|2025-12-01 H10K c p|2026-05-20 UNIT o r|2026-05-27 SPR o c|2026-07-10 CDC o c
+2026-07-13 RUP c r|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c|2026-08-09 M23 o c
+2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c|2026-09-08 NS o c|2026-09-29 S6 o c
+2026-10-16 CONN c r|2026-10-19 ES o c|2026-11-21 RH o p"""
 w = ROWS.split()
 rows = {w[i]: tuple(w[i + 1:i + 5]) for i in range(0, len(w), 5)}
 log = [tuple(e.split()) for e in LOG.replace("\n", "|").split("|")]
@@ -356,7 +386,7 @@ def date(n):                                # inverse of days(), found by counti
     while m < 12 and days(f"{y}-{m + 1:02d}-01") <= n: m += 1
     return f"{y}-{m:02d}-{n - days(f'{y}-{m:02d}-01') + 1:02d}"
 
-print(f"register as of {TODAY}: {len(rows)} rows, every row checked {TODAY}")
+print(f"register as of {TODAY}: {len(rows)} rows, each checked {CHK} or {TODAY}")
 assert all(rule(c, a) == s for k, s, c, a in rows.values()), "status rule disagrees with a row"
 now = replay(TODAY)
 assert now == {k: v[1] for k, v in rows.items()}, "log replay disagrees with the rows"
@@ -371,9 +401,9 @@ print(f"changed between {SNAP} and {TODAY}: " + ", ".join(f"{k} {NAME[old[k]]}>{
 for a, b in [(SNAP, TODAY), ("2002-11-11", "2006-07-25"), ("2017-01-04", "2017-01-09"), ("2016-03-14", "2017-05-01"), ("2025-02-24", "2026-07-23")]:
     assert days(b) - days(a) == days_loop(b) - days_loop(a)
     print(f"days {a} to {b}: {days(b) - days(a)}")
-due = {s: date(days(TODAY) + L) for s, L in [("c", 30), ("o", 365)]}
-assert days(due["o"]) - days(TODAY) == 365 and date(days("2017-01-09")) == "2017-01-09"
-print(f"next recheck: claimed rows {due['c']}, all other rows {due['o']}")
+due = {s: date(days(CHK) + L) for s, L in [("c", 30), ("o", 365)]}
+assert days(due["o"]) - days(CHK) == 365 and date(days("2017-01-09")) == "2017-01-09"
+print(f"next recheck, rows checked {CHK}: claimed {due['c']}, others {due['o']}")
 yrs = [str(y) for y in range(1995, 2026, 5)]               # the chart: replay stopped at each year's end
 snaps = [replay(y + "-12-31") for y in yrs] + [now]
 print("chart, end of " + " ".join(yrs) + ", then " + TODAY)
@@ -425,36 +455,41 @@ print(f"JAC3: det = -2 at all 343 grid points; by central differences at (0.5, -
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-register as of 2026-11-23: 44 rows, every row checked 2026-11-23
-open 23, claimed 9, proved 10, refuted 2
-kinds: conjecture 38, theorem 5, model 1
-status rule = rows = log replay for all 44 rows; log has 31 entries
+register as of 2026-11-25: 64 rows, each checked 2026-11-23 or 2026-11-25
+open 32, claimed 14, proved 14, refuted 4
+kinds: conjecture 50, theorem 13, model 1
+status rule = rows = log replay for all 64 rows; log has 47 entries
 log  1963-12 CH open>proved | 1991-06 OT open>proved | 1993-06 FLT open>claimed
 log  1995-05 FLT claimed>proved | 2002-11-11 POINC open>claimed | 2006-07-25 POINC claimed>proved
-log  2012-08 ABC open>claimed | 2015-12-11 GI open>claimed | 2016-03-14 SP8 open>claimed
-log  2016-03-21 SP24 open>claimed | 2016-06-19 GI claimed>proved | 2017-01-04 GI proved>open
-log  2017-01-09 GI open>claimed | 2017-01-16 GI claimed>proved | 2017-05-01 SP8 claimed>proved
-log  2017-05-01 SP24 claimed>proved | 2018-04-18 MF open>claimed | 2018-07-27 MF claimed>proved
-log  2025-02-24 KAK3 open>claimed | 2026-05-20 UNIT open>refuted | 2026-07-10 CDC open>claimed
-log  2026-07-20 JAC3 open>refuted | 2026-07-23 KAK3 claimed>proved | 2026-08-01 SOFIC open>claimed
-log  2026-08-09 M23 open>claimed | 2026-08-10 Z23 open>claimed | 2026-08-28 PERC open>claimed
-log  2026-09-07 KOTHE open>claimed | 2026-09-08 NS open>claimed | 2026-10-19 ES open>claimed
-log  2026-11-21 RH open>proved
-changed between 2026-09-13 and 2026-11-23: RH open>proved, ES open>claimed
-days 2026-09-13 to 2026-11-23: 71
+log  2011 AOC open>proved | 2012-08 ABC open>claimed | 2015-12-11 GI open>claimed
+log  2016-03-14 SP8 open>claimed | 2016-03-21 SP24 open>claimed | 2016-06-19 GI claimed>proved
+log  2017-01-04 GI proved>open | 2017-01-09 GI open>claimed | 2017-01-16 GI claimed>proved
+log  2017-05-01 SP8 claimed>proved | 2017-05-01 SP24 claimed>proved | 2018-04-18 MF open>claimed
+log  2018-07-27 MF claimed>proved | 2020-01 CONN open>claimed | 2021-09-18 AOS open>claimed
+log  2024-05-06 GLANG open>claimed | 2024-08-14 HILB6B open>claimed | 2024-11-29 SOFA open>claimed
+log  2024-12-02 H10K open>claimed | 2025 GLANG claimed>proved | 2025-02-24 KAK3 open>claimed
+log  2025-03-03 HILB6F open>claimed | 2025-08-25 RUP open>claimed | 2025-10-31 HILB6B claimed>proved
+log  2025-12-01 H10K claimed>proved | 2026-05-20 UNIT open>refuted | 2026-05-27 SPR open>claimed
+log  2026-07-10 CDC open>claimed | 2026-07-13 RUP claimed>refuted | 2026-07-20 JAC3 open>refuted
+log  2026-07-23 KAK3 claimed>proved | 2026-08-01 SOFIC open>claimed | 2026-08-09 M23 open>claimed
+log  2026-08-10 Z23 open>claimed | 2026-08-28 PERC open>claimed | 2026-09-07 KOTHE open>claimed
+log  2026-09-08 NS open>claimed | 2026-09-29 S6 open>claimed | 2026-10-16 CONN claimed>refuted
+log  2026-10-19 ES open>claimed | 2026-11-21 RH open>proved
+changed between 2026-09-13 and 2026-11-25: RH open>proved, ES open>claimed, S6 open>claimed, CONN claimed>refuted
+days 2026-09-13 to 2026-11-25: 73
 days 2002-11-11 to 2006-07-25: 1352
 days 2017-01-04 to 2017-01-09: 5
 days 2016-03-14 to 2017-05-01: 413
 days 2025-02-24 to 2026-07-23: 514
-next recheck: claimed rows 2026-12-23, all other rows 2027-11-23
-chart, end of 1995 2000 2005 2010 2015 2020 2025, then 2026-11-23
-chart, claimed 0 0 1 0 2 1 2 9
-chart, proved or refuted 3 3 3 4 4 8 8 12
-breaks: claims counted as accepted: proved or refuted 12 -> 21
-breaks: abc's journal counted, dispute ignored: proved 10 -> 11
+next recheck, rows checked 2026-11-23: claimed 2026-12-23, others 2027-11-23
+chart, end of 1995 2000 2005 2010 2015 2020 2025, then 2026-11-25
+chart, claimed 0 0 1 0 2 2 7 14
+chart, proved or refuted 3 3 3 4 5 9 12 18
+breaks: claims counted as accepted: proved or refuted 18 -> 32
+breaks: abc's journal counted, dispute ignored: proved 14 -> 15
 breaks: never downgrade: GI on 2017-01-05 reads proved, true open
 breaks: one 365-day period: claimed rows due 2027-11-23, 335 days late
 GOLD: every even n with 4 <= n <= 10000 is a sum of two primes: checked
@@ -474,23 +509,28 @@ ALL CHECKS PASS
 use std::collections::BTreeMap;
 use std::ops::{Add, Mul, Sub};
 
-const TODAY: &str = "2026-11-23";
+const TODAY: &str = "2026-11-25";
 const SNAP: &str = "2026-09-13";
-const ROWS: &str = "RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -
-POINC C p P I  TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X
-BEAL C o - -  FLT C p P I  DIST C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -
-HN C o - -  CDC C c P A  ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I
-COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A
-PERC C c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+const CHK: &str = "2026-11-23";
+const ROWS: &str = "RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -  POINC C p P I
+TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X  BEAL C o - -  FLT C p P I
+DIST C o - -  SCH C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -  HN C o - -  CDC C c P A
+ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I  SPZ C o - -  SPR C c D A  S6 T c P A
+CARA C o - -  RAM C o - -  SPC4 C o - -  HADW C o - -  SOFA T c P A  RUP C r D I  HSC C o - -
+COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A  PERC C c P A
+HILB6B T p P I  HILB6F T c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+LANG C o - -  GLANG T p P I  H10K T p P I  H10Q C o - -  AOC T p P I  AOS T c P A  CONN C r D I
 BQP C o - -  ROUGH M o - -  OT T p P I  GEN C o - -  DDES C o - -  MF T p P I  SGD C o - -";
-const LOG: &str = "1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p
-2002-11-11 POINC o c|2006-07-25 POINC c p|2012-08 ABC o c|2015-12-11 GI o c
-2016-03-14 SP8 o c|2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o
-2017-01-09 GI o c|2017-01-16 GI c p|2017-05-01 SP8 c p|2017-05-01 SP24 c p
-2018-04-18 MF o c|2018-07-27 MF c p|2025-02-24 KAK3 o c|2026-05-20 UNIT o r
-2026-07-10 CDC o c|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c
-2026-08-09 M23 o c|2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c
-2026-09-08 NS o c|2026-10-19 ES o c|2026-11-21 RH o p";
+const LOG: &str = "1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p|2002-11-11 POINC o c
+2006-07-25 POINC c p|2011 AOC o p|2012-08 ABC o c|2015-12-11 GI o c|2016-03-14 SP8 o c
+2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o|2017-01-09 GI o c|2017-01-16 GI c p
+2017-05-01 SP8 c p|2017-05-01 SP24 c p|2018-04-18 MF o c|2018-07-27 MF c p|2020-01 CONN o c
+2021-09-18 AOS o c|2024-05-06 GLANG o c|2024-08-14 HILB6B o c|2024-11-29 SOFA o c
+2024-12-02 H10K o c|2025 GLANG c p|2025-02-24 KAK3 o c|2025-03-03 HILB6F o c|2025-08-25 RUP o c
+2025-10-31 HILB6B c p|2025-12-01 H10K c p|2026-05-20 UNIT o r|2026-05-27 SPR o c|2026-07-10 CDC o c
+2026-07-13 RUP c r|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c|2026-08-09 M23 o c
+2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c|2026-09-08 NS o c|2026-09-29 S6 o c
+2026-10-16 CONN c r|2026-10-19 ES o c|2026-11-21 RH o p";
 
 fn name(s: &str) -> &str { match s { "o" => "open", "c" => "claimed", "p" => "proved", _ => "refuted" } }
 fn rule(claim: &str, accept: &str) -> &'static str {
@@ -563,7 +603,7 @@ fn main() {
     let w: Vec<&str> = ROWS.split_whitespace().collect();
     let rows: Vec<Row> = w.chunks(5).map(|c| (c[0], c[1], c[2], c[3], c[4])).collect();
     let log: Vec<Vec<&str>> = LOG.split(|c| c == '|' || c == '\n').map(|e| e.split(' ').collect()).collect();
-    println!("register as of {}: {} rows, every row checked {}", TODAY, rows.len(), TODAY);
+    println!("register as of {}: {} rows, each checked {} or {}", TODAY, rows.len(), CHK, TODAY);
     assert!(rows.iter().all(|r| rule(r.3, r.4) == r.2), "status rule disagrees with a row");
     let now = replay(&rows, &log, TODAY, false);
     assert!(rows.iter().all(|r| now[r.0] == r.2), "log replay disagrees with the rows");
@@ -586,9 +626,9 @@ fn main() {
         assert_eq!(days(b) - days(a), days_loop(b) - days_loop(a));
         println!("days {} to {}: {}", a, b, days(b) - days(a));
     }
-    let (due_c, due_o) = (date(days(TODAY) + 30), date(days(TODAY) + 365));
-    assert!(days(&due_o) - days(TODAY) == 365 && date(days("2017-01-09")) == "2017-01-09");
-    println!("next recheck: claimed rows {}, all other rows {}", due_c, due_o);
+    let (due_c, due_o) = (date(days(CHK) + 30), date(days(CHK) + 365));
+    assert!(days(&due_o) - days(CHK) == 365 && date(days("2017-01-09")) == "2017-01-09");
+    println!("next recheck, rows checked {}: claimed {}, others {}", CHK, due_c, due_o);
     let yrs: Vec<String> = (1995..2026).step_by(5).map(|y| y.to_string()).collect(); // the chart: replay stopped at each year's end
     let mut snaps: Vec<Vec<usize>> = yrs.iter().map(|y| tally(&replay(&rows, &log, &format!("{}-12-31", y), false))).collect();
     snaps.push(t.clone());
@@ -635,36 +675,41 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-register as of 2026-11-23: 44 rows, every row checked 2026-11-23
-open 23, claimed 9, proved 10, refuted 2
-kinds: conjecture 38, theorem 5, model 1
-status rule = rows = log replay for all 44 rows; log has 31 entries
+register as of 2026-11-25: 64 rows, each checked 2026-11-23 or 2026-11-25
+open 32, claimed 14, proved 14, refuted 4
+kinds: conjecture 50, theorem 13, model 1
+status rule = rows = log replay for all 64 rows; log has 47 entries
 log  1963-12 CH open>proved | 1991-06 OT open>proved | 1993-06 FLT open>claimed
 log  1995-05 FLT claimed>proved | 2002-11-11 POINC open>claimed | 2006-07-25 POINC claimed>proved
-log  2012-08 ABC open>claimed | 2015-12-11 GI open>claimed | 2016-03-14 SP8 open>claimed
-log  2016-03-21 SP24 open>claimed | 2016-06-19 GI claimed>proved | 2017-01-04 GI proved>open
-log  2017-01-09 GI open>claimed | 2017-01-16 GI claimed>proved | 2017-05-01 SP8 claimed>proved
-log  2017-05-01 SP24 claimed>proved | 2018-04-18 MF open>claimed | 2018-07-27 MF claimed>proved
-log  2025-02-24 KAK3 open>claimed | 2026-05-20 UNIT open>refuted | 2026-07-10 CDC open>claimed
-log  2026-07-20 JAC3 open>refuted | 2026-07-23 KAK3 claimed>proved | 2026-08-01 SOFIC open>claimed
-log  2026-08-09 M23 open>claimed | 2026-08-10 Z23 open>claimed | 2026-08-28 PERC open>claimed
-log  2026-09-07 KOTHE open>claimed | 2026-09-08 NS open>claimed | 2026-10-19 ES open>claimed
-log  2026-11-21 RH open>proved
-changed between 2026-09-13 and 2026-11-23: RH open>proved, ES open>claimed
-days 2026-09-13 to 2026-11-23: 71
+log  2011 AOC open>proved | 2012-08 ABC open>claimed | 2015-12-11 GI open>claimed
+log  2016-03-14 SP8 open>claimed | 2016-03-21 SP24 open>claimed | 2016-06-19 GI claimed>proved
+log  2017-01-04 GI proved>open | 2017-01-09 GI open>claimed | 2017-01-16 GI claimed>proved
+log  2017-05-01 SP8 claimed>proved | 2017-05-01 SP24 claimed>proved | 2018-04-18 MF open>claimed
+log  2018-07-27 MF claimed>proved | 2020-01 CONN open>claimed | 2021-09-18 AOS open>claimed
+log  2024-05-06 GLANG open>claimed | 2024-08-14 HILB6B open>claimed | 2024-11-29 SOFA open>claimed
+log  2024-12-02 H10K open>claimed | 2025 GLANG claimed>proved | 2025-02-24 KAK3 open>claimed
+log  2025-03-03 HILB6F open>claimed | 2025-08-25 RUP open>claimed | 2025-10-31 HILB6B claimed>proved
+log  2025-12-01 H10K claimed>proved | 2026-05-20 UNIT open>refuted | 2026-05-27 SPR open>claimed
+log  2026-07-10 CDC open>claimed | 2026-07-13 RUP claimed>refuted | 2026-07-20 JAC3 open>refuted
+log  2026-07-23 KAK3 claimed>proved | 2026-08-01 SOFIC open>claimed | 2026-08-09 M23 open>claimed
+log  2026-08-10 Z23 open>claimed | 2026-08-28 PERC open>claimed | 2026-09-07 KOTHE open>claimed
+log  2026-09-08 NS open>claimed | 2026-09-29 S6 open>claimed | 2026-10-16 CONN claimed>refuted
+log  2026-10-19 ES open>claimed | 2026-11-21 RH open>proved
+changed between 2026-09-13 and 2026-11-25: RH open>proved, ES open>claimed, S6 open>claimed, CONN claimed>refuted
+days 2026-09-13 to 2026-11-25: 73
 days 2002-11-11 to 2006-07-25: 1352
 days 2017-01-04 to 2017-01-09: 5
 days 2016-03-14 to 2017-05-01: 413
 days 2025-02-24 to 2026-07-23: 514
-next recheck: claimed rows 2026-12-23, all other rows 2027-11-23
-chart, end of 1995 2000 2005 2010 2015 2020 2025, then 2026-11-23
-chart, claimed 0 0 1 0 2 1 2 9
-chart, proved or refuted 3 3 3 4 4 8 8 12
-breaks: claims counted as accepted: proved or refuted 12 -> 21
-breaks: abc's journal counted, dispute ignored: proved 10 -> 11
+next recheck, rows checked 2026-11-23: claimed 2026-12-23, others 2027-11-23
+chart, end of 1995 2000 2005 2010 2015 2020 2025, then 2026-11-25
+chart, claimed 0 0 1 0 2 2 7 14
+chart, proved or refuted 3 3 3 4 5 9 12 18
+breaks: claims counted as accepted: proved or refuted 18 -> 32
+breaks: abc's journal counted, dispute ignored: proved 14 -> 15
 breaks: never downgrade: GI on 2017-01-05 reads proved, true open
 breaks: one 365-day period: claimed rows due 2027-11-23, 335 days late
 GOLD: every even n with 4 <= n <= 10000 is a sum of two primes: checked
@@ -682,17 +727,17 @@ Lean proves the replay rule for every log in date order, and checks this card's 
 - Take any log listed in the order of its sources' dates, and any date. Then replay to that date succeeds exactly when every entry up to it starts from its row's word.
 - When it succeeds, each row holds the last word its log wrote by that date, or open if there is none.
 - Suppose one entry's old word differs from its row's word just before it. Then replay fails outright.
-- The register has 44 rows and the log 31 entries, in date order. The rule gives each row its typed status.
-- The log replayed to 2026-11-23 gives every typed status: 23 open, 9 claimed, 10 proved and 2 refuted.
-- Between 2026-09-13 and 2026-11-23 exactly two rows changed: RH and ES. The chart's points all check.
-- What breaks checks too: 21 settled rows, 11 proved rows, and GI read as proved on 2017-01-05 by a replay that never moves a row down.
+- The register has 64 rows and the log 47 entries, in date order. The rule gives each row its typed status.
+- The log replayed to 2026-11-25 gives every typed status: 32 open, 14 claimed, 14 proved and 4 refuted.
+- Between 2026-09-13 and 2026-11-25 exactly four rows changed: RH, ES, S6 and CONN. The chart's points all check.
+- What breaks checks too: 32 settled rows, 15 proved rows, and GI read as proved on 2017-01-05 by a replay that never moves a row down.
 - Take the map of row JAC3. Then its determinant is the constant −2, and its three points all map to (−1/4, 0, 0).
-- 27 reaches 1 after 111 Collatz steps, with peak 9232. The 71-day and 335-day counts check as plain sums.
+- 27 reaches 1 after 111 Collatz steps, with peak 9232. The 73-day and 335-day counts check as plain sums.
 
 The calendar dates, the GOLD and TWIN counts and the central differences are left to the Python and Rust checks.
 
 ```lean
--- The status register: replaying a date-ordered correction log from all-open succeeds exactly when every entry starts from the word its row holds, and then rebuilds every row's status on any date; the card's 44-row register, its 31-entry log, the JAC3 counterexample and its small cases check exactly.
+-- The status register: replaying a date-ordered correction log from all-open succeeds exactly when every entry starts from the word its row holds, and then rebuilds every row's status on any date; the card's 64-row register, its 47-entry log, the JAC3 counterexample and its small cases check exactly.
 import Mathlib.Algebra.MvPolynomial.PDeriv
 import Mathlib.Algebra.Field.Rat
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
@@ -708,7 +753,7 @@ inductive Status
   deriving DecidableEq, Repr
 
 /-- One correction-log entry: the date of its source (written YYYYMMDD, with DD = 00 for a
-source dated to the month), the row it changes, the word it replaces and the new word. -/
+source dated to the month, MMDD = 0000 for one dated to the year), the row it changes, the word it replaces and the new word. -/
 structure Entry (R : Type*) where
   date : ℕ
   row : R
@@ -930,14 +975,15 @@ theorem jac3_det_neg_two_and_three_points_one_image :
     funext i
     fin_cases i <;> simp [jac3Map] <;> norm_num
 
-/-! ## The card's register as of 2026-11-23 -/
+/-! ## The card's register as of 2026-11-25 -/
 
-/-- The register's 44 rows. -/
+/-- The register's 64 rows. -/
 inductive Row
   | RH | BSD | PNP | NS | HODGE | YM | POINC | TWIN | GOLD | LEG | NSQ | ABC | BEAL | FLT
-  | DIST | UNIT | KAK3 | KAKN | HN | CDC | ER | ES | UC | SP8 | SP24 | COLL | Z23 | JAC3
-  | JAC2 | SOFIC | KOTHE | PERC | IGP | M23 | CH | UGC | GI | BQP | ROUGH | OT | GEN | DDES
-  | MF | SGD
+  | DIST | SCH | UNIT | KAK3 | KAKN | HN | CDC | ER | ES | UC | SP8 | SP24 | SPZ | SPR | S6
+  | CARA | RAM | SPC4 | HADW | SOFA | RUP | HSC | COLL | Z23 | JAC3 | JAC2 | SOFIC | KOTHE
+  | PERC | HILB6B | HILB6F | IGP | M23 | CH | UGC | GI | LANG | GLANG | H10K | H10Q | AOC
+  | AOS | CONN | BQP | ROUGH | OT | GEN | DDES | MF | SGD
   deriving DecidableEq, Repr
 
 /-- A claim's kind. -/
@@ -974,7 +1020,7 @@ structure RegRow where
 
 open Row Kind Status Claim Accept
 
-/-- The register as of 2026-11-23, as typed in the card's checks. -/
+/-- The register as of 2026-11-25, as typed in the card's checks. -/
 def register : List RegRow :=
   [⟨RH, conjecture, proved, proof, independent⟩, ⟨BSD, conjecture, «open», noClaim, nobody⟩,
    ⟨PNP, conjecture, «open», noClaim, nobody⟩, ⟨NS, conjecture, claimed, disproof, authors⟩,
@@ -983,42 +1029,61 @@ def register : List RegRow :=
    ⟨GOLD, conjecture, «open», noClaim, nobody⟩, ⟨LEG, conjecture, «open», noClaim, nobody⟩,
    ⟨NSQ, conjecture, «open», noClaim, nobody⟩, ⟨ABC, conjecture, claimed, proof, disputed⟩,
    ⟨BEAL, conjecture, «open», noClaim, nobody⟩, ⟨FLT, conjecture, proved, proof, independent⟩,
-   ⟨DIST, conjecture, «open», noClaim, nobody⟩, ⟨UNIT, conjecture, refuted, disproof, independent⟩,
+   ⟨DIST, conjecture, «open», noClaim, nobody⟩, ⟨SCH, conjecture, «open», noClaim, nobody⟩,
+   ⟨UNIT, conjecture, refuted, disproof, independent⟩,
    ⟨KAK3, conjecture, proved, proof, independent⟩, ⟨KAKN, conjecture, «open», noClaim, nobody⟩,
    ⟨HN, conjecture, «open», noClaim, nobody⟩, ⟨CDC, conjecture, claimed, proof, authors⟩,
    ⟨ER, conjecture, «open», noClaim, nobody⟩, ⟨ES, conjecture, claimed, proof, authors⟩,
    ⟨UC, conjecture, «open», noClaim, nobody⟩, ⟨SP8, conjecture, proved, proof, independent⟩,
-   ⟨SP24, conjecture, proved, proof, independent⟩, ⟨COLL, conjecture, «open», noClaim, nobody⟩,
+   ⟨SP24, conjecture, proved, proof, independent⟩, ⟨SPZ, conjecture, «open», noClaim, nobody⟩,
+   ⟨SPR, conjecture, claimed, disproof, authors⟩, ⟨S6, «theorem», claimed, proof, authors⟩,
+   ⟨CARA, conjecture, «open», noClaim, nobody⟩, ⟨RAM, conjecture, «open», noClaim, nobody⟩,
+   ⟨SPC4, conjecture, «open», noClaim, nobody⟩, ⟨HADW, conjecture, «open», noClaim, nobody⟩,
+   ⟨SOFA, «theorem», claimed, proof, authors⟩, ⟨RUP, conjecture, refuted, disproof, independent⟩,
+   ⟨HSC, conjecture, «open», noClaim, nobody⟩, ⟨COLL, conjecture, «open», noClaim, nobody⟩,
    ⟨Z23, «theorem», claimed, proof, authors⟩, ⟨JAC3, conjecture, refuted, disproof, independent⟩,
    ⟨JAC2, conjecture, «open», noClaim, nobody⟩, ⟨SOFIC, conjecture, claimed, disproof, authors⟩,
    ⟨KOTHE, conjecture, claimed, disproof, authors⟩, ⟨PERC, conjecture, claimed, proof, authors⟩,
+   ⟨HILB6B, «theorem», proved, proof, independent⟩, ⟨HILB6F, «theorem», claimed, proof, authors⟩,
    ⟨IGP, conjecture, «open», noClaim, nobody⟩, ⟨M23, conjecture, claimed, proof, authors⟩,
    ⟨CH, «theorem», proved, proof, independent⟩, ⟨UGC, conjecture, «open», noClaim, nobody⟩,
-   ⟨GI, «theorem», proved, proof, independent⟩, ⟨BQP, conjecture, «open», noClaim, nobody⟩,
-   ⟨ROUGH, model, «open», noClaim, nobody⟩, ⟨OT, «theorem», proved, proof, independent⟩,
-   ⟨GEN, conjecture, «open», noClaim, nobody⟩, ⟨DDES, conjecture, «open», noClaim, nobody⟩,
-   ⟨MF, «theorem», proved, proof, independent⟩, ⟨SGD, conjecture, «open», noClaim, nobody⟩]
+   ⟨GI, «theorem», proved, proof, independent⟩, ⟨LANG, conjecture, «open», noClaim, nobody⟩,
+   ⟨GLANG, «theorem», proved, proof, independent⟩, ⟨H10K, «theorem», proved, proof, independent⟩,
+   ⟨H10Q, conjecture, «open», noClaim, nobody⟩, ⟨AOC, «theorem», proved, proof, independent⟩,
+   ⟨AOS, «theorem», claimed, proof, authors⟩, ⟨CONN, conjecture, refuted, disproof, independent⟩,
+   ⟨BQP, conjecture, «open», noClaim, nobody⟩, ⟨ROUGH, model, «open», noClaim, nobody⟩,
+   ⟨OT, «theorem», proved, proof, independent⟩, ⟨GEN, conjecture, «open», noClaim, nobody⟩,
+   ⟨DDES, conjecture, «open», noClaim, nobody⟩, ⟨MF, «theorem», proved, proof, independent⟩,
+   ⟨SGD, conjecture, «open», noClaim, nobody⟩]
 
-/-- The correction log, oldest first; dates YYYYMMDD, DD = 00 for a month-precision source. -/
+/-- The correction log, oldest first; dates YYYYMMDD, DD = 00 for a month-precision source,
+MMDD = 0000 for a year. -/
 def cardLog : List (Entry Row) :=
-  [⟨19631200, CH, «open», proved⟩, ⟨19910600, OT, «open», proved⟩,
-   ⟨19930600, FLT, «open», claimed⟩, ⟨19950500, FLT, claimed, proved⟩,
-   ⟨20021111, POINC, «open», claimed⟩, ⟨20060725, POINC, claimed, proved⟩,
+  [⟨19631200, CH, «open», proved⟩, ⟨19910600, OT, «open», proved⟩, ⟨19930600, FLT, «open», claimed⟩,
+   ⟨19950500, FLT, claimed, proved⟩, ⟨20021111, POINC, «open», claimed⟩,
+   ⟨20060725, POINC, claimed, proved⟩, ⟨20110000, AOC, «open», proved⟩,
    ⟨20120800, ABC, «open», claimed⟩, ⟨20151211, GI, «open», claimed⟩,
    ⟨20160314, SP8, «open», claimed⟩, ⟨20160321, SP24, «open», claimed⟩,
-   ⟨20160619, GI, claimed, proved⟩, ⟨20170104, GI, proved, «open»⟩,
-   ⟨20170109, GI, «open», claimed⟩, ⟨20170116, GI, claimed, proved⟩,
-   ⟨20170501, SP8, claimed, proved⟩, ⟨20170501, SP24, claimed, proved⟩,
-   ⟨20180418, MF, «open», claimed⟩, ⟨20180727, MF, claimed, proved⟩,
-   ⟨20250224, KAK3, «open», claimed⟩, ⟨20260520, UNIT, «open», refuted⟩,
-   ⟨20260710, CDC, «open», claimed⟩, ⟨20260720, JAC3, «open», refuted⟩,
+   ⟨20160619, GI, claimed, proved⟩, ⟨20170104, GI, proved, «open»⟩, ⟨20170109, GI, «open», claimed⟩,
+   ⟨20170116, GI, claimed, proved⟩, ⟨20170501, SP8, claimed, proved⟩,
+   ⟨20170501, SP24, claimed, proved⟩, ⟨20180418, MF, «open», claimed⟩,
+   ⟨20180727, MF, claimed, proved⟩, ⟨20200100, CONN, «open», claimed⟩,
+   ⟨20210918, AOS, «open», claimed⟩, ⟨20240506, GLANG, «open», claimed⟩,
+   ⟨20240814, HILB6B, «open», claimed⟩, ⟨20241129, SOFA, «open», claimed⟩,
+   ⟨20241202, H10K, «open», claimed⟩, ⟨20250000, GLANG, claimed, proved⟩,
+   ⟨20250224, KAK3, «open», claimed⟩, ⟨20250303, HILB6F, «open», claimed⟩,
+   ⟨20250825, RUP, «open», claimed⟩, ⟨20251031, HILB6B, claimed, proved⟩,
+   ⟨20251201, H10K, claimed, proved⟩, ⟨20260520, UNIT, «open», refuted⟩,
+   ⟨20260527, SPR, «open», claimed⟩, ⟨20260710, CDC, «open», claimed⟩,
+   ⟨20260713, RUP, claimed, refuted⟩, ⟨20260720, JAC3, «open», refuted⟩,
    ⟨20260723, KAK3, claimed, proved⟩, ⟨20260801, SOFIC, «open», claimed⟩,
    ⟨20260809, M23, «open», claimed⟩, ⟨20260810, Z23, «open», claimed⟩,
    ⟨20260828, PERC, «open», claimed⟩, ⟨20260907, KOTHE, «open», claimed⟩,
-   ⟨20260908, NS, «open», claimed⟩, ⟨20261019, ES, «open», claimed⟩,
+   ⟨20260908, NS, «open», claimed⟩, ⟨20260929, S6, «open», claimed⟩,
+   ⟨20261016, CONN, claimed, refuted⟩, ⟨20261019, ES, «open», claimed⟩,
    ⟨20261121, RH, «open», proved⟩]
 
-/-- All 44 rows, in register order. -/
+/-- All 64 rows, in register order. -/
 def allRows : List Row := register.map RegRow.row
 
 /-- How many rows of a state hold each word: (open, claimed, proved, refuted). -/
@@ -1026,40 +1091,40 @@ def tally (S : Row → Status) : ℕ × ℕ × ℕ × ℕ :=
   ((allRows.filter (fun r => S r = «open»)).length, (allRows.filter (fun r => S r = claimed)).length,
    (allRows.filter (fun r => S r = proved)).length, (allRows.filter (fun r => S r = refuted)).length)
 
--- 44 rows, 31 log entries; kinds: conjecture 38, theorem 5, model 1.
-example : register.length = 44 ∧ cardLog.length = 31 := by decide
+-- 64 rows, 47 log entries; kinds: conjecture 50, theorem 13, model 1.
+example : register.length = 64 ∧ cardLog.length = 47 := by decide
 example : ((register.filter (·.kind = conjecture)).length, (register.filter (·.kind = «theorem»)).length,
-    (register.filter (·.kind = model)).length) = (38, 5, 1) := by decide
+    (register.filter (·.kind = model)).length) = (50, 13, 1) := by decide
 -- The log is listed in date order, so the main theorem applies to it.
 example : cardLog.Pairwise (fun a b => a.date ≤ b.date) := by decide
 -- Road 1 = road 2: the status rule applied to each row's evidence gives the status typed in it.
 example : ∀ x ∈ register, rule x.claim x.accept = x.status := by decide
--- Road 3 = road 2: the log replayed from all-open to 2026-11-23 gives every typed status.
-example : ∀ x ∈ register, (replayTo cardLog 20261123).map (· x.row) = some x.status := by decide
--- The register as of 2026-11-23: 23 open, 9 claimed, 10 proved, 2 refuted.
-example : (replayTo cardLog 20261123).map tally = some (23, 9, 10, 2) := by decide
-example : 23 + 9 + 10 + 2 = 44 ∧ 10 + 2 = 12 := by norm_num
--- Between the 2026-09-13 snapshot and 2026-11-23 exactly two rows changed: RH and ES.
+-- Road 3 = road 2: the log replayed from all-open to 2026-11-25 gives every typed status.
+example : ∀ x ∈ register, (replayTo cardLog 20261125).map (· x.row) = some x.status := by decide
+-- The register as of 2026-11-25: 32 open, 14 claimed, 14 proved, 4 refuted.
+example : (replayTo cardLog 20261125).map tally = some (32, 14, 14, 4) := by decide
+example : 32 + 14 + 14 + 4 = 64 ∧ 14 + 4 = 18 := by norm_num
+-- Between the 2026-09-13 snapshot and 2026-11-25 exactly four rows changed: RH, ES, S6, CONN.
 example : (do
     let a ← replayTo cardLog 20260913
-    let b ← replayTo cardLog 20261123
-    pure (allRows.filter (fun r => a r ≠ b r))) = some [RH, ES] := by decide
--- The snapshot's age: 17 days left in September, then 31 and 23.
-example : (30 - 13) + 31 + 23 = 71 := by norm_num
+    let b ← replayTo cardLog 20261125
+    pure (allRows.filter (fun r => a r ≠ b r))) = some [RH, ES, S6, CONN] := by decide
+-- The snapshot's age: 17 days left in September, then 31 and 25.
+example : (30 - 13) + 31 + 25 = 73 := by norm_num
 -- The chart: rows claimed, and rows proved or refuted, at the end of 1995, 2000, …, 2025,
--- then on 2026-11-23.
-example : [19951231, 20001231, 20051231, 20101231, 20151231, 20201231, 20251231, 20261123].map
+-- then on 2026-11-25.
+example : [19951231, 20001231, 20051231, 20101231, 20151231, 20201231, 20251231, 20261125].map
     (fun d => (replayTo cardLog d).map (fun S => let t := tally S; (t.2.1, t.2.2.1 + t.2.2.2))) =
-    [some (0, 3), some (0, 3), some (1, 3), some (0, 4), some (2, 4), some (1, 8), some (2, 8),
-     some (9, 12)] := by decide
--- What breaks: counting every claim as accepted settles 21 rows, not 12.
+    [some (0, 3), some (0, 3), some (1, 3), some (0, 4), some (2, 5), some (2, 9), some (7, 12),
+     some (14, 18)] := by decide
+-- What breaks: counting every claim as accepted settles 32 rows, not 18.
 example : (register.filter (fun x =>
     rule x.claim (if x.accept = authors ∨ x.accept = disputed then independent else x.accept) = proved ∨
     rule x.claim (if x.accept = authors ∨ x.accept = disputed then independent else x.accept) = refuted)).length
-    = 21 := by decide
--- What breaks: counting abc's journal and ignoring the dispute gives 11 proved rows, not 10.
+    = 32 := by decide
+-- What breaks: counting abc's journal and ignoring the dispute gives 15 proved rows, not 14.
 example : (register.filter (fun x =>
-    rule x.claim (if x.accept = disputed then independent else x.accept) = proved)).length = 11 := by
+    rule x.claim (if x.accept = disputed then independent else x.accept) = proved)).length = 15 := by
   decide
 -- What breaks: on 2017-01-05 GI is open; a replay that never moves a row down says proved.
 example : (replayTo cardLog 20170105).map (· GI) = some «open» ∧
@@ -1080,7 +1145,7 @@ example : (∀ k ≤ 111, collatzStep^[k] 27 ≤ 9232) ∧ ∃ k ≤ 111, collat
 #print axioms jac3_det_neg_two_and_three_points_one_image
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'lastWord_concat' depends on axioms: [propext, Quot.sound]
@@ -1096,7 +1161,7 @@ example : (∀ k ≤ 111, collatzStep^[k] 27 ≤ 9232) ∧ ∃ k ≤ 111, collat
 
 > [!TIP]
 > **Try changing**
-> - Guess first: how many rows changed between 2026-07-01 and today? Set `SNAP = "2026-07-01"`. The answer is **11**: the two above plus NS, KAK3, CDC, Z23, JAC3, SOFIC, KOTHE, PERC and M23.
+> - Guess first: how many rows changed between 2026-07-01 and today? Set `SNAP = "2026-07-01"`. The answer is **14**: the four above plus NS, KAK3, CDC, RUP, Z23, JAC3, SOFIC, KOTHE, PERC and M23.
 > - Guess first: what happens if abc's dispute is ignored in the row? Change `ABC C c P X` to `ABC C c P I`. The run stops: **status rule disagrees with a row**, because the rule now says proved and the row says claimed.
 > - Guess first: delete `2026-11-21 RH o p` from the log. The run stops: **log replay disagrees with the rows**, because replay leaves RH open.
 > - Guess first: set `TODAY = "2026-11-20"`. The run stops at the same replay check: the RH entry is dated after that day.
@@ -1106,11 +1171,11 @@ example : (∀ k ≤ 111, collatzStep^[k] 27 ≤ 9232) ∧ ∃ k ≤ 111, collat
 ## The usual mistake
 
 > [!warning]
-> **Upgrading a status beyond its source.** A confident announcement, a preprint, or the authors' own formal proof is a claim. Only acceptance by someone independent of the authors moves a row to proved or refuted. Count every claim as accepted and this register reports 21 settled rows instead of 12.
+> **Upgrading a status beyond its source.** A confident announcement, a preprint, or the authors' own formal proof is a claim. Only acceptance by someone independent of the authors moves a row to proved or refuted. Count every claim as accepted and this register reports 32 settled rows instead of 18.
 >
 > Smaller traps, each with the wrong number it gives:
 > - **"Checked up to N" read as proved.** Goldbach is checked to 4 × 10^18 and the code checks every even number to 10,000. The row stays open.
-> - **A journal counted, a dispute ignored.** abc would join the proved rows, 11 instead of 10, while the 2018 objection is on record.
+> - **A journal counted, a dispute ignored.** abc would join the proved rows, 15 instead of 14, while the 2018 objection is on record.
 > - **Upgrades only.** Replay that never moves a row down shows graph isomorphism as proved on 2017-01-05, when its author had withdrawn it the day before.
 > - **One recheck period.** Checking claimed rows yearly puts their next check at 2027-11-23, 335 days after it was due.
 
@@ -1120,12 +1185,10 @@ example : (∀ k ≤ 111, collatzStep^[k] 27 ≤ 9232) ∧ ∃ k ≤ 111, collat
 
 - **Prize custodians.** Clay sorts its seven problems under "Active", "Unsolved" and "Solved". The register quotes that word and keeps its own status beside it.
 - **Formal proof libraries.** A Lean or Isabelle entry is an artifact with a date. The register separates the artifact from its acceptance: a rerun by others is what moved RH and JAC3.
-- **Preprint servers.** arXiv keeps every version with its date. That history is a correction log for one paper, and it dated the graph isomorphism story.
 - **Databases.** Many databases write each change to a log first and rebuild their tables from it after a crash. Step 2's check, replay equals table, is the same idea.
-- **Laboratory and audit records.** A finding is written with a date and its evidence, and a correction is a new dated entry, never an erasure.
 
 > **Say it back**
-> The register holds one row per problem in this wing: its kind, one of four status words, the date of the source that set it, the date it was checked, and that primary source. A fixed rule turns evidence into a word: no claim is open, a claim is claimed, and a claim accepted by someone independent is proved or refuted. Every change goes into a dated log, so replaying the log rebuilds the table on any date and exposes any unlogged edit. As of 2026-11-23 it reads 23 open, 9 claimed, 10 proved and 2 refuted. Claimed rows are checked monthly, the rest yearly.
+> The register holds one row per problem in this wing: its kind, one of four status words, the date of the source that set it, the date it was checked, and that primary source. A fixed rule turns evidence into a word: no claim is open, a claim is claimed, and a claim accepted by someone independent is proved or refuted. Every change goes into a dated log, so replaying the log rebuilds the table on any date and exposes any unlogged edit. As of 2026-11-25 it reads 32 open, 14 claimed, 14 proved and 4 refuted. Claimed rows are checked monthly, the rest yearly.
 
 ---
 

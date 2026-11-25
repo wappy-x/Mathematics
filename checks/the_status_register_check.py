@@ -3,25 +3,29 @@
 # Roads: status rule vs rows, log replay vs rows, two day counts, small cases.
 from fractions import Fraction as Fr
 
-TODAY, SNAP = "2026-11-23", "2026-09-13"
+TODAY, SNAP, CHK = "2026-11-25", "2026-09-13", "2026-11-23"
 # id kind status claim accept.  kind: C conjecture, T theorem, M model.
 # status: o open, c claimed, p proved, r refuted.  claim: - none, P proof, D disproof.
 # accept: - none, A authors only, X disputed, I independent (refereed, prize, formal rerun).
-ROWS = """RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -
-POINC C p P I  TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X
-BEAL C o - -  FLT C p P I  DIST C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -
-HN C o - -  CDC C c P A  ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I
-COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A
-PERC C c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+ROWS = """RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -  POINC C p P I
+TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X  BEAL C o - -  FLT C p P I
+DIST C o - -  SCH C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -  HN C o - -  CDC C c P A
+ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I  SPZ C o - -  SPR C c D A  S6 T c P A
+CARA C o - -  RAM C o - -  SPC4 C o - -  HADW C o - -  SOFA T c P A  RUP C r D I  HSC C o - -
+COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A  PERC C c P A
+HILB6B T p P I  HILB6F T c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+LANG C o - -  GLANG T p P I  H10K T p P I  H10Q C o - -  AOC T p P I  AOS T c P A  CONN C r D I
 BQP C o - -  ROUGH M o - -  OT T p P I  GEN C o - -  DDES C o - -  MF T p P I  SGD C o - -"""
-LOG = """1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p
-2002-11-11 POINC o c|2006-07-25 POINC c p|2012-08 ABC o c|2015-12-11 GI o c
-2016-03-14 SP8 o c|2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o
-2017-01-09 GI o c|2017-01-16 GI c p|2017-05-01 SP8 c p|2017-05-01 SP24 c p
-2018-04-18 MF o c|2018-07-27 MF c p|2025-02-24 KAK3 o c|2026-05-20 UNIT o r
-2026-07-10 CDC o c|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c
-2026-08-09 M23 o c|2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c
-2026-09-08 NS o c|2026-10-19 ES o c|2026-11-21 RH o p"""
+LOG = """1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p|2002-11-11 POINC o c
+2006-07-25 POINC c p|2011 AOC o p|2012-08 ABC o c|2015-12-11 GI o c|2016-03-14 SP8 o c
+2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o|2017-01-09 GI o c|2017-01-16 GI c p
+2017-05-01 SP8 c p|2017-05-01 SP24 c p|2018-04-18 MF o c|2018-07-27 MF c p|2020-01 CONN o c
+2021-09-18 AOS o c|2024-05-06 GLANG o c|2024-08-14 HILB6B o c|2024-11-29 SOFA o c
+2024-12-02 H10K o c|2025 GLANG c p|2025-02-24 KAK3 o c|2025-03-03 HILB6F o c|2025-08-25 RUP o c
+2025-10-31 HILB6B c p|2025-12-01 H10K c p|2026-05-20 UNIT o r|2026-05-27 SPR o c|2026-07-10 CDC o c
+2026-07-13 RUP c r|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c|2026-08-09 M23 o c
+2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c|2026-09-08 NS o c|2026-09-29 S6 o c
+2026-10-16 CONN c r|2026-10-19 ES o c|2026-11-21 RH o p"""
 w = ROWS.split()
 rows = {w[i]: tuple(w[i + 1:i + 5]) for i in range(0, len(w), 5)}
 log = [tuple(e.split()) for e in LOG.replace("\n", "|").split("|")]
@@ -62,7 +66,7 @@ def date(n):                                # inverse of days(), found by counti
     while m < 12 and days(f"{y}-{m + 1:02d}-01") <= n: m += 1
     return f"{y}-{m:02d}-{n - days(f'{y}-{m:02d}-01') + 1:02d}"
 
-print(f"register as of {TODAY}: {len(rows)} rows, every row checked {TODAY}")
+print(f"register as of {TODAY}: {len(rows)} rows, each checked {CHK} or {TODAY}")
 assert all(rule(c, a) == s for k, s, c, a in rows.values()), "status rule disagrees with a row"
 now = replay(TODAY)
 assert now == {k: v[1] for k, v in rows.items()}, "log replay disagrees with the rows"
@@ -77,9 +81,9 @@ print(f"changed between {SNAP} and {TODAY}: " + ", ".join(f"{k} {NAME[old[k]]}>{
 for a, b in [(SNAP, TODAY), ("2002-11-11", "2006-07-25"), ("2017-01-04", "2017-01-09"), ("2016-03-14", "2017-05-01"), ("2025-02-24", "2026-07-23")]:
     assert days(b) - days(a) == days_loop(b) - days_loop(a)
     print(f"days {a} to {b}: {days(b) - days(a)}")
-due = {s: date(days(TODAY) + L) for s, L in [("c", 30), ("o", 365)]}
-assert days(due["o"]) - days(TODAY) == 365 and date(days("2017-01-09")) == "2017-01-09"
-print(f"next recheck: claimed rows {due['c']}, all other rows {due['o']}")
+due = {s: date(days(CHK) + L) for s, L in [("c", 30), ("o", 365)]}
+assert days(due["o"]) - days(CHK) == 365 and date(days("2017-01-09")) == "2017-01-09"
+print(f"next recheck, rows checked {CHK}: claimed {due['c']}, others {due['o']}")
 yrs = [str(y) for y in range(1995, 2026, 5)]               # the chart: replay stopped at each year's end
 snaps = [replay(y + "-12-31") for y in yrs] + [now]
 print("chart, end of " + " ".join(yrs) + ", then " + TODAY)

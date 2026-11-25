@@ -4,23 +4,28 @@
 use std::collections::BTreeMap;
 use std::ops::{Add, Mul, Sub};
 
-const TODAY: &str = "2026-11-23";
+const TODAY: &str = "2026-11-25";
 const SNAP: &str = "2026-09-13";
-const ROWS: &str = "RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -
-POINC C p P I  TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X
-BEAL C o - -  FLT C p P I  DIST C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -
-HN C o - -  CDC C c P A  ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I
-COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A
-PERC C c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+const CHK: &str = "2026-11-23";
+const ROWS: &str = "RH C p P I  BSD C o - -  PNP C o - -  NS C c D A  HODGE C o - -  YM C o - -  POINC C p P I
+TWIN C o - -  GOLD C o - -  LEG C o - -  NSQ C o - -  ABC C c P X  BEAL C o - -  FLT C p P I
+DIST C o - -  SCH C o - -  UNIT C r D I  KAK3 C p P I  KAKN C o - -  HN C o - -  CDC C c P A
+ER C o - -  ES C c P A  UC C o - -  SP8 C p P I  SP24 C p P I  SPZ C o - -  SPR C c D A  S6 T c P A
+CARA C o - -  RAM C o - -  SPC4 C o - -  HADW C o - -  SOFA T c P A  RUP C r D I  HSC C o - -
+COLL C o - -  Z23 T c P A  JAC3 C r D I  JAC2 C o - -  SOFIC C c D A  KOTHE C c D A  PERC C c P A
+HILB6B T p P I  HILB6F T c P A  IGP C o - -  M23 C c P A  CH T p P I  UGC C o - -  GI T p P I
+LANG C o - -  GLANG T p P I  H10K T p P I  H10Q C o - -  AOC T p P I  AOS T c P A  CONN C r D I
 BQP C o - -  ROUGH M o - -  OT T p P I  GEN C o - -  DDES C o - -  MF T p P I  SGD C o - -";
-const LOG: &str = "1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p
-2002-11-11 POINC o c|2006-07-25 POINC c p|2012-08 ABC o c|2015-12-11 GI o c
-2016-03-14 SP8 o c|2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o
-2017-01-09 GI o c|2017-01-16 GI c p|2017-05-01 SP8 c p|2017-05-01 SP24 c p
-2018-04-18 MF o c|2018-07-27 MF c p|2025-02-24 KAK3 o c|2026-05-20 UNIT o r
-2026-07-10 CDC o c|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c
-2026-08-09 M23 o c|2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c
-2026-09-08 NS o c|2026-10-19 ES o c|2026-11-21 RH o p";
+const LOG: &str = "1963-12 CH o p|1991-06 OT o p|1993-06 FLT o c|1995-05 FLT c p|2002-11-11 POINC o c
+2006-07-25 POINC c p|2011 AOC o p|2012-08 ABC o c|2015-12-11 GI o c|2016-03-14 SP8 o c
+2016-03-21 SP24 o c|2016-06-19 GI c p|2017-01-04 GI p o|2017-01-09 GI o c|2017-01-16 GI c p
+2017-05-01 SP8 c p|2017-05-01 SP24 c p|2018-04-18 MF o c|2018-07-27 MF c p|2020-01 CONN o c
+2021-09-18 AOS o c|2024-05-06 GLANG o c|2024-08-14 HILB6B o c|2024-11-29 SOFA o c
+2024-12-02 H10K o c|2025 GLANG c p|2025-02-24 KAK3 o c|2025-03-03 HILB6F o c|2025-08-25 RUP o c
+2025-10-31 HILB6B c p|2025-12-01 H10K c p|2026-05-20 UNIT o r|2026-05-27 SPR o c|2026-07-10 CDC o c
+2026-07-13 RUP c r|2026-07-20 JAC3 o r|2026-07-23 KAK3 c p|2026-08-01 SOFIC o c|2026-08-09 M23 o c
+2026-08-10 Z23 o c|2026-08-28 PERC o c|2026-09-07 KOTHE o c|2026-09-08 NS o c|2026-09-29 S6 o c
+2026-10-16 CONN c r|2026-10-19 ES o c|2026-11-21 RH o p";
 
 fn name(s: &str) -> &str { match s { "o" => "open", "c" => "claimed", "p" => "proved", _ => "refuted" } }
 fn rule(claim: &str, accept: &str) -> &'static str {
@@ -93,7 +98,7 @@ fn main() {
     let w: Vec<&str> = ROWS.split_whitespace().collect();
     let rows: Vec<Row> = w.chunks(5).map(|c| (c[0], c[1], c[2], c[3], c[4])).collect();
     let log: Vec<Vec<&str>> = LOG.split(|c| c == '|' || c == '\n').map(|e| e.split(' ').collect()).collect();
-    println!("register as of {}: {} rows, every row checked {}", TODAY, rows.len(), TODAY);
+    println!("register as of {}: {} rows, each checked {} or {}", TODAY, rows.len(), CHK, TODAY);
     assert!(rows.iter().all(|r| rule(r.3, r.4) == r.2), "status rule disagrees with a row");
     let now = replay(&rows, &log, TODAY, false);
     assert!(rows.iter().all(|r| now[r.0] == r.2), "log replay disagrees with the rows");
@@ -116,9 +121,9 @@ fn main() {
         assert_eq!(days(b) - days(a), days_loop(b) - days_loop(a));
         println!("days {} to {}: {}", a, b, days(b) - days(a));
     }
-    let (due_c, due_o) = (date(days(TODAY) + 30), date(days(TODAY) + 365));
-    assert!(days(&due_o) - days(TODAY) == 365 && date(days("2017-01-09")) == "2017-01-09");
-    println!("next recheck: claimed rows {}, all other rows {}", due_c, due_o);
+    let (due_c, due_o) = (date(days(CHK) + 30), date(days(CHK) + 365));
+    assert!(days(&due_o) - days(CHK) == 365 && date(days("2017-01-09")) == "2017-01-09");
+    println!("next recheck, rows checked {}: claimed {}, others {}", CHK, due_c, due_o);
     let yrs: Vec<String> = (1995..2026).step_by(5).map(|y| y.to_string()).collect(); // the chart: replay stopped at each year's end
     let mut snaps: Vec<Vec<usize>> = yrs.iter().map(|y| tally(&replay(&rows, &log, &format!("{}-12-31", y), false))).collect();
     snaps.push(t.clone());
