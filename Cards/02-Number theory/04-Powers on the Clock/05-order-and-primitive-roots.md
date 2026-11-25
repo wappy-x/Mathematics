@@ -247,12 +247,12 @@ import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Nat.Totient
 
-theorem sonnet_pow_modEq_one_iff (a n k : ℕ) : a ^ k ≡ 1 [MOD n] ↔ (a : ZMod n) ^ k = 1 := by
+theorem pow_modEq_one_iff_zmod (a n k : ℕ) : a ^ k ≡ 1 [MOD n] ↔ (a : ZMod n) ^ k = 1 := by
   rw [← ZMod.natCast_eq_natCast_iff]; push_cast; rfl
 
-#print axioms sonnet_pow_modEq_one_iff
+#print axioms pow_modEq_one_iff_zmod
 
-theorem sonnet_order_pos_dvd (a n : ℕ) (h : Nat.Coprime a n) :
+theorem clock_order_pos_dvd (a n : ℕ) (h : Nat.Coprime a n) :
     0 < orderOf (a : ZMod n) ∧ ∀ k : ℕ, ((a : ZMod n) ^ k = 1 ↔ orderOf (a : ZMod n) ∣ k) := by
   refine ⟨?_, fun k => orderOf_dvd_iff_pow_eq_one.symm⟩
   rcases Nat.eq_zero_or_pos n with rfl | hn
@@ -263,7 +263,7 @@ theorem sonnet_order_pos_dvd (a n : ℕ) (h : Nat.Coprime a n) :
     rw [← ZMod.coe_unitOfCoprime a h, orderOf_units]
     exact orderOf_pos _
 
-#print axioms sonnet_order_pos_dvd
+#print axioms clock_order_pos_dvd
 
 /-- The card's main claim. Take a clock of size n and a number a sharing no factor above 1 with
 n. The order of a on the n-clock (the fewest multiplications by a that bring the remainder back
@@ -307,9 +307,9 @@ back to 1, so the order is at least 1, and a run of k multiplications lands on 1
 the order divides k. -/
 theorem powers_return_to_one_exactly_at_multiples_of_order (a n : ℕ) (h : Nat.Coprime a n) :
     0 < orderOf (a : ZMod n) ∧ ∀ k : ℕ, (a ^ k ≡ 1 [MOD n] ↔ orderOf (a : ZMod n) ∣ k) := by
-  refine ⟨(sonnet_order_pos_dvd a n h).1, fun k => ?_⟩
-  rw [sonnet_pow_modEq_one_iff]
-  exact (sonnet_order_pos_dvd a n h).2 k
+  refine ⟨(clock_order_pos_dvd a n h).1, fun k => ?_⟩
+  rw [pow_modEq_one_iff_zmod]
+  exact (clock_order_pos_dvd a n h).2 k
 
 /-- Why the hypothesis matters. If a and the clock size n share a factor above 1, no run of one
 or more multiplications by a ever lands on 1, as with 10 on the 14-clock. -/
@@ -317,7 +317,7 @@ theorem shared_factor_never_reaches_one (a n : ℕ) (h : ¬ Nat.Coprime a n) :
     ∀ k : ℕ, 0 < k → ¬ a ^ k ≡ 1 [MOD n] := by
   intro k hk hmod
   apply h
-  rw [sonnet_pow_modEq_one_iff] at hmod
+  rw [pow_modEq_one_iff_zmod] at hmod
   have hu : IsUnit (a : ZMod n) := by
     refine IsUnit.of_mul_eq_one ((a : ZMod n) ^ (k - 1)) ?_
     rw [← pow_succ']
@@ -367,8 +367,8 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 **Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
-'sonnet_pow_modEq_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
-'sonnet_order_pos_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'pow_modEq_one_iff_zmod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'clock_order_pos_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
 'order_divides_totient_and_full_order_is_primitive_root' depends on axioms: [propext, Classical.choice, Quot.sound]
 'powers_return_to_one_exactly_at_multiples_of_order' depends on axioms: [propext, Classical.choice, Quot.sound]
 'shared_factor_never_reaches_one' depends on axioms: [propext, Classical.choice, Quot.sound]
