@@ -12,7 +12,9 @@ Which records must stay? Take a guess S, a set of records, and check it with one
 
 From no records, apply the rule again and again: {}, {1}, {1, 2}, {1, 2}. The climb stops at what record 1 reaches. From all four, the rule keeps all four. No other of the 16 guesses is fixed.
 
-**If a rule keeps order (a guess inside another gets an answer inside the other's answer), and every collection of guesses has a meet and a join (a largest guess below them all, a smallest above them all), it has a least and a greatest fixed point; with finitely many guesses, climbing from the bottom finds the least.**
+A rule keeps order when a guess inside another gets an answer inside the other's answer. A complete lattice is an order where every collection of guesses has a meet and a join: a largest guess below them all, and a smallest above them all.
+
+**A rule that keeps order on a complete lattice has a least and a greatest fixed point, and with finitely many guesses, climbing from the bottom finds the least.**
 
 **What kind of fact this is:** a theorem, proved in Why it works for subsets; all but the climb works in any complete lattice. A complete lattice is a definition.
 
@@ -105,7 +107,7 @@ Record 1 needs record 2 and nothing else.
 | --- | --- | --- |
 | The complement rule | 0 fixed points | A bigger guess gives a smaller answer |
 | Fractions x from 0 to 2, rule x to (2x + 2) / (x + 2) | 0, 1, 4/3, 7/5, 24/17, 41/29 = 1.41379, never fixed | It climbs toward the square root of 2, which is no fraction |
-| Climbing from {3} | {1, 2, 3}, {1, 2, 4}, {1, 2, 3}, … | {3} is not inside f({3}), so steps need not grow |
+| Climbing from {3} | {1, 4}, {1, 2, 3}, {1, 2, 4}, {1, 2, 3}, … | {3} is not inside f({3}), so steps need not grow |
 
 The rule keeps order, but a fixed point needs x × x = 2, and no fraction does that. Fractions such as 2 lie above the climb, but none is smallest: that missing join means the fractions are not a complete lattice.
 
@@ -393,10 +395,11 @@ example : ((2 * (7 / 5 : ℚ) + 2) / (7 / 5 + 2)) = 24 / 17 := by norm_num
 
 ## Where this goes next
 
-- [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the laws meet and join obey, and lattices as a structure.
+- [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): the first card of the next shelf, Sizes of Infinity. It compares endless sets by pairing them off, the road to Cantor–Bernstein.
 - [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): states Cantor–Bernstein; one fixed point of this kind proves it.
+- [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the laws meet and join obey, and lattices as a structure.
 
-Left open: when a rule does not keep order, what else can force a fixed point?
+Left open: the climb here stopped because there are only 16 guesses. When a set has no end, how do you tell whether two sets are the same size?
 
 ---
 

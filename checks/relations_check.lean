@@ -5,7 +5,7 @@ import Mathlib.Data.Fintype.Prod
 open SetRel
 
 /-- A relation R on a set A is a set of ordered pairs (a, b) from A × A, and each test is a
-question about that set. Reflexive: the five loops (a, a) are all in R. Symmetric: reversing every
+question about that set. Reflexive: every loop (a, a) is in R. Symmetric: reversing every
 pair gives R back. Antisymmetric: the pairs that are in R both ways round are all loops.
 Transitive: following R twice in a row (the composition) gives only pairs already in R. -/
 theorem relation_tests_are_set_conditions {α : Type*} (R : SetRel α α) :

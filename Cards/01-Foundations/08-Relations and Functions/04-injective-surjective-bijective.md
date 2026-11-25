@@ -397,7 +397,7 @@ example : ¬ Injective crowded ∧ ¬ Surjective crowded := by decide
 - [Inverse functions](05-inverse-functions.md): running the arrows backwards, possible exactly when the function is a bijection.
 - [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): a bijection is what "the same size" means.
 
-The question this card leaves open: on endless sets, what does "the same size" mean?
+The question this card leaves open: once a function is a bijection, how do you build the rule that runs it backwards? Endless sets, and what "the same size" means there, wait for the next shelf.
 
 ---
 

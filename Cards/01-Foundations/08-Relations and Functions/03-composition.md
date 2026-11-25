@@ -54,13 +54,13 @@ Each chain collapses into one rule. Step 2 does the working; here is where they 
 | price | the input, the number on the tag | $50.00 |
 | f | the 20% offer: keep four fifths | $50.00 gives $40.00 |
 | g | the coupon: take five dollars off | $50.00 gives $45.00 |
-| g after f, written g(f(price)) | do f, hand the answer to g | $35.00 |
+| g after f, written g(f(price)) or g ∘ f | do f, hand the answer to g | $35.00 |
 | f after g, written f(g(price)) | do g, hand the answer to f | $36.00 |
 | the do-nothing rule | hands back the price untouched | $50.00 gives $50.00 |
 
 ### When it holds
 
-- **Each rule's outputs are inputs the next accepts.** Here, a price over $5. Below that, the coupon hands back less than nothing.
+- **Each rule's outputs are inputs the next accepts.** Here, the coupon needs a price of at least $5. With the 20% first, that means a tag of at least $6.25, since 0.8 × 6.25 = 5. Below that, the coupon hands back less than nothing.
 - **Each rule works on what the one before handed it.** Take the 20% off the $50 tag, not the $45 left, and you pay $40.00, not $36.00.
 - **The order stays as written.** Swap the rules and the chain is a different function: $36.00, not $35.00.
 
@@ -70,7 +70,7 @@ Each chain collapses into one rule. Step 2 does the working; here is where they 
 
 ### Step 0: the first rule's output must be the second rule's kind of input
 
-Both offers take a price over $5 and hand back a price. That is the only reason they chain, in either order. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the codomain (what a rule hands back) and domain (what it accepts) of [Functions](02-functions.md).
+Both offers take a price and hand back a price. That is the only reason they chain, in either order. The coupon also needs at least $5 to take off, so the tag must be big enough: $6.25 with the 20% first. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the codomain (what a rule hands back) and domain (what it accepts) of [Functions](02-functions.md).
 
 ### Step 1: run them in order, on the real number
 
@@ -242,16 +242,16 @@ The two outputs match line for line: whole cents throughout, and the fifths are 
 
 ### Lean
 
-Lean proves three facts: the first for every price over $5, the other two for any rules that chain.
+Lean proves three facts: the first for every price of at least $6.25, the other two for any rules that chain.
 
-- 20% off then the coupon is always 0.8 × price − 5. The coupon first is always 0.8 × price − 4. So the coupon first always costs exactly $1 more.
+- 20% off then the coupon is always 0.8 × price − 5, and never below $0. The coupon first is always 0.8 × price − 4. So the coupon first always costs exactly $1 more.
 - The do-nothing rule, put on either end of a chain, changes nothing.
 - With three rules in a queue, which pair you collapse into one rule first changes nothing.
 
 It also checks the jacket and coat numbers exactly. Whole cents and the printed tables are left to the Python and Rust checks.
 
 ```lean
--- Composing functions: for every price over $5, taking 20% off then a $5 coupon gives 0.8 × price − 5 while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
+-- Composing functions: for every price of at least $6.25, taking 20% off then a $5 coupon gives 0.8 × price − 5, never below $0, while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
 import Mathlib.Algebra.Order.Ring.Rat
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -262,20 +262,26 @@ def percentOff (price : ℚ) : ℚ := 4 / 5 * price
 /-- The $5 coupon `g`: take five dollars off the price. -/
 def couponOff (price : ℚ) : ℚ := price - 5
 
-/-- Order changes the answer. For any price over $5, "g after f" (20% off first, then the
-coupon) collapses to the one rule `0.8 × price − 5`, and "f after g" (the coupon first, then
-20% off) collapses to `0.8 × price − 4`. So the coupon-first order costs exactly $1 more,
-whatever the price: through the 20%, the $5 coupon is worth only $4. -/
-theorem coupon_first_costs_one_dollar_more (price : ℚ) (h : 5 < price) :
+/-- Order changes the answer. For any price of at least $6.25, "g after f" (20% off first,
+then the coupon) collapses to the one rule `0.8 × price − 5` and never goes below $0, and
+"f after g" (the coupon first, then 20% off) collapses to `0.8 × price − 4`. So the
+coupon-first order costs exactly $1 more, whatever the price: through the 20%, the $5 coupon
+is worth only $4. Below $6.25, 20% off leaves less than $5 for the coupon to take. -/
+theorem coupon_first_costs_one_dollar_more (price : ℚ) (h : 25 / 4 ≤ price) :
     (couponOff ∘ percentOff) price = 4 / 5 * price - 5 ∧
       (percentOff ∘ couponOff) price = 4 / 5 * price - 4 ∧
-      (percentOff ∘ couponOff) price = (couponOff ∘ percentOff) price + 1 := by
+      (percentOff ∘ couponOff) price = (couponOff ∘ percentOff) price + 1 ∧
+      0 ≤ (couponOff ∘ percentOff) price := by
   have h1 : (couponOff ∘ percentOff) price = 4 / 5 * price - 5 := by
     simp [Function.comp, couponOff, percentOff]
   have h2 : (percentOff ∘ couponOff) price = 4 / 5 * price - 4 := by
     simp only [Function.comp, couponOff, percentOff]; ring
-  refine ⟨h1, h2, ?_⟩
-  rw [h1, h2]; ring
+  have h5 : (5 : ℚ) ≤ 4 / 5 * price :=
+    calc (5 : ℚ) = 4 / 5 * (25 / 4) := by norm_num
+      _ ≤ 4 / 5 * price := mul_le_mul_of_nonneg_left h (by norm_num)
+  refine ⟨h1, h2, ?_, ?_⟩
+  · rw [h1, h2]; ring
+  · rw [h1]; exact sub_nonneg.mpr h5
 
 /-- The do-nothing rule changes no chain: putting the identity on either end of any function
 `f` gives back `f`. -/
@@ -313,7 +319,7 @@ example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [
 #print axioms composing_is_associative
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'coupon_first_costs_one_dollar_more' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -357,10 +363,11 @@ example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [
 
 ## Where this goes next
 
+- [One-to-one and onto](04-injective-surjective-bijective.md): next on this shelf. The two tests a rule must pass before it can be run backwards.
 - [Inverse functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
-- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): a rule that keeps order, composed with itself again and again, until the answer stops changing.
 
-Left open: when can a chain run backwards, from the money paid to the tag price?
+Left open: before a chain can run backwards, from the money paid to the tag price, what two tests must each rule pass?
 
 ---
 

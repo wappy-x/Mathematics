@@ -16,7 +16,7 @@ one, per, morning = lands_on(dial, hours, 1), [len(lands_on(dial, hours, d)) for
 print(f"the rule: F = 1.8 x C + 32, so 20 C -> {fmt(to_f(20))} F")
 print(f"the undo: C = (F - 32) / 1.8, so 68 F -> {fmt(to_c(68))} C")
 print(f"round trip, {', '.join(fmt(c) for c in CELSIUS)} C -> {', '.join(fmt(f) for f in fahr)} F -> {', '.join(fmt(c) for c in home)} C -- {back} of {len(CELSIUS)} home")
-print(f"search road, whole degrees -50 to 100 C landing on 68 F: {', '.join(str(c) for c in found)} -- {len(found)} input")
+print(f"search road, whole degrees -50 to 100 C landing on {fmt(to_f(20))} F: {', '.join(str(c) for c in found)} -- {len(found)} input")
 print(f"the one temperature both scales share: 1.8 x -40 + 32 = {fmt(to_f(-40))}")
 print(f"the clock: {len(list(hours))} hours onto {len(readings)} dial readings, readings reached {len(readings)} of 12")
 print(f"hours landing on dial 1: 01:00 and 13:00 -- {len(one)} inputs, so no undo")

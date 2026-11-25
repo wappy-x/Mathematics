@@ -56,7 +56,7 @@ Divides fails that one at 2 and 3. A rule passing all four is a **total order**;
 ### When it holds
 
 - **Each number is paired with itself.** Without the self-pairs, divides has 12 pairs and fails the reflexive test.
-- **No loops.** If 4 were below 6 and 6 below 4, the antisymmetric test fails.
+- **No two-way links.** If 4 were below 6 and 6 below 4, the antisymmetric test fails.
 - **No gaps.** If 1 is below 2 and 2 below 4, then 1 must be below 4, or the transitive test fails.
 - **Every pair compares, for a total order.** Divides misses 3 of the 15 pairs.
 - **A finite set, for the Hasse diagram.** On the number line, any two points have another between them, so there are no covers.
@@ -67,9 +67,9 @@ Divides fails that one at 2 and 3. A rule passing all four is a **total order**;
 
 ### The three tests are three things a ranking must not do
 
-Reflexive fills in the easy pairs, so "below or equal to" is one rule, not two. Antisymmetric bans the loop: if 4 were below 6 and 6 below 4, "below" would mean nothing. Transitive bans the gap: 2 below 6 and 6 below 12 must force 2 below 12, or the diagram lies.
+Reflexive fills in the easy pairs, so "below or equal to" is one rule, not two. Antisymmetric bans two-way links: if 4 were below 6 and 6 below 4, "below" would mean nothing. Transitive bans the gap: 2 below 6 and 6 below 12 must force 2 below 12, or the diagram lies.
 
-Divides passes all three: 12 is one 12; if each of two numbers is a whole number of the other, neither is smaller, so they are equal; 12 is two 6s and 6 is two 3s, so 12 is four 3s.
+Divides passes all three. Reflexive: 12 is one 12. Antisymmetric: if each of two numbers is a whole number of the other, neither is smaller, so they are equal. Transitive: 12 is two 6s and 6 is two 3s, so 12 is four 3s.
 
 ### Comparability is a fourth demand, and nothing forces it
 
@@ -77,7 +77,9 @@ No test mentions a pair with no link. 2 and 3 have none, and no test complains �
 
 ### Only the short steps need drawing
 
-A cover is a step with nothing strictly in between. Draw covers only and 7 arrows carry what the 12 different-number pairs say. Put the six self-pairs back, link the arrows over and over — 1 to 2 and 2 to 4 gives 1 to 4 — and all 18 pairs return. The queue is called a **chain**; it takes 5 arrows, each number to the next.
+A cover is a step with nothing strictly in between. Draw covers only and 7 arrows carry what the 12 different-number pairs say. Put the six self-pairs back, link the arrows over and over — 1 to 2 and 2 to 4 gives 1 to 4 — and all 18 pairs return.
+
+The queue is called a **chain**; it takes 5 arrows, each number to the next.
 
 ---
 
@@ -235,7 +237,7 @@ Lean proves the three tests for divides on every number's divisors, the Hasse di
 - Divides has exactly the 7 covers in the picture, and the chain has 5 arrows.
 - Under divides, the divisors of 8 all compare: one queue.
 
-The yes-no test table, the rules that fail a test, and adding 5 are left to the Python and Rust checks.
+The yes-no test table and the rules that fail a test are left to the Python and Rust checks. Adding 5 is a Try changing step, not a check.
 
 ```lean
 -- Orders: divides is a partial order on the divisors of any number, a finite order is rebuilt from its covers, and on the divisors of 12 divides is partial but not total while less-than-or-equal is total.
@@ -374,11 +376,14 @@ example : ∀ a ∈ Nat.divisors 8, ∀ b ∈ Nat.divisors 8, a ∣ b ∨ b ∣ 
 
 ## Where this goes next
 
+- [Pigeonhole](08-pigeonhole-principle.md): next on this shelf, a short turn back to functions and counting. Orders return on the card after it.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): the last card on this shelf. An order where every group has a nearest item above and below, and a rule that keeps order there, which always leaves some item unchanged.
 - [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): given two incomparable things, is there a nearest thing above both, and a nearest below? Lattices answer that.
-- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
-- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
-- [Zorn's lemma and the well-ordering theorem](../09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md): the axiom of choice in two more sets of clothes, and why they are the same.
+- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where one more at the end makes a longer order but one more at the front does not.
+- [Zorn's lemma and the well-ordering theorem](../09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md): the axiom of choice stated two more ways, both about orders, and why all three say the same thing.
 - [Dilworth's theorem](../../04-Combinatorics%20and%20graphs/15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
+
+Left open: when every group of items has a nearest item above it and a nearest below, what must a rule that keeps order do? [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md) answers that, after the counting detour through Pigeonhole.
 
 ---
 

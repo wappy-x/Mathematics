@@ -141,7 +141,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 08 · Relations and Functions · 9 cards
 
-*Relations and their four properties; functions, composition, one-to-one/onto, inverses; equivalence relations and partitions; orders; pigeonhole.*
+*Relations and their four properties; functions, composition, one-to-one/onto, inverses; equivalence relations and partitions; orders; pigeonhole; complete lattices and Knaster-Tarski.*
 
 1. [Relations: a list of which pairs are linked, and four tests on it](08-Relations%20and%20Functions/01-relations.md)
 2. [Functions: one output for every input, with domain, codomain and range](08-Relations%20and%20Functions/02-functions.md)

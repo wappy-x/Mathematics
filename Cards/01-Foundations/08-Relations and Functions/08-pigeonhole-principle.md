@@ -16,6 +16,8 @@ That is the argument, all of it. It has a name because it works on anything sort
 
 Same move, other holes: the sentence below runs to 27 words, and there are 26 letters. Two words start with the same letter.
 
+> Every guest brought a dish, and dinner ran late, so nobody counted the months until Priya asked, quietly, whether any two of us shared a birthday month.
+
 **More pigeons than holes, and some hole holds two — for any placing at all, without looking at it.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works by contradiction.
@@ -112,6 +114,8 @@ The code prints the first two as `breaks:` lines; the third is the months-holdin
 ## Code, from first principles, and it actually runs
 
 Nothing is imported. Each placing is read two ways: walk the list and stop at the first label used twice, then count what landed in each hole. A repeat found one way has to show up as a crowded hole the other way, or the code stops.
+
+The 25-guest round is checked by the Lean below, not by the Python and Rust.
 
 ### Python
 
@@ -354,9 +358,11 @@ example : (born 2 + 1 : Fin 12) = 7 ∧ (born 12 + 1 : Fin 12) = 7 := by decide
 
 ## Where this goes next
 
-Nothing on this shelf follows it: pigeonhole closes Relations and Functions.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): the last card on this shelf, back to orders. A rule that keeps order leaves some guess unchanged, and on finitely many guesses a climb must stop. Finiteness does the work again.
+- [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): finiteness is the whole condition here. Double every whole number and you land in the even numbers — half of them, seemingly, and still nothing doubles up. That is what infinite means.
+- [Friends and strangers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): push the counting further and you get Ramsey theory, where enough pigeons force a whole pattern, not just a shared hole.
 
-Finiteness is the whole condition. Double every whole number and you land in the even numbers — half of them, seemingly, and still nothing doubles up. That is what infinite means: [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md). Push the counting further and you get Ramsey theory, where enough pigeons force a whole pattern, not just a shared hole.
+Left open: a climb through finitely many guesses, each inside the next, cannot go on growing for ever. Where does it stop, and is the stopping point the same from every start?
 
 ---
 

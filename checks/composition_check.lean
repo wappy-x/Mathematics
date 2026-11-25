@@ -1,4 +1,4 @@
--- Composing functions: for every price over $5, taking 20% off then a $5 coupon gives 0.8 × price − 5 while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
+-- Composing functions: for every price of at least $6.25, taking 20% off then a $5 coupon gives 0.8 × price − 5, never below $0, while the coupon first gives 0.8 × price − 4, so the coupon-first order always costs exactly $1 more; the do-nothing rule changes no chain, regrouping a chain of three changes nothing, and the card's jacket and coat numbers come out as it says.
 import Mathlib.Algebra.Order.Ring.Rat
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -9,20 +9,26 @@ def percentOff (price : ℚ) : ℚ := 4 / 5 * price
 /-- The $5 coupon `g`: take five dollars off the price. -/
 def couponOff (price : ℚ) : ℚ := price - 5
 
-/-- Order changes the answer. For any price over $5, "g after f" (20% off first, then the
-coupon) collapses to the one rule `0.8 × price − 5`, and "f after g" (the coupon first, then
-20% off) collapses to `0.8 × price − 4`. So the coupon-first order costs exactly $1 more,
-whatever the price: through the 20%, the $5 coupon is worth only $4. -/
-theorem coupon_first_costs_one_dollar_more (price : ℚ) (h : 5 < price) :
+/-- Order changes the answer. For any price of at least $6.25, "g after f" (20% off first,
+then the coupon) collapses to the one rule `0.8 × price − 5` and never goes below $0, and
+"f after g" (the coupon first, then 20% off) collapses to `0.8 × price − 4`. So the
+coupon-first order costs exactly $1 more, whatever the price: through the 20%, the $5 coupon
+is worth only $4. Below $6.25, 20% off leaves less than $5 for the coupon to take. -/
+theorem coupon_first_costs_one_dollar_more (price : ℚ) (h : 25 / 4 ≤ price) :
     (couponOff ∘ percentOff) price = 4 / 5 * price - 5 ∧
       (percentOff ∘ couponOff) price = 4 / 5 * price - 4 ∧
-      (percentOff ∘ couponOff) price = (couponOff ∘ percentOff) price + 1 := by
+      (percentOff ∘ couponOff) price = (couponOff ∘ percentOff) price + 1 ∧
+      0 ≤ (couponOff ∘ percentOff) price := by
   have h1 : (couponOff ∘ percentOff) price = 4 / 5 * price - 5 := by
     simp [Function.comp, couponOff, percentOff]
   have h2 : (percentOff ∘ couponOff) price = 4 / 5 * price - 4 := by
     simp only [Function.comp, couponOff, percentOff]; ring
-  refine ⟨h1, h2, ?_⟩
-  rw [h1, h2]; ring
+  have h5 : (5 : ℚ) ≤ 4 / 5 * price :=
+    calc (5 : ℚ) = 4 / 5 * (25 / 4) := by norm_num
+      _ ≤ 4 / 5 * price := mul_le_mul_of_nonneg_left h (by norm_num)
+  refine ⟨h1, h2, ?_, ?_⟩
+  · rw [h1, h2]; ring
+  · rw [h1]; exact sub_nonneg.mpr h5
 
 /-- The do-nothing rule changes no chain: putting the identity on either end of any function
 `f` gives back `f`. -/

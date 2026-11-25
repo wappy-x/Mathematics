@@ -24,7 +24,7 @@ fn main() {
     println!("the rule: F = 1.8 x C + 32, so 20 C -> {} F", fmt(to_f(20.0)));
     println!("the undo: C = (F - 32) / 1.8, so 68 F -> {} C", fmt(to_c(68.0)));
     println!("round trip, {} C -> {} F -> {} C -- {} of {} home", join(&CELSIUS), join(&fahr), join(&home), back, CELSIUS.len());
-    println!("search road, whole degrees -50 to 100 C landing on 68 F: {} -- {} input", found.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(", "), found.len());
+    println!("search road, whole degrees -50 to 100 C landing on {} F: {} -- {} input", fmt(to_f(20.0)), found.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(", "), found.len());
     println!("the one temperature both scales share: 1.8 x -40 + 32 = {}", fmt(to_f(-40.0)));
     println!("the clock: {} hours onto {} dial readings, readings reached {} of 12", hours.len(), readings.len(), readings.len());
     println!("hours landing on dial 1: 01:00 and 13:00 -- {} inputs, so no undo", one.len());

@@ -43,7 +43,7 @@ Written short: **f: buttons → snacks**. Left of the arrow is the domain, right
 
 **Read it aloud:** f is a rule from the 6 buttons to the 5 snacks stocked, and each button gets exactly one snack.
 
-Call the rule f, so f(A1) = crisps reads "press A1, get crisps". A relation is a function exactly when every button appears as a first name (the first entry of a pair) **exactly once**: at least once, so nothing goes unanswered; at most once, so nothing is ambiguous.
+Call the rule f, so f(A1) = crisps reads "press A1, get crisps". A relation is a function exactly when every button appears as the first entry of a pair **exactly once**. At least once, so nothing goes unanswered; at most once, so nothing is ambiguous.
 
 **domain = the 6 buttons, codomain = the 5 snacks stocked, range = the 4 reached**
 
@@ -85,7 +85,7 @@ Counting backwards tests forwards. Buttons behind each snack: crisps 2, chocolat
 
 ### The indicator function
 
-Chocolate and mints have sold out. Write that as a function from the 5 snacks stocked to two values: 1 if sold out, 0 if not. In order it reads 0 1 0 0 1 — the **indicator function** of the sold-out set, also called the characteristic function, written 1_A, where A names the set it marks: here, the sold-out snacks.
+Chocolate and mints have sold out. Write that as a function from the 5 snacks stocked to two values: 1 if sold out, 0 if not. In order it reads 0 1 0 0 1. That is the **indicator function** of the sold-out set, also called the characteristic function. It is written $`1_A`$, where A names the set it marks: here, the sold-out snacks.
 
 Add the five values: 2, the number sold out. Turning a yes or no into a 1 or a 0 makes counting into adding — why probability leans on it.
 
@@ -240,7 +240,7 @@ The two outputs match line for line: all counting.
 
 Lean proves three general claims for any domain and codomain, not just the vending machine.
 
-- A relation is a function exactly when every input appears as a first name exactly once.
+- A relation is a function exactly when every input appears as a first entry exactly once.
 - When the domain and codomain are finite, count the inputs behind each output and add: the total is the number of inputs.
 - Adding an indicator function's 1s and 0s over a finite codomain gives the number of members of the set it marks.
 
@@ -398,14 +398,16 @@ example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
 
 ## What this builds on
 
-- [Relations](01-relations.md): a relation is any set of ordered pairs; a function is the tidy kind, every first name appearing exactly once.
+- [Relations](01-relations.md): a relation is any set of ordered pairs; a function is the tidy kind, every first entry appearing exactly once.
 - [Ordered pairs and the Cartesian product](../07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pair (button, snack), input first.
 
 ## Where this goes next
 
-- [Composing functions](03-composition.md): running one function into another, and what the domain and range do.
+- [Composing functions](03-composition.md): running one function into another, and how domain and codomain decide which rules can chain.
 - [One-to-one and onto](04-injective-surjective-bijective.md): what this card left open — repeats like crisps, gaps like the mints.
-- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): a function that keeps order always leaves some input unchanged, given an order where every group has a nearest point above and below.
+
+The open question: when one function's output feeds straight into another, does the order you run them in change the answer?
 
 ---
 

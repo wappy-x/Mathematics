@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A day has 24 hours, numbered 0 to 23. The kitchen clock has 12 readings, taking the 12 on its face as 0: at hour 15 the dial shows 3, at hour 23 it shows 11, at hour 3 it shows 3 again.
+A day has 24 hours, numbered 0 to 23. The kitchen clock has 12 readings, taking the 12 on its face as 0. At hour 15 the dial shows 3, at hour 23 it shows 11, at hour 3 it shows 3 again.
 
 Take this rule: two hours count as the same when the dial shows the same for both. That is a relation on the 24 hours — a set of ordered pairs, [Relations](01-relations.md) — and 48 of the 24 × 24 = 576 pairs are in it.
 
@@ -64,7 +64,7 @@ Books write a ~ b for "linked", [a] for a's block.
 - **Reflexive.** Drop it and a member can miss its own block. "Same reading, different hour" has 24 pairs, and hour 0 is not in its own block.
 - **Symmetric.** Drop it and a can sit in b's block while b sits outside a's.
 - **Transitive.** Drop it and blocks overlap. "Readings at most 1 apart, no wrap" links 2 with 3 and 3 with 4, but not 2 with 4.
-- **Piles that cover the set.** Every member must sit in a pile. Leave one sock on the floor and "same pile" fails reflexive: 26 pairs, no partition.
+- **Piles that cover the set.** Every member must sit in a pile. In the 9-sock drawer below, leave one grey sock on the floor and "same pile" fails reflexive: 26 pairs, not 29, no partition.
 
 ---
 
@@ -76,7 +76,9 @@ The block of an hour is everything the rule links it to. Hour 0: to 12, and to i
 
 ### Symmetric and transitive stop blocks overlapping
 
-Suppose the block of a and the block of b share an hour, h. Then a is linked to h, and b to h. Symmetric turns the second round: h is linked to b. Transitive joins them: a is linked to b. Anything in a's block is linked to a, so to b, so it sits in b's block — and the same the other way. One block, two labels.
+Suppose the block of a and the block of b share an hour, h. Then a is linked to h, and b to h. Symmetric turns the second round: h is linked to b. Transitive joins them: a is linked to b.
+
+Anything in a's block is linked to a, so to b, so it sits in b's block — and the same the other way. One block, two labels.
 
 So two blocks match exactly or share nothing: cover, no overlap — a partition.
 
@@ -442,7 +444,7 @@ example : ¬ (pile 8 = pile 8 ∧ (8 : ℕ) ≠ 8 ∧ (8 : ℕ) ≠ 8) := by dec
 - [Orders](07-partial-and-total-orders.md): swap symmetric for antisymmetric and the same kind of list becomes a ranking, not piles.
 - [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): each block collapsed to one new thing — the quotient — that you can add and multiply.
 
-Left open: when blocks are added, does the answer depend on which member names each block?
+Left open on this shelf: keep reflexive and transitive, swap symmetric for antisymmetric, and what kind of list do you get? Adding blocks, and whether the answer depends on which member names each block, waits for [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md).
 
 ---
 

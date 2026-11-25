@@ -39,12 +39,13 @@ One arrow each way between the temperatures. Two into the dial reading, none out
 
 **Read it aloud:** forwards, stretch by 1.8 and shift up 32; back, take off the shift, then the stretch.
 
-The undo is called the **inverse**. If f is the forward rule, the inverse is written **f^-1**, said "f inverse": it sends each output back to the input that made it. The raised −1 is a label, not a power, not 1 over f.
+The undo is called the **inverse**. If f is the forward rule, the inverse is written $`f^{-1}`$, said "f inverse": it sends each output back to the input that made it. The raised −1 is a label, not a power, not 1 over f.
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
+| C and F | the temperature in Celsius, and in Fahrenheit | 20 and 68 |
 | the forward rule | the machine you start with | F = 1.8 × C + 32 |
-| the inverse, f^-1 | sends each output back to its input; the −1 is a label, not a power | C = (F − 32) ÷ 1.8 |
+| the inverse, $`f^{-1}`$ | sends each output back to its input; the −1 is a label, not a power | C = (F − 32) ÷ 1.8 |
 | one-to-one | no two inputs share an output | only 20 °C gives 68 °F |
 | onto | every output is reached | every Fahrenheit temperature has a Celsius behind it |
 | a bijection | one-to-one and onto at once | the temperature rule, not the clock |
@@ -76,7 +77,9 @@ The check sends four temperatures out and back, −40, 0, 20 and 100 °C, and al
 
 Ask the clock's inverse which hour gave dial reading 1. It must answer with one hour. The honest answer is two: 01:00 and 13:00. A rule answering an input twice is not a function ([Functions](02-functions.md)), so the inverse does not exist. Not hidden — not there.
 
-The whole day is like this: 12 readings, 24 hours, 2 hours behind every one. Every reading is reached, so the clock is onto — and onto alone is not enough. The mirror failure is an output nothing produces: the inverse is handed it with no input to give back. Rule out both and you have ruled in a bijection. **Undoable and bijection are the same condition.**
+The whole day is like this: 12 readings, 24 hours, 2 hours behind every one. Every reading is reached, so the clock is onto — and onto alone is not enough.
+
+The mirror failure is an output nothing produces: the inverse is handed it with no input to give back. Rule out both and you have ruled in a bijection. **Undoable and bijection are the same condition.**
 
 ### The repair
 
@@ -132,7 +135,7 @@ one, per, morning = lands_on(dial, hours, 1), [len(lands_on(dial, hours, d)) for
 print(f"the rule: F = 1.8 x C + 32, so 20 C -> {fmt(to_f(20))} F")
 print(f"the undo: C = (F - 32) / 1.8, so 68 F -> {fmt(to_c(68))} C")
 print(f"round trip, {', '.join(fmt(c) for c in CELSIUS)} C -> {', '.join(fmt(f) for f in fahr)} F -> {', '.join(fmt(c) for c in home)} C -- {back} of {len(CELSIUS)} home")
-print(f"search road, whole degrees -50 to 100 C landing on 68 F: {', '.join(str(c) for c in found)} -- {len(found)} input")
+print(f"search road, whole degrees -50 to 100 C landing on {fmt(to_f(20))} F: {', '.join(str(c) for c in found)} -- {len(found)} input")
 print(f"the one temperature both scales share: 1.8 x -40 + 32 = {fmt(to_f(-40))}")
 print(f"the clock: {len(list(hours))} hours onto {len(readings)} dial readings, readings reached {len(readings)} of 12")
 print(f"hours landing on dial 1: 01:00 and 13:00 -- {len(one)} inputs, so no undo")
@@ -146,7 +149,7 @@ assert per == [2] * 12 and sum(per) == 24 and len(morning) == 1 and [len(lands_o
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the rule: F = 1.8 x C + 32, so 20 C -> 68 F
@@ -193,7 +196,7 @@ fn main() {
     println!("the rule: F = 1.8 x C + 32, so 20 C -> {} F", fmt(to_f(20.0)));
     println!("the undo: C = (F - 32) / 1.8, so 68 F -> {} C", fmt(to_c(68.0)));
     println!("round trip, {} C -> {} F -> {} C -- {} of {} home", join(&CELSIUS), join(&fahr), join(&home), back, CELSIUS.len());
-    println!("search road, whole degrees -50 to 100 C landing on 68 F: {} -- {} input", found.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(", "), found.len());
+    println!("search road, whole degrees -50 to 100 C landing on {} F: {} -- {} input", fmt(to_f(20.0)), found.iter().map(|c| c.to_string()).collect::<Vec<String>>().join(", "), found.len());
     println!("the one temperature both scales share: 1.8 x -40 + 32 = {}", fmt(to_f(-40.0)));
     println!("the clock: {} hours onto {} dial readings, readings reached {} of 12", hours.len(), readings.len(), readings.len());
     println!("hours landing on dial 1: 01:00 and 13:00 -- {} inputs, so no undo", one.len());
@@ -209,7 +212,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the rule: F = 1.8 x C + 32, so 20 C -> 68 F
@@ -332,7 +335,7 @@ example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 12).filter (fun h => dial h 
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the numbers above, so one will fire.
-> - **Flatten the stretch.** Set the 1.8 to 0: every Celsius temperature now goes to 32 °F. Only 1 of the 4 round trips comes home, and the search finds 151 whole degrees on one output, not 1.
+> - **Flatten the stretch.** Set the 1.8 in `to_f` to 0, and leave `to_c` alone, or it divides by zero. Every Celsius temperature now goes to 32 °F. Only 1 of the 4 round trips comes home, and the search finds 151 whole degrees on one output, not 1.
 > - **Give the day a 25th hour.** Run the clock over 00:00 to 24:00. Dial reading 12 picks up a third hour: the counts read 2 2 2 2 2 2 2 2 2 2 2 3, total 25.
 
 ---
@@ -367,7 +370,11 @@ example : ∀ d ∈ Finset.Icc 1 12, ((Finset.range 12).filter (fun h => dial h 
 
 ## Where this goes next
 
-Nothing later on this shelf leans on it; the shelf turns to [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md). Undoing returns wherever a rule runs in reverse: solving for an input, a logarithm undoing a power ([Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)), decrypting a message. The question this card leaves open: when a rule crowds inputs together, which inputs do you keep so it can be undone?
+- [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md): next on this shelf. Nothing there leans on inverses; it studies what the clock does instead: the blocks of hours that share a dial reading.
+
+Undoing returns wherever a rule runs in reverse: solving for an input, decrypting a message, and a logarithm undoing a power, met earlier in [Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md).
+
+The question this card leaves open: when a rule crowds inputs together, like 01:00 and 13:00 on dial 1, how do those crowds split up the whole set?
 
 ---
 

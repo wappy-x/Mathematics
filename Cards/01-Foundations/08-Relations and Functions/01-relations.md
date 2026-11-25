@@ -105,7 +105,11 @@ That sum runs tallest first: Luis is at least as tall as all 5, Jon as 4, Kai 3,
 
 ## Code, from first principles, and it actually runs
 
-The email list is built from the 4 conversations, the height list from the five numbers. Each test is answered twice: once by walking the pairs one at a time, straight off the definition, and once by set arithmetic — reverse the list, overlap it with the original, and follow it twice in a row. That two-step list is the **composition** of the relation with itself. Eight answers, two routes, and the run stops if any disagree. The last line re-counts the two broken lists.
+The email list is built from the 4 conversations, the height list from the five numbers.
+
+Each test is answered twice. First the code walks the pairs one at a time, straight off the definition. Then it uses set arithmetic: reverse the list, overlap it with the original, and follow it twice in a row. That two-step list is the **composition** of the relation with itself.
+
+Eight answers, two routes, and the run stops if any disagree. The last line re-counts the two broken lists.
 
 ### Python
 
@@ -247,7 +251,7 @@ import Mathlib.Data.Fintype.Prod
 open SetRel
 
 /-- A relation R on a set A is a set of ordered pairs (a, b) from A × A, and each test is a
-question about that set. Reflexive: the five loops (a, a) are all in R. Symmetric: reversing every
+question about that set. Reflexive: every loop (a, a) is in R. Symmetric: reversing every
 pair gives R back. Antisymmetric: the pairs that are in R both ways round are all loops.
 Transitive: following R twice in a row (the composition) gives only pairs already in R. -/
 theorem relation_tests_are_set_conditions {α : Type*} (R : SetRel α α) :
@@ -390,7 +394,7 @@ example : cmTie Maya ≤ cmTie Priya ∧ cmTie Priya ≤ cmTie Maya ∧ Maya ≠
 #print axioms at_least_as_tall_tests
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'relation_tests_are_set_conditions' depends on axioms: [propext, Quot.sound]
