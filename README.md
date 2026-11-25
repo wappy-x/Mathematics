@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/banner.svg" alt="Mathematics: a comprehensive mathematics library, with every number checked in Python and Rust and the key results proved in Lean" width="100%">
+  <img src=".github/banner.svg" alt="Mathematics: a plain-English math library checked in Python, Rust, and Lean" width="100%">
 </p>
 
 <p align="center">
@@ -8,56 +8,65 @@
   <img alt="checks" src="https://img.shields.io/badge/every%20card-Python%20%2B%20Rust%20checks-b48cff?style=flat-square">
   <img alt="proofs" src="https://img.shields.io/badge/proofs-Lean%204%20%2B%20Mathlib-a78bfa?style=flat-square">
   <img alt="status" src="https://img.shields.io/badge/status-work%20in%20progress-f5a524?style=flat-square">
-  <img alt="licence" src="https://img.shields.io/badge/licence-CC%20BY%204.0%20%2B%20Apache%202.0-8b949e?style=flat-square">
+  <img alt="license" src="https://img.shields.io/badge/license-CC%20BY%204.0%20%2B%20Apache%202.0-8b949e?style=flat-square">
 </p>
 
-<p align="center"><b>A plain-English library of mathematics, from counting to the edge of research.</b><br>
-One idea per card. What it means, why it's true, a worked example with real numbers,<br>code that checks every single number twice,<br>and a Lean proof of the key results, checked by computer.</p>
+<p align="center"><b>A plain-English math library, from counting to open research problems.</b><br>
+One idea per card, with a worked example.<br>
+Python and Rust check every number. Lean proves key results.</p>
 
 <p align="center">
-  <a href="SYLLABUS.md"><img alt="Browse the syllabus: every wing, shelf and card" src="https://img.shields.io/badge/Browse_the_syllabus-every_wing%2C_shelf_and_card-7aa7ff?style=for-the-badge"></a>
+  <a href="SYLLABUS.md"><img alt="Browse the syllabus: every wing, shelf, and card" src="https://img.shields.io/badge/Browse_the_syllabus-every_wing%2C_shelf%2C_and_card-7aa7ff?style=for-the-badge"></a>
   <a href="#start-here"><img alt="Start reading: five good first cards" src="https://img.shields.io/badge/Start_reading-five_good_first_cards-b48cff?style=for-the-badge"></a>
 </p>
 
 ---
 
-## What is this?
+## What this library is
 
-A library of short, self-contained **cards**, each teaching one idea of mathematics. It's written for someone smart who never trained in maths and wants to learn it properly, not just memorise rules.
+This library teaches math with short, self-contained **cards**, one idea each. It is for adults without formal math training who want understanding, not memorized rules.
 
-The cards are arranged like a ladder. They start with place value and fractions, climb through algebra, calculus and probability, and end at topology, number theory and the famous unsolved problems. Each card only uses ideas from the cards before it, so you can start at the bottom and keep going, or jump straight to whatever you need.
+Cards build in order, using only ideas from earlier cards:
 
-**2,351 of 2,351 cards are ready to read.** The [syllabus](SYLLABUS.md) lists all 25 wings, and each wing has its own page showing its shelves and every card on them.
+- **Start:** place value and fractions.
+- **Middle:** algebra, calculus, and probability.
+- **End:** topology, number theory, and unsolved problems.
 
-## What's on a card
+Read in order, or jump to any topic.
 
-Every card has the same shape, so you always know where to look:
+**2,351 of 2,351 cards are ready to read.** The library organizes cards into 25 **wings** (major subjects), each split into **shelves** (topic groups). See the [syllabus](SYLLABUS.md) for all 25 wings.
+
+## What a card contains
+
+Every card uses the same sections:
 
 | Section | What you get |
 | --- | --- |
-| **General Overview** | The idea in plain words, starting from a real situation with real numbers. |
-| **The formula** | The rule written once, every symbol explained, and a sentence for reading it aloud. |
-| **Why it works** | The reasoning, step by step. Longer proofs are folded away until you want them. |
-| **Worked numbers, by hand** | The example done in full, so you can follow every step with a pen. |
-| **The code** | Two small programs, one in Python and one in Rust, that compute every number on the card, each reaching the answer by at least two independent routes. |
-| **The proof** | A Lean proof of the card's key results, checked by computer. The card says in plain words what it proves, and which parts are left to the Python and Rust checks. |
-| **What breaks** | What goes wrong when an assumption fails, with the numbers to show it. |
-| **The usual mistake** | The trap most people fall into, and how to avoid it. |
-| **Where you meet it** | Where the idea turns up in real life. |
-| **Builds on / goes next** | Links back to what you need first and forward to where it leads. |
-| **Sources** | Real books and papers, checked to exist. |
+| **General Overview** | Plain-English explanation starting from a real situation and real numbers. |
+| **The formula** | The rule, every symbol defined, and how to read it aloud. |
+| **Why it works** | Step-by-step reasoning. Long proofs stay collapsed until you open them. |
+| **Worked numbers, by hand** | Full example you can follow on paper. |
+| **The code** | Python and Rust programs that compute every number by at least two independent methods each. |
+| **The proof** | Formal proof in **Lean** (a computer proof checker) for key results. States what Lean proves and what Python and Rust check. |
+| **What breaks** | Numbers showing what goes wrong when an assumption fails. |
+| **The usual mistake** | The common error and how to avoid it. |
+| **Where you meet it** | Real-life uses of the idea. |
+| **Builds on / goes next** | Links to required cards and next cards. |
+| **Sources** | Real books and papers, verified to exist. |
 
 ## Start here
 
-- [**Place value**](Cards/01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): Why the 5 in 523 is worth five hundred.
-- [**Bayes' rule**](Cards/09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): How a positive test can still mean you probably don't have the disease.
-- [**The Black–Scholes call**](Cards/12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): The formula that prices an option, built up one piece at a time.
-- [**Brownian motion**](Cards/11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): The jittery random path behind pollen grains and share prices.
-- [**Why a new integral?**](Cards/10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): The question that forced mathematicians to rebuild the idea of area.
+Try one of these five cards:
+
+- [**Place value**](Cards/01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): Why the 5 in 523 equals 500.
+- [**Bayes' rule**](Cards/09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): Why a positive test can still mean you probably do not have the disease.
+- [**The Black–Scholes call**](Cards/12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): The formula that prices a financial option, step by step.
+- [**Brownian motion**](Cards/11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): The random path behind pollen grains and stock prices.
+- [**Why a new integral?**](Cards/10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): The question that led mathematicians to rebuild the idea of area.
 
 ## The map
 
-The library has 25 **wings**, each split into shelves of cards. Click a wing to open its page: a list of its shelves, then every card on each shelf.
+Select any wing to open its shelves and cards.
 
 <!-- map:start -->
 | # | Wing | What it's about | Ready to read |
@@ -89,68 +98,106 @@ The library has 25 **wings**, each split into shelves of cards. Click a wing to 
 | 25 | [**Frontier**](Cards/25-Frontier/README.md) | How research works, and the great open problems. | 58 of 58 |
 <!-- map:end -->
 
-## How it's checked
+## How cards are checked
 
-Mathematics should be right, so every card is checked in several ways:
+Every card passes automated checks and independent review.
 
-- **Every number is computed, not typed.** Each card's Python and Rust programs work out every number the card states, and the two must print exactly the same output.
-- **The key results are proved in Lean.** Almost every card carries a [Lean 4](https://lean-lang.org) proof, built on the [Mathlib](https://leanprover-community.github.io) library and checked by computer. Every proof is complete and uses only Lean's standard axioms. Lean proves the exact maths; the worked numbers and real-world models stay with the Python and Rust checks, and each card says which is which. 23 of the 2,351 cards have no Lean yet, because Mathlib does not yet cover enough of their subject: planar drawings and polyhedra, the homology of spheres, interpolation of operators, Bézout's theorem, rational points on elliptic curves, Hilbert's tenth problem, and the prime number theorem and the results built on it.
-- **Every check can fail.** The checks compare independent routes to the same answer (a formula against a brute-force count, a simulation, or an exact calculation), so a wrong formula trips them. They're tested by deliberately breaking the maths.
-- **Every card passes a strict linter** that checks its shape, links, symbols and sources, and every DOI in a source list is verified.
-- **Independent reviewers** recompute the numbers, test the proofs and look for anything misleading, and what they find gets fixed.
+### Code and review
 
-Errors still slip through now and then. If you spot one, please [open an issue](https://github.com/wappy-x/Mathematics/issues).
+- **No hand-typed numbers.** Each card's Python and Rust programs compute every stated number and must print identical output.
+- **Independent methods.** Each check compares two routes (such as a formula against a brute-force count, simulation, or exact calculation).
+- **Failure-tested.** Tests break the math on purpose so a wrong formula fails the check.
+- **Strict linter.** An automated **linter** (format checker) verifies card structure, links, symbols, and sources. Every source DOI (Digital Object Identifier, a permanent link to a work) is verified.
+- **Independent review.** Reviewers recompute numbers, test proofs, and flag misleading text. Every issue they find is fixed.
+
+### Lean proofs
+
+- **Computer-checked.** Almost every card has a [Lean 4](https://lean-lang.org) proof built on [Mathlib](https://leanprover-community.github.io) (Lean's math library).
+- **Complete.** Every proof uses only Lean's standard axioms (the basic assumptions Lean accepts without proof).
+- **Clear split.** Lean proves exact math; Python and Rust check worked numbers and real-world models. Each card states which is which.
+- **Waiting on Mathlib.** 23 of the 2,351 cards have no Lean yet because Mathlib does not yet cover enough of these subjects:
+  - planar drawings and polyhedra
+  - the homology of spheres
+  - interpolation of operators
+  - Bézout's theorem
+  - rational points on elliptic curves
+  - Hilbert's tenth problem
+  - the prime number theorem and the results built on it
+
+Errors still happen sometimes. If you find one, [open an issue](https://github.com/wappy-x/Mathematics/issues).
 
 ## Run a check yourself
 
-Every card's checks live in `checks/`. You need Python 3, and Rust if you want to run the second program.
+All checks are in `checks/`.
 
-```bash
-python3 checks/place_value_check.py
-rustc --edition 2021 -O checks/place_value_check.rs -o /tmp/check && /tmp/check
-```
+### Python and Rust
 
-Each program prints its working, then confirms that every check passed.
+1. Install Python 3 (and Rust to run the second program).
+2. Run one or both checks:
 
-To check a Lean proof you need [elan](https://github.com/leanprover/elan), Lean's installer. The `lean/` folder pins the Lean and Mathlib versions:
+   ```bash
+   python3 checks/place_value_check.py
+   rustc --edition 2021 -O checks/place_value_check.rs -o /tmp/check && /tmp/check
+   ```
 
-```bash
-cd lean
-lake exe cache get                          # fetch Mathlib, already compiled
-lake env lean ../checks/place_value_check.lean
-```
+Each program prints its steps and confirms every check passed.
 
-It prints the axioms each theorem rests on. A complete proof rests only on `propext`, `Classical.choice` and `Quot.sound`.
+### Lean
 
-## Reading it
+1. Install [elan](https://github.com/leanprover/elan) (Lean's installer). The `lean/` folder pins the Lean and Mathlib versions.
+2. Fetch precompiled Mathlib and run Lean on a proof:
 
-The cards are plain Markdown and read best right here on GitHub. Formulas, charts and diagrams display, the links between cards work, and the longer proofs stay folded until you open them. A card that isn't written yet is named in plain text.
+   ```bash
+   cd lean
+   lake exe cache get                          # fetch Mathlib, already compiled
+   lake env lean ../checks/place_value_check.lean
+   ```
+
+Lean prints each theorem's axioms. A complete proof uses only `propext`, `Classical.choice`, and `Quot.sound`.
+
+## Reading tips
+
+Read the cards on GitHub. They are **Markdown** files (plain text with light formatting):
+
+- Formulas, charts, and diagrams display inline.
+- Links between cards work.
+- Long proofs stay collapsed until you open them.
+- Unwritten cards appear as plain text.
 
 ## Layout
 
-```
-Cards/<wing>/README.md           the wing's page: its shelves and every card
-Cards/<wing>/<shelf>/<card>.md    the cards
-Cards/<wing>/figures/             the diagrams drawn on the cards
-checks/<card>_check.py            each card's Python check
-checks/<card>_check.rs            each card's Rust check
-checks/<card>_check.lean          each card's Lean proof
-lean/                             the Lean project: pinned Lean and Mathlib versions
-SYLLABUS.md                       the contents: all 25 wings, each linked to its page
-.github/                          the contributing guide, the agent brief and the banner
-```
+- `Cards/<wing>/README.md`: Wing page listing its shelves and cards.
+- `Cards/<wing>/<shelf>/<card>.md`: Individual cards.
+- `Cards/<wing>/figures/`: Diagrams shown on cards.
+- `checks/<card>_check.py`: Each card's Python check.
+- `checks/<card>_check.rs`: Each card's Rust check.
+- `checks/<card>_check.lean`: Each card's Lean proof.
+- `lean/`: Lean project with pinned Lean and Mathlib versions.
+- `SYLLABUS.md`: All 25 wings, linked to their pages.
+- `.github/`: Contributing guide, agent brief, and banner.
 
-## How it's made
+## How it is made
 
-The cards are written by AI agents working to a strict house standard, then checked by code and by independent review, as described above. The [agent brief](.github/AGENTS.md) is that standard in full.
+AI agents write the cards to a strict house standard. Automated checks and independent reviewers verify every card. Read the full standard in the [agent brief](.github/AGENTS.md).
 
 ## Contributing
 
-Help is welcome, from a one-word fix to a whole shelf of new cards.
+Help is welcome, from a one-word fix to a new shelf.
 
-- **Spotted a mistake?** [Open an issue](https://github.com/wappy-x/Mathematics/issues) with the card and what's wrong, or send a pull request with the fix.
-- **Want to build cards?** 0 cards are still to write, all listed in the [syllabus](SYLLABUS.md). Claim a shelf, give your AI agent the [agent brief](.github/AGENTS.md), and send the cards back as a pull request. The [contributing guide](.github/CONTRIBUTING.md) walks through it, using the next shelf as the example.
+- **Fix a mistake:** [Open an issue](https://github.com/wappy-x/Mathematics/issues) naming the card and error, or submit a **pull request** (proposed change on GitHub).
+- **Build cards:** Right now, 0 cards are still to write. Check the [syllabus](SYLLABUS.md) for current status.
 
-## Licence
+To build an open shelf:
 
-The writing is licensed under [Creative Commons Attribution 4.0](LICENSE) (CC BY 4.0): share and adapt it for any purpose, with credit to this library. The code, meaning every program in `checks/` and the same programs shown on the cards, is licensed under [Apache 2.0](checks/LICENSE).
+1. Claim the shelf on GitHub.
+2. Give your AI agent the [agent brief](.github/AGENTS.md).
+3. Submit the cards in a pull request.
+
+See the [contributing guide](.github/CONTRIBUTING.md) for a step-by-step example using the next shelf.
+
+## License
+
+This library uses two licenses:
+
+- **Writing:** [Creative Commons Attribution 4.0](LICENSE) (CC BY 4.0). Share and adapt for any purpose with credit to this library.
+- **Code:** [Apache 2.0](checks/LICENSE). Covers every program in `checks/` and the matching programs shown on the cards.
