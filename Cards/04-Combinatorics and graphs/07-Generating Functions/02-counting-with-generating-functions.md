@@ -8,7 +8,7 @@
 
 A till holds pennies (1 cent), nickels (5), dimes (10) and quarters (25), plenty of each. A charge of 50 cents must be paid in exact coins. How many piles pay it? Only the counts matter: three pennies and a nickel is one pile, in any order.
 
-The rule of product looks like the tool ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)): nickels 0 to 10, dimes 0 to 5, quarters 0, 1 or 2, pennies filling the rest. Eleven times six times three is 198 — badly wrong, since most of those combinations spend past 50 cents. The choices are tied together: they must reach one fixed total.
+The rule of product looks like the tool ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)). Take nickels 0 to 10, dimes 0 to 5, quarters 0, 1 or 2, with pennies filling the rest. Eleven times six times three is 198 — badly wrong, since most of those combinations spend past 50 cents. The choices are tied together: they must reach one fixed total.
 
 Here is the move that handles the total. Give each kind of coin a menu of what it could contribute: pennies 0, 1, 2, 3 cents and on up, quarters 0, 25 or 50. Write each menu as a row of powers of a placeholder, one power per amount, and multiply the four rows.
 
@@ -86,7 +86,7 @@ Each factor belongs to one kind and lists what it may contribute. The till has f
 
 $`x^{5}`$ times $`x^{45}`$ is $`x^{50}`$: powers of one placeholder add. Multiplying two factors means taking one term from each, adding the exponents, and collecting what lands on one power.
 
-Pennies and nickels alone, at $`x^{50}`$: no nickel with fifty pennies, one with forty-five, on to ten nickels with none — eleven terms, so the coefficient is 11, the count by hand too. The multiplication did the splitting, for every power at once.
+Pennies and nickels alone at $`x^{50}`$: no nickel with fifty pennies, one with forty-five, on to ten nickels with none. That makes eleven terms, so the coefficient is 11, the count by hand too. The multiplication did the splitting, for every power at once.
 
 ### Step 1: one kind of coin is one list, endless or short
 
@@ -108,7 +108,7 @@ no constant term, since 0 is not a face, and nothing above $`x^{6}`$. Two dice s
 
 ### Step 2: the coefficient keeps only what adds up
 
-Now all four. A term of the product takes one term from each factor: $`x^{a}`$ from the pennies, $`x^{5b}`$ from the nickels, $`x^{10c}`$ from the dimes, $`x^{25d}`$ from the quarters, where $`a`$, $`b`$, $`c`$ and $`d`$ count coins. Exponents add, so the term lands on
+Now all four. A term of the product takes one term from each factor: $`x^{a}`$ from the pennies, $`x^{5b}`$ from the nickels, $`x^{10c}`$ from the dimes, and $`x^{25d}`$ from the quarters. Here $`a`$, $`b`$, $`c`$ and $`d`$ count coins. Exponents add, so the term lands on
 
 ```math
 x^{\,a + 5b + 10c + 25d}
@@ -528,7 +528,7 @@ example : Nat.choose 53 3 = 23426 := by decide
 - [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md): the same series turned on a step rule, which becomes one equation whose answer is a ratio of polynomials.
 - [Euler's product](../08-Partitions/02-partitions-generating-function.md): one factor for every part size, and what their endless product counts.
 
-These four factors were chosen by hand; what happens when the kinds are every whole number at once is a later card's product.
+Here each coin value gave a factor directly. When a sequence comes from a step rule instead, the next card turns that rule into one equation for its series.
 
 ---
 

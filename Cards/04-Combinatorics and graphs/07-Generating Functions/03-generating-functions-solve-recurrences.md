@@ -10,7 +10,9 @@ A drum machine holds a bar of 12 beats. Every note is worth one beat or two, and
 
 Nobody counts those by hand. The first note takes one beat, leaving an 11-beat bar, or two, leaving a 10-beat bar. Nothing else can happen, so 12's count is 11's plus 10's — the Fibonacci rule.
 
-A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter, x, instead — a generating function ([Generating functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series. Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once: the 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
+A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter, x, instead — a generating function ([Generating functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series.
+
+Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once. The 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
 
 **Multiply a fixed-weight step rule by the letter raised to the step number, add over every step, and the series solves out as one polynomial over another; splitting that fraction reads off a formula for any term.**
 
@@ -34,7 +36,7 @@ Only the first arrow is new.
 
 ## The formula
 
-One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([Generating functions](01-ordinary-generating-functions.md)); the letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $`G(x)`$, keeping $`F`$ for its numbers:
+One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([Generating functions](01-ordinary-generating-functions.md)). The letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $`G(x)`$, keeping $`F`$ for its numbers:
 
 ```math
 G(x) = F(0) + F(1)x + F(2)x^2 + \cdots = \sum_{n\ge 0} F(n)\,x^n
@@ -81,7 +83,7 @@ The two amounts come from matching coefficients: two equations, two unknowns ([T
 ### When it holds
 
 - **Fixed weights, nothing added.** In a(n) = n × a(n−1) the weight changes with the step, so no single equation in the series comes out. Something added each step brings its own series, and the answer stays a ratio only if that series is one.
-- **A bottom starting at 1.** That division never stalls ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)); a constant term of 0 divides by zero at once.
+- **A bottom starting at 1.** Dividing term by term from the constant term upward (the reverse order of [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)) never stalls. A constant term of 0 divides by zero at once.
 - **Two different brackets.** 1 − 4x + 4x^2 is one bracket squared, and needs a piece carrying that square, which [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md) builds.
 
 ---
@@ -113,7 +115,7 @@ Dividing x by 1 − x − x^2 one coefficient at a time hands back 0, 1, 1, 2, 3
 <details>
 <summary>Detailed proof: the fraction's coefficients are the sequence, at every position</summary>
 
-Take a(n) = c1·a(n−1) + c2·a(n−2) from n = 2, bottom D = 1 − c1·x − c2·x^2, top N = a(0) + (a(1) − c1·a(0))x. Since D starts at 1, the division fixes the quotient's coefficients b(0), b(1), … one at a time: b(n) is N's coefficient on x^n plus c1·b(n−1) plus c2·b(n−2), absent terms read as 0.
+Take a(n) = c1·a(n−1) + c2·a(n−2) from n = 2, bottom D = 1 − c1·x − c2·x^2, top N = a(0) + (a(1) − c1·a(0))x. Since D starts at 1, the division fixes the quotient's coefficients b(0), b(1), … one at a time. Each b(n) is N's coefficient on x^n plus c1·b(n−1) plus c2·b(n−2), with absent terms read as 0.
 
 So b(0) = a(0) and b(1) = a(1), and from position 2 on, N contributes nothing and b(n) = c1·b(n−1) + c2·b(n−2) — the rule itself. Two sequences obeying one rule and agreeing at positions 0 and 1 agree everywhere, by induction; factoring and splitting only rewrite the fraction. ∎
 
@@ -121,11 +123,15 @@ So b(0) = a(0) and b(1) = a(1), and from position 2 on, N contributes nothing an
 
 ### Step 3: factor the bottom
 
-Guess the bottom is (1 − phi·x)(1 − psi·x). Multiplying out gives 1 − (phi + psi)x + (phi × psi)x^2, so the guess needs phi + psi = 1 and phi × psi = −1. A pair with a known sum and product are the roots of r^2 − r − 1 = 0, the same rule's characteristic equation ([The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md)): the golden ratio 1.6180339887, and −0.6180339887.
+Guess the bottom is (1 − phi·x)(1 − psi·x). Multiplying out gives 1 − (phi + psi)x + (phi × psi)x^2, so the guess needs phi + psi = 1 and phi × psi = −1.
+
+A pair with a known sum and product are the roots of r^2 − r − 1 = 0, the same rule's characteristic equation ([The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md)). Those roots are the golden ratio 1.6180339887 and −0.6180339887.
 
 ### Step 4: split the fraction
 
-Over the shared bottom, the right-hand side's top is A(1 − psi·x) + B(1 − phi·x), which must equal x. Constant terms: A + B = 0. Terms in x: −A·psi − B·phi = 1. So B = −A and A(phi − psi) = 1; since phi − psi = √5, A = 1/√5 and B = −1/√5, which the code reaches from those same two equations.
+Over the shared bottom, the right-hand side's top is A(1 − psi·x) + B(1 − phi·x), which must equal x. Constant terms give A + B = 0, and terms in x give −A·psi − B·phi = 1.
+
+So B = −A and A(phi − psi) = 1. Since phi − psi = √5, we get A = 1/√5 and B = −1/√5, which the code reaches from those same two equations.
 
 ### Step 5: read off the coefficient
 
@@ -159,7 +165,9 @@ A 4-beat bar has five patterns, each note written as its worth in beats: 1111, 1
 
 233 is how many ways a 12-beat bar fills with one- and two-beat notes, and the fraction reached it from the step rule alone.
 
-**A whole-number case.** a(n) = 5·a(n−1) − 6·a(n−2) from a(0) = 2, a(1) = 5 has bottom 1 − 5x + 6x^2 and top 2 − 5x. The code finds the growth rates 2 and 3 by search, then multiplies (1 − 2x)(1 − 3x) back out to confirm them. The two amounts come out 1 and 1, so a(n) = 2^n + 3^n: 2, 5, 13, 35, 97, 275, 793, 2315, 6817.
+**A whole-number case.** Take a(n) = 5·a(n−1) − 6·a(n−2) from a(0) = 2 and a(1) = 5. Its bottom is 1 − 5x + 6x^2 and its top is 2 − 5x.
+
+The code finds the growth rates 2 and 3 by search, then multiplies (1 − 2x)(1 − 3x) back out to confirm them. The two amounts come out 1 and 1, so a(n) = 2^n + 3^n: 2, 5, 13, 35, 97, 275, 793, 2315, 6817.
 
 ### What breaks if you drop a piece
 
@@ -531,7 +539,7 @@ example : 2 * 2 ^ 4 = 32 ∧ 2 ^ 4 + 3 ^ 4 = 97 := by decide
 
 - [Generating functions](01-ordinary-generating-functions.md): what such a series is, and what its coefficients mean.
 - [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md): the same closed form from geometric guesses; its roots are the bracketed rates.
-- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): why dividing by a polynomial starting at 1 never stalls.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): term-by-term polynomial division; here the same cancel-and-subtract step runs from the constant term upward instead of from the highest power down.
 - [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): finding the split's two amounts.
 
 ## Where this goes next
@@ -541,7 +549,7 @@ The shelf carries on:
 - [Exponential generating functions](04-exponential-generating-functions.md): the same bookkeeping with each term over a factorial, as arrangements need.
 - [The Catalan generating function](05-catalan-generating-function.md): a rule fed by every earlier term, so its equation is quadratic and no such ratio answers it.
 
-Every rule here reached a fixed number of steps back; one that feeds on every earlier term breaks that shape, and the Catalan card answers it.
+Every series so far hung plain counts on powers of x. Next, exponential generating functions add a factorial under each power for labelled arrangements. After that, the Catalan card answers a recurrence that feeds on every earlier term.
 
 ---
 

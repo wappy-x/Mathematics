@@ -115,7 +115,9 @@ The turns of one list all differ and share one weight, so the 56 lists fall into
 
 Write $`s_k`$ for the sum of $`c_i - 1`$ over the first $`k`$ entries, so $`s_n = (n - 1) - n = -1`$. The open-slot count after $`k`$ entries is $`1 + s_k`$, and a list is a tree code when $`s_k \ge 0`$ for every $`k < n`$.
 
-Let $`m`$ be the **first** position from 1 to $`n`$ where $`s_k`$ is lowest. Start the list just after position $`m`$. Up to the end of the old list, the new sums are $`s_k - s_m \ge 0`$, because $`s_m`$ is the lowest. After wrapping round to position $`i < m`$, the new sum is $`-1 - s_m + s_i \ge 0`$, because $`s_i > s_m`$ strictly before the first lowest point. The last step lands on $`-1`$. So this turn is a tree code.
+Let $`m`$ be the **first** position from 1 to $`n`$ where $`s_k`$ is lowest. Start the list just after position $`m`$. Up to the end of the old list, the new sums are $`s_k - s_m \ge 0`$, because $`s_m`$ is the lowest.
+
+After wrapping round to position $`i < m`$, the new sum is $`-1 - s_m + s_i \ge 0`$, because $`s_i > s_m`$ strictly before the first lowest point. The last step lands on $`-1`$. So this turn is a tree code.
 
 Any other start fails: a start after position $`m'`$ passes only if $`s_{m'}`$ is no higher than every later sum and lower than every earlier one, which makes $`m' = m`$.
 
@@ -131,7 +133,9 @@ $`\displaystyle [x^n]\,T \;=\; \sum_{\text{tree codes}} \prod_i \varphi_{c_i} \;
 
 Two sides per merge give the menu $`(1 + t)^2`$, three give $`(1 + t)^3`$: 14 and 55 plans at four merges.
 
-A **rooted labelled tree** is a tree on named vertices with one marked as the **root**, here the depot. It is the root, $`x`$, holding a set of rooted trees on the other names. The exponential formula turns "a set of labelled pieces" into $`e^T`$ ([The exponential formula](06-exponential-formula.md)), so $`T = x\,e^T`$. The theorem needs only the equation, which one series solves (Step 1), so it holds here too.
+A **rooted labelled tree** is a tree on named vertices with one marked as the **root**, here the depot. It is the root, $`x`$, holding a set of rooted trees on the other names.
+
+The exponential formula turns "a set of labelled pieces" into $`e^T`$ ([The exponential formula](06-exponential-formula.md)), so $`T = x\,e^T`$. The theorem needs only the equation, which one series solves (Step 1), so it holds here too.
 
 With $`\varphi = e^t`$, the power is $`e^{nt}`$, whose coefficient at $`t^{n-1}`$ is $`n^{n-1}/(n-1)!`$. Then:
 
@@ -168,7 +172,9 @@ At $`n = 4`$ that is $`4^3 = 64`$. Any of the 4 villages can be the depot, so la
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Each family is counted for 1 to 6 nodes three ways: Lagrange, multiplying out the menu's power; solving the equation round by round, for $`e^T`$ splitting off the piece holding the smallest name; and building every tree, as child-count codes or parent maps. The first two share only the series product. The code also tests the cycle lemma on all 16 lists and the series product on the shelf's two dice.
+Nothing is imported. Each family is counted for 1 to 6 nodes three ways: Lagrange via powers of the menu, solving the equation round by round, and building every tree as child-count codes or parent maps. For $`e^T`$, the second road splits off the piece holding the smallest name.
+
+The first two roads share only the series product. The code also tests the cycle lemma on all 16 lists and checks the series product on the shelf's two dice.
 
 ### Python
 
@@ -641,9 +647,10 @@ example : Nat.choose 8 4 = 70 ∧ 70 % 4 ≠ 0 := by decide
 
 ## Where this goes next
 
+- [Integer partitions](../08-Partitions/01-integer-partitions.md): opens the next shelf, counting ways to split a number into whole parts before Euler's product turns those counts back into a generating function.
 - [Spanning trees](../10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): proves Cayley's $`n^{n-2}`$ directly, by Prüfer codes, on the same four villages; this card's 64 / 4 = 16 is another road to it.
 
-The counts are exact but grow fast; how fast, for a general menu, this card leaves open.
+The counts here are exact but grow fast — how fast, for a general menu, this card leaves open. Next, shelf 08 turns to integer partitions, where generating functions meet sums of whole parts.
 
 ---
 

@@ -123,7 +123,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 07 · Generating Functions · 7 cards
 
-*Ordinary generating functions as formal bookkeeping, products as convolutions and constrained counting, solving recurrences, exponential generating functions for labelled objects, and the Catalan generating function.*
+*Ordinary generating functions as formal bookkeeping, products as convolutions and constrained counting, solving recurrences, exponential generating functions for labelled objects, the Catalan generating function, the exponential formula for sets of connected pieces, and Lagrange inversion.*
 
 1. [Generating functions: hang a sequence on powers of x, and adding or multiplying series does the counting](07-Generating%20Functions/01-ordinary-generating-functions.md)
 2. [Counting by multiplying series: each constraint is a factor, and the answer is one coefficient](07-Generating%20Functions/02-counting-with-generating-functions.md)

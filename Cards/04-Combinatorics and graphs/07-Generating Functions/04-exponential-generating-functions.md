@@ -8,9 +8,11 @@
 
 A Scrabble rack holds five tiles: two A's, two B's and one C. Lay four of them in a row and read off the letters: a four-letter word, dictionary or not. How many different words can that rack show?
 
-Five different letters would give 5 × 4 × 3 × 2 = 120 rows. These are not five different letters. Each word comes from four of those rows — two ways to supply its A's, two its B's — so 120 rows are 30 words.
+Five different letters would give 5 × 4 × 3 × 2 = 120 rows. These are not five different letters. Each four-letter word comes from four of those rows — two ways to supply its A's, two its B's — so 120 rows are 30 words.
 
-All five tiles down is the easy case: 5! / (2! × 2!) = 30, one division per pair ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)). Four out of five is not one division, because which four to lay down is itself a choice: AABB, AABC or ABBC, giving 6, 12 and 12 words. Three cases here, thousands on a real rack.
+That shortcut fails in general. Dropping one tile here still leaves at least one A and one B, so every word matches four rows. For three-letter words it breaks: AAC uses no B, so it comes from only two of the 60 rows.
+
+All five tiles down is the easy case: 5! / (2! × 2!) = 30, one division per pair ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)). In general, laying down only part of a rack splits into cases, because which letters to take is itself a choice. Here AABB, AABC or ABBC give 6, 12 and 12 words. Three cases here, thousands on a real rack.
 
 The shelf's earlier cards hang a count on a power of a placeholder, so one polynomial holds every size at once ([Generating functions](01-ordinary-generating-functions.md)). Here that machine answers 3 at the fourth power: it counts which letters to take, not their order. One change fixes that.
 
@@ -44,9 +46,9 @@ A(x) \;=\; a_0 \;+\; a_1\frac{x}{1!} \;+\; a_2\frac{x^2}{2!} \;+\; a_3\frac{x^3}
 
 **Read it aloud:** the count for n places rides on x to the n, divided by the orderings of n things.
 
-Nothing is put in place of $`x`$; it is a peg keeping the sizes apart. A count comes back out as $`n!`$ times the coefficient of $`x^n`$. The factorial under each power is the **hanger**, and it is the only difference from the ordinary series.
+Nothing is put in place of $`x`$; it is a peg keeping the sizes apart. A count comes back out as $`n!`$ times the coefficient of $`x^n`$. The factorial under each power is the only difference from the ordinary series.
 
-What the hanger buys is the product. Take a second part, counts $`b_n`$ and series $`B(x)`$; let $`c_n`$ count the ways the two together fill $`n`$ places, each place to one part. Then $`A(x)`$ times $`B(x)`$ is the series of the $`c_n`$:
+What that factorial buys is the product. Take a second part, counts $`b_n`$ and series $`B(x)`$; let $`c_n`$ count the ways the two together fill $`n`$ places, each place to one part. Then $`A(x)`$ times $`B(x)`$ is the series of the $`c_n`$:
 
 ```math
 c_n \;=\; C(n,0)\,a_0 b_n \;+\; C(n,1)\,a_1 b_{n-1} \;+\; \cdots \;+\; C(n,n)\,a_n b_0
@@ -68,7 +70,7 @@ One split of the rack runs the table: the A and B tiles are the first part, the 
 | --- | --- | --- | --- |
 | $`x`$ | the peg; its power records the size | never given a value | — |
 | $`n`$ | places in the row | 4 | climbs, till the tiles run out |
-| $`n!`$ | orderings of $`n`$ things; the hanger | 4! = 24 | — |
+| $`n!`$ | orderings of $`n`$ things; the denominator under $`x^n`$ | 4! = 24 | — |
 | $`a_n`$ | the first part's ways on $`n`$ places | A and B tiles: 1, 2, 4, 6, 6 | more words at every size |
 | $`b_n`$ | the second part's ways on $`n`$ places | C tile: 1, 1, none | more words again |
 | $`c_n`$ | both parts' ways on $`n`$ places | 30 at $`n`$ = 4 | — |
@@ -91,7 +93,7 @@ The four places are distinguishable — first, second, third, fourth — and the
 
 ### Step 1: one letter's own series
 
-Two A tiles, given named places, cover none, one or two of them, one way each: an A in each place given. Three cannot be covered, so the counts are 1, 1, 1, then nothing. Hung on the factorials, that list is 1 + x + x^2/2. The 2 underneath counts nothing; it is the hanger Step 2 needs.
+Two A tiles, given named places, cover none, one or two of them, one way each: an A in each place given. Three cannot be covered, so the counts are 1, 1, 1, then nothing. Hung on the factorials, that list is 1 + x + x^2/2. The 2 underneath counts nothing; it is the factorial denominator Step 2 needs.
 
 ### Step 2: multiply, and the choosing appears by itself
 
@@ -107,7 +109,7 @@ Only pairs with i + j = n land on the n-th power. Writing k for i, the coefficie
 \frac{n!}{k!\,(n-k)!} \;=\; C(n, k).
 ```
 
-Nothing but the hangers produced that; on plain powers the sizes merely add.
+Nothing but the factorial denominators produced that; on plain powers the sizes merely add.
 
 ### Step 3: the same number by handing the places out
 
@@ -135,7 +137,7 @@ Three letters, three factors, one multiplication. The fourth power carries 5/4 a
 
 With m factors, Step 2's algebra leaves a multinomial coefficient in front instead of a binomial ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)). That is n! over the factorial of each share's size: the ways to hand n places out in shares of those sizes. Every letter's count being 1, the product counts the words.
 
-A second road skips series: split by which letters are taken, count each case by the division rule of [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md), add — 6 + 12 + 12 = 30. Multiplying does that split for free, and cases grow fast while a polynomial multiply does not.
+A second road skips series. Split by which letters are taken, count each case by the division rule of [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md), and add: 6 + 12 + 12 = 30. Multiplying does that split for free, and cases grow fast while a polynomial multiply does not.
 
 ---
 
@@ -158,7 +160,7 @@ Six of the thirty use both A's and both B's; the other two selections give twelv
 | --- | --- | --- |
 | Counts hung on plain powers | 3 | Counts which letters to take, not the words |
 | The coefficient read as the answer | 5/4 | It is the count over 4! |
-| 1 + x + x^2 for a pair, still × 4! | 72 | No hanger inside the factor |
+| 1 + x + x^2 for a pair, still × 4! | 72 | No factorial denominator inside the factor |
 | All five tiles taken as different | 120 | Each word counted 4 times over |
 
 The code prints all four.
@@ -582,14 +584,14 @@ example : Nat.factorial 4 / (Nat.factorial 2 * Nat.factorial 2) + Nat.factorial 
 > **Combining the counts with no binomial coefficient.** An ordinary product adds sizes and nothing else. This one also hands the places out, and that handing out *is* the C(n, k) in the sum. On this rack the difference is 3 against 30: selections against words.
 >
 > - **Reading the coefficient as a count.** The fourth power carries 5/4, which counts nothing. The count is 4! times it, 30.
-> - **Losing the hanger inside a factor.** A pair of tiles gives 1 + x + x^2/2. Writing 1 + x + x^2 and still multiplying by 4! gives 72.
-> - **Reading a series without knowing its hanger.** One polynomial names two count lists, on plain powers or on powers over factorials. Which it is travels with the series, not inside it.
+> - **Dropping the factorial inside a factor.** A pair of tiles gives 1 + x + x^2/2. Writing 1 + x + x^2 and still multiplying by 4! gives 72.
+> - **Reading a series without knowing which kind it is.** One polynomial names two count lists, on plain powers or on powers over factorials. Which it is travels with the series, not inside it.
 
 ---
 
 ## Where you meet it in real life
 
-- **Word games.** A rack's whole profile falls out of one product: this one spells 1, 3, 8, 18, 30 and 30 words in rows of length nought to five.
+- **Word games.** A rack's whole profile falls out of one product: this one spells 1, 3, 8, 18, 30 and 30 words in rows of length zero to five.
 - **Codes with a supply limit.** Eight-character codes using no character twice: a factor of 1 + x per character, read at the eighth power. Code positions are distinguishable, so the factorials belong.
 - **Labelled structures.** Partitions of a numbered set, permutations by cycle type, trees on numbered points: each built from these series. A part with no supply limit has count 1 at every size, so its series never stops: 1 + x + x^2/2! + x^3/3! + …, written e^x and built in wing 06, calculus and analysis.
 
@@ -608,7 +610,7 @@ example : Nat.factorial 4 / (Nat.factorial 2 * Nat.factorial 2) + Nat.factorial 
 - [The Catalan generating function](05-catalan-generating-function.md): a series that never stops, handled by a closed form instead of a finite multiplication.
 - [The exponential formula](06-exponential-formula.md): if the connected pieces have generating function C(x), the structures built from sets of them have generating function e^C(x).
 
-Every factor here stops, because a tile runs out. A part with no limit gives a series that never stops, and reading a count off one needs a closed form — the shelf's last card makes that move.
+Every factor here stops because a tile runs out. Next on the shelf, the Catalan card handles an endless series by turning a recursive split into one equation. Right after it, the exponential formula extends this card's labelled product to sets of pieces of any size.
 
 ---
 

@@ -32,7 +32,9 @@ The single stack is the 1, the last merge the x, the blocks the two copies of C.
 
 ## The formula
 
-Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $`n`$ hangs on $`x`$ to the power $`n`$, and "the coefficient of x^n" names it ([Generating functions](01-ordinary-generating-functions.md)). Here $`C_n`$ counts plans using $`n`$ merges, a row of $`n`$ + 1 stacks; $`x`$ is a place-marker, not a quantity, carrying one factor per merge.
+Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $`n`$ hangs on $`x`$ to the power $`n`$ ([Generating functions](01-ordinary-generating-functions.md)). "The coefficient of x^n" names that count.
+
+Here $`C_n`$ counts plans using $`n`$ merges, a row of $`n`$ + 1 stacks. The letter $`x`$ is a place-marker, not a quantity, carrying one factor per merge.
 
 ```math
 C(x) = 1 + x\,C(x)^2
@@ -40,7 +42,9 @@ C(x) = 1 + x\,C(x)^2
 
 **Read it aloud:** a plan is either the do-nothing plan for one stack, or a last merge — one x — with a plan for the left block and a plan for the right.
 
-Coefficient by coefficient, that line is the convolution recurrence proved on [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one product per split of the merges. Treated instead as a quadratic in $`C`$ and solved, it names the list in one expression:
+Coefficient by coefficient, that line is the convolution recurrence proved on [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one per split of the merges. That "last merge" split has the same shape as the **first-return recurrence** there, which cuts a safe queue at the first moment the till is empty again.
+
+Treated instead as a quadratic in $`C`$ and solved, the equation names the list in one expression:
 
 ```math
 C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}
@@ -78,9 +82,9 @@ Two rules make that algebra ([Counting by multiplying series](02-counting-with-g
 
 ### Step 2: iterate, and each round settles one more count
 
-One count is given outright: $`C_0 = 1`$. Put C = 1 into the right-hand side and keep putting the result back; the table below has the first rounds' arithmetic. The code prints six rounds, and each column stops moving: x^3 settles at 5 in round 3, x^4 at 14 in round 4, x^5 at 42 in round 5; round 6 repeats round 5.
+One count is given outright: $`C_0 = 1`$. Put C = 1 into the right-hand side and keep putting the result back; the table below has the first rounds' arithmetic. The code prints six rounds, and each column stops moving: x^3 settles at 5 in round 3, x^4 at 14 in round 4, and x^5 at 42 in round 5. Round 6 repeats round 5.
 
-The x in front of the square is the reason: the coefficient of x^n on the right is built only from coefficients below x^n on the left, so a round correct up to some power hands back one more, and the settled part never moves. Entries above that line — the 6s in round 3, the 26 in round 4 — are working residue.
+The x in front of the square is the reason. On the right, the coefficient of x^n uses only lower coefficients from the left. So each round settles one more power, and the settled part never moves. Entries above that line — the 6s in round 3, the 26 in round 4 — are working residue.
 
 ### Step 3: the quadratic formula names the whole series
 
@@ -101,11 +105,15 @@ Multiply the minus root above and below by 1 + sqrt(1 - 4x): the top becomes 1 -
 
 $`\displaystyle \frac{1 - \sqrt{1 - 4x}}{2x} = \frac{2}{1 + \sqrt{1 - 4x}}`$
 
-At x = 0 that reads 2 over 1 + 1, which is 1: the do-nothing plan, $`C_0`$. The plus root is 2 over a vanishing 2x, past every bound. Both roots return themselves through 1 + x C^2, so that test cannot separate them; the code separates them by adding up the counts at x = 0.1, landing on the minus root, 1.127016653793.
+At x = 0 that reads 2 over 1 + 1, which is 1: the do-nothing plan, $`C_0`$. The plus root is 2 over a vanishing 2x, past every bound.
+
+Both roots return themselves through 1 + x C^2, so that test cannot separate them. The code separates them by adding up the counts at x = 0.1, landing on the minus root, 1.127016653793.
 
 </details>
 
-One step is left undone: reading the coefficient of x^n off the square root needs sqrt(1 - 4x) expanded in powers of x, which waits for wing 06. The code closes the circle from the other side, pushing the closed count C(2n, n)/(n + 1) through 1 + x C^2 - C and leaving 0 out to x^10. Here C(2n, n) is "2n choose n", the number of ways to pick n things from 2n; it is not the series C.
+One step is left undone: reading the coefficient of x^n off the square root needs sqrt(1 - 4x) expanded in powers of x, which waits for wing 06.
+
+The code closes the circle from the other side, pushing the closed count C(2n, n)/(n + 1) through 1 + x C^2 - C and leaving 0 out to x^10. Here C(2n, n) is "2n choose n", the number of ways to pick n things from 2n; it is not the series C.
 
 ---
 
@@ -141,7 +149,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads reach the same six counts and share no arithmetic: iterating C <- 1 + x C^2 on series cut above x^5; simulating every merge order of one to six stacks and keeping the distinct nestings; and the closed count C(2n, n)/(n + 1), also pushed through 1 + x C^2 - C out to x^10. The square root is the script's own, by Heron's method: average a guess with the number divided by that guess, and repeat.
+Nothing is imported. Three roads reach the same six counts and share no arithmetic: iterating C <- 1 + x C^2 on series cut above x^5, simulating every merge order of one to six stacks to keep the distinct nestings, and computing C(2n, n)/(n + 1).
+
+The script also pushes the closed count through 1 + x C^2 - C out to x^10. Its square root uses Heron's method: average a guess with the number divided by that guess, and repeat.
 
 ### Python
 
@@ -513,10 +523,11 @@ example : Nat.factorial 5 = 120 := by decide
 
 ## Where this goes next
 
-- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the step that turns the closed form into C(2n, n)/(n + 1).
-- [Lagrange inversion](07-lagrange-inversion.md): when a series is defined by T = x phi(T), its coefficients come straight from powers of phi.
+- [The exponential formula](06-exponential-formula.md): returns to labelled series from the previous card and counts structures built from sets of connected pieces.
+- [Lagrange inversion](07-lagrange-inversion.md): reads the coefficients of T = x phi(T) straight from powers of phi, giving C(2n, n)/(n + 1) without expanding a square root.
+- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the calculus step that expands sqrt(1 - 4x) into C(2n, n)/(n + 1).
 
-The equation holds every count, but the rounds give them up one at a time; whether a line of algebra can name the coefficient of x^n outright is what that expansion settles.
+The equation holds every count, but the rounds give them up one at a time. Both Lagrange inversion at the end of this shelf and the binomial series in wing 06 name the coefficient of x^n outright. Next on this shelf, the exponential formula returns to labelled series to count structures made of sets of pieces.
 
 ---
 

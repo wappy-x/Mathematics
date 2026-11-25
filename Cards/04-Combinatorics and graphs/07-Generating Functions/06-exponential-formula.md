@@ -12,7 +12,9 @@ Type a message through the board twice and the message comes back. A shuffle tha
 
 Take a small board with five letters, A to E. No cable gives 1 setting. One cable gives 10, one for each pair of letters. Two cables give 15. That is 26 settings in all.
 
-Every setting is a set of pieces: lone letters and cabled pairs. The **exponential formula** turns a count of the pieces into a count of the settings, for every board size at once. A lone letter is one piece on one label and a cable one piece on two, so the pieces' series, with $`x`$ marking one label, is $`x + x^2/2`$. Raise e to that series, multiply the coefficient of $`x^n`$ by $`n!`$, and read off 1, 1, 2, 4, 10, 26 settings on 0 to 5 letters.
+Every setting is a set of pieces: lone letters and cabled pairs. The **exponential formula** turns a count of the pieces into a count of the settings, for every board size at once.
+
+A lone letter is one piece on one label and a cable is one piece on two, so the pieces' series, with $`x`$ marking one label, is $`x + x^2/2`$. Raise e to that series, multiply the coefficient of $`x^n`$ by $`n!`$, and read off 1, 1, 2, 4, 10, 26 settings on 0 to 5 letters.
 
 The rule also runs backwards. Four computers have 6 possible cables between them, each in or out: 64 networks. A logarithm turns that 64 into 38: the networks in which every computer can reach every other.
 
@@ -166,7 +168,9 @@ Five letters allow 26 self-undoing settings; 38 of the 64 networks on four compu
 
 ## Code, from first principles, and it actually runs
 
-A series is kept as whole-number counts, $`n!`$ times each coefficient. Three roads reach the involutions and the connected networks: adding up $`C(x)^k/k!`$ (or the logarithm's terms), the newest-label recurrence forwards and backwards, and brute force over every map of the letters and every graph on up to five computers. The groups take the first two roads and the loops are checked against $`n!`$; the 26-letter plugboard is also counted cable by cable.
+A series is kept as whole-number counts, $`n!`$ times each coefficient. Three roads reach the involutions and the connected networks: adding up $`C(x)^k/k!`$ (or the logarithm's terms), running the newest-label recurrence forwards and backwards, and checking every map or graph by brute force.
+
+The groups take the first two roads, and the loops are checked against $`n!`$. The 26-letter plugboard is also counted cable by cable.
 
 ### Python
 

@@ -8,7 +8,9 @@
 
 Two ordinary dice, one red and one blue, rolled once: 36 ordered outcomes, red 2 with blue 5 apart from red 5 with blue 2. A total of 7 happens six ways, a total of 12 only one. For the totals 2 through 12 the counts run 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1.
 
-Working that list out means pairing a red face with a blue face for every total. Hang each count on a power of a placeholder letter: one die becomes x + x^2 + x^3 + x^4 + x^5 + x^6, the power recording the face and the number in front how many ways it happens. Multiply that by itself. Powers of x multiply by adding exponents — what two dice do to their faces — so collecting terms gathers the rolls by total, and the number in front of x^7 comes out 6.
+Working that list out means pairing a red face with a blue face for every total. Hang each count on a power of a placeholder letter: one die becomes x + x^2 + x^3 + x^4 + x^5 + x^6. The power records the face, and the number in front records how many ways it happens.
+
+Multiply that series by itself. Powers of x multiply by adding exponents, which is what two dice do to their faces. Collecting terms gathers the rolls by total, and the number in front of x^7 comes out 6.
 
 An expression holding a list that way is a **generating function**, the term used from here on. Two facts earn it, both proved below: what a product of series counts, and that the series of all 1s is the inverse of 1 − x.
 
@@ -82,13 +84,15 @@ x^3 times x^4 is x^7: three copies of x beside four makes seven. So when the exp
 
 ### Step 1: multiplying two series convolves the two lists
 
-Multiply out the way two polynomials do, every term of the first against every term of the second ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $`x^n`$: if the first exponent is $`k`$ the second is $`n`$ minus $`k`$, and adding those products gives $`c_n`$. For the dice at total 7 the first exponent runs 1 through 6, its partner always in range, each product 1 times 1: six splits, so 6. At 13 nothing works, and the series stops at the twelfth power.
+Multiply out the way two polynomials do, every term of the first against every term of the second ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $`x^n`$: if the first exponent is $`k`$ the second is $`n`$ minus $`k`$, and adding those products gives $`c_n`$.
 
-Read the same line as counting. A split with a size-$`k`$ first piece has $`a_k`$ times $`b_{n-k}`$ pairs, by the product rule; the splits are separate cases covering everything, so the sum rule adds them ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)). Multiplying series is those two rules applied to every size at once, in advance.
+For the dice at total 7, the first exponent runs 1 through 6 and its partner is always in range. Each product is 1 times 1 across six splits, so the count is 6. At 13 nothing works, and the series stops at the twelfth power.
+
+Read the same line as counting. A split with a size-$`k`$ first piece has $`a_k`$ times $`b_{n-k}`$ pairs, by the product rule. The splits are separate cases covering everything, so the sum rule adds them ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)). Multiplying series is those two rules applied to every size at once, in advance.
 
 ### Step 2: the series of ones is the inverse of 1 − x
 
-Multiply the series of ones by 1 − x. The coefficients of 1 − x are 1, then −1, then 0 forever, so above the constant term only two products land on each power: the 1 there against that 1, and the 1 below against that −1. Every $`a_n`$ here is 1.
+Multiply the series of ones by 1 − x. The coefficients of 1 − x are 1, then −1, then 0 forever. Above the constant term, only two products land on each power: the 1 there against that 1, and the 1 below against that −1. Every $`a_n`$ here is 1.
 
 ```math
 c_n = a_n \cdot 1 + a_{n-1} \cdot (-1) = 1 - 1 = 0 \quad \text{for } n \ge 1, \qquad c_0 = 1
@@ -96,15 +100,17 @@ c_n = a_n \cdot 1 + a_{n-1} \cdot (-1) = 1 - 1 = 0 \quad \text{for } n \ge 1, \q
 
 They cancel, and the constant term stays 1. So the product is plain 1, which is what the name 1/(1 − x) records: not a division, but what multiplies 1 − x to 1.
 
-Nothing else does. Read the same convolution for an unknown series with $`(1-x)A(x) = 1`$: its constant term must be 1, and above that each coefficient must equal the one before, so all are 1. No finite piece will do either: cut the ones off and everything cancels except the top term, left with no partner, so 1 − x times 1 + x + … + x^8 is 1 − x^9.
+Nothing else does. Read the same convolution for an unknown series with $`(1-x)A(x) = 1`$: its constant term must be 1, and above that each coefficient must equal the one before, so all are 1.
+
+No finite piece will do either. Cut the ones off and everything cancels except the top term, left with no partner. So 1 − x times 1 + x + … + x^8 is 1 − x^9.
 
 ### Step 3: ones against ones, and the grand total
 
-Squaring the ones is the smallest convolution worth doing: every split of $`n`$ gives 1 times 1, and there are $`n + 1`$ splits, so the coefficients run 1, 2, 3, 4, … — the count of ordered pairs of whole numbers adding to $`n`$.
+Squaring the ones is the smallest convolution worth doing. Every split of $`n`$ gives 1 times 1, and there are $`n + 1`$ splits. So the coefficients run 1, 2, 3, 4, … — the count of ordered pairs of whole numbers adding to $`n`$.
 
 The dice cross-check a total instead of one coefficient: the eleven coefficients add to 36, and 6 faces times 6 faces is the same 36. Every pair of faces sits in one split, so the roads must agree.
 
-A different route reaches the ones from the other end: the list obeys a(n) = a(n−1) with a(0) = 1, and turning such a rule into an equation is the work of [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md).
+A different route reaches the ones from the other end: the list obeys a(n) = a(n−1) with a(0) = 1. Turning such a rule into an equation is the work of [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md).
 
 ---
 
@@ -137,7 +143,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The dice counts come out three times by roads sharing no arithmetic: the series multiplied over every pair of terms, all 36 rolls listed and tallied, and the splits of each total counted. The squared ones is set against $`n + 1`$, 1 − x times the ones shows the leftover at the top, and the four wrong numbers are printed too.
+Nothing is imported. Three roads sharing no arithmetic reach the dice counts: multiplying the series over every pair of terms, listing and tallying all 36 rolls, and counting each total's splits.
+
+The script also checks the squared ones against $`n + 1`$, multiplies 1 − x by the ones to show the leftover at the top, and prints all four wrong numbers.
 
 ### Python
 
