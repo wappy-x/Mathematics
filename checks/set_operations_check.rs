@@ -15,6 +15,7 @@ fn main() {
     let b_only = pick(|f| has(b, f) && !has(a, f));
     let neither = pick(|f| !has(a, f) && !has(b, f));         // not on A, and not on B
     let outside = pick(|f| !has(&union, f));                  // the other road
+    let not_both = pick(|f| !has(a, f) || !has(b, f));        // the mirror law
     let rows: [(&str, usize); 8] = [("films on the watchlist", FILMS.len()),
         ("films on service A", a.len()), ("films on service B", b.len()),
         ("on both, A and B", both.len()), ("A or B, the union", union.len()),
@@ -26,9 +27,9 @@ fn main() {
     println!("A only: {} | both: {} | B only: {} | neither: {}", a_only.join(", "),
              both.join(", "), b_only.join(", "), outside.join(", "));
     println!("the three mistakes come out at {}, {} and {}",
-             a.len() + b.len(), a.len() - b.len(), FILMS.len() - both.len());
+             a.len() + b.len(), a.len() - b.len(), not_both.len());
     assert!(union.len() == 6 + 5 - 2 && outside.len() == 12 - 9);   // by arithmetic
-    assert!(outside == neither && neither == ["Nectar", "Onyx", "Pike"]); // De Morgan
-    assert!(both == ["Halo", "Ivory"] && a_only.len() == 4 && b_only.len() == 3);
+    assert!(outside == neither && neither == ["Nectar", "Onyx", "Pike"] && not_both == pick(|f| !has(&both, f))); // De Morgan, both laws
+    assert!(both == ["Halo", "Ivory"] && a_only.len() == 4 && b_only.len() == 3 && not_both.len() == 12 - 2);
     println!("ALL CHECKS PASS");
 }

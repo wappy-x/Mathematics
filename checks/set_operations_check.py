@@ -12,6 +12,7 @@ a_only = pick(lambda f: f in A and f not in B)
 b_only = pick(lambda f: f in B and f not in A)
 neither = pick(lambda f: f not in A and f not in B)     # not on A, and not on B
 outside = pick(lambda f: f not in union)                # the other road: not (A or B)
+not_both = pick(lambda f: f not in A or f not in B)     # the mirror law: not on A, or not on B
 for label, films in [("films on the watchlist", FILMS), ("films on service A", A),
                      ("films on service B", B), ("on both, A and B", both),
                      ("A or B, the union", union), ("A minus B, on A only", a_only),
@@ -22,8 +23,8 @@ print(f"not on A: {len(pick(lambda f: f not in A))} -- not on B: "
 print("A only: " + ", ".join(a_only) + " | both: " + ", ".join(both)
       + " | B only: " + ", ".join(b_only) + " | neither: " + ", ".join(outside))
 print(f"the three mistakes come out at {len(A) + len(B)}, {len(A) - len(B)} "
-      f"and {len(FILMS) - len(both)}")
+      f"and {len(not_both)}")
 assert len(union) == 6 + 5 - 2 and len(outside) == 12 - 9      # counted by arithmetic
-assert outside == neither and neither == ["Nectar", "Onyx", "Pike"]   # De Morgan
-assert both == ["Halo", "Ivory"] and len(a_only) == 4 and len(b_only) == 3
+assert outside == neither == ["Nectar", "Onyx", "Pike"] and not_both == pick(lambda f: f not in both)   # De Morgan, both laws
+assert both == ["Halo", "Ivory"] and len(a_only) == 4 and len(b_only) == 3 and len(not_both) == 12 - 2
 print("ALL CHECKS PASS")

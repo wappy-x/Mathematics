@@ -343,14 +343,17 @@ example : 4 + 13 = 17 ∧ 4 * 12 = 48 := by norm_num
 
 ## What this builds on
 
+- [Sets](01-sets-and-membership.md): a set forgets order, which is why a pair needs round brackets, not braces.
+- [Subsets and the power set](02-subsets-and-power-set.md): a subset of A × B is some of the pairs, which is what a relation keeps.
 - [Set operations](03-set-operations.md): union, intersection and difference. The deck and the flipped deck are two sets of pairs whose intersection is empty.
 
 ## Where this goes next
 
-- [Relations](../08-Relations%20and%20Functions/01-relations.md): keep only some of the pairs in A × B — a subset, in the sense of [Subsets and the power set](02-subsets-and-power-set.md) — and you have a relation: a rule saying which things go with which.
+- [Russell's paradox](06-russells-paradox.md): the next card on this shelf. Before building more sets from pairs and families, it shows which rules for making a set break down.
 - [Indexed families](07-indexed-families-of-sets.md): unions, intersections and products over any number of sets, and De Morgan for infinitely many.
+- [Relations](../08-Relations%20and%20Functions/01-relations.md): keep only some of the pairs in A × B and you have a relation: a rule saying which things go with which.
 
-The question this card leaves open: of all 52 pairs, which belong together, and how do you say so?
+The question this card leaves open: of all 52 pairs, which belong together, and how do you say so? The next shelf answers it, starting at [Relations](../08-Relations%20and%20Functions/01-relations.md). First, this shelf finishes the ground rules: which collections are sets at all.
 
 ---
 

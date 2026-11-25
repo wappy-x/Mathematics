@@ -30,10 +30,11 @@ fn main() {
     row("scrambled spelling, guests", as_set(&names).len().to_string());
     row("nobody in the office under 20", by_rule(|age| age < 20).len().to_string());
     row("nobody in the office over 60", by_rule(|age| age > 60).len().to_string());
-    row("the two empty lists agree", yes_no(by_rule(|age| age < 20) == by_rule(|age| age > 60)));
+    row("the two empty sets agree", yes_no(by_rule(|age| age < 20) == by_rule(|age| age > 60)));
     println!("count the repeat: {} guests; count the orders: {} spellings; drop the rule: {} guests", names.len(), 3 * 2 * 1, OFFICE.len());
     assert!(guests == written && as_set(&names) == written);   // order and repeats do not count
     assert!(OFFICE.iter().all(|(n, age)| under_30(*age) == has(&written, n)));   // person by person
-    assert!(guests.len() == 3 && OFFICE.len() == 5 && by_rule(|age| age > 60).len() == 0 && !under_30(30));
+    assert!(guests.len() == 3 && OFFICE.len() == 5 && !under_30(30));
+    assert!(by_rule(|age| age < 20) == by_rule(|age| age > 60) && by_rule(|age| age < 20).is_empty());   // one empty set
     println!("ALL CHECKS PASS");
 }

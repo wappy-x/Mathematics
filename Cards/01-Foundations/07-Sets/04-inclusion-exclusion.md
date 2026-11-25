@@ -32,10 +32,10 @@ flowchart LR
   c2 -->|yes| h3{"choir?"}
   c2 -->|no| h4{"choir?"}
   h1 -->|yes| p1["all three: 2"]
-  h1 -->|no| p2["football and chess: 5"]
-  h2 -->|yes| p3["football and choir: 2"]
+  h1 -->|no| p2["football and chess only: 5"]
+  h2 -->|yes| p3["football and choir only: 2"]
   h2 -->|no| p4["football only: 9"]
-  h3 -->|yes| p5["chess and choir: 1"]
+  h3 -->|yes| p5["chess and choir only: 1"]
   h3 -->|no| p6["chess only: 4"]
   h4 -->|yes| p7["choir only: 5"]
   h4 -->|no| p8["none of the three: 2"]
@@ -70,9 +70,19 @@ Add the three sizes. Take off the shared-by-two counts: 7 in both games, 4 in fo
 | the pairs | shared-by-two counts, taken off | 7, 4 and 3 |
 | the triple | shared by all three, put back | 2 |
 
-In symbols, two groups: \|F ∪ C\| = \|F\| + \|C\| − \|F ∩ C\|.
+In symbols, two groups:
 
-Three groups: \|F ∪ C ∪ H\| = \|F\| + \|C\| + \|H\| − \|F ∩ C\| − \|F ∩ H\| − \|C ∩ H\| + \|F ∩ C ∩ H\|. Singles in, pairs out, triple in.
+```math
+|F \cup C| = |F| + |C| - |F \cap C|
+```
+
+Three groups:
+
+```math
+|F \cup C \cup H| = |F| + |C| + |H| - |F \cap C| - |F \cap H| - |C \cap H| + |F \cap C \cap H|
+```
+
+Singles in, pairs out, triple in.
 
 **Read it aloud:** the students in at least one group are the group sizes added, minus every count shared by two groups, plus the count shared by all three.
 
@@ -185,7 +195,7 @@ row("neither of the two", len(CLASS) - two)
 row("at least one of three, formula", three)
 row("at least one of three, roster", len(FOOT | CHESS | CHOIR))
 row("none of the three", len(CLASS) - three)
-row("the seven slices of a class of 30", *slices)
+row("seven slices, the 28 in a group", *slices)
 print(f"the three mistakes come out at {foot + chess}, {three - all3} and {three - 2 * all3}")
 assert len(CLASS) == 30 and two == len(FOOT | CHESS) == 23 and len(CLASS) - two == len(CLASS - (FOOT | CHESS)) == 7
 assert three == len(FOOT | CHESS | CHOIR) == 28 and len(CLASS) - three == len(CLASS - (FOOT | CHESS | CHOIR)) == 2
@@ -193,7 +203,7 @@ assert sum(slices) == three and (foot, chess, choir, fc, fh, ch, all3) == (18, 1
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 football, chess, choir               18   12   10
@@ -205,7 +215,7 @@ neither of the two                    7
 at least one of three, formula       28
 at least one of three, roster        28
 none of the three                     2
-the seven slices of a class of 30     9    4    5    5    2    1    2
+seven slices, the 28 in a group       9    4    5    5    2    1    2
 the three mistakes come out at 30, 26 and 24
 ALL CHECKS PASS
 ```
@@ -248,7 +258,7 @@ fn main() {
     row("at least one of three, formula", &[three]);
     row("at least one of three, roster", &[union3.len()]);
     row("none of the three", &[class.len() - three]);
-    row("the seven slices of a class of 30", &slices);
+    row("seven slices, the 28 in a group", &slices);
     println!("the three mistakes come out at {}, {} and {}", foot + chess, three - all3, three - 2 * all3);
     assert!(class.len() == 30 && two == either.len() && two == 23 && class.len() - two == 7 && class.difference(&either).count() == 7);
     assert!(three == union3.len() && three == 28 && class.len() - three == 2 && class.difference(&union3).count() == 2);
@@ -257,7 +267,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 football, chess, choir               18   12   10
@@ -269,7 +279,7 @@ neither of the two                    7
 at least one of three, formula       28
 at least one of three, roster        28
 none of the three                     2
-the seven slices of a class of 30     9    4    5    5    2    1    2
+seven slices, the 28 in a group       9    4    5    5    2    1    2
 the three mistakes come out at 30, 26 and 24
 ALL CHECKS PASS
 ```
@@ -414,8 +424,10 @@ example : (18 : ℤ) + 12 + 10 - 7 - 4 - 3 - 2 = 24 := by norm_num
 
 ## Where this goes next
 
-- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where sets are multiplied instead of counted.
-- Four groups and more keep alternating in the same way; that general version sits with the counting cards further along.
+- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where every member of one set is paired with every member of another, and the sizes multiply instead of adding.
+- [Inclusion-exclusion for any number of sets](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): four groups and more, alternating the same way.
+
+Left open: pair every member of one set with every member of another — how many pairs come out, and why does the order of the two slots matter?
 
 ---
 

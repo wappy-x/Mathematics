@@ -86,7 +86,9 @@ Put Cyd in for x. Both answers are ruled out, so the sentence is false. But the 
 
 ### Step 2: the same flip, with membership
 
-Ask whether a set belongs to itself. Most do not: the set of villagers is not a villager. Gather every set that is not a member of itself and call it $`R`$. Is $`R`$ a member of $`R`$? If it is, it fails its own entry test, so it is not. If it is not, it passes, so it is. Same wreck, so no such set exists.
+Ask whether a set belongs to itself. Most do not: the set of villagers is not a villager. Gather every set that is not a member of itself and call it $`R`$.
+
+Is $`R`$ a member of $`R`$? If it is, it fails its own entry test, so it is not. If it is not, it passes, so it is. Same wreck, so no such set exists.
 
 ### Step 3: cut, do not sweep
 
@@ -110,8 +112,9 @@ Cyd holds a list of the people he shaves. A list is any set of villagers, so the
 | the Russell collection over the eight | no list holds a list | 8 |
 | the fullest of the eight | Ada, Ben, Cyd | 3 |
 | how many of the eight hold eight | eight is not three | **0** |
+| sets equal to their Russell cut, 512 tables | each differs from its cut at itself | **0** |
 
-Two zeros, one point: no list keeps the sign, and the Russell collection sits outside the eight. The eight lists hold villagers, not lists, so none could hold itself: that last count pictures the flip rather than proving it.
+The zeros make one point: no list keeps the sign, and the Russell collection sits outside the eight. The eight lists hold villagers, not lists, so none could hold itself: that count pictures the flip rather than proving it. The last row tests it: three sets that may hold one another or themselves, all 512 ways.
 
 ### What breaks if you drop a piece
 
@@ -125,7 +128,7 @@ Two zeros, one point: no list keeps the sign, and the Russell collection sits ou
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The barber road tries all eight lists Cyd could hold and counts how many keep the sign. The second road drops barbers: it makes those eight lists into sets that may hold sets, gathers the ones not members of themselves, and asks whether that gathering is one of the eight.
+Nothing is imported. The barber road tries all eight lists Cyd could hold and counts how many keep the sign. The second road drops barbers: it turns the eight lists into sets, gathers the ones not members of themselves, and asks whether that gathering is one of the eight. The third road tries all 512 ways three sets can hold one another and looks for a set equal to its Russell cut.
 
 ### Python
 
@@ -136,33 +139,33 @@ Nothing is imported. The barber road tries all eight lists Cyd could hold and co
 VILLAGERS = ["Ada", "Ben", "Cyd"]
 LISTS = [[v for i, v in enumerate(VILLAGERS) if n >> i & 1] for n in range(8)]
 SETS = [frozenset(l) for l in LISTS]           # the second road: sets, not barbers
-
 def shaves_self(v, lst): return v == "Ada" or (v == "Cyd" and "Cyd" in lst)
 def promise_ok(v, lst): return (v in lst) == (not shaves_self(v, lst))
 def row(name, value): print(f"{name:<46}{value:>2}")
+def table_holds(t, j, i): return t >> (3 * j + i) & 1 == 1   # third road: in table t, set j holds set i
 
 kept = sum(1 for l in LISTS if all(promise_ok(v, l) for v in VILLAGERS))
 others = sum(1 for l in LISTS if promise_ok("Ada", l) and promise_ok("Ben", l))
 broken = sum(1 for l in LISTS if not promise_ok("Cyd", l))
-holders = sum(1 for s in SETS if s in s)       # a real self-membership test
 russell = frozenset(s for s in SETS if s not in s)
 biggest = max(len(s) for s in SETS)
+is_cut = sum(all(table_holds(t, j, i) != table_holds(t, i, i) for i in range(3)) for t in range(512) for j in range(3))
 row("villagers in the village", len(VILLAGERS))
 row("lists of villagers there are, in all", len(LISTS))
 row("lists that get Ada and Ben right", others)
 row("lists that keep the barber's whole promise", kept)
 row("lists that break it at the barber himself", broken)
-row("of the eight sets, ones that hold themselves", holders)
 row("the Russell set, how many it holds", len(russell))
 row("the most members any one of the eight holds", biggest)
 row("how many of the eight hold eight", sum(1 for s in SETS if len(s) == 8))
 row("the Russell set found among the eight", int(russell in SETS))
+row("of 512 tables, a set equal to its Russell cut", is_cut)
 assert len(LISTS) == 8 and others == 2 and kept == 0 and broken == 8
-assert holders == 0 and len(russell) == 8 and biggest == 3 and russell not in SETS
+assert len(russell) == 8 and biggest == 3 and russell not in SETS and is_cut == 0
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 villagers in the village                       3
@@ -170,11 +173,11 @@ lists of villagers there are, in all           8
 lists that get Ada and Ben right               2
 lists that keep the barber's whole promise     0
 lists that break it at the barber himself      8
-of the eight sets, ones that hold themselves   0
 the Russell set, how many it holds             8
 the most members any one of the eight holds    3
 how many of the eight hold eight               0
 the Russell set found among the eight          0
+of 512 tables, a set equal to its Russell cut  0
 ALL CHECKS PASS
 ```
 
@@ -187,7 +190,6 @@ Same numbers, same labels; built with `rustc --edition 2021 -O`.
 // Three villagers: Ada shaves herself, Ben does not, Cyd is the barber who
 // shaves the villagers who do not shave themselves.  Then the trap for sets.
 const VILLAGERS: [&str; 3] = ["Ada", "Ben", "Cyd"];
-
 #[derive(Clone, PartialEq)]
 enum Item { Villager(&'static str), Set(Vec<Item>) }   // a member may be a set
 
@@ -198,6 +200,7 @@ fn size(s: &Item) -> usize { match s { Item::Set(ms) => ms.len(), _ => 0 } }
 fn shaves_self(v: &str, l: &[&str]) -> bool { v == "Ada" || (v == "Cyd" && l.contains(&"Cyd")) }
 fn promise_ok(v: &str, l: &[&str]) -> bool { l.contains(&v) == !shaves_self(v, l) }
 fn row(name: &str, value: usize) { println!("{:<46}{:>2}", name, value); }
+fn table_holds(t: u32, j: u32, i: u32) -> bool { t >> (3 * j + i) & 1 == 1 }   // third road: in table t, set j holds set i
 
 fn main() {
     let lists: Vec<Vec<&str>> = (0..8).map(list_of).collect();
@@ -205,26 +208,26 @@ fn main() {
     let kept = lists.iter().filter(|l| VILLAGERS.iter().all(|v| promise_ok(v, l))).count();
     let others = lists.iter().filter(|l| promise_ok("Ada", l) && promise_ok("Ben", l)).count();
     let broken = lists.iter().filter(|l| !promise_ok("Cyd", l)).count();
-    let holders = sets.iter().filter(|&s| holds(s, s)).count();
     let russell = Item::Set(sets.iter().filter(|&s| !holds(s, s)).cloned().collect());
     let biggest = sets.iter().map(size).max().unwrap();
+    let is_cut: usize = (0..512u32).map(|t| (0..3).filter(|&j| (0..3).all(|i| table_holds(t, j, i) != table_holds(t, i, i))).count()).sum();
     row("villagers in the village", VILLAGERS.len());
     row("lists of villagers there are, in all", lists.len());
     row("lists that get Ada and Ben right", others);
     row("lists that keep the barber's whole promise", kept);
     row("lists that break it at the barber himself", broken);
-    row("of the eight sets, ones that hold themselves", holders);
     row("the Russell set, how many it holds", size(&russell));
     row("the most members any one of the eight holds", biggest);
     row("how many of the eight hold eight", sets.iter().filter(|&s| size(s) == 8).count());
     row("the Russell set found among the eight", sets.contains(&russell) as usize);
+    row("of 512 tables, a set equal to its Russell cut", is_cut);
     assert!(lists.len() == 8 && others == 2 && kept == 0 && broken == 8);
-    assert!(holders == 0 && size(&russell) == 8 && biggest == 3 && !sets.contains(&russell));
+    assert!(size(&russell) == 8 && biggest == 3 && !sets.contains(&russell) && is_cut == 0);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 villagers in the village                       3
@@ -232,11 +235,11 @@ lists of villagers there are, in all           8
 lists that get Ada and Ben right               2
 lists that keep the barber's whole promise     0
 lists that break it at the barber himself      8
-of the eight sets, ones that hold themselves   0
 the Russell set, how many it holds             8
 the most members any one of the eight holds    3
 how many of the eight hold eight               0
 the Russell set found among the eight          0
+of 512 tables, a set equal to its Russell cut  0
 ALL CHECKS PASS
 ```
 
@@ -249,7 +252,7 @@ Lean proves the flip for every set and every village, and recounts the three-vil
 - For every set $`A`$, the Russell cut of $`A`$ is never a member of $`A`$.
 - In the village: 8 lists, 2 get Ada and Ben right, 0 keep the promise, all 8 break at Cyd, and none holds 8.
 
-Python and Rust build the eight lists as sets of sets and show the Russell set, holding all 8, is not among them.
+Python and Rust build the eight lists as sets and show the Russell set, holding all 8, is not among them.
 
 ```lean
 -- Russell's paradox: no set contains exactly the sets that are not members of themselves, no barber can shave exactly those who do not shave themselves, and the Russell cut of any set is never a member of that set.
@@ -359,12 +362,11 @@ example : (Finset.univ.filter (fun l : Finset (Fin 3) => l.card = 8)).card = 0 :
 - [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it never existed.
 
 ## Where this goes next
+
+- [Indexed families](07-indexed-families-of-sets.md): next on this shelf: unions and products over many sets, inside a universe named first.
 - [The ZFC axioms](08-zfc-axioms.md): the rules that say which collections are sets, and how they stop Russell.
 
-
-Last card on the Sets shelf. Its neighbours [Inclusion-exclusion](04-inclusion-exclusion.md) and [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md) build sets the safe way, from sets already in hand.
-
-Left open: if every set is cut from a set already in hand, where do the first sets come from?
+Left open: if every set is cut from a set already in hand, how do you gather infinitely many sets safely? The next card shows how; [The ZFC axioms](08-zfc-axioms.md) says where the first sets come from.
 
 ---
 

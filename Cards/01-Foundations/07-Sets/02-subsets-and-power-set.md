@@ -14,7 +14,7 @@ Each pizza is a **subset** of the topping list: a set whose members all come fro
 
 Eight is not luck: each topping is a yes-or-no, and the menu doubles at every one.
 
-**A subset is any part of a set, none of it and all of it included; the power set is those parts collected into one set; and because every member is an on-or-off choice, a set of n members — n is how many are on the list — has 2^n subsets, n twos multiplied.**
+**A subset is any part of a set, empty and whole included; the power set collects every subset; and a set of n members has 2^n subsets, one on-or-off choice per member.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; subset and power set are definitions.
 
@@ -46,13 +46,11 @@ One 2 per topping, on or off, and the 2s multiply because the choices do not int
 | Piece | Plain meaning | In the pizza shop |
 | --- | --- | --- |
 | a set | a collection, fixed by what belongs | the three toppings |
-| a subset | every member of it belongs to the bigger set | mushroom and olive: one pizza |
+| a subset, A ⊆ B | every member of A is in B | mushroom and olive: one pizza |
 | the empty set | the set with no members | the plain pizza |
-| the power set | the set of all subsets | the eight pizzas, gathered |
+| the power set, P(A) | the set of all subsets of A | the eight pizzas, gathered |
 | n | how many members the set has | 3 |
 | 2^n | n twos multiplied | 2 × 2 × 2 = 8 |
-
-The subset sign is ⊆: A ⊆ B reads "every member of A is in B". The power set of A is written P(A).
 
 ### When it holds
 
@@ -380,9 +378,10 @@ example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
 - [Set operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
 - [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
 - [The ZFC axioms](08-zfc-axioms.md): the rules that say which collections are sets, and how they stop Russell.
-- [Knaster-Tarski](../08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md): an order-keeping map on a complete lattice always has a fixed point.
+- [Knaster-Tarski](../08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md): the power set, ordered by ⊆, is a complete lattice, so any rule that keeps that order has a fixed point.
+- [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): how many of the 8 pizzas carry exactly two toppings, counted without listing them.
 
-Left open: how many of the 8 pizzas carry exactly two toppings, and how do you count subsets of one size without listing them?
+Left open: given two pizzas off the same board, how do you combine them — toppings on either, toppings on both, or toppings on one but not the other?
 
 ---
 

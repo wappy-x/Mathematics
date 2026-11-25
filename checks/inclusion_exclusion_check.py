@@ -22,7 +22,7 @@ row("neither of the two", len(CLASS) - two)
 row("at least one of three, formula", three)
 row("at least one of three, roster", len(FOOT | CHESS | CHOIR))
 row("none of the three", len(CLASS) - three)
-row("the seven slices of a class of 30", *slices)
+row("seven slices, the 28 in a group", *slices)
 print(f"the three mistakes come out at {foot + chess}, {three - all3} and {three - 2 * all3}")
 assert len(CLASS) == 30 and two == len(FOOT | CHESS) == 23 and len(CLASS) - two == len(CLASS - (FOOT | CHESS)) == 7
 assert three == len(FOOT | CHESS | CHOIR) == 28 and len(CLASS) - three == len(CLASS - (FOOT | CHESS | CHOIR)) == 2

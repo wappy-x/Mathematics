@@ -496,10 +496,13 @@ example : ((Finset.univ : Finset (Fin 4 × Fin 13)).filter (fun c => c.1 = 2)).c
 
 ## Where this goes next
 
+- [Relations](../08-Relations%20and%20Functions/01-relations.md): the first card on the next shelf. With sets and ordered pairs on firm ground, a relation is a set of pairs: which things go with which.
 - [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md): the tenth rule, what it buys and why it is debated.
 - [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): a question ZFC cannot settle.
 
-Left open: if ZFC cannot prove it is free of contradiction, what makes it trustworthy?
+Left open: with sets and pairs on firm ground, how do you record which things go with which? The next shelf answers that, starting at [Relations](../08-Relations%20and%20Functions/01-relations.md).
+
+A deeper question stays open for later: if ZFC cannot prove it is free of contradiction, what makes it trustworthy? See [Godel's theorems](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/03-godels-incompleteness-in-outline.md).
 
 ---
 

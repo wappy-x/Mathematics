@@ -124,7 +124,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 07 · Sets · 8 cards
 
-*Sets and membership, subsets and power set, union/intersection/difference/complement, inclusion-exclusion, ordered pairs and products, Russell's paradox.*
+*Sets and membership, subsets and power set, union/intersection/difference/complement, inclusion-exclusion, ordered pairs and products, Russell's paradox, indexed families, the ZFC axioms.*
 
 1. [Sets: a collection defined only by what belongs, with the empty set and set-builder shorthand](07-Sets/01-sets-and-membership.md)
 2. [Subsets and the power set: everything inside a set, and the 2^n ways to pick some of it](07-Sets/02-subsets-and-power-set.md)

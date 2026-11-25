@@ -80,7 +80,7 @@ Nothing could tell the two apart. One set, three members, not four. The rule has
 
 Ask for everyone in the office under 20. Nobody. Everyone over 60. Nobody. Two rules, no members. Same members — none — so the same set. There is exactly one such set: the **empty set**, written $`\emptyset`$ or as empty braces { }.
 
-It is a thing, not the absence of one: an envelope with no invitation is still an envelope. And a list with the empty list written on it is not empty — it has one entry.
+It is a thing, not the absence of one: an envelope with no invitation is still an envelope. And a set whose only member is the empty set, {∅}, is not empty — it has one member.
 
 ---
 
@@ -100,9 +100,9 @@ The party, end to end.
 | the scrambled spelling | repeat dropped | 3 |
 | nobody under 20 | no yeses | 0 |
 | nobody over 60 | no yeses | 0 |
-| the two empty lists agree | same members: none | **True** |
+| the two empty sets agree | same members: none | **True** |
 
-Three people are coming, and one empty list.
+Three people are coming, and there is one empty set.
 
 ### What breaks if you drop a piece
 
@@ -112,28 +112,27 @@ Three people are coming, and one empty list.
 | Treating the list as ordered | 6 orderings | Three guests write in 3 × 2 × 1 = 6 orders, all one set |
 | Dropping the "under 30" half | 5 guests | That is the whole office, not the party |
 
-The code prints the two the data gives; 6 is 3 × 2 × 1 by hand.
+The code prints all three. The 4 and the 5 come from the data; the 6 is 3 × 2 × 1, worked by hand, and Lean counts the 6 orders.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The guest list is built from the rule, cross-checked against the list written by hand, then checked person by person, so a name that slipped in or out fires an assert — a line that stops the program if a claim is false.
+Nothing is imported. The guest list is built from the rule, cross-checked against the list written by hand, then checked person by person. A name that slipped in or out fires an assert — a line that stops the program if a claim is false.
 
 ### Python
 
 ```python
 # Sets and membership -- the check behind the card.  Nothing is imported.  The
 # office is five people with ages.  The party guest list is everyone under 30,
-# written out by name and built again from the rule, plus two empty lists.
+# written out by name and built again from the rule, plus two empty sets.
 OFFICE = [("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)]
 
 def under_30(age): return age < 30   # the party rule, strict: a 30-year-old is out
 def by_rule(test):              # keep the office people the test says yes to
     return frozenset(name for name, age in OFFICE if test(age))
 
-def row(name, value):
-    print(f"{name:<30}{value:>6}")
+def row(name, value): print(f"{name:<30}{value:>6}")
 
 names = ["Eli", "Ana", "Cleo", "Ana"]                 # scrambled, one name twice
 written = frozenset(["Ana", "Cleo", "Eli"])           # the list, written out
@@ -147,15 +146,16 @@ row("Ben is on the list", str("Ben" in guests))
 row("scrambled spelling, guests", len(frozenset(names)))
 row("nobody in the office under 20", len(by_rule(lambda age: age < 20)))
 row("nobody in the office over 60", len(by_rule(lambda age: age > 60)))
-row("the two empty lists agree", str(by_rule(lambda age: age < 20) == by_rule(lambda age: age > 60)))
+row("the two empty sets agree", str(by_rule(lambda age: age < 20) == by_rule(lambda age: age > 60)))
 print(f"count the repeat: {len(names)} guests; count the orders: {3 * 2 * 1} spellings; drop the rule: {len(OFFICE)} guests")
 assert guests == written and frozenset(names) == written    # order and repeats do not count
 assert all(under_30(age) == (name in written) for name, age in OFFICE)   # person by person
-assert len(guests) == 3 and len(OFFICE) == 5 and len(by_rule(lambda age: age > 60)) == 0 and not under_30(30)
+assert len(guests) == 3 and len(OFFICE) == 5 and not under_30(30)
+assert by_rule(lambda age: age < 20) == by_rule(lambda age: age > 60) == frozenset()   # one empty set
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 people in the office               5
@@ -167,7 +167,7 @@ Ben is on the list             False
 scrambled spelling, guests         3
 nobody in the office under 20      0
 nobody in the office over 60       0
-the two empty lists agree       True
+the two empty sets agree        True
 count the repeat: 4 guests; count the orders: 6 spellings; drop the rule: 5 guests
 ALL CHECKS PASS
 ```
@@ -209,16 +209,17 @@ fn main() {
     row("scrambled spelling, guests", as_set(&names).len().to_string());
     row("nobody in the office under 20", by_rule(|age| age < 20).len().to_string());
     row("nobody in the office over 60", by_rule(|age| age > 60).len().to_string());
-    row("the two empty lists agree", yes_no(by_rule(|age| age < 20) == by_rule(|age| age > 60)));
+    row("the two empty sets agree", yes_no(by_rule(|age| age < 20) == by_rule(|age| age > 60)));
     println!("count the repeat: {} guests; count the orders: {} spellings; drop the rule: {} guests", names.len(), 3 * 2 * 1, OFFICE.len());
     assert!(guests == written && as_set(&names) == written);   // order and repeats do not count
     assert!(OFFICE.iter().all(|(n, age)| under_30(*age) == has(&written, n)));   // person by person
-    assert!(guests.len() == 3 && OFFICE.len() == 5 && by_rule(|age| age > 60).len() == 0 && !under_30(30));
+    assert!(guests.len() == 3 && OFFICE.len() == 5 && !under_30(30));
+    assert!(by_rule(|age| age < 20) == by_rule(|age| age > 60) && by_rule(|age| age < 20).is_empty());   // one empty set
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 people in the office               5
@@ -230,7 +231,7 @@ Ben is on the list             False
 scrambled spelling, guests         3
 nobody in the office under 20      0
 nobody in the office over 60       0
-the two empty lists agree       True
+the two empty sets agree        True
 count the repeat: 4 guests; count the orders: 6 spellings; drop the rule: 5 guests
 ALL CHECKS PASS
 ```
@@ -349,7 +350,7 @@ example : ({("Ana", 24), ("Ben", 31), ("Cleo", 28), ("Dev", 41), ("Eli", 29)} :
 >
 > - Counting a repeated name as a second guest: {Eli, Ana, Cleo, Ana} has 3 members, not 4.
 > - Reading the empty set as "no set". It is one particular set, and there is only one.
-> - Confusing "on the list" with "part of the list". Ana is on the guest list. {Ana} is not on the guest list — it is a one-name list you could cut out of it. Two different relations; the second one is [Subsets and the power set](02-subsets-and-power-set.md).
+> - Confusing "on the list" with "part of the list". Ana is on the guest list. {Ana} is not on the guest list — it is a one-member set you could cut out of it. Two different relations; the second one is [Subsets and the power set](02-subsets-and-power-set.md).
 
 ---
 

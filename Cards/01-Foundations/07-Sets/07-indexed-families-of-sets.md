@@ -64,7 +64,7 @@ U - \bigcup_{n} A_n = \bigcap_{n} (U - A_n) \qquad U - \bigcap_{n} A_n = \bigcup
 | $`\bigcup`$, $`\bigcap`$ | union: in at least one set; intersection: in every set | 52 cards; no card | — |
 | $`n`$, $`x`$ | a counting label 1, 2, 3, …; a member being tested | n = 1000; x = 0.001 | bigger n: set n shrinks |
 | $`\prod`$, $`f`$ | product: every pick f, card f(s) from suit s | 28,561 picks | a new set multiplies the count by its size |
-| $`U -`$ | complement: what the universe U holds outside | 0 to 1, both ends in | — |
+| $`U -`$ | complement: what the universe U holds outside | U is 0 to 1, both ends in; $`U - [1/n, 1] = [0, 1/n)`$ | — |
 
 ### When it holds
 
@@ -408,11 +408,11 @@ example : (1 / 1000 : ℝ) ∈ Set.Ico (0 : ℝ) (1 / 999) ∧ (1 / 1000 : ℝ) 
 
 ## Where this goes next
 
+- [The ZFC axioms](08-zfc-axioms.md): the next card on this shelf. Its rules make these unions and products sets.
 - [Functions](../08-Relations%20and%20Functions/02-functions.md): one output per input, the shape of every family and pick.
 - [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md): a product of non-empty sets has a member, even with no rule for the picks.
-- [The ZFC axioms](08-zfc-axioms.md): the rules that make these unions and products sets.
 
-Left open: when every set in an infinite family has a member, must the product have one?
+Left open: which rules make these unions and products sets at all? The next card lists them. One of them, the axiom of choice, settles a harder question: when every set in an infinite family has a member, must the product have one? [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md) explores that rule.
 
 ---
 

@@ -31,7 +31,7 @@ fn main() {
     row("at least one of three, formula", &[three]);
     row("at least one of three, roster", &[union3.len()]);
     row("none of the three", &[class.len() - three]);
-    row("the seven slices of a class of 30", &slices);
+    row("seven slices, the 28 in a group", &slices);
     println!("the three mistakes come out at {}, {} and {}", foot + chess, three - all3, three - 2 * all3);
     assert!(class.len() == 30 && two == either.len() && two == 23 && class.len() - two == 7 && class.difference(&either).count() == 7);
     assert!(three == union3.len() && three == 28 && class.len() - three == 2 && class.difference(&union3).count() == 2);

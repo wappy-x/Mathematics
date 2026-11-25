@@ -82,7 +82,14 @@ A complement needs everything in play named first: the **universe**, written U �
 
 Walk the list, asking each film twice: on A? on B? Each question has one answer, so every film drops into exactly one pile: 4 on A only, 2 on both, 3 on B only, 3 on neither — back to 12.
 
-The four moves are those piles glued together: the union is the first three, 9 films; the intersection is "both", 2; A − B is "A only", 4 — an intersection with a "not" in it; the complement of the union is "neither", 3. Order matters for a difference: B − A is the B-only pile, 3 films.
+The four moves are those piles glued together:
+
+- **Union:** the first three piles, 9 films.
+- **Intersection:** "both", 2 films.
+- **A − B:** "A only", 4 films. It is an intersection with a "not" in it.
+- **Complement of the union:** "neither", 3 films.
+
+Order matters for a difference: B − A is the B-only pile, 3 films.
 
 ### Step 1: the union counts the overlap once
 
@@ -146,6 +153,7 @@ a_only = pick(lambda f: f in A and f not in B)
 b_only = pick(lambda f: f in B and f not in A)
 neither = pick(lambda f: f not in A and f not in B)     # not on A, and not on B
 outside = pick(lambda f: f not in union)                # the other road: not (A or B)
+not_both = pick(lambda f: f not in A or f not in B)     # the mirror law: not on A, or not on B
 for label, films in [("films on the watchlist", FILMS), ("films on service A", A),
                      ("films on service B", B), ("on both, A and B", both),
                      ("A or B, the union", union), ("A minus B, on A only", a_only),
@@ -156,14 +164,14 @@ print(f"not on A: {len(pick(lambda f: f not in A))} -- not on B: "
 print("A only: " + ", ".join(a_only) + " | both: " + ", ".join(both)
       + " | B only: " + ", ".join(b_only) + " | neither: " + ", ".join(outside))
 print(f"the three mistakes come out at {len(A) + len(B)}, {len(A) - len(B)} "
-      f"and {len(FILMS) - len(both)}")
+      f"and {len(not_both)}")
 assert len(union) == 6 + 5 - 2 and len(outside) == 12 - 9      # counted by arithmetic
-assert outside == neither and neither == ["Nectar", "Onyx", "Pike"]   # De Morgan
-assert both == ["Halo", "Ivory"] and len(a_only) == 4 and len(b_only) == 3
+assert outside == neither == ["Nectar", "Onyx", "Pike"] and not_both == pick(lambda f: f not in both)   # De Morgan, both laws
+assert both == ["Halo", "Ivory"] and len(a_only) == 4 and len(b_only) == 3 and len(not_both) == 12 - 2
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 films on the watchlist          12
@@ -202,6 +210,7 @@ fn main() {
     let b_only = pick(|f| has(b, f) && !has(a, f));
     let neither = pick(|f| !has(a, f) && !has(b, f));         // not on A, and not on B
     let outside = pick(|f| !has(&union, f));                  // the other road
+    let not_both = pick(|f| !has(a, f) || !has(b, f));        // the mirror law
     let rows: [(&str, usize); 8] = [("films on the watchlist", FILMS.len()),
         ("films on service A", a.len()), ("films on service B", b.len()),
         ("on both, A and B", both.len()), ("A or B, the union", union.len()),
@@ -213,15 +222,15 @@ fn main() {
     println!("A only: {} | both: {} | B only: {} | neither: {}", a_only.join(", "),
              both.join(", "), b_only.join(", "), outside.join(", "));
     println!("the three mistakes come out at {}, {} and {}",
-             a.len() + b.len(), a.len() - b.len(), FILMS.len() - both.len());
+             a.len() + b.len(), a.len() - b.len(), not_both.len());
     assert!(union.len() == 6 + 5 - 2 && outside.len() == 12 - 9);   // by arithmetic
-    assert!(outside == neither && neither == ["Nectar", "Onyx", "Pike"]); // De Morgan
-    assert!(both == ["Halo", "Ivory"] && a_only.len() == 4 && b_only.len() == 3);
+    assert!(outside == neither && neither == ["Nectar", "Onyx", "Pike"] && not_both == pick(|f| !has(&both, f))); // De Morgan, both laws
+    assert!(both == ["Halo", "Ivory"] && a_only.len() == 4 && b_only.len() == 3 && not_both.len() == 12 - 2);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 films on the watchlist          12
