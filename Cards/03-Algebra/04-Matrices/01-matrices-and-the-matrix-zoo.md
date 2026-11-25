@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A cafe writes down what it sold. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Two rows, one per day; two columns, one per product. Take the words away and four numbers are left, still in their places:
+A small office keeps a tab at the cafe downstairs, and the cafe writes down what the office bought. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Two rows, one per day; two columns, one per product. Take the words away and four numbers are left, still in their places:
 
 `[[2, 1], [1, 1]]`
 
@@ -54,7 +54,7 @@ Notation first, in words: a matrix A with m rows and n columns is m by n, and th
 | $`m`$, $`n`$ | how many rows, how many columns | 5 and 2 for the week | a taller or wider table |
 | $`a_{ij}`$, $`b_{ij}`$ | their entries in row i, column j; both count from 1 | a_21 is 1: Tuesday's coffees | another slot is read |
 | $`c`$ | a plain number to scale by | 2, for days that doubled | every entry scales with it |
-| $`A^{T}`$ | $`A`$ transposed: rows become columns | the week tipped: 2 by 5, not 5 by 2 | the size flips too |
+| $`A^{T}`$ | $`A`$ transposed: rows become columns | `[[2, 1], [1, 1]]` again for the two days; the 5 by 2 week tipped is 2 by 5 | the size flips too |
 | $`I`$ | the identity: 1s down the diagonal, 0s elsewhere | `[[1, 0], [0, 1]]` | — |
 | $`\mathrm{tr}(A)`$ | the trace: the diagonal entries added | 2 + 1 = 3 | it rises with a diagonal entry |
 
@@ -89,7 +89,7 @@ Scaling is the same with one multiplier: a pair of days that sold exactly double
 
 ### Step 3: the transpose asks the same question the other way
 
-The week table is days by products: pick a day, read across. Tip it over and it is products by days: pick a product, read across. That is the **transpose**, written $`A^{T}`$.
+The week table is days by products: pick a day, read across. Tip it over and it is products by days: pick a product, read across. That is the **transpose**; for a table $`A`$ it is written $`A^{T}`$.
 
 |  | Mon | Tue | Wed | Thu | Fri |
 | --- | --- | --- | --- | --- | --- |
@@ -134,7 +134,7 @@ The cafe's week, `[[2, 1], [1, 1], [3, 2], [2, 1], [4, 3]]`, and the two-day tab
 | A transposed | swap the row and column numbers | `[[2, 1], [1, 1]]`, equal to A |
 | trace of A | 2 + 1 | **3** |
 
-The cafe sold 12 coffees and 8 pastries that week; the transpose makes those read as easily as the daily figures.
+The cafe sold the office 12 coffees and 8 pastries that week; the transpose makes those read as easily as the daily figures.
 
 ### What breaks if you drop a piece
 
@@ -495,7 +495,7 @@ example : (1 : Matrix (Fin 2) (Fin 2) ℤ).trace = 2 := by decide
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the Advanced Encryption Standard, a widely used cipher, holds its state as a 4 by 4 table of bytes.
 - [Simplicial complexes and chains](../../17-Topology/05-Homology/01-simplicial-complexes-and-chains.md): tables recording which piece borders which, signs included.
 - [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): square matrices that form groups in their own right.
-- BQP (the problems a quantum computer can solve efficiently): a quantum gate is a square table acting on a list of numbers.
+- [BQP](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/06-quantum-computation-and-bqp.md): the problems a quantum computer can solve efficiently; each quantum gate is a square table acting on a list of numbers.
 
 A table on its own only stores. What turns it into a rule sending one list of numbers to another is [Matrix times vector](02-matrix-times-vector.md).
 

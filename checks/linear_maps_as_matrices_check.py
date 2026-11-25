@@ -46,14 +46,15 @@ u, v, k = (1, 0), (0, 1), 3
 print(f"linearity of the shear, with u = {s(u)}, v = {s(v)}, c = {k}")
 print(f"  T(u + v) = {s(shear(add(u, v)))} and T(u) + T(v) = {s(add(shear(u), shear(v)))}")
 print(f"  T(cu) = {s(shear(scale(k, u)))} and cT(u) = {s(scale(k, shear(u)))}")
-print(f"slide right by 1 fails: D(u + v) = {s(slide(add(u, v)))} but D(u) + D(v) = {s(add(slide(u), slide(v)))}")
+print(f"slide right by 1 fails: slide(u + v) = {s(slide(add(u, v)))} but slide(u) + slide(v) = {s(add(slide(u), slide(v)))}")
 
 rows_not_cols, no_minus = [[1, 0], [1, 1]], [[0, 1], [1, 0]]
 print(f"mistakes on corner {s(C)}: wrong order {s(apply(ST, C))}, "
       f"rows not columns {s(apply(rows_not_cols, C))}, turn with no minus {s(apply(no_minus, C))}")
-
 assert S == [[1, 1], [0, 1]] and R == [[0, -1], [1, 0]]
-assert all(apply(S, w) == shear(w) and apply(R, w) == turn(w) for w in SQUARE)
+assert all(apply(S, w) == shear(w) and apply(R, w) == turn(w) for w in SQUARE + [(3, 2), (-2, 5)])
 assert TS == [[1, -1], [1, 0]] and ST == [[0, -1], [1, 1]]
 assert apply(TS, C) == shear(turn(C)) == (0, 1) and apply(ST, C) == turn(shear(C)) == (-1, 2)
+assert shear(add(u, v)) == add(shear(u), shear(v)) and shear(scale(k, u)) == scale(k, shear(u))
+assert slide(add(u, v)) != add(slide(u), slide(v)) and (apply(rows_not_cols, C), apply(no_minus, C)) == ((1, 2), (1, 1))
 print("ALL CHECKS PASS")

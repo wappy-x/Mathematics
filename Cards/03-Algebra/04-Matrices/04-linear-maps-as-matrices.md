@@ -16,7 +16,7 @@ Such a map needs no rule written out: four numbers hold it. Watch where it sends
 
 The shear's table, written row by row, is `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` — matrices ([Matrices](01-matrices-and-the-matrix-zoo.md)), 2 × 2, rows × columns. Press both buttons in a row and the trip is one matrix, the product of theirs.
 
-**A rule that respects adding and stretching is pinned down by where it sends the two axis arrows — which is why it is a matrix, and why one rule after another is those matrices multiplied, first move on the right.**
+**A rule that respects adding and stretching is the matrix whose columns are where the axis arrows land; chaining two rules multiplies their matrices, first move on the right.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; "linear map" is a definition.
 
@@ -161,7 +161,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The two moves are written as plain rules, not matrices. Every answer is reached twice: by applying the rules, and by building each matrix from the two axis arrows and using it instead. Corners and trips agree on both roads. Both tests run on the shear, the slide is shown failing, and the wrong answers above are printed.
+The two moves are written as plain rules, not matrices. Every answer is reached twice: by applying the rules, and by building each matrix from the two axis arrows and using it instead. Corners, two points off the corners, and trips agree on both roads. Both tests run on the shear, the slide is shown failing, and the wrong answers above are printed. Asserts pin every one of these.
 
 ### Python
 
@@ -214,20 +214,21 @@ u, v, k = (1, 0), (0, 1), 3
 print(f"linearity of the shear, with u = {s(u)}, v = {s(v)}, c = {k}")
 print(f"  T(u + v) = {s(shear(add(u, v)))} and T(u) + T(v) = {s(add(shear(u), shear(v)))}")
 print(f"  T(cu) = {s(shear(scale(k, u)))} and cT(u) = {s(scale(k, shear(u)))}")
-print(f"slide right by 1 fails: D(u + v) = {s(slide(add(u, v)))} but D(u) + D(v) = {s(add(slide(u), slide(v)))}")
+print(f"slide right by 1 fails: slide(u + v) = {s(slide(add(u, v)))} but slide(u) + slide(v) = {s(add(slide(u), slide(v)))}")
 
 rows_not_cols, no_minus = [[1, 0], [1, 1]], [[0, 1], [1, 0]]
 print(f"mistakes on corner {s(C)}: wrong order {s(apply(ST, C))}, "
       f"rows not columns {s(apply(rows_not_cols, C))}, turn with no minus {s(apply(no_minus, C))}")
-
 assert S == [[1, 1], [0, 1]] and R == [[0, -1], [1, 0]]
-assert all(apply(S, w) == shear(w) and apply(R, w) == turn(w) for w in SQUARE)
+assert all(apply(S, w) == shear(w) and apply(R, w) == turn(w) for w in SQUARE + [(3, 2), (-2, 5)])
 assert TS == [[1, -1], [1, 0]] and ST == [[0, -1], [1, 1]]
 assert apply(TS, C) == shear(turn(C)) == (0, 1) and apply(ST, C) == turn(shear(C)) == (-1, 2)
+assert shear(add(u, v)) == add(shear(u), shear(v)) and shear(scale(k, u)) == scale(k, shear(u))
+assert slide(add(u, v)) != add(slide(u), slide(v)) and (apply(rows_not_cols, C), apply(no_minus, C)) == ((1, 2), (1, 1))
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 shear: e1 -> (1, 0), e2 -> (1, 1), so the matrix is [[1, 1], [0, 1]]
@@ -246,7 +247,7 @@ shear first, then turn: one matrix [[0, -1], [1, 1]]
 linearity of the shear, with u = (1, 0), v = (0, 1), c = 3
   T(u + v) = (2, 1) and T(u) + T(v) = (2, 1)
   T(cu) = (3, 0) and cT(u) = (3, 0)
-slide right by 1 fails: D(u + v) = (2, 1) but D(u) + D(v) = (3, 1)
+slide right by 1 fails: slide(u + v) = (2, 1) but slide(u) + slide(v) = (3, 1)
 mistakes on corner (1, 1): wrong order (-1, 2), rows not columns (1, 2), turn with no minus (1, 1)
 ALL CHECKS PASS
 ```
@@ -295,6 +296,7 @@ fn row<F: Fn(V) -> V>(label: &str, f: F, square: &[V]) -> String {
 
 fn main() {
     let square: Vec<V> = vec![(0, 0), (1, 0), (1, 1), (0, 1)];   // the sprite's four corners
+    let off: Vec<V> = vec![(3, 2), (-2, 5)];                     // two points off the corners
     let (sm, rm) = (matrix_of(shear), matrix_of(turn));
     println!("shear: e1 -> {}, e2 -> {}, so the matrix is {}", s(shear(E1)), s(shear(E2)), mm(sm));
     println!("turn:  e1 -> {}, e2 -> {}, so the matrix is {}", s(turn(E1)), s(turn(E2)), mm(rm));
@@ -316,7 +318,7 @@ fn main() {
     println!("linearity of the shear, with u = {}, v = {}, c = {}", s(u), s(v), k);
     println!("  T(u + v) = {} and T(u) + T(v) = {}", s(shear(add(u, v))), s(add(shear(u), shear(v))));
     println!("  T(cu) = {} and cT(u) = {}", s(shear(scale(k, u))), s(scale(k, shear(u))));
-    println!("slide right by 1 fails: D(u + v) = {} but D(u) + D(v) = {}",
+    println!("slide right by 1 fails: slide(u + v) = {} but slide(u) + slide(v) = {}",
              s(slide(add(u, v))), s(add(slide(u), slide(v))));
 
     let rows_not_cols: M = [[1, 0], [1, 1]];
@@ -325,15 +327,17 @@ fn main() {
              s(C), s(apply(st, C)), s(apply(rows_not_cols, C)), s(apply(no_minus, C)));
 
     assert!(sm == [[1, 1], [0, 1]] && rm == [[0, -1], [1, 0]]);
-    assert!(square.iter().all(|&w| apply(sm, w) == shear(w) && apply(rm, w) == turn(w)));
+    assert!(square.iter().chain(off.iter()).all(|&w| apply(sm, w) == shear(w) && apply(rm, w) == turn(w)));
     assert!(ts == [[1, -1], [1, 0]] && st == [[0, -1], [1, 1]]);
     assert!(apply(ts, C) == shear(turn(C)) && apply(ts, C) == (0, 1)
             && apply(st, C) == turn(shear(C)) && apply(st, C) == (-1, 2));
+    assert!(shear(add(u, v)) == add(shear(u), shear(v)) && shear(scale(k, u)) == scale(k, shear(u)));
+    assert!(slide(add(u, v)) != add(slide(u), slide(v)) && apply(rows_not_cols, C) == (1, 2) && apply(no_minus, C) == (1, 1));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 shear: e1 -> (1, 0), e2 -> (1, 1), so the matrix is [[1, 1], [0, 1]]
@@ -352,7 +356,7 @@ shear first, then turn: one matrix [[0, -1], [1, 1]]
 linearity of the shear, with u = (1, 0), v = (0, 1), c = 3
   T(u + v) = (2, 1) and T(u) + T(v) = (2, 1)
   T(cu) = (3, 0) and cT(u) = (3, 0)
-slide right by 1 fails: D(u + v) = (2, 1) but D(u) + D(v) = (3, 1)
+slide right by 1 fails: slide(u + v) = (2, 1) but slide(u) + slide(v) = (3, 1)
 mistakes on corner (1, 1): wrong order (-1, 2), rows not columns (1, 2), turn with no minus (1, 1)
 ALL CHECKS PASS
 ```
@@ -466,7 +470,7 @@ example : shear (![1, 0] + ![0, 1]) = ![2, 1] ∧ shear ![1, 0] + shear ![0, 1] 
   constructor <;> (ext i; fin_cases i <;> norm_num [shear])
 example : shear ((3 : ℝ) • ![1, 0]) = ![3, 0] ∧ (3 : ℝ) • shear ![1, 0] = ![3, 0] := by
   constructor <;> (ext i; fin_cases i <;> norm_num [shear])
--- Sliding right by 1 fails the first test: D(u + v) = (2, 1) but D(u) + D(v) = (3, 1).
+-- Sliding right by 1 fails the first test: slide(u + v) = (2, 1) but slide(u) + slide(v) = (3, 1).
 example : (![1, 0] + ![0, 1] : Fin 2 → ℝ) + ![1, 0] = ![2, 1] ∧
     ((![1, 0] : Fin 2 → ℝ) + ![1, 0]) + (![0, 1] + ![1, 0]) = ![3, 1] := by
   constructor <;> (ext i; fin_cases i <;> norm_num)
@@ -486,7 +490,7 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 #print axioms matrix_of_composition_is_product
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'linear_map_is_matrix_of_axis_images' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -534,16 +538,17 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 
 ## Where this goes next
 
+- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the map run backwards: given a landing spot b, which inputs x land there, if any.
 - [Determinants](../05-Solving%20Systems/04-determinants.md): one number off the matrix: how much the map stretches area, and whether it flattened the sprite.
 - [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map keeps and what it destroys, and why the counts add up.
 - [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map against different axis arrows, and how its matrix changes.
-- [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): the same recipe in space, three axis arrows and a 3 × 3 matrix.
+- [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): a third coordinate equal to 1 lets shifts, which no 2 × 2 matrix can do, join turns, mirrors and stretches as 3 × 3 matrices.
 - [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): linear maps whose input lists never end, sized by the most they stretch a vector.
-- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
-- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
-- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further.
+- [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point; blurring what a linear map ignores leaves a copy of what it reaches.
+- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear maps that output one number form a space of their own, and a linear map pulls them back through its transpose.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): each move of a group as a linear map, so combining moves multiplies matrices; Maschke's theorem splits every one into pieces that cannot split further.
 
-The matrix says where every point goes, but not how much room it leaves: whether the sprite is leaned or flattened onto a line is the one number [Determinants](../05-Solving%20Systems/04-determinants.md) reads off.
+This card runs a matrix forward, from a point to where it lands. The next shelf starts by running it backwards: given a landing spot, which points get sent there, if any? That is [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md).
 
 ---
 

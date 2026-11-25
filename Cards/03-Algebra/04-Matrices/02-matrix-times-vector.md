@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A cafe keeps one table of what it sold. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Written row by row in square brackets, that table is the matrix `[[2, 1], [1, 1]]`: two rows, one per day, two columns, one per product ([Matrices](01-matrices-and-the-matrix-zoo.md)).
+A small office keeps a tab at the cafe downstairs, and the cafe keeps one table of what the office bought. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Written row by row in square brackets, that table is the matrix `[[2, 1], [1, 1]]`: two rows, one per day, two columns, one per product ([Matrices](01-matrices-and-the-matrix-zoo.md)).
 
 A coffee costs $4, a pastry $3. That is a list of two numbers, a vector, written in round brackets: (4, 3).
 
@@ -14,11 +14,11 @@ Hold the table against the prices and out come the takings: $11 Monday, $7 Tuesd
 
 The first way looks down the columns. The coffee column is (2, 1): two coffees Monday, one Tuesday. Each coffee brings in $4, so four copies of it make (8, 4). Three copies of the pastry column (1, 1) make (3, 3). Added: (11, 7).
 
-The second way looks across the rows: 2*4 + 1*3 = 11 for Monday, 1*4 + 1*3 = 7 for Tuesday. The same two numbers.
+The second way looks across the rows: 2 × 4 + 1 × 3 = 11 for Monday, 1 × 4 + 1 × 3 = 7 for Tuesday. The same two numbers.
 
 **A x is the columns of the matrix mixed together, with the entries of the vector as the weights — and that same mix can be read off one row at a time.**
 
-**What kind of fact this is:** a definition — the product *is* that mix of the columns; that the row reading gives the same answer is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition — the product *is* that mix of the columns. That the row reading gives the same answer is a theorem, proved on this card in Why it works.
 
 ```mermaid
 flowchart TD
@@ -27,7 +27,7 @@ flowchart TD
     P["the prices (4, 3)"] --> C
     P --> R
     C["road 1: mix the columns<br/>4 copies of (2, 1), plus 3 copies of (1, 1)"] --> ANS
-    R["road 2: run each row along the prices<br/>2*4 + 1*3, then 1*4 + 1*3"] --> ANS
+    R["road 2: run each row along the prices<br/>2 × 4 + 1 × 3, then 1 × 4 + 1 × 3"] --> ANS
     ANS["the takings (11, 7)"]
 ```
 
@@ -80,13 +80,15 @@ Whatever list goes in, **A x lands in the span of the columns** — everything t
 
 ### Step 2: the same mix, read across
 
-Add the two weighed columns entry by entry and read the first entry: 4*2 + 3*1, the numbers in Monday's row, each meeting its own price. The second entry is 4*1 + 3*1, Tuesday's row against the prices.
+Add the two weighed columns entry by entry and read the first entry: 4 × 2 + 3 × 1, the numbers in Monday's row, each meeting its own price. The second entry is 4 × 1 + 3 × 1, Tuesday's row against the prices.
 
 So the row road is not a second rule, only the same additions in a different order: finish each column and add, or finish each output number in turn. Pairing two lists, multiplying the pairs and adding, has its own card: the dot product ([The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
 ### Step 3: why the two roads must agree
 
-Both roads multiply the same numbers: every entry against the weight of its own column. The column road totals them product by product, the row road day by day. Addition does not care how a sum is grouped ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so the totals match, for any table.
+Both roads multiply the same pairs: each entry against the weight of its own column. Scaling and adding columns work entry by entry, so in each row the column road adds the same products as the row road.
+
+Only the order inside each product differs: weight × entry on one road, entry × weight on the other. Two numbers multiply to the same answer in either order ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so the totals match, for any table.
 
 <details>
 <summary>Detailed proof: the two roads agree at every size</summary>
@@ -95,13 +97,13 @@ Take a table of $`m`$ rows and $`n`$ columns and a list of $`n`$ weights, one pe
 
 (weight 1) × (row i, column 1) + … + (weight $`n`$) × (row i, column $`n`$),
 
-which runs along row i pairing each entry with the weight of its own column: road 2's answer for row i. Row i was any row. Two facts did it — scaling a column scales each entry, a sum may be regrouped — and neither mentions the numbers, so this holds at every size.
+which runs along row i pairing each entry with the weight of its own column: road 2's answer for row i. Row i was any row. Two facts did it. Scaling and adding columns work entry by entry, and two numbers multiply to the same answer in either order. Neither mentions this table's numbers, so this holds at every size.
 
 </details>
 
 ### Step 4: a pile of equations becomes one line
 
-Turn the cafe around: the till totals are known, $11 and $7, the prices are not. Call the coffee price x and the pastry price y. The two days say:
+Turn the cafe around: the tab's totals are known, $11 and $7, the prices are not. Call the coffee price x and the pastry price y. The two days say:
 
 ```math
 2x + y \;=\; 11, \qquad x + y \;=\; 7
@@ -134,11 +136,11 @@ The cafe's table `[[2, 1], [1, 1]]` against the prices (4, 3), both roads.
 | the coffee column, weighed by $4 | 4 × (2, 1) | (8, 4) |
 | the pastry column, weighed by $3 | 3 × (1, 1) | (3, 3) |
 | add the two weighed columns | (8 + 3, 4 + 3) | **(11, 7)** |
-| Monday's row against the prices | 2*4 + 1*3 | **11** |
-| Tuesday's row against the prices | 1*4 + 1*3 | **7** |
-| add Wednesday, 3 coffees + 2 pastries | 3*4 + 2*3 | **18** |
+| Monday's row against the prices | 2 × 4 + 1 × 3 | **11** |
+| Tuesday's row against the prices | 1 × 4 + 1 × 3 | **7** |
+| add Wednesday, 3 coffees + 2 pastries | 3 × 4 + 2 × 3 | **18** |
 
-Monday's till should read $11, Tuesday's $7. Add Wednesday and the table is 3 by 2: two prices in, three takings out, (11, 7, 18).
+Monday's tab should come to $11, Tuesday's to $7. Add Wednesday and the table is 3 by 2: two prices in, three takings out, (11, 7, 18).
 
 ### What breaks if you drop a piece
 

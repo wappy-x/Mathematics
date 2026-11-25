@@ -1,4 +1,4 @@
--- Matrix multiplication: the row-by-column rule is the only table that does "B, then A" in one step, grouping a chain never changes it, order can change it at every square size from 2 up, and the card's workshop numbers come out as it says.
+-- Matrix multiplication: the row-by-column rule is the only table that does "B, then A" in one step, grouping a chain never changes it, order can change it at every square size from 2 up, and the card's bakery numbers come out as it says.
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Hadamard
 import Mathlib.Data.Matrix.Basis
@@ -50,45 +50,45 @@ theorem order_can_change_the_answer {R : Type*} [CommRing R] [Nontrivial R] (n :
   · simp at h2
   · simp [Fin.ext_iff]
 
-/-- `A`: grams per product. Rows beans and flour, columns brew and loaf. -/
-def recipe : Matrix (Fin 2) (Fin 2) ℤ := !![20, 0; 0, 60]
+/-- `A`: kilograms per batch. Rows flour and butter, columns brioche and croissant. -/
+def recipe : Matrix (Fin 2) (Fin 2) ℤ := !![5, 3; 2, 2]
 
-/-- `B`: products per day. Rows brew and loaf, columns Monday and Tuesday. -/
+/-- `B`: batches per day. Rows brioche and croissant, columns Monday and Tuesday. -/
 def schedule : Matrix (Fin 2) (Fin 2) ℤ := !![2, 1; 1, 1]
 
 /-- `C`: how many of each weekday in four weeks. Rows Monday and Tuesday, one column. -/
 def month : Matrix (Fin 2) (Fin 1) ℤ := !![4; 4]
 
 -- The four entries of AB, worked by hand.
-example : (20 : ℤ) * 2 + 0 * 1 = 40 := by norm_num
-example : (20 : ℤ) * 1 + 0 * 1 = 20 := by norm_num
-example : (0 : ℤ) * 2 + 60 * 1 = 60 := by norm_num
-example : (0 : ℤ) * 1 + 60 * 1 = 60 := by norm_num
--- A row 2, column 1 is 0: no flour in a brew.
-example : recipe 1 0 = 0 := by decide
--- Monday through both machines: Monday's column (2, 1) of products becomes 40 g and 60 g.
-example : recipe *ᵥ ![2, 1] = ![40, 60] := by decide
--- The grams-per-day table AB.
-example : recipe * schedule = !![40, 20; 60, 60] := by decide
+example : (5 : ℤ) * 2 + 3 * 1 = 13 := by norm_num
+example : (5 : ℤ) * 1 + 3 * 1 = 8 := by norm_num
+example : (2 : ℤ) * 2 + 2 * 1 = 6 := by norm_num
+example : (2 : ℤ) * 1 + 2 * 1 = 4 := by norm_num
+-- A row 2, column 1 is 2: 2 kg of butter in a batch of brioche.
+example : recipe 1 0 = 2 := by decide
+-- Monday through both machines: Monday's column (2, 1) of batches becomes 13 kg and 6 kg.
+example : recipe *ᵥ ![2, 1] = ![13, 6] := by decide
+-- The kilograms-per-day table AB.
+example : recipe * schedule = !![13, 8; 6, 4] := by decide
 -- The flipped order BA: same tables, different answer.
-example : schedule * recipe = !![40, 60; 20, 60] := by decide
+example : schedule * recipe = !![12, 8; 7, 5] := by decide
 example : recipe * schedule ≠ schedule * recipe := by decide
--- Products per month BC: twelve brews and eight loaves.
+-- Batches per month BC: twelve of brioche and eight of croissants.
 example : schedule * month = !![12; 8] := by decide
--- Both groupings of the month: 240 g of beans and 480 g of flour.
-example : (recipe * schedule) * month = !![240; 480] := by decide
-example : recipe * (schedule * month) = !![240; 480] := by decide
+-- Both groupings of the month: 84 kg of flour and 40 kg of butter.
+example : (recipe * schedule) * month = !![84; 40] := by decide
+example : recipe * (schedule * month) = !![84; 40] := by decide
 -- One column times one row: the outer products, and their sum is AB.
-example : vecMulVec (fun i => recipe i 0) (fun j => schedule 0 j) = !![40, 20; 0, 0] := by decide
-example : vecMulVec (fun i => recipe i 1) (fun j => schedule 1 j) = !![0, 0; 60, 60] := by decide
-example : (!![40, 20; 0, 0] : Matrix (Fin 2) (Fin 2) ℤ) + !![0, 0; 60, 60] = !![40, 20; 60, 60] := by
+example : vecMulVec (fun i => recipe i 0) (fun j => schedule 0 j) = !![10, 5; 4, 2] := by decide
+example : vecMulVec (fun i => recipe i 1) (fun j => schedule 1 j) = !![3, 3; 2, 2] := by decide
+example : (!![10, 5; 4, 2] : Matrix (Fin 2) (Fin 2) ℤ) + !![3, 3; 2, 2] = !![13, 8; 6, 4] := by
   decide
 -- The mistake: entry by entry gives a different table.
-example : recipe ⊙ schedule = !![40, 0; 0, 60] := by decide
--- The slices of AB against C: 160 + 80 and 240 + 240.
-example : vecMulVec (fun i => (recipe * schedule) i 0) (fun j => month 0 j) = !![160; 240] := by
+example : recipe ⊙ schedule = !![10, 3; 2, 2] := by decide
+-- The slices of AB against C: 52 + 32 and 24 + 16.
+example : vecMulVec (fun i => (recipe * schedule) i 0) (fun j => month 0 j) = !![52; 24] := by
   decide
-example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !![80; 240] := by
+example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !![32; 16] := by
   decide
 
 #print axioms row_by_column_is_forced_by_chaining

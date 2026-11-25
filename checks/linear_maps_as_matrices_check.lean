@@ -92,7 +92,7 @@ example : shear (![1, 0] + ![0, 1]) = ![2, 1] ∧ shear ![1, 0] + shear ![0, 1] 
   constructor <;> (ext i; fin_cases i <;> norm_num [shear])
 example : shear ((3 : ℝ) • ![1, 0]) = ![3, 0] ∧ (3 : ℝ) • shear ![1, 0] = ![3, 0] := by
   constructor <;> (ext i; fin_cases i <;> norm_num [shear])
--- Sliding right by 1 fails the first test: D(u + v) = (2, 1) but D(u) + D(v) = (3, 1).
+-- Sliding right by 1 fails the first test: slide(u + v) = (2, 1) but slide(u) + slide(v) = (3, 1).
 example : (![1, 0] + ![0, 1] : Fin 2 → ℝ) + ![1, 0] = ![2, 1] ∧
     ((![1, 0] : Fin 2 → ℝ) + ![1, 0]) + (![0, 1] + ![1, 0]) = ![3, 1] := by
   constructor <;> (ext i; fin_cases i <;> norm_num)

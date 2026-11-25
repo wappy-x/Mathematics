@@ -37,6 +37,7 @@ fn row<F: Fn(V) -> V>(label: &str, f: F, square: &[V]) -> String {
 
 fn main() {
     let square: Vec<V> = vec![(0, 0), (1, 0), (1, 1), (0, 1)];   // the sprite's four corners
+    let off: Vec<V> = vec![(3, 2), (-2, 5)];                     // two points off the corners
     let (sm, rm) = (matrix_of(shear), matrix_of(turn));
     println!("shear: e1 -> {}, e2 -> {}, so the matrix is {}", s(shear(E1)), s(shear(E2)), mm(sm));
     println!("turn:  e1 -> {}, e2 -> {}, so the matrix is {}", s(turn(E1)), s(turn(E2)), mm(rm));
@@ -58,7 +59,7 @@ fn main() {
     println!("linearity of the shear, with u = {}, v = {}, c = {}", s(u), s(v), k);
     println!("  T(u + v) = {} and T(u) + T(v) = {}", s(shear(add(u, v))), s(add(shear(u), shear(v))));
     println!("  T(cu) = {} and cT(u) = {}", s(shear(scale(k, u))), s(scale(k, shear(u))));
-    println!("slide right by 1 fails: D(u + v) = {} but D(u) + D(v) = {}",
+    println!("slide right by 1 fails: slide(u + v) = {} but slide(u) + slide(v) = {}",
              s(slide(add(u, v))), s(add(slide(u), slide(v))));
 
     let rows_not_cols: M = [[1, 0], [1, 1]];
@@ -67,9 +68,11 @@ fn main() {
              s(C), s(apply(st, C)), s(apply(rows_not_cols, C)), s(apply(no_minus, C)));
 
     assert!(sm == [[1, 1], [0, 1]] && rm == [[0, -1], [1, 0]]);
-    assert!(square.iter().all(|&w| apply(sm, w) == shear(w) && apply(rm, w) == turn(w)));
+    assert!(square.iter().chain(off.iter()).all(|&w| apply(sm, w) == shear(w) && apply(rm, w) == turn(w)));
     assert!(ts == [[1, -1], [1, 0]] && st == [[0, -1], [1, 1]]);
     assert!(apply(ts, C) == shear(turn(C)) && apply(ts, C) == (0, 1)
             && apply(st, C) == turn(shear(C)) && apply(st, C) == (-1, 2));
+    assert!(shear(add(u, v)) == add(shear(u), shear(v)) && shear(scale(k, u)) == scale(k, shear(u)));
+    assert!(slide(add(u, v)) != add(slide(u), slide(v)) && apply(rows_not_cols, C) == (1, 2) && apply(no_minus, C) == (1, 1));
     println!("ALL CHECKS PASS");
 }
