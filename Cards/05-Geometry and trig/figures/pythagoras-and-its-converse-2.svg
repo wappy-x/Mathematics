@@ -12,7 +12,7 @@
 <text x="256" y="40" font-size="13" fill="currentColor">outer square</text>
 <text x="256" y="58" font-size="13" fill="currentColor">7 m by 7 m</text>
 <text x="256" y="100" font-size="13" fill="currentColor">each corner</text>
-<text x="256" y="118" font-size="13" fill="currentColor">triangle 6 m^2</text>
+<text x="256" y="118" font-size="13" fill="currentColor">triangle 6 m²</text>
 <text x="256" y="160" font-size="13" fill="currentColor">shaded centre</text>
-<text x="256" y="178" font-size="13" fill="currentColor">25 m^2</text>
+<text x="256" y="178" font-size="13" fill="currentColor">25 m²</text>
 </svg>

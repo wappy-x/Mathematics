@@ -30,7 +30,7 @@ for a, b in [(3, 4), (3, 3)]:
     rule, box = a * a + b * b, (a + b) ** 2 - 4 * (a * b / 2)
     area = shoelace(centre(a, b))
     print(f"rafters {a} and {b}: rule {a}^2 + {b}^2 = {rule}, span {root(rule):.10f}")
-    print(f"  dissection: outer {a + b} x {a + b} = {(a + b) ** 2}, four triangles 4 x {a * b // 2} = {2 * a * b},"
+    print(f"  dissection: outer {a + b} x {a + b} = {(a + b) ** 2}, four triangles 4 x {a * b / 2:g} = {2 * a * b},"
           f" left {box:.0f}; corner coordinates give {area:.0f}; root {root(area):.10f}")
     assert rule == area and box == area                # three roads to one area
 leg = root(5 * 5 - 3 * 3)

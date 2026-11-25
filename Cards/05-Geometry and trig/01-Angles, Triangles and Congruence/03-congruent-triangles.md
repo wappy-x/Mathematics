@@ -106,13 +106,13 @@ On the gate, a 1.70 m brace from the rail hole reaches the stile at one point on
 
 ### Step 5: SSA is not a test
 
-Copy the brace angle at the rail hole, keep the rail at 1.50 m, and ask only that the stile hole sit 0.80 m from the corner hole. The corner need not be square. A 0.80 m arm swung about the corner hole meets the brace line twice. One crossing gives the true brace, 1.700 m. The other gives 0.947 m, with the stile hole at 0.664 m along and 0.446 m up. Two triangles share all three facts.
+Copy the brace angle at the rail hole, keep the rail at 1.50 m, and ask only that the stile hole sit 0.80 m from the corner hole. The corner need not be square. A 0.80 m arm swung about the corner hole meets the brace line twice. Call the unknown brace length $`s`$. One crossing gives the true brace, $`s = 1.700`$ m. The other gives $`s = 0.947`$ m, with the stile hole at 0.664 m along and 0.446 m up. Two triangles share all three facts.
 
 <p align="center"><img src="../figures/congruent-triangles-2.svg" alt="SSA fails: a 0.80 m arc about the corner hole crosses the copied brace line twice, giving braces of 1.700 m and 0.947 m" width="420"></p>
 
 Drawn to scale, 1 m = 150 units. The small arc at B is the copied angle; the dotted arc is every point 0.80 m from A.
 
-When the side facing the given angle is at least as long as the other given side, the arm meets the line once on the correct side of B. A right angle always gives that case: RHS.
+When the side facing the given angle is strictly longer than the other given side (or equal to it when the given angle is acute), the arm meets the line once past B. In any right triangle the hypotenuse is strictly longer than either leg, so a right angle always gives that unique case: RHS.
 
 The code's second road is coordinates: holes on a grid, distances by the distance formula. The proofs say why the grid always agrees.
 
@@ -555,7 +555,7 @@ example : (170 : ℕ) - 136 = 34 := by norm_num
 ## Where this goes next
 
 - [Similar triangles](04-similar-triangles-and-scale.md): the AAA row as a theorem: same angles, sides in one ratio.
-- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): builds on this card.
+- [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](../05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md): classifies all distance-keeping moves (slides, turns, flips and glide flips) and proves every one is at most three mirror flips.
 - [Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
 
 The AAA copy matches every angle of the gate at 0.8 size; how its sides relate to the gate's is the question this card leaves open.

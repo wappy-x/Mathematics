@@ -38,7 +38,9 @@ Notation first, in words.
 s = 180^\circ - \theta \qquad v = \theta \qquad c = a = \theta \qquad i = 180^\circ - \theta \qquad w = 90^\circ - \theta
 ```
 
-**Read it aloud:** a neighbour on a straight line takes what is left of 180°; the angle across a crossing is equal; a parallel line is met at the same angle in the matching corner and the opposite inside corner, and at what is left of 180° in the same-side inside corner; the wall gets what is left of 90°.
+Here $`0^\circ < \theta < 180^\circ`$. The wall angle $`w = 90^\circ - \theta`$ also requires an upright wall (90° to the ground) and an acute ladder angle, $`0^\circ < \theta < 90^\circ`$.
+
+**Read it aloud:** a neighbour on a straight line takes what is left of 180°, and the angle across a crossing is equal. A parallel line copies the angle into the matching corner and the opposite inside corner. The same-side inside corner takes what is left of 180°, and the wall gets what is left of 90°.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -51,7 +53,7 @@ s = 180^\circ - \theta \qquad v = \theta \qquad c = a = \theta \qquad i = 180^\c
 | $`w`$ | the angle between ladder and wall | 20° | falls |
 | $`^\circ`$ | the degree: one 360th of a full turn | 360° in a turn | a unit, not a quantity |
 
-Angle types: under 90° is **acute** (20°, 70°); exactly 90° is **right**; between 90° and 180° is **obtuse** (110°); exactly 180° is **straight**; over 180° is **reflex**, such as the 290° the long way round from ground to ladder.
+Angle types: between 0° and 90° is **acute** (20°, 70°); exactly 90° is **right**; between 90° and 180° is **obtuse** (110°); exactly 180° is **straight**; between 180° and 360° is **reflex**, such as the 290° the long way round from ground to ladder.
 
 ### When it holds
 
@@ -107,7 +109,7 @@ At the top, the alternate angle (below the gutter line, away from the wall) face
 
 The wall meets the ground at 90° and crosses the gutter line too, so by Step 3 it meets the gutter line at 90°. At the top the ladder splits that right angle into the alternate angle, 70°, and the angle against the wall: $`w = 90^\circ - 70^\circ = 20^\circ`$.
 
-Step 3 also runs backwards: equal corresponding angles make two lines parallel. That direction needs only Proposition 16, not the postulate. It is how parallels are drawn with a set square or a compass: [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md).
+Step 3 also runs backwards: equal corresponding angles make two lines parallel. That direction needs only Proposition 16, not the postulate. It is how parallels are drawn with a set square or a compass; [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md) uses parallel lines to multiply and divide lengths.
 
 ---
 
@@ -138,7 +140,11 @@ A ladder at 70° to the ground leans 20° off the wall; every angle at its ends 
 
 ## Code, from first principles, and it actually runs
 
-Two roads reach every angle. Road one is the card's arithmetic: 180 − 70, 90 − 70, and copies of 70. Road two never uses those rules. It puts wall and ground on a grid in metres, places the ladder by bisection (halving an interval until it reads 70°), then measures every other angle off the coordinates with a protractor built from the dot product and a determinant (two products of the coordinates: one grows as two directions line up, the other as they turn apart). Adding unit vectors along an angle's two sides halves it; after 30 halvings the sliver's slope is proportional to its size. It is calibrated on a square's diagonal, 45°, and tested on an equilateral triangle's corner, 60°. Four asserts: measured angles match the arithmetic, the foot's four total 360, a tilted gutter shifts the copy by the tilt, and the protractor passes its test.
+Two roads reach every angle. Road one is the card's arithmetic: 180 − 70, 90 − 70, and copies of 70. Road two never uses those rules. It puts wall and ground on a grid in metres and places the ladder by bisection (halving an interval until it reads 70°).
+
+Road two then measures every angle off the coordinates with a home-made protractor. It uses the dot product and a determinant (two coordinate products: one grows as directions line up, the other as they turn apart). Adding unit vectors along both sides halves an angle; after 30 halvings the sliver's slope matches its size.
+
+The protractor is calibrated on a square's diagonal, 45°, and tested on an equilateral triangle's corner, 60°. Four asserts check the measured angles, the 360° total at the foot, a tilted gutter, and the 60° test.
 
 ### Python
 
@@ -447,7 +453,7 @@ example : (Nat.divisors 100).card = 9 := by decide
 
 > [!TIP]
 > **Try changing**
-> - **Set THETA to 40.** Guess first: does an assert fail? None does; the rules hold for any angle.
+> - **Set THETA to 40.** Guess first: does an assert fail? None does; the rules hold for any acute ladder angle (up to about 89° in this script's slope search).
 > - **Raise one end of the gutter: G = (4, h + 0.1).** Guess first. The first assert fails: the gutter is no longer parallel.
 > - **Change 45 to 46 in the protractor.** Guess first. The 70s and 110s still agree, since a miscalibrated protractor agrees with itself; only the equilateral test fails. A tool checked only against itself proves nothing.
 
@@ -481,10 +487,11 @@ example : (Nat.divisors 100).card = 9 := by decide
 ## Where this goes next
 
 - [Triangles](02-triangle-angle-sum-and-inequality.md): the gutter-line trick, a parallel through a triangle's top corner, proves its angles total 180°.
-- [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): drawing a parallel by copying an angle, the backwards direction of Step 3.
+- [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): uses parallel lines to multiply lengths, and proves which figures a straightedge and compass can and cannot build.
 - [Hilbert's axioms](../06-Beyond%20Euclid/06-hilberts-axioms.md): the betweenness and continuity rules Euclid used without writing down.
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): what changes on a curved surface, where the parallel postulate fails and triangle angles top 180°.
 
-Left open: on a curved surface, where the parallel postulate fails, do these angle rules still hold? [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md) starts the answer.
+Left open: draw that same parallel gutter line across the top corner of any triangle—what must its three angles add to? [Triangles](02-triangle-angle-sum-and-inequality.md) answers next.
 
 ---
 

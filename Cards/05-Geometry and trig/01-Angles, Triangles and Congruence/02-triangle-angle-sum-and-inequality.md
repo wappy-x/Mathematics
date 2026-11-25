@@ -24,7 +24,7 @@ Drawn to scale, 1 m = 40 units. The short panels, hinged at A and B, really lie 
 
 ## The formula
 
-The degree sign ° counts turning, 360° to a full turn, as on [Angles](01-angles-and-parallel-lines.md). New here, the naming used for every triangle from now on: corners are A, B and C, each letter also naming the angle there, and each side takes the small letter of the corner it faces: side $`a`$ lies opposite corner $`A`$.
+The degree sign ° counts turning, 360° to a full turn, as on [Angles](01-angles-and-parallel-lines.md). New here is the naming used for every triangle from now on. Corners are A, B and C, and each letter also names the angle there. Each side takes the small letter of the corner it faces: side $`a`$ lies opposite corner $`A`$.
 
 In the 5 m bed, A and B are the ends of the 5 m panel and C is where the other two meet, so $`c`$ = 5 m, $`b`$ = 3 m and $`a`$ = 4 m.
 
@@ -42,7 +42,7 @@ a + b > c, \qquad b + c > a, \qquad c + a > b
 
 **Read it aloud:** each side is shorter than the other two laid end to end.
 
-With $`c`$ the longest side, the second and third lines hold automatically, since $`c`$ alone is at least as long as $`a`$ or $`b`$. One comparison settles it: the two shorter against the longest. For the fence, 3 + 4 = 7, not more than 8.
+For positive lengths with $`c`$ the longest side, the second and third lines hold automatically, since $`c`$ alone is already at least as long as $`a`$ or $`b`$. One comparison settles it: the two shorter against the longest. For the fence, 3 + 4 = 7, not more than 8.
 
 Turned round, a third panel works with the 3 m and 4 m ones when it is shorter than 4 + 3 = 7 m and longer than 4 − 3 = 1 m.
 
@@ -141,7 +141,11 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads, sharing no arithmetic. The first is the rule: sort, compare, subtract from 180. The second puts the panels on a grid and swings the 3 m panel round A in small steps, measuring how far its tip sits beyond the 4 m panel's reach. A bisection search (halving an interval each time) finds where the 5 m bed closes, and the corners there are measured from grid positions with the dot product: multiply matching coordinates of two directions and add, which fixes the angle between them. The swing's positions use cos and sin, and the angle uses the inverse cosine, all met later in this wing. A second case checks the angle sum on 1000 triangles from a home-made random number generator.
+Two roads check the fence, sharing no arithmetic. The first is the rule: sort, compare, and subtract from 180. The second puts the panels on a grid and swings the 3 m panel round A in steps, measuring the gap beyond the 4 m panel's reach.
+
+A bisection search (halving an interval each time) finds where the 5 m bed closes. The corners are measured from grid positions with the dot product (multiply matching coordinates of two directions and add), which fixes the angle between them.
+
+The swing's positions use cos and sin, and the angle uses the inverse cosine, all met later in this wing. A second case checks the angle sum on 1000 triangles from a home-made random number generator.
 
 ### Python
 

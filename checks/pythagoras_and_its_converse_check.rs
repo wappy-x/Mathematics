@@ -42,7 +42,7 @@ fn main() {
         let area = shoelace(&centre(a, b));
         println!("rafters {} and {}: rule {}^2 + {}^2 = {}, span {:.10}", a, b, a, b, rule, root(rule as f64));
         println!("  dissection: outer {} x {} = {}, four triangles 4 x {} = {}, left {:.0}; corner coordinates give {:.0}; root {:.10}",
-                 a + b, a + b, sq, a * b / 2, 2 * a * b, boxed, area, root(area));
+                 a + b, a + b, sq, (a * b) as f64 / 2.0, 2 * a * b, boxed, area, root(area));
         assert!(rule as f64 == area && boxed == area);  // three roads to one area
     }
     let leg = root(5.0 * 5.0 - 3.0 * 3.0);

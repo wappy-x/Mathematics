@@ -85,6 +85,8 @@ Cut down the dashed height from C. Slide the left piece 9 m right and it fills t
 
 The result is a rectangle 9 m wide and h tall. Nothing was stretched, so the parallelogram's area is $`c\,h`$: 53.665631 square metres.
 
+If the parallelogram leans so far that the height from C misses segment AB, slice it horizontally into thinner parallelograms until each cut hits its base. The formula $`c\,h`$ still holds.
+
 ### The picture: two beds make a parallelogram, one cut makes a rectangle
 
 <p align="center"><img src="../figures/area-of-triangles-and-polygons-2.svg" alt="The bed and a half-turned copy form a parallelogram; cutting off its left end and moving it 9 m right gives a rectangle" width="420"></p>
@@ -109,34 +111,36 @@ Any straight-edged plot splits the same way: draw lines between corners that sta
 
 Lay side c along the ground with A at the start. Call the foot of the height $`x`$ metres from A. Two right-angled triangles stand either side of the height, and [Pythagoras](05-pythagoras-and-its-converse.md) gives one equation for each:
 
-b^2 = x^2 + h^2 and a^2 = (c − x)^2 + h^2.
+```math
+b^2 = x^2 + h^2, \qquad a^2 = (c - x)^2 + h^2
+```
 
-Subtract the second from the first. The h^2 cancels and leaves x = (b^2 + c^2 − a^2) / (2c). For the bed, (64 + 81 − 49) / 18 = 5.333333 m. Then h^2 = 64 − x^2, and h = 5.962848 m.
+Subtract the second from the first. The $`h^2`$ cancels and leaves $`x = (b^2 + c^2 - a^2) / (2c)`$. For the bed, $`(64 + 81 - 49) / 18 = 5.333333`$ m. Then $`h^2 = 64 - x^2`$, and $`h = 5.962848`$ m.
 
 If the angle at A is wide, x comes out negative and the foot lies outside the triangle; the equations still hold.
 
 ### Step 5: put that height into half base times height
 
-Square the area and multiply by 16: 16K^2 = 4c^2h^2. Replace h^2 from Step 4 and only sides remain. The result factors into four brackets, each twice one of s, s − a, s − b, s − c; the twos cancel the 16, and the square root is Heron's rule.
+Square the area and multiply by 16: $`16K^2 = 4c^2h^2`$. Replace $`h^2`$ from Step 4 and only sides remain. The result factors into four brackets, each twice one of $`s`$, $`s - a`$, $`s - b`$, $`s - c`$; the twos cancel the 16, and the square root is Heron's rule.
 
 For the bed: the brackets are 24, 10, 8 and 6, whose product is 11520, which is 16 × 720. The area is √720, the 26.832816 of Step 2.
 
 <details>
 <summary>Detailed proof</summary>
 
-From Step 4, 2cx = b^2 + c^2 − a^2 and h^2 = b^2 − x^2. So
+From Step 4, $`2cx = b^2 + c^2 - a^2`$ and $`h^2 = b^2 - x^2`$. So
 
-16K^2 = 4c^2h^2 = 4b^2c^2 − (2cx)^2 = (2bc)^2 − (b^2 + c^2 − a^2)^2.
+$`\displaystyle 16K^2 = 4c^2h^2 = 4b^2c^2 - (2cx)^2 = (2bc)^2 - (b^2 + c^2 - a^2)^2.`$
 
-A difference of two squares, P^2 − Q^2, factors as (P − Q)(P + Q):
+A difference of two squares, $`P^2 - Q^2`$, factors as $`(P - Q)(P + Q)`$:
 
-16K^2 = (2bc − b^2 − c^2 + a^2)(2bc + b^2 + c^2 − a^2) = (a^2 − (b − c)^2)((b + c)^2 − a^2).
+$`\displaystyle 16K^2 = (2bc - b^2 - c^2 + a^2)(2bc + b^2 + c^2 - a^2) = \bigl(a^2 - (b - c)^2\bigr)\bigl((b + c)^2 - a^2\bigr).`$
 
 Factor each bracket again:
 
-16K^2 = (a − b + c)(a + b − c)(b + c − a)(b + c + a).
+$`\displaystyle 16K^2 = (a - b + c)(a + b - c)(b + c - a)(b + c + a).`$
 
-With 2s = a + b + c, the four brackets are 2(s − b), 2(s − c), 2(s − a) and 2s. Their product is 16 s(s − a)(s − b)(s − c). Divide by 16 and take the positive root. The triangle inequality makes all four brackets positive, so the root exists.
+With $`2s = a + b + c`$, the four brackets are $`2(s - b)`$, $`2(s - c)`$, $`2(s - a)`$ and $`2s`$. Their product is $`16\,s(s - a)(s - b)(s - c)`$. Divide by 16 and take the positive root. The triangle inequality makes all four brackets positive, so the root exists.
 
 </details>
 
@@ -153,7 +157,7 @@ A second road needs no area formula. Slice the bed into thin upright strips, tre
 | Heron's product | 12 × 5 × 4 × 3 | 720 |
 | Heron's area | √720 | **26.832816** |
 | Foot of the height | (64 + 81 − 49) / 18 | x = 5.333333 |
-| Height | √(64 − x^2) | h = 5.962848 |
+| Height | $`\sqrt{64 - x^2}`$ | h = 5.962848 |
 | Half base times height | 9 × 5.962848 / 2 | **26.832816** |
 
 The bed needs about 26.83 square metres of topsoil.
@@ -198,8 +202,8 @@ def corner(a, b, c):                       # C above base AB, with A at (0, 0)
     x = (b * b + c * c - a * a) / (2 * c)  # from b^2 = x^2 + h^2, a^2 = (c - x)^2 + h^2
     return x, root(b * b - x * x)
 
-def strips(c, x, h, n):                    # n strips, each read at its middle
-    w, total = c / n, 0.0
+def strips(c, x, h, n):                    # n strips, read at middle (acute base: 0 < x < c)
+    assert 0 < x < c; w, total = c / n, 0.0
     for i in range(n):
         t = (i + 0.5) * w
         total += w * (h * t / x if t < x else h * (c - t) / (c - x))
@@ -242,7 +246,7 @@ assert abs(4 * h2 / 2 - heron(4, 5, 8)) < 1e-9           # obtuse case, two road
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 sides 7, 8, 9; s = 12; s(s-a)(s-b)(s-c) = 720
@@ -295,7 +299,8 @@ fn corner(a: f64, b: f64, c: f64) -> (f64, f64) { // C above base AB, A at (0, 0
     (x, root(b * b - x * x))
 }
 
-fn strips(c: f64, x: f64, h: f64, n: usize) -> f64 { // n strips, read at the middle
+fn strips(c: f64, x: f64, h: f64, n: usize) -> f64 { // n strips, read at middle (acute base: 0 < x < c)
+    assert!(0.0 < x && x < c);
     let w = c / n as f64;
     (0..n).map(|i| {
         let t = (i as f64 + 0.5) * w;
@@ -346,7 +351,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 sides 7, 8, 9; s = 12; s(s-a)(s-b)(s-c) = 720
@@ -738,16 +743,20 @@ example : (3 : ℕ) * 2 = 6 := by decide
 
 ## What this builds on
 
+- [Triangles](02-triangle-angle-sum-and-inequality.md): the triangle inequality that tells when three sides can close into a triangle with positive area.
+- [Congruent triangles](03-congruent-triangles.md): shapes that match exactly have equal area, which makes a triangle half a parallelogram.
+- [Similar triangles](04-similar-triangles-and-scale.md): why a cut halfway up a triangle has half the base, and why doubling sides quadruples area.
 - [Pythagoras](05-pythagoras-and-its-converse.md): the two right-angled triangles that give the height from the sides.
 
 ## Where this goes next
 
+- [Circles](../02-Circles%20and%20Solids/01-circle-circumference-and-area.md): extends area from straight edges to curved ones by unrolling a circle into a triangle.
 - [Small angles](../03-Trigonometry/08-small-angles-and-the-sine-bound.md): compares a triangle's area with a circular slice to pin down how a small angle behaves.
 - [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the area of any polygon straight from its corners' grid positions, the shoelace formula.
 - [Scissors congruence](../02-Circles%20and%20Solids/08-scissors-congruence-and-dehn-invariant.md): equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot.
 - [Ceva and Menelaus](../04-Coordinates%20and%20Curves/10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
 
-Left open: when only the corners' grid positions are known, is there a rule that needs no heights at all?
+Left open: cutting into triangles handles any straight-edged plot, but what about a curved boundary like a circle? [Circles](../02-Circles%20and%20Solids/01-circle-circumference-and-area.md) starts the next shelf.
 
 ---
 

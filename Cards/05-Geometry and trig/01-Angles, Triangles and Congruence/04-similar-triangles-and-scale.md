@@ -55,7 +55,7 @@ The factor has no unit, metres over metres, so both shadows must be in the same 
 
 ### When it holds
 
-- **Same sun angle.** Both shadows must be read at the same moment. Read the stick's an hour later at 1.2 m and the pole comes out at 8 m.
+- **Same sun angle, not directly overhead.** Both shadows must be read at the same moment, with $`s > 0`$. Read the stick's an hour later at 1.2 m and the pole comes out at 8 m. With the sun straight overhead both shadows vanish, and $`S / s`$ divides by zero.
 - **Upright objects on level ground.** A leaning pole or a sloping field changes one triangle's angles, and the ratio stops applying.
 - **Parallel rays.** The sun is far enough away for its rays to arrive parallel. A street lamp's rays spread from a point and meet stick and pole at different angles.
 - **A flat plane.** On a sphere, triangles with equal angles are the same size; no scaled copies exist.
@@ -74,7 +74,7 @@ Each object stands upright, so each triangle has a right angle at the ground. Pa
 
 ### Step 2: slide the small triangle inside the big one
 
-Call the pole's shadow tip T, its foot B, its top C. Carry the stick until its shadow tip also lands on T. Its foot, D, now lies on TB. The angle at T is the same for both, so the stick's ray lies along TC, and its top, E, sits on the pole's ray. The stick stands upright, like the pole, so DE is parallel to BC. For any two triangles with two equal angles the same slide works: the equal angles at D and B make DE parallel to BC.
+Call the pole's shadow tip T, its foot B, its top C. Carry the stick until its shadow tip also lands on T. Its foot, D, now lies on TB. The angle at T is the same for both, so the stick's ray lies along TC, and its top, E, sits on the pole's ray. The stick stands upright, like the pole, so DE is parallel to BC. For any two triangles with two equal angles the same move works, after turning or flipping the smaller triangle to fit inside the larger. The equal angles at D and B then make DE parallel to BC.
 
 ### Step 3: a parallel cut divides both sides in the same ratio
 
@@ -83,7 +83,7 @@ A line parallel to one side of a triangle cuts the other two sides in equal prop
 <details>
 <summary>Detailed proof: a parallel cut divides both sides proportionally</summary>
 
-The corners are named as in Step 2: D on TB and E on TC, with DE parallel to BC.
+The corners are named as in Step 2: D on TB and E on TC, with DE parallel to BC. If the two triangles are the same size, D = B and E = C, so both ratios are already 1. Otherwise D sits strictly between T and B, and E strictly between T and C.
 
 Triangles DEB and DEC stand on the same base DE. Their far corners B and C lie on BC, which is parallel to DE, so both are the same height above DE. Equal base and equal height give equal area.
 
@@ -99,11 +99,13 @@ The same argument runs in reverse: if a line cuts two sides proportionally, it i
 
 ### Step 4: the heights follow
 
-The heights need one more cut. From E draw a line level with the ground, meeting the pole at F. That line is parallel to TB, so Step 3 applies again, now in the corner at C: CF is the same fraction of CB as CE is of CT. Since TE is one twelfth of TC, CE is eleven twelfths of it, so CF is eleven twelfths of the pole and FB is the last twelfth. FB is level with the stick's top, so it equals the stick's height. All three pairs of sides share one ratio: $`k`$ = 12.
+The heights need one more cut. From E draw a line level with the ground, meeting the pole at F. That line is parallel to TB, so Step 3 applies again at corner C: CF is the same fraction of CB as CE is of CT.
+
+Since TE is one twelfth of TC, CE is eleven twelfths of it, so CF is eleven twelfths of the pole and FB is the last twelfth. Point F sits level with the stick's top E and B sits level with its foot D, so FB equals the stick's height DE. All three pairs of sides share one ratio: $`k`$ = 12.
 
 ### Step 5: areas scale by the square
 
-A triangle's area is half its base times its height. Scaling by $`k`$ multiplies the base by $`k`$ and the height by $`k`$, so the area gets $`k`$ twice: $`k^2`$. The stick's triangle covers 0.4 m^2, the pole's 0.4 × 144 = 57.6 m^2.
+A triangle's area is half its base times its height. Scaling by $`k`$ multiplies the base by $`k`$ and the height by $`k`$, so the area gets $`k`$ twice: $`k^2`$. The stick's triangle covers 0.4 m², the pole's 0.4 × 144 = 57.6 m².
 
 Two other tests are proved the same way: three sides in one ratio (Euclid VI.5), or two sides in one ratio with the angle between them equal (VI.6). Another road to the height is the angle itself: [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md) calls the fixed ratio of height to shadow the **tangent** of the sun's angle.
 
@@ -115,8 +117,8 @@ Two other tests are proved the same way: three sides in one ratio (Euclid VI.5),
 | --- | --- | --- |
 | scale factor | pole's shadow over stick's: 9.6 ÷ 0.8 | 12 |
 | pole's height | stick's height times the factor: 1 × 12 | **12 m** |
-| stick's triangle area | half of 1 × 0.8 | 0.4 m^2 |
-| pole's triangle area | half of 12 × 9.6 | 57.6 m^2 |
+| stick's triangle area | half of 1 × 0.8 | 0.4 m² |
+| pole's triangle area | half of 12 × 9.6 | 57.6 m² |
 | area ratio | 57.6 ÷ 0.4 | **144 = 12 × 12** |
 
 ### A second case: a river's width
@@ -134,7 +136,7 @@ The triangles meet at Q, where their angles are opposite each other across two c
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Ratio crossed: pole's height over its shadow set to stick's shadow over its height | 7.68 m | Height matched with shadow |
-| Area scaled by the factor | 4.8 m^2 | One direction stretched, not two |
+| Area scaled by the factor | 4.8 m² | One direction stretched, not two |
 | Stick's shadow read later, at 1.2 m | 8 m | The sun moved; the triangles are not similar |
 
 The code prints all three.
@@ -143,7 +145,11 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The pole's height takes two roads. One scales the stick's height by the shadow ratio. The other forms no ratio of shadows: it hunts by repeated halving (bisection) for the pole height whose sun angle, compared through the dot product of the two sides at the shadow tip, equals the stick's. The dot product multiplies matching coordinates of two directions and adds; divided by their lengths, it gives a number that is the same exactly when the angles are the same. Areas come from half base times height and from counting the 1 cm squares whose centres lie inside. The river's width comes from scaling and from intersecting the sight line with the line across the river on a grid. Four asserts compare the roads.
+The pole's height takes two roads. One scales the stick's height by the shadow ratio. The other forms no ratio of shadows: it hunts by repeated halving (bisection) for the pole height whose sun angle matches the stick's. Both angles are compared through the dot product of the two sides at each shadow tip.
+
+The dot product multiplies matching coordinates of two directions and adds; divided by their lengths, it gives a number that matches exactly when the angles match. Areas come from half base times height and from counting 1 cm squares whose centres lie inside.
+
+The river's width also takes two roads: scaling, and intersecting the sight line with the line across the river on a grid. Four asserts compare the roads.
 
 ### Python
 
@@ -463,7 +469,7 @@ example : (100 : ℚ) * 960 / 120 = 800 := by norm_num
 > **Using the ratio before checking the angles.** Triangles that merely look alike need not have proportional sides. A leaning pole, a sloping field, a lamp instead of the sun: each changes an angle, and the shadow ratio then gives a confident wrong height. The theorem's input is the pair of equal angles.
 >
 > - **Matching the wrong sides.** Pair height with height, shadow with shadow; crossing them gives 7.68 m.
-> - **Scaling area by the factor.** The pole's triangle covers 57.6 m^2, not 4.8 m^2.
+> - **Scaling area by the factor.** The pole's triangle covers 57.6 m², not 4.8 m².
 > - **Mixed units.** The factor is a pure number only if both shadows are in metres; a pole's shadow in centimetres over a stick's in metres gives a pole over a kilometre tall.
 
 ---
@@ -482,18 +488,21 @@ example : (100 : ℚ) * 960 / 120 = 800 := by norm_num
 
 ## What this builds on
 
+- [Angles](01-angles-and-parallel-lines.md): parallel rays meeting level ground at equal angles.
+- [Triangles](02-triangle-angle-sum-and-inequality.md): the 180° angle sum that makes two equal angles force the third.
 - [Congruent triangles](03-congruent-triangles.md): matching corners in order, and the tests that fix a triangle; similarity is congruence with the size set free.
 - [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): equal ratios, and why a ratio of like units has no unit.
 
 ## Where this goes next
 
 - [Pythagoras](05-pythagoras-and-its-converse.md): the height dropped onto the long side of a right triangle splits it into two triangles similar to the whole, and that gives Pythagoras.
+- [Area](06-area-of-triangles-and-polygons.md): finding area from the sides alone, or for shapes that are not triangles.
 - [Similarity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md): scaling laws for whole machines, where lengths, areas and volumes grow at different rates.
 - [Power of a point](../02-Circles%20and%20Solids/07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
 - [Ceva and Menelaus](../04-Coordinates%20and%20Curves/10-ceva-and-menelaus.md): one product of side ratios says three lines meet, another says three points line up.
 - [Inversion in a circle](../06-Beyond%20Euclid/08-inversion-in-a-circle.md): turn the plane inside out, so lines and circles swap and angles survive.
 
-Each area here came from a base and a height; finding one from the sides alone, or for shapes that are not triangles, is [Area](06-area-of-triangles-and-polygons.md).
+Left open: drop a height onto the long side of a right triangle, and it splits into two triangles similar to the whole. What equation between the three sides follows from those ratios? [Pythagoras](05-pythagoras-and-its-converse.md) answers next.
 
 ---
 

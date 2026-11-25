@@ -23,7 +23,8 @@ fn corner(a: f64, b: f64, c: f64) -> (f64, f64) { // C above base AB, A at (0, 0
     (x, root(b * b - x * x))
 }
 
-fn strips(c: f64, x: f64, h: f64, n: usize) -> f64 { // n strips, read at the middle
+fn strips(c: f64, x: f64, h: f64, n: usize) -> f64 { // n strips, read at middle (acute base: 0 < x < c)
+    assert!(0.0 < x && x < c);
     let w = c / n as f64;
     (0..n).map(|i| {
         let t = (i as f64 + 0.5) * w;

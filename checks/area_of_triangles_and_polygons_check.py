@@ -16,8 +16,8 @@ def corner(a, b, c):                       # C above base AB, with A at (0, 0)
     x = (b * b + c * c - a * a) / (2 * c)  # from b^2 = x^2 + h^2, a^2 = (c - x)^2 + h^2
     return x, root(b * b - x * x)
 
-def strips(c, x, h, n):                    # n strips, each read at its middle
-    w, total = c / n, 0.0
+def strips(c, x, h, n):                    # n strips, read at middle (acute base: 0 < x < c)
+    assert 0 < x < c; w, total = c / n, 0.0
     for i in range(n):
         t = (i + 0.5) * w
         total += w * (h * t / x if t < x else h * (c - t) / (c - x))

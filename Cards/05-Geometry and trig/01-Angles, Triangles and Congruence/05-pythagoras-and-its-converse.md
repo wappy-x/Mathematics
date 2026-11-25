@@ -12,7 +12,7 @@ The numbers also work backwards. A carpenter setting out a corner marks 3 m alon
 
 These are two claims. One starts from a right angle and fixes a length; the other starts from three lengths and detects a right angle. A claim turned round need not stay true, so each gets its own proof.
 
-**In a flat triangle with a right angle, the squares on the two short sides add up to the square on the long side; and when three lengths obey that equation, the triangle they make has a right angle.**
+**In a flat triangle with a right angle, the squares on the two short sides add up to the square on the long side; and when three positive lengths obey that equation, the triangle they make has a right angle.**
 
 **What kind of fact this is:** a theorem and its converse (the same statement run backwards), both proved on this card in Why it works.
 
@@ -26,7 +26,7 @@ Drawn at 1 m = 60 units. The ridge C sits 3.2 m along the tie beam from A and 2.
 
 ## The formula
 
-Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([Angles](01-angles-and-parallel-lines.md)). Put the right angle at C. The sides meeting there, $`a`$ and $`b`$, are the **legs**; the side opposite, $`c`$, is the **hypotenuse**, always the longest.
+Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([Triangles](02-triangle-angle-sum-and-inequality.md)). Put the right angle at C. The sides meeting there, $`a`$ and $`b`$, are the **legs**; the side opposite, $`c`$, is the **hypotenuse**, always the longest.
 
 ```math
 a^2 + b^2 = c^2
@@ -34,7 +34,7 @@ a^2 + b^2 = c^2
 
 **Read it aloud:** the square on one leg plus the square on the other leg equals the square on the hypotenuse.
 
-$`a^2`$ is $`a`$ times $`a`$: the area of a square with side $`a`$. For the truss, 9 + 16 = 25 m^2. The positive square root gives a length back ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
+$`a^2`$ is $`a`$ times $`a`$: the area of a square with side $`a`$. For the truss, 9 + 16 = 25 m². The positive square root gives a length back ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
 
 ```math
 c = \sqrt{a^2 + b^2}, \qquad b = \sqrt{c^2 - a^2}
@@ -50,7 +50,7 @@ The **converse**: if three positive lengths satisfy $`a^2 + b^2 = c^2`$, their t
 | $`a`$ | the leg opposite A: rafter BC | 3 m | the span grows, but by less than the rafter grew |
 | $`b`$ | the leg opposite B: rafter CA | 4 m | the same |
 | $`c`$ | the hypotenuse, opposite C: the tie beam | 5 m | with legs fixed, the corner opens past square |
-| $`a^2`$, $`b^2`$, $`c^2`$ | areas of squares on each side | 9, 16, 25 m^2 | — |
+| $`a^2`$, $`b^2`$, $`c^2`$ | areas of squares on each side | 9, 16, 25 m² | — |
 | $`\sqrt{\ }`$ | the positive square root: the length whose square is given | the root of 25 is 5 | — |
 | $`d`$ | the converse proof's built third side | 5 m | — |
 | $`a^2 + b^2 - c^2`$ | the residual: zero exactly when the corner is square | 0; −1.01 for a 5.1 m diagonal | negative: opened; positive: closed |
@@ -81,11 +81,11 @@ Put a copy of the truss triangle in each corner of a square of side $`a + b`$, 7
 
 ### Step 2: the middle is a square
 
-Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy, and they add to 90°, since a triangle's angles total 180° and the right angle has used 90° ([Triangles](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $`c^2`$.
+Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy. A triangle's angles total 180° and the right angle uses 90°, so those two add to 90° ([Triangles](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $`c^2`$.
 
 ### Step 3: subtract
 
-Each corner triangle is half an $`a`$ by $`b`$ rectangle cut along its diagonal, so its area is $`ab/2`$: 6 m^2 here. From the big square's $`(a + b)^2`$, take the four triangles away:
+Each corner triangle is half an $`a`$ by $`b`$ rectangle cut along its diagonal, so its area is $`ab/2`$: 6 m² here. From the big square's $`(a + b)^2`$, take the four triangles away:
 
 ```math
 c^2 = (a + b)^2 - 4 \cdot \tfrac{ab}{2} = a^2 + 2ab + b^2 - 2ab = a^2 + b^2
@@ -95,7 +95,7 @@ The mixed $`2ab`$ terms cancel. Nothing used 3 and 4, so the rule holds for ever
 
 ### Step 4: the converse, by building a second triangle
 
-Now start from three lengths $`a`$, $`b`$, $`c`$ with $`a^2 + b^2 = c^2`$, and no angle known. Build a separate triangle with a right angle between legs $`a`$ and $`b`$; call its hypotenuse $`d`$. Steps 1 to 3 give $`d^2 = a^2 + b^2 = c^2`$. Two positive lengths with equal squares are equal, so $`d = c`$.
+Now start from three positive lengths $`a`$, $`b`$, $`c`$ with $`a^2 + b^2 = c^2`$, and no angle known. Build a separate triangle with a right angle between legs $`a`$ and $`b`$; call its hypotenuse $`d`$. Steps 1 to 3 give $`d^2 = a^2 + b^2 = c^2`$. Two positive lengths with equal squares are equal, so $`d = c`$.
 
 The two triangles now match side for side, and three matching sides force matching angles (the side-side-side test, [Congruent triangles](03-congruent-triangles.md)). The built triangle is right-angled between $`a`$ and $`b`$, so the original is too. That is the carpenter's 3-4-5 check, proved.
 
@@ -118,12 +118,12 @@ A second road: drop a line from the ridge square onto the tie beam. It cuts the 
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| square the rafters | 3 × 3 and 4 × 4 | 9 and 16 m^2 |
-| add | 9 + 16 | 25 m^2 |
+| square the rafters | 3 × 3 and 4 × 4 | 9 and 16 m² |
+| add | 9 + 16 | 25 m² |
 | back to a length | the root of 25 | **5 m** |
-| outer square of the dissection | 7 × 7 | 49 m^2 |
-| four corner triangles | 4 × (3 × 4 ÷ 2) | 24 m^2 |
-| middle square | 49 − 24 | **25 m^2** |
+| outer square of the dissection | 7 × 7 | 49 m² |
+| four corner triangles | 4 × (3 × 4 ÷ 2) | 24 m² |
+| middle square | 49 − 24 | **25 m²** |
 | missing rafter, span 5 m and rafter 3 m | the root of 25 − 9 = 16 | **4 m** |
 | a symmetric truss, rafters 3 m and 3 m | the root of 9 + 9 = 18 | **4.2426406871 m** |
 | corner check, diagonal reads 5.1 m | 9 + 16 − 26.01 | **−1.01**: opened past square |
@@ -135,7 +135,7 @@ The 3-4 truss takes a tie beam cut at exactly 5 m. The 3-3 truss needs one no ta
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Add the rafters | 3 + 4 = 7 m | The walk along both rafters is longer than the straight line across |
-| Stop before the root | 25 "m" | 25 is an area in m^2, not a length |
+| Stop before the root | 25 "m" | 25 is an area in m², not a length |
 | Call the 4 m rafter the hypotenuse | the root of 16 − 9: 2.6457513111 m | The side opposite the right angle was misidentified |
 
 The code prints all three.
@@ -144,7 +144,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; the square root is found by halving an interval. The area $`c^2`$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula, which finds a polygon's area from the grid positions of its corners and never measures a slanted side. For the converse, the program lays rafter $`a`$ along the ground, swings rafter $`b`$ round a circle, and searches for the point where the diagonal reads the tape's value. That point's sideways shift from the square position must equal the residual divided by twice $`a`$; [Law of cosines](../03-Trigonometry/06-law-of-cosines.md), this rule with a correction for any corner angle, says why. A second truss, rafters 3 m and 3 m, runs the same roads.
+Nothing is imported; the square root is found by halving an interval. The area $`c^2`$ is reached three ways: the rule, the dissection's subtraction, and the shoelace formula. The shoelace formula finds a polygon's area from the grid positions of its corners and never measures a slanted side.
+
+For the converse, the program lays rafter $`a`$ along the ground and swings rafter $`b`$ round a circle until the diagonal matches the tape. Its sideways shift from square must equal the residual divided by twice $`a`$; [Law of cosines](../03-Trigonometry/06-law-of-cosines.md) explains why. A second truss, rafters 3 m and 3 m, runs the same roads.
 
 ### Python
 
@@ -181,7 +183,7 @@ for a, b in [(3, 4), (3, 3)]:
     rule, box = a * a + b * b, (a + b) ** 2 - 4 * (a * b / 2)
     area = shoelace(centre(a, b))
     print(f"rafters {a} and {b}: rule {a}^2 + {b}^2 = {rule}, span {root(rule):.10f}")
-    print(f"  dissection: outer {a + b} x {a + b} = {(a + b) ** 2}, four triangles 4 x {a * b // 2} = {2 * a * b},"
+    print(f"  dissection: outer {a + b} x {a + b} = {(a + b) ** 2}, four triangles 4 x {a * b / 2:g} = {2 * a * b},"
           f" left {box:.0f}; corner coordinates give {area:.0f}; root {root(area):.10f}")
     assert rule == area and box == area                # three roads to one area
 leg = root(5 * 5 - 3 * 3)
@@ -211,13 +213,13 @@ print(f"figure, dissection 1 m = 30: outer (20, 10) to (230, 220); centre {pts}"
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-24 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 rafters 3 and 4: rule 3^2 + 4^2 = 25, span 5.0000000000
   dissection: outer 7 x 7 = 49, four triangles 4 x 6 = 24, left 25; corner coordinates give 25; root 5.0000000000
 rafters 3 and 3: rule 3^2 + 3^2 = 18, span 4.2426406871
-  dissection: outer 6 x 6 = 36, four triangles 4 x 4 = 18, left 18; corner coordinates give 18; root 4.2426406871
+  dissection: outer 6 x 6 = 36, four triangles 4 x 4.5 = 18, left 18; corner coordinates give 18; root 4.2426406871
 missing rafter, span 5 and rafter 3: 4.0000000000
 altitude from C: pieces 1.8 + 3.2 = 5.0, height 2.4; 5 x 1.8 = 9, 5 x 3.2 = 16
 corner test, diagonal 5.000: 9 + 16 - 25.000000 = 0.000000; search: square
@@ -281,7 +283,7 @@ fn main() {
         let area = shoelace(&centre(a, b));
         println!("rafters {} and {}: rule {}^2 + {}^2 = {}, span {:.10}", a, b, a, b, rule, root(rule as f64));
         println!("  dissection: outer {} x {} = {}, four triangles 4 x {} = {}, left {:.0}; corner coordinates give {:.0}; root {:.10}",
-                 a + b, a + b, sq, a * b / 2, 2 * a * b, boxed, area, root(area));
+                 a + b, a + b, sq, (a * b) as f64 / 2.0, 2 * a * b, boxed, area, root(area));
         assert!(rule as f64 == area && boxed == area);  // three roads to one area
     }
     let leg = root(5.0 * 5.0 - 3.0 * 3.0);
@@ -315,13 +317,13 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-24 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 rafters 3 and 4: rule 3^2 + 4^2 = 25, span 5.0000000000
   dissection: outer 7 x 7 = 49, four triangles 4 x 6 = 24, left 25; corner coordinates give 25; root 5.0000000000
 rafters 3 and 3: rule 3^2 + 3^2 = 18, span 4.2426406871
-  dissection: outer 6 x 6 = 36, four triangles 4 x 4 = 18, left 18; corner coordinates give 18; root 4.2426406871
+  dissection: outer 6 x 6 = 36, four triangles 4 x 4.5 = 18, left 18; corner coordinates give 18; root 4.2426406871
 missing rafter, span 5 and rafter 3: 4.0000000000
 altitude from C: pieces 1.8 + 3.2 = 5.0, height 2.4; 5 x 1.8 = 9, 5 x 3.2 = 16
 corner test, diagonal 5.000: 9 + 16 - 25.000000 = 0.000000; search: square
@@ -423,9 +425,9 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 > [!warning]
 > **Using the rule where there is no right angle.** The equation belongs to the right angle, with $`c`$ opposite it. Rafters of 3 m and 4 m meeting wider than square span more than 5 m, yet the rule still says 5 m. The converse checks the corner before the rule is trusted.
 >
-> - **Stopping at the square.** 25 is the tie beam's square in m^2; the length is its root, 5 m.
+> - **Stopping at the square.** 25 is the tie beam's square in m²; the length is its root, 5 m.
 > - **Testing with the longest side out of place.** Lengths 3, 5, 4 tried in that order leave a residual of 18, though the corner is square; the longest side always goes alone on the right.
-> - **Reading a near-zero residual as proof.** A diagonal of 5.001 m leaves a residual of −0.010001 m^2, a corner opened by 0.0017 m: easy to miss on a tape, still not square.
+> - **Reading a near-zero residual as proof.** A diagonal of 5.001 m leaves a residual of −0.010001 m², a corner opened by 0.0017 m: easy to miss on a tape, still not square.
 
 ---
 
@@ -442,8 +444,10 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 
 ## What this builds on
 
+- [Triangles](02-triangle-angle-sum-and-inequality.md): the 180° angle sum that forces the middle figure's corners to be right angles.
+- [Congruent triangles](03-congruent-triangles.md): the side-side-side test that transfers the right angle in the converse proof.
 - [Similar triangles](04-similar-triangles-and-scale.md): the same-shape ratios behind the second proof.
-- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the positive square root that turns 25 m^2 back into 5 m.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the positive square root that turns 25 m² back into 5 m.
 
 ## Where this goes next
 
@@ -452,7 +456,7 @@ example : (3 : ℤ) ^ 2 + 5 ^ 2 - 4 ^ 2 = 18 := by decide
 - [Law of cosines](../03-Trigonometry/06-law-of-cosines.md): what a wider ridge does to the span, and why a negative residual means an opened corner, once angles have a number.
 - [Power of a point](../02-Circles%20and%20Solids/07-power-of-a-point.md): every chord, secant and tangent through one point gives the same product.
 
-This card covers only a square corner; how long the tie beam must be when the rafters meet at any other angle is the question it leaves open.
+Step 3 found a right triangle's area as half a rectangle. How to find the area of any triangle—even from its three sides alone, using Pythagoras—is [Area](06-area-of-triangles-and-polygons.md).
 
 ---
 
