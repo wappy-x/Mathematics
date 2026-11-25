@@ -6,13 +6,13 @@
 
 ## General Overview
 
-A tank design sheet carries two expressions in the same letter x: x^3 - 6x^2 + 11x - 6 and x^2 - 1. One is divided by the other further down the sheet, so any shared factor should cancel first. Which factor is it?
+A computer algebra worksheet, a page where software does exact algebra, holds one fraction: x^3 - 6x^2 + 11x - 6 over x^2 - 1. To simplify it, the software must cancel any factor the top and bottom share. It cannot rely on guessing roots. Which factor is shared?
 
-For whole numbers this is routine: divide and keep the leftover. With 84 and 36: 84 = 2 x 36 + 12, then 36 = 3 x 12 + 0, so they share 12, the last leftover that was not zero — Euclid's algorithm ([Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Guessing the factors of a cubic is not routine.
+For whole numbers this is routine: divide and keep the leftover. With 84 and 36: 84 = 2 × 36 + 12, then 36 = 3 × 12 + 0. So they share 12, the last leftover that was not zero: Euclid's algorithm ([Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Guessing the factors of a cubic is not routine.
 
 That loop never needed whole numbers. It needed division with remainder: a quotient, plus a leftover smaller than the divisor. Polynomials have that when their coefficients come from a field — a system where every nonzero number has a reciprocal, such as the fractions ([Fields](02-fields.md)). "Smaller" becomes "of lower degree", the degree being the highest power of x present.
 
-Two rounds settle it: the cubic divided by x^2 - 1 leaves 12x - 12, then x^2 - 1 divided by x - 1 leaves nothing. The shared factor is x - 1.
+Two rounds settle it: the cubic divided by x^2 - 1 leaves 12x - 12, then x^2 - 1 divided by x - 1 leaves nothing. The shared factor is x - 1, and the fraction simplifies to x^2 - 5x + 6 over x + 1.
 
 **Over a field, polynomials divide with remainder, so Euclid's algorithm, primes and unique factorisation all come back, with degree doing the job size does for whole numbers.**
 
@@ -53,7 +53,7 @@ f = q g + r, \qquad r = 0 \ \text{ or } \ \deg r < \deg g
 | $`h`$ | the greatest common divisor (gcd), made monic | x - 1 | — |
 
 ```math
-\gcd(f, g) = \gcd(g, r)
+h = \gcd(f, g) = \gcd(g, r)
 ```
 
 In plain words: swapping (polynomial, divisor) for (divisor, remainder) changes nothing about what divides both.
@@ -62,7 +62,7 @@ In plain words: swapping (polynomial, divisor) for (divisor, remainder) changes 
 
 ### When it holds
 
-- **Coefficients from a field.** Cancelling needs a reciprocal for the divisor's top coefficient, and whole numbers have none: dividing x by 2x asks for 1/2.
+- **Coefficients from a field.** Cancelling needs a reciprocal for the divisor's top coefficient, and 2 has none among the whole numbers: dividing x by 2x asks for 1/2.
 - **Degree shrinks, not size.** A remainder can be bigger in value than the divisor at some x; the loop still ends, degree being a count that falls.
 - **Exact coefficients, one letter.** Rounding breaks exact division; with two letters nothing plays the part of degree.
 
@@ -74,11 +74,15 @@ In plain words: swapping (polynomial, divisor) for (divisor, remainder) changes 
 
 Long division makes one move, repeated: subtract the multiple of the divisor carrying the same top term as whatever is left. Knocking x^3 off the cubic with x^2 - 1 needs the multiplier x; the -6x^2 surfacing next needs -6. The multiplier exists because the divisor's top coefficient divides into the one in hand, every nonzero number in a field having a reciprocal.
 
-Each subtraction kills the top term, so what is left has lower degree, and a count that falls cannot fall forever. The division halts when what is left has degree below the divisor's, or is nothing: f = q g + r. No other pair works, since two quotients would differ by a nonzero polynomial times g, of degree at least deg g — more than remainders can differ by.
+Each subtraction kills the top term, so what is left has lower degree, and a count that falls cannot fall forever. The division halts when what is left has degree below the divisor's, or is nothing: f = q g + r.
+
+No other pair works, since two quotients would differ by a nonzero polynomial times g, of degree at least deg g — more than remainders can differ by.
 
 ### Step 1: the remainder keeps every common divisor
 
-Anything dividing f and g divides f - q g, which is r; anything dividing g and r divides q g + r, which is f. The two pairs have the same common divisors, so the swap loses nothing, and the new divisor has lower degree, so the remainder soon hits zero. That last divisor divides both originals, and every common divisor of them divides it — which is what greatest means: not bigger, but divisible by all the rest.
+Anything dividing f and g divides f - q g, which is r; anything dividing g and r divides q g + r, which is f. The two pairs have the same common divisors, so the swap loses nothing, and the new divisor has lower degree, so the remainder soon hits zero.
+
+That last divisor divides both originals, and every common divisor of them divides it — which is what greatest means: not bigger, but divisible by all the rest.
 
 ### Step 2: run the loop on the sheet
 
@@ -98,14 +102,18 @@ Zero remainder, so the loop stops at x - 1. No root was found on the way.
 
 A polynomial of degree 1 or more is **irreducible over F** when it is not a product of two polynomials of degree 1 or more with coefficients in F. Nonzero constants are the **units**, the invertible ones; like 1 and -1 among the whole numbers, they are not primes.
 
-Any such polynomial is irreducible or splits into two of lower degree; repeat, and degrees fall until they cannot, so every polynomial of degree 1 or more is a product of irreducibles times a constant. Uniqueness is the content: **the irreducible factors are the same every time, up to order and up to nonzero constants** — proved as for whole numbers ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)), through the same lemma ([Euclid's lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)).
+Any such polynomial is irreducible or splits into two of lower degree; repeat, and degrees fall until they cannot, so every polynomial of degree 1 or more is a product of irreducibles times a constant.
+
+Uniqueness is the content: **the irreducible factors are the same every time, up to order and up to nonzero constants** — proved as for whole numbers ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)), through the same lemma ([Euclid's lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)).
 
 <details>
 <summary>Detailed proof: why the irreducible factors are the same every time</summary>
 
 **A.** Each remainder is one polynomial minus a multiple of the other, so each is (something) times f plus (something) times g — the gcd included. That is Bezout's identity ([Bezout's identity](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)).
 
-**B.** Let P be irreducible, dividing f g but neither factor. The monic gcd of P and f is 1: a common divisor of degree 1 or more would be P times a constant, making P divide f. So by A, u P + z f = 1 for polynomials u and z. Multiply by g: u P g + z f g = g, and P divides both left-hand terms, so P divides g. Contradiction — Euclid's lemma in F[x].
+**B.** Let P be irreducible, dividing f g but neither factor. The monic gcd of P and f is 1: a common divisor of degree 1 or more would be P times a constant, making P divide f. So by A, u P + z f = 1 for polynomials u and z.
+
+Multiply by g: u P g + z f g = g, and P divides both left-hand terms, so P divides g. Contradiction — Euclid's lemma in F[x].
 
 **C.** Take an irreducible from one factorisation: by B it divides a member of any other, and one irreducible dividing another leaves a constant. Cancel and repeat; monic factors leave only the order free.
 
@@ -151,7 +159,9 @@ The code prints both.
 
 ## Code, from first principles, and it actually runs
 
-A polynomial is a list of whole-number coefficients, constant term first. Two roads reach the gcd. Road one is the loop: divide, keep the remainder, strip its constant, repeat. Road two divides nothing — it evaluates each polynomial at every whole number from -9 to 9, keeps the numbers giving zero, and reads the shared factors off the shared numbers. The four asserts check the division identity by value, rebuild the cubic, compare the roads, and test a remainder.
+A polynomial is a list of whole-number coefficients, constant term first. Two roads reach the gcd. Road one is the loop: divide, keep the remainder, strip its constant, repeat.
+
+Road two divides nothing — it evaluates each polynomial at every whole number from -9 to 9, keeps the numbers giving zero, and reads the shared factors off the shared numbers. The four asserts check the division identity by value, rebuild the cubic, compare the roads, and test a remainder.
 
 ### Python
 
@@ -343,7 +353,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three results for polynomials over every field, and checks the sheet's numbers exactly.
+Lean proves the card's four results for polynomials over every field, and checks the sheet's numbers exactly.
 
 - Division with remainder: for a divisor that is not zero, exactly one quotient and remainder work, with the remainder zero or of lower degree.
 - Euclid's swap: if f = q g + r, then f and g have the same common divisors as g and r.
@@ -549,7 +559,7 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 > [!warning]
 > **Reading "greatest" as "bigger".** It is not the common divisor with the larger value at some x, nor the one with larger coefficients, but the one every other common divisor divides.
 >
-> - **Irreducible depends on the field.** Splitting x^2 - 2 over the fractions needs a fraction root, and in lowest terms such a root has top dividing 2 and bottom dividing 1: only -2, -1, 1 and 2 can be tried. The code prints 2, -1, -1 and 2 there, so no root exists. Over the real numbers it splits in two.
+> - **Irreducible depends on the field.** Splitting x^2 - 2 over the fractions needs a fraction root. In lowest terms such a root has top dividing 2 and bottom dividing 1, so only -2, -1, 1 and 2 can be tried. The code prints 2, -1, -1 and 2 there, so no root exists. Over the real numbers it splits in two.
 > - **Promoting a factor of one to a factor of both.** x + 1 divides x^2 - 1 exactly and leaves -24 in the cubic.
 > - **Expecting roots to do the job.** Roots find only linear factors, those of degree 1; the loop finds the gcd even when neither polynomial has a root.
 
@@ -558,10 +568,12 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 ## Where you meet it in real life
 
 - **Cancelling an algebraic fraction.** Any system simplifying a ratio of polynomials runs this loop first.
-- **Error-correcting codes.** A QR code's data are coefficients of a polynomial over a finite field (a field with finitely many numbers), and decoding is division with remainder and gcd work ([Finite fields](05-finite-fields.md)).
+- **Error-correcting codes.** A QR code's data are coefficients of a polynomial over a finite field (a field with finitely many numbers). Decoding is division with remainder and gcd work ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
-> Over a field, one polynomial divided by another leaves a quotient and a remainder of lower degree, which is all Euclid's algorithm ever needed. So the loop runs on polynomials: divide, keep the remainder, repeat. Two rounds on the sheet return x - 1, the factor the two expressions share. Each swap keeps every common divisor, so nothing is lost, and the answer is pinned once it is made monic. Irreducible polynomials are the primes here, and a factorisation into them never changes.
+> Over a field, one polynomial divided by another leaves a quotient and a remainder of lower degree, which is all Euclid's algorithm ever needed. So the loop runs on polynomials: divide, keep the remainder, repeat. Two rounds on the sheet return x - 1, the factor the top and bottom of the fraction share.
+>
+> Each swap keeps every common divisor, so nothing is lost, and the answer is pinned once it is made monic. Irreducible polynomials are the primes here, and a factorisation into them never changes.
 
 ---
 
@@ -578,7 +590,7 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 
 - [Ideals and quotient rings](04-ideals-and-quotient-rings.md): keep only remainders, as clock time does after 12, and a number system appears.
 - [Gaussian integers](../10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the same division with a square root of -1.
-- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): the loop on numbers built from root 2.
+- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): another ring, numbers built from root 2, where units never run out.
 - [Field extensions](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/01-field-extensions-and-degree.md): an irreducible divisor makes a bigger field.
 - [Minimal polynomials](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/02-minimal-polynomials-and-conjugates.md): each new number carries one irreducible polynomial.
 - [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): the Euclidean domain, PID and UFD hierarchy named above, proved.

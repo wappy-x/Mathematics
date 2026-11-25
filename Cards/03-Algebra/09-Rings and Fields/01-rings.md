@@ -64,7 +64,9 @@ Sums and products must also stay inside. The top line makes adding alone a group
 | $`-a`$ | the additive undo of $`a`$ | the hours back round the dial | every member has one |
 | $`a^{-1}`$ | the multiplicative undo, if any | 5 is its own | most have none |
 
-Three more words. A ring is **commutative** when $`ab = ba`$ always: the dial is, the matrices below are not. A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $`a`$ with $`ab = 0`$ for a nonzero $`b`$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
+Three more words. A ring is **commutative** when $`ab = ba`$ always: the dial is, the matrices below are not.
+
+A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $`a`$ with $`ab = 0`$ for a nonzero $`b`$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
 
 ### When it holds
 
@@ -80,7 +82,7 @@ Three more words. A ring is **commutative** when $`ab = ba`$ always: the dial is
 
 A rule claimed for a collection must hold for every choice of members — for an infinite one, by argument, not examples. The payment: what follows from the rules holds in every ring.
 
-The dial's own argument is short. A reading stands for every whole number with the same remainder after division by 12 ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). Swapping stand-ins shifts a sum or product by a multiple of 12 and leaves the reading alone, so the rules drop down from the whole numbers; the code walks the distributive rule over all 1728 triples.
+The dial's own argument is short. A reading stands for every whole number with the same remainder after division by 12 ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). Swapping stand-ins shifts a sum or product by a multiple of 12 and leaves the reading alone, so the rules drop down from the whole numbers. The code walks the distributive rule over all 1728 triples.
 
 ### Step 1: zero swallows every product
 
@@ -106,9 +108,11 @@ That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero
 
 ### Step 3: on a dial, every nonzero reading is a unit or a zero divisor
 
-A reading has an undo exactly when it shares no factor above 1 with the dial size ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)) — when their greatest common divisor, the largest whole number dividing both, is 1. At 12 that leaves 1, 5, 7 and 11.
+A reading has an undo exactly when it shares no factor above 1 with the dial size ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). That is, their greatest common divisor, the largest whole number dividing both, is 1. At 12 that leaves 1, 5, 7 and 11.
 
-Any other nonzero reading shares a factor $`d`$ above 1 with 12. Multiply it by 12 divided by $`d`$, a reading and not 0: the product is a whole number of turns, so it reads 0. So every nonzero reading is a unit or a zero divisor, never both (Step 2), its partner being 12 divided by the shared factor; the table below lists all seven pairs. The whole numbers have no such fork, where 2 is neither.
+Any other nonzero reading shares a factor $`d`$ above 1 with 12. Multiply it by 12 divided by $`d`$, a reading and not 0: the product is a whole number of turns, so it reads 0.
+
+So every nonzero reading is a unit or a zero divisor, never both (Step 2). A zero divisor's partner is 12 divided by the shared factor; the table below lists all seven pairs. The whole numbers have no such fork, where 2 is neither.
 
 <details>
 <summary>Detailed proof: why each bar is that tall</summary>
@@ -121,9 +125,11 @@ Write $`d`$ for the greatest common divisor of a reading $`a`$ with the dial siz
 
 ### Step 4: two more rings
 
-**Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient, the number in front of its highest power, is the product of the two leading ones. So an integral domain whose only units are 1 and −1 — the shortage that makes polynomials divide with a remainder instead ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
+**Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient, the number in front of its highest power, is the product of the two leading ones.
 
-**The 2 by 2 matrices of whole numbers** ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two comforts go at once. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`; and `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
+So they form an integral domain whose only units are 1 and −1. Once the coefficients come from a field, polynomials divide with a remainder, just as whole numbers do ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
+
+**The 2 by 2 matrices of whole numbers** ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two familiar rules fail here. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`. And `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
 
 ```mermaid
 flowchart TB
@@ -154,7 +160,7 @@ Four readings of the twelve can be divided by; the other seven each pair off to 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Cancelling the 2 in "2x = 2" | x = 1, losing x = 7 | cancelling needs an undo |
+| Cancelling the 2 in "2x = 2" | x = 1, losing x = 7 | 2 is a zero divisor here (2 × 6 = 0), so it cannot be cancelled |
 | Expecting "2x = 1" to have an answer | nothing: 2 reaches 0 2 4 6 8 10 | six readings, not 1 |
 | Reading "nonzero" as "no zero product" | 3 × 4 = 0 | two nonzero readings multiply to 0 |
 
@@ -164,7 +170,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and every claim about the dial is reached twice by roads sharing no arithmetic. Road one hunts, trying all twelve partners of each reading for a product of 1 and of 0. Road two argues from the greatest common divisor, written out in the script, predicting the same units, partners and bar heights. The distributive rule is then walked over 1728 triples, the whole numbers swept from −20 to 20, the polynomial product gathered and evaluated, the matrices multiplied both ways.
+Nothing is imported, and every claim about the dial is reached twice by roads sharing no arithmetic. Road one hunts, trying all twelve partners of each reading for a product of 1 and of 0. Road two argues from the greatest common divisor, written out in the script, predicting the same units, partners and bar heights.
+
+The distributive rule is then walked over 1728 triples, the whole numbers swept from −20 to 20, the polynomial product gathered and evaluated, the matrices multiplied both ways.
 
 ### Python
 
@@ -495,10 +503,12 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 
 - **Anything that wraps.** A clock, a weekday, hash buckets, a check digit: wrapping arithmetic is this ring, and its zero divisors decide which multipliers reach every slot.
 - **Machine arithmetic.** Fixed-width integers wrap at a power of two: a ring whose units are the odd values.
-- **Exact algebra, and codes.** Software that expands expressions without rounding works in a polynomial ring ([Polynomials](../02-Polynomials/01-polynomials.md)), and the codes on a disc or a QR symbol use polynomial rings over a small dial ([Finite fields](05-finite-fields.md)).
+- **Exact algebra, and codes.** Software that expands expressions without rounding works in a polynomial ring ([Polynomials](../02-Polynomials/01-polynomials.md)). The codes on a disc or a QR symbol use polynomial rings over a finite field ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
-> A ring is one collection with two operations: adding, which every member can undo, and multiplying, which not every member can, linked by the rule that a multiplier reaches every term in a bracket. On a 12-hour dial 3 × 4 = 0 with neither factor 0, and only 1, 5, 7 and 11 have a partner reaching 1. The whole numbers have no zero products, and only two units. Order may matter, and nonzero is not safe to divide by.
+> A ring is one collection with two operations: adding, which every member can undo, and multiplying, which not every member can, linked by the rule that a multiplier reaches every term in a bracket.
+>
+> On a 12-hour dial 3 × 4 = 0 with neither factor 0, and only 1, 5, 7 and 11 have a partner reaching 1. The whole numbers have no zero products, and only two units. Order may matter, and nonzero is not safe to divide by.
 
 ---
 

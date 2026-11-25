@@ -6,13 +6,17 @@
 
 ## General Overview
 
-A QR symbol repairs itself by solving equations in the alphabet it stores, so every nonzero element of that alphabet needs a reciprocal: a partner multiplying with it to give 1. Two bits give four symbols — 00, 01, 10, 11 — and as the hours of a four-hour clock they cannot divide: 2 times 2 wraps to 0, and neither factor of such a zero product has a reciprocal ([Rings](01-rings.md)).
+A QR symbol repairs itself by solving equations in the alphabet it stores. So every nonzero element of that alphabet needs a reciprocal: a partner multiplying with it to give 1. A real QR symbol uses bytes, 256 symbols; two bits show the same problem at a size you can check by hand.
 
-Four is not prime, and a clock divides only at a prime number of hours ([Fields](02-fields.md)). Yet a field of exactly four elements exists: wrap polynomials rather than numbers, and out come 0, 1, a and a + 1, where a carries one rule, a squared is a + 1. That makes a times a + 1 equal 1, so a and a + 1 are reciprocals and every nonzero element divides.
+Two bits give four symbols: 00, 01, 10, 11. As the hours of a four-hour clock they cannot divide: 2 times 2 wraps to 0, and neither factor of such a zero product has a reciprocal ([Rings](01-rings.md)).
+
+Four is not prime, and a clock divides only at a prime number of hours ([Fields](02-fields.md)). Yet a field of exactly four elements exists. Wrap polynomials rather than numbers, and out come 0, 1, a and a + 1, where a carries one rule: a squared is a + 1.
+
+That makes a times a + 1 equal 1, so a and a + 1 are reciprocals and every nonzero element divides.
 
 **A finite field's size is always a prime raised to a positive whole power: at prime sizes it is the clock, and at every other size it is polynomials wrapped at one that does not factor.**
 
-**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power, sameness after renaming, and one element's powers giving the rest are stated here, proved in the later card Finite fields, in Algebraic and analytic number theory.
+**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power and sameness after renaming are stated here and proved in [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md) (in Algebraic and analytic number theory). That one element's powers give every nonzero element is stated here and checked for GF(4).
 
 ### The picture: four symbols, two readings
 
@@ -32,7 +36,7 @@ Same four symbols on both branches; only the arithmetic differs.
 
 A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0.
 
-A polynomial over GF(2) has coefficients 0 and 1 only, its letter $`x`$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied.
+A polynomial over GF(2) has coefficients 0 and 1 only. Its letter $`x`$ is a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). It is **irreducible** when it is not two smaller polynomials multiplied.
 
 Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($`p`$)[$`x`$] means polynomials in $`x`$ over GF($`p`$):
 
@@ -71,15 +75,17 @@ Multiplying two elements means multiplying out and then trading every $`a^2`$ fo
 
 Both halves of this card are one move: divide by a fixed thing, keep the remainder.
 
-Division survives only when that thing has no factors, and Euclid's algorithm is the reason — run on two things sharing no factor it ends with one multiple of each adding to 1, and after the wrap the fixed thing's multiple is 0, leaving the other's multiplier as its reciprocal. Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
+Division survives only when that fixed thing has no factors. Euclid's algorithm shows why: run on two things sharing no factor, it produces one multiple of each that add to 1. After the wrap, the fixed thing's multiple becomes 0, leaving the other multiplier as the reciprocal.
 
-So a prime clock divides — the previous card's theorem ([Fields](02-fields.md)) — and that clock, GF($`p`$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
+Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
+
+So a prime clock divides — an earlier card's theorem ([Fields](02-fields.md)) — and that clock, GF($`p`$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
 
 ### Step 1: four symbols no clock can supply
 
-The four-hour clock is finished before it starts: if 2 had a reciprocal r there, then 2 = 2 times 2 times r = 0 times r = 0.
+The four-hour clock fails at once: if 2 had a reciprocal r there, then 2 = 2 times 2 times r = 0 times r = 0.
 
-Over GF(2) only two values can be tried in $`x^2 + x + 1`$: at $`x = 0`$ it is 1, at $`x = 1`$ it is 1 + 1 + 1, wrapping to 1. No root, so no factor of degree one — and at degree two that is the whole of it, since any factorisation is two degree-one pieces, each with a root. Irreducible.
+Over GF(2) only two values can be tried in $`x^2 + x + 1`$: at $`x = 0`$ it is 1, at $`x = 1`$ it is 1 + 1 + 1, wrapping to 1. No root, so no factor of degree one. At degree two that settles it: any factorisation is two degree-one pieces, each with a root. Irreducible.
 
 Dividing by it leaves a remainder of degree at most one: 0, 1, $`x`$ or $`x + 1`$, four in all. The wrap sets $`x^2 + x + 1`$ to 0, so with $`a`$ for what $`x`$ becomes, and with adding and subtracting one operation here:
 
@@ -102,13 +108,17 @@ Take the fewest elements from which every element is built by multiplying with c
 <details>
 <summary>Detailed proof: why the characteristic cannot be composite</summary>
 
-Call the smallest positive number of 1's adding to 0 the count, and suppose it factors into two numbers, each above 1 and below it. The first many 1's add to one element, the second many to another, neither 0 by minimality — yet their product is the count's worth of 1's, which is 0. Multiplying by the first one's reciprocal forces the second to 0, a contradiction ([Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
+Call the smallest positive number of 1's adding to 0 the count, and suppose it factors into two numbers, each above 1 and below it. The first many 1's add to one element, the second many to another, neither 0 by minimality — yet their product is the count's worth of 1's, which is 0.
+
+Multiplying by the first one's reciprocal forces the second to 0, a contradiction ([Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
 </details>
 
 ### Step 3: three facts stated, proved elsewhere
 
-One field exists for every prime power, and any two of a size are one field after a renaming, both proved in the later card Finite fields, in Algebraic and analytic number theory. The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
+One field exists for every prime power, and any two of a size are one field after a renaming. Both are proved in [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md) (in Algebraic and analytic number theory).
+
+The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)). It is stated here and checked for GF(4); [Every prime clock has a primitive root](../../02-Number%20theory/04-Powers%20on%20the%20Clock/08-primitive-roots-mod-p.md) proves it for prime clocks.
 
 ```mermaid
 flowchart LR
@@ -156,7 +166,9 @@ The code prints both.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic and compared on every pair: one shifts and XORs the packed polynomials, folding the top power away with $`x^2 + x + 1`$; the other multiplies coefficients by a rule taken from $`a^2 = a + 1`$. The clock side is done twice too, by search and by Euclid. XOR, short for exclusive or, adds two bit patterns place by place with 1 + 1 = 0, which is adding coefficients wrapped at 2.
+Nothing is imported. Two roads reach all sixteen products, sharing no arithmetic, and are compared on every pair. Road one shifts and XORs the packed polynomials, folding the top power away with $`x^2 + x + 1`$. Road two multiplies coefficients by a rule taken from $`a^2 = a + 1`$.
+
+The clock side is done twice too, by search and by Euclid. XOR, short for exclusive or, adds two bit patterns place by place with 1 + 1 = 0, which is adding coefficients wrapped at 2.
 
 ### Python
 
@@ -356,7 +368,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three main facts in general: for every finite field, every clock, and every polynomial over a prime clock.
+Lean proves the card's four main facts in general: for every finite field, every clock, and every polynomial over a prime clock.
 
 - A finite field's size is always a prime raised to a positive whole power.
 - A clock is a field exactly when its number of hours is prime.
@@ -468,7 +480,7 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Taking GF(4) to be the whole numbers wrapped at 4.** The size is right, the arithmetic wrong. In GF(4) every element added to itself gives 0, so 1 + 1 = 0, and no two nonzero elements multiply to 0; the clock has 1 + 1 = 2 and 2 times 2 = 0. No relabelling turns one into the other.
+> **Taking GF(4) to be the whole numbers wrapped at 4.** The size is right, the arithmetic wrong. In GF(4) every element added to itself gives 0, so 1 + 1 = 0, and no two nonzero elements multiply to 0. The clock has 1 + 1 = 2 and 2 times 2 = 0. No relabelling turns one into the other.
 >
 > - **Expecting a field of every size.** Prime powers only: none with 6 elements, none with 10.
 > - **Reading $`a`$ as a number.** It is $`x`$ after the wrap, obeying one rule: a squared is a + 1.
@@ -481,7 +493,9 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 - **AES (the Advanced Encryption Standard), in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $`k`$ = 8 ([AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md)).
 
 > **Say it back**
-> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded. GF(2) and $`x^2 + x + 1`$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
+> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded.
+>
+> GF(2) and $`x^2 + x + 1`$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
 
 ---
 
@@ -494,18 +508,19 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 
 ## Where this goes next
 
+- [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): the next shelf's first card, where over the complex numbers every polynomial factors completely.
 - [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): the codes behind it.
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the field inside a cipher.
 - [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
 - [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): squares on a prime clock.
-- Finite fields, in Algebraic and analytic number theory: existence, uniqueness, symmetry.
+- [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md) (in Algebraic and analytic number theory): existence, uniqueness, symmetry, and an irreducible polynomial of every degree.
 - [The curve mod p](../../22-Algebraic%20geometry/04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md): counting points field by field.
 - [Finite planes and orthogonal Latin squares](../../04-Combinatorics%20and%20graphs/16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
 - [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
 - [The Jacobian](../../22-Algebraic%20geometry/03-Plane%20Curves/11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
 - [Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
 
-Degree two over GF(2) was easy by hand; whether an irreducible polynomial of every degree exists is the next question.
+Degree two over GF(2) was easy by hand. Whether an irreducible polynomial of every degree exists is settled in wing 21's [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md): it does. The next shelf turns to the opposite world: over the complex numbers, does any polynomial above degree one stay unfactored? [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md) answers no.
 
 ---
 

@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A depot runs a seven-day rota, the days labelled 0 to 6 with 0 for Monday, so 18 days after a Monday lands on 4, Friday: two weeks and four over. A driver's shifts fall a fixed number of days apart, and the third shift after a Monday one falls on a Friday. So three gaps of x days must land on 4: 3x ≡ 4 (mod 7).
+A depot runs a seven-day rota, the days labelled 0 to 6 with 0 for Monday. So 18 days after a Monday lands on 4, Friday: two weeks and four over.
+
+A driver's shifts fall a fixed number of days apart, under a week, and the third shift after a Monday one falls on a Friday. So three gaps of x days must land on 4: 3x ≡ 4 (mod 7).
 
 Multiplying by 5 undoes multiplying by 3 here: 3 × 5 = 15, a fortnight and a day over, so 3 × 5 ≡ 1 (mod 7). Multiply the target by 5 and 5 × 4 = 20 ≡ 6. Six days between shifts; check forward, 3 × 6 = 18 ≡ 4.
 
@@ -69,32 +71,40 @@ A field is a definition; these conditions belong to the two theorems, which cove
 
 ### Step 0: the reciprocal has to be in the set
 
-Among whole numbers 2x = 1 has no answer: twice a whole number is even, 1 is odd. Among fractions it has one, and no nonzero fraction wants for a reciprocal — 3/4 and 4/3 multiply to 12/12, which is 1 ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). The integers are short of reciprocals, not arithmetic: that lack is the whole distance from a field.
+Among whole numbers 2x = 1 has no answer: twice a whole number is even, 1 is odd. Among fractions it has one, and every nonzero fraction has a reciprocal — 3/4 and 4/3 multiply to 12/12, which is 1 ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). The integers are short of reciprocals, not arithmetic: that lack is the whole distance from a field.
 
 ### Step 1: one reciprocal gives one answer, and never a second
 
-Take ax = b with a nonzero. An answer exists: $`a^{-1}b`$. Multiply it by a and regroup, which the ring rules allow; the a meets its reciprocal and b is left. No second exists: multiply ax = b by $`a^{-1}`$ and regroup, and the left collapses to x, the right to $`a^{-1}b`$. Searching could never show that. The code solves all 42 equations on the week with a nonzero coefficient, each with one answer.
+Take ax = b with a nonzero. An answer exists: $`a^{-1}b`$. Multiply it by a and regroup, which the ring rules allow; the a meets its reciprocal and b is left.
+
+No second exists: multiply ax = b by $`a^{-1}`$ and regroup, and the left collapses to x, the right to $`a^{-1}b`$. Searching could never show that. The code solves all 42 equations on the week with a nonzero coefficient, each with one answer.
 
 ### Step 2: zero can never be handed a reciprocal
 
-In any ring 0 times anything is 0, never 1 ([Rings](01-rings.md)), so "every nonzero element" is the most any set can promise — and why 0x ≡ 0 (mod 7) has all seven days as answers, 0x ≡ 1 (mod 7) none.
+In any ring 0 times anything is 0, never 1 ([Rings](01-rings.md)). So "every nonzero element" is the most any set can promise. It is also why 0x ≡ 0 (mod 7) has all seven days as answers, and 0x ≡ 1 (mod 7) none.
 
 ### Step 3: no zero divisors, so a composite cycle is out
 
-Suppose ab = 0 with a nonzero. Multiply by $`a^{-1}`$: the left collapses to b, the right to 0. In a field two nonzero elements never multiply to zero; one that breaks this is a **zero divisor**. The six-day cycle has a pair, 2 × 3 ≡ 0 (mod 6), and every composite size splits the same way, into two numbers between 1 and itself whose product is one whole cycle. The clock: 3 × 4 ≡ 0 (mod 12).
+Suppose ab = 0 with a nonzero. Multiply by $`a^{-1}`$: the left collapses to b, the right to 0. In a field two nonzero elements never multiply to zero; one that breaks this is a **zero divisor**.
+
+The six-day cycle has a pair, 2 × 3 ≡ 0 (mod 6). Every composite size splits the same way, into two numbers between 1 and itself whose product is one whole cycle. The clock: 3 × 4 ≡ 0 (mod 12).
 
 ### Step 4: a prime cycle supplies every reciprocal
 
-Let the size be prime. Every label from 1 to one below it is then coprime to the size ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Euclid's algorithm writes a greatest common divisor as a whole-number combination: so many jumps of the label, plus so many whole cycles, adding to 1. Cycles read as 0, so that count of jumps is the reciprocal ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). A construction, not an existence claim: the code runs it.
+Let the size be prime. Every label from 1 to one below it is then coprime to the size ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
+
+Euclid's algorithm writes a greatest common divisor as a whole-number combination: so many jumps of the label, plus so many whole cycles, adding to 1. Cycles read as 0, so that count of jumps is the reciprocal ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). A construction, not an existence claim: the code runs it.
 
 Steps 3 and 4 close on each other: **the n-day cycle, for n at least 2, is a field exactly when n is prime.** The cycle comes from the quotient machinery on [Ideals and quotient rings](04-ideals-and-quotient-rings.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-**Prime is enough.** Let n be prime and a a label from 1 to n − 1. Since n does not divide a, their greatest common divisor is 1, and Euclid's algorithm returns whole numbers t and s with ta + sn = 1. On the cycle sn reads as 0, leaving ta ≡ 1 (mod n), so t is the reciprocal of a. For a = 3 on the week, t = 5: 5 × 3 − 2 × 7 = 1.
+**Prime is enough.** Let n be prime and a a label from 1 to n − 1. Since n does not divide a, their greatest common divisor is 1, and Euclid's algorithm returns whole numbers t and s with ta + sn = 1. On the cycle sn reads as 0, leaving ta ≡ 1 (mod n), so t is the reciprocal of a.
 
-**Prime is necessary.** Let n = uv with u and v strictly between 1 and n. Both are nonzero labels and uv reads as 0, so by Step 3 this is no field, and u has no reciprocal: multiplying uv ≡ 0 by one would force v ≡ 0. Size 1 is excluded, since there 0 and 1 are one label.
+For a = 3 on the week, t = 5: 5 × 3 − 2 × 7 = 1.
+
+**Prime is necessary.** Let n = uv with u and v strictly between 1 and n. Both are nonzero labels and uv reads as 0, so by Step 3 this is no field. Indeed u has no reciprocal: multiplying uv ≡ 0 by one would force v ≡ 0. Size 1 is excluded, since there 0 and 1 are one label.
 
 </details>
 
@@ -136,7 +146,7 @@ Six days between shifts, as the rota required. Every nonzero day has a reciproca
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| The day that cancels 3 under addition | x = 2, and 3 × 2 ≡ 6, not 4 | 3 + 4 ≡ 0 (mod 7), but 3 × 4 ≡ 5 |
+| The day that cancels 3 under addition | x = 4 × 4 ≡ 2, and 3 × 2 ≡ 6, not 4 | 3 + 4 ≡ 0 (mod 7), but 3 × 4 ≡ 5 |
 | Dividing by 2 on the six-day cycle | 2x ≡ 1 has 0 answers, 2x ≡ 2 has 2 | 2 has no reciprocal; uniqueness goes too |
 | Cancelling the 3 in 3x ≡ 0 (mod 12) | 3 answers: x = 0, 4 and 8 | a zero divisor is not cancellable |
 | Dividing by zero | 0x ≡ 1 has 0 answers, 0x ≡ 0 has 7 | 0 has no reciprocal |
@@ -475,7 +485,9 @@ example : (Finset.Icc 2 12).filter Nat.Prime = {2, 3, 5, 7, 11} := by decide
 - **Cryptography and error correction.** Key exchange runs modulo a prime, disc and QR codes in finite fields, where division is exact ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
-> A field is a ring where multiplication commutes and every nonzero element also has a reciprocal inside the set, so dividing is allowed. That forces ax = b with a nonzero to have exactly one answer, b times the reciprocal of a: on the week 3x ≡ 4 (mod 7) gives x = 6, because 3 × 5 ≡ 1. Zero never gets a reciprocal, so 0x ≡ 0 has every answer, 0x ≡ 1 none. The n-day cycle is a field exactly when n is prime.
+> A field is a ring where multiplication commutes and every nonzero element also has a reciprocal inside the set, so dividing is allowed.
+>
+> That forces ax = b with a nonzero to have exactly one answer, b times the reciprocal of a: on the week 3x ≡ 4 (mod 7) gives x = 6, because 3 × 5 ≡ 1. Zero never gets a reciprocal, so 0x ≡ 0 has every answer, 0x ≡ 1 none. The n-day cycle is a field exactly when n is prime.
 
 ---
 
@@ -494,7 +506,7 @@ example : (Finset.Icc 2 12).filter Nat.Prime = {2, 3, 5, 7, 11} := by decide
 - [Field extensions](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/01-field-extensions-and-degree.md): one field inside another, and the step's size.
 - [The Nullstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/09-nullstellensatz.md): solution sets once the field holds every root.
 
-One equation in one unknown is settled over any field. Open still is higher degree, where roots may need a larger field than the coefficients.
+One equation in one unknown is settled over any field. What about polynomials, where long division divides by a leading coefficient? Over a field that is always legal, and the next card shows polynomials then behave like the whole numbers.
 
 ---
 

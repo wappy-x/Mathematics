@@ -157,7 +157,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 09 · Rings and Fields · 5 cards
 
-*Rings with two operations and the clock as the model, zero divisors and units, fields where division always works, polynomials as a ring that behaves like the integers, ideals and quotient rings with Z mod n as the model, finite fields including the four-element field. Rests on shelf 7 and wing 02 clock arithmetic.*
+*Rings with two operations and the clock as the model, zero divisors and units, fields where division always works, polynomials as a ring that behaves like the integers, ideals and quotient rings with Z mod n as the model, finite fields including the four-element field. Rests on shelf 8 and wing 02 clock arithmetic.*
 
 1. [Rings: add, subtract and multiply, but not always divide, and the clock where 3 times 4 is zero](09-Rings%20and%20Fields/01-rings.md)
 2. [Fields: a ring where every nonzero thing has a reciprocal, so every linear equation has exactly one answer](09-Rings%20and%20Fields/02-fields.md)

@@ -60,7 +60,7 @@ The first is closure under subtraction. The second is **absorbing**: a member ti
 
 ### When it holds
 
-- **Both halves.** {0, 4, 6, 8} on the 12-hour clock absorbs every product, yet 4 + 6 = 10 lies outside it; the constant polynomials are closed under subtraction, yet 1 times x escapes them. Either failure lets two names for one class give two answers.
+- **Both halves.** {0, 4, 6, 8} on the 12-hour clock absorbs every product, yet 4 + 6 = 10 lies outside it. The constant polynomials are closed under subtraction, yet 1 times x escapes them. Either failure lets two names for one class give two answers.
 - **Both sides.** Where multiplication order matters, both ra and ar must stay inside, or a product depends on the names picked.
 - **Proper.** Throw the whole ring away and one class is left, where 1 and 0 agree: true, and empty.
 
@@ -477,7 +477,7 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 ## The usual mistake
 
 > [!warning]
-> **Assuming any set closed under its own arithmetic can be thrown away.** Such a set is a **subring**, which is weaker: the constant polynomials are a subring, yet 1 times x lies outside them, so collapsing by the constants would force x to be a constant. An ideal must absorb the whole ring.
+> **Assuming any set closed under its own arithmetic can be thrown away.** Such a set is a **subring**, which is weaker. The constant polynomials are a subring, yet 1 times x lies outside them. So collapsing by the constants would force x to be a constant. An ideal must absorb the whole ring.
 >
 > - **Believing a passed check.** An error that is a multiple of 9 is invisible: the wrong total 1,090 passes as 1,081 does.
 > - **Confusing a class with its smallest name.** 2 × 5 = 10 is a correct product of classes; 10 names class 1.
@@ -490,10 +490,12 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 - **Checks on paper.** Casting out nines, and the rule that 9 divides a number when it divides its digit sum, are one statement: every power of ten is class 1.
 - **Computer algebra and cryptography.** Reduction by a fixed polynomial holds every answer inside a fixed number of coordinates: [Finite fields](05-finite-fields.md).
 - **Error-correcting codes.** Many codes are the multiples of one chosen polynomial, an ideal; decoding reads off the class.
-- **Geometry.** The polynomials vanishing on a set of points form an ideal: Ideals and varieties.
+- **Geometry.** The polynomials vanishing on a set of points form an ideal: [Ideals and varieties](../../22-Algebraic%20geometry/01-Polynomial%20Systems/01-ideals-and-varieties.md).
 
 > **Say it back**
-> An ideal is a set inside a ring, closed under subtraction, that absorbs multiplication by the whole ring. Throw it away and the ring falls into classes, two members sharing a class when their difference was thrown away, and those classes add and multiply: the quotient ring. The multiples of 9 give Z mod 9, which is why casting out nines checks the invoice: 47 and 23 become 2 and 5, and 2 × 5 = 10 is class 1, matching 1,081. Every ring map's kernel is an ideal, and collapsing by it leaves the image.
+> An ideal is a set inside a ring, closed under subtraction, that absorbs multiplication by the whole ring. Throw it away and the ring falls into classes, two members sharing a class when their difference was thrown away, and those classes add and multiply: the quotient ring.
+>
+> The multiples of 9 give Z mod 9, which is why casting out nines checks the invoice: 47 and 23 become 2 and 5, and 2 × 5 = 10 is class 1, matching 1,081. Every ring map's kernel is an ideal, and collapsing by it leaves the image.
 
 ---
 
