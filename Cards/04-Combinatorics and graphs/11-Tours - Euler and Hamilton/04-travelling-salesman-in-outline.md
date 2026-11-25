@@ -12,9 +12,9 @@ Sixty rounds are possible, few enough to list outright: the cheapest is A-D-F-B-
 
 Greed comes close and loses: always drive to the nearest town not yet called on and the round costs 160 miles, 8.11% above the cheapest.
 
-**The cost of a round is the sum of its legs, so a few towns are settled by listing every round and reading off the cheapest; past a couple of dozen towns nobody knows a method that stays quick on every chart.**
+**A round's cost is the sum of its legs: listing every round settles a few towns, but past about twenty towns no known method stays quick on every chart.**
 
-**What kind of fact this is:** a method, carrying a theorem proved below ($`n`$ towns hold $`(n-1)!/2`$ rounds), an approximation with no fixed guarantee (the nearest-town rule), and an open question, unsettled as of 19 September 2026: whether a fast exact method can exist.
+**What kind of fact this is:** a method, carrying a theorem proved below ($`n`$ towns hold $`(n-1)!/2`$ rounds) and an approximation with no fixed guarantee (the nearest-town rule). Whether a fast exact method can exist is an open question, unsettled as of 19 September 2026.
 
 ### The picture: the cheapest of the sixty rounds
 
@@ -64,7 +64,7 @@ The smallest cost any tour can have is written $`L`$: 148 miles here. With $`n`$
 
 Here $`n!`$ is the factorial: $`n`$ times every whole number below it ([Factorials](../01-Counting%20Principles/03-factorial.md)). **Read it aloud:** hold home still, order the other towns every way, then halve, since a round driven backwards is the same round.
 
-One more quantity is needed below: the **cheapest connecting tree**, joining all six towns with five legs and no loop for the least miles ([The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $`T`$ for it, 105 here.
+One more quantity is needed below: the **cheapest connecting tree** (minimum spanning tree), joining all six towns with five legs and no loop for the least miles ([The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $`T`$ for it, 105 here.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,13 +92,15 @@ Each tour has a cost, the tours can be listed, and a finite list of numbers has 
 
 Six towns line up in 6! = 720 orders, most naming the same round. Fixing home first strips a factor of six: 720 over 6 is 120, the orders of the other five towns. Each round still appears twice, clockwise and anticlockwise, so halving gives 60 — the bracelet count, with towns for beads ([Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
 
-Each town added multiplies the count by the number of towns already there: a seventh town takes 60 rounds to 360, ten towns to 181,440, fifteen to 43,589,145,600, twenty to 60,822,550,204,416,000. That is no large constant; it is a wall.
+Each town added multiplies the count by the number of towns already there. A seventh town takes 60 rounds to 360, ten towns to 181,440, fifteen to 43,589,145,600, and twenty to 60,822,550,204,416,000. That is no large constant; it is a wall.
 
 ### Step 2: the nearest-town rule is fast, close, and wrong
 
 From wherever the van stands, drive to the nearest town not yet called on, and home from the last one: the **nearest-neighbour rule**.
 
-It gives A-D-F-B and then stumbles. At B the nearest uncalled town is E at 26 miles against C at 28, so greed takes E. The bill lands on the final leg, which greed never chooses: 42 miles home from C against 28 from E. The round costs 160 miles, 8.11% above 148; restarting at each of the six towns in turn does best from F, at 158. The rule never looks ahead, so nothing protects the drive home, and its excess can grow with the number of towns.
+It gives A-D-F-B and then stumbles. At B the nearest uncalled town is E at 26 miles against C at 28, so greed takes E. The bill lands on the final leg, which greed never chooses: 42 miles home from C against 28 from E.
+
+The round costs 160 miles, 8.11% above 148; restarting at each of the six towns in turn does best from F, at 158. The rule never looks ahead, so nothing protects the drive home, and its excess can grow with the number of towns.
 
 ### Step 3: the cheapest connecting tree traps the answer from both sides
 
@@ -108,23 +110,29 @@ T \le L \le 2T
 
 **Read it aloud:** the cheapest tour is never shorter than the cheapest tree, nor longer than twice it: 105 ≤ 148 ≤ 210.
 
-The floor: delete one leg from any tour and five legs remain, still connected and with no room for a loop — a spanning tree, costing the tour less that leg. The cheapest tree is no dearer, so 105 sits below 148 before a single tour is costed.
+The floor: delete one leg from any tour and five legs remain, still connected with no loop — a spanning tree, costing the tour less that leg. The cheapest tree is no dearer, so 105 sits below 148 before a single tour is costed.
 
-The ceiling: walk the cheapest tree from A, each leg once out and once back. That is 210 miles and calls at every town, but towns repeat, so it is no tour. Repair it in one pass: wherever the walk would return to a town already called on, drive straight to the next town not yet called on. Each skip trades a chain of legs for one direct road, no dearer since no detour beats a direct road. The repaired round calls once at each town for at most 210 miles, so $`L`$ is at most 210 too.
+The ceiling: walk the cheapest tree from A, each leg once out and once back. That is 210 miles and calls at every town, but towns repeat, so it is no tour.
+
+Repair it in one pass: whenever the walk would revisit a town, drive straight to the next uncalled town. Each skip trades a chain of legs for one direct road, no dearer by the detour rule. The repaired round calls once at each town for at most 210 miles, so $`L`$ is at most 210 too.
 
 Sharper floors than the tree exist, and inside a search that prunes they solve real instances ([Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md)).
 
 ### Step 4: why nobody has a fast method
 
-Held and Karp published a better exact method in 1962, the set-by-set method. For every set of towns already called on and every town in it, keep only the cheapest way to leave A, call at that set and stop there. Each record is built from the records one town shorter. Six towns need 80 records against 60 tours, no saving; twenty need 4,980,736. That count doubles with each town added, so it too runs out.
+Held and Karp published a better exact method in 1962, the set-by-set method. For every set of towns already called on and every town in it, keep only the cheapest way to leave A, call at that set and stop there. Each record is built from the records one town shorter.
+
+Six towns need 80 records against 60 tours, no saving; twenty need 4,980,736. That count more than doubles with each town added, so it too runs out.
 
 Karp's 1972 list of problems with no known fast method holds the bare question of whether a Hamiltonian cycle exists at all. Price a map's roads at one mile each and its missing roads at two: a round costing one mile per town exists exactly when a Hamiltonian cycle does.
 
-So asking whether a round comes in under a given number of miles is at least as hard as anything on that list. That list is a family now thousands strong, each problem rewritable as any other in steps growing like a power of the input size (Karp's list). One method quick on every chart would make all of them quick. None is known, and whether one can exist is the open P versus NP question: P stands for the problems solved quickly, NP for the problems whose answers are checked quickly.
+So asking whether a round comes in under a given number of miles is at least as hard as anything on that list. That list is a family now thousands strong, each problem rewritable as any other in steps growing like a power of the input size ([Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md)).
+
+One method quick on every chart would make all of them quick. None is known, and whether one can exist is the open P versus NP question. P stands for problems solved quickly, and NP for problems whose answers are checked quickly.
 
 Charts of tens of thousands of towns are still solved exactly: the guarantee is what is missing, not the answers.
 
-Degrees settle whether a route using every road once exists ([Euler circuits](01-euler-circuits.md)), and matching settles the cheapest road-covering route ([The Chinese postman](02-chinese-postman.md)); no such test is known once towns replace roads.
+Degrees settle whether a route using every road once exists ([Euler circuits](01-euler-circuits.md)), and matching settles the cheapest road-covering route ([The Chinese postman](02-chinese-postman.md)). No such test is known once towns replace roads.
 
 ---
 
@@ -165,7 +173,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The cheapest tour comes twice over, by roads sharing no arithmetic: all 120 orders of the five towns after A, costed and sorted, and the set-by-set method, which forms no whole tour. The count comes twice too, formula against folding.
+Nothing is imported. The cheapest tour comes twice over, by roads sharing no arithmetic. One lists and sorts all 120 orders of the five towns after A; the other is the set-by-set method, which forms no whole tour. The count comes twice too, formula against folding.
 
 ### Python
 
@@ -1015,6 +1023,7 @@ example : 5 * 2 ^ 4 = 80 ∧ 19 * 2 ^ 18 = 4980736 := by norm_num
 
 ## Where this goes next
 
+- [De Bruijn sequences](05-de-bruijn-sequences.md): a code-packing problem that looks like a Hamiltonian tour until you make the codes edges instead of vertices.
 - [Polynomial or exponential](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md): what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
 - [Approximation](../../14-Applied%20and%20computational/02-Randomised%20and%20Approximate%20Algorithms/06-approximation-algorithms.md): heuristics with a guaranteed ratio.
 - [Integer programs](../../14-Applied%20and%20computational/05-Operations%20Research/03-integer-programming-and-branch-and-bound.md): floors and pruning made into an exact method.
@@ -1022,7 +1031,7 @@ example : 5 * 2 ^ 4 = 80 ∧ 19 * 2 ^ 18 = 4980736 := by norm_num
 - [Heuristics with a promise](../../15-Optimization/05-Integer%20and%20Combinatorial%20Optimisation/08-heuristics-and-approximation-guarantees.md): how close a quick method can be promised to get.
 - [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): the family this problem joins, and how membership is proved.
 
-This card costs all 60 tours and shrugs at the twenty-town count; what "quick" means precisely is [Polynomial or exponential](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md).
+This card shows how fast vertex-tour costs explode. [De Bruijn sequences](05-de-bruijn-sequences.md) closes the shelf by turning a Hamiltonian-looking packing problem back into an easy Euler circuit. What "quick" means precisely is [Polynomial or exponential](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/03-polynomial-versus-exponential-time.md).
 
 ---
 

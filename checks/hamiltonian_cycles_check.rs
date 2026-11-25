@@ -1,5 +1,5 @@
 // Hamiltonian cycles -- the same check as hamiltonian_cycles_check.py, in Rust.  No crates.  Three
-// networks: the 8 corners of a cube-shaped warehouse, that cube plus four gangways across the middle,
+// networks: the 8 corners of a cube-shaped warehouse, that cube plus four opposite-corner links,
 // and the Petersen network of 10 depots.  Every round is counted twice, by backtracking over routes
 // and by a tally over sets of corners that builds no route at all.
 fn deg(x: u64) -> u32 { x.count_ones() }             // a degree: the 1 bits of a neighbour set
@@ -44,9 +44,9 @@ fn subsets(m: &[u64]) -> u64 {                      // road two: a tally over se
 }
 fn main() {
     let cube: Vec<(usize, usize)> = (0..8).flat_map(|x| (x + 1..8).map(move |y| (x, y))).filter(|&(x, y)| deg((x ^ y) as u64) == 1).collect();
-    let mut gang = cube.clone(); for x in 0..4 { gang.push((x, 7 - x)) }   // to opposite corners
+    let mut plus = cube.clone(); for x in 0..4 { plus.push((x, 7 - x)) }   // to opposite corners
     let pet: Vec<(usize, usize)> = (0..5).flat_map(|i| [(i, (i + 1) % 5), (i, i + 5), (i + 5, (i + 2) % 5 + 5)]).collect();
-    let nets = [("cube warehouse", 8usize, &cube), ("cube + gangways", 8, &gang), ("Petersen depots", 10, &pet)];
+    let nets = [("cube warehouse", 8usize, &cube), ("cube + 4 links", 8, &plus), ("Petersen depots", 10, &pet)];
     println!("{:<17}{:>3}{:>7}{:>9}{:>9}{:>5}{:>7}{:>10}{:>8}{:>9}", "network", "n", "links",
              "min deg", "odd deg", "n/2", "Dirac", "(n-1)!/2", "search", "subsets");
     let (mut mm, mut found, mut tally, mut opened) = (vec![], vec![], vec![], vec![]);
@@ -61,7 +61,7 @@ fn main() {
     }
     println!("one round on the cube: {}", dash(&search(&mm[0], true).0[0]));
     println!("partial routes opened by the search: cube {}, Petersen {}", opened[0], opened[2]);
-    println!("rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: {}", fact(4) * fact(3) / 2);
+    println!("rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: {}", fact(4) * fact(3) / 2);
     println!("route over all 10 depots that will not close: {}", dash(&search(&mm[2], false).0[0]));
     let pairs: Vec<(usize, usize)> = (0..6).flat_map(|i| (i + 1..6).map(move |j| (i, j))).collect();
     let (mut dirac, mut ham, mut both) = (0u64, 0u64, 0u64);

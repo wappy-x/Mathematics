@@ -346,13 +346,13 @@ def cube : SimpleGraph (Fin 8) where
 instance : DecidableRel cube.Adj := fun _ _ =>
   inferInstanceAs (Decidable (_ ∨ _ ∨ _))
 
-/-- The cube plus four gangways, each joining a corner `x` to the opposite corner `7 - x`. -/
-def cubeGangways : SimpleGraph (Fin 8) where
+/-- The cube plus four opposite-corner links, each joining a corner `x` to `7 - x`. -/
+def cubePlusLinks : SimpleGraph (Fin 8) where
   Adj x y := cube.Adj x y ∨ x.val + y.val = 7
   symm := ⟨by decide⟩
   loopless := ⟨by decide⟩
 
-instance : DecidableRel cubeGangways.Adj := fun _ _ =>
+instance : DecidableRel cubePlusLinks.Adj := fun _ _ =>
   inferInstanceAs (Decidable (_ ∨ _))
 
 /-- The links of the Petersen network of ten depots: an outer five-cycle, five spokes, and an
@@ -403,14 +403,14 @@ example : List.IsChain cube.Adj [0, 1, 3, 2, 6, 7, 5, 4, 0] ∧
 -- A blind sift faces (8 - 1)! / 2 = 2520 orders.
 example : Nat.factorial (8 - 1) / 2 = 2520 := by decide
 
--- Four gangways: every degree 3 + 1 = 4, meeting the bar 8 / 2 exactly; 16 links in all.
-example : ∀ v, cubeGangways.degree v = 4 := by decide
-example : cubeGangways.minDegree = 4 ∧ 8 ≤ 2 * 4 := by decide
-example : cubeGangways.edgeFinset.card = 16 := by decide
+-- Four opposite-corner links: every degree 3 + 1 = 4, meeting the bar 8 / 2 exactly; 16 links in all.
+example : ∀ v, cubePlusLinks.degree v = 4 := by decide
+example : cubePlusLinks.minDegree = 4 ∧ 8 ≤ 2 * 4 := by decide
+example : cubePlusLinks.edgeFinset.card = 16 := by decide
 
--- The gangway network is K(4, 4): every corner is joined to exactly the four corners whose
+-- The augmented cube is K(4, 4): every corner is joined to exactly the four corners whose
 -- count of 1s has the other parity; its rounds number 4! × 3! / 2 = 72.
-example : ∀ x y : Fin 8, cubeGangways.Adj x y ↔
+example : ∀ x y : Fin 8, cubePlusLinks.Adj x y ↔
     (x.val % 2 + x.val / 2 % 2 + x.val / 4) % 2 ≠ (y.val % 2 + y.val / 2 % 2 + y.val / 4) % 2 := by decide
 example : Nat.factorial 4 * Nat.factorial 3 / 2 = 72 := by decide
 

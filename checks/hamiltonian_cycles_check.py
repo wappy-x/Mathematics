@@ -1,5 +1,5 @@
 # Hamiltonian cycles -- the check behind the card.  Nothing is imported.  Three networks:
-# the 8 corners of a cube-shaped warehouse, that cube plus four gangways across the middle,
+# the 8 corners of a cube-shaped warehouse, that cube plus four opposite-corner links,
 # and the Petersen network of 10 depots.  Every round is counted twice, by backtracking over
 # routes and by a tally over sets of corners that builds no route at all.
 deg = lambda x: bin(x).count("1")          # a degree: the 1 bits of a neighbour set
@@ -31,10 +31,10 @@ def subsets(m):                            # road two: a tally over sets of corn
                 cnt[s | b][low(b)] += c    # the same routes, one corner longer
     return sum(cnt[full][v] for v in range(n) if m[0] >> v & 1) // 2
 CUBE = [(x, y) for x in range(8) for y in range(x + 1, 8) if deg(x ^ y) == 1]
-GANG = CUBE + [(x, 7 - x) for x in range(4)]          # gangways to opposite corners
+PLUS = CUBE + [(x, 7 - x) for x in range(4)]          # links to opposite corners
 PET = ([(i, (i + 1) % 5) for i in range(5)] + [(i, i + 5) for i in range(5)]
        + [(i + 5, (i + 2) % 5 + 5) for i in range(5)])
-NETS = [("cube warehouse", 8, CUBE), ("cube + gangways", 8, GANG), ("Petersen depots", 10, PET)]
+NETS = [("cube warehouse", 8, CUBE), ("cube + 4 links", 8, PLUS), ("Petersen depots", 10, PET)]
 M, found, tally, opened = {}, {}, {}, {}
 print(FMT.format("network", "n", "links", "min deg", "odd deg", "n/2", "Dirac", "(n-1)!/2", "search", "subsets"))
 for name, n, edges in NETS:
@@ -44,7 +44,7 @@ for name, n, edges in NETS:
     print(FMT.format(name, n, e, d, o, f"{n / 2:.1f}", "yes" if d >= n / 2 else "no", fact(n - 1) // 2, found[name], tally[name]))
 print("one round on the cube: " + "-".join(map(str, search(M["cube warehouse"])[0][0])))
 print(f"partial routes opened by the search: cube {opened['cube warehouse']}, Petersen {opened['Petersen depots']}")
-print(f"rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: {fact(4) * fact(3) // 2}")
+print(f"rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: {fact(4) * fact(3) // 2}")
 print("route over all 10 depots that will not close: " + "-".join(map(str, search(M["Petersen depots"], False)[0][0])))
 pairs, dirac, ham, both = [(i, j) for i in range(6) for j in range(i + 1, 6)], 0, 0, 0
 for bits in range(1 << 15):                # every network on 6 labelled corners
@@ -54,7 +54,7 @@ for bits in range(1 << 15):                # every network on 6 labelled corners
 print(f"of all {1 << 15} networks on 6 corners, {dirac} meet Dirac and all {both} of those have a round")
 print(f"of the same {1 << 15}, {ham} have a round, so {ham - both} have one with Dirac silent")
 assert [found[k] for k, _, _ in NETS] == [tally[k] for k, _, _ in NETS]   # the two roads agree
-assert found["cube + gangways"] == fact(4) * fact(3) // 2 and found["cube + gangways"] == 72
+assert found["cube + 4 links"] == fact(4) * fact(3) // 2 and found["cube + 4 links"] == 72
 assert found["cube warehouse"] == 6 and found["Petersen depots"] == 0
 assert dirac == both < ham                 # Dirac is never wrong, and never necessary
 print("ALL CHECKS PASS")

@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A distribution warehouse is built as a cube: eight corners, a walkway along each of its twelve edges. Number the corners 0 to 7 in three binary digits, one per direction of the building; two corners share a walkway exactly when their codes differ in one digit.
+A two-floor warehouse is laid out as a cube: eight corners, a walkway along each of its twelve edges. Label each corner by three binary coordinates — floor (0 ground, 1 upper), front or back, left or right — giving 0 to 7 in binary. Two corners share a walkway whenever their codes differ in one digit.
 
 A courier signs a sheet at every corner, walking only the walkways, signing nowhere twice, finishing where the round began. One round works: 0, 1, 3, 2, 6, 7, 5, 4, back to 0. Six such rounds exist.
 
-A tour like that, every vertex once and then home, is a **Hamiltonian cycle**. The twin question asks for every *edge* once: that is Euler's, and degrees settle it in a line ([Euler circuits](01-euler-circuits.md)). Swapping "edge" for "vertex" changes everything. No quick test is known, and since Karp's 1972 list this has been a standard hard problem. That list gathers problems tied so tightly that a quick test for any one would give a quick test for all.
+A tour like that, every vertex once and then home, is a **Hamiltonian cycle**. The twin question asks for every *edge* once: that is Euler's, and degrees settle it in a line ([Euler circuits](01-euler-circuits.md)).
+
+Swapping "edge" for "vertex" changes everything. No quick test is known, and since Karp's 1972 list this has been a standard hard problem. That list gathers problems tied so tightly that a quick test for any one would give a quick test for all.
 
 Enough edges still force a round; that guarantee is this card. No count of edges explains a failure, though. Ten depots on fifteen links, three at each — the Petersen network, as well wired per depot as a cube corner — carry no round. A search over all 274 partial routes confirms it.
 
@@ -76,7 +78,7 @@ Dirac's theorem, from 1952, is the guarantee:
 ### When it holds
 
 - **Three vertices or more, simply joined.** Two vertices and one edge make no cycle; a repeated edge, or an edge from a vertex to itself, serves no round.
-- **Half exactly is enough.** Four gangways across the middle, each joining a corner to the opposite corner, lift every degree to 4 on a network of 8: the bar met exactly, and 72 rounds.
+- **Half exactly is enough.** On an 8-station cube network, adding four opposite-corner links lifts every degree to 4: the bar is met exactly, with 72 rounds.
 - **One way only.** Below the bar the theorem says nothing — the cube sits at degree 3 against a bar of 4, with six rounds regardless.
 
 ---
@@ -93,24 +95,30 @@ Let $`x_1`$ and $`x_k`$ end a route with no repeats, through as many vertices as
 
 ### Step 2: the ends' neighbours must collide, and the collision closes the route
 
-Each end has at least half of $`n`$ neighbours, all on the route. Mark where $`x_1`$'s neighbours sit, and mark one step past each of $`x_k`$'s: two lists, at least $`n`$ marks between them, in the fewer than $`n`$ positions after the first. Two marks must land together, giving a vertex $`x_i`$ joined to $`x_1`$ with the vertex before it joined to $`x_k`$.
+Each end has at least half of $`n`$ neighbours, all on the route. Mark where $`x_1`$'s neighbours sit, and mark one step past each of $`x_k`$'s: two lists, at least $`n`$ marks between them, in the fewer than $`n`$ positions after the first.
+
+Two marks must land together, giving a vertex $`x_i`$ joined to $`x_1`$ with the vertex before it joined to $`x_k`$.
 
 That collision closes the route: from $`x_1`$ jump to $`x_i`$, run forward to $`x_k`$, jump back to the vertex before $`x_i`$, run backwards to $`x_1`$, every vertex used once.
 
 ### Step 3: the loop cannot have left a vertex out
 
-The loop holds all of $`x_1`$'s neighbours, so more than half the vertices sit on it. Suppose one sits outside. Joined to the loop anywhere, it lets the loop be cut open there, and that route with the stray on the end beats the longest. Joined nowhere, its neighbours all lie outside, where fewer than half the vertices remain. Impossible either way, so the loop is a Hamiltonian cycle.
+The loop holds all of $`x_1`$'s neighbours, so more than half the vertices sit on it. Suppose one sits outside. Joined to the loop anywhere, it lets the loop be cut open there, and that route with the stray on the end beats the longest.
+
+Joined nowhere, its neighbours all lie outside, where fewer than half the vertices remain. Impossible either way, so the loop is a Hamiltonian cycle.
 
 <details>
 <summary>Detailed proof: the collision, counted exactly</summary>
 
-With `x1 x2 ... xk` a longest path, collect `A = { i : x1 joined to xi }` and `B = { i : the vertex before xi joined to xk }`, both inside `2, ..., k`. Each holds one member per neighbour of its end, so at least `n` members sit in at most `n - 1` positions and some `i` lies in both. Then `x1, xi, xi+1, ..., xk, xi-1, ..., x1` is a cycle on every vertex of the path; `i = k` is the plain closing edge.
+Let $`x_1, x_2, \dots, x_k`$ be a longest path. Collect $`A = \{i : x_1 \text{ joined to } x_i\}`$ and $`B = \{i : x_{i-1} \text{ joined to } x_k\}`$, both inside $`2, \dots, k`$. Each holds one member per neighbour of its end, so at least $`n`$ members sit in at most $`n - 1`$ positions and some $`i`$ lies in both.
+
+Then $`x_1, x_i, x_{i+1}, \dots, x_k, x_{i-1}, \dots, x_1`$ is a cycle on every vertex of the path. The case $`i = k`$ is the plain closing edge.
 
 </details>
 
 ### Step 4: why the ten depots have none, and why no degree count says so
 
-Every depot has three links, as every cube corner does: the same pattern, six rounds on one network and none on the other. Degrees alone cannot decide.
+Every depot has three links, as every cube corner does: the same pattern, six rounds on one network and none on the other. Depots 0 to 4 form an outer five-ring, 5 to 9 an inner five-pointed star (5-7-9-6-8-5), and five spokes join each outer depot $`i`$ to $`i + 5`$. Degrees alone cannot decide.
 
 Two cheap ways to rule a round out do exist:
 
@@ -119,12 +127,12 @@ Two cheap ways to rule a round out do exist:
 
 The cube clears both, four corners a side; the depots have no such vertex and no two sides at all, and still no round.
 
-What settles the depots here is exhaustion: the search opens 274 partial routes and closes none — a verdict on one network, not a test. The general question sits on Karp's 1972 list (Karp's list).
+What settles the depots here is exhaustion: the search opens 274 partial routes and closes none — a verdict on one network, not a test. The general question sits on Karp's 1972 list ([Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md)).
 
 ```mermaid
 flowchart TB
     q{"is there a round through every vertex?"}
-    q -->|"every degree at least half of n"| y["yes, guaranteed: Dirac, as on the cube plus gangways"]
+    q -->|"every degree at least half of n"| y["yes, guaranteed: Dirac, as on the cube plus 4 links"]
     q -->|"deleting one vertex breaks the network"| n1["no, cheaply"]
     q -->|"two sides, all edges crossing, sides unequal"| n2["no, cheaply"]
     q -->|"none of the three fires"| s["exhaustive search, as on the cube and the depots"]
@@ -141,10 +149,12 @@ Ore's theorem of 1960 asks less: two vertices with no edge between them need onl
 | walkways, Dirac's bar, every degree against it | 8 corners × 3 each ÷ 2 ends; 8 ÷ 2; 3 against 4 | 12, bar 4, silent |
 | orders a blind sift would face, and routes opened | (8 − 1)! ÷ 2, against the search | 2520, 112 |
 | rounds, one being 0-1-3-2-6-7-5-4-0 | both roads | **6** |
-| four gangways: every degree, and the rounds | 3 + 1 against 4, then 4! × 3! ÷ 2 | fires, **72** |
+| four opposite-corner links: every degree, and the rounds | 3 + 1 against 4, then 4! × 3! ÷ 2 | fires, **72** |
 | the depots against their bar, every route refused | 3 against 5, then both roads | silent, **0** |
 
-Six rounds, found by searching. Four gangways lift every corner to half the network, turning the search into a guarantee. They also complete it: the codes split four-four by whether they hold an even or an odd count of 1s. Every corner now joins all four of the other kind. That network is K(4, 4), whose rounds number 4! × 3! ÷ 2 = 72: each side ordered, one start fixed, halved for direction. The depots have none.
+Six rounds, found by searching. Adding four opposite-corner links lifts every station to half the network, turning the search into a guarantee.
+
+They also complete it: the codes split four-four by whether they hold an even or an odd count of 1s. Every station now joins all four of the other kind. That network is K(4, 4), whose rounds number 4! × 3! ÷ 2 = 72: each side ordered, one start fixed, halved for direction. The depots have none.
 
 ### What breaks if you drop a piece
 
@@ -160,13 +170,15 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and every count is reached twice. Road one is backtracking: extend a route corner by corner, and when stuck, back up and take the next edge. Road two builds no route: it tallies how many routes from corner 0 cover each set of corners and stop at each corner in it, then closes the full sets. Beside them: the gangway count against K(4, 4)'s 4! × 3! ÷ 2, and a census of all six-corner networks.
+Nothing is imported, and every count is reached twice. Road one is backtracking: extend a route corner by corner, and when stuck, back up and take the next edge.
+
+Road two builds no route: it tallies how many routes from corner 0 cover each set of corners and stop at each corner in it, then closes the full sets. Beside them: the augmented cube's count against K(4, 4)'s 4! × 3! ÷ 2, and a census of all six-corner networks.
 
 ### Python
 
 ```python
 # Hamiltonian cycles -- the check behind the card.  Nothing is imported.  Three networks:
-# the 8 corners of a cube-shaped warehouse, that cube plus four gangways across the middle,
+# the 8 corners of a cube-shaped warehouse, that cube plus four opposite-corner links,
 # and the Petersen network of 10 depots.  Every round is counted twice, by backtracking over
 # routes and by a tally over sets of corners that builds no route at all.
 deg = lambda x: bin(x).count("1")          # a degree: the 1 bits of a neighbour set
@@ -198,10 +210,10 @@ def subsets(m):                            # road two: a tally over sets of corn
                 cnt[s | b][low(b)] += c    # the same routes, one corner longer
     return sum(cnt[full][v] for v in range(n) if m[0] >> v & 1) // 2
 CUBE = [(x, y) for x in range(8) for y in range(x + 1, 8) if deg(x ^ y) == 1]
-GANG = CUBE + [(x, 7 - x) for x in range(4)]          # gangways to opposite corners
+PLUS = CUBE + [(x, 7 - x) for x in range(4)]          # links to opposite corners
 PET = ([(i, (i + 1) % 5) for i in range(5)] + [(i, i + 5) for i in range(5)]
        + [(i + 5, (i + 2) % 5 + 5) for i in range(5)])
-NETS = [("cube warehouse", 8, CUBE), ("cube + gangways", 8, GANG), ("Petersen depots", 10, PET)]
+NETS = [("cube warehouse", 8, CUBE), ("cube + 4 links", 8, PLUS), ("Petersen depots", 10, PET)]
 M, found, tally, opened = {}, {}, {}, {}
 print(FMT.format("network", "n", "links", "min deg", "odd deg", "n/2", "Dirac", "(n-1)!/2", "search", "subsets"))
 for name, n, edges in NETS:
@@ -211,7 +223,7 @@ for name, n, edges in NETS:
     print(FMT.format(name, n, e, d, o, f"{n / 2:.1f}", "yes" if d >= n / 2 else "no", fact(n - 1) // 2, found[name], tally[name]))
 print("one round on the cube: " + "-".join(map(str, search(M["cube warehouse"])[0][0])))
 print(f"partial routes opened by the search: cube {opened['cube warehouse']}, Petersen {opened['Petersen depots']}")
-print(f"rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: {fact(4) * fact(3) // 2}")
+print(f"rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: {fact(4) * fact(3) // 2}")
 print("route over all 10 depots that will not close: " + "-".join(map(str, search(M["Petersen depots"], False)[0][0])))
 pairs, dirac, ham, both = [(i, j) for i in range(6) for j in range(i + 1, 6)], 0, 0, 0
 for bits in range(1 << 15):                # every network on 6 labelled corners
@@ -221,22 +233,22 @@ for bits in range(1 << 15):                # every network on 6 labelled corners
 print(f"of all {1 << 15} networks on 6 corners, {dirac} meet Dirac and all {both} of those have a round")
 print(f"of the same {1 << 15}, {ham} have a round, so {ham - both} have one with Dirac silent")
 assert [found[k] for k, _, _ in NETS] == [tally[k] for k, _, _ in NETS]   # the two roads agree
-assert found["cube + gangways"] == fact(4) * fact(3) // 2 and found["cube + gangways"] == 72
+assert found["cube + 4 links"] == fact(4) * fact(3) // 2 and found["cube + 4 links"] == 72
 assert found["cube warehouse"] == 6 and found["Petersen depots"] == 0
 assert dirac == both < ham                 # Dirac is never wrong, and never necessary
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 network            n  links  min deg  odd deg  n/2  Dirac  (n-1)!/2  search  subsets
 cube warehouse     8     12        3        8  4.0     no      2520       6        6
-cube + gangways    8     16        4        0  4.0    yes      2520      72       72
+cube + 4 links     8     16        4        0  4.0    yes      2520      72       72
 Petersen depots   10     15        3       10  5.0     no    181440       0        0
 one round on the cube: 0-1-3-2-6-7-5-4-0
 partial routes opened by the search: cube 112, Petersen 274
-rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: 72
+rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: 72
 route over all 10 depots that will not close: 0-1-2-3-4-9-6-8-5-7
 of all 32768 networks on 6 corners, 1858 meet Dirac and all 1858 of those have a round
 of the same 32768, 10078 have a round, so 8220 have one with Dirac silent
@@ -249,7 +261,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
 // Hamiltonian cycles -- the same check as hamiltonian_cycles_check.py, in Rust.  No crates.  Three
-// networks: the 8 corners of a cube-shaped warehouse, that cube plus four gangways across the middle,
+// networks: the 8 corners of a cube-shaped warehouse, that cube plus four opposite-corner links,
 // and the Petersen network of 10 depots.  Every round is counted twice, by backtracking over routes
 // and by a tally over sets of corners that builds no route at all.
 fn deg(x: u64) -> u32 { x.count_ones() }             // a degree: the 1 bits of a neighbour set
@@ -294,9 +306,9 @@ fn subsets(m: &[u64]) -> u64 {                      // road two: a tally over se
 }
 fn main() {
     let cube: Vec<(usize, usize)> = (0..8).flat_map(|x| (x + 1..8).map(move |y| (x, y))).filter(|&(x, y)| deg((x ^ y) as u64) == 1).collect();
-    let mut gang = cube.clone(); for x in 0..4 { gang.push((x, 7 - x)) }   // to opposite corners
+    let mut plus = cube.clone(); for x in 0..4 { plus.push((x, 7 - x)) }   // to opposite corners
     let pet: Vec<(usize, usize)> = (0..5).flat_map(|i| [(i, (i + 1) % 5), (i, i + 5), (i + 5, (i + 2) % 5 + 5)]).collect();
-    let nets = [("cube warehouse", 8usize, &cube), ("cube + gangways", 8, &gang), ("Petersen depots", 10, &pet)];
+    let nets = [("cube warehouse", 8usize, &cube), ("cube + 4 links", 8, &plus), ("Petersen depots", 10, &pet)];
     println!("{:<17}{:>3}{:>7}{:>9}{:>9}{:>5}{:>7}{:>10}{:>8}{:>9}", "network", "n", "links",
              "min deg", "odd deg", "n/2", "Dirac", "(n-1)!/2", "search", "subsets");
     let (mut mm, mut found, mut tally, mut opened) = (vec![], vec![], vec![], vec![]);
@@ -311,7 +323,7 @@ fn main() {
     }
     println!("one round on the cube: {}", dash(&search(&mm[0], true).0[0]));
     println!("partial routes opened by the search: cube {}, Petersen {}", opened[0], opened[2]);
-    println!("rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: {}", fact(4) * fact(3) / 2);
+    println!("rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: {}", fact(4) * fact(3) / 2);
     println!("route over all 10 depots that will not close: {}", dash(&search(&mm[2], false).0[0]));
     let pairs: Vec<(usize, usize)> = (0..6).flat_map(|i| (i + 1..6).map(move |j| (i, j))).collect();
     let (mut dirac, mut ham, mut both) = (0u64, 0u64, 0u64);
@@ -330,16 +342,16 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 network            n  links  min deg  odd deg  n/2  Dirac  (n-1)!/2  search  subsets
 cube warehouse     8     12        3        8  4.0     no      2520       6        6
-cube + gangways    8     16        4        0  4.0    yes      2520      72       72
+cube + 4 links     8     16        4        0  4.0    yes      2520      72       72
 Petersen depots   10     15        3       10  5.0     no    181440       0        0
 one round on the cube: 0-1-3-2-6-7-5-4-0
 partial routes opened by the search: cube 112, Petersen 274
-rounds on cube + gangways, from the K(4,4) count 4! x 3! / 2: 72
+rounds on cube + 4 links, from the K(4,4) count 4! x 3! / 2: 72
 route over all 10 depots that will not close: 0-1-2-3-4-9-6-8-5-7
 of all 32768 networks on 6 corners, 1858 meet Dirac and all 1858 of those have a round
 of the same 32768, 10078 have a round, so 8220 have one with Dirac silent
@@ -356,8 +368,8 @@ Lean proves Dirac's theorem and the two-sided test for every network, and checks
 - A two-sided network, every edge crossing, with sides of different sizes, has no Hamiltonian cycle.
 - The cube warehouse sits at degree 3, below its bar of 4, and still has a round.
 - The cube has 12 walkways and degree 3 at every corner; the round 0-1-3-2-6-7-5-4-0 walks only walkways and signs every corner once.
-- Four gangways lift every degree to 4, meeting the bar exactly, with 16 links in all.
-- With gangways, each corner joins exactly the four whose count of 1s has the other parity: K(4, 4).
+- Four opposite-corner links lift every degree to 4, meeting the bar exactly, with 16 links in all.
+- With those four links, each corner joins exactly the four whose count of 1s has the other parity: K(4, 4).
 - The depots have 15 links, three at each, against a bar of 5.
 - The route 0-1-2-3-4-9-6-8-5-7 covers all ten depots once, but its ends 7 and 0 are not joined.
 - The arithmetic holds: (8 − 1)! ÷ 2 = 2520, (10 − 1)! ÷ 2 = 181440, and 4! × 3! ÷ 2 = 72.
@@ -713,13 +725,13 @@ def cube : SimpleGraph (Fin 8) where
 instance : DecidableRel cube.Adj := fun _ _ =>
   inferInstanceAs (Decidable (_ ∨ _ ∨ _))
 
-/-- The cube plus four gangways, each joining a corner `x` to the opposite corner `7 - x`. -/
-def cubeGangways : SimpleGraph (Fin 8) where
+/-- The cube plus four opposite-corner links, each joining a corner `x` to `7 - x`. -/
+def cubePlusLinks : SimpleGraph (Fin 8) where
   Adj x y := cube.Adj x y ∨ x.val + y.val = 7
   symm := ⟨by decide⟩
   loopless := ⟨by decide⟩
 
-instance : DecidableRel cubeGangways.Adj := fun _ _ =>
+instance : DecidableRel cubePlusLinks.Adj := fun _ _ =>
   inferInstanceAs (Decidable (_ ∨ _))
 
 /-- The links of the Petersen network of ten depots: an outer five-cycle, five spokes, and an
@@ -770,14 +782,14 @@ example : List.IsChain cube.Adj [0, 1, 3, 2, 6, 7, 5, 4, 0] ∧
 -- A blind sift faces (8 - 1)! / 2 = 2520 orders.
 example : Nat.factorial (8 - 1) / 2 = 2520 := by decide
 
--- Four gangways: every degree 3 + 1 = 4, meeting the bar 8 / 2 exactly; 16 links in all.
-example : ∀ v, cubeGangways.degree v = 4 := by decide
-example : cubeGangways.minDegree = 4 ∧ 8 ≤ 2 * 4 := by decide
-example : cubeGangways.edgeFinset.card = 16 := by decide
+-- Four opposite-corner links: every degree 3 + 1 = 4, meeting the bar 8 / 2 exactly; 16 links in all.
+example : ∀ v, cubePlusLinks.degree v = 4 := by decide
+example : cubePlusLinks.minDegree = 4 ∧ 8 ≤ 2 * 4 := by decide
+example : cubePlusLinks.edgeFinset.card = 16 := by decide
 
--- The gangway network is K(4, 4): every corner is joined to exactly the four corners whose
+-- The augmented cube is K(4, 4): every corner is joined to exactly the four corners whose
 -- count of 1s has the other parity; its rounds number 4! × 3! / 2 = 72.
-example : ∀ x y : Fin 8, cubeGangways.Adj x y ↔
+example : ∀ x y : Fin 8, cubePlusLinks.Adj x y ↔
     (x.val % 2 + x.val / 2 % 2 + x.val / 4) % 2 ≠ (y.val % 2 + y.val / 2 % 2 + y.val / 4) % 2 := by decide
 example : Nat.factorial 4 * Nat.factorial 3 / 2 = 72 := by decide
 
@@ -800,7 +812,7 @@ example : Nat.factorial (10 - 1) / 2 = 181440 := by decide
 end HamiltonianCycles
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'HamiltonianCycles.hc_mod_one' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -819,7 +831,7 @@ end HamiltonianCycles
 > Guess first, then run it. The asserts are pinned to these three networks, so expect one to stop.
 > - **Drop the rule keeping one direction.** Remove `path[1] < path[-1]`. Each round is then counted twice, once each way round, while the subset tally is unmoved: the first assert stops it.
 > - **Lower the bar below half.** Change the census test `>= 3` to `>= 2`. 12068 networks clear it and only 10078 have a round: 1990 false guarantees, and the fourth assert stops it.
-> - **Take a walkway out of the cube.** Drop one pair from `CUBE`. Every walkway lies in four of the six rounds, so two survive. The gangway network is built on `CUBE`, so it loses rounds too, and the second assert, pinned to 72, stops it first.
+> - **Take a walkway out of the cube.** Drop one pair from `CUBE`. Every walkway lies in four of the six rounds, so two survive. The four-link network is built on `CUBE`, so it loses rounds too, and the second assert, pinned to 72, stops it first.
 
 ---
 
@@ -842,7 +854,7 @@ end HamiltonianCycles
 - **Shortest string holding every code.** A sequence containing each binary block of one length once is a round through every vertex of one network ([De Bruijn sequences](05-de-bruijn-sequences.md)).
 
 > **Say it back**
-> A Hamiltonian cycle visits every vertex once and returns home. Euler's twin question, every edge once, has a cheap degree test; this one has none. Dirac's theorem gives a one-way guarantee: three vertices or more, every degree at least half the vertices. Its proof takes a longest route and counts the ends' neighbours until they must collide, closing it. The warehouse has six rounds with the bar unmet; four gangways meet it and lift the count to 72; the ten depots have none.
+> A Hamiltonian cycle visits every vertex once and returns home. Euler's twin question, every edge once, has a cheap degree test; this one has none. Dirac's theorem gives a one-way guarantee: three vertices or more, every degree at least half the vertices. Its proof takes a longest route and counts the ends' neighbours until they must collide, closing it. The warehouse has six rounds with the bar unmet; four opposite-corner links meet it and lift the count to 72; the ten depots have none.
 
 ---
 
@@ -856,7 +868,7 @@ end HamiltonianCycles
 - [The travelling salesman](04-travelling-salesman-in-outline.md): the same round with a cost on every edge, where finding one stops being the hard part.
 - [Karp's list](../../24-Computability%20and%20complexity/03-Time%20Complexity/05-karps-problems-and-hardness-recipes.md): where "no quick test is known" becomes a precise claim about a family of problems.
 
-The search opened 274 partial routes where a blind sift of ten depots faces 181440 orders — encouraging until the depots number a thousand. What to do when the exact answer is out of reach is the next card's business.
+The search opened 274 partial routes where a blind sift of ten depots faces 181440 orders — encouraging until the depots number a thousand. Pricing every leg to ask for the cheapest round, and bracketing it when listing tours hits a wall, is [The travelling salesman](04-travelling-salesman-in-outline.md).
 
 ---
 

@@ -10,11 +10,11 @@ A stockroom door carries a keypad: ten digits, no enter key. It opens the moment
 
 But presses overlap: type 0000, then 1, and the lock has seen 0000 and 0001 — two codes for five presses. At the limit every press after the first three finishes an untried code, and 10,003 presses reach that limit, opening the door whatever the code is.
 
-The small case is checkable by eye. Two digits and codes of length 3 give eight codes, 24 digits in a plain list. Read the eight digits 00010111 as a ring instead — a circle with no start — three at a time, wrapping past the end: 000, 001, 010, 101, 011, 111, 110, 100. Each code once.
+The small case is checkable by eye. Two digits and codes of length 3 give eight codes, 24 digits in a plain list. Read the eight digits 00010111 as a ring instead — a circle with no start — three at a time, wrapping past the end. That gives 000, 001, 010, 101, 011, 111, 110, 100: each code once.
 
 Such a string is a **de Bruijn sequence**, after Nicolaas de Bruijn, whose 1946 paper counted the binary ones. The construction never searches. It makes the codes the **arrows** of a graph, not its places, and walks every arrow once — an Euler circuit ([Euler circuits](01-euler-circuits.md)), as I. J. Good showed that year.
 
-**Take the windows one digit shorter than a code as the places of a graph and the codes as arrows between them; every place then has as many arrows in as out, so one closed walk uses every arrow once, and the digits it adds spell a ring with one digit per code.**
+**Make the shorter windows the places and the codes the arrows: equal arrows in and out give an Euler circuit that spells a shortest ring, one digit per code.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works — a ring that short always exists, and nothing shorter holds every code. The counting formula is stated, not proved.
 
@@ -80,7 +80,7 @@ How many rings exist is a second formula, in which $`n!`$ is the factorial, 1 ×
 
 ### Step 0: make the codes the arrows, not the places
 
-The obvious graph makes the eight codes its places, joining 001 to 011 because they overlap in two digits, and asks for a cycle through every place — a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)), for which no fast method is known ([The travelling salesman](04-travelling-salesman-in-outline.md)).
+The obvious graph makes the eight codes its places, joining 001 to 011 because they overlap in two digits. Asking for a cycle through every place is then a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)), for which no fast method is known ([The travelling salesman](04-travelling-salesman-in-outline.md)).
 
 Drop a level. The places become the four two-digit windows, the arrows the codes: 001 runs from 00 to 01. Now "every code once" means "every arrow once" — an Euler circuit, with a one-line test and a fast method ([Euler circuits](01-euler-circuits.md)). Same task, different graph, and the difficulty went with it.
 
@@ -88,7 +88,9 @@ Drop a level. The places become the four two-digit windows, the arrows the codes
 
 Two arrows leave window 01, 010 and 011, one per digit appended; two arrive, 001 and 101, one per digit put in front. The count is $`n`$ both ways at every window. The checks tally both off the list of codes, not off the construction: in-degree (arrows arriving) and out-degree (arrows leaving) run 2 to 2 everywhere.
 
-Connected, too: pressing another window's digits reaches it within $`k-1`$ presses. Equal degrees plus connected is the condition for a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)), so one exists for every graph of this shape, with no search.
+Every window also reaches every other along the arrows, within $`k-1`$ presses of the target's digits. That makes the graph strongly connected.
+
+Equal in- and out-degree lets the splice proof of [Euler circuits](01-euler-circuits.md) carry straight over to arrows. Arriving at any window other than the start leaves an unused outgoing arrow, so a walk still closes and leftover loops splice in. A closed walk using every arrow once therefore exists at every size, with no search.
 
 ### Step 2: the walk spells the string
 
@@ -102,12 +104,16 @@ Every position of a circular string starts one code, so a ring holds at most as 
 
 ### Step 4: how many rings there are
 
-Two, not one, at this size. Brute force over all 256 eight-digit strings finds 16 that hold every code: the eight rotations of each of two rings, 00010111 and 00011101, so 16 ÷ 8 = 2, which is what the formula gives. Both roads agree at two more sizes: 16 rings for binary codes of length 4, 24 for length 2 over three digits. That it holds at every size is the BEST theorem, named in the sources; the letters stand for de Bruijn, van Aardenne-Ehrenfest, Smith and Tutte.
+Two, not one, at this size. Brute force over all 256 eight-digit strings finds 16 that hold every code. They are the eight rotations of each of two rings, 00010111 and 00011101, so 16 ÷ 8 = 2 — matching the formula.
+
+Both roads agree at two more sizes: 16 rings for binary codes of length 4, and 24 for length 2 over three digits. That it holds at every size is the BEST theorem, named in the sources; the letters stand for de Bruijn, van Aardenne-Ehrenfest, Smith and Tutte.
 
 <details>
 <summary>Detailed proof: the ring exists for every alphabet and every code length</summary>
 
-Places: the $`n^{k-1}`$ windows; arrows: each code, from its first $`k-1`$ digits to its last $`k-1`$. For any $`n`$ and $`k`$, every window has $`n`$ arrows out and $`n`$ in, so the degrees match, and typing a window's digits reaches it from any other in $`k-1`$ steps, so the graph is connected. A connected directed graph with matching degrees has a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)). Steps 2 and 3 are written for any $`n`$ and $`k`$ already, so the ring exists and is shortest at every size.
+Places: the $`n^{k-1}`$ windows; arrows: each code, from its first $`k-1`$ digits to its last $`k-1`$. For any $`n`$ and $`k`$, every window has $`n`$ arrows out and $`n`$ in, so in-degree equals out-degree. Typing a window's digits reaches it from any other in $`k-1`$ steps, so the graph is strongly connected.
+
+As in [Euler circuits](01-euler-circuits.md), equal in- and out-degrees leave an unused outgoing arrow at any stop away from the start. Walks therefore close and leftover loops splice in, giving a closed walk using every arrow once. Steps 2 and 3 hold for any $`n`$ and $`k`$, so a shortest ring exists at every size.
 
 </details>
 
@@ -143,7 +149,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and no road borrows another's answer. The first walks an Euler circuit of the window graph, taking the smallest unused code each step and parking a window when it runs dry, so skipped arrows are spliced in on the way back. The second tests all 256 eight-digit strings, no graph at all. The third counts the rings by formula. The lock is built the same way. The output uses the usual graph words: vertices for places, edges for arrows, and PINs (personal identification numbers) for the lock's codes.
+Nothing is imported, and no road borrows another's answer. The first walks an Euler circuit of the window graph, taking the smallest unused code at each step. When a window runs dry, the code parks it so skipped arrows splice in on the way back.
+
+The second tests all 256 eight-digit strings, no graph at all. The third counts the rings by formula, and the lock is built the same way. The output uses the usual graph words: vertices for places, edges for arrows, and PINs (personal identification numbers) for the lock's codes.
 
 ### Python
 
@@ -663,7 +671,7 @@ example : 10 ^ 4 + 4 - 1 = 10003 ∧ 4 * 10 ^ 4 = 40000 ∧ 40000 - 10003 = 2999
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the binary ring, so expect one to stop the program.
 > - **Take the largest code first.** In `circuit`, pop the last unused code, not the first: another valid ring, and the first assert stops the run.
-> - **Lose the splice.** Delete `path.reverse()`: the codes read off no longer match the arrows walked.
+> - **Walk the circuit backwards.** Delete `path.reverse()`: Hierholzer's stack records the circuit back to front, so without reversing it the directed steps run backwards and the codes read off no longer match the arrows walked.
 > - **Break the count.** In `by_formula`, raise the factorial to the power of the codes, not of the windows: brute force is unmoved and the two disagree.
 
 ---
@@ -692,17 +700,18 @@ example : 10 ^ 4 + 4 - 1 = 10003 ∧ 4 * 10 ^ 4 = 40000 ∧ 40000 - 10003 = 2999
 
 ## What this builds on
 
-- [Euler circuits](01-euler-circuits.md): the test for a closed walk using every arrow once, and the splicing method that finds one.
+- [Euler circuits](01-euler-circuits.md): the undirected test for using every edge once, and Hierholzer's splicing method, which works the same way on arrows.
 - [Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): arrows with a direction, counted in and out of a place.
 - [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): why $`n`$ digits in $`k`$ slots give $`n^k`$ codes.
 
 ## Where this goes next
 
+- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): the next shelf turns from tours to flat drawings, and Euler's formula $`V - E + F = 2`$.
 - [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): codes built from arithmetic on bits that adds without carry, the same arithmetic a shift register's feedback rule uses.
 - **Shift registers.** A few bits of memory and a feedback rule emit one of these rings a digit at a time, storing no table.
 - **Counting the walks.** The BEST theorem counts the circuits by turning them into spanning trees: sets of arrows that lead from every place to one chosen place, with no loop.
 
-This card builds one ring and checks the count at three sizes; the counting theorem settles it at every size.
+This card closes the tours shelf by turning a code-packing puzzle into an Euler circuit. The next shelf begins with [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md), asking which graphs can be drawn flat with no crossings.
 
 ---
 

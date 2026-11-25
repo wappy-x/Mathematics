@@ -12,13 +12,13 @@ Count bridge-ends, not bridges: the island A carries 5, the north bank B 3, the 
 
 Odd is fatal: passing *through* a land spends two bridge-ends, one in and one out, so they pair off. Only the start and the finish leave an end unpaired, so at most two lands may be odd. Königsberg has four.
 
-The count runs forwards too. A snowplough must clear every street of a 3 x 3 grid — nine junctions, 12 streets — and finish at the depot. Four junctions carry three streets, so no closed sweep exists: four extra passes are needed, and the code builds the 16-pass route.
+The count runs forwards too. A snowplough must clear a 3 × 3 grid — nine junctions lettered A to I across the rows, 12 streets — and return to the depot. The four side-middles (B, D, F, H) each meet three streets, so pairing them two streets apart adds four extra passes. The code builds the 16-pass route.
 
 Vocabulary, once. A route repeating no line is a **trail** ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)); closed means it ends where it began. A closed trail covering every line once is an **Euler circuit**, the open one an **Euler trail**.
 
-The title uses the formal words: a network of dots and lines is a graph, a dot is a vertex, a line is an edge, and "in one piece" is connected.
+The title uses the formal words. A network of dots and lines is a graph, a dot is a vertex, a line is an edge, and "in one piece" is connected.
 
-**A closed route using every line once exists exactly when the lines sit in one piece and every dot has an even number of line-ends, because passing through a dot spends two of them.**
+**A closed route using every line once exists exactly when the lines sit in one piece and every dot has an even degree, because passing through a dot spends two ends.**
 
 **What kind of fact this is:** a theorem, proved both ways in Why it works; Hierholzer's splice, Step 4, is the method that builds the route.
 
@@ -69,7 +69,7 @@ The open twin is the same statement with $`k = 2`$: two odd dots, and the trail 
 - **Finitely many lines.** The proof takes a longest trail, which an endless network need not have.
 - **Lines scored honestly.** Score the two north bridges as one and the island reads even, so the test lies.
 - **One piece.** Two triangles apart have every degree 2 and no route covering both: the check prints 0 odd dots, no route.
-- **Lines, not dots, and no arrows.** Every dot once is [Hamiltonian cycles](03-hamiltonian-cycles.md); one-way lines have their own test ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
+- **Lines, not dots, and no arrows.** Every dot once is [Hamiltonian cycles](03-hamiltonian-cycles.md). One-way lines need arrows in to equal arrows out at every dot ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md) defines in- and out-degree; [De Bruijn sequences](05-de-bruijn-sequences.md) puts the directed test to work).
 
 ---
 
@@ -81,21 +81,31 @@ Watch a route pass a dot part way along: it arrives on one line and leaves on an
 
 ### Step 1: so even degrees and one piece are forced
 
-Suppose a closed trail covers every line. Tally the ends spent at one dot: each visit spends two, the closing arrival pairing with the opening departure. Every line is used once, so all the ends there are spent in pairs — the degree is even. One piece follows too, the stretch of trail between any two lines joining them. Königsberg fails the first test four times over.
+Suppose a closed trail covers every line. Tally the ends spent at one dot: each visit spends two, the closing arrival pairing with the opening departure. Every line is used once, so all the ends there are spent in pairs — the degree is even.
+
+One piece follows too, the stretch of trail between any two lines joining them. Königsberg fails the first test four times over.
 
 ### Step 2: a longest trail closes, and leftovers splice into it
 
-Now the other direction: a network in one piece, every degree even. No trail repeats a line, so trails cannot run on for ever: take a longest one. Were it to stop away from its start, that dot would have spent two ends per visit plus the arrival that never left — an odd number — while its degree is even. So a free line hangs there and extends the trail: the longest trail closes.
+Now the other direction: a network in one piece, every degree even. No trail repeats a line, so trails cannot run on for ever. Take a longest one.
 
-Were a line unused, then, since the lines sit in one piece, some unused line would touch a dot of the trail. Strip the trail's lines: every dot loses an even number of ends, so the leftovers are even too. Walking them from that dot until stuck comes back — a closed loop. Splice it in there, going round the detour before carrying on, and the trail is longer again. So the longest trail covers every line and closes: an Euler circuit.
+Suppose it stopped away from its start. That dot would have spent two ends per visit plus the arrival that never left — an odd number — while its degree is even. So a free line hangs there and extends the trail: the longest trail closes.
+
+Were a line unused, then, since the lines sit in one piece, some unused line would touch a dot of the trail. Strip the trail's lines: every dot loses an even number of ends, so the leftovers are even too.
+
+Walking them from that dot until stuck comes back — a closed loop. Splice it in there, going round the detour before carrying on, and the trail is longer again. So the longest trail covers every line and closes: an Euler circuit.
 
 ### Step 3: two odd dots, and one phantom line
 
-Join the two odd dots with one extra line: every degree turns even, so Step 2 gives a closed route. Delete the phantom line and an open trail is left, running between those two dots. Königsberg with an eighth bridge B-C is the check's second row: B and C rise from 3 to 4, leaving A and D the odd pair, verdict an open trail. Four odd dots or more defeat every ordering, Step 1 allowing two unpaired ends at most.
+Join the two odd dots with one extra line: every degree turns even, so Step 2 gives a closed route. Delete the phantom line and an open trail is left, running between those two dots.
+
+Königsberg with an eighth bridge B-C is the check's second row. B and C rise from 3 to 4, leaving A and D the odd pair, verdict an open trail. Four odd dots or more defeat every ordering, since Step 1 allows at most two unpaired ends.
 
 ### Step 4: Hierholzer's method is Step 2, run forwards
 
-Hierholzer's 1873 procedure is Step 2 as instructions. Walk from the start along unused lines until stuck, which means being back at the start. If lines remain, one touches the tour, so begin a fresh loop there and splice it in. The code keeps a stack of dots and writes one down only once no unused line is left at it — the postponement is the splice.
+Hierholzer's 1873 procedure is Step 2 as instructions. Walk from the start along unused lines until stuck, which means being back at the start. If lines remain, one touches the tour, so begin a fresh loop there and splice it in.
+
+The code keeps a stack of dots and writes one down only once no unused line is left at it — the postponement is the splice.
 
 ### The picture: two squares sharing a corner, spliced at C
 
@@ -113,7 +123,7 @@ flowchart LR
 
 Every dot is even and the lines are in one piece, so a closed route exists. From A the code returns A-B-C-E-F-G-C-D-A: the first square as far as C, the second square from C back to C, then the rest of the first.
 
-A second proof instead cuts such a network into loops sharing no lines and glues them at shared dots; how far loops reach in general is the Cycle double cover conjecture, in Where this goes next.
+A second proof instead cuts such a network into loops sharing no lines and glues them at shared dots. How far loops reach in general is the Cycle double cover conjecture, in Where this goes next.
 
 ---
 
@@ -144,7 +154,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Six networks face the same question, and every verdict comes twice by roads sharing no arithmetic: this card's degree count, and a brute-force hunt trying every order of the lines from every dot, knowing no theorem. Hierholzer builds the routes, audited against the list of lines. The grid's four extra passes come twice too: from pairing the odd junctions, and from trying every set of repeats.
+Nothing is imported. Six networks face the same question, and every verdict comes twice by roads sharing no arithmetic. One road is this card's degree count; the other is a brute-force hunt trying every order of the lines from every dot, knowing no theorem.
+
+Hierholzer builds the routes, audited against the list of lines. The grid's four extra passes come twice too: from pairing the odd junctions, and from trying every set of repeats.
 
 ### Python
 
@@ -1004,7 +1016,7 @@ end EulerCircuits
 
 - [The Chinese postman](02-chinese-postman.md): choosing the repeats at least cost once streets have lengths.
 - [Hamiltonian cycles](03-hamiltonian-cycles.md): every dot once instead of every line once, an easy test turned hard search.
-- [De Bruijn sequences](05-de-bruijn-sequences.md): Euler circuits at work, building the shortest string holding every window.
+- [De Bruijn sequences](05-de-bruijn-sequences.md): Euler circuits at work, building the shortest string holding every fixed-length code.
 - [Cycle double cover](../../25-Frontier/04-Geometry%20and%20Combinatorics/04-cycle-double-cover-conjecture.md): the conjecture that any network with no single line whose removal splits it has loops covering every line exactly twice; a proof was claimed in July 2026 and is not yet refereed.
 
 This card says whether a closed sweep exists and builds one when it does; the cheapest way to fix a network that fails is [The Chinese postman](02-chinese-postman.md).

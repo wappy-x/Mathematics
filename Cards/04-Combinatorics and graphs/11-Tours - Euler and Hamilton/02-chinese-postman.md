@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A postman parks the van at junction A of a small estate: nine junctions in a 3 by 3 grid, lettered A to I across the rows, joined by twelve streets of 100 m. Every street needs a delivery, and the round must end back at the van. That is 1,200 m of street; the shortest round is 1,600 m.
+A postman parks the van at junction A of a small estate. Nine junctions sit in a 3 × 3 grid, lettered A to I across the rows, joined by twelve 100 m streets. Every street needs a delivery, ending back at the van. That is 1,200 m of street; the shortest round is 1,600 m.
 
 The extra 400 m is forced. A round walking every street exactly once and ending where it began exists only when every junction meets an even number of streets ([Euler circuits](01-euler-circuits.md)). Four junctions here meet three: B, D, F and H, the middles of the sides. So some streets must be walked twice — which, and how few metres?
 
-One move answers it. Take the junctions an odd number of streets meet — **odd junctions** from here on — and pair them up; for each pair, walk the shortest route between its two a second time. Doubling a street adds one at each end, and a junction passed through gains two, so only the pair's counts flip. Every junction is then even, and one round covers the lot.
+One move answers it. Take the junctions an odd number of streets meet — **odd junctions** from here on — and pair them up. For each pair, walk the shortest route between its two a second time.
 
-Kwan Mei-ko set the problem out in 1960; Jack Edmonds named it the Chinese postman problem for Kwan and, with Ellis Johnson, proved the pairing is all there is to it.
+Doubling a street adds one at each end, and a junction passed through gains two, so only the pair's counts flip. Every junction is then even, and one round covers the lot.
+
+Kwan Mei-ko set the problem out in 1960. Jack Edmonds named it the Chinese postman problem for Kwan and, with Ellis Johnson, proved the pairing is all there is to it.
 
 **The shortest closed round covering every street is the total street length plus the cheapest pairing of the odd junctions, each pair charged the shortest walk between its two.**
 
@@ -62,7 +64,7 @@ L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)
 | $`M`$ | one pairing of $`O`$ | B with F, D with H | — |
 | $`L`$ | the shortest closed round | 1,600 m | — |
 
-The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)): the first takes any of the other 2k − 1, the rest pair the same way, so there are
+The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). The first takes any of the other 2k − 1, and the rest pair the same way, so there are
 
 ```math
 1 \times 3 \times 5 \times \cdots \times (2k-1)
@@ -90,7 +92,9 @@ A copy adds one to the count at each of its two ends, and Euler's test wants eve
 
 ### Step 2: a pair's cheapest repeat is a shortest walk
 
-Such a map breaks into walks joining those four two by two, plus closed loops. The loops can go: deleting one leaves every junction as odd or even as it was — its parity — and saves metres. A walk from B to F is at least $`d(B,F)`$ long, so nothing beats a shortest walk, and no street is walked three times: two copies of one street delete together.
+Such a map breaks into walks joining those four two by two, plus closed loops. The loops can go: deleting one leaves every junction as odd or even as it was — its parity — and saves metres.
+
+A walk from B to F is at least $`d(B,F)`$ long, so nothing beats a shortest walk. No street is walked three times either: two copies of one street delete together.
 
 ### Step 3: add the two pieces
 
@@ -99,7 +103,9 @@ Every street is walked at least once, whatever the round: 1,200 m. The repeats a
 <details>
 <summary>Detailed proof: the two halves of the argument</summary>
 
-Map in one piece, every length positive. Take any closed round covering every street and collect its extra passes as R. With R's copies added the round uses every copy once, so it is an Euler circuit: every junction even there. A count there is the map count plus the R count, so R is odd exactly at the map's odd junctions. Deleting two copies of one street, or one of R's closed loops, holds every parity and shortens R. What is left splits into walks pairing the odd junctions, each at least the shortest walk between its ends, so R costs at least the cheapest pairing.
+Map in one piece, every length positive. Take any closed round covering every street and collect its extra passes as R. With R added the round uses every copy once, so it is an Euler circuit: every junction is even. Each count is the map count plus the R count, so R is odd exactly at the map's odd junctions.
+
+Deleting two copies of one street, or one of R's closed loops, holds every parity and shortens R. What is left splits into walks pairing the odd junctions, each at least the shortest walk between its ends, so R costs at least the cheapest pairing.
 
 The other half builds a round: add every street on a cheapest pairing's walks, deleting any street thereby doubled. Every junction is even and the map in one piece, so an Euler circuit exists, of length the street total plus at most the pairing's total. The bounds meet.
 
@@ -109,9 +115,11 @@ The other half builds a round: add every street on a cheapest pairing's walks, d
 
 A program listing them settles three pairings, or 945, in no time. But the count keeps multiplying, so listing stops being possible at a few dozen odd junctions — and a city map has hundreds.
 
-Edmonds' 1965 matching algorithm, blossom ([Edmonds' blossom algorithm](../13-Matchings%20and%20Flows/09-edmonds-blossom-algorithm.md)), finds the cheapest pairing without listing any, in a time growing like a fixed power of the junction count. A matching is a set of pairs with no junction used twice, so a pairing is a matching that uses every odd junction ([Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md)). This card leans on it, unbuilt.
+The weighted form of Edmonds' 1965 blossom algorithm finds the cheapest pairing without listing any, in time growing like a fixed power of the junction count. Its unweighted form is [Edmonds' blossom algorithm](../13-Matchings%20and%20Flows/09-edmonds-blossom-algorithm.md).
 
-A second road reaches the same 400 m with no pairings and no shortest walks: keep every set of streets whose own odd junctions are exactly B, D, F and H, then take the smallest, every street here being 100 m — Step 1 read forwards.
+A matching is a set of pairs with no junction used twice, so a pairing is a matching that uses every odd junction ([Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md)). This card leans on it, unbuilt.
+
+A second road reaches the same 400 m with no pairings and no shortest walks. Keep every set of streets whose own odd junctions are B, D, F and H, then take the smallest — Step 1 read forwards, as every street is 100 m.
 
 ---
 
@@ -127,7 +135,9 @@ A second road reaches the same 400 m with no pairings and no shortest walks: kee
 | the cheapest pairing | 200 + 200, and all three tie | **400 m** |
 | the round | 1,200 + 400 | **1,600 m** |
 
-The postman walks 1,600 m to deliver on 1,200 m of street. All three pairings tie at 400 m, so "cheapest" is idle on this estate; it earns its keep on the code's second map, two rows of four junctions. That map has P, Q, R and S in the top row and T, U, V and W under them, each junction joined to its neighbours across and down: ten streets of 100 m.
+The postman walks 1,600 m to deliver on 1,200 m of street. All three pairings tie at 400 m, so "cheapest" is idle on this estate. It earns its keep on the code's second map, two rows of four junctions.
+
+That map has P, Q, R and S in the top row and T, U, V and W under them. Each junction joins its neighbours across and down: ten streets of 100 m.
 
 ### The picture: the four repeats
 
