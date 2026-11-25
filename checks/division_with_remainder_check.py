@@ -23,8 +23,8 @@ for length in (365, 366, 365):
     moved.append((moved[-1] + length % 7) % 7)
 print("6 September: " + ", ".join(f"{y} {DAYS[m]}" for y, m in zip(range(2026, 2030), moved)))
 print("weekdays moved since 2026: " + ", then ".join(str(m) for m in moved))
-print(f"the three mistakes come out at {52 * 7} days, 51 weeks with {365 - 51 * 7} days over, and {DAYS[3]}")
-assert (365 // 7, 365 % 7) == (52, 1) and 52 * 7 + 1 == 365
+print(f"the three mistakes come out at {52 * 7} days, 51 weeks with {365 - 51 * 7} days over, and {DAYS[3 * (365 % 7) % 7]}")
+assert (365 // 7, 365 % 7) == (52, 1) and strip(365, 7)[0] * 7 + strip(365, 7)[1] == 365
 assert (366 // 7, 366 % 7) == (52, 2) and strip(365, 7) == (52, 1)
 assert pairs == [(52, 1)] and moved == [0, 1, 3, 4]
 print("ALL CHECKS PASS")

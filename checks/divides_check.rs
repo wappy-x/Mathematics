@@ -35,6 +35,6 @@ fn main() {
              brute.iter().filter(|&&a| a <= 6).count(), brute.len());
     assert!(brute == vec![1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]);
     assert!(from_pairs == brute && brute.len() == 12);
-    assert!(brute.iter().all(|&a| a * (HOUR / a) == HOUR) && HOUR % 8 == 4 && HOUR / 8 == 7);
+    assert!(brute.iter().all(|&a| a * (HOUR / a) == HOUR) && HOUR % 8 == 4 && HOUR / 8 == 7 && divides(0, 0) && !divides(0, HOUR) && divides(HOUR, 0) && !divides(HOUR, 12));
     println!("ALL CHECKS PASS");
 }

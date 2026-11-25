@@ -25,6 +25,6 @@ row("divisors of 360, the slow way", len(by_hand(360)))
 row("sum of the divisors of 96, 63 x 4", sum(by_hand(96)))
 print(f"the three mistakes come out at {5 * 1}, {(5 + 1) + (1 + 1)} and {by_formula(96) - 2}")
 assert by_formula(96) == len(by_hand(96)) == 12 and by_hand(96)[-1] == 96
-assert sorted([d for d in by_hand(96) if d % 3] + [d for d in by_hand(96) if d % 3 == 0]) == by_hand(96)
+assert sorted(a * b for a in (1, 2, 4, 8, 16, 32) for b in (1, 3)) == by_hand(96)   # the grid, built from its primes
 assert by_formula(360) == len(by_hand(360)) == 24 and sum(by_hand(96)) == 63 * 4
 print("ALL CHECKS PASS")

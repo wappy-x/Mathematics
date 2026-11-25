@@ -25,4 +25,5 @@ print(f"stopping the list at 6 finds only {len([a for a in brute if a <= 6])} of
 assert brute == [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]
 assert from_pairs == brute and len(brute) == 12
 assert all(a * (HOUR // a) == HOUR for a in brute) and HOUR % 8 == 4 and HOUR // 8 == 7
+assert divides(0, 0) and not divides(0, HOUR) and divides(HOUR, 0) and not divides(HOUR, 12)
 print("ALL CHECKS PASS")

@@ -7,7 +7,6 @@ def flip(n):                       # the switch starts off; flip it n times
     on = False
     for _ in range(n): on = not on
     return "on" if on else "off"
-
 def row(label, work, value):
     print(f"{label:<30}{work:>16}   {parity(value)}")
 
@@ -26,5 +25,6 @@ row("peel one trip off the eleven", f"{trips - 1} x {each} = {mine - each}", min
 row("nobody touches it", "0", 0)
 assert flip(total) == "on" and parity(total) == "odd" and total == 2 * (total // 2) + 1
 assert flip(other) == "off" and parity(other) == "even" and other == 2 * (other // 2)
-assert mine == (trips - 1) * each + each and parity(mine - each) == "even"
+assert parity(mine) == "odd" and parity(mine - each) == "even" and all((parity(a + b) == "even") == (parity(a) == parity(b))
+    and (parity(a * b) == "odd") == (parity(a) == parity(b) == "odd") for a in range(10) for b in range(10))   # the table
 print("ALL CHECKS PASS")

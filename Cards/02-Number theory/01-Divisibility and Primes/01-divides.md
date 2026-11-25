@@ -27,7 +27,7 @@ xychart-beta
     bar [60, 30, 20, 15, 12, 10, 6, 5, 4, 3, 2, 1]
 ```
 
-One bar per length: how many lessons of that length fill the hour. Only these twelve lengths work, and the bars read the same from either end: they come in six pairs.
+One bar per length: how many lessons of that length fill the hour. Only these twelve lengths work. The bar heights are the same twelve numbers in reverse order: they come in six pairs.
 
 ---
 
@@ -118,7 +118,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The hour is worked the plain way: try every length from 1 to 60, keep the ones with no leftover. Then the list is built again from pairs, testing only 1 to 7 and taking both ends. Three asserts hold the two together.
+Nothing is imported. The hour is worked the plain way: try every length from 1 to 60, keep the ones with no leftover. Then the list is built again from pairs, testing only 1 to 7 and taking both ends. The asserts hold the two roads together and pin down the 0 cases.
 
 ### Python
 
@@ -150,10 +150,11 @@ print(f"stopping the list at 6 finds only {len([a for a in brute if a <= 6])} of
 assert brute == [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]
 assert from_pairs == brute and len(brute) == 12
 assert all(a * (HOUR // a) == HOUR for a in brute) and HOUR % 8 == 4 and HOUR // 8 == 7
+assert divides(0, 0) and not divides(0, HOUR) and divides(HOUR, 0) and not divides(HOUR, 12)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 the pairs that multiply to 60   1 x 60  2 x 30  3 x 20  4 x 15  5 x 12  6 x 10
@@ -211,12 +212,12 @@ fn main() {
              brute.iter().filter(|&&a| a <= 6).count(), brute.len());
     assert!(brute == vec![1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]);
     assert!(from_pairs == brute && brute.len() == 12);
-    assert!(brute.iter().all(|&a| a * (HOUR / a) == HOUR) && HOUR % 8 == 4 && HOUR / 8 == 7);
+    assert!(brute.iter().all(|&a| a * (HOUR / a) == HOUR) && HOUR % 8 == 4 && HOUR / 8 == 7 && divides(0, 0) && !divides(0, HOUR) && divides(HOUR, 0) && !divides(HOUR, 12));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 the pairs that multiply to 60   1 x 60  2 x 30  3 x 20  4 x 15  5 x 12  6 x 10
@@ -372,7 +373,7 @@ example : Nat.divisors 59 = {1, 59} := by decide
 - [Division with a remainder](04-division-with-remainder.md): the 4 stranded minutes, and why there is only one answer.
 - [Primes and composites](05-primes-and-composites.md): numbers whose only divisors are 1 and themselves.
 
-This card leaves one question open: why does 60 have 12 divisors and not some other count? [Counting divisors](08-counting-divisors.md) answers it.
+This card leaves one question open: why does 60 have 12 divisors and not some other count? The answer needs primes first, so it waits for [Counting divisors](08-counting-divisors.md), the last card on this shelf. Next comes the simplest divisor of all, 2, in [Even and odd](02-even-and-odd.md).
 
 ---
 

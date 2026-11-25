@@ -30,7 +30,7 @@ The bottom row is where people slip: odd plus odd is even, odd times odd is odd.
 
 ## The formula
 
-The week, written out. Eleven trips down the hall, three flips a trip — on, off, on, hunting for keys — then four more from your housemate.
+The week, written out. You made eleven trips down the hall at three flips a trip. Your housemate added four more flips.
 
 **11 × 3 = 33, and odd × odd = odd**
 
@@ -117,7 +117,7 @@ The code prints the right answer to all three.
 
 ## Code, from first principles, and it actually runs
 
-Each count is read by pairing off, then checked the slow way: a switch flipped one press at a time.
+Each count is read by pairing off, then checked the slow way: a switch flipped one press at a time. A last assert runs the whole parity table on every pair of numbers from 0 to 9.
 
 ### Python
 
@@ -131,7 +131,6 @@ def flip(n):                       # the switch starts off; flip it n times
     on = False
     for _ in range(n): on = not on
     return "on" if on else "off"
-
 def row(label, work, value):
     print(f"{label:<30}{work:>16}   {parity(value)}")
 
@@ -150,11 +149,12 @@ row("peel one trip off the eleven", f"{trips - 1} x {each} = {mine - each}", min
 row("nobody touches it", "0", 0)
 assert flip(total) == "on" and parity(total) == "odd" and total == 2 * (total // 2) + 1
 assert flip(other) == "off" and parity(other) == "even" and other == 2 * (other // 2)
-assert mine == (trips - 1) * each + each and parity(mine - each) == "even"
+assert parity(mine) == "odd" and parity(mine - each) == "even" and all((parity(a + b) == "even") == (parity(a) == parity(b))
+    and (parity(a * b) == "odd") == (parity(a) == parity(b) == "odd") for a in range(10) for b in range(10))   # the table
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 eleven trips, three flips each     11 x 3 = 33   odd
@@ -178,7 +178,7 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // Even and odd -- the same check as even_and_odd_check.py, in Rust.  No crates.  The
 // hallway switch: eleven trips, three flips each, plus four.  Paired off, then flipped.
 fn parity(n: i64) -> &'static str {    // n / 2 is whole-number division: the number of pairs
-    if n - 2 * (n / 2) == 0 { "even" } else { "odd" }   // the leftover is 0 or 1
+    if n - 2 * (n / 2) == 0 { "even" } else { "odd" }   // the leftover is 0 or 1 here
 }
 
 fn flip(n: i64) -> &'static str {      // the switch starts off; flip it n times
@@ -209,12 +209,14 @@ fn main() {
     row("nobody touches it", "0".to_string(), 0);
     assert!(flip(total) == "on" && parity(total) == "odd" && total == 2 * (total / 2) + 1);
     assert!(flip(other) == "off" && parity(other) == "even" && other == 2 * (other / 2));
-    assert!(mine == (trips - 1) * each + each && parity(peeled) == "even");
+    assert!(parity(mine) == "odd" && parity(peeled) == "even");
+    assert!((0..10i64).all(|a| (0..10i64).all(|b| (parity(a + b) == "even") == (parity(a) == parity(b))
+        && (parity(a * b) == "odd") == (parity(a) == "odd" && parity(b) == "odd"))));   // the table
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 eleven trips, three flips each     11 x 3 = 33   odd
@@ -349,10 +351,11 @@ example : Even (6 : ℤ) ∧ Even (2 : ℤ) ∧ (6 : ℤ) / 2 = 3 ∧ Odd (3 : �
 
 ## Where this goes next
 
-- [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
+- [Divisibility rules](03-divisibility-rules.md): the 2 test is a glance at the last digit; the digits also answer for 3, 4, 5, 6, 8, 9 and 10.
 - [Division with a remainder](04-division-with-remainder.md): the leftover when you split by any number, not just by 2.
+- [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
 
-Splitting by 2 leaves 0 or 1 over. What can be left over when you split by 3?
+Whether 2 divides a number shows in its last digit. Can the digits show whether 3 or 9 divides it, without dividing?
 
 ---
 

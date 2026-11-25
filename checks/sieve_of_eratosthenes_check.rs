@@ -18,7 +18,7 @@ fn divisions(n: usize) -> usize { let (mut c, mut d) = (0, 2); while d * d <= n 
 fn open_count(ps: &[usize]) -> usize { (2..=TOP).filter(|&n| ps.contains(&n) || ps.iter().all(|q| n % q != 0)).count() }
 fn join(v: &[usize], sep: &str) -> String { v.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(sep) }
 fn main() {
-    let (primes, passes) = sieve(TOP, false, true, 99);
+    let (primes, passes) = sieve(TOP, false, true, TOP);
     for (p, hit, still) in &passes {
         let shown = if hit.len() <= 6 { join(hit, " ") } else { format!("{} ... {}", join(&hit[..3], " "), hit[hit.len() - 1]) };
         println!("{}'s pass slams {:<21} -- {:>2} lockers, {} still open", p, shown, hit.len(), still);
@@ -28,11 +28,11 @@ fn main() {
     println!("lockers still open, before any pass and after each: {} {}", TOP - 1, join(&counts, " "));
     println!("the {} open lockers: {}", primes.len(), join(&primes, ", "));
     let (trial, open5): (Vec<usize>, Vec<usize>) = ((1..=TOP).filter(|&n| by_trial(n)).collect(), sieve(TOP, false, true, 5).0);
-    println!("trial division, one locker at a time, agrees: {} primes, the same list, after {} divisions", trial.len(), (1..=TOP).map(divisions).sum::<usize>());
+    println!("trial division, one locker at a time, agrees: {} primes, the same list, after {} divisions; the sieve made {} slams", trial.len(), (1..=TOP).map(divisions).sum::<usize>(), passes.iter().map(|t| t.1.len()).sum::<usize>());
     let extra: Vec<usize> = open5.iter().cloned().filter(|n| !primes.contains(n)).collect();   // 49, 77, 91
     println!("stopping after 5's pass: {} open, and {} are not prime", open5.len(), join(&extra, ", "));
-    println!("slamming each prime along with its multiples: {} open", sieve(TOP, true, true, 99).0.len());
-    println!("leaving locker 1 open: {} open", sieve(TOP, false, false, 99).0.len());
+    println!("slamming each prime along with its multiples: {} open", sieve(TOP, true, true, TOP).0.len());
+    println!("leaving locker 1 open: {} open", sieve(TOP, false, false, TOP).0.len());
     assert!(primes == trial && primes.len() == 25 && primes[24] == 97);
     assert!(passes.iter().map(|t| t.2).collect::<Vec<usize>>() == counts && counts == vec![50, 34, 28, 25]);
     assert!(open5.len() == 28 && 7 * 7 <= TOP && TOP < 11 * 11);

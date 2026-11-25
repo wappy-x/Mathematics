@@ -1,9 +1,9 @@
 # The sieve of Eratosthenes -- the check behind the card.  Nothing is imported.  100 lockers, all open.  Shut locker 1,
 # keep 2 and slam every second locker after it, then 3, then 5, then 7.  Trial division is the second road to the 25.
 TOP, divs = 100, []                                              # divs tallies trial division's work
-def sieve(top, shut_prime=False, shut_one=True, last=99):        # the plain road: slam the multiples
+def sieve(top, shut_prime=False, shut_one=True, last=None):      # the plain road: slam the multiples
     open_, passes = [False, not shut_one] + [True] * (top - 1), []
-    for p in [q for q in range(2, top + 1) if q * q <= top and q <= last]:
+    for p in [q for q in range(2, top + 1) if q * q <= top and q <= (last or top)]:
         if open_[p]:
             hit = [k for k in range(p if shut_prime else p * p, top + 1, p) if open_[k]]   # start at p x p
             for k in hit: open_[k] = False
@@ -20,7 +20,7 @@ counts = [open_count(ps) for ps in ((2,), (2, 3), (2, 3, 5), (2, 3, 5, 7))]
 print(f"lockers still open, before any pass and after each: {TOP - 1} " + " ".join(map(str, counts)))
 print(f"the {len(primes)} open lockers: " + ", ".join(map(str, primes)))
 trial, open5 = [n for n in range(1, TOP + 1) if by_trial(n)], sieve(TOP, last=5)[0]
-print(f"trial division, one locker at a time, agrees: {len(trial)} primes, the same list, after {len(divs)} divisions")
+print(f"trial division, one locker at a time, agrees: {len(trial)} primes, the same list, after {len(divs)} divisions; the sieve made {sum(len(hit) for _, hit, _ in passes)} slams")
 print(f"stopping after 5's pass: {len(open5)} open, and {', '.join(str(n) for n in open5 if n not in primes)} are not prime")
 print(f"slamming each prime along with its multiples: {len(sieve(TOP, shut_prime=True)[0])} open")
 print(f"leaving locker 1 open: {len(sieve(TOP, shut_one=False)[0])} open")

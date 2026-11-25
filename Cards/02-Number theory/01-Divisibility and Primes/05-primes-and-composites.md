@@ -12,7 +12,7 @@ Now 91 chairs. Rows of 2, 3, 4, 5, 6 all leave something over — as stubborn as
 
 A number bigger than 1 that will not split into equal rows of more than one is **prime**; one that will is **composite**. This card tells the two apart without the chairs.
 
-**A number bigger than 1 is prime when nothing divides it but 1 and itself, and you find out by trying 2, 3, 4, 5 and up — stopping the moment the number you are trying, times itself, passes the number tested.**
+**A number bigger than 1 is prime when nothing divides it but 1 and itself; try 2, 3, 4 and up until the trial divisor, times itself, passes the number.**
 
 **What kind of fact this is:** a definition, plus a theorem: the stop rule, proved in Why it works.
 
@@ -27,7 +27,7 @@ xychart-beta
     bar [4, 6, 4, 4, 4, 12, 2, 6, 6, 9]
 ```
 
-One bar per number: how many divisors it has. Everything has at least two, 1 and itself; only 97 sits at 2, and that is what prime means.
+One bar per number: how many divisors it has. Every number here has at least two, 1 and itself; only 97 sits at 2, and that is what prime means.
 
 ---
 
@@ -344,8 +344,8 @@ example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 :
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
-> - **Stop one step early.** Break while the trial divisor times itself is under the number, not at it: 4, 9, 25 and 49 turn prime, because every prime times itself slips through.
-> - **Drop 1 from the divisor list.** In `divisors`, change `range(1, n + 1)` to `range(1, n)`: 97 shows 1 divisor, the two roads disagree, the assert fires.
+> - **Stop one step early.** In `trials`, change `if d * d > n` to `if d * d >= n`: the trials stop at the number, not past it. 4, 9, 25 and 49 turn prime, because every prime times itself slips through.
+> - **Drop the number itself from the divisor list.** In `divisors`, change `range(1, n + 1)` to `range(1, n)`: 97 shows 1 divisor, the two roads disagree, the assert fires.
 > - **Stop the trials at 5.** In `trials`, change `if d * d > n` to `if d > 5`: 49, 77 and 91 pass as prime, 28 primes below 100.
 
 ---
@@ -379,7 +379,7 @@ example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 :
 
 ## Where this goes next
 
-- [The sieve of Eratosthenes](06-sieve-of-eratosthenes.md): the same test on a block of numbers at once, by crossing out multiples.
+- [The sieve of Eratosthenes](06-sieve-of-eratosthenes.md): every prime in a block of numbers at once, by crossing out multiples, without testing any number.
 - [Prime factorisation](07-prime-factorisation.md): what a composite is made of — 91 breaks into 7 and 13.
 - [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the fact that makes those pieces unique, proved properly.
 - [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): multiplying large primes is easy, undoing it is not.

@@ -8,11 +8,18 @@
 
 A school corridor. 100 lockers, numbered 1 to 100, every door open.
 
-Shut locker 1. Leave locker 2 open, but slam every second locker after it: 4, 6, 8, on to 100. The next door still open is 3. Leave it, slam every third locker after it — 6 and 12 are shut already, so the slams land on 9, 15, 21, on to 99. Next open is 5: same again, and the slams land on 25, 35, 55, 65, 85, 95. Next is 7: leave it, slam 49, 77, 91.
+Shut locker 1. Then walk the corridor once for each door you keep. A door you shut stays shut.
+
+1. Leave locker 2 open, but slam every second locker after it: 4, 6, 8, on to 100.
+2. The next door still open is 3. Leave it, and slam every third locker after it. 6 and 12 are shut already, so the slams land on 9, 15, 21, on to 99.
+3. Next open is 5. Same again: the slams land on 25, 35, 55, 65, 85, 95.
+4. Next is 7. Leave it, and slam 49, 77, 91.
 
 Count what is still open: 25 doors — exactly the primes up to 100 ([Primes and composites](05-primes-and-composites.md)).
 
 You never asked whether a number was prime. You slammed multiples of numbers you had already kept. That is a **sieve**: the composites fall through, the primes stay in the mesh. Its name is the sieve of Eratosthenes, from around 240 BC, and still how computers build prime lists.
+
+On paper it is crossing numbers out on a 1-to-100 grid; the lockers are that grid.
 
 **Keep the first door still open, slam every multiple of it, repeat. Stop once the door you keep, times itself, runs past the end of the corridor. Everything still open is prime.**
 
@@ -67,7 +74,11 @@ Every door a pass slams is a multiple of the kept number — that number goes in
 
 ### Every composite gets slammed
 
-Take 91. It splits: 91 = 7 × 13. Its smallest divisor above 1 is 7 — and a smallest divisor is always prime, since if it split further the smaller piece would divide 91 too and be smaller still. And 13 is at least 7, so 91 sits at or past 49, where 7's pass begins. Every composite has a prime divisor; that prime's door stayed open, and its pass slammed the composite.
+Take 91. It splits: 91 = 7 × 13. Its smallest divisor above 1 is 7.
+
+A smallest divisor is always prime. If it split further, its smaller piece would divide 91 too, and be smaller still.
+
+And 13 is at least 7, so 91 sits at or past 49, where 7's pass begins. Every composite has a prime divisor; that prime's door stayed open, and its pass slammed the composite.
 
 Slammed means composite. Open means prime. Nothing in between.
 
@@ -119,9 +130,9 @@ Nothing is imported. The corridor is walked the plain way, one pass per open doo
 # The sieve of Eratosthenes -- the check behind the card.  Nothing is imported.  100 lockers, all open.  Shut locker 1,
 # keep 2 and slam every second locker after it, then 3, then 5, then 7.  Trial division is the second road to the 25.
 TOP, divs = 100, []                                              # divs tallies trial division's work
-def sieve(top, shut_prime=False, shut_one=True, last=99):        # the plain road: slam the multiples
+def sieve(top, shut_prime=False, shut_one=True, last=None):      # the plain road: slam the multiples
     open_, passes = [False, not shut_one] + [True] * (top - 1), []
-    for p in [q for q in range(2, top + 1) if q * q <= top and q <= last]:
+    for p in [q for q in range(2, top + 1) if q * q <= top and q <= (last or top)]:
         if open_[p]:
             hit = [k for k in range(p if shut_prime else p * p, top + 1, p) if open_[k]]   # start at p x p
             for k in hit: open_[k] = False
@@ -138,7 +149,7 @@ counts = [open_count(ps) for ps in ((2,), (2, 3), (2, 3, 5), (2, 3, 5, 7))]
 print(f"lockers still open, before any pass and after each: {TOP - 1} " + " ".join(map(str, counts)))
 print(f"the {len(primes)} open lockers: " + ", ".join(map(str, primes)))
 trial, open5 = [n for n in range(1, TOP + 1) if by_trial(n)], sieve(TOP, last=5)[0]
-print(f"trial division, one locker at a time, agrees: {len(trial)} primes, the same list, after {len(divs)} divisions")
+print(f"trial division, one locker at a time, agrees: {len(trial)} primes, the same list, after {len(divs)} divisions; the sieve made {sum(len(hit) for _, hit, _ in passes)} slams")
 print(f"stopping after 5's pass: {len(open5)} open, and {', '.join(str(n) for n in open5 if n not in primes)} are not prime")
 print(f"slamming each prime along with its multiples: {len(sieve(TOP, shut_prime=True)[0])} open")
 print(f"leaving locker 1 open: {len(sieve(TOP, shut_one=False)[0])} open")
@@ -148,7 +159,7 @@ assert len(open5) == 28 and 7 * 7 <= TOP < 11 * 11
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 2's pass slams 4 6 8 ... 100         -- 49 lockers, 50 still open
@@ -158,7 +169,7 @@ print("ALL CHECKS PASS")
 next open locker is 11, and 11 x 11 = 121 is past 100, so the passes stop
 lockers still open, before any pass and after each: 99 50 34 28 25
 the 25 open lockers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
-trial division, one locker at a time, agrees: 25 primes, the same list, after 236 divisions
+trial division, one locker at a time, agrees: 25 primes, the same list, after 236 divisions; the sieve made 74 slams
 stopping after 5's pass: 28 open, and 49, 77, 91 are not prime
 slamming each prime along with its multiples: 21 open
 leaving locker 1 open: 26 open
@@ -188,7 +199,7 @@ fn divisions(n: usize) -> usize { let (mut c, mut d) = (0, 2); while d * d <= n 
 fn open_count(ps: &[usize]) -> usize { (2..=TOP).filter(|&n| ps.contains(&n) || ps.iter().all(|q| n % q != 0)).count() }
 fn join(v: &[usize], sep: &str) -> String { v.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(sep) }
 fn main() {
-    let (primes, passes) = sieve(TOP, false, true, 99);
+    let (primes, passes) = sieve(TOP, false, true, TOP);
     for (p, hit, still) in &passes {
         let shown = if hit.len() <= 6 { join(hit, " ") } else { format!("{} ... {}", join(&hit[..3], " "), hit[hit.len() - 1]) };
         println!("{}'s pass slams {:<21} -- {:>2} lockers, {} still open", p, shown, hit.len(), still);
@@ -198,11 +209,11 @@ fn main() {
     println!("lockers still open, before any pass and after each: {} {}", TOP - 1, join(&counts, " "));
     println!("the {} open lockers: {}", primes.len(), join(&primes, ", "));
     let (trial, open5): (Vec<usize>, Vec<usize>) = ((1..=TOP).filter(|&n| by_trial(n)).collect(), sieve(TOP, false, true, 5).0);
-    println!("trial division, one locker at a time, agrees: {} primes, the same list, after {} divisions", trial.len(), (1..=TOP).map(divisions).sum::<usize>());
+    println!("trial division, one locker at a time, agrees: {} primes, the same list, after {} divisions; the sieve made {} slams", trial.len(), (1..=TOP).map(divisions).sum::<usize>(), passes.iter().map(|t| t.1.len()).sum::<usize>());
     let extra: Vec<usize> = open5.iter().cloned().filter(|n| !primes.contains(n)).collect();   // 49, 77, 91
     println!("stopping after 5's pass: {} open, and {} are not prime", open5.len(), join(&extra, ", "));
-    println!("slamming each prime along with its multiples: {} open", sieve(TOP, true, true, 99).0.len());
-    println!("leaving locker 1 open: {} open", sieve(TOP, false, false, 99).0.len());
+    println!("slamming each prime along with its multiples: {} open", sieve(TOP, true, true, TOP).0.len());
+    println!("leaving locker 1 open: {} open", sieve(TOP, false, false, TOP).0.len());
     assert!(primes == trial && primes.len() == 25 && primes[24] == 97);
     assert!(passes.iter().map(|t| t.2).collect::<Vec<usize>>() == counts && counts == vec![50, 34, 28, 25]);
     assert!(open5.len() == 28 && 7 * 7 <= TOP && TOP < 11 * 11);
@@ -210,7 +221,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 2's pass slams 4 6 8 ... 100         -- 49 lockers, 50 still open
@@ -220,7 +231,7 @@ fn main() {
 next open locker is 11, and 11 x 11 = 121 is past 100, so the passes stop
 lockers still open, before any pass and after each: 99 50 34 28 25
 the 25 open lockers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
-trial division, one locker at a time, agrees: 25 primes, the same list, after 236 divisions
+trial division, one locker at a time, agrees: 25 primes, the same list, after 236 divisions; the sieve made 74 slams
 stopping after 5's pass: 28 open, and 49, 77, 91 are not prime
 slamming each prime along with its multiples: 21 open
 leaving locker 1 open: 26 open

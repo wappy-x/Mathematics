@@ -32,8 +32,8 @@ fn main() {
     let steps: Vec<String> = moved.iter().map(|m| m.to_string()).collect();
     println!("weekdays moved since 2026: {}", steps.join(", then "));
     println!("the three mistakes come out at {} days, 51 weeks with {} days over, and {}",
-             52 * 7, 365 - 51 * 7, DAYS[3]);
-    assert!((365 / 7, 365 % 7) == (52, 1) && 52 * 7 + 1 == 365);
+             52 * 7, 365 - 51 * 7, DAYS[3 * (365 % 7) % 7]);
+    assert!((365 / 7, 365 % 7) == (52, 1) && q * 7 + r == 365);
     assert!((366 / 7, 366 % 7) == (52, 2) && strip(365, 7) == (52, 1));
     assert!(pairs == vec![(52, 1)] && moved == vec![0, 1, 3, 4]);
     println!("ALL CHECKS PASS");

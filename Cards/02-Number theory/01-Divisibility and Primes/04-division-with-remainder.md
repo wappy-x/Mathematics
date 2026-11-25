@@ -149,14 +149,14 @@ for length in (365, 366, 365):
     moved.append((moved[-1] + length % 7) % 7)
 print("6 September: " + ", ".join(f"{y} {DAYS[m]}" for y, m in zip(range(2026, 2030), moved)))
 print("weekdays moved since 2026: " + ", then ".join(str(m) for m in moved))
-print(f"the three mistakes come out at {52 * 7} days, 51 weeks with {365 - 51 * 7} days over, and {DAYS[3]}")
-assert (365 // 7, 365 % 7) == (52, 1) and 52 * 7 + 1 == 365
+print(f"the three mistakes come out at {52 * 7} days, 51 weeks with {365 - 51 * 7} days over, and {DAYS[3 * (365 % 7) % 7]}")
+assert (365 // 7, 365 % 7) == (52, 1) and strip(365, 7)[0] * 7 + strip(365, 7)[1] == 365
 assert (366 // 7, 366 % 7) == (52, 2) and strip(365, 7) == (52, 1)
 assert pairs == [(52, 1)] and moved == [0, 1, 3, 4]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 what                            total  weeks  days over
@@ -209,15 +209,15 @@ fn main() {
     let steps: Vec<String> = moved.iter().map(|m| m.to_string()).collect();
     println!("weekdays moved since 2026: {}", steps.join(", then "));
     println!("the three mistakes come out at {} days, 51 weeks with {} days over, and {}",
-             52 * 7, 365 - 51 * 7, DAYS[3]);
-    assert!((365 / 7, 365 % 7) == (52, 1) && 52 * 7 + 1 == 365);
+             52 * 7, 365 - 51 * 7, DAYS[3 * (365 % 7) % 7]);
+    assert!((365 / 7, 365 % 7) == (52, 1) && q * 7 + r == 365);
     assert!((366 / 7, 366 % 7) == (52, 2) && strip(365, 7) == (52, 1));
     assert!(pairs == vec![(52, 1)] && moved == vec![0, 1, 3, 4]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 what                            total  weeks  days over
@@ -372,7 +372,7 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
 
-The question this card leaves open: what is the remainder when the count is negative?
+Next on this shelf, [Primes and composites](05-primes-and-composites.md) asks a new question of the leftover: which numbers leave one on every try except 1 and themselves? The question this card leaves open, the remainder of a negative count, waits for [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
 
 ---
 

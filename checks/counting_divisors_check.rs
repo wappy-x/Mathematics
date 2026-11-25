@@ -32,9 +32,8 @@ fn main() {
     row("sum of the divisors of 96, 63 x 4", by_hand(96).iter().sum::<i64>());
     println!("the three mistakes come out at {}, {} and {}", 5, (5 + 1) + (1 + 1), by_formula(96) - 2);
     assert!(by_formula(96) == 12 && by_hand(96).len() == 12 && *by_hand(96).last().unwrap() == 96);
-    let mut grid: Vec<i64> = by_hand(96).into_iter().filter(|d| d % 3 != 0)
-        .chain(by_hand(96).into_iter().filter(|d| d % 3 == 0)).collect();
-    grid.sort(); assert!(grid == by_hand(96));
+    let mut grid: Vec<i64> = [1i64, 2, 4, 8, 16, 32].iter().flat_map(|a| [a * 1, a * 3]).collect();
+    grid.sort(); assert!(grid == by_hand(96));   // the grid, built from its primes
     assert!(by_formula(360) == 24 && by_hand(360).len() == 24 && by_hand(96).iter().sum::<i64>() == 63 * 4);
     println!("ALL CHECKS PASS");
 }

@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A box holds 96 floor tiles. Lay all 96 in one rectangle — every tile used, no gaps, no cutting. How many shapes? Turning a shape round is not a new shape.
+A craft box holds 96 small square mosaic tiles. Lay all 96 in one rectangle — every tile used, no gaps, no cutting. How many shapes? Turning a shape round is not a new shape.
 
 You start listing. 1 by 96. 2 by 48. 3 by 32. 4 by 24. 6 by 16. 8 by 12. Six, and you are fairly sure that is all.
 
@@ -62,7 +62,7 @@ Break any divisor of 96 into primes. They come from 96's own pile: a number has 
 
 ### Step 1: one decision per prime, and decisions multiply
 
-How many 2s: nought up to five. Six answers. How many 3s: nought or one. Two answers. Each pair of answers builds exactly one divisor — three 2s and one 3 builds 24, none of either builds 1, all of them build 96.
+How many 2s: zero up to five. Six answers. How many 3s: zero or one. Two answers. Each pair of answers builds exactly one divisor — three 2s and one 3 builds 24, none of either builds 1, all of them build 96.
 
 Six ways to answer the first, two for each: 6 × 2 = 12 ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)). The added one is the choice of taking none of a prime — miss it and you lose the no-2s column and the no-3 row: seven divisors, 1 among them.
 
@@ -139,12 +139,12 @@ row("divisors of 360, the slow way", len(by_hand(360)))
 row("sum of the divisors of 96, 63 x 4", sum(by_hand(96)))
 print(f"the three mistakes come out at {5 * 1}, {(5 + 1) + (1 + 1)} and {by_formula(96) - 2}")
 assert by_formula(96) == len(by_hand(96)) == 12 and by_hand(96)[-1] == 96
-assert sorted([d for d in by_hand(96) if d % 3] + [d for d in by_hand(96) if d % 3 == 0]) == by_hand(96)
+assert sorted(a * b for a in (1, 2, 4, 8, 16, 32) for b in (1, 3)) == by_hand(96)   # the grid, built from its primes
 assert by_formula(360) == len(by_hand(360)) == 24 and sum(by_hand(96)) == 63 * 4
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 96 = 2 x 2 x 2 x 2 x 2 x 3
@@ -200,15 +200,14 @@ fn main() {
     row("sum of the divisors of 96, 63 x 4", by_hand(96).iter().sum::<i64>());
     println!("the three mistakes come out at {}, {} and {}", 5, (5 + 1) + (1 + 1), by_formula(96) - 2);
     assert!(by_formula(96) == 12 && by_hand(96).len() == 12 && *by_hand(96).last().unwrap() == 96);
-    let mut grid: Vec<i64> = by_hand(96).into_iter().filter(|d| d % 3 != 0)
-        .chain(by_hand(96).into_iter().filter(|d| d % 3 == 0)).collect();
-    grid.sort(); assert!(grid == by_hand(96));
+    let mut grid: Vec<i64> = [1i64, 2, 4, 8, 16, 32].iter().flat_map(|a| [a * 1, a * 3]).collect();
+    grid.sort(); assert!(grid == by_hand(96));   // the grid, built from its primes
     assert!(by_formula(360) == 24 && by_hand(360).len() == 24 && by_hand(96).iter().sum::<i64>() == 63 * 4);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 96 = 2 x 2 x 2 x 2 x 2 x 3
@@ -426,8 +425,8 @@ example : #(Nat.divisors 97) = 2 := by decide
 
 ## Where you meet it in real life
 
-- **Laying anything out in a rectangle.** Tiles, chairs, a photo grid, pallets in a lorry. The layouts are half the divisors, unless the count is a square.
-- **Package sizes.** 96 splits evenly ten ways besides 1 by 96; 97 is prime, so it splits no way at all. That is why cases run on 12, 24 and 36.
+- **Laying anything out in a rectangle.** Tiles, chairs, a photo grid, pallets in a truck. The layouts are half the divisors, unless the count is a square.
+- **Package sizes.** 96 packs evenly into ten pack sizes besides 1 and 96; 97 is prime, so only packs of 1 or 97 work. That is why cases run on 12, 24 and 36.
 - **Adding divisors rather than counting.** The grid gives 252 for 96: [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md).
 
 > **Say it back**
@@ -442,9 +441,10 @@ example : #(Nat.divisors 97) = 2 := by decide
 
 ## Where this goes next
 
+- [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md): put two prime factorisations side by side and read off the biggest number that divides both.
 - [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md): stop counting divisors and start adding them. When they add to twice the number, it is called perfect.
 
-Left open: the grid adds the divisors of 96 to 252. When does that sum come out at exactly twice the number?
+Left open: 96 and 360 each have their own grid of divisors. What is the biggest number on both grids? The next shelf opens with [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md), which answers it. Adding the divisors up, 252 for 96, is a side road: [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md).
 
 ---
 

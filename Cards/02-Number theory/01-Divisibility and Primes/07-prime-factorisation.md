@@ -87,13 +87,17 @@ A prime is already finished: 7 is just 7, a tree with no branches.
 
 Not prime means something other than 1 and the number itself goes in. Split there: 360 = 6 × 60. Neither piece is 1, so both are smaller than 360.
 
-Every split shrinks the pieces, and whole numbers cannot shrink forever — the floor is 2. So each branch runs out, and stops only where its number refuses to split, which is what prime means. So every number bigger than 1 has a prime factorisation. (1 is kept out on purpose: 360 = 1 × 360 gets nowhere, and 1s could be hung on any list.)
+Every split shrinks the pieces, and whole numbers cannot shrink forever — the floor is 2. So each branch runs out, and stops only where its number refuses to split, which is what prime means. Every number bigger than 1 has a prime factorisation.
+
+1 is kept out on purpose: 360 = 1 × 360 gets nowhere, and 1s could be hung on any list.
 
 ### Why the route does not change the ends
 
 The two trees disagree all the way down and agree at the ends.
 
-Take the 5 that road one found. Road two's list also multiplies to 360, so 5 goes into that product — and a prime that goes into a product must go into one of the pieces. Those pieces are all prime, and a prime that 5 goes into can only be 5 itself. Cross a 5 off each list and start again; neither list runs out first.
+Take the 5 that road one found. Road two's list also multiplies to 360, so 5 goes into that product — and a prime that goes into a product must go into one of the pieces. Those pieces are all prime, and a prime that 5 goes into can only be 5 itself.
+
+Cross a 5 off each list and start again; neither list runs out first.
 
 That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 nor 3, so only primes pass it: [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md), next shelf. Until then, the code runs two roads over every number to 1,000 and checks the ends match.
 
@@ -238,7 +242,14 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves every number above 1 splits into primes, one way only; Python and Rust run the roads.
+Lean proves the card's claims for every number above 1, not just 360.
+
+- Every number bigger than 1 is a product of primes, and apart from the order it is that product and no other.
+- The factor tree always finishes: every number bigger than 1 splits all the way down to primes.
+- Two lists of primes with the same product hold the same primes, each the same number of times, whichever route made them.
+- The card's numbers check out: 360's six primes, both roads, its 24 divisors, and the three mistakes.
+
+Lean takes the "one way only" half from its maths library. This card does not prove that half; [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md) builds it from scratch on the next shelf. Running the three roads, and checking every number to 1,000, stays with the Python and Rust checks.
 
 ```lean
 -- Prime factorisation: every whole number bigger than 1 is a product of primes, and any two lists of primes with that product are the same list apart from order.
@@ -347,7 +358,7 @@ example : Nat.Prime 7 := by norm_num
 - [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the proof that the route cannot change the ends.
 - [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the atoms never run out.
 
-The question this card leaves open: why must a prime that goes into a product go into one of its pieces?
+Next on this shelf, [Counting divisors](08-counting-divisors.md) reads how many divisors a number has straight off this list of primes. The question this card leaves open waits for the next shelf: why must a prime that goes into a product go into one of its pieces? [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md) answers it.
 
 ---
 

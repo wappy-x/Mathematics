@@ -1,7 +1,7 @@
 // Even and odd -- the same check as even_and_odd_check.py, in Rust.  No crates.  The
 // hallway switch: eleven trips, three flips each, plus four.  Paired off, then flipped.
 fn parity(n: i64) -> &'static str {    // n / 2 is whole-number division: the number of pairs
-    if n - 2 * (n / 2) == 0 { "even" } else { "odd" }   // the leftover is 0 or 1
+    if n - 2 * (n / 2) == 0 { "even" } else { "odd" }   // the leftover is 0 or 1 here
 }
 
 fn flip(n: i64) -> &'static str {      // the switch starts off; flip it n times
@@ -32,6 +32,8 @@ fn main() {
     row("nobody touches it", "0".to_string(), 0);
     assert!(flip(total) == "on" && parity(total) == "odd" && total == 2 * (total / 2) + 1);
     assert!(flip(other) == "off" && parity(other) == "even" && other == 2 * (other / 2));
-    assert!(mine == (trips - 1) * each + each && parity(peeled) == "even");
+    assert!(parity(mine) == "odd" && parity(peeled) == "even");
+    assert!((0..10i64).all(|a| (0..10i64).all(|b| (parity(a + b) == "even") == (parity(a) == parity(b))
+        && (parity(a * b) == "odd") == (parity(a) == "odd" && parity(b) == "odd"))));   // the table
     println!("ALL CHECKS PASS");
 }

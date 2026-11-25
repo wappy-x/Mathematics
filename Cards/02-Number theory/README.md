@@ -25,7 +25,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 01 · Divisibility and Primes · 8 cards
 
-*Divides, factors and multiples, parity, digit rules, division with remainder, primes and trial division, the sieve, factor trees, counting divisors. Needs only multiplying-and-dividing and arithmetic-laws (plus place-value and adding-and-subtracting, which precede them). No negatives, no exponents, no proof cards.*
+*Divides, factors and multiples, parity, digit rules, division with remainder, primes and trial division, the sieve, factor trees, counting divisors. Needs only multiplying-and-dividing and arithmetic-laws (plus place-value and adding-and-subtracting, which precede them). Negatives only in passing; no exponents, no proof cards.*
 
 1. [Divides: when one number goes into another with nothing left over](01-Divisibility%20and%20Primes/01-divides.md)
 2. [Even and odd: the two-way split, and what adding and multiplying do to it](01-Divisibility%20and%20Primes/02-even-and-odd.md)
