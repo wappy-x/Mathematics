@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <title>Schematic: three lines through a point p of the plane, and after blowing up p, three disjoint fibres crossing the exceptional curve E</title>
+  <rect x="0" y="0" width="640" height="300" fill="#ffffff"/>
+  <rect x="20" y="20" width="280" height="260" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <rect x="340" y="20" width="280" height="260" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <text x="30" y="40" fill="#1d1d1d">the plane P², point p</text>
+  <text x="350" y="40" fill="#1d1d1d">the blow-up F₁</text>
+  <line x1="70" y1="60" x2="250" y2="240" stroke="#e76f51" stroke-width="3"/>
+  <line x1="70" y1="150" x2="250" y2="150" stroke="#2a9d8f" stroke-width="3"/>
+  <line x1="70" y1="240" x2="250" y2="60" stroke="#264653" stroke-width="3"/>
+  <circle cx="160" cy="150" r="5" fill="#1d1d1d"/>
+  <text x="152" y="178" fill="#1d1d1d">p</text>
+  <text x="200" y="272" fill="#1d1d1d">t = −1, 0, 1</text>
+  <line x1="380" y1="150" x2="600" y2="150" stroke="#1d1d1d" stroke-width="4"/>
+  <text x="584" y="140" fill="#1d1d1d">E</text>
+  <line x1="420" y1="60" x2="420" y2="250" stroke="#e76f51" stroke-width="3"/>
+  <line x1="490" y1="60" x2="490" y2="250" stroke="#2a9d8f" stroke-width="3"/>
+  <line x1="560" y1="60" x2="560" y2="250" stroke="#264653" stroke-width="3"/>
+  <circle cx="420" cy="150" r="4" fill="#1d1d1d"/>
+  <circle cx="490" cy="150" r="4" fill="#1d1d1d"/>
+  <circle cx="560" cy="150" r="4" fill="#1d1d1d"/>
+  <text x="350" y="272" fill="#1d1d1d">fibres H − E, square 0; E² = −1</text>
+  <line x1="330" y1="100" x2="310" y2="100" stroke="#1d1d1d" stroke-width="1.5"/>
+  <polygon points="304,100 314,95 314,105" fill="#1d1d1d"/>
+  <text x="312" y="90" fill="#1d1d1d">π</text>
+</svg>

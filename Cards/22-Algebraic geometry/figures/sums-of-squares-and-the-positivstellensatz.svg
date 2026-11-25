@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 320" width="440" height="320" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<title>The circle x^2 + y^2 = 1, a 1 m link swinging about the origin, and the region x &gt;= 2 to the right of the wall x = 2. They never meet: the nearest circle point, (1, 0), is 1 m short of the wall. Real points only, drawn to scale.</title>
+<rect x="0" y="0" width="440" height="320" fill="#ffffff"/>
+<rect x="300" y="20.0" width="120.0" height="240.0" fill="#dbe8f5"/>
+<line x1="20.0" y1="260.0" x2="20.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="60.0" y1="260.0" x2="60.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="100.0" y1="260.0" x2="100.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="140.0" y1="260.0" x2="140.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="180.0" y1="260.0" x2="180.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="220.0" y1="260.0" x2="220.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="260.0" y1="260.0" x2="260.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="300.0" y1="260.0" x2="300.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="340.0" y1="260.0" x2="340.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="380.0" y1="260.0" x2="380.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="420.0" y1="260.0" x2="420.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="260.0" x2="420.0" y2="260.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="220.0" x2="420.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="180.0" x2="420.0" y2="180.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="140.0" x2="420.0" y2="140.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="100.0" x2="420.0" y2="100.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="60.0" x2="420.0" y2="60.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="20.0" x2="420.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="20.0" y1="140" x2="420.0" y2="140" stroke="#888888" stroke-width="1"/>
+<line x1="140" y1="260.0" x2="140" y2="20.0" stroke="#888888" stroke-width="1"/>
+<circle cx="140" cy="140" r="80" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+<line x1="300" y1="260.0" x2="300" y2="20.0" stroke="#1f5f99" stroke-width="2.5"/>
+<circle cx="220" cy="140" r="3.5" fill="#1d1d1d"/>
+<text x="186" y="158" fill="#1d1d1d">(1, 0)</text>
+<line x1="220" y1="120.0" x2="300" y2="120.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="220" y1="115.0" x2="220" y2="125.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<line x1="300" y1="115.0" x2="300" y2="125.0" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="236.0" y="114.0" fill="#1d1d1d">gap 1 m</text>
+<text x="308" y="38.0" fill="#1f5f99">x ≥ 2</text>
+<text x="146" y="134" fill="#1d1d1d">0</text>
+<text x="28.0" y="44.0" fill="#c0392b">x² + y² = 1</text>
+<text x="20" y="285" fill="#c0392b">red: the circle, where a 1 m link can put its tip</text>
+<text x="20" y="302" fill="#1f5f99">blue: the wall x = 2 m and the side it asks for</text>
+</svg>

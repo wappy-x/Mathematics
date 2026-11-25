@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 430" width="420" height="430">
+<title>The seven points of y^2 = x^3 - x mod 13, and how the map [i](x, y) = (-x, 5y) moves them</title>
+<rect x="0" y="0" width="420" height="430" fill="#ffffff"/>
+<line x1="52" y1="372" x2="52" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="372" x2="364" y2="372" stroke="#d0d0d0" stroke-width="1"/>
+<text x="52" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">0</text>
+<text x="38" y="376" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">0</text>
+<line x1="78" y1="372" x2="78" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="346" x2="364" y2="346" stroke="#d0d0d0" stroke-width="1"/>
+<text x="78" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">1</text>
+<text x="38" y="350" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">1</text>
+<line x1="104" y1="372" x2="104" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="320" x2="364" y2="320" stroke="#d0d0d0" stroke-width="1"/>
+<text x="104" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">2</text>
+<text x="38" y="324" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">2</text>
+<line x1="130" y1="372" x2="130" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="294" x2="364" y2="294" stroke="#d0d0d0" stroke-width="1"/>
+<text x="130" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">3</text>
+<text x="38" y="298" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">3</text>
+<line x1="156" y1="372" x2="156" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="268" x2="364" y2="268" stroke="#d0d0d0" stroke-width="1"/>
+<text x="156" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">4</text>
+<text x="38" y="272" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">4</text>
+<line x1="182" y1="372" x2="182" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="242" x2="364" y2="242" stroke="#d0d0d0" stroke-width="1"/>
+<text x="182" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">5</text>
+<text x="38" y="246" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">5</text>
+<line x1="208" y1="372" x2="208" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="216" x2="364" y2="216" stroke="#d0d0d0" stroke-width="1"/>
+<text x="208" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">6</text>
+<text x="38" y="220" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">6</text>
+<line x1="234" y1="372" x2="234" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="190" x2="364" y2="190" stroke="#d0d0d0" stroke-width="1"/>
+<text x="234" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">7</text>
+<text x="38" y="194" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">7</text>
+<line x1="260" y1="372" x2="260" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="164" x2="364" y2="164" stroke="#d0d0d0" stroke-width="1"/>
+<text x="260" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">8</text>
+<text x="38" y="168" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">8</text>
+<line x1="286" y1="372" x2="286" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="138" x2="364" y2="138" stroke="#d0d0d0" stroke-width="1"/>
+<text x="286" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">9</text>
+<text x="38" y="142" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">9</text>
+<line x1="312" y1="372" x2="312" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="112" x2="364" y2="112" stroke="#d0d0d0" stroke-width="1"/>
+<text x="312" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">10</text>
+<text x="38" y="116" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">10</text>
+<line x1="338" y1="372" x2="338" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="86" x2="364" y2="86" stroke="#d0d0d0" stroke-width="1"/>
+<text x="338" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">11</text>
+<text x="38" y="90" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">11</text>
+<line x1="364" y1="372" x2="364" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<line x1="52" y1="60" x2="364" y2="60" stroke="#d0d0d0" stroke-width="1"/>
+<text x="364" y="392" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">12</text>
+<text x="38" y="64" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1d1d1d">12</text>
+<text x="208" y="410" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d">x mod 13</text>
+<text x="16" y="216" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#1d1d1d" transform="rotate(-90 16 216)">y mod 13</text>
+<line x1="221.0" y1="379.8" x2="221.0" y2="52.19999999999999" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="5,4"/>
+<line x1="188.4" y1="261.6" x2="248.0" y2="202.0" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="253.6,196.4 250.1,207.0 243.0,199.9" fill="#1d1d1d"/>
+<line x1="252.5" y1="185.0" x2="196.1" y2="147.4" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="189.5,143.0 200.6,144.4 195.0,152.7" fill="#1d1d1d"/>
+<line x1="188.4" y1="144.4" x2="248.0" y2="204.0" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="253.6,209.6 243.0,206.1 250.1,199.0" fill="#1d1d1d"/>
+<line x1="252.5" y1="221.0" x2="196.1" y2="258.6" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="189.5,263.0 195.0,253.3 200.6,261.6" fill="#1d1d1d"/>
+<path d="M 78 363 Q 221.0 304.4 364 363" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+<polygon points="78.0,363.0 85.4,354.6 89.1,363.8" fill="#1d1d1d"/>
+<polygon points="364.0,363.0 352.9,363.8 356.6,354.6" fill="#1d1d1d"/>
+<circle cx="52" cy="372" r="6" fill="#1d1d1d"/>
+<circle cx="78" cy="372" r="6" fill="#1d1d1d"/>
+<circle cx="364" cy="372" r="6" fill="#1d1d1d"/>
+<circle cx="182" cy="268" r="6" fill="#1d1d1d"/>
+<circle cx="182" cy="138" r="6" fill="#1d1d1d"/>
+<circle cx="260" cy="216" r="6" fill="#1d1d1d"/>
+<circle cx="260" cy="190" r="6" fill="#1d1d1d"/>
+<circle cx="52" cy="372" r="10" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+<text x="174" y="286" font-family="sans-serif" font-size="11" fill="#1d1d1d">(5, 4)</text>
+<text x="144" y="130" font-family="sans-serif" font-size="11" fill="#1d1d1d">Q = (5, 9)</text>
+<text x="269" y="184" font-family="sans-serif" font-size="11" fill="#1d1d1d">(8, 7)</text>
+<text x="269" y="230" font-family="sans-serif" font-size="11" fill="#1d1d1d">(8, 6)</text>
+</svg>

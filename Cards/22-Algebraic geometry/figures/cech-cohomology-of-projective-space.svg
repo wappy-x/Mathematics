@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" width="520" height="300" font-family="Helvetica, Arial, sans-serif">
+<title>Laurent monomials x^a y^b z^c on the projective plane, plotted by (a, b): the six classes of H^0(O(2)) and the three classes of H^2(O(-4))</title>
+<rect x="0" y="0" width="520" height="300" fill="#ffffff"/>
+<text x="124" y="24" font-size="12" text-anchor="middle" fill="#1d1d1d">d = 2: six classes, all exponents 0 or more</text>
+<circle cx="40" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="40" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="64" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="88" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="112" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="136" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="160" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="184" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="208" cy="56" r="1.6" fill="#9a9a9a"/>
+<line x1="136" y1="224" x2="136" y2="56" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="40" y1="128" x2="208" y2="128" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="112" y1="56" x2="208" y2="152" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 3"/>
+<polygon points="136,128 184,128 136,80" fill="#1d3557" fill-opacity="0.15" stroke="#1d3557" stroke-width="1.2"/>
+<circle cx="136" cy="128" r="5" fill="#1d3557"/>
+<circle cx="136" cy="104" r="5" fill="#1d3557"/>
+<circle cx="136" cy="80" r="5" fill="#1d3557"/>
+<circle cx="160" cy="128" r="5" fill="#1d3557"/>
+<circle cx="160" cy="104" r="5" fill="#1d3557"/>
+<circle cx="184" cy="128" r="5" fill="#1d3557"/>
+<text x="214" y="132" font-size="11" fill="#1d1d1d">a</text>
+<text x="141" y="52" font-size="11" fill="#1d1d1d">b</text>
+<text x="10" y="264" font-size="11" fill="#1d1d1d">dashed: c = 0, that is a + b = 2</text>
+<text x="384" y="24" font-size="12" text-anchor="middle" fill="#1d1d1d">d = -4: three classes, all exponents -1 or less</text>
+<circle cx="300" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="300" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="324" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="348" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="372" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="396" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="420" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="444" cy="56" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="224" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="200" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="176" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="152" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="128" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="104" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="80" r="1.6" fill="#9a9a9a"/>
+<circle cx="468" cy="56" r="1.6" fill="#9a9a9a"/>
+<line x1="396" y1="224" x2="396" y2="56" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="300" y1="128" x2="468" y2="128" stroke="#1d1d1d" stroke-width="1"/>
+<line x1="300" y1="128" x2="396" y2="224" stroke="#1d1d1d" stroke-width="1" stroke-dasharray="4 3"/>
+<polygon points="372,152 372,176 348,152" fill="#c0392b" fill-opacity="0.15" stroke="#c0392b" stroke-width="1.2"/>
+<circle cx="348" cy="152" r="5" fill="#c0392b"/>
+<circle cx="372" cy="176" r="5" fill="#c0392b"/>
+<circle cx="372" cy="152" r="5" fill="#c0392b"/>
+<text x="474" y="132" font-size="11" fill="#1d1d1d">a</text>
+<text x="401" y="52" font-size="11" fill="#1d1d1d">b</text>
+<text x="270" y="264" font-size="11" fill="#1d1d1d">dashed: c = 0, that is a + b = -4</text>
+<text x="260" y="286" font-size="11" text-anchor="middle" fill="#1d1d1d">Each grey dot is a pair (a, b) from -4 to 3; c = d - a - b. To scale, 24 px per step.</text>
+</svg>
