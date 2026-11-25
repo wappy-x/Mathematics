@@ -12,7 +12,7 @@ One number, built from the numbers $`A`$, $`B`$, $`C`$ in front of $`x^2`$, $`xy
 
 The name "conic" comes from cones. A garden lamp with a cone-shaped beam, aimed 45° off vertical, lights a patch of exactly the bed's shape. Two spheres wedged in the beam prove the patch has two pegs.
 
-**Turn the axes by the angle that kills the $`xy`$ term, and any second-degree equation becomes a circle, ellipse, parabola or hyperbola in standard position (or a degenerate case); the sign of $`B^2 - 4AC`$, which no turn changes, says which one, and two spheres show that a flat slice of a cone is the same curve.**
+**Turn the axes by the angle that kills the $`xy`$ term, and any second-degree equation becomes a circle, ellipse, parabola or hyperbola in standard position (or a degenerate case: a single point, a pair of lines, or no points at all); the sign of $`B^2 - 4AC`$, which no turn changes, says which one, and two spheres show that a flat slice of a cone is the same curve.**
 
 **What kind of fact this is:** theorems, all proved in Why it works: the turning formulas, the unchanged $`B^2 - 4AC`$, and the Dandelin spheres argument with the slice's eccentricity.
 

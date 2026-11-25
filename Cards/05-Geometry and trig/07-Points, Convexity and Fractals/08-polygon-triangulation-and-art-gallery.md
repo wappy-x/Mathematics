@@ -776,13 +776,12 @@ end
 - [Inside or outside](03-point-in-polygon-and-segment-tests.md): the ray test for grid points and the crossing test for sight lines.
 - [Colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): proper colouring, here of the triangulation's corners in three colours.
 - [Convex sets](02-convex-sets-and-convex-hulls.md): why one corner of a triangle sees all of it.
-- [Nearest-neighbour maps](04-voronoi-and-delaunay.md): a different triangulation, of scattered points rather than a polygon.
 
 ## Where this goes next
 
 - [Sweeping a line across the plane](09-plane-sweep-segment-intersection.md): the sweep that finds crossing segments; textbooks adapt it to triangulate a polygon in about n log n steps, against ear clipping's n².
 
-The ceiling covers every gallery with n corners; how to find the fewest guards for one particular gallery is the question this card leaves open. Next on this shelf, Sweeping a line across the plane develops the plane sweep needed for faster triangulation.
+The ceiling covers every gallery with n corners; how to find the fewest guards for one particular gallery is the question this card leaves open. Next on this shelf, [Sweeping a line across the plane](09-plane-sweep-segment-intersection.md) develops the plane sweep needed for faster triangulation.
 
 ---
 

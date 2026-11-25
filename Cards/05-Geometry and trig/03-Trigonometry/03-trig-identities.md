@@ -505,7 +505,7 @@ example : (30 : ℝ) + 10 * cos 0 = 40 ∧ (10 : ℝ) * sin 0 = 0 := by
 
 ## Where you meet it in real life
 
-- **Mains electricity.** Two voltages of one frequency, a quarter cycle apart, add to one wave, as in Step 5; three waves make AC (alternating current) power.
+- **Mains electricity.** Two voltages of one frequency, a quarter cycle apart, add to one wave, as in Step 5; three waves a third of a cycle apart make three-phase power, the usual supply for factory motors.
 - **Sound.** Two nearly equal notes swell and fade: the sum and difference formulas turn their sum into a product, and the slow factor is the beat ([Resonance](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/06-resonance-and-beats.md)).
 - **Tables before calculators.** Ptolemy's second-century chord table grew from a few exact angles by a half-arc rule; he knew the sum rule in chord form. Abu'l-Wafa had the double angle by 980.
 

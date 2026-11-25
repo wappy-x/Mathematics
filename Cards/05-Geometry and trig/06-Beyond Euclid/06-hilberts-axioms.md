@@ -70,7 +70,7 @@ Pasch's axiom, the order rule this card uses, for a triangle ABC and a line $`\e
 
 An **axiom** is a rule a proof may use without proving it. To show a rule is missing, build a world where all the written rules hold but the claimed result fails. Then no proof from the written rules can exist.
 
-The **fraction plane** is such a world: the points of squared paper whose coordinates are both fractions (whole number over whole number). Lines and circles still exist there, so Euclid's drawing rules hold. In I.1 only the crossing is missing, but others are too: the circle about A meets the line y = x at no fraction point.
+The **fraction plane** (the "rational plane" in the code's output) is such a world: the points of squared paper whose coordinates are both fractions (whole number over whole number). Lines and circles still exist there, so Euclid's drawing rules hold. In I.1 only the crossing is missing, but others are too: the circle about A meets the line y = x at no fraction point.
 
 ### Step 1: Hilbert's five groups
 
@@ -111,7 +111,7 @@ Suppose P and Q lie on one side of $`\ell`$, and Q and R do too. Off one line, i
 
 On one line, order axioms settle it: two distinct lines meet at most once.
 
-On squared paper, a line's equation gives a **sign test**. The red line is y = x − 1, so y − x + 1 is zero on it, positive on one side and negative on the other. For line AB, the x-axis, the test is the sign of y: + at C, − at C′. So Euclid's construction has two answers, one on each side of AB.
+On squared paper, a line's equation gives a **sign test**. The dashed red line in the figure, through D and E, is y = x − 1, so y − x + 1 is zero on it, positive on one side and negative on the other. For line AB, the x-axis, the test is the sign of y: + at C, − at C′. So Euclid's construction has two answers, one on each side of AB.
 
 The red line enters through D = (1, 0), heading 1 right for each 1 up. Its sign is + at A, − at B, + at C. Only B is on its own, so the line crosses AB and BC, and leaves through BC at E = (2.902, 1.902).
 

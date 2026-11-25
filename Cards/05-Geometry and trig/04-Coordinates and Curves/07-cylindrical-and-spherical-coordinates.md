@@ -95,7 +95,7 @@ The shadow lies at distance r from the centre, at angle θ from the Greenwich di
 
 Join the centre O, Tokyo, and Tokyo's shadow. The shadow-to-Tokyo line is vertical and the O-to-shadow line flat, so the right angle is at the shadow and the long side is ρ.
 
-The angle at O between ρ and the vertical axis is the colatitude φ. Sine and cosine in a right triangle ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
+The angle at O is Tokyo's latitude. The vertical side runs parallel to the axis, so the angle at Tokyo, 90° minus the latitude, is the colatitude φ, the angle between ρ and the vertical axis. Sine and cosine in a right triangle ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
 
 South of the equator the colatitude passes 90°: Rio de Janeiro, at 22.91° south, has 112.91°. The cosine past 90° is negative ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)), so z = −2480.1 km: below the equator, with no separate rule needed. The sine stays positive up to 180°, so r stays a distance.
 
@@ -474,7 +474,7 @@ theorem spherical_sum_of_squares (ρ θ φ : ℝ) :
 > **Try changing**
 > Guess first, then run it.
 > - **The North Pole.** Set Tokyo to latitude 90. The distance from the axis falls to 0.0 and the dot road stops: it divides by r = 0, because longitude at the pole has no value.
-> - **London.** Use latitude 51.51 and longitude −0.13. Guess the sign of y first: negative but small, −9.0 km, since London is just west of Greenwich.
+> - **London.** Replace Tokyo's entry with latitude 51.51 and longitude −0.13. Guess the sign of y first: negative but small, −9.0 km, since London is just west of Greenwich. The run then stops at the arctan assert, which expects Tokyo's longitude.
 > - **Break the sign rule.** Replace `(1 if y >= 0 else -1)` with `1`. Rio's longitude comes back as +43.17 on the dot road, and the second assert stops the run.
 
 ---
