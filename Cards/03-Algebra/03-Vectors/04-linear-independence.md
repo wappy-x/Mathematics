@@ -6,7 +6,7 @@
 
 ## General Overview
 
-The garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus — as a vector, a list of numbers in round brackets ([Vectors](01-vectors.md)), A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
+The turf supplier stocks two fertiliser blends in 50 kg bags. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus — as a vector, a list of numbers in round brackets ([Vectors](01-vectors.md)), A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
 
 A supplier turns up with a third blend, bag C = (12, 13). Worth stocking?
 
@@ -152,7 +152,7 @@ One bag of A and one of B, with one bag of C taken back out, leaves an empty bar
 | Testing the bags two at a time | cross-numbers 70, 70 and −70 | Every pair is independent, the trio dependent anyway |
 | Offering the all-zero mix as proof | (0, 0) | Every list does that; only a not-zero amount counts |
 | Insisting on positive amounts | (24, 26) | All three added fills the barrow; one bag must come back out |
-| Dropping A rather than C | cross-number of B and C is −70 | Either works: B and C still reach everything |
+| Assuming only C can be dropped | cross-number of B and C is −70 | Nothing breaks if A goes instead: B and C still reach everything |
 
 The code prints all of those numbers.
 

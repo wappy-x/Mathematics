@@ -51,8 +51,8 @@ fn main() {
     line("200 g flour, zero", format!("{}   flour {}", show(zero), zero[0]));
     line("grams kept positive", format!("the opposite of shortbread is {}", show(scale(-1, short))));
 
-    let sugar_mix = add(scale(a, f1), scale(b, f2))[1];        // road two: one slot of a mix
-    let flour_mix = add(scale(a, g1), scale(b, g2))[0];
+    let sugar_mix = a * f1[1] + b * f2[1];        // road two: one slot of the mix, from two slots
+    let flour_mix = a * g1[0] + b * g2[0];        // no vector is built on this road
     println!("second road: the slot of the mix {} u + {} v, worked from the two slots alone", a, b);
     line("sugar of the mix", format!("{} = {} x {} + {} x {}   still sugar-free",
                                      sugar_mix, a, f1[1], b, f2[1]));
@@ -63,5 +63,6 @@ fn main() {
     assert!(all_hold && scale(a + b, short) == [-300, -100, -200]);
     assert!(add(f1, f2)[1] == 0 && scale(3, f1)[1] == 0 && sugar_mix == 0);
     assert!(add(g1, g2)[0] == 400 && scale(3, g1)[0] == 600 && flour_mix == -200 && zero[0] != 200);
+    assert!(sugar_mix == add(scale(a, f1), scale(b, f2))[1] && flour_mix == add(scale(a, g1), scale(b, g2))[0]);
     println!("ALL CHECKS PASS");
 }

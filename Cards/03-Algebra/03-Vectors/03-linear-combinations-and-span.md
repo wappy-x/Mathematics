@@ -6,9 +6,9 @@
 
 ## General Overview
 
-A garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — that is A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
+A turf supplier stocks two fertiliser blends in 50 kg bags. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — that is A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
 
-A lawn needs 14 kg of nitrogen and 21 kg of phosphorus. Can these two bags supply it?
+A football pitch, about 7,000 square metres of lawn, needs 14 kg of nitrogen and 21 kg of phosphorus for one feed. Can these two bags supply it?
 
 Buy one bag of A and two bags of B. Nitrogen: 10 + 2 × 2 = 14. Phosphorus: 5 + 2 × 8 = 21. Exact, with nothing left over.
 
@@ -40,39 +40,39 @@ The flatter line is nitrogen, the steeper one phosphorus. Each extra bag of B li
 
 Two names first, in words. The number of bags of the first blend is the unknown x, the number of bags of the second is y. Those two numbers are the **coefficients** of the mix: the amounts each vector is multiplied by.
 
-Call the two bags $`a`$ and $`b`$ — lower case, the same two bags — and the target $`t`$. A linear combination of $`a`$ and $`b`$ is:
+Call the target $`t`$. A linear combination of the two bags $`A`$ and $`B`$ is:
 
 ```math
-x\,a + y\,b
+x\,A + y\,B
 ```
 
 The target sits in the span exactly when some pair of numbers makes that combination land on it:
 
 ```math
-x\,a + y\,b = t
+x\,A + y\,B = t
 ```
 
 **Read it aloud:** some amount of the first bag, plus some amount of the second, added together, has to land exactly on what the lawn needs.
 
-The span is the whole collection of those mixes, written span{$`a`$, $`b`$}:
+The span is the whole collection of those mixes, written span{$`A`$, $`B`$}:
 
 ```math
-\mathrm{span}\{a, b\} = \{\, x\,a + y\,b \ :\ x \text{ and } y \text{ any numbers} \,\}
+\mathrm{span}\{A, B\} = \{\, x\,A + y\,B \ :\ x \text{ and } y \text{ any numbers} \,\}
 ```
 
 Read the colon as "such that". Three vectors would mean a third amount and a third scaled term; nothing else changes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`a`$ | the first vector: a list of numbers in round brackets | bag A = (10, 5): 10 kg nitrogen, 5 kg phosphorus | raise a slot and the mix leans that way |
-| $`b`$ | the second vector | bag B = (2, 8) | the mix leans further towards phosphorus |
-| $`x`$ | the coefficient on $`a`$: how many bags of it the mix uses | 1 bag | every slot of $`a`$ contributes more |
-| $`y`$ | the coefficient on $`b`$ | 2 bags | every slot of $`b`$ contributes more |
+| $`A`$ | the first vector: a list of numbers in round brackets | bag A = (10, 5): 10 kg nitrogen, 5 kg phosphorus | raise a slot and the mix leans that way |
+| $`B`$ | the second vector | bag B = (2, 8) | the mix leans further towards phosphorus |
+| $`x`$ | the coefficient on $`A`$: how many bags of it the mix uses | 1 bag | every slot of $`A`$ contributes more |
+| $`y`$ | the coefficient on $`B`$ | 2 bags | every slot of $`B`$ contributes more |
 | $`t`$ | the target you are trying to land on | (14, 21) | the amounts needed grow with it |
-| span{$`a`$, $`b`$} | every target the mixes can reach | the whole flat plane | — |
+| span{$`A`$, $`B`$} | every target the mixes can reach | the whole flat plane | — |
 | the cross-number | one number saying whether the two vectors reach everything | 70 | nothing changes; only zero versus not-zero matters |
 
-The cross-number of two vectors in the plane: the first slot of $`a`$ times the second slot of $`b`$, minus the first slot of $`b`$ times the second slot of $`a`$. Here, 10 × 8 − 2 × 5 = 70. Not zero, and that is the whole test: $`a`$ and $`b`$ span the entire plane. That number's real name is the **determinant**, taken further in [Determinants](../05-Solving%20Systems/04-determinants.md).
+The cross-number of two vectors in the plane: the first slot of $`A`$ times the second slot of $`B`$, minus the first slot of $`B`$ times the second slot of $`A`$. Here, 10 × 8 − 2 × 5 = 70. Not zero, and that is the whole test: $`A`$ and $`B`$ span the entire plane. That number's real name is the **determinant**, taken further in [Determinants](../05-Solving%20Systems/04-determinants.md).
 
 ### When it holds
 
@@ -87,7 +87,7 @@ The cross-number of two vectors in the plane: the first slot of $`a`$ times the 
 
 ### Step 0: a vector equation is really one equation per slot
 
-Two lists are equal when they agree slot by slot. So $`x\,a + y\,b = t`$ is not one equation. It is two — one for nitrogen, one for phosphorus — sharing the same two unknowns.
+Two lists are equal when they agree slot by slot. So $`x\,A + y\,B = t`$ is not one equation. It is two — one for nitrogen, one for phosphorus — sharing the same two unknowns.
 
 ### Step 1: write the two slot equations out
 
@@ -118,7 +118,7 @@ That number is the divisor for every target you will ever try. Divide by it and 
 
 Add two mixes and the result is a mix: add the amounts. Scale a mix and the result is a mix: scale the amounts. Set both amounts to zero and you get the zero vector, (0, 0), so the span always contains it.
 
-Those three facts are precisely the test for a subspace ([Vector spaces and subspaces](02-vector-spaces-and-subspaces.md)). So the span of any list of vectors is a subspace — and the smallest one containing them: any subspace holding $`a`$ and $`b`$ must hold every mix of them too.
+Those three facts are precisely the test for a subspace ([Vector spaces and subspaces](02-vector-spaces-and-subspaces.md)). So the span of any list of vectors is a subspace — and the smallest one containing them: any subspace holding $`A`$ and $`B`$ must hold every mix of them too.
 
 ### The shapes a span takes
 
@@ -514,7 +514,7 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] = ![2
 - **Solving equations.** Asking whether two equations in two unknowns have a solution is the same question as asking whether the target is in the span of the two columns ([Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 > **Say it back**
-> A linear combination is a mix: so much of one vector, so much of another, added together. The span is every target those mixes reach. Bag A = (10, 5) and bag B = (2, 8): one A and two B land exactly on (14, 21), so (14, 21) is in the span. To test any target, match slot by slot and solve the two equations you get. The cross-number here is 70, not zero, so these bags reach the whole plane — (14, 22) too, with fractions of a bag. One vector spans a line, two spread-out vectors a plane, three a whole space.
+> A linear combination is a mix: so much of one vector, so much of another, added together. The span is every target those mixes reach. Bag A = (10, 5) and bag B = (2, 8): one A and two B land exactly on (14, 21), so (14, 21) is in the span. To test any target, match slot by slot and solve the two equations you get. The cross-number here is 70, not zero, so these bags reach the whole plane — (14, 22) too, with fractions of a bag. One non-zero vector spans a line. Two vectors pointing different ways span a plane. Three in space, none a mix of the other two, span all of space.
 
 ---
 
@@ -528,7 +528,7 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] = ![2
 - [Linear independence](04-linear-independence.md): whether any vector in the list was redundant — already a mix of the others, adding nothing to the span.
 - [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): the same mix written as a matrix times a list of amounts, which shortens everything here.
 
-Left open: when a target is in the span, is the mix that reaches it the only one?
+Left open: when a third bag joins the list, how can you tell whether it widens the span or is already a mix of the two you have?
 
 ---
 

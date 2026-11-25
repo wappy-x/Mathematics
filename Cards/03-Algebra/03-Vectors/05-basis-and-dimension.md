@@ -6,11 +6,11 @@
 
 ## General Overview
 
-A rowing crew launches from a boathouse. A buoy sits 5 km east and 3 km north of it. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — the buoy is at (5, 3).
+A rowing crew launches from a boathouse on a wide estuary, where the river is several kilometres across. A buoy sits 5 km east and 3 km north of it. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — the buoy is at (5, 3).
 
 That pair is not the buoy. It is an instruction: go 5 east, then 3 north. Two directions, one amount each.
 
-The crew does not steer in east and north. They steer in the river, which runs northeast. One stroke downstream carries them 1 km east and 1 km north, the vector (1, 1). Straight across it, at right angles, is (-1, 1). In those two directions the buoy is 4 downstream and 1 back across, because 4 × (1, 1) − 1 × (-1, 1) = (5, 3).
+The crew does not steer in east and north. They steer in the river, which runs northeast. One leg downstream carries them 1 km east and 1 km north, the vector (1, 1). Straight across it, at right angles, is (-1, 1). In those two directions the buoy is 4 downstream and 1 back across, because 4 × (1, 1) − 1 × (-1, 1) = (5, 3).
 
 Same buoy, two pairs of numbers: (5, 3) one way, (4, -1) the other. Neither is more real. What did not change is the number two. Each way needed two directions. No set of directions that covers this plane ever has one, or three.
 
@@ -30,7 +30,7 @@ xychart-beta
     line [0, 1, 2, 3, 4, 3]
 ```
 
-The straight climbing line is the river: every point reachable going downstream only. The second line rides the river for 4 strokes, to (4, 4), then cuts 1 stroke back across onto the buoy. Neither direction alone gets there. Together they reach anywhere.
+The straight climbing line is the river: every point reachable going downstream only. The second line rides the river for 4 legs, to (4, 4), then cuts 1 leg back across onto the buoy. Neither direction alone gets there. Together they reach anywhere.
 
 ---
 
@@ -57,10 +57,10 @@ The list $`b_1`$, $`b_2`$ is a basis when both hold: it **spans**, so every poin
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`v`$ | the vector being described | the buoy, (5, 3) | the coordinates move with it |
-| $`b_1`$ | the first basis vector | (1, 1): one stroke downstream | fewer strokes needed: $`x`$ falls |
-| $`b_2`$ | the second basis vector | (-1, 1): one stroke across | the crossing shrinks: $`y`$ moves toward 0 |
-| $`x`$ | the amount of $`b_1`$ in the mix | 4 strokes downstream | the point slides downstream |
-| $`y`$ | the amount of $`b_2`$ in the mix | -1: one stroke back across | the point slides across |
+| $`b_1`$ | the first basis vector | (1, 1): one leg downstream | fewer legs needed: $`x`$ falls |
+| $`b_2`$ | the second basis vector | (-1, 1): one leg across | the crossing shrinks: $`y`$ moves toward 0 |
+| $`x`$ | the amount of $`b_1`$ in the mix | 4 legs downstream | the point slides downstream |
+| $`y`$ | the amount of $`b_2`$ in the mix | -1: one leg back across | the point slides across |
 | $`[v]_B`$ | the coordinates of $`v`$ in that basis | (4, -1) | — |
 | $`e_1`$ and $`e_2`$ | the **standard basis**: (1, 0) and (0, 1), one east and one north | coordinates against these are just the entries, (5, 3) | — |
 | the cross-number | whether two vectors reach the whole plane ([Linear combinations and span](03-linear-combinations-and-span.md)) | 1 × 1 − (-1) × 1 = 2 | only zero versus not-zero matters |
@@ -138,7 +138,7 @@ One lemma (a helper fact proved on the way to a bigger one) does it in any space
 
 ### The other route
 
-Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible, so that its effect can be undone? The cross-number is then the determinant — the route taken properly on [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md).
+Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible, so that its effect can be undone? The cross-number is then the determinant — the route taken properly on [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md) and [Determinants](../05-Solving%20Systems/04-determinants.md).
 
 ---
 
@@ -500,7 +500,7 @@ example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the two bases and the two points.
 > - **Tilt the across vector.** Set `B2` to `(1, -1)`. Still a basis: cross-number -2, buoy's address (4, 1). The elimination is written for the old basis, so the first assert stops the run.
 > - **Make the river vectors parallel.** Set `B2` to `(2, 2)`, twice `B1`. The cross-number falls to 0, the rule divides by zero, and the script stops before printing an address.
-> - **Move the second point.** Change `(0, 6)` to `(7, 1)`. Both roads print (4, -3) and the rebuild lands on (7, 1), but the second assert is pinned to (0, 6) and stops it.
+> - **Move the second point.** In the loop, change `(0, 6)` to `(7, 1)`. Both roads print (4, -3) and the rebuild lands on (7, 1). Every assert still passes, because the second one names (0, 6) itself. Change it there too and that assert stops the run.
 
 ---
 
@@ -537,6 +537,7 @@ example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![
 
 ## Where this goes next
 
+- [Matrices](../04-Matrices/01-matrices-and-the-matrix-zoo.md): the next shelf. Basis vectors stacked side by side make a table of numbers, the main tool of the shelves that follow.
 - [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): with a basis fixed, a linear map is just the matrix of what it does to the basis vectors.
 - [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map does to dimension — how many directions survive, how many are flattened.
 - [Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): straightening any basis into one whose vectors are at right angles and one unit long.
@@ -544,7 +545,7 @@ example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
 - [Tensor products](../11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md): pair every basis vector of one space with every basis vector of another, so a 2-space and a 3-space make a 6-space, and most of its members are not simple pairs.
 
-The question this card leaves open: how do you turn an address in one basis into its address in another without solving from scratch each time?
+The question this card leaves open: how do you turn an address in one basis into its address in another without solving from scratch each time? The answer needs matrices, so the next shelf starts with [Matrices](../04-Matrices/01-matrices-and-the-matrix-zoo.md). The full answer is on [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md).
 
 ---
 

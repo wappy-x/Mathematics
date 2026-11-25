@@ -73,8 +73,8 @@ One vector gets its own name. The **zero vector**, written 0, is all zeros: (0, 
 
 ### When it holds
 
-- **Both lists have the same length.** The two-number legs add, and the four-number week adds. A two-number leg and a four-number week do not: some slots have nothing to match.
-- **Every list uses the same slot order.** East first, north second, in every vector. Mix the order and east lands on north; add across slots and you get 8, which is not a place.
+- **Both lists have the same length.** Two legs with two numbers each add. Two lists with four numbers each add too, like the four-day week below. A two-number leg and a four-number list do not: some slots have nothing to match.
+- **Every list uses the same slot order.** East first, north second, in every vector. Write one leg north first and its east kilometres get added to the other leg's north.
 - **A scalar is one plain number.** Scaling multiplies every slot by that one number. Multiply two vectors slot by slot instead and (6, -4) comes out, which is not scaling.
 
 ---
@@ -450,10 +450,10 @@ example : (![2 * 3, 4] : Fin 2 → ℝ) ≠ (2 : ℝ) • ![3, 4] := by
 ## Where this goes next
 
 - [Vector spaces and subspaces](02-vector-spaces-and-subspaces.md): the rules adding and scaling obey, written out, so anything obeying them inherits the whole subject.
-- [Matrices](../04-Matrices/01-matrices-and-the-matrix-zoo.md): the grid of numbers that takes a vector in and hands a different vector back.
+- [Matrices](../04-Matrices/01-matrices-and-the-matrix-zoo.md): a table of numbers whose rows and columns are vectors, with a size and a set of named shapes.
 - [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): multiplying two vectors into a single number, and where the length of an arrow finally comes from.
 
-Left open: an arrow has a length and a direction, but adding and scaling alone never say how long one is.
+Left open: adding and scaling obey the same rearranging laws as plain numbers. What else can be added and scaled by those laws, and which pieces of it stay closed? The next card answers that. How long an arrow is waits for [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md).
 
 ---
 

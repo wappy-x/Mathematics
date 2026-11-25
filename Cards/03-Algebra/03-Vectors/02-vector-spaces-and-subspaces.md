@@ -10,7 +10,9 @@ A shortbread recipe is three numbers: 300 grams of flour, 100 of sugar, 200 of b
 
 Two things you can do. Double the shortbread: (600, 200, 400), still a recipe. Bake shortbread and sponge together and the shopping list is the two added slot by slot: (500, 300, 300), also a recipe. Add, scale: you never land outside the recipes.
 
-A collection like that — adding and scaling never take you outside, and the rearranging you already do with numbers still works — is a **vector space**. Recipes are one. Arrows drawn from a corner of a page are another. So are quadratics, the expressions with an x-squared in them. Prove something about a vector space and it holds for all of them.
+A collection like that — adding and scaling never take you outside, and the rearranging you already do with numbers still works — is a **vector space**. Recipes are one, once a negative amount may mean "take that much out" (Why it works, Step 1).
+
+Arrows drawn from a corner of a page are another. So are the polynomials of degree at most 2, such as 3x² − x + 5: nothing higher than an x-squared, and the x-squared part may be zero. Prove something about a vector space and it holds for all of them.
 
 Some subsets are little vector spaces themselves. The sugar-free recipes are: add two, still sugar-free; scale one, still sugar-free. Those are **subspaces**. The recipes with exactly 200 grams of flour are not: add two of them and you have 400 grams of flour.
 
@@ -35,11 +37,17 @@ flowchart LR
 
 A vector is a list in round brackets, and single letters stand for whole lists: $`u`$, $`v`$, $`w`$ are recipes, $`a`$ and $`b`$ are numbers ([Vectors](01-vectors.md)). A number you scale by is a **scalar**, and in this wing scalars are always real numbers.
 
-The two operations:
+The two operations. Adding, $`u + v`$, adds slot by slot:
 
-**$`u + v`$: add slot by slot. (300, 100, 200) + (200, 200, 100) = (500, 300, 300).**
+```math
+(300, 100, 200) + (200, 200, 100) = (500, 300, 300)
+```
 
-**$`a u`$: multiply every slot by $`a`$. 2 × (300, 100, 200) = (600, 200, 400).**
+Scaling, $`a u`$, multiplies every slot by the number $`a`$:
+
+```math
+2 \times (300, 100, 200) = (600, 200, 400)
+```
 
 A collection $`V`$ carrying those two operations is a **vector space** when every result lands back in $`V`$ and the rearranging laws you use on numbers still hold: order and grouping do not matter, there is a zero, everything has an opposite, scaling spreads across a sum ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)). Written out, that is a list of eight.
 
@@ -62,7 +70,9 @@ Rules 1 to 4 are adding, 5 to 8 scaling: the arithmetic laws of wing 01, one slo
 
 Now the subset test. A subset $`W`$ of $`V`$ is a **subspace** when three things hold:
 
-**$`0`$ is in $`W`$; if $`u`$ and $`v`$ are in $`W`$ then $`u + v`$ is in $`W`$; and if $`u`$ is in $`W`$ then $`a u`$ is in $`W`$ for every number $`a`$.**
+1. The zero vector $`0`$ is in $`W`$.
+2. If $`u`$ and $`v`$ are in $`W`$, then $`u + v`$ is in $`W`$.
+3. If $`u`$ is in $`W`$, then $`a u`$ is in $`W`$ for every number $`a`$.
 
 **Read it aloud:** a subspace holds the zero, and adding or scaling things inside it lands you back inside it.
 
@@ -88,7 +98,7 @@ Now the subset test. A subset $`W`$ of $`V`$ is a **subspace** when three things
 
 ### Step 0: the rules are a contract, not a description
 
-Nobody discovered that recipes obey eight laws. The laws were chosen, because they are what a proof needs. Any collection that signs gets every vector-space theorem for free, whether its members are recipes, arrows or quadratics. That is why the definition is a list of rules, not a picture.
+Nobody discovered that recipes obey eight laws. The laws were chosen, because they are what a proof needs. Any collection that signs gets every vector-space theorem for free, whether its members are recipes, arrows or polynomials. That is why the definition is a list of rules, not a picture.
 
 ### Step 1: recipes sign it, one slot at a time
 
@@ -102,6 +112,8 @@ Fractions and negatives have to be allowed. Half a batch is a recipe. A negative
 
 Here is the saving. If $`W`$ sits inside a vector space, the eight rules already hold for its members: they held outside, and a subset does not change what adding means. All that can go wrong is leaving, so that is all you check.
 
+Rule 4 needs one more line. For each member $`u`$, its opposite $`-u`$ must sit inside $`W`$, not just inside $`V`$. Scaling by −1 gives $`-u = (-1)\,u`$, so the third check puts every opposite inside $`W`$.
+
 The zero check looks free: scale any member by 0 and out comes the zero vector. But an empty set has no member to scale, and the check rejects a candidate fastest.
 
 ### Step 3: one subset closes, the other comes apart
@@ -110,7 +122,11 @@ Sugar-free means the sugar slot is 0. Add (300, 0, 200) and (100, 0, 50): the su
 
 Exactly 200 grams of flour fails all three. Add (200, 100, 50) and (200, 50, 150): the flour is 400. Triple the first: 600. The zero recipe has 0 grams of flour, not 200.
 
-One line of arithmetic says why, and it is the second road the code takes. Any one slot of a mix $`a u + b v`$ is $`a`$ times that slot of $`u`$ plus $`b`$ times that slot of $`v`$. For sugar-free that is $`a`$ × 0 + $`b`$ × 0 = 0, whatever the weights. For the 200-gram set it is $`a`$ × 200 + $`b`$ × 200, back to 200 only when the weights add to 1; at $`a`$ = 2 and $`b`$ = −3 it is −200. Pinned at zero, a set closes up. Pinned anywhere else, it slides off the zero vector.
+One line of arithmetic says why, and it is the second road the code takes. Any one slot of a mix $`a u + b v`$ is $`a`$ times that slot of $`u`$ plus $`b`$ times that slot of $`v`$.
+
+For sugar-free that is $`a`$ × 0 + $`b`$ × 0 = 0, whatever the weights. For the 200-gram set it is $`a`$ × 200 + $`b`$ × 200. That is back to 200 only when the weights add to 1; at $`a`$ = 2 and $`b`$ = −3 it is −200.
+
+Pinned at zero, a set closes up. Pinned anywhere else, it slides off the zero vector.
 
 Mixes with any weights, which is what a subspace is closed under, are the next card: [Linear combinations and span](03-linear-combinations-and-span.md).
 
@@ -161,7 +177,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. A recipe is three numbers of grams, kept whole here so the arithmetic is exact; adding and scaling are written by hand. The first road walks the eight rules, then runs the three subspace checks on both candidate subsets. The second road reaches the same verdicts without testing membership: it works out one slot of a mix $`a u + b v`$ from that slot of $`u`$ and of $`v`$.
+Nothing is imported. A recipe is three numbers of grams, kept whole here so the arithmetic is exact; adding and scaling are written by hand. The first road walks the eight rules, then runs the three subspace checks on both candidate subsets. The second road reaches the same verdicts without testing membership: it works out one slot of a mix $`a u + b v`$ from that slot of $`u`$ and of $`v`$. The last assert checks that slot against the full mix built on road one.
 
 ### Python
 
@@ -209,8 +225,8 @@ line("200 g flour, tripled", f"{show(scale(3, G1))}   flour {scale(3, G1)[0]}")
 line("200 g flour, zero", f"{show(ZERO)}   flour {ZERO[0]}")
 line("grams kept positive", f"the opposite of shortbread is {show(scale(-1, SHORT))}")
 
-sugar_mix = add(scale(a, F1), scale(b, F2))[1]        # road two: one slot of a mix
-flour_mix = add(scale(a, G1), scale(b, G2))[0]
+sugar_mix = a * F1[1] + b * F2[1]        # road two: one slot of the mix, from two slots
+flour_mix = a * G1[0] + b * G2[0]        # no vector is built on this road
 print(f"second road: the slot of the mix {a} u + {b} v, worked from the two slots alone")
 line("sugar of the mix", f"{sugar_mix} = {a} x {F1[1]} + {b} x {F2[1]}   still sugar-free")
 line("flour of the mix", f"{flour_mix} = {a} x {G1[0]} + {b} x {G2[0]}   not 200")
@@ -219,10 +235,11 @@ assert add(SHORT, SPONGE) == (500, 300, 300) and scale(2, SHORT) == (600, 200, 4
 assert all(rules) and scale(a + b, SHORT) == (-300, -100, -200)
 assert add(F1, F2)[1] == 0 and scale(3, F1)[1] == 0 and sugar_mix == 0
 assert add(G1, G2)[0] == 400 and scale(3, G1)[0] == 600 and flour_mix == -200 and ZERO[0] != 200
+assert sugar_mix == add(scale(a, F1), scale(b, F2))[1] and flour_mix == add(scale(a, G1), scale(b, G2))[0]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 recipes are (flour, sugar, butter) in grams
@@ -304,8 +321,8 @@ fn main() {
     line("200 g flour, zero", format!("{}   flour {}", show(zero), zero[0]));
     line("grams kept positive", format!("the opposite of shortbread is {}", show(scale(-1, short))));
 
-    let sugar_mix = add(scale(a, f1), scale(b, f2))[1];        // road two: one slot of a mix
-    let flour_mix = add(scale(a, g1), scale(b, g2))[0];
+    let sugar_mix = a * f1[1] + b * f2[1];        // road two: one slot of the mix, from two slots
+    let flour_mix = a * g1[0] + b * g2[0];        // no vector is built on this road
     println!("second road: the slot of the mix {} u + {} v, worked from the two slots alone", a, b);
     line("sugar of the mix", format!("{} = {} x {} + {} x {}   still sugar-free",
                                      sugar_mix, a, f1[1], b, f2[1]));
@@ -316,11 +333,12 @@ fn main() {
     assert!(all_hold && scale(a + b, short) == [-300, -100, -200]);
     assert!(add(f1, f2)[1] == 0 && scale(3, f1)[1] == 0 && sugar_mix == 0);
     assert!(add(g1, g2)[0] == 400 && scale(3, g1)[0] == 600 && flour_mix == -200 && zero[0] != 200);
+    assert!(sugar_mix == add(scale(a, f1), scale(b, f2))[1] && flour_mix == add(scale(a, g1), scale(b, g2))[0]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 recipes are (flour, sugar, butter) in grams
@@ -483,7 +501,7 @@ example : ((4 : ℤ) • (![200, 100, 50] : Fin 3 → ℤ) + (-3 : ℤ) • ![20
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong.
 > - **Put sugar in a sugar-free recipe.** Set `F1` to the sponge, `(200, 200, 100)`. Both sugar-free lines carry sugar now, and the third assert stops it.
-> - **Scale by 0 instead of 3.** Both tripled lines land on (0, 0, 0). Sugar-free survives; the 200 g flour line reads flour 0, the missing zero in a second disguise. The fourth assert stops it.
+> - **Scale by 0 instead of 3.** Put 0 for 3 in every `scale(3, ...)`, asserts included. Both tripled lines land on (0, 0, 0). Sugar-free survives; the 200 g flour line reads flour 0, the missing zero in a second disguise. The fourth assert stops it.
 > - **Make the weights add to 1.** Set `a, b = 4, -3`. The flour of the mix comes out at 200, so that mix does stay in the 200 g set: the near-miss the set is made of. The second assert stops it.
 
 ---
@@ -495,8 +513,8 @@ example : ((4 : ℤ) • (![200, 100, 50] : Fin 3 → ℤ) + (-3 : ℤ) • ![20
 >
 > - **Checking adding and forgetting scaling.** Both are needed: the recipes using a whole number of grams of sugar survive adding and die on scaling by a half.
 > - **Skipping the zero check.** It is the cheapest of the three and kills the most candidates. The 200 g flour set dies on it: the zero recipe has 0 grams of flour, not 200.
-> - **Mixing up the zero vector and the number zero.** In rule 3 the zero is the list (0, 0, 0). In rule 6, $`a`$ and $`b`$ are scalars. Different objects, one name.
-> - **Thinking a vector space has to be arrows.** Anything you can add and scale by the eight rules qualifies. Quadratics do: add two, scale one, the degree never climbs past 2.
+> - **Mixing up the zero vector and the number zero.** In rule 3 the zero is the list (0, 0, 0). In $`0\,u = (0, 0, 0)`$, the 0 on the left is the plain number zero, a scalar. Different objects, one name.
+> - **Thinking a vector space has to be arrows.** Anything you can add and scale by the eight rules qualifies. Polynomials of degree at most 2 do: add two, scale one, the degree never climbs past 2.
 
 ---
 
@@ -522,7 +540,7 @@ example : ((4 : ℤ) • (![200, 100, 50] : Fin 3 → ℤ) + (-3 : ℤ) • ![20
 
 - [Linear combinations and span](03-linear-combinations-and-span.md): what you can reach by mixing a few vectors with any weights. Every such collection is a subspace, and the usual way to build one on purpose.
 
-Left open: a subspace such as the sugar-free recipes holds endlessly many members, so how few recipes are enough to mix all of them?
+Left open: a subspace such as the sugar-free recipes holds endlessly many members. Can a few recipes, mixed with any weights, reach all of them?
 
 ---
 

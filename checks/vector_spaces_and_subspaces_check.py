@@ -41,8 +41,8 @@ line("200 g flour, tripled", f"{show(scale(3, G1))}   flour {scale(3, G1)[0]}")
 line("200 g flour, zero", f"{show(ZERO)}   flour {ZERO[0]}")
 line("grams kept positive", f"the opposite of shortbread is {show(scale(-1, SHORT))}")
 
-sugar_mix = add(scale(a, F1), scale(b, F2))[1]        # road two: one slot of a mix
-flour_mix = add(scale(a, G1), scale(b, G2))[0]
+sugar_mix = a * F1[1] + b * F2[1]        # road two: one slot of the mix, from two slots
+flour_mix = a * G1[0] + b * G2[0]        # no vector is built on this road
 print(f"second road: the slot of the mix {a} u + {b} v, worked from the two slots alone")
 line("sugar of the mix", f"{sugar_mix} = {a} x {F1[1]} + {b} x {F2[1]}   still sugar-free")
 line("flour of the mix", f"{flour_mix} = {a} x {G1[0]} + {b} x {G2[0]}   not 200")
@@ -51,4 +51,5 @@ assert add(SHORT, SPONGE) == (500, 300, 300) and scale(2, SHORT) == (600, 200, 4
 assert all(rules) and scale(a + b, SHORT) == (-300, -100, -200)
 assert add(F1, F2)[1] == 0 and scale(3, F1)[1] == 0 and sugar_mix == 0
 assert add(G1, G2)[0] == 400 and scale(3, G1)[0] == 600 and flour_mix == -200 and ZERO[0] != 200
+assert sugar_mix == add(scale(a, F1), scale(b, F2))[1] and flour_mix == add(scale(a, G1), scale(b, G2))[0]
 print("ALL CHECKS PASS")
