@@ -56,7 +56,7 @@ example : (3 : ℕ) + 2 * 5 = 13 := by decide
 example : ((13 : ℚ) - 3) / 2 = 5 := by norm_num
 -- Undoing in the wrong order (divide first, then take off 32) does not give 25.
 example : (77 : ℚ) / (9 / 5) - 32 ≠ 25 := by norm_num
--- Forgetting the flagfall: 13 / 2 is not 5 miles.
+-- Forgetting the start fee: 13 / 2 is not 5 miles.
 example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 
 #print axioms rearranged_formula_same_relationship

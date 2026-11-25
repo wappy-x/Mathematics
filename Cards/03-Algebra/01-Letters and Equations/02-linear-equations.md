@@ -81,7 +81,7 @@ An equation is two descriptions of one number: the fare 3 + 2m and the meter's 1
 
 Take 3 off the left pan alone and it tips — the sentence has stopped being true. Take 3 off both pans and it stays level. Every step below is one use of that. Drop the scale now and say it plainly: do the same thing to both sides.
 
-Four moves keep an equation true: add the same number to both sides, subtract it from both, multiply both by it, or divide both by it, so long as that number is not zero.
+Four moves keep an equation true: add, subtract, multiply or divide both sides by the same number. For multiplying and dividing, that number must not be zero.
 
 ### Step 1: undo the story backwards
 
@@ -150,7 +150,7 @@ The same two undo steps read 21 miles off a 45-dollar fare, and turn "under 15 d
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Halving before the 3 comes off | m = 4.5 | Wrong order. The 3 is not charged per mile, so it cannot be halved. Check: 3 + 2 × 4.5 = 12, not 15 |
+| Halving before the 3 comes off | m = 4.5 | Wrong order. Halving the 15 also halves the $3 start fee inside it, to $1.50. Taking off a full 3 afterwards takes off 1.50 too much. Check: 3 + 2 × 4.5 = 12, not 15 |
 | Taking the 3 off the left side only | m = 7.5 | The right side never moved, so 2m = 15 is a different sentence from 2m + 3 = 15 |
 | Dividing −2m > −12 by −2 without flipping | m > 6 | The sign reverses when both sides cross zero. Unflipped it calls 7 miles affordable; at 7 miles the fare is 17 |
 
@@ -160,7 +160,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The code takes two roads to the same 6. The first undoes the equation: subtract the 3, halve what is left. The second runs backwards — pick an answer, push it through the fare recipe, solve the equation that comes out, and see whether it lands back where it started. Both roads run on the 15-dollar fare and the 45-dollar one. The no-answer case, the every-number case, the flip and the table's three wrong answers are printed too.
+Nothing is imported. The code takes two roads to the same 6. The first undoes the equation: subtract the 3, halve what is left. The second never subtracts or divides. It runs the meter forwards a mile at a time and stops when the fare reaches the reading.
+
+Both roads run on the 15-dollar fare and the 45-dollar one, and must agree. The no-answer case, the every-number case and the table's three wrong answers are printed too. The flip is tested at 5 miles and at 7: −2m > −12 must hold at 5 and fail at 7.
 
 ### Python
 
@@ -168,8 +170,8 @@ Nothing is imported. The code takes two roads to the same 6. The first undoes th
 # Linear equations -- the check behind the card.  Nothing is imported.  A taxi
 # charges $3 to start plus $2 a mile, so the fare in dollars is 3 + 2m.  Every
 # equation here is solved by undoing: subtract the 3 from both sides, then
-# halve both sides.  A second road builds an equation from an answer picked
-# first, then solves it back and must land on the answer it started from.
+# halve both sides.  A second road never subtracts or divides: it runs the
+# meter forwards a mile at a time until the fare reaches the reading.
 A, B = 2.0, 3.0                    # $2 a mile, $3 to start: fare = A*m + B
 
 def fare(m):                       # the recipe, run forwards
@@ -179,6 +181,12 @@ def solve(a, b, c):                # a*x + b = c, undone in reverse order
     if a == 0:                     # the unknown has vanished from both sides
         return "every" if b == c else None
     return (c - b) / a             # subtract b from both sides, then divide by a
+
+def walk(c):                       # road two: run the meter a mile at a time
+    m = 0.0
+    while fare(m) < c:             # not there yet, so ride one more mile
+        m = m + 1.0
+    return m if fare(m) == c else None   # None: no whole mile gives this fare
 
 def n(v):                          # 6.0 prints as 6, 4.5 as 4.5
     return f"{v:g}"
@@ -192,11 +200,12 @@ grid("fare 3 + 2m, in dollars", [n(fare(m)) for m in miles])
 grid("the $15 target", [n(15.0) for _ in miles])
 for c in (15.0, 45.0):             # one road: undo the two steps
     m = solve(A, B, c)
-    print(f"2m + 3 = {n(c)}  ->  subtract 3: 2m = {n(c - B)},  halve: m = {n(m)},"
-          f"  check: 3 + 2({n(m)}) = {n(fare(m))}")
-for want in (6.0, 21.0):           # second road: build it from a known answer
-    print(f"built from a known answer: m = {n(want)} gives fare {n(fare(want))},"
-          f" solved back to m = {n(solve(A, B, fare(want)))}")
+    print(f"2m + {n(B)} = {n(c)}  ->  subtract {n(B)}: 2m = {n(c - B)},  halve: m = {n(m)},"
+          f"  check: {n(B)} + 2({n(m)}) = {n(fare(m))}")
+for c in (15.0, 45.0):             # second road: run the meter forwards
+    w = walk(c)
+    print(f"a mile at a time: no whole mile shows {n(c)}" if w is None else
+          f"a mile at a time: the meter first shows {n(c)} at m = {n(w)}")
 limit = solve(A, B, 15.0)
 print(f"staying under $15: 2m + 3 < 15  ->  m < {n(limit)}; at m = 5 the fare is"
       f" {n(fare(5.0))}, at m = 7 it is {n(fare(7.0))}")
@@ -204,19 +213,21 @@ flip = solve(-A, 0.0, -12.0)       # 12 - 2m > 0 becomes -2m > -12
 print(f"money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < {n(flip)} after the flip")
 no_answer = solve(0.0, 3.0, 5.0)   # 3 + 2m = 5 + 2m, the 2m taken off both sides
 every = solve(0.0, 0.0, 0.0)       # 3 + m + m = 3 + 2m, everything taken off
-print("3 + 2m = 5 + 2m  ->  3 = 5, false: no answer")
-print("3 + m + m = 3 + 2m  ->  0 = 0, true: every number works")
+print(f"3 + 2m = 5 + 2m  ->  3 = 5, false: {'no answer' if no_answer is None else 'an answer after all'}")
+print(f"3 + m + m = 3 + 2m  ->  0 = 0, true: {'every number works' if every == 'every' else 'not every number'}")
 halved_first = 15.0 / A - B        # halving before the 3 comes off
 one_side = 15.0 / A                # the 3 taken off the left side only
 print(f"the three mistakes come out at {n(halved_first)}, {n(one_side)} and m > 6")
 assert solve(A, B, 15.0) == 6.0 and solve(A, B, 45.0) == 21.0
-assert solve(A, B, fare(6.0)) == 6.0 and solve(A, B, fare(21.0)) == 21.0
+assert walk(15.0) == solve(A, B, 15.0) and walk(45.0) == solve(A, B, 45.0)
 assert no_answer is None and every == "every" and flip == 6.0
+assert fare(5.0) < 15.0 < fare(7.0)                  # under 6 miles is under $15
+assert -A * 5.0 > -12.0 and not (-A * 7.0 > -12.0)   # -2m > -12 holds at 5, fails at 7
 assert fare(5.0) == 13.0 and fare(7.0) == 17.0 and halved_first == 4.5 and one_side == 7.5
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 miles m                             0    1    2    3    4    5    6    7    8    9   10
@@ -224,8 +235,8 @@ fare 3 + 2m, in dollars             3    5    7    9   11   13   15   17   19   
 the $15 target                     15   15   15   15   15   15   15   15   15   15   15
 2m + 3 = 15  ->  subtract 3: 2m = 12,  halve: m = 6,  check: 3 + 2(6) = 15
 2m + 3 = 45  ->  subtract 3: 2m = 42,  halve: m = 21,  check: 3 + 2(21) = 45
-built from a known answer: m = 6 gives fare 15, solved back to m = 6
-built from a known answer: m = 21 gives fare 45, solved back to m = 21
+a mile at a time: the meter first shows 15 at m = 6
+a mile at a time: the meter first shows 45 at m = 21
 staying under $15: 2m + 3 < 15  ->  m < 6; at m = 5 the fare is 13, at m = 7 it is 17
 money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < 6 after the flip
 3 + 2m = 5 + 2m  ->  3 = 5, false: no answer
@@ -242,8 +253,8 @@ Same numbers, same labels, built with `rustc --edition 2021 -O`.
 // Linear equations -- the same check as the Python, in Rust.  No crates.  A taxi
 // charges $3 to start plus $2 a mile, so the fare in dollars is 3 + 2m.  Every
 // equation here is solved by undoing: subtract the 3 from both sides, then
-// halve both sides.  A second road builds an equation from an answer picked
-// first, then solves it back and must land on the answer it started from.
+// halve both sides.  A second road never subtracts or divides: it runs the
+// meter forwards a mile at a time until the fare reaches the reading.
 const A: f64 = 2.0; // $2 a mile
 const B: f64 = 3.0; // $3 to start: fare = A*m + B
 
@@ -257,6 +268,12 @@ fn solve(a: f64, b: f64, c: f64) -> Sol {   // a*x + b = c, undone in reverse or
     } else {
         Sol::One((c - b) / a)               // subtract b from both sides, then divide by a
     }
+}
+
+fn walk(c: f64) -> Option<f64> {            // road two: run the meter a mile at a time
+    let mut m = 0.0;
+    while fare(m) < c { m = m + 1.0; }      // not there yet, so ride one more mile
+    if fare(m) == c { Some(m) } else { None } // None: no whole mile gives this fare
 }
 
 fn x(s: Sol) -> f64 {                       // the one answer, when there is exactly one
@@ -278,12 +295,14 @@ fn main() {
     grid("the $15 target", &miles.iter().map(|_| n(15.0)).collect::<Vec<String>>());
     for c in [15.0, 45.0] {                 // one road: undo the two steps
         let m = x(solve(A, B, c));
-        println!("2m + 3 = {}  ->  subtract 3: 2m = {},  halve: m = {},  check: 3 + 2({}) = {}",
-                 n(c), n(c - B), n(m), n(m), n(fare(m)));
+        println!("2m + {} = {}  ->  subtract {}: 2m = {},  halve: m = {},  check: {} + 2({}) = {}",
+                 n(B), n(c), n(B), n(c - B), n(m), n(B), n(m), n(fare(m)));
     }
-    for want in [6.0, 21.0] {               // second road: build it from a known answer
-        println!("built from a known answer: m = {} gives fare {}, solved back to m = {}",
-                 n(want), n(fare(want)), n(x(solve(A, B, fare(want)))));
+    for c in [15.0, 45.0] {                 // second road: run the meter forwards
+        match walk(c) {
+            Some(m) => println!("a mile at a time: the meter first shows {} at m = {}", n(c), n(m)),
+            None => println!("a mile at a time: no whole mile shows {}", n(c)),
+        }
     }
     let limit = x(solve(A, B, 15.0));
     println!("staying under $15: 2m + 3 < 15  ->  m < {}; at m = 5 the fare is {}, at m = 7 it is {}",
@@ -292,20 +311,22 @@ fn main() {
     println!("money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < {} after the flip", n(flip));
     let no_answer = matches!(solve(0.0, 3.0, 5.0), Sol::None);  // 3 + 2m = 5 + 2m
     let every = matches!(solve(0.0, 0.0, 0.0), Sol::Every);     // 3 + m + m = 3 + 2m
-    println!("3 + 2m = 5 + 2m  ->  3 = 5, false: no answer");
-    println!("3 + m + m = 3 + 2m  ->  0 = 0, true: every number works");
+    println!("3 + 2m = 5 + 2m  ->  3 = 5, false: {}", if no_answer { "no answer" } else { "an answer after all" });
+    println!("3 + m + m = 3 + 2m  ->  0 = 0, true: {}", if every { "every number works" } else { "not every number" });
     let halved_first = 15.0 / A - B;        // halving before the 3 comes off
     let one_side = 15.0 / A;                // the 3 taken off the left side only
     println!("the three mistakes come out at {}, {} and m > 6", n(halved_first), n(one_side));
     assert!(x(solve(A, B, 15.0)) == 6.0 && x(solve(A, B, 45.0)) == 21.0);
-    assert!(x(solve(A, B, fare(6.0))) == 6.0 && x(solve(A, B, fare(21.0))) == 21.0);
+    assert!(walk(15.0) == Some(x(solve(A, B, 15.0))) && walk(45.0) == Some(x(solve(A, B, 45.0))));
     assert!(no_answer && every && flip == 6.0);
+    assert!(fare(5.0) < 15.0 && 15.0 < fare(7.0));          // under 6 miles is under $15
+    assert!(-A * 5.0 > -12.0 && !(-A * 7.0 > -12.0));       // -2m > -12 holds at 5, fails at 7
     assert!(fare(5.0) == 13.0 && fare(7.0) == 17.0 && halved_first == 4.5 && one_side == 7.5);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.99.0, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 miles m                             0    1    2    3    4    5    6    7    8    9   10
@@ -313,8 +334,8 @@ fare 3 + 2m, in dollars             3    5    7    9   11   13   15   17   19   
 the $15 target                     15   15   15   15   15   15   15   15   15   15   15
 2m + 3 = 15  ->  subtract 3: 2m = 12,  halve: m = 6,  check: 3 + 2(6) = 15
 2m + 3 = 45  ->  subtract 3: 2m = 42,  halve: m = 21,  check: 3 + 2(21) = 45
-built from a known answer: m = 6 gives fare 15, solved back to m = 6
-built from a known answer: m = 21 gives fare 45, solved back to m = 21
+a mile at a time: the meter first shows 15 at m = 6
+a mile at a time: the meter first shows 45 at m = 21
 staying under $15: 2m + 3 < 15  ->  m < 6; at m = 5 the fare is 13, at m = 7 it is 17
 money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < 6 after the flip
 3 + 2m = 5 + 2m  ->  3 = 5, false: no answer
@@ -409,8 +430,8 @@ example : ∀ m : ℝ, 3 + m + m = 3 + 2 * m := by intro m; ring
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that halts the program when a number comes out wrong, and these are pinned to this taxi's numbers, so expect a halt.
-> - **Make the first three dollars free.** Set `B` to `0.0`. Nothing is added on top, so nothing comes off: 2m = 15 straight away, and 15 dollars buys 7.5 miles — the table's wrong answer, now the right one for a different taxi. The first assert halts it.
-> - **Overcharge the meter.** In `fare`, return `4.0 * m + B`. Solving still says 6, but the substitution check now reads 27, and the return road goes 6, fare 27, back to 12. The second assert halts it.
+> - **Make the first three dollars free.** Set `B` to `0.0`. Nothing is added on top, so nothing comes off: 2m = 15 straight away, and 15 dollars buys 7.5 miles — the table's wrong answer, now the right one for a different taxi. The second road finds no whole mile that shows 15. The first assert halts it.
+> - **Overcharge the meter.** In `fare`, return `4.0 * m + B`. Solving still says 6, but the substitution check now reads 27. The second road, run on the new meter, reaches 15 at 3 miles, so the two roads disagree. The second assert halts it.
 
 ---
 
@@ -448,7 +469,7 @@ example : ∀ m : ℝ, 3 + m + m = 3 + 2 * m := by intro m; ring
 - [Rearranging a formula](03-rearranging-formulas.md): solve the fare recipe once for m and every fare is answered in one line.
 - [Two equations, two unknowns](04-two-equations-two-unknowns.md): what to do when two numbers are unknown at once.
 
-Left open: if the start charge and the rate per mile were both unknown, how many meter readings would it take to find them?
+Left open: with a whole column of meter readings to turn into miles, how do you solve the fare recipe once, instead of once for every fare?
 
 ---
 

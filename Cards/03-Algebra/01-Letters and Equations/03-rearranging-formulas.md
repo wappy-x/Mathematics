@@ -42,7 +42,7 @@ F = 1.8C + 32
 
 **Read it aloud:** every Celsius degree is worth 1.8 Fahrenheit degrees, and the two scales start 32 apart, so multiply then add.
 
-The last two rows of the table are this shelf's taxi: $3 to start (the flagfall) plus $2 a mile, so the fare is 3 + 2m, where $`m`$ is the miles.
+The last two rows of the table are this shelf's taxi: a $3 start fee plus $2 a mile, so the fare is 3 + 2m, where $`m`$ is the miles.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -68,7 +68,7 @@ The taxi behaves the same way. Make $`m`$ the subject and the meter reads backwa
 - **The same move on both sides.** Take 32 off one side only and the two sides stop being the same number. Every line after that is untrue.
 - **Steps undone in reverse order.** Divide by 1.8 before taking off the 32 and Chicago comes out at 10.78 degrees C, not 25.
 - **A number you divide by that is not zero.** If the 1.8 were zero, every Celsius reading would give the same 32 degrees F, and no way back would exist.
-- **A step with one undo.** A square root undoes a square, but a positive number has two square roots, one positive and one negative. The rug's radius takes the positive one, 1.9544 feet.
+- **A step with one undo.** A square root undoes a square, but a positive number has two square roots, one positive and one negative. A length cannot be negative, so the radius of a round rug takes the positive one: 1.9544 feet for 12 square feet (the fold under Step 3).
 
 ---
 
@@ -76,7 +76,9 @@ The taxi behaves the same way. Make $`m`$ the subject and the meter reads backwa
 
 ### Step 0: an equals sign is a promise, and both sides must keep it
 
-$`F = 1.8C + 32`$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds. That is the entire permission slip, and [Linear equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
+$`F = 1.8C + 32`$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds.
+
+That is the entire permission slip, and [Linear equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
 
 ### Step 1: read the steps that built the formula, in order
 
@@ -142,12 +144,12 @@ The difference is how far the work goes. Solving with the number already in answ
 | forwards, add | 45 + 32 | **77** |
 | backwards, take off 32 | 77 − 32 | 45 |
 | backwards, divide | 45 / 1.8 | **25** |
-| taxi, take off the flagfall | 13.00 − 3 | 10.00 |
+| taxi, take off the start fee | 13.00 − 3 | 10.00 |
 | taxi, divide by the rate per mile | 10.00 / 2 | **5** |
 
 77 degrees Fahrenheit is 25 degrees Celsius, and a $13.00 taxi fare bought 5 miles. Both answers came out of a formula that was written to run the other way.
 
-The same line drawn once answers both directions at once: pick a Celsius reading along the bottom and read the Fahrenheit off the side, or pick a Fahrenheit reading on the side and read the Celsius off the bottom.
+The same line, drawn once, answers both directions. Pick a Celsius reading along the bottom and read the Fahrenheit off the side. Or pick a Fahrenheit reading on the side and read the Celsius off the bottom.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -167,7 +169,7 @@ The single line is F = 1.8C + 32. Chicago's day sits at 25 along the bottom and 
 | Dividing by 1.8 before taking off the 32 | 10.78 | The steps were undone in the order they were built, not in reverse |
 | Losing the brackets: F − 32 / 1.8 | 59.22 | Only the 32 got divided. The whole of F − 32 has to be |
 | Undoing the +32 with another +32 | 60.56 | The formula added 32, so the undo takes it off |
-| Taxi: dividing the whole 13.00 fare by 2 | 6.5 miles | The 3 flagfall was never taken off, and it is not per mile |
+| Taxi: dividing the whole 13.00 fare by 2 | 6.5 miles | The $3 start fee was never taken off, and it is not per mile |
 
 The code prints all four.
 
@@ -175,7 +177,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. One road is the rearranged formula: take off 32, divide by 1.8. The second road never rearranges anything at all — it feeds guesses of Celsius into the original formula and halves its range each time until the Fahrenheit comes out at 77. That is a root finder, written out from scratch. If the rearranging were wrong, the two roads would part company. The taxi both ways, the three wrong turnings, and the rug and the interest rate from the tip above are printed too.
+Nothing is imported. One road is the rearranged formula: take off 32, divide by 1.8. The second road never rearranges anything at all. It feeds guesses of Celsius into the original formula and halves its range each time until the Fahrenheit comes out at 77.
+
+That is a root finder, written out from scratch. If the rearranging were wrong, the two roads would part company. The taxi both ways, the three wrong turnings, and the rug and the interest rate from the fold under Step 3 are printed too.
 
 ### Python
 
@@ -197,15 +201,16 @@ def hunt(f):                                   # road two: no rearranging at all
         else: hi = mid                         # too warm, keep the lower half
     return (lo + hi) / 2
 
-def fare(m): return 3.0 + 2.0 * m              # the taxi: $3 to start, $2 a mile
-def miles(f): return (f - 3.0) / 2.0           # the same formula, rearranged
+START, RATE = 3.0, 2.0                         # the taxi: $3 to start, $2 a mile
+def fare(m): return START + RATE * m           # the taxi formula as it is written
+def miles(f): return (f - START) / RATE        # the same formula, rearranged
 
 def grid(name, values): print(f"{name:<26}" + "".join(f"{v:>7}" for v in values))
 def one(name, value): print(f"{name:<48}{value:>10}")
 
-print(f"forward   1.8 x 25 = {SLOPE * 25:.1f}, then {SLOPE * 25:.1f} + 32 = "
+print(f"forward   {SLOPE:g} x 25 = {SLOPE * 25:.1f}, then {SLOPE * 25:.1f} + {OFFSET:g} = "
       f"{to_f(25):.1f} degrees F")
-print(f"backward  77 - 32 = {77 - OFFSET:.1f}, then {77 - OFFSET:.1f} / 1.8 = "
+print(f"backward  77 - {OFFSET:g} = {77 - OFFSET:.1f}, then {77 - OFFSET:.1f} / {SLOPE:g} = "
       f"{to_c(77):.1f} degrees C")
 cs = [0, 5, 10, 15, 20, 25]
 fs = [to_f(c) for c in cs]
@@ -215,14 +220,15 @@ grid("back to C, rearranged", [f"{to_c(f):.0f}" for f in fs])
 one("77 F in Celsius, the rearranged formula", f"{to_c(77.0):.1f}")
 one("77 F in Celsius, hunted in the original formula", f"{hunt(77.0):.1f}")
 one("5 miles in the taxi costs", f"${fare(5):.2f}")
-print(f"taxi      13.00 - 3 = {13.0 - 3.0:.2f}, then {13.0 - 3.0:.2f} / 2 = "
+print(f"taxi      13.00 - {START:g} = {13.0 - START:.2f}, then {13.0 - START:.2f} / {RATE:g} = "
       f"{miles(13.0):.1f} miles")
 wrong_order = 77 / SLOPE - OFFSET              # divided before subtracting
 no_brackets = 77 - OFFSET / SLOPE              # only the 32 got divided
 wrong_sign = (77 + OFFSET) / SLOPE             # added instead of subtracted
 print(f"the three wrong roads give {wrong_order:.2f}, {no_brackets:.2f} and "
       f"{wrong_sign:.2f} degrees C, not {to_c(77.0):.1f}")
-one("a $13.00 fare with the $3 flagfall forgotten", f"{13.0 / 2.0:.1f} miles")
+forgot = 13.0 / RATE                           # the start fee never taken off
+one(f"a $13.00 fare with the ${START:g} start fee forgotten", f"{forgot:.1f} miles")
 PI = 3.14159265358979                          # written out, nothing imported
 radius = (12.0 / PI) ** 0.5                    # area = PI x radius x radius
 one("a rug of area 12.00 square feet has radius", f"{radius:.4f} feet")
@@ -230,13 +236,13 @@ rate = (162.89 / 100.0) ** (1 / 10) - 1        # a tenth power, undone the same 
 one("$100.00 to $162.89 in 10 years is a rate of", f"{rate * 100:.2f}% a year")
 assert (to_f(25) == 77.0 and to_c(77.0) == 25.0 and fs == [32, 41, 50, 59, 68, 77]
         and abs(hunt(77.0) - 25.0) < 1e-9 and abs(hunt(212.0) - 100.0) < 1e-9)
-assert fare(5) == 13.0 and miles(13.0) == 5.0 and 13.0 / 2.0 == 6.5
+assert fare(5) == 13.0 and miles(13.0) == 5.0 and forgot == 6.5 != miles(13.0)
 assert (round(wrong_order, 2), round(no_brackets, 2), round(wrong_sign, 2)) == (10.78, 59.22, 60.56)
 assert round(radius, 4) == 1.9544 and round(rate * 100, 2) == 5.00
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 forward   1.8 x 25 = 45.0, then 45.0 + 32 = 77.0 degrees F
@@ -249,7 +255,7 @@ back to C, rearranged           0      5     10     15     20     25
 5 miles in the taxi costs                           $13.00
 taxi      13.00 - 3 = 10.00, then 10.00 / 2 = 5.0 miles
 the three wrong roads give 10.78, 59.22 and 60.56 degrees C, not 25.0
-a $13.00 fare with the $3 flagfall forgotten     6.5 miles
+a $13.00 fare with the $3 start fee forgotten    6.5 miles
 a rug of area 12.00 square feet has radius      1.9544 feet
 $100.00 to $162.89 in 10 years is a rate of     5.00% a year
 ALL CHECKS PASS
@@ -280,8 +286,10 @@ fn hunt(f: f64) -> f64 {                         // road two: no rearranging at 
     (lo + hi) / 2.0
 }
 
-fn fare(m: f64) -> f64 { 3.0 + 2.0 * m }         // the taxi: $3 to start, $2 a mile
-fn miles(f: f64) -> f64 { (f - 3.0) / 2.0 }      // the same formula, rearranged
+const START: f64 = 3.0;                          // the taxi: $3 to start, $2 a mile
+const RATE: f64 = 2.0;
+fn fare(m: f64) -> f64 { START + RATE * m }      // the taxi formula as it is written
+fn miles(f: f64) -> f64 { (f - START) / RATE }   // the same formula, rearranged
 
 fn grid(name: &str, values: &[String]) {
     let mut line = format!("{:<26}", name);
@@ -292,10 +300,10 @@ fn one(name: &str, value: String) { println!("{:<48}{:>10}", name, value); }
 fn round2(x: f64) -> f64 { (x * 100.0).round() / 100.0 }
 
 fn main() {
-    println!("forward   1.8 x 25 = {:.1}, then {:.1} + 32 = {:.1} degrees F",
-             SLOPE * 25.0, SLOPE * 25.0, to_f(25.0));
-    println!("backward  77 - 32 = {:.1}, then {:.1} / 1.8 = {:.1} degrees C",
-             77.0 - OFFSET, 77.0 - OFFSET, to_c(77.0));
+    println!("forward   {} x 25 = {:.1}, then {:.1} + {} = {:.1} degrees F",
+             SLOPE, SLOPE * 25.0, SLOPE * 25.0, OFFSET, to_f(25.0));
+    println!("backward  77 - {} = {:.1}, then {:.1} / {} = {:.1} degrees C",
+             OFFSET, 77.0 - OFFSET, 77.0 - OFFSET, SLOPE, to_c(77.0));
     let cs = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0];
     let fs: Vec<f64> = cs.iter().map(|c| to_f(*c)).collect();
     grid("C, degrees Celsius", &cs.iter().map(|c| format!("{:.0}", c)).collect::<Vec<String>>());
@@ -304,14 +312,15 @@ fn main() {
     one("77 F in Celsius, the rearranged formula", format!("{:.1}", to_c(77.0)));
     one("77 F in Celsius, hunted in the original formula", format!("{:.1}", hunt(77.0)));
     one("5 miles in the taxi costs", format!("${:.2}", fare(5.0)));
-    println!("taxi      13.00 - 3 = {:.2}, then {:.2} / 2 = {:.1} miles",
-             13.0 - 3.0, 13.0 - 3.0, miles(13.0));
+    println!("taxi      13.00 - {} = {:.2}, then {:.2} / {} = {:.1} miles",
+             START, 13.0 - START, 13.0 - START, RATE, miles(13.0));
     let wrong_order = 77.0 / SLOPE - OFFSET;     // divided before subtracting
     let no_brackets = 77.0 - OFFSET / SLOPE;     // only the 32 got divided
     let wrong_sign = (77.0 + OFFSET) / SLOPE;    // added instead of subtracted
     println!("the three wrong roads give {:.2}, {:.2} and {:.2} degrees C, not {:.1}",
              wrong_order, no_brackets, wrong_sign, to_c(77.0));
-    one("a $13.00 fare with the $3 flagfall forgotten", format!("{:.1} miles", 13.0 / 2.0));
+    let forgot = 13.0 / RATE;                    // the start fee never taken off
+    one(&format!("a $13.00 fare with the ${} start fee forgotten", START), format!("{:.1} miles", forgot));
     const PI: f64 = 3.14159265358979;            // written out, no crates
     let radius = (12.0 / PI).sqrt();             // area = PI x radius x radius
     one("a rug of area 12.00 square feet has radius", format!("{:.4} feet", radius));
@@ -319,14 +328,14 @@ fn main() {
     one("$100.00 to $162.89 in 10 years is a rate of", format!("{:.2}% a year", rate * 100.0));
     assert!(to_f(25.0) == 77.0 && to_c(77.0) == 25.0 && fs == [32.0, 41.0, 50.0, 59.0, 68.0, 77.0]
             && (hunt(77.0) - 25.0).abs() < 1e-9 && (hunt(212.0) - 100.0).abs() < 1e-9);
-    assert!(fare(5.0) == 13.0 && miles(13.0) == 5.0 && 13.0 / 2.0 == 6.5);
+    assert!(fare(5.0) == 13.0 && miles(13.0) == 5.0 && forgot == 6.5 && forgot != miles(13.0));
     assert!(round2(wrong_order) == 10.78 && round2(no_brackets) == 59.22 && round2(wrong_sign) == 60.56);
     assert!((radius * 10000.0).round() / 10000.0 == 1.9544 && round2(rate * 100.0) == 5.00);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.99.0, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 forward   1.8 x 25 = 45.0, then 45.0 + 32 = 77.0 degrees F
@@ -339,7 +348,7 @@ back to C, rearranged           0      5     10     15     20     25
 5 miles in the taxi costs                           $13.00
 taxi      13.00 - 3 = 10.00, then 10.00 / 2 = 5.0 miles
 the three wrong roads give 10.78, 59.22 and 60.56 degrees C, not 25.0
-a $13.00 fare with the $3 flagfall forgotten     6.5 miles
+a $13.00 fare with the $3 start fee forgotten    6.5 miles
 a rug of area 12.00 square feet has radius      1.9544 feet
 $100.00 to $162.89 in 10 years is a rate of     5.00% a year
 ALL CHECKS PASS
@@ -417,7 +426,7 @@ example : (3 : ℕ) + 2 * 5 = 13 := by decide
 example : ((13 : ℚ) - 3) / 2 = 5 := by norm_num
 -- Undoing in the wrong order (divide first, then take off 32) does not give 25.
 example : (77 : ℚ) / (9 / 5) - 32 ≠ 25 := by norm_num
--- Forgetting the flagfall: 13 / 2 is not 5 miles.
+-- Forgetting the start fee: 13 / 2 is not 5 miles.
 example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 
 #print axioms rearranged_formula_same_relationship
@@ -425,7 +434,7 @@ example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 #print axioms radius_from_area
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-25 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'rearranged_formula_same_relationship' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -438,7 +447,7 @@ example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong, and these are pinned to Chicago's 77 degrees, so expect one to stop it.
 > - **Undo in the wrong order.** In `to_c`, write `f / SLOPE - OFFSET` instead of `(f - OFFSET) / SLOPE`. The rearranged road now says 10.8 while the hunting road still says 25.0, the two roads disagree in print, and the first assert stops it.
 > - **Change the scale.** Set `SLOPE` to `2.0`, the rough rule of thumb that doubles and adds 32. 25 degrees C now reads 82 degrees F, both roads still agree with each other at 22.5, and the first assert stops it because 77 is no longer the answer.
-> - **Raise the flagfall.** Change both `3.0`s in the taxi to `5.0`. Five miles now costs $15.00, a $13.00 fare falls to 4.0 miles, and the second assert stops it.
+> - **Raise the start fee.** Set `START` to `5.0`. Five miles now costs $15.00, a $13.00 fare falls to 4.0 miles, and the second assert stops it.
 
 ---
 
@@ -450,7 +459,7 @@ example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 > - **Losing the brackets.** F − 32 / 1.8 divides only the 32, and gives 59.22.
 > - **Undoing with the same sign.** The formula adds 32, so the undo takes 32 off. Adding again gives 60.56.
 > - **Doing it to one side only.** Take 32 off the right and not the left and the two sides stop being the same number. Everything after that is untrue.
-> - **Skipping the flagfall.** Dividing a $13.00 fare straight by 2 gives 6.5 miles, not 5. The first $3 bought no distance.
+> - **Skipping the start fee.** Dividing a $13.00 fare straight by 2 gives 6.5 miles, not 5. The first $3 bought no distance.
 
 ---
 
@@ -477,7 +486,7 @@ example : (13 : ℚ) / 2 ≠ 5 := by norm_num
 
 - [Two equations, two unknowns](04-two-equations-two-unknowns.md): what to do when one formula is not enough to pin the letters down, and two of them are needed at once. Rearranging one of them to make a letter the subject is the first move.
 
-Left open: if both the $3 flagfall and the $2 a mile were unknown, one fare could not fix them both, so what would?
+Left open: if both the $3 start fee and the $2 a mile were unknown, one fare could not fix them both, so what would?
 
 ---
 

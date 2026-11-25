@@ -16,14 +16,17 @@ def row(name, cents): print(f"{name:<26}" + "".join(f"{m(v):>7}" for v in cents)
 dbl = (2 * c, 2 * d, 2 * q)
 y1 = (dbl[2] - p) // (dbl[1] - b)     # the one child left over
 x1 = (q - d * y1) // c                # that price back into Saturday
-# road two: substitution.  Saturday says x = (q - d*y)/c; put that into Friday.
-y2 = (p * c - a * q) // (b * c - a * d)
-x2 = (q - d * y2) // c
+# road two: substitution.  Saturday says x = (q - d*y)/c.  Try every child
+# price in cents, put that adult price into Friday, keep what Friday accepts.
+fits = [((q - d * y) // c, y) for y in range(q // d + 1)
+        if (q - d * y) % c == 0 and a * ((q - d * y) // c) + b * y == p]
+x2, y2 = fits[0]
 # road three: the crossing number, then the cross-multiplied pair
 cross = a * d - b * c
 x3, y3 = (p * d - b * q) // cross, (a * q - c * p) // cross
 wy = q - p                            # mistake: only the tickets doubled
 wx = q - d * wy
+back = c * ((q - d * y1) // c) + d * y1   # mistake: Saturday's x put back into Saturday
 
 one("Friday, 2 adults and 3 children", m(p))
 one("Saturday, 1 adult and 2 children", m(q))
@@ -46,11 +49,11 @@ row("adults on Saturday's line", [at(SAT, y) for y in range(11)])
 row("adults on Sunday's line", [at(SUN, y) for y in range(11)])
 
 one(f"mistake -- only the tickets doubled: child {m(wy)}, adult", m(wx))
-one("mistake -- the rearranged adult back into Saturday", f"{m(q)} = {m(q)}")
+one("mistake -- the rearranged adult back into Saturday", f"{m(back)} = {m(q)}")
 one(f"mistake -- Friday alone at {m(GUESS[0])} and {m(GUESS[1])}, Saturday",
     m(c * GUESS[0] + d * GUESS[1]))
 
-assert (x1, y1) == (x2, y2) == (x3, y3)                   # three roads, one pair
+assert (x1, y1) == (x2, y2) == (x3, y3) and len(fits) == 1 and back == q   # one pair
 assert a * 1000 + b * 700 == p and c * 1000 + d * 700 == q and (x1, y1) == (1000, 700)
 assert a * GUESS[0] + b * GUESS[1] == p and c * GUESS[0] + d * GUESS[1] == 2300
 assert a * SUN[1] - b * SUN[0] == 0 and 2 * p == 8200 and SUN[2] != 8200

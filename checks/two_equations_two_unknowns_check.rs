@@ -22,14 +22,19 @@ fn main() {
     let dbl = (2 * c, 2 * d, 2 * q);
     let y1 = (dbl.2 - p) / (dbl.1 - b);          // the one child left over
     let x1 = (q - d * y1) / c;                   // that price back into Saturday
-    // road two: substitution.  Saturday says x = (q - d*y)/c; put that into Friday.
-    let y2 = (p * c - a * q) / (b * c - a * d);
-    let x2 = (q - d * y2) / c;
+    // road two: substitution.  Saturday says x = (q - d*y)/c.  Try every child
+    // price in cents, put that adult price into Friday, keep what Friday accepts.
+    let fits: Vec<(i64, i64)> = (0..=q / d)
+        .filter(|&y| (q - d * y) % c == 0 && a * ((q - d * y) / c) + b * y == p)
+        .map(|y| ((q - d * y) / c, y))
+        .collect();
+    let (x2, y2) = fits[0];
     // road three: the crossing number, then the cross-multiplied pair
     let cross = a * d - b * c;
     let (x3, y3) = ((p * d - b * q) / cross, (a * q - c * p) / cross);
     let wy = q - p;                              // mistake: only the tickets doubled
     let wx = q - d * wy;
+    let back = c * ((q - d * y1) / c) + d * y1;  // mistake: Saturday's x put back into Saturday
 
     one("Friday, 2 adults and 3 children".to_string(), m(p));
     one("Saturday, 1 adult and 2 children".to_string(), m(q));
@@ -53,11 +58,11 @@ fn main() {
 
     one(format!("mistake -- only the tickets doubled: child {}, adult", m(wy)), m(wx));
     one("mistake -- the rearranged adult back into Saturday".to_string(),
-        format!("{} = {}", m(q), m(q)));
+        format!("{} = {}", m(back), m(q)));
     one(format!("mistake -- Friday alone at {} and {}, Saturday", m(GUESS.0), m(GUESS.1)),
         m(c * GUESS.0 + d * GUESS.1));
 
-    assert!((x1, y1) == (x2, y2) && (x2, y2) == (x3, y3));   // three roads, one pair
+    assert!((x1, y1) == (x2, y2) && (x2, y2) == (x3, y3) && fits.len() == 1 && back == q);  // one pair
     assert!(a * 1000 + b * 700 == p && c * 1000 + d * 700 == q && (x1, y1) == (1000, 700));
     assert!(a * GUESS.0 + b * GUESS.1 == p && c * GUESS.0 + d * GUESS.1 == 2300);
     assert!(a * SUN.1 - b * SUN.0 == 0 && 2 * p == 8200 && SUN.2 != 8200);

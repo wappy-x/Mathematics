@@ -58,7 +58,7 @@ Each piece separated by a plus or minus sign is a **term**. So 3 + 2m has two te
 - **One number per letter.** In 3 + 2m + 3 + 2m, both m's are the same trip. Give them two different rides and the fares no longer collect into 6 + 4m.
 - **Multiply before you add.** Add the 3 and the 2 first and the 6-mile fare comes out at 30, not 15.
 - **A fixed start fee and a fixed rate.** If the price per mile changes partway through the ride, 3 + 2m stops matching the meter.
-- **Trying values needs a whole-number answer.** The search from 0 to 20 miles finds one ride, m = 6, for a $15 meter. A fare that no whole number of miles gives leaves the search empty.
+- **Trying values needs a whole-number answer.** Testing every whole number of miles from 0 to 20 (Step 4) finds m = 6 for a $15 meter. A fare that falls between whole miles is missed.
 
 ---
 
@@ -66,7 +66,7 @@ Each piece separated by a plus or minus sign is a **term**. So 3 + 2m has two te
 
 ### Step 0: the letter hides nothing
 
-m is a slot. Whatever number goes in the slot, the recipe runs the same way and never argues. Put 6 in and 3 + 2m is 15. Put 10 in and it is 23. The letter did not change. Only what you dropped into it changed.
+m is a slot. Whatever number you drop into it, the recipe 3 + 2m runs the same way. The letter does not change. Only the number you put in it changes.
 
 ### Step 1: an expression is a recipe, run in order
 
@@ -105,7 +105,7 @@ Two identical fares is also just double one fare:
 
 A bracket means do that part first, and a number written against a bracket multiplies it. Doubling a total is the same as doubling each part of it: double the 3 to get 6, double the 2m to get 4m. So 2(3 + 2m) is 6 + 4m — the same expression Step 2 reached by a different route.
 
-That is the **distributive law**: a multiplier outside a bracket reaches every term inside, one at a time. It is the same law that lets 7 × 23 be done as 7 × 20 plus 7 × 3 ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)); the only new thing is a letter sitting inside the bracket.
+That is the **distributive law**: a multiplier outside a bracket reaches every term inside, one at a time. It is the same law that lets 7 × 23 be done as 7 × 20 plus 7 × 3 ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)). The only new thing is a letter sitting inside the bracket.
 
 At 6 miles: one fare is $15, so two are $30. And 6 + 4 × 6 is 6 + 24, which is $30. The code checks that agreement at every distance from 0 to 20 miles.
 
@@ -152,7 +152,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The fare is built twice by roads that share no arithmetic: once by the recipe 3 + 2m in a single line, and once by starting at $3 and adding $2 over and over, one mile at a time. Then the two-taxi fare is built three ways — two fares added, the collected form 6 + 4m, the bracketed form 2(3 + 2m) — and the three are compared at every distance from 0 to 20 miles. Last, the unknown: every whole number of miles up to 20 is tried against a $15 meter.
+Nothing is imported. The fare is built twice, by roads that share no arithmetic. One road is the recipe 3 + 2m in a single line. The other starts at $3 and adds $2 once for each mile.
+
+Then the two-taxi fare is built three ways: two fares added, the collected form 6 + 4m, and the bracketed form 2(3 + 2m). The three are compared at every distance from 0 to 20 miles. Last comes the unknown: every whole number of miles up to 20 is tried against a $15 meter.
 
 ### Python
 
@@ -399,9 +401,9 @@ example : 3 + 4 * 6 = 27 := by decide
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert is a line that stops the program if a number comes out wrong, and these are pinned to the taxi's numbers, so expect one to stop it.
-> - **Raise the start fee.** Set `START` to `5`. Guess the 6-mile fare before you look: it is $17, and the first assert stops the program because that assert holds out for 15.
+> - **Raise the start fee.** Set `START` to `5`. Guess the 6-mile fare before you look: it is $17. The first assert stops the program, because it expects the $3 taxi's fares of 3, 15 and 23.
 > - **Break a bracket.** In `two_taxis_bracketed`, change `2 * (START + PER_MILE * m)` to `2 * START + PER_MILE * m`. That is the 2 reaching only the first term. The row prints 18 at 6 miles instead of 30, and the third assert stops the program.
-> - **Collect unlike terms.** In `two_taxis_collected`, change `6 + 4 * m` to `5 * m`. At 0 miles the row prints 0 rather than 6, because the start fees were swallowed into the mileage, and the third assert stops the program again.
+> - **Collect unlike terms.** In `two_taxis_collected`, change `6 + 4 * m` to `10 * m`. At 0 miles the row prints 0 rather than 6, because the start fees were swallowed into the mileage, and the third assert stops the program again.
 
 ---
 

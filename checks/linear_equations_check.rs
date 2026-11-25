@@ -1,8 +1,8 @@
 // Linear equations -- the same check as the Python, in Rust.  No crates.  A taxi
 // charges $3 to start plus $2 a mile, so the fare in dollars is 3 + 2m.  Every
 // equation here is solved by undoing: subtract the 3 from both sides, then
-// halve both sides.  A second road builds an equation from an answer picked
-// first, then solves it back and must land on the answer it started from.
+// halve both sides.  A second road never subtracts or divides: it runs the
+// meter forwards a mile at a time until the fare reaches the reading.
 const A: f64 = 2.0; // $2 a mile
 const B: f64 = 3.0; // $3 to start: fare = A*m + B
 
@@ -16,6 +16,12 @@ fn solve(a: f64, b: f64, c: f64) -> Sol {   // a*x + b = c, undone in reverse or
     } else {
         Sol::One((c - b) / a)               // subtract b from both sides, then divide by a
     }
+}
+
+fn walk(c: f64) -> Option<f64> {            // road two: run the meter a mile at a time
+    let mut m = 0.0;
+    while fare(m) < c { m = m + 1.0; }      // not there yet, so ride one more mile
+    if fare(m) == c { Some(m) } else { None } // None: no whole mile gives this fare
 }
 
 fn x(s: Sol) -> f64 {                       // the one answer, when there is exactly one
@@ -37,12 +43,14 @@ fn main() {
     grid("the $15 target", &miles.iter().map(|_| n(15.0)).collect::<Vec<String>>());
     for c in [15.0, 45.0] {                 // one road: undo the two steps
         let m = x(solve(A, B, c));
-        println!("2m + 3 = {}  ->  subtract 3: 2m = {},  halve: m = {},  check: 3 + 2({}) = {}",
-                 n(c), n(c - B), n(m), n(m), n(fare(m)));
+        println!("2m + {} = {}  ->  subtract {}: 2m = {},  halve: m = {},  check: {} + 2({}) = {}",
+                 n(B), n(c), n(B), n(c - B), n(m), n(B), n(m), n(fare(m)));
     }
-    for want in [6.0, 21.0] {               // second road: build it from a known answer
-        println!("built from a known answer: m = {} gives fare {}, solved back to m = {}",
-                 n(want), n(fare(want)), n(x(solve(A, B, fare(want)))));
+    for c in [15.0, 45.0] {                 // second road: run the meter forwards
+        match walk(c) {
+            Some(m) => println!("a mile at a time: the meter first shows {} at m = {}", n(c), n(m)),
+            None => println!("a mile at a time: no whole mile shows {}", n(c)),
+        }
     }
     let limit = x(solve(A, B, 15.0));
     println!("staying under $15: 2m + 3 < 15  ->  m < {}; at m = 5 the fare is {}, at m = 7 it is {}",
@@ -51,14 +59,16 @@ fn main() {
     println!("money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < {} after the flip", n(flip));
     let no_answer = matches!(solve(0.0, 3.0, 5.0), Sol::None);  // 3 + 2m = 5 + 2m
     let every = matches!(solve(0.0, 0.0, 0.0), Sol::Every);     // 3 + m + m = 3 + 2m
-    println!("3 + 2m = 5 + 2m  ->  3 = 5, false: no answer");
-    println!("3 + m + m = 3 + 2m  ->  0 = 0, true: every number works");
+    println!("3 + 2m = 5 + 2m  ->  3 = 5, false: {}", if no_answer { "no answer" } else { "an answer after all" });
+    println!("3 + m + m = 3 + 2m  ->  0 = 0, true: {}", if every { "every number works" } else { "not every number" });
     let halved_first = 15.0 / A - B;        // halving before the 3 comes off
     let one_side = 15.0 / A;                // the 3 taken off the left side only
     println!("the three mistakes come out at {}, {} and m > 6", n(halved_first), n(one_side));
     assert!(x(solve(A, B, 15.0)) == 6.0 && x(solve(A, B, 45.0)) == 21.0);
-    assert!(x(solve(A, B, fare(6.0))) == 6.0 && x(solve(A, B, fare(21.0))) == 21.0);
+    assert!(walk(15.0) == Some(x(solve(A, B, 15.0))) && walk(45.0) == Some(x(solve(A, B, 45.0))));
     assert!(no_answer && every && flip == 6.0);
+    assert!(fare(5.0) < 15.0 && 15.0 < fare(7.0));          // under 6 miles is under $15
+    assert!(-A * 5.0 > -12.0 && !(-A * 7.0 > -12.0));       // -2m > -12 holds at 5, fails at 7
     assert!(fare(5.0) == 13.0 && fare(7.0) == 17.0 && halved_first == 4.5 && one_side == 7.5);
     println!("ALL CHECKS PASS");
 }

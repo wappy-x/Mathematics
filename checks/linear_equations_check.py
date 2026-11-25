@@ -1,8 +1,8 @@
 # Linear equations -- the check behind the card.  Nothing is imported.  A taxi
 # charges $3 to start plus $2 a mile, so the fare in dollars is 3 + 2m.  Every
 # equation here is solved by undoing: subtract the 3 from both sides, then
-# halve both sides.  A second road builds an equation from an answer picked
-# first, then solves it back and must land on the answer it started from.
+# halve both sides.  A second road never subtracts or divides: it runs the
+# meter forwards a mile at a time until the fare reaches the reading.
 A, B = 2.0, 3.0                    # $2 a mile, $3 to start: fare = A*m + B
 
 def fare(m):                       # the recipe, run forwards
@@ -12,6 +12,12 @@ def solve(a, b, c):                # a*x + b = c, undone in reverse order
     if a == 0:                     # the unknown has vanished from both sides
         return "every" if b == c else None
     return (c - b) / a             # subtract b from both sides, then divide by a
+
+def walk(c):                       # road two: run the meter a mile at a time
+    m = 0.0
+    while fare(m) < c:             # not there yet, so ride one more mile
+        m = m + 1.0
+    return m if fare(m) == c else None   # None: no whole mile gives this fare
 
 def n(v):                          # 6.0 prints as 6, 4.5 as 4.5
     return f"{v:g}"
@@ -25,11 +31,12 @@ grid("fare 3 + 2m, in dollars", [n(fare(m)) for m in miles])
 grid("the $15 target", [n(15.0) for _ in miles])
 for c in (15.0, 45.0):             # one road: undo the two steps
     m = solve(A, B, c)
-    print(f"2m + 3 = {n(c)}  ->  subtract 3: 2m = {n(c - B)},  halve: m = {n(m)},"
-          f"  check: 3 + 2({n(m)}) = {n(fare(m))}")
-for want in (6.0, 21.0):           # second road: build it from a known answer
-    print(f"built from a known answer: m = {n(want)} gives fare {n(fare(want))},"
-          f" solved back to m = {n(solve(A, B, fare(want)))}")
+    print(f"2m + {n(B)} = {n(c)}  ->  subtract {n(B)}: 2m = {n(c - B)},  halve: m = {n(m)},"
+          f"  check: {n(B)} + 2({n(m)}) = {n(fare(m))}")
+for c in (15.0, 45.0):             # second road: run the meter forwards
+    w = walk(c)
+    print(f"a mile at a time: no whole mile shows {n(c)}" if w is None else
+          f"a mile at a time: the meter first shows {n(c)} at m = {n(w)}")
 limit = solve(A, B, 15.0)
 print(f"staying under $15: 2m + 3 < 15  ->  m < {n(limit)}; at m = 5 the fare is"
       f" {n(fare(5.0))}, at m = 7 it is {n(fare(7.0))}")
@@ -37,13 +44,15 @@ flip = solve(-A, 0.0, -12.0)       # 12 - 2m > 0 becomes -2m > -12
 print(f"money left out of $15: 12 - 2m > 0  ->  -2m > -12  ->  m < {n(flip)} after the flip")
 no_answer = solve(0.0, 3.0, 5.0)   # 3 + 2m = 5 + 2m, the 2m taken off both sides
 every = solve(0.0, 0.0, 0.0)       # 3 + m + m = 3 + 2m, everything taken off
-print("3 + 2m = 5 + 2m  ->  3 = 5, false: no answer")
-print("3 + m + m = 3 + 2m  ->  0 = 0, true: every number works")
+print(f"3 + 2m = 5 + 2m  ->  3 = 5, false: {'no answer' if no_answer is None else 'an answer after all'}")
+print(f"3 + m + m = 3 + 2m  ->  0 = 0, true: {'every number works' if every == 'every' else 'not every number'}")
 halved_first = 15.0 / A - B        # halving before the 3 comes off
 one_side = 15.0 / A                # the 3 taken off the left side only
 print(f"the three mistakes come out at {n(halved_first)}, {n(one_side)} and m > 6")
 assert solve(A, B, 15.0) == 6.0 and solve(A, B, 45.0) == 21.0
-assert solve(A, B, fare(6.0)) == 6.0 and solve(A, B, fare(21.0)) == 21.0
+assert walk(15.0) == solve(A, B, 15.0) and walk(45.0) == solve(A, B, 45.0)
 assert no_answer is None and every == "every" and flip == 6.0
+assert fare(5.0) < 15.0 < fare(7.0)                  # under 6 miles is under $15
+assert -A * 5.0 > -12.0 and not (-A * 7.0 > -12.0)   # -2m > -12 holds at 5, fails at 7
 assert fare(5.0) == 13.0 and fare(7.0) == 17.0 and halved_first == 4.5 and one_side == 7.5
 print("ALL CHECKS PASS")

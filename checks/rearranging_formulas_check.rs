@@ -18,8 +18,10 @@ fn hunt(f: f64) -> f64 {                         // road two: no rearranging at 
     (lo + hi) / 2.0
 }
 
-fn fare(m: f64) -> f64 { 3.0 + 2.0 * m }         // the taxi: $3 to start, $2 a mile
-fn miles(f: f64) -> f64 { (f - 3.0) / 2.0 }      // the same formula, rearranged
+const START: f64 = 3.0;                          // the taxi: $3 to start, $2 a mile
+const RATE: f64 = 2.0;
+fn fare(m: f64) -> f64 { START + RATE * m }      // the taxi formula as it is written
+fn miles(f: f64) -> f64 { (f - START) / RATE }   // the same formula, rearranged
 
 fn grid(name: &str, values: &[String]) {
     let mut line = format!("{:<26}", name);
@@ -30,10 +32,10 @@ fn one(name: &str, value: String) { println!("{:<48}{:>10}", name, value); }
 fn round2(x: f64) -> f64 { (x * 100.0).round() / 100.0 }
 
 fn main() {
-    println!("forward   1.8 x 25 = {:.1}, then {:.1} + 32 = {:.1} degrees F",
-             SLOPE * 25.0, SLOPE * 25.0, to_f(25.0));
-    println!("backward  77 - 32 = {:.1}, then {:.1} / 1.8 = {:.1} degrees C",
-             77.0 - OFFSET, 77.0 - OFFSET, to_c(77.0));
+    println!("forward   {} x 25 = {:.1}, then {:.1} + {} = {:.1} degrees F",
+             SLOPE, SLOPE * 25.0, SLOPE * 25.0, OFFSET, to_f(25.0));
+    println!("backward  77 - {} = {:.1}, then {:.1} / {} = {:.1} degrees C",
+             OFFSET, 77.0 - OFFSET, 77.0 - OFFSET, SLOPE, to_c(77.0));
     let cs = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0];
     let fs: Vec<f64> = cs.iter().map(|c| to_f(*c)).collect();
     grid("C, degrees Celsius", &cs.iter().map(|c| format!("{:.0}", c)).collect::<Vec<String>>());
@@ -42,14 +44,15 @@ fn main() {
     one("77 F in Celsius, the rearranged formula", format!("{:.1}", to_c(77.0)));
     one("77 F in Celsius, hunted in the original formula", format!("{:.1}", hunt(77.0)));
     one("5 miles in the taxi costs", format!("${:.2}", fare(5.0)));
-    println!("taxi      13.00 - 3 = {:.2}, then {:.2} / 2 = {:.1} miles",
-             13.0 - 3.0, 13.0 - 3.0, miles(13.0));
+    println!("taxi      13.00 - {} = {:.2}, then {:.2} / {} = {:.1} miles",
+             START, 13.0 - START, 13.0 - START, RATE, miles(13.0));
     let wrong_order = 77.0 / SLOPE - OFFSET;     // divided before subtracting
     let no_brackets = 77.0 - OFFSET / SLOPE;     // only the 32 got divided
     let wrong_sign = (77.0 + OFFSET) / SLOPE;    // added instead of subtracted
     println!("the three wrong roads give {:.2}, {:.2} and {:.2} degrees C, not {:.1}",
              wrong_order, no_brackets, wrong_sign, to_c(77.0));
-    one("a $13.00 fare with the $3 flagfall forgotten", format!("{:.1} miles", 13.0 / 2.0));
+    let forgot = 13.0 / RATE;                    // the start fee never taken off
+    one(&format!("a $13.00 fare with the ${} start fee forgotten", START), format!("{:.1} miles", forgot));
     const PI: f64 = 3.14159265358979;            // written out, no crates
     let radius = (12.0 / PI).sqrt();             // area = PI x radius x radius
     one("a rug of area 12.00 square feet has radius", format!("{:.4} feet", radius));
@@ -57,7 +60,7 @@ fn main() {
     one("$100.00 to $162.89 in 10 years is a rate of", format!("{:.2}% a year", rate * 100.0));
     assert!(to_f(25.0) == 77.0 && to_c(77.0) == 25.0 && fs == [32.0, 41.0, 50.0, 59.0, 68.0, 77.0]
             && (hunt(77.0) - 25.0).abs() < 1e-9 && (hunt(212.0) - 100.0).abs() < 1e-9);
-    assert!(fare(5.0) == 13.0 && miles(13.0) == 5.0 && 13.0 / 2.0 == 6.5);
+    assert!(fare(5.0) == 13.0 && miles(13.0) == 5.0 && forgot == 6.5 && forgot != miles(13.0));
     assert!(round2(wrong_order) == 10.78 && round2(no_brackets) == 59.22 && round2(wrong_sign) == 60.56);
     assert!((radius * 10000.0).round() / 10000.0 == 1.9544 && round2(rate * 100.0) == 5.00);
     println!("ALL CHECKS PASS");

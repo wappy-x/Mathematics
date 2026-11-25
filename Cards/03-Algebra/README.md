@@ -29,7 +29,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 01 · Letters and Equations · 4 cards
 
-*Letters standing for numbers, expressions and substitution, solving a linear equation by undoing, inequalities folded in, making a different letter the subject of a formula, two equations in two unknowns by elimination. Needs only wing 01 arithmetic; no exponents beyond squares.*
+*Letters standing for numbers, expressions and substitution, solving a linear equation by undoing, inequalities folded in, making a different letter the subject of a formula, two equations in two unknowns by substitution and elimination. Needs only wing 01 arithmetic; no exponents beyond squares, except one folded compound-interest example.*
 
 1. [Letters for numbers: a letter is a number you have not been told yet, and an expression is a recipe that uses one](01-Letters%20and%20Equations/01-letters-for-numbers.md)
 2. [Linear equations: undo the story step by step, doing the same thing to both sides](01-Letters%20and%20Equations/02-linear-equations.md)

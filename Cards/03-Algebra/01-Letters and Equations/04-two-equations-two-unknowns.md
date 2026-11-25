@@ -30,7 +30,9 @@ xychart-beta
     line [24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4]
 ```
 
-The lower line at the left edge is Friday's receipt: every pair of prices that comes to 41.00 for two adults and three children. The upper one is Saturday's, every pair that comes to 24.00 for one adult and two children. They touch at exactly one place: a child at 7.00, an adult at 10.00. In both pictures the child price runs across the bottom and the adult price up the side.
+The lower line at the left edge is Friday's receipt: every pair of prices that comes to 41.00 for two adults and three children. The upper one is Saturday's, every pair that comes to 24.00 for one adult and two children.
+
+They touch at exactly one place: a child at 7.00, an adult at 10.00. Here, and in Step 4's picture, the child price runs across the bottom and the adult price up the side.
 
 ---
 
@@ -73,7 +75,7 @@ The number underneath both, $`ad - bc`$, decides everything. Call it the **cross
 
 - **Both receipts cover the same two prices.** If a price changed between Friday and Saturday, there are four unknowns, and two receipts cannot pin them.
 - **Each total is the counts times the prices, added up.** A group discount breaks this. The receipt is then no longer a straight line, and the steps below do not apply.
-- **The crossing number is not zero.** Here it is 1. Friday against Sunday gives 0: at 70.00 no prices fit both, and at 82.00 both (10.00, 7.00) and (13.00, 5.00) fit.
+- **The crossing number is not zero.** Here it is 1. Step 4 brings in a third receipt, Sunday's, whose ticket counts are Friday's doubled. Friday against Sunday gives 0: at 70.00 no prices fit both, and at 82.00 both (10.00, 7.00) and (13.00, 5.00) fit.
 
 ---
 
@@ -99,7 +101,7 @@ That is what Saturday allows: pick a child price and the adult price follows. No
 2(24 - 2y) + 3y = 41
 ```
 
-Multiply out the bracket ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)): 48 − 4y + 3y = 41, so 48 − y = 41, so y = 7. One equation, one unknown, undone step by step — that is the card before this one ([Linear equations](02-linear-equations.md)). Feed 7.00 back into x = 24 − 2y and the adult price is 10.00.
+Multiply out the bracket ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)): 48 − 4y + 3y = 41, so 48 − y = 41, so y = 7. One equation, one unknown, undone step by step — that is an earlier card on this shelf ([Linear equations](02-linear-equations.md)). Feed 7.00 back into x = 24 − 2y and the adult price is 10.00.
 
 ### Step 2: elimination, make one letter cancel
 
@@ -109,7 +111,9 @@ Doing the same thing to both sides of an equation leaves it true, so double Satu
 2x + 4y = 48
 ```
 
-Two adults now appear on both receipts. Subtract Friday from this one: equal amounts taken from equal amounts leave equal amounts, so the result is still true. The adults cancel. The children do not: 4y − 3y = y. The totals give 48 − 41 = 7. So y = 7, with no rearranging at all, and either receipt then returns the adult price: 24.00 − 2 × 7.00 = 10.00.
+Two adults now appear on both receipts. Subtract Friday from this one: equal amounts taken from equal amounts leave equal amounts, so the result is still true.
+
+The adults cancel. The children do not: 4y − 3y = y. The totals give 48 − 41 = 7. So y = 7, with no rearranging at all, and either receipt then returns the adult price: 24.00 − 2 × 7.00 = 10.00.
 
 Substitution and elimination reach the same pair because they do the same thing in different clothes: both spend one equation to kill one letter.
 
@@ -148,7 +152,9 @@ xychart-beta
 
 The upper line is Friday's receipt again, the lower one Sunday's claim of 70.00. The gap between them never closes.
 
-Now suppose the slip had read 82.00 instead. The crossing number is still 0, but the receipt is now Friday's doubled, word for word. It adds no fact. The two lines lie on top of one another and every pair on that line fits both: (10.00, 7.00) does, and so does (13.00, 5.00). That is **infinitely many** answers — the same failure wearing the other face, a second fact that was never a second fact.
+Now suppose the slip had read 82.00 instead. The crossing number is still 0, but the receipt is now Friday's doubled, word for word. It adds no fact.
+
+The two lines lie on top of one another, and every pair on that line fits both: (10.00, 7.00) does, and so does (13.00, 5.00). That is **infinitely many** answers. It is the same failure wearing the other face: a second fact that was never a second fact.
 
 So the crossing number sorts the three outcomes. Not zero: one answer. Zero, with the totals disagreeing: no answer, parallel lines. Zero, with the totals agreeing too: a whole line of answers, one line drawn twice.
 
@@ -186,7 +192,13 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Money is held in whole cents, so nothing rounds. The pair is reached by three roads that share no arithmetic: elimination, which doubles Saturday and subtracts; substitution, which makes the adult price the subject and pushes it into Friday; and the cross-multiplied formulas, built from the four counts and two totals. Then both receipts are paid out from the answer, the three mistakes are shown, and both charts' lines are printed point by point.
+Nothing is imported. Money is held in whole cents, so nothing rounds. The pair is reached by three methods:
+
+- **Elimination** doubles Saturday and subtracts Friday.
+- **Substitution** makes the adult price the subject of Saturday. It then tries every child price, in cents, in Friday's receipt and keeps the one Friday accepts.
+- **The cross-multiplied formulas** use only the four counts and the two totals.
+
+Then both receipts are paid out from the answer, the three mistakes are shown, and both charts' lines are printed point by point.
 
 ### Python
 
@@ -209,14 +221,17 @@ def row(name, cents): print(f"{name:<26}" + "".join(f"{m(v):>7}" for v in cents)
 dbl = (2 * c, 2 * d, 2 * q)
 y1 = (dbl[2] - p) // (dbl[1] - b)     # the one child left over
 x1 = (q - d * y1) // c                # that price back into Saturday
-# road two: substitution.  Saturday says x = (q - d*y)/c; put that into Friday.
-y2 = (p * c - a * q) // (b * c - a * d)
-x2 = (q - d * y2) // c
+# road two: substitution.  Saturday says x = (q - d*y)/c.  Try every child
+# price in cents, put that adult price into Friday, keep what Friday accepts.
+fits = [((q - d * y) // c, y) for y in range(q // d + 1)
+        if (q - d * y) % c == 0 and a * ((q - d * y) // c) + b * y == p]
+x2, y2 = fits[0]
 # road three: the crossing number, then the cross-multiplied pair
 cross = a * d - b * c
 x3, y3 = (p * d - b * q) // cross, (a * q - c * p) // cross
 wy = q - p                            # mistake: only the tickets doubled
 wx = q - d * wy
+back = c * ((q - d * y1) // c) + d * y1   # mistake: Saturday's x put back into Saturday
 
 one("Friday, 2 adults and 3 children", m(p))
 one("Saturday, 1 adult and 2 children", m(q))
@@ -239,18 +254,18 @@ row("adults on Saturday's line", [at(SAT, y) for y in range(11)])
 row("adults on Sunday's line", [at(SUN, y) for y in range(11)])
 
 one(f"mistake -- only the tickets doubled: child {m(wy)}, adult", m(wx))
-one("mistake -- the rearranged adult back into Saturday", f"{m(q)} = {m(q)}")
+one("mistake -- the rearranged adult back into Saturday", f"{m(back)} = {m(q)}")
 one(f"mistake -- Friday alone at {m(GUESS[0])} and {m(GUESS[1])}, Saturday",
     m(c * GUESS[0] + d * GUESS[1]))
 
-assert (x1, y1) == (x2, y2) == (x3, y3)                   # three roads, one pair
+assert (x1, y1) == (x2, y2) == (x3, y3) and len(fits) == 1 and back == q   # one pair
 assert a * 1000 + b * 700 == p and c * 1000 + d * 700 == q and (x1, y1) == (1000, 700)
 assert a * GUESS[0] + b * GUESS[1] == p and c * GUESS[0] + d * GUESS[1] == 2300
 assert a * SUN[1] - b * SUN[0] == 0 and 2 * p == 8200 and SUN[2] != 8200
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-07 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 Friday, 2 adults and 3 children                              41.00
@@ -304,14 +319,19 @@ fn main() {
     let dbl = (2 * c, 2 * d, 2 * q);
     let y1 = (dbl.2 - p) / (dbl.1 - b);          // the one child left over
     let x1 = (q - d * y1) / c;                   // that price back into Saturday
-    // road two: substitution.  Saturday says x = (q - d*y)/c; put that into Friday.
-    let y2 = (p * c - a * q) / (b * c - a * d);
-    let x2 = (q - d * y2) / c;
+    // road two: substitution.  Saturday says x = (q - d*y)/c.  Try every child
+    // price in cents, put that adult price into Friday, keep what Friday accepts.
+    let fits: Vec<(i64, i64)> = (0..=q / d)
+        .filter(|&y| (q - d * y) % c == 0 && a * ((q - d * y) / c) + b * y == p)
+        .map(|y| ((q - d * y) / c, y))
+        .collect();
+    let (x2, y2) = fits[0];
     // road three: the crossing number, then the cross-multiplied pair
     let cross = a * d - b * c;
     let (x3, y3) = ((p * d - b * q) / cross, (a * q - c * p) / cross);
     let wy = q - p;                              // mistake: only the tickets doubled
     let wx = q - d * wy;
+    let back = c * ((q - d * y1) / c) + d * y1;  // mistake: Saturday's x put back into Saturday
 
     one("Friday, 2 adults and 3 children".to_string(), m(p));
     one("Saturday, 1 adult and 2 children".to_string(), m(q));
@@ -335,11 +355,11 @@ fn main() {
 
     one(format!("mistake -- only the tickets doubled: child {}, adult", m(wy)), m(wx));
     one("mistake -- the rearranged adult back into Saturday".to_string(),
-        format!("{} = {}", m(q), m(q)));
+        format!("{} = {}", m(back), m(q)));
     one(format!("mistake -- Friday alone at {} and {}, Saturday", m(GUESS.0), m(GUESS.1)),
         m(c * GUESS.0 + d * GUESS.1));
 
-    assert!((x1, y1) == (x2, y2) && (x2, y2) == (x3, y3));   // three roads, one pair
+    assert!((x1, y1) == (x2, y2) && (x2, y2) == (x3, y3) && fits.len() == 1 && back == q);  // one pair
     assert!(a * 1000 + b * 700 == p && c * 1000 + d * 700 == q && (x1, y1) == (1000, 700));
     assert!(a * GUESS.0 + b * GUESS.1 == p && c * GUESS.0 + d * GUESS.1 == 2300);
     assert!(a * SUN.1 - b * SUN.0 == 0 && 2 * p == 8200 && SUN.2 != 8200);
@@ -347,7 +367,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-07 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.99.0, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 Friday, 2 adults and 3 children                              41.00
@@ -546,14 +566,17 @@ example : (24 : ℤ) - 41 = -17 ∧ (24 : ℤ) - 2 * (-17) = 58 := by decide
 ## What this builds on
 
 - [Linear equations](02-linear-equations.md): undoing one equation with one unknown, which is what both routes reduce the problem to.
+- [Rearranging a formula](03-rearranging-formulas.md): making one letter the subject of a receipt, which is the opening move of substitution.
 - [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): multiplying out 2(24 − 2y), and why doubling a whole equation keeps it true.
 
 ## Where this goes next
 
+- [Polynomials](../02-Polynomials/01-polynomials.md): the next shelf. It goes back to one letter, now raised to powers, and asks where an expression crosses zero.
 - [Linear combinations and span](../03-Vectors/03-linear-combinations-and-span.md): the same two equations read as a question about mixing two lists of numbers to hit a target.
 - [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the counts stacked in a grid, the crossing number given its real name, and the same three outcomes for any number of unknowns.
+- [Determinants](../05-Solving%20Systems/04-determinants.md): the crossing number for any square grid of counts, which answers the question below.
 
-Left open: with three prices and three receipts, what number plays the part of the crossing number?
+Left open: with three prices and three receipts, what number plays the part of the crossing number? The next shelf, Polynomials, does not answer it. Determinants, on the Solving Systems shelf, does.
 
 ---
 
