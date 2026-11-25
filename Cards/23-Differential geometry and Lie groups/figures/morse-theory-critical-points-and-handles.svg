@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 380" width="420" height="380" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <title>A swim ring stood on edge, front view in orthographic projection along its axis, to scale at 5 px per cm, with its four critical points of height</title>
+  <rect x="0" y="0" width="420" height="380" fill="#ffffff"/>
+  <line x1="20" y1="340" x2="400" y2="340" stroke="#1d1d1d" stroke-width="2"/>
+  <text x="24" y="358" fill="#1d1d1d">floor, 0 cm</text>
+  <circle cx="210" cy="190" r="150" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <circle cx="210" cy="190" r="50" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+  <g stroke="#555555" stroke-width="1" stroke-dasharray="5 4">
+    <line x1="40" y1="290" x2="380" y2="290"/>
+    <line x1="40" y1="190" x2="380" y2="190"/>
+    <line x1="40" y1="90" x2="380" y2="90"/>
+  </g>
+  <g fill="#555555">
+    <text x="22" y="294">10</text>
+    <text x="22" y="194">30</text>
+    <text x="22" y="94">50</text>
+    <text x="8" y="20">level, cm</text>
+  </g>
+  <g fill="#1d1d1d">
+    <circle cx="210" cy="340" r="5"/>
+    <circle cx="210" cy="240" r="5"/>
+    <circle cx="210" cy="140" r="5"/>
+    <circle cx="210" cy="40" r="5"/>
+  </g>
+  <g fill="#1d1d1d">
+    <text x="220" y="358">pit: index 0, 0 cm</text>
+    <text x="220" y="256">pass: index 1, 20 cm</text>
+    <text x="220" y="132">pass: index 1, 40 cm</text>
+    <text x="220" y="32">peak: index 2, 60 cm</text>
+  </g>
+</svg>

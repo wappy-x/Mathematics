@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 390" width="420" height="390" font-family="Helvetica, Arial, sans-serif">
+  <title>Glued map sheet: loop A = (1, 0) along y = 0.25 and loop B = (1, 2) cross at (0.125, 0.25) and (0.625, 0.25), both with sign +1</title>
+  <rect x="0" y="0" width="420" height="390" fill="#ffffff"/>
+  <!-- the sheet: unit square, 300 px per unit, corner (0,0) at (60,330) -->
+  <rect x="60" y="30" width="300" height="300" fill="#fffaf0" stroke="#1d1d1d" stroke-width="1.5"/>
+  <!-- gluing marks: left and right edges glued (single arrow), top and bottom glued (double arrow) -->
+  <path d="M 54 186 L 60 174 L 66 186" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 354 186 L 360 174 L 366 186" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 200 24 L 212 30 L 200 36 M 208 24 L 220 30 L 208 36" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <path d="M 200 324 L 212 330 L 200 336 M 208 324 L 220 330 L 208 336" fill="none" stroke="#1d1d1d" stroke-width="1.5"/>
+  <!-- loop A: y = 0.25 -->
+  <line x1="60" y1="255" x2="360" y2="255" stroke="#264653" stroke-width="3"/>
+  <!-- loop B: (0,0)-(0.5,1) and (0.5,0)-(1,1) -->
+  <line x1="60" y1="330" x2="210" y2="30" stroke="#c0392b" stroke-width="3"/>
+  <line x1="210" y1="330" x2="360" y2="30" stroke="#c0392b" stroke-width="3"/>
+  <!-- crossings -->
+  <circle cx="97.5" cy="255" r="6" fill="#1d1d1d"/>
+  <circle cx="247.5" cy="255" r="6" fill="#1d1d1d"/>
+  <text x="104" y="278" font-size="14" fill="#1d1d1d">+1</text>
+  <text x="254" y="278" font-size="14" fill="#1d1d1d">+1</text>
+  <text x="97.5" y="242" font-size="11" fill="#1d1d1d" text-anchor="end">(0.125, 0.25)</text>
+  <text x="247.5" y="242" font-size="11" fill="#1d1d1d" text-anchor="end">(0.625, 0.25)</text>
+  <!-- labels -->
+  <text x="300" y="249" font-size="14" fill="#264653">A = (1, 0)</text>
+  <text x="166" y="100" font-size="14" fill="#c0392b" text-anchor="end">B = (1, 2)</text>
+  <text x="60" y="350" font-size="12" fill="#1d1d1d">0</text>
+  <text x="354" y="350" font-size="12" fill="#1d1d1d">1</text>
+  <text x="44" y="34" font-size="12" fill="#1d1d1d">1</text>
+  <text x="210" y="372" font-size="14" fill="#1d1d1d" text-anchor="middle">signed count +1 + 1 = 2 = 1 × 2 − 0 × 1</text>
+</svg>

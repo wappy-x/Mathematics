@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+<title>The A2 and G2 root systems drawn to scale, with their simple roots and Dynkin diagrams</title>
+<defs>
+<marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d1d1d"/></marker>
+</defs>
+<rect x="0" y="0" width="640" height="400" fill="#ffffff"/>
+<g font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#1d1d1d">
+<text x="160" y="22" text-anchor="middle">A2, from sl(3): 6 roots</text>
+<text x="480" y="22" text-anchor="middle">G2: 12 roots</text>
+</g>
+<g stroke="#777777" stroke-width="1" stroke-dasharray="5 4">
+<line x1="160" y1="40" x2="160" y2="300"/>
+<line x1="272.6" y1="105" x2="47.4" y2="235"/>
+<line x1="47.4" y1="105" x2="272.6" y2="235"/>
+</g>
+<g stroke="#1d1d1d" stroke-width="1.5" marker-end="url(#tip)">
+<line x1="160" y1="170" x2="82.2" y2="170"/>
+<line x1="160" y1="170" x2="198.9" y2="102.6"/>
+<line x1="160" y1="170" x2="121.1" y2="237.4"/>
+<line x1="160" y1="170" x2="198.9" y2="237.4"/>
+<line x1="480" y1="170" x2="402.2" y2="170"/>
+<line x1="480" y1="170" x2="518.9" y2="102.6"/>
+<line x1="480" y1="170" x2="441.1" y2="237.4"/>
+<line x1="480" y1="170" x2="518.9" y2="237.4"/>
+<line x1="480" y1="170" x2="557.8" y2="170"/>
+<line x1="480" y1="170" x2="596.7" y2="102.6"/>
+<line x1="480" y1="170" x2="363.3" y2="237.4"/>
+<line x1="480" y1="170" x2="363.3" y2="102.6"/>
+<line x1="480" y1="170" x2="480" y2="304.7"/>
+<line x1="480" y1="170" x2="480" y2="35.3"/>
+</g>
+<g stroke="#1d1d1d" stroke-width="3.5" marker-end="url(#tip)">
+<line x1="160" y1="170" x2="237.8" y2="170"/>
+<line x1="160" y1="170" x2="121.1" y2="102.6"/>
+<line x1="480" y1="170" x2="441.1" y2="102.6"/>
+<line x1="480" y1="170" x2="596.7" y2="237.4"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#1d1d1d">
+<text x="242" y="164">α1</text>
+<text x="96" y="98">α2</text>
+<text x="420" y="130">α1</text>
+<text x="600" y="256">α2</text>
+</g>
+<g stroke="#1d1d1d" stroke-width="2" fill="none">
+<line x1="130" y1="355" x2="190" y2="355"/>
+<line x1="440" y1="351" x2="520" y2="351"/>
+<line x1="440" y1="355" x2="520" y2="355"/>
+<line x1="440" y1="359" x2="520" y2="359"/>
+<polyline points="486,344 475,355 486,366"/>
+</g>
+<g fill="#ffffff" stroke="#1d1d1d" stroke-width="2">
+<circle cx="130" cy="355" r="7"/>
+<circle cx="190" cy="355" r="7"/>
+<circle cx="440" cy="355" r="7"/>
+<circle cx="520" cy="355" r="7"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1d1d">
+<text x="160" y="388" text-anchor="middle">Dynkin diagram: one line, 120°</text>
+<text x="480" y="388" text-anchor="middle">Dynkin diagram: three lines, 150°</text>
+</g>
+</svg>
