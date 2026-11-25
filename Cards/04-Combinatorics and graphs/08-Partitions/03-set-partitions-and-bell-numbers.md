@@ -113,7 +113,9 @@ The two constructions undo each other, so splits with a leftover of size k match
 
 </details>
 
-A second route reaches the same numbers by addition alone. Each row starts with the last entry of the row above; every further entry is the entry to its left plus the entry above that. The rows run 1 / 1 2 / 2 3 5 / 5 7 10 15 / 15 20 27 37 52, each starting on one Bell number and ending on the next. This is A. C. Aitken's triangle of 1933, also called the Bell triangle, the name the code uses. Why it must always agree is not proved here; the run checks it to 4,140.
+A second route reaches the same numbers by addition alone. Each row starts with the last entry of the row above; every further entry is the entry to its left plus the entry above that. The rows run 1 / 1 2 / 2 3 5 / 5 7 10 15 / 15 20 27 37 52, each starting on one Bell number and ending on the next.
+
+This is A. C. Aitken's triangle of 1933, also called the Bell triangle, the name the code uses. Why it must always agree is not proved here; the run checks it to 4,140.
 
 ---
 

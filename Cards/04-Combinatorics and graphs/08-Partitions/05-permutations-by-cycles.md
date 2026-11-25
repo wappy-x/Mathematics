@@ -43,6 +43,8 @@ c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1
 
 **Read it aloud:** the last key either slips into a rehang of the other n − 1, in any of n − 1 places, or hangs on its own beside a rehang making one loop fewer.
 
+Outside 1 to $`n`$, $`c(n,k) = 0`$.
+
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`n`$ | keys rehung, one per hook | 5 | rows grow far larger |
@@ -94,7 +96,9 @@ So c(5,k) = 4 c(4,k) + c(4,k−1), and at three loops 4 × 6 + 11 = 35. The mult
 <details>
 <summary>Detailed proof: the splice is reversible</summary>
 
-Inserting 5 after any of the four hooks lengthens that hook's loop and makes or loses none, so k holds, and the four results differ: a different hook sends its key to hook 5 in each. Deleting 5 undoes the insertion, so the two sides stand one to four: the term (n − 1) c(n − 1, k). Seeds: c(1,1) = 1, and c(n,k) = 0 for k above n or below 1.
+Inserting 5 after any of the four hooks lengthens that hook's loop and makes or loses none, so k holds. The four results differ because a different hook sends its key to hook 5 in each. Deleting 5 undoes the insertion, so the two sides stand one to four: the term (n − 1) c(n − 1, k).
+
+Seeds: c(1,1) = 1, and c(n,k) = 0 for k above n or below 1.
 
 </details>
 
@@ -705,12 +709,12 @@ example : 3 * 6 + 11 = 29 ∧ Nat.stirlingSecond 5 3 = 25 := by decide
 
 ## Where this goes next
 
-- [The twelvefold way](06-twelvefold-way.md): the table sorting this family of questions — labelled or unlabelled things into labelled or unlabelled boxes — and placing loops and blocks in it.
+- [The twelvefold way](06-twelvefold-way.md): the table sorting all twelve "put n things into k boxes" counts — placing blocks and integer partitions in the grid, while ordered loops sit outside it.
 - [The RSK correspondence](08-rsk-correspondence.md): every shuffle becomes a pair of same-shaped tableaux, so the squared tableau counts add up to n!, and the first row is the longest rising run.
 
 Beside it, [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md) counts the same keys into blocks, and [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md) adds those counts along a row.
 
-Loops and blocks are now counted apart; which standard question each answers, and what the other ten are, is the twelvefold way.
+Counting shuffles by loops sits just outside the twelvefold way's "items into boxes" grid; the next card lays out all twelve box-loading counts in one table, putting blocks and partitions in their cells.
 
 ---
 

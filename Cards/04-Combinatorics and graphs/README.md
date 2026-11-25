@@ -139,7 +139,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 ## 08 · Partitions · 8 cards
 
-*Integer partitions and Ferrers diagrams, Euler's product, set partitions and Bell numbers, Stirling numbers of the second kind, permutations counted by cycles, and the twelvefold way as the wing's counting map.*
+*Integer partitions and Ferrers diagrams, Euler's product, set partitions and Bell numbers, Stirling numbers of the second kind, permutations counted by cycles, the twelvefold way as the wing's counting map, Young tableaux with the hook length formula, and the RSK correspondence.*
 
 1. [Integer partitions: a number as a sum of whole parts with order ignored, drawn as rows of dots](08-Partitions/01-integer-partitions.md)
 2. [Euler's product: one geometric factor per part size, and the coefficients count partitions](08-Partitions/02-partitions-generating-function.md)

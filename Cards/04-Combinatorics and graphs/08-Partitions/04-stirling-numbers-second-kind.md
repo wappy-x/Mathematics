@@ -100,12 +100,14 @@ The edges agree: the empty rule on no items misses nothing, matching S(0, 0) = 1
 
 ### Step 5: add the whole row and every split is counted once
 
-Every split of the five tools has one number of groups and one only, so filing splits by that number puts each in one column and the whole row counts every split: 1 + 15 + 25 + 10 + 1 = 52, the Bell number B(5), reached from the other side on [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md).
+Every split of the five tools uses one exact number of groups, so each split lands in one column. Adding the row counts every split once: 1 + 15 + 25 + 10 + 1 = 52, the Bell number B(5) from [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md).
 
 <details>
 <summary>The other road: count the named-box rules, then sieve</summary>
 
-There are 3^5 = 243 rules sending five tools to three named boxes, empty ones allowed. Each of the 3 boxes is avoided by 2^5 = 32 rules, so subtract 3 × 32 = 96; the 3 rules piling everything into one box came off twice, so add them back: 243 − 96 + 3 = 150 fill every box. Divide by 3! = 6 for 25 splits. The general alternating count is on [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
+There are 3^5 = 243 rules sending five tools to three named boxes, empty ones allowed. Each of the 3 boxes is avoided by 2^5 = 32 rules, so subtract 3 × 32 = 96. The 3 rules piling everything into one box came off twice, so add them back: 243 − 96 + 3 = 150 fill every box.
+
+Divide by 3! = 6 for 25 splits. The general alternating count is on [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
 
 </details>
 
@@ -762,9 +764,10 @@ example : Nat.choose 5 3 = 10 ∧ Nat.choose 5 3 = Nat.stirlingSecond 5 4 := by 
 
 ## Where this goes next
 
+- [Counting shuffles by their loops](05-permutations-by-cycles.md): Stirling numbers of the first kind, where items form directed loops instead of unordered blocks and the multiplier changes from $`k`$ to $`n - 1`$.
 - [The twelvefold way](06-twelvefold-way.md): this count as one cell of a table, beside the eleven other ways of naming or not naming items and boxes.
 
-Three rules are fixed here: items named, boxes not, none empty. Change one and the count changes — the twelvefold way settles all of them in one table.
+Blocks ignore order inside each group; give each group a direction around a loop instead, and the next card counts those shuffles with a sibling triangle.
 
 ---
 

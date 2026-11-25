@@ -159,16 +159,16 @@ theorem at_most_k_parts_recurrence (n k : ℕ) :
       card_at_most_k_parts_eq_card_parts_at_most_k]
     exact ip_helper_parts_at_most_recurrence n k
 
--- The card's worked numbers for a bar of 8 beats.
--- Splits by note count, 1 to 8 notes, add to 22; so do splits by biggest note.
+-- The card's worked numbers for an 8-metre pipe.
+-- Plans by piece count, 1 to 8 pieces, add to 22; so do plans by longest piece.
 example : 1 + 4 + 5 + 5 + 3 + 2 + 1 + 1 = 22 := by norm_num
--- At most three notes: a ≥ b ≥ c ≥ 0 with a + b + c = 8 (a 0 means an unused note): 10 splits.
+-- At most three pieces: a ≥ b ≥ c ≥ 0 with a + b + c = 8 (a 0 means an unused slot): 10 plans.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.2.2 ≤ t.2.1 ∧ t.2.1 ≤ t.1 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 10 := by decide
--- No note over three beats: x ones, y twos and z threes with x + 2y + 3z = 8: also 10 splits.
+-- No piece over three metres: x ones, y twos and z threes with x + 2y + 3z = 8: also 10 plans.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.1 + 2 * t.2.1 + 3 * t.2.2 = 8)).card = 10 := by decide
--- Exactly three notes: 5 splits, half of the 10 ("at most" read as "exactly").
+-- Exactly three pieces: 5 plans, half of the 10 ("at most" read as "exactly").
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => 1 ≤ t.2.2 ∧ t.2.2 ≤ t.2.1 ∧ t.2.1 ≤ t.1 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 5 := by
   decide
@@ -178,7 +178,7 @@ example : ((Finset.range 6 ×ˢ Finset.range 6 ×ˢ Finset.range 6).filter
 example : ((Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.2 ≤ t.1 ∧ t.1 + t.2 = 8)).card = 5 := by decide
 example : 5 + 5 = 10 := by norm_num
--- Mismatched caps: parts of at most four beats give 15 splits, not 10.
+-- Mismatched caps: pieces of at most four metres give 15 plans, not 10.
 example : ((Finset.range 9 ×ˢ Finset.range 5 ×ˢ Finset.range 3 ×ˢ Finset.range 3).filter
     (fun t => t.1 + 2 * t.2.1 + 3 * t.2.2.1 + 4 * t.2.2.2 = 8)).card = 15 := by decide
 -- The turn of 6+1+1: column heights 3, 1, 1, 1, 1, 1; turning again gives 6, 1, 1.
@@ -186,10 +186,10 @@ example : (List.range 6).map (fun j => ([6, 1, 1].filter (fun a => j + 1 ≤ a))
     = [3, 1, 1, 1, 1, 1] := by decide
 example : (List.range 3).map (fun j => ([3, 1, 1, 1, 1, 1].filter (fun a => j + 1 ≤ a)).length)
     = [6, 1, 1] := by decide
--- Stars and bars for three named notes: 21 ordered triples of at least 1 adding to 8, not 5.
+-- Stars and bars for three named pieces: 21 ordered triples of at least 1 adding to 8, not 5.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => 1 ≤ t.1 ∧ 1 ≤ t.2.1 ∧ 1 ≤ t.2.2 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 21 := by decide
--- Rhythms with order kept: 2 ^ 7 = 128 for eight beats, not 22.
+-- Cut orders with order kept: 2 ^ 7 = 128 for an 8-metre pipe, not 22.
 example : 2 ^ (8 - 1) = 128 := by norm_num
 
 #print axioms card_at_most_k_parts_eq_card_parts_at_most_k

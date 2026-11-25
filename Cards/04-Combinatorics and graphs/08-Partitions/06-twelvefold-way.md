@@ -77,6 +77,7 @@ k(k-1)(k-2)\cdots(k-n+1)
 - **The label questions are about the answer, not the metal.** The same vans differ when the manifest names them and are alike when it does not.
 - **Three holding rules, no others.** A cap of two parcels a van is none of the twelve, and no cell counts it.
 - **Nothing is ordered inside a box.** Stack each van in a fixed order and every count in the grid is too small.
+- **At least one thing and one box ($`n \ge 1, k \ge 1`$).** At zero things or zero boxes, the choose formulas and the Stirling sum starting at 1 need edge-case rules.
 
 ---
 
@@ -117,7 +118,9 @@ At most one parcel a van needs a van per parcel, so the column reads 0 here. Sen
 
 With both labels on, the first parcel picks one of three vans and the second one of the two left, 3 × 2 = 6 ([Ordered picks](../01-Counting%20Principles/04-ordered-picks.md)). Sacks into named vans: which two are used, C(3, 2) = 3. Unnamed vans give 1 either way, nothing telling two such loadings apart.
 
-Two more routes cross-check the grid. A loading that leaves vans empty fills fewer of them. So each "any" cell is its row's "at least one" cell added over how many vans are used, times the choice of which when they are named: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, 5 = 1 + 2 + 2. And the alike-van rows grow one thing at a time, by $`S(n, k) = k\,S(n-1, k) + S(n-1, k-1)`$ and $`p_k(n) = p_{k-1}(n-1) + p_k(n-k)`$, both run by the code.
+Two more routes cross-check the grid. A loading that leaves vans empty fills fewer of them. So each "any" cell adds its row's "at least one" cell over how many vans are used, times the choice of which vans when they are named. For our depot: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, and 5 = 1 + 2 + 2.
+
+The alike-van rows also grow one thing at a time, and the code checks both rules. For named parcels, $`S(n, k) = k\,S(n-1, k) + S(n-1, k-1)`$. For identical sacks, $`p_k(n) = p_{k-1}(n-1) + p_k(n-k)`$. Either one van holds a single sack, leaving $`p_{k-1}(n-1)`$ ways for the rest. Or every van holds at least two, so taking one from each leaves $`p_k(n-k)`$ ways.
 
 ---
 
@@ -1079,11 +1082,13 @@ example : Nat.stirlingSecond 4 3 = 6 ∧ Nat.stirlingSecond 4 2 = 7 ∧ 3 * 6 + 
 
 ## Where this goes next
 
-This card closes the Partitions shelf, beside [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md), [Euler's product](02-partitions-generating-function.md) and [Counting shuffles by their loops](05-permutations-by-cycles.md).
+This card gathers the counting rows of the Partitions shelf beside [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md), [Euler's product](02-partitions-generating-function.md) and [Counting shuffles by their loops](05-permutations-by-cycles.md).
 
-- [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): colouring a graph sorts its points into colour groups, and the label questions decide when two colourings are one answer.
+- [Young tableaux and the hook length formula](07-young-tableaux-and-hook-lengths.md): fills the partition shapes from the bottom row of this table with 1 to n rising along rows and down columns.
+- [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): splits a graph's vertices into groups with no edge inside any group, and asks for the fewest groups needed.
+- [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md): handles holding rules outside these three, such as a van taking at most two parcels.
 
-Only three holding rules: a van that may take at most two parcels is none of the twelve, which is the job of the product built in [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md).
+The bottom row of the table counts partitions only by shape; the next card asks how many ordered ways a given partition shape can be filled.
 
 ---
 

@@ -16,7 +16,7 @@ A box grid filled with 1 to n, rows rising to the right and columns downward, is
 
 **Give every box a hook — the box, the boxes to its right and the boxes below it — and the number of standard tableaux on n boxes is n! divided by the product of all the hook lengths.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the Schur polynomial is a definition, and its symmetry a theorem proved in Step 4.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. Allowing repeated entries later on this card defines a weight sum — the Schur polynomial — whose symmetry is proved in Step 4.
 
 ### The picture: the five fillings of 3 + 2
 
@@ -113,9 +113,11 @@ Jumps go right or down, so the walk stops; its stopping chances add to 1.
 
 ### Step 3: the walk stops at each corner with Step 1's fraction
 
-Group the walks to $`c`$ by the rows and columns they visit; the top row and left column give the start. A group's total chance is a product: each visited row other than $`r`$ gives one over (hook minus one) at the box where that row meets column $`s`$; each visited column other than $`s`$ gives the same where it meets row $`r`$.
+Write the corner as $`c = (r, s)`$, and group the walks to $`c`$ by the rows and columns they visit; the top row and left column give the start.
 
-Each row above $`c`$ and each column left of $`c`$ is visited or not, so summing over all groups, times $`1/n`$ for the start, gives $`1 + 1/(h-1) = h/(h-1)`$ per box above or left of $`c`$: Step 1's fraction. The fractions are stopping chances, they add to 1, and the formula obeys the corner rule.
+A group's total chance is a product. Each visited row other than $`r`$ gives one over (hook minus one) at the box where that row meets column $`s`$. Each visited column other than $`s`$ gives the same where it meets row $`r`$.
+
+Each row above $`c`$ and each column left of $`c`$ is either visited or skipped. Summing over all groups, times $`1/n`$ for the start, gives $`1 + 1/(h-1) = h/(h-1)`$ per box above or left of $`c`$: Step 1's fraction. The fractions are stopping chances, they add to 1, and the formula obeys the corner rule.
 
 <details>
 <summary>Detailed proof: the chance of one set of rows and columns</summary>
@@ -124,7 +126,9 @@ Start at $`(i, j)`$, with $`i \le r`$ and $`j \le s`$. The first jump goes down 
 
 $`\displaystyle \frac{(h(i, s) - 1) + (h(r, j) - 1)}{h(i, j) - 1}`$
 
-and this ratio is 1. Since $`c`$ is a corner, column $`s`$ ends at row $`r`$ and row $`r`$ ends at column $`s`$. So $`h(i, s) - 1`$ counts row $`i`$ right of column $`s`$ plus the $`r - i`$ boxes below; $`h(r, j) - 1`$ counts the $`s - j`$ boxes right of it plus column $`j`$ below row $`r`$. Together: every box right of or below $`(i, j)`$. In row $`r`$ or column $`s`$ one term is zero, and the count still holds.
+and this ratio is 1. Since $`c`$ is a corner, column $`s`$ ends at row $`r`$ and row $`r`$ ends at column $`s`$. So $`h(i, s) - 1`$ counts row $`i`$ right of column $`s`$ plus the $`r - i`$ boxes below. Likewise $`h(r, j) - 1`$ counts the $`s - j`$ boxes right of it plus column $`j`$ below row $`r`$.
+
+Together, those count every box right of or below $`(i, j)`$. In row $`r`$ or column $`s`$ one term is zero, and the count still holds.
 
 </details>
 
@@ -132,7 +136,9 @@ and this ratio is 1. Since $`c`$ is a corner, column $`s`$ ends at row $`r`$ and
 
 Swap $`x_1`$ and $`x_2`$ in $`x_1^2 x_2 + x_1 x_2^2`$ and the same polynomial returns. A swap of tableaux due to Bender and Knuth shows why.
 
-A 1 with a 2 directly below it forms a locked pair; every other 1 and 2 is free. In each row, swap the number of free 1s with the number of free 2s. The result is still semistandard, and doing it twice gives back the start, so weights pair off with $`x_1`$ and $`x_2`$ traded. In top row 1 1 over 2, the second 1 is free and becomes a 2: top row 1 2 over 2.
+A 1 with a 2 directly below it forms a locked pair; every other 1 and 2 is free. In each row, swap the number of free 1s with the number of free 2s. The result is still semistandard, and doing it twice gives back the start, so weights pair off with $`x_1`$ and $`x_2`$ traded.
+
+In top row 1 1 over 2, the second 1 is free and becomes a 2: top row 1 2 over 2.
 
 The swap works for any neighbouring values, and such swaps reach every reordering, so $`s_{\lambda}`$ never changes when its variables are reordered. The code checks all six reorderings of $`s_{(2,1)}(x_1, x_2, x_3)`$.
 
@@ -153,7 +159,7 @@ A weight of $`x_1 x_2 \cdots x_n`$ uses each of 1 to $`n`$ once, so that coeffic
 | reflection | C(5,2) − C(5,1) = 10 − 5 | 5 |
 | a 10–10 vote | hooks 11 down to 2, then 10 down to 1 | **16,796** |
 
-Five reading orders keep yes level or ahead. Reflection uses [The reflection principle](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): for 10–10, 184,756 − 167,960 = 16,796.
+Five reading orders keep yes level or ahead. Reflection with the mirror shifted one step lower ([The reflection principle](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md), [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md)) gives 184,756 − 167,960 = 16,796 for a 10–10 vote.
 
 ### What breaks if you drop a piece
 

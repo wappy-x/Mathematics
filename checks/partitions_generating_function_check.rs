@@ -1,8 +1,8 @@
-// Euler's product -- the same check as the Python, in Rust.  No crates.  Eight identical marbles go
-// into unmarked cups, none empty: 22 ways.  The count is reached twice, by listing every split and
-// by multiplying one geometric bracket per cup size, and a third time at n = 50 by Euler's
-// pentagonal recurrence.  All-different and all-odd splits are counted by listing and by products.
-const N: usize = 50; const MARBLES: usize = 8;
+// Euler's product -- the same check as the Python, in Rust.  No crates.  Weighing 8 grams on a
+// balance pan with whole-gram brass weights: 22 ways.  The count is reached twice, by listing
+// every load and by multiplying one geometric bracket per weight size, and a third time at n = 50
+// by Euler's pentagonal recurrence.  All-different and all-odd loads are counted by listing and by products.
+const N: usize = 50; const TARGET: usize = 8;
 fn splits(total: usize, largest: usize) -> Vec<Vec<usize>> {   // non-increasing lists summing to total
     if total == 0 { return vec![vec![]] }
     (1..=largest.min(total)).rev().flat_map(|k| splits(total - k, k).into_iter()
@@ -45,31 +45,31 @@ fn main() {
     let listed: Vec<i128> = (0..11).map(|n| splits(n, n).len() as i128).collect();
     let distinct = product((1..=N).map(at_most_one).collect());
     let odd = product((1..=N).step_by(2).map(any_number_of).collect());
-    let all8 = splits(MARBLES, MARBLES);
+    let all8 = splits(TARGET, TARGET);
     let diff8: Vec<Vec<usize>> = all8.iter().filter(|s| s.windows(2).all(|w| w[0] != w[1])).cloned().collect();
     let odd8: Vec<Vec<usize>> = all8.iter().filter(|s| s.iter().all(|k| k % 2 == 1)).cloned().collect();
-    let running: Vec<i128> = (1..=MARBLES).map(|m| product((1..=m).map(any_number_of).collect())[MARBLES]).collect();
-    let mut comps = vec![0i128; MARBLES + 1]; comps[0] = 1;
-    for n in 1..=MARBLES { comps[n] = (1..=n).map(|k| comps[n - k]).sum() }
-    println!("{} identical marbles into unmarked cups, none empty; cup sizes 1 to {}", MARBLES, MARBLES);
-    grid("marbles to share, n", &(0..11).collect::<Vec<i128>>());
-    grid("splits listed one by one", &listed);
+    let running: Vec<i128> = (1..=TARGET).map(|m| product((1..=m).map(any_number_of).collect())[TARGET]).collect();
+    let mut comps = vec![0i128; TARGET + 1]; comps[0] = 1;
+    for n in 1..=TARGET { comps[n] = (1..=n).map(|k| comps[n - k]).sum() }
+    println!("weighing {} grams with whole-gram weights, order ignored; weight sizes 1 to {} g", TARGET, TARGET);
+    grid("target mass in grams, n", &(0..11).collect::<Vec<i128>>());
+    grid("loads listed one by one", &listed);
     grid("coefficient of x^n in the product", &euler[..11]);
     grid("the same, by the pentagonal recurrence", &pent[..11]);
-    grid("all cups different, from 1+x^k", &distinct[..11]);
-    grid("all cups odd, from odd sizes only", &odd[..11]);
-    println!("the x^{} coefficient as sizes 1 to {} are added: {:?}", MARBLES, MARBLES, running);
-    println!("the {} all-different splits of {}: {}", diff8.len(), MARBLES, show(&diff8));
-    println!("the {} all-odd splits of {}: {}", odd8.len(), MARBLES, show(&odd8));
+    grid("all weights different, from 1+x^k", &distinct[..11]);
+    grid("all weights odd, from odd sizes only", &odd[..11]);
+    println!("the x^{} coefficient as sizes 1 to {} g are added: {:?}", TARGET, TARGET, running);
+    println!("the {} all-different loads of {} g: {}", diff8.len(), TARGET, show(&diff8));
+    println!("the {} all-odd loads of {} g: {}", odd8.len(), TARGET, show(&odd8));
     println!("p({}) from the product: {}", N, euler[N]);
     println!("p({}) from the pentagonal recurrence: {}", N, pent[N]);
-    println!("mistake 1, order counted: {} ordered writings of {}, not {}", comps[MARBLES], MARBLES, euler[MARBLES]);
-    println!("mistake 2, sizes stopped at 4: {}, not {}", running[3], euler[MARBLES]);
-    println!("mistake 3, every size at most once: {}, not {}", distinct[MARBLES], euler[MARBLES]);
-    println!("mistake 4, pentagonal signs all plus: {}, not {}", pentagonal(MARBLES, false)[MARBLES], euler[MARBLES]);
+    println!("mistake 1, order counted: {} ordered sequences for {} g, not {}", comps[TARGET], TARGET, euler[TARGET]);
+    println!("mistake 2, sizes stopped at 4 g: {}, not {}", running[3], euler[TARGET]);
+    println!("mistake 3, every size at most once: {}, not {}", distinct[TARGET], euler[TARGET]);
+    println!("mistake 4, pentagonal signs all plus: {}, not {}", pentagonal(TARGET, false)[TARGET], euler[TARGET]);
     assert!(listed == euler[..11].to_vec() && euler[..11] == pent[..11]);   // listing, product, recurrence
-    assert!(euler[MARBLES] == 22 && euler[N] == 204226);                   // the published partition numbers
-    assert!(distinct == odd && distinct[MARBLES] == diff8.len() as i128 && diff8.len() == odd8.len() && odd8.len() == 6);
-    assert!(running == vec![1, 5, 10, 15, 18, 20, 21, 22] && comps[MARBLES] == 1i128 << (MARBLES - 1));
+    assert!(euler[TARGET] == 22 && euler[N] == 204226);                     // the published partition numbers
+    assert!(distinct == odd && distinct[TARGET] == diff8.len() as i128 && diff8.len() == odd8.len() && odd8.len() == 6);
+    assert!(running == vec![1, 5, 10, 15, 18, 20, 21, 22] && comps[TARGET] == 1i128 << (TARGET - 1));
     println!("ALL CHECKS PASS");
 }

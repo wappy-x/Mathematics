@@ -1,18 +1,18 @@
-// Integer partitions -- the same check as the Python, in Rust.  No crates.  A bar
-// of 8 beats is split into notes a whole number of beats long, order ignored.
-// p(n) is reached twice, by listing every split and by a build-up that lists
-// none, and the flip of the dot diagram is then run on the splits themselves.
+// Integer partitions -- the same check as the Python, in Rust.  No crates.  An 8-metre
+// pipe is cut into whole-metre pieces, order ignored.  p(n) is reached twice, by
+// listing every plan and by a build-up that lists none, and the flip of the dot
+// diagram is then run on the plans themselves.
 const N: usize = 8;
 const K: usize = 3;
 fn writings(n: usize, cap: usize, keep_order: bool) -> Vec<Vec<usize>> {
-    if n == 0 { return vec![vec![]] }           // road one: list them, biggest note first
+    if n == 0 { return vec![vec![]] }           // road one: list them, longest piece first
     let mut out: Vec<Vec<usize>> = Vec::new();
     for a in (1..=cap.min(n)).rev() {
         for r in writings(n - a, if keep_order { n - a } else { a }, keep_order) { out.push([vec![a], r].concat()) }
     }
     out
 }
-fn built_up(n: usize) -> Vec<i64> {             // road two: add one note length at a time
+fn built_up(n: usize) -> Vec<i64> {             // road two: add one piece length at a time
     let mut p = vec![0i64; n + 1]; p[0] = 1;
     for a in 1..=n { for i in a..=n { p[i] += p[i - a] } }
     p
@@ -39,40 +39,40 @@ fn main() {
     let exact: Vec<i64> = (1..=N).map(|k| all8.iter().filter(|s| s.len() == k).count() as i64).collect();
     let longest: Vec<i64> = (1..=N).map(|k| all8.iter().filter(|s| s[0] == k).count() as i64).collect();
     let (at_most, no_over) = (cum(&exact), cum(&longest));
-    let few_notes: Vec<Vec<usize>> = all8.iter().filter(|s| s.len() <= K).cloned().collect();
-    let short_notes: Vec<Vec<usize>> = all8.iter().filter(|s| s[0] <= K).cloned().collect();
-    let flipped: Vec<Vec<usize>> = few_notes.iter().map(|s| flip(s)).collect();
+    let few_pieces: Vec<Vec<usize>> = all8.iter().filter(|s| s.len() <= K).cloned().collect();
+    let short_pieces: Vec<Vec<usize>> = all8.iter().filter(|s| s[0] <= K).cloned().collect();
+    let flipped: Vec<Vec<usize>> = few_pieces.iter().map(|s| flip(s)).collect();
     let ordered = writings(N, N, true);
     let mut collapsed: Vec<Vec<usize>> = ordered.iter()
         .map(|r| { let mut v = r.clone(); v.sort_by(|a, b| b.cmp(a)); v }).collect();
     collapsed.sort(); collapsed.dedup();
-    let pairs: Vec<String> = few_notes.iter().map(|s| format!("{}/{}", show(s), show(&flip(s)))).collect();
+    let pairs: Vec<String> = few_pieces.iter().map(|s| format!("{}/{}", show(s), show(&flip(s)))).collect();
     let by_recur: Vec<i64> = (1..=N as i64).map(|k| few(N as i64, k)).collect();
-    println!("a bar of {} beats, notes a whole number of beats long, order ignored", N);
-    row("beats n", &(0..=N as i64).collect::<Vec<i64>>());
-    row("splits p(n), by listing", &listed);
-    row("splits p(n), by the build-up", &built_up(N));
-    row("notes k, or longest note k", &(1..=N as i64).collect::<Vec<i64>>());
-    row("splits with exactly k notes", &exact);
-    row("splits whose longest note is k", &longest);
-    row("splits with at most k notes", &at_most);
-    row("splits with no note over k", &no_over);
-    println!("at most {} notes: {}; no note over {} beats: {}; without listing, \
+    println!("an {}-metre pipe cut into whole-metre pieces, order ignored", N);
+    row("metres n", &(0..=N as i64).collect::<Vec<i64>>());
+    row("plans p(n), by listing", &listed);
+    row("plans p(n), by the build-up", &built_up(N));
+    row("pieces k, or longest piece k", &(1..=N as i64).collect::<Vec<i64>>());
+    row("plans with exactly k pieces", &exact);
+    row("plans whose longest piece is k", &longest);
+    row("plans with at most k pieces", &at_most);
+    row("plans with no piece over k", &no_over);
+    println!("at most {} pieces: {}; no piece over {} metres: {}; without listing, \
               R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = {} + {} = {}",
              K, at_most[K - 1], K, no_over[K - 1], few(5, 3), few(8, 2), few(8, 3));
     println!("the flip carries the first collection onto the second, one for one: {}; \
-              flipping twice returns every split: {}",
-             if sort(&flipped) == sort(&short_notes) { "yes" } else { "no" },
+              flipping twice returns every plan: {}",
+             if sort(&flipped) == sort(&short_pieces) { "yes" } else { "no" },
              if all8.iter().all(|s| flip(&flip(s)) == *s) { "yes" } else { "no" });
-    println!("the {} splits with at most {} notes, each with its flip:", few_notes.len(), K);
+    println!("the {} plans with at most {} pieces, each with its flip:", few_pieces.len(), K);
     println!("  {}", pairs[..5].join("  "));
     println!("  {}", pairs[5..].join("  "));
-    println!("mistake 1, rhythms counted in order: {}, not {}", ordered.len(), listed[N]);
-    println!("mistake 2, stars and bars for three named notes: {}, not {}",
+    println!("mistake 1, cut orders counted: {}, not {}", ordered.len(), listed[N]);
+    println!("mistake 2, stars and bars for three named pieces: {}, not {}",
              ordered.iter().filter(|r| r.len() == 3).count(), exact[2]);
-    println!("mistake 3, at most {} notes read as exactly {}: {}, not {}", K, K, exact[K - 1], at_most[K - 1]);
+    println!("mistake 3, at most {} pieces read as exactly {}: {}, not {}", K, K, exact[K - 1], at_most[K - 1]);
     assert!(listed == built_up(N) && listed == vec![1, 1, 2, 3, 5, 7, 11, 15, 22]);
-    assert!(sort(&flipped) == sort(&short_notes));
+    assert!(sort(&flipped) == sort(&short_pieces));
     assert!(by_recur == at_most && at_most == no_over);
     assert!(collapsed == sort(&all8) && all8.iter().all(|s| flip(&flip(s)) == *s));
     println!("ALL CHECKS PASS");

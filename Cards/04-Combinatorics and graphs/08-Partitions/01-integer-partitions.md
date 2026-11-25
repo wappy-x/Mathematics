@@ -6,17 +6,17 @@
 
 ## General Overview
 
-A bar of music holds eight beats. A composer fills it with notes, each note a whole number of beats long: one note of eight beats, or three then three then two, or eight single beats.
+A steel yard has an eight-metre pipe to cut into whole-metre pieces: one eight-metre length, or pieces of three, three and two metres, or eight one-metre pieces.
 
-Ask something narrower than "which rhythm": which note lengths the bar uses and how many of each, order set aside. Three-three-two and two-three-three are then one answer. There are 22.
+The yard cares which lengths come out and how many of each, not the order of the cuts. Three-three-two and two-three-three produce the same bundle of pieces, so they count as one plan. There are 22 plans.
 
-Cap every note at three beats and the count drops to 10. Lift that cap and allow at most three notes instead, any lengths: also 10. The match is not luck — one picture turns each restriction into the other.
+Cap every piece at three metres so it fits in a three-metre van, and the count drops to 10. Lift that cap and allow at most three pieces instead, any lengths: also 10. The match is not luck — one picture turns each restriction into the other.
 
-A whole number written as a sum of whole numbers of at least one, order thrown away, is a **partition**. In the music example the card also calls one a **split**. Drawn as rows of dots, one row per part, longest on top, it is a **Ferrers diagram**, after Norman Macleod Ferrers, whose argument about these pictures J. J. Sylvester printed in 1853.
+A whole number written as a sum of whole numbers of at least one, order thrown away, is a **partition**. In the pipe example the card also calls one a **plan**. Drawn as rows of dots, one row per part, longest on top, it is a **Ferrers diagram**, after Norman Macleod Ferrers, whose argument about these pictures J. J. Sylvester printed in 1853.
 
-**A partition is a whole number written as a sum of whole parts, order discarded; drawn as rows of dots it turns on its diagonal, and the turn trades "how many parts" for "how big the biggest part is".**
+**A partition splits a whole number into whole parts, order ignored; turning its dot diagram swaps "how many parts" with "biggest part".**
 
-**What kind of fact this is:** a definition, since no formula as simple as a binomial coefficient gives the count; the turn that matches few parts with small parts is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition, since no simple formula gives the count. The turn matching few parts with small parts is a theorem, proved in Why it works.
 
 ### The picture: eight dots, turned on the diagonal
 
@@ -29,7 +29,7 @@ A whole number written as a sum of whole numbers of at least one, order thrown a
 |  | ● |
 |  | ● |
 
-Left: one row per note, longest on top. Right: the same eight dots read down the columns. Three rows, longest six, became six rows, longest three.
+Left: one row per piece, longest on top. Right: the same eight dots read down the columns. Three rows, longest six, became six rows, longest three.
 
 ---
 
@@ -51,7 +51,7 @@ Two capped counts carry this card. $`R_k(n)`$ counts the partitions of $`n`$ wit
 R_k(n) = C_k(n)
 ```
 
-**Read it aloud:** into few parts, or into small parts, is the same number of ways — at eight beats with a cap of three, 10 each.
+**Read it aloud:** into few parts, or into small parts, is the same number of ways — at eight metres with a cap of three, 10 each.
 
 The capped count is reachable without listing, from smaller capped counts — a **recurrence**:
 
@@ -59,11 +59,11 @@ The capped count is reachable without listing, from smaller capped counts — a 
 R_k(n) = R_k(n-k) + R_{k-1}(n)
 ```
 
-Either the partition uses exactly $`k`$ parts, and then one unit comes off every part, leaving $`n-k`$ in at most $`k`$ parts; or it uses fewer than $`k`$. Start from $`R_k(0) = 1`$ and $`R_0(n) = 0`$ for $`n`$ at least one.
+Either the partition uses exactly $`k`$ parts, and then one unit comes off every part, leaving $`n-k`$ in at most $`k`$ parts; or it uses fewer than $`k`$. Start from $`R_k(0) = 1`$, $`R_0(n) = 0`$ for $`n`$ at least one, and $`R_k(n) = 0`$ whenever $`n`$ is below zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`n`$ | the number being split | 8 beats | more splits, fast |
+| $`n`$ | the number being split | 8 metres | more plans, fast |
 | $`p(n)`$ | how many partitions $`n`$ has | 22 | — |
 | $`a_1`$, $`a_2`$, …, $`a_r`$ | the parts, biggest first | 3, 3, 2 | — |
 | $`i`$, $`a_i`$ | a place in the list, and its part | place 2 holds 3 | — |
@@ -74,8 +74,8 @@ Either the partition uses exactly $`k`$ parts, and then one unit comes off every
 
 ### When it holds
 
-- **Every part is a whole number of at least one.** Allow a part of zero and a split gains endlessly many copies of it: nothing finite to count.
-- **The order is thrown away.** Count orders instead and the bar holds 128 rhythms, not 22.
+- **Every part is a whole number of at least one.** Allow a part of zero and a plan gains endlessly many copies of it: nothing finite to count.
+- **The order is thrown away.** Count cut orders instead and the pipe holds 128 sequences, not 22.
 - **Zero has one partition, the empty sum.** Set that to nothing and the build-up below cannot start.
 - **The turn pairs a cap with the same cap.** Mismatch them and nothing holds: at most three parts is 10, parts of at most four 15.
 
@@ -95,7 +95,7 @@ It works for every shape. A column's height is how many rows reach that far, and
 
 ### Step 2: turning twice gives back the original
 
-Turn 3+1+1+1+1+1 and its columns read six dots, then one, then one: 6+1+1 again. Turning undoes itself, so it pairs the 22 splits of eight off one for one, nothing doubled and nothing stranded. The code turns all 22 twice.
+Turn 3+1+1+1+1+1 and its columns read six dots, then one, then one: 6+1+1 again. Turning undoes itself, so it pairs the 22 plans of eight off one for one, nothing doubled and nothing stranded. The code turns all 22 twice.
 
 ### Step 3: the turn trades rows for the longest row
 
@@ -106,17 +106,21 @@ Read that as a restriction: at most three rows turns into biggest part at most t
 <details>
 <summary>Detailed proof: the turn, written out</summary>
 
-Take parts $`a_1 \ge a_2 \ge \cdots \ge a_r \ge 1`$ adding to $`n`$, and let each column's height, up to column $`a_1`$, be the number of parts reaching it. Heights are at least one, since the first part reaches every column; they never rise going right, since a part reaching one column reaches the one before it; and they add to $`n`$, each part counted once per column it reaches. So the heights are a partition of $`n`$ with $`a_1`$ parts whose first height is $`r`$: the two numbers traded.
+Take parts $`a_1 \ge a_2 \ge \cdots \ge a_r \ge 1`$ adding to $`n`$. For each column up to $`a_1`$, let its height be the number of parts reaching it. Heights are at least one, since $`a_1`$ reaches every column. They never rise going right, since a part reaching one column reaches the one before it.
 
-Turn again. A column's height is at least $`i`$ exactly when $`i`$ parts or more reach it, which for parts in falling order says the $`i`$th part reaches it: the new shape has $`a_i`$ heights of $`i`$ or more. Its own $`i`$th column counts just those, so it stands $`a_i`$ dots tall, and the second turn hands back $`a_1, a_2, \ldots, a_r`$.
+Each part is counted once per column it reaches, so the heights add to $`n`$. They form a partition of $`n`$ with $`a_1`$ parts whose first height is $`r`$: the two numbers traded.
+
+Turn again. A column's height is at least $`i`$ exactly when at least $`i`$ parts reach it. Because the parts fall, that happens exactly when $`a_i`$ reaches it, so $`a_i`$ columns have height $`i`$ or more. The turned shape's $`i`$th column counts just those, standing $`a_i`$ dots tall, and the second turn hands back $`a_1, a_2, \ldots, a_r`$.
 
 </details>
 
 ### Step 4: counting without drawing anything
 
-The recurrence fills capped counts from smaller ones: at most three notes in eight beats is at most three in five beats plus at most two in eight, 5+5 = 10.
+The recurrence fills capped counts from smaller ones: at most three pieces from eight metres is at most three from five metres plus at most two from eight, 5+5 = 10.
 
-For $`p(n)`$, build up by note length. Start with the one way to fill zero beats and let one-beat notes in: every bar length now has one way. Let two-beat notes in and each bar gains the ways to fill it two beats shorter, every such split being a shorter one with a two-beat note added. Carry on to eight-beat notes and the counts read 1, 1, 2, 3, 5, 7, 11, 15, 22, nothing listed.
+For $`p(n)`$, build up by piece length. Start with the one way to cut zero metres and let one-metre pieces in: every pipe length now has one plan.
+
+Let two-metre pieces in and each pipe gains the plans two metres shorter, since each new plan is a shorter one with a two-metre piece added. Carry on to eight-metre pieces and the counts read 1, 1, 2, 3, 5, 7, 11, 15, 22, nothing listed.
 
 That loop written as one line of algebra is Euler's product, the next card ([Euler's product](02-partitions-generating-function.md)).
 
@@ -126,36 +130,36 @@ That loop written as one line of algebra is Euler's product, the next card ([Eul
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| splits by note count, 1 to 8 notes | 1+4+5+5+3+2+1+1 | **22** |
-| splits by biggest note, 1 to 8 beats | 1+4+5+5+3+2+1+1 | **22 again** |
-| at most three notes | 1+4+5 | **10** |
-| no note over three beats | 1+4+5 | **10** |
+| plans by piece count, 1 to 8 pieces | 1+4+5+5+3+2+1+1 | **22** |
+| plans by longest piece, 1 to 8 metres | 1+4+5+5+3+2+1+1 | **22 again** |
+| at most three pieces | 1+4+5 | **10** |
+| no piece over three metres | 1+4+5 | **10** |
 | the same 10 without listing | 5+5 | **10** |
 
-The first two rows agree term by term, not only in total: 5 splits use exactly three notes, and 5 have a biggest note of exactly three beats — the turn, seen as a table.
+The first two rows agree term by term, not only in total: 5 plans use exactly three pieces, and 5 have a longest piece of exactly three metres — the turn, seen as a table.
 
 ```
-Splits of eight beats by how many notes, one █ per split
+Plans for an 8-metre pipe by how many pieces, one █ per plan
 
-1 note     █                    1
-2 notes    ████                 4
-3 notes    █████                5
-4 notes    █████                5
-5 notes    ███                  3
-6 notes    ██                   2
-7 notes    █                    1
-8 notes    █                    1
+1 piece     █                    1
+2 pieces    ████                 4
+3 pieces    █████                5
+4 pieces    █████                5
+5 pieces    ███                  3
+6 pieces    ██                   2
+7 pieces    █                    1
+8 pieces    █                    1
 ```
 
-The first three bars add to 10: every split playable with at most three notes. Read them as "biggest note is k beats" and they give the 10 with no note over three.
+The first three bars add to 10: every plan with at most three pieces. Read them as "longest piece is k metres" and they give the 10 with no piece over three metres.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Counting rhythms, order kept | 128 | 3+3+2 and 2+3+3 are one split |
-| Stars and bars for three notes | 21 | Three named slots; unnamed, only 5 |
-| "At most three" read as "exactly three" | 5 | The one- and two-note splits are dropped |
+| Counting cut orders, order kept | 128 | 3+3+2 and 2+3+3 are one plan |
+| Stars and bars for three named pieces | 21 | Three named slots; unnamed, only 5 |
+| "At most three" read as "exactly three" | 5 | The one- and two-piece plans are dropped |
 
 The code prints all three.
 
@@ -163,21 +167,21 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Three roads meet: listing every split up to eight beats, building the counts up one note length at a time without listing, and the capped recurrence. The turn then runs on the shapes themselves, and the ordered rhythms are enumerated and collapsed, reaching 22 a fourth way.
+Nothing is imported. Three roads meet: listing every plan up to eight metres, building the counts up one piece length at a time without listing, and the capped recurrence. The turn then runs on the shapes themselves, and the ordered cut sequences are enumerated and collapsed, reaching 22 a fourth way.
 
 ### Python
 
 ```python
-# Integer partitions -- the check behind the card.  Nothing is imported.  A bar
-# of 8 beats is split into notes a whole number of beats long, order ignored.
-# p(n) is reached twice, by listing every split and by a build-up that lists
-# none, and the flip of the dot diagram is then run on the splits themselves.
+# Integer partitions -- the check behind the card.  Nothing is imported.  An 8-metre
+# pipe is cut into whole-metre pieces, order ignored.  p(n) is reached twice, by
+# listing every plan and by a build-up that lists none, and the flip of the dot
+# diagram is then run on the plans themselves.
 N, K = 8, 3
-def splits(n, biggest):                  # road one: list the splits, biggest note first
+def splits(n, biggest):                  # road one: list the plans, longest piece first
     if n == 0:
         return [()]
     return [(a,) + r for a in range(min(biggest, n), 0, -1) for r in splits(n - a, a)]
-def built_up(n):                         # road two: add one note length at a time
+def built_up(n):                         # road two: add one piece length at a time
     p = [1] + [0] * n
     for a in range(1, n + 1):
         for i in range(a, n + 1):
@@ -189,8 +193,8 @@ def few(n, k):                           # road three: R(n,k) = R(n-k,k) + R(n,k
     return 0 if n < 0 or k == 0 else few(n - k, k) + few(n, k - 1)
 def flip(s):                             # the dot diagram turned over: rows become columns
     return tuple(sum(1 for a in s if a >= j) for j in range(1, s[0] + 1))
-def rhythms(n):                          # order kept: every ordered writing of n
-    return [()] if n == 0 else [(a,) + r for a in range(1, n + 1) for r in rhythms(n - a)]
+def ordered_cuts(n):                     # order kept: every ordered sequence of lengths
+    return [()] if n == 0 else [(a,) + r for a in range(1, n + 1) for r in ordered_cuts(n - a)]
 def row(name, values):
     print(f"{name:<31}" + "".join(f"{v:>4}" for v in values))
 cum = lambda xs: [sum(xs[:i + 1]) for i in range(len(xs))]
@@ -199,57 +203,57 @@ all8 = splits(N, N)
 listed = [len(splits(n, n)) for n in range(N + 1)]
 exact = [sum(1 for s in all8 if len(s) == k) for k in range(1, N + 1)]
 longest = [sum(1 for s in all8 if s[0] == k) for k in range(1, N + 1)]
-few_notes, short_notes = [s for s in all8 if len(s) <= K], [s for s in all8 if s[0] <= K]
-ordered = rhythms(N)
+few_pieces, short_pieces = [s for s in all8 if len(s) <= K], [s for s in all8 if s[0] <= K]
+ordered = ordered_cuts(N)
 collapsed = {tuple(sorted(r, reverse=True)) for r in ordered}
-pairs = [f"{show(s)}/{show(flip(s))}" for s in few_notes]
-print(f"a bar of {N} beats, notes a whole number of beats long, order ignored")
-row("beats n", list(range(N + 1)))
-row("splits p(n), by listing", listed)
-row("splits p(n), by the build-up", built_up(N))
-row("notes k, or longest note k", list(range(1, N + 1)))
-row("splits with exactly k notes", exact)
-row("splits whose longest note is k", longest)
-row("splits with at most k notes", cum(exact))
-row("splits with no note over k", cum(longest))
-print(f"at most {K} notes: {cum(exact)[K - 1]}; no note over {K} beats: {cum(longest)[K - 1]}; "
+pairs = [f"{show(s)}/{show(flip(s))}" for s in few_pieces]
+print(f"an {N}-metre pipe cut into whole-metre pieces, order ignored")
+row("metres n", list(range(N + 1)))
+row("plans p(n), by listing", listed)
+row("plans p(n), by the build-up", built_up(N))
+row("pieces k, or longest piece k", list(range(1, N + 1)))
+row("plans with exactly k pieces", exact)
+row("plans whose longest piece is k", longest)
+row("plans with at most k pieces", cum(exact))
+row("plans with no piece over k", cum(longest))
+print(f"at most {K} pieces: {cum(exact)[K - 1]}; no piece over {K} metres: {cum(longest)[K - 1]}; "
       f"without listing, R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = {few(5, 3)} + {few(8, 2)} = {few(8, 3)}")
 print(f"the flip carries the first collection onto the second, one for one: "
-      f"{'yes' if sorted(flip(s) for s in few_notes) == sorted(short_notes) else 'no'}; "
-      f"flipping twice returns every split: {'yes' if all(flip(flip(s)) == s for s in all8) else 'no'}")
-print(f"the {len(few_notes)} splits with at most {K} notes, each with its flip:")
+      f"{'yes' if sorted(flip(s) for s in few_pieces) == sorted(short_pieces) else 'no'}; "
+      f"flipping twice returns every plan: {'yes' if all(flip(flip(s)) == s for s in all8) else 'no'}")
+print(f"the {len(few_pieces)} plans with at most {K} pieces, each with its flip:")
 print("  " + "  ".join(pairs[:5]))
 print("  " + "  ".join(pairs[5:]))
-print(f"mistake 1, rhythms counted in order: {len(ordered)}, not {listed[N]}")
-print(f"mistake 2, stars and bars for three named notes: {sum(1 for r in ordered if len(r) == 3)}, not {exact[2]}")
-print(f"mistake 3, at most {K} notes read as exactly {K}: {exact[K - 1]}, not {cum(exact)[K - 1]}")
+print(f"mistake 1, cut orders counted: {len(ordered)}, not {listed[N]}")
+print(f"mistake 2, stars and bars for three named pieces: {sum(1 for r in ordered if len(r) == 3)}, not {exact[2]}")
+print(f"mistake 3, at most {K} pieces read as exactly {K}: {exact[K - 1]}, not {cum(exact)[K - 1]}")
 assert listed == built_up(N) == [1, 1, 2, 3, 5, 7, 11, 15, 22]
-assert sorted(flip(s) for s in few_notes) == sorted(short_notes)
+assert sorted(flip(s) for s in few_pieces) == sorted(short_pieces)
 assert [few(N, k) for k in range(1, N + 1)] == cum(exact) == cum(longest)
 assert collapsed == set(all8) and all(flip(flip(s)) == s for s in all8)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-19 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-a bar of 8 beats, notes a whole number of beats long, order ignored
-beats n                           0   1   2   3   4   5   6   7   8
-splits p(n), by listing           1   1   2   3   5   7  11  15  22
-splits p(n), by the build-up      1   1   2   3   5   7  11  15  22
-notes k, or longest note k        1   2   3   4   5   6   7   8
-splits with exactly k notes       1   4   5   5   3   2   1   1
-splits whose longest note is k    1   4   5   5   3   2   1   1
-splits with at most k notes       1   5  10  15  18  20  21  22
-splits with no note over k        1   5  10  15  18  20  21  22
-at most 3 notes: 10; no note over 3 beats: 10; without listing, R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = 5 + 5 = 10
-the flip carries the first collection onto the second, one for one: yes; flipping twice returns every split: yes
-the 10 splits with at most 3 notes, each with its flip:
+an 8-metre pipe cut into whole-metre pieces, order ignored
+metres n                          0   1   2   3   4   5   6   7   8
+plans p(n), by listing            1   1   2   3   5   7  11  15  22
+plans p(n), by the build-up       1   1   2   3   5   7  11  15  22
+pieces k, or longest piece k      1   2   3   4   5   6   7   8
+plans with exactly k pieces       1   4   5   5   3   2   1   1
+plans whose longest piece is k    1   4   5   5   3   2   1   1
+plans with at most k pieces       1   5  10  15  18  20  21  22
+plans with no piece over k        1   5  10  15  18  20  21  22
+at most 3 pieces: 10; no piece over 3 metres: 10; without listing, R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = 5 + 5 = 10
+the flip carries the first collection onto the second, one for one: yes; flipping twice returns every plan: yes
+the 10 plans with at most 3 pieces, each with its flip:
   8/1+1+1+1+1+1+1+1  7+1/2+1+1+1+1+1+1  6+2/2+2+1+1+1+1  6+1+1/3+1+1+1+1+1  5+3/2+2+2+1+1
   5+2+1/3+2+1+1+1  4+4/2+2+2+2  4+3+1/3+2+2+1  4+2+2/3+3+1+1  3+3+2/3+3+2
-mistake 1, rhythms counted in order: 128, not 22
-mistake 2, stars and bars for three named notes: 21, not 5
-mistake 3, at most 3 notes read as exactly 3: 5, not 10
+mistake 1, cut orders counted: 128, not 22
+mistake 2, stars and bars for three named pieces: 21, not 5
+mistake 3, at most 3 pieces read as exactly 3: 5, not 10
 ALL CHECKS PASS
 ```
 
@@ -258,21 +262,21 @@ ALL CHECKS PASS
 Same numbers, same labels, built with `rustc --edition 2021 -O`.
 
 ```rust
-// Integer partitions -- the same check as the Python, in Rust.  No crates.  A bar
-// of 8 beats is split into notes a whole number of beats long, order ignored.
-// p(n) is reached twice, by listing every split and by a build-up that lists
-// none, and the flip of the dot diagram is then run on the splits themselves.
+// Integer partitions -- the same check as the Python, in Rust.  No crates.  An 8-metre
+// pipe is cut into whole-metre pieces, order ignored.  p(n) is reached twice, by
+// listing every plan and by a build-up that lists none, and the flip of the dot
+// diagram is then run on the plans themselves.
 const N: usize = 8;
 const K: usize = 3;
 fn writings(n: usize, cap: usize, keep_order: bool) -> Vec<Vec<usize>> {
-    if n == 0 { return vec![vec![]] }           // road one: list them, biggest note first
+    if n == 0 { return vec![vec![]] }           // road one: list them, longest piece first
     let mut out: Vec<Vec<usize>> = Vec::new();
     for a in (1..=cap.min(n)).rev() {
         for r in writings(n - a, if keep_order { n - a } else { a }, keep_order) { out.push([vec![a], r].concat()) }
     }
     out
 }
-fn built_up(n: usize) -> Vec<i64> {             // road two: add one note length at a time
+fn built_up(n: usize) -> Vec<i64> {             // road two: add one piece length at a time
     let mut p = vec![0i64; n + 1]; p[0] = 1;
     for a in 1..=n { for i in a..=n { p[i] += p[i - a] } }
     p
@@ -299,66 +303,66 @@ fn main() {
     let exact: Vec<i64> = (1..=N).map(|k| all8.iter().filter(|s| s.len() == k).count() as i64).collect();
     let longest: Vec<i64> = (1..=N).map(|k| all8.iter().filter(|s| s[0] == k).count() as i64).collect();
     let (at_most, no_over) = (cum(&exact), cum(&longest));
-    let few_notes: Vec<Vec<usize>> = all8.iter().filter(|s| s.len() <= K).cloned().collect();
-    let short_notes: Vec<Vec<usize>> = all8.iter().filter(|s| s[0] <= K).cloned().collect();
-    let flipped: Vec<Vec<usize>> = few_notes.iter().map(|s| flip(s)).collect();
+    let few_pieces: Vec<Vec<usize>> = all8.iter().filter(|s| s.len() <= K).cloned().collect();
+    let short_pieces: Vec<Vec<usize>> = all8.iter().filter(|s| s[0] <= K).cloned().collect();
+    let flipped: Vec<Vec<usize>> = few_pieces.iter().map(|s| flip(s)).collect();
     let ordered = writings(N, N, true);
     let mut collapsed: Vec<Vec<usize>> = ordered.iter()
         .map(|r| { let mut v = r.clone(); v.sort_by(|a, b| b.cmp(a)); v }).collect();
     collapsed.sort(); collapsed.dedup();
-    let pairs: Vec<String> = few_notes.iter().map(|s| format!("{}/{}", show(s), show(&flip(s)))).collect();
+    let pairs: Vec<String> = few_pieces.iter().map(|s| format!("{}/{}", show(s), show(&flip(s)))).collect();
     let by_recur: Vec<i64> = (1..=N as i64).map(|k| few(N as i64, k)).collect();
-    println!("a bar of {} beats, notes a whole number of beats long, order ignored", N);
-    row("beats n", &(0..=N as i64).collect::<Vec<i64>>());
-    row("splits p(n), by listing", &listed);
-    row("splits p(n), by the build-up", &built_up(N));
-    row("notes k, or longest note k", &(1..=N as i64).collect::<Vec<i64>>());
-    row("splits with exactly k notes", &exact);
-    row("splits whose longest note is k", &longest);
-    row("splits with at most k notes", &at_most);
-    row("splits with no note over k", &no_over);
-    println!("at most {} notes: {}; no note over {} beats: {}; without listing, \
+    println!("an {}-metre pipe cut into whole-metre pieces, order ignored", N);
+    row("metres n", &(0..=N as i64).collect::<Vec<i64>>());
+    row("plans p(n), by listing", &listed);
+    row("plans p(n), by the build-up", &built_up(N));
+    row("pieces k, or longest piece k", &(1..=N as i64).collect::<Vec<i64>>());
+    row("plans with exactly k pieces", &exact);
+    row("plans whose longest piece is k", &longest);
+    row("plans with at most k pieces", &at_most);
+    row("plans with no piece over k", &no_over);
+    println!("at most {} pieces: {}; no piece over {} metres: {}; without listing, \
               R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = {} + {} = {}",
              K, at_most[K - 1], K, no_over[K - 1], few(5, 3), few(8, 2), few(8, 3));
     println!("the flip carries the first collection onto the second, one for one: {}; \
-              flipping twice returns every split: {}",
-             if sort(&flipped) == sort(&short_notes) { "yes" } else { "no" },
+              flipping twice returns every plan: {}",
+             if sort(&flipped) == sort(&short_pieces) { "yes" } else { "no" },
              if all8.iter().all(|s| flip(&flip(s)) == *s) { "yes" } else { "no" });
-    println!("the {} splits with at most {} notes, each with its flip:", few_notes.len(), K);
+    println!("the {} plans with at most {} pieces, each with its flip:", few_pieces.len(), K);
     println!("  {}", pairs[..5].join("  "));
     println!("  {}", pairs[5..].join("  "));
-    println!("mistake 1, rhythms counted in order: {}, not {}", ordered.len(), listed[N]);
-    println!("mistake 2, stars and bars for three named notes: {}, not {}",
+    println!("mistake 1, cut orders counted: {}, not {}", ordered.len(), listed[N]);
+    println!("mistake 2, stars and bars for three named pieces: {}, not {}",
              ordered.iter().filter(|r| r.len() == 3).count(), exact[2]);
-    println!("mistake 3, at most {} notes read as exactly {}: {}, not {}", K, K, exact[K - 1], at_most[K - 1]);
+    println!("mistake 3, at most {} pieces read as exactly {}: {}, not {}", K, K, exact[K - 1], at_most[K - 1]);
     assert!(listed == built_up(N) && listed == vec![1, 1, 2, 3, 5, 7, 11, 15, 22]);
-    assert!(sort(&flipped) == sort(&short_notes));
+    assert!(sort(&flipped) == sort(&short_pieces));
     assert!(by_recur == at_most && at_most == no_over);
     assert!(collapsed == sort(&all8) && all8.iter().all(|s| flip(&flip(s)) == *s));
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-19 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-a bar of 8 beats, notes a whole number of beats long, order ignored
-beats n                           0   1   2   3   4   5   6   7   8
-splits p(n), by listing           1   1   2   3   5   7  11  15  22
-splits p(n), by the build-up      1   1   2   3   5   7  11  15  22
-notes k, or longest note k        1   2   3   4   5   6   7   8
-splits with exactly k notes       1   4   5   5   3   2   1   1
-splits whose longest note is k    1   4   5   5   3   2   1   1
-splits with at most k notes       1   5  10  15  18  20  21  22
-splits with no note over k        1   5  10  15  18  20  21  22
-at most 3 notes: 10; no note over 3 beats: 10; without listing, R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = 5 + 5 = 10
-the flip carries the first collection onto the second, one for one: yes; flipping twice returns every split: yes
-the 10 splits with at most 3 notes, each with its flip:
+an 8-metre pipe cut into whole-metre pieces, order ignored
+metres n                          0   1   2   3   4   5   6   7   8
+plans p(n), by listing            1   1   2   3   5   7  11  15  22
+plans p(n), by the build-up       1   1   2   3   5   7  11  15  22
+pieces k, or longest piece k      1   2   3   4   5   6   7   8
+plans with exactly k pieces       1   4   5   5   3   2   1   1
+plans whose longest piece is k    1   4   5   5   3   2   1   1
+plans with at most k pieces       1   5  10  15  18  20  21  22
+plans with no piece over k        1   5  10  15  18  20  21  22
+at most 3 pieces: 10; no piece over 3 metres: 10; without listing, R(n=8, k=3) = R(n=5, k=3) + R(n=8, k=2) = 5 + 5 = 10
+the flip carries the first collection onto the second, one for one: yes; flipping twice returns every plan: yes
+the 10 plans with at most 3 pieces, each with its flip:
   8/1+1+1+1+1+1+1+1  7+1/2+1+1+1+1+1+1  6+2/2+2+1+1+1+1  6+1+1/3+1+1+1+1+1  5+3/2+2+2+1+1
   5+2+1/3+2+1+1+1  4+4/2+2+2+2  4+3+1/3+2+2+1  4+2+2/3+3+1+1  3+3+2/3+3+2
-mistake 1, rhythms counted in order: 128, not 22
-mistake 2, stars and bars for three named notes: 21, not 5
-mistake 3, at most 3 notes read as exactly 3: 5, not 10
+mistake 1, cut orders counted: 128, not 22
+mistake 2, stars and bars for three named pieces: 21, not 5
+mistake 3, at most 3 pieces read as exactly 3: 5, not 10
 ALL CHECKS PASS
 ```
 
@@ -366,16 +370,16 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's facts for every whole number and every cap, not just for eight beats.
+Lean proves the card's facts for every whole number and every cap, not just for eight metres.
 
 - Few parts or small parts, the same count: $`R_k(n) = C_k(n)`$.
 - The turn gives a partition of the same number, and turning twice gives back the original.
 - The turn swaps the number of parts with the biggest part.
 - The recurrence $`R_k(n) = R_k(n-k) + R_{k-1}(n)`$ holds whenever $`k`$ is at least one and $`n`$ is at least $`k`$.
 - Its starting values hold too: $`R_k(0) = 1`$, and $`R_0(n) = 0`$ for $`n`$ at least one.
-- For eight beats: 10 splits with at most three notes, 10 with no note over three, 5 with exactly three, 15 with none over four.
+- For an 8-metre pipe: 10 plans with at most three pieces, 10 with no piece over three metres, 5 with exactly three, 15 with none over four.
 
-The count of 22, the build-up by note length and the ten printed pairs are left to the Python and Rust checks.
+The count of 22, the build-up by piece length and the ten printed pairs are left to the Python and Rust checks.
 
 ```lean
 -- Integer partitions: for every n and every cap k, the partitions of n with at most k parts are exactly as many as those with every part at most k, because turning the dot diagram swaps the part count with the biggest part and undoes itself.
@@ -539,16 +543,16 @@ theorem at_most_k_parts_recurrence (n k : ℕ) :
       card_at_most_k_parts_eq_card_parts_at_most_k]
     exact ip_helper_parts_at_most_recurrence n k
 
--- The card's worked numbers for a bar of 8 beats.
--- Splits by note count, 1 to 8 notes, add to 22; so do splits by biggest note.
+-- The card's worked numbers for an 8-metre pipe.
+-- Plans by piece count, 1 to 8 pieces, add to 22; so do plans by longest piece.
 example : 1 + 4 + 5 + 5 + 3 + 2 + 1 + 1 = 22 := by norm_num
--- At most three notes: a ≥ b ≥ c ≥ 0 with a + b + c = 8 (a 0 means an unused note): 10 splits.
+-- At most three pieces: a ≥ b ≥ c ≥ 0 with a + b + c = 8 (a 0 means an unused slot): 10 plans.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.2.2 ≤ t.2.1 ∧ t.2.1 ≤ t.1 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 10 := by decide
--- No note over three beats: x ones, y twos and z threes with x + 2y + 3z = 8: also 10 splits.
+-- No piece over three metres: x ones, y twos and z threes with x + 2y + 3z = 8: also 10 plans.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.1 + 2 * t.2.1 + 3 * t.2.2 = 8)).card = 10 := by decide
--- Exactly three notes: 5 splits, half of the 10 ("at most" read as "exactly").
+-- Exactly three pieces: 5 plans, half of the 10 ("at most" read as "exactly").
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => 1 ≤ t.2.2 ∧ t.2.2 ≤ t.2.1 ∧ t.2.1 ≤ t.1 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 5 := by
   decide
@@ -558,7 +562,7 @@ example : ((Finset.range 6 ×ˢ Finset.range 6 ×ˢ Finset.range 6).filter
 example : ((Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => t.2 ≤ t.1 ∧ t.1 + t.2 = 8)).card = 5 := by decide
 example : 5 + 5 = 10 := by norm_num
--- Mismatched caps: parts of at most four beats give 15 splits, not 10.
+-- Mismatched caps: pieces of at most four metres give 15 plans, not 10.
 example : ((Finset.range 9 ×ˢ Finset.range 5 ×ˢ Finset.range 3 ×ˢ Finset.range 3).filter
     (fun t => t.1 + 2 * t.2.1 + 3 * t.2.2.1 + 4 * t.2.2.2 = 8)).card = 15 := by decide
 -- The turn of 6+1+1: column heights 3, 1, 1, 1, 1, 1; turning again gives 6, 1, 1.
@@ -566,10 +570,10 @@ example : (List.range 6).map (fun j => ([6, 1, 1].filter (fun a => j + 1 ≤ a))
     = [3, 1, 1, 1, 1, 1] := by decide
 example : (List.range 3).map (fun j => ([3, 1, 1, 1, 1, 1].filter (fun a => j + 1 ≤ a)).length)
     = [6, 1, 1] := by decide
--- Stars and bars for three named notes: 21 ordered triples of at least 1 adding to 8, not 5.
+-- Stars and bars for three named pieces: 21 ordered triples of at least 1 adding to 8, not 5.
 example : ((Finset.range 9 ×ˢ Finset.range 9 ×ˢ Finset.range 9).filter
     (fun t => 1 ≤ t.1 ∧ 1 ≤ t.2.1 ∧ 1 ≤ t.2.2 ∧ t.1 + t.2.1 + t.2.2 = 8)).card = 21 := by decide
--- Rhythms with order kept: 2 ^ 7 = 128 for eight beats, not 22.
+-- Cut orders with order kept: 2 ^ 7 = 128 for an 8-metre pipe, not 22.
 example : 2 ^ (8 - 1) = 128 := by norm_num
 
 #print axioms card_at_most_k_parts_eq_card_parts_at_most_k
@@ -602,23 +606,23 @@ example : 2 ^ (8 - 1) = 128 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Counting the rhythms.** Three-three-two and two-three-three are two rhythms and one split. Rhythms give 128 for eight beats, splits 22. Whether order matters is the whole question.
+> **Counting cut orders.** Three-three-two and two-three-three are two cut orders and one plan. Cut orders give 128 for an 8-metre pipe, plans 22. Whether order matters is the whole question.
 >
 > - **Reaching for a formula.** No formula as simple as a binomial coefficient gives $`p(n)`$; the exact ones are deep and long. The build-up above, or the next card's product, is how the number is got.
-> - **Using stars and bars.** Three named notes filling eight beats is 21 ways ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)). Take the names off and 5 remain.
-> - **Confusing "at most" with "exactly".** At most three notes is 10, exactly three is 5. The capped counts here are all "at most".
-> - **Naming the items.** Eight named jobs on identical machines is a different, much larger count ([Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md)). Here the beats are interchangeable.
+> - **Using stars and bars.** Three named pieces adding to eight metres is 21 ways ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)). Take the names off and 5 remain.
+> - **Confusing "at most" with "exactly".** At most three pieces is 10, exactly three is 5. The capped counts here are all "at most".
+> - **Naming the items.** Eight named jobs on identical machines is a different, much larger count ([Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md)). Here the metre units are interchangeable.
 
 ---
 
 ## Where you meet it in real life
 
-- **Rhythm and metre.** The 22 splits of an eight-beat bar are the ingredient lists a composer chooses from, each unfolding into its orderings ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)).
-- **Cutting stock.** An eight-metre pipe cut into whole-metre pieces: the yard cares which lengths come out, not the order of the cuts. 22 plans, 10 under a three-metre limit.
+- **Cutting stock.** Steel pipes, timber beams and paper rolls cut to whole-unit lengths: a yard cares which lengths come out, not the order of the cuts.
+- **Rhythm and metre.** A composer filling an eight-beat bar picks one of the 22 note-length tallies, then arranges it into ordered rhythms ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)) — where order does matter, giving 128 rhythms.
 - **Shuffles by their loops.** Follow each card through a shuffle and the cards fall into closed loops whose lengths partition the pack, so eight cards have 22 shuffle shapes ([Counting shuffles by their loops](05-permutations-by-cycles.md)).
 
 > **Say it back**
-> A partition is a number written as a sum of whole parts, biggest first, order thrown away; eight beats have 22. Drawn as rows of dots, longest on top, it becomes a shape, and reading that shape down its columns gives another partition of the same number. Turning twice returns the original, so the turn pairs the 22 off one for one. Since it swaps the row count with the longest row, at most three notes and no note over three beats must match: 10 each.
+> A partition is a number written as a sum of whole parts, biggest first, order thrown away; eight metres have 22 plans. Drawn as rows of dots, longest on top, it becomes a shape, and reading that shape down its columns gives another partition of the same number. Turning twice returns the original, so the turn pairs the 22 off one for one. Since it swaps the row count with the longest row, at most three pieces and no piece over three metres must match: 10 each.
 
 ---
 
@@ -628,12 +632,12 @@ example : 2 ^ (8 - 1) = 128 := by norm_num
 
 ## Where this goes next
 
-- [Euler's product](02-partitions-generating-function.md): the build-up by note length written as one product, Euler's way into the later facts.
+- [Euler's product](02-partitions-generating-function.md): the build-up by piece length written as one product, Euler's way into the later facts.
 - [The twelvefold way](06-twelvefold-way.md): the grid of named-or-unnamed items and boxes, with this card in one of its twelve cells.
 - [Young tableaux and the hook length formula](07-young-tableaux-and-hook-lengths.md): fill a partition's diagram with 1 to n rising along rows and down columns, and n! over the product of hook lengths counts the ways.
 - [The RSK correspondence](08-rsk-correspondence.md): every shuffle becomes a pair of same-shaped tableaux, so the squared tableau counts add up to n!, and the first row is the longest rising run.
 
-The build-up fills a row of counts without saying why they grow as they do; turning the loop into a product makes the pattern visible.
+The build-up fills a row of counts one loop at a time; turning that loop into one product lets factor cancellations prove new partition identities at a stroke.
 
 ---
 

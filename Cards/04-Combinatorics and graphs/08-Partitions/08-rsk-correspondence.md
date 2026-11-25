@@ -14,9 +14,9 @@ The **RSK correspondence** (named for Robinson, Schensted and Knuth) finds the l
 
 It also turns each of the 4! = 24 orders of four volumes into a pair of same-shaped grids, and back, with nothing lost. Counting both sides gives 1 + 9 + 4 + 9 + 1 = 24.
 
-**Row insertion turns each shuffle of n into a pair of standard tableaux of one shape, one holding the numbers and one recording when each box appeared; reverse bumping undoes it, so the squared tableau counts add up to n!, and the first row's length is the longest rising run.**
+**Row insertion pairs each shuffle of n with two same-shaped standard tableaux, so the squared tableau counts sum to n! and row 1 gives the longest rising run.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the facts that the number of rows equals the longest falling run, and that the shuffles that undo themselves have equal tableaux, are quoted from papers in Sources.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. Two further results — the row count as longest falling run, and equal tableaux for self-undoing shuffles — are quoted from Sources.
 
 ### The picture: inserting 2, 4, 1, 3
 
@@ -2329,9 +2329,12 @@ example : (rsk [3, 4, 2, 1]).1 = [[1, 4], [2], [3]] := by decide
 
 ## Where this goes next
 
-- [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): the bound of Step 6 proved again by labels and pigeonhole, and the lists that show it cannot be improved.
+This card closes the Partitions shelf and the counting half of this wing; the next shelf starts graph theory.
 
-The open question: for a shuffle of $`n`$ chosen at random, how long is the longest rising run, and how much does it vary?
+- [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): the next shelf, turning from counting arrangements to networks of vertices and edges.
+- [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): the direct continuation of Step 6's bound, proved again by labels and pigeonhole, with the lists that show it cannot be improved.
+
+The open question: for a shuffle of $`n`$ chosen at random, how long is the longest rising run, and how much does it vary? That random-shuffle question goes beyond this wing's elementary counting; on the next shelf, the wing turns to [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md).
 
 ---
 

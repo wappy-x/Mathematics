@@ -169,10 +169,10 @@ theorem distinct_parts_product_eq_odd_parts_product :
 -- `decide` cannot evaluate Mathlib's `Fintype (Nat.Partition n)` instance (it is built through
 -- `Finset.sort`, which does not reduce), so these four stay open for the proof step.
 
--- Eight marbles into unmarked cups: p(8) = 22.
+-- Weighing 8 grams with whole-gram weights: p(8) = 22.
 example : Fintype.card (Partition 8) = 22 := by rw [card_partition_eq]; decide +kernel
 
--- The x^8 place as sizes 1 to 8 go in: 1, 5, 10, 15, 18, 20, 21, 22.
+-- The x^8 place as sizes 1 to 8 g go in: 1, 5, 10, 15, 18, 20, 21, 22.
 example : (List.range 8).map (fun j => ((Finset.univ : Finset (Partition 8)).filter
     (fun p => ∀ i ∈ p.parts, i ≤ j + 1)).card) = [1, 5, 10, 15, 18, 20, 21, 22] := by
   rw [show (fun j => ((Finset.univ : Finset (Partition 8)).filter
@@ -181,7 +181,7 @@ example : (List.range 8).map (fun j => ((Finset.univ : Finset (Partition 8)).fil
     funext fun j => card_filter_partition 8 (fun m => ∀ i ∈ m, i ≤ j + 1)]
   decide +kernel
 
--- Eight marbles with no size twice: 6 ways; all sizes odd: 6 ways.
+-- 8 grams with no weight size twice: 6 ways; all sizes odd: 6 ways.
 example : (distincts 8).card = 6 ∧ (odds 8).card = 6 := by
   rw [distincts, odds, restricted, card_filter_partition 8 Multiset.Nodup,
     card_filter_partition 8 (fun m => ∀ i ∈ m, ¬ Even i)]
@@ -193,7 +193,7 @@ example : Fintype.card (Partition 7) + Fintype.card (Partition 6) - Fintype.card
   simp only [card_partition_eq]
   decide +kernel
 
--- Counting the order of the cups instead gives 128 writings of 8.
+-- Counting the order of the weights instead gives 128 sequences for 8 g.
 example : Fintype.card (Composition 8) = 128 := by simp [composition_card]
 
 #print axioms partition_series_eq_euler_product
