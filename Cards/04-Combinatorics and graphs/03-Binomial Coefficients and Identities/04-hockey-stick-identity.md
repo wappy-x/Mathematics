@@ -367,7 +367,7 @@ The two outputs match line for line.
 Lean proves the card's three facts for every column and every row, not just the pile of tins.
 
 - Adding a column from its top entry C(k,k) down to row n gives the blade C(n+1, k+1), for any n ≥ k.
-- Among the picks of k+1 labels from 1 to n+1, those with largest label i+1 number C(i,k).
+- Among the picks of k+1 labels from 1 to n+1, those with largest label i+1 (for k ≤ i ≤ n) number C(i,k).
 - A triangular layer m rows deep holds C(m+1, 2) tins.
 - It also re-checks the card's numbers: the five layers, the 35 picks by largest label, column 3, two further shafts and four mistakes.
 

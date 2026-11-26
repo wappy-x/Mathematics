@@ -355,7 +355,7 @@ Lean proves three claims for every case, not just the five tunes.
 
 - Every row of Pascal's triangle past row 0 adds to zero with alternating signs.
 - Any set with at least one item has as many even-size picks as odd-size picks.
-- Binomial inversion, both ways, for any quantities that add: weighting by the plain row and by the signed row undo each other.
+- Binomial inversion, both ways, for any quantities that add and subtract: weighting by the plain row and by the signed row undo each other.
 
 Lean also checks the worked numbers; listing every pick and every setlist is left to the Python and Rust checks.
 

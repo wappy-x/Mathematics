@@ -140,7 +140,7 @@ The sandwich is wide on purpose. The middle entry is 0.1762 of its row, beats th
 
 A factor of 21 sits between 10 and 100, so the sandwich is one to two digits wide on a base-10 scale ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)): 5 digits at the bottom, 6 for the count, 7 at the top. A cheap bound buys the digit count, not the digits.
 
-Replacing k! by an estimate of its own size sharpens the upper bound to (eN/k)^k, with e the growth constant — a step that uses the series for e^x ([The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md)).
+Replacing k! by a lower bound of its own size loosens the upper bound to the simpler (eN/k)^k, with e the growth constant — a step that uses the series for e^x ([The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md)).
 
 Another road: [Vandermonde's identity](03-vandermonde-identity.md) makes C(20, 10) the entries of row 10 squared and added, which the run confirms at 184,756.
 

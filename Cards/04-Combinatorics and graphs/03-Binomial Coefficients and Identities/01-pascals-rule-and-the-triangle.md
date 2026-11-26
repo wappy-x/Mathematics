@@ -12,11 +12,11 @@ Count them again without writing anything down. Single out one song, Ember. Ever
 
 Six and four make ten: one count on five songs became two counts on four. That works whatever the numbers are, and it is Pascal's rule.
 
-Stack the counts in rows, one row per number of songs to choose from, and every entry is the sum of the two above it. Addition alone fills the array, Pascal's triangle. It is named for Blaise Pascal, whose *Treatise on the Arithmetical Triangle* was not the first study of it but the one that shaped what came after.
+Stack the counts in rows, one row per number of songs to choose from, and every entry past row 0 is the sum of the two above it. Addition alone fills the array, Pascal's triangle. It is named for Blaise Pascal, whose *Treatise on the Arithmetical Triangle* was not the first study of it but the one that shaped what came after.
 
 Add a row up and a second fact appears. The five-song row, 1 5 10 10 5 1, adds to 32: every set from silence to the full show. Thirty-two is 2 multiplied in five times, one yes-or-no decision per song.
 
-**Each count of k items chosen from n splits by one singled-out item, in or out, so every entry of the triangle is the sum of the two above it, and a row adds to 2^n.**
+**For n ≥ 1, each count of k items chosen from n splits by one singled-out item, in or out, so every entry below row 0 is the sum of the two above it, and every row adds to 2^n.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -38,7 +38,7 @@ The branches add to the whole: 6 + 4 = 10.
 C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). One convention makes the ends of a row behave: a count of something impossible is zero, so C(n, k) = 0 whenever k is below 0 or above n.
 
 ```math
-C(n, k) = C(n-1, k-1) + C(n-1, k)
+C(n, k) = C(n-1, k-1) + C(n-1, k) \qquad (n \ge 1)
 ```
 
 **Read it aloud:** the picks of size k are the picks that keep one singled-out item, plus the picks that leave it out.
@@ -62,7 +62,7 @@ C(n, 0) + C(n, 1) + \cdots + C(n, n) = 2^n
 
 ### When it holds
 
-- **Whole numbers, and zero off the row.** Without C(n, k) = 0 past the ends, a row's outer entries have one parent, not two.
+- **Whole numbers, with n ≥ 1 for the rule, and zero off the row.** Without C(n, k) = 0 past the ends, a row's outer entries have one parent, not two.
 - **One item singled out, the same one on both sides.** Split on a different song in each branch and sets get counted twice.
 - **Order ignored.** Count running orders and the two-song figure is 20, not 10.
 - **Every size counted for the row sum.** Drop the empty set and the full set and 32 falls to 30.
@@ -86,15 +86,15 @@ Ember cannot be both, so nothing is counted twice and nothing escapes. Adding gi
 
 ### Step 2: the ends of the row
 
-The first and last entry of every row is 1: one way to take nothing, one to take everything. The zero convention keeps the rule true there, since C(n, 0) = C(n − 1, −1) + C(n − 1, 0) = 0 + 1 = 1.
+The first and last entry of every row is 1: one way to take nothing, one to take everything. For n ≥ 1, the zero convention keeps the rule true there, since C(n, 0) = C(n − 1, −1) + C(n − 1, 0) = 0 + 1 = 1.
 
 ### Step 3: the triangle builds itself
 
-Row 0 is a single 1. Lined up by k, the size of the pick, each entry of row n is the sum of the one directly above it and the one above-left. These are the parents C(n − 1, k) and C(n − 1, k − 1), with blanks off the row counting as zero.
+Row 0 is a single 1. Lined up by k, the size of the pick, each entry of row n (n ≥ 1) is the sum of the one directly above it and the one above-left. These are the parents C(n − 1, k) and C(n − 1, k − 1), with blanks off the row counting as zero.
 
 Row 3 is 1 3 3 1, so row 4 is 1 4 6 4 1: the 6 is 3 + 3, each 4 is 1 + 3. The run below carries the array to row 10.
 
-Step 1 proved the rule for every n and k, so the array of sums is the array of counts all the way down ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). Every entry is reachable by addition, no factorial formed, no division done. A factorial is the product of every whole number from 1 up to a given number.
+Step 1 proved the rule for every n ≥ 1 and k, so the array of sums is the array of counts all the way down ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). Every entry is reachable by addition, no factorial formed, no division done. A factorial is the product of every whole number from 1 up to a given number.
 
 ### Step 4: the row doubles, by two separate arguments
 
@@ -346,7 +346,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the rule, the in-or-out split behind it, and the row sum, for every n and k.
+Lean proves the rule and the in-or-out split (for n and k from 1 up), and the row sum for every n.
 
 - Pascal's rule, C(n, k) = C(n − 1, k − 1) + C(n − 1, k), for every n and k from 1 up. Past the end of a row, C(n, k) is already 0.
 - Single out one item of n. Of the picks of k items, for k from 1 up, C(n − 1, k) leave it out and C(n − 1, k − 1) keep it in.
@@ -488,7 +488,7 @@ example : ∑ k ∈ range 5, Nat.choose 4 k = 16 := by decide
 - **Routes across a grid.** Each junction's count is the sum of the two feeding it — this rule drawn on paper: [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
 
 > **Say it back**
-> Five songs, and a two-song set is one of ten. Count the ten again by singling out one song: six sets leave it out, four keep it in, and the piles never overlap. That split works for any number of items and any size of pick, so each count is the sum of two smaller counts, and addition alone fills Pascal's triangle. A row adds to 2 multiplied in n times, since a pick of any size is one yes-or-no answer per item: row 5 adds to 32, row 10 to 1,024.
+> Five songs, and a two-song set is one of ten. Count the ten again by singling out one song: six sets leave it out, four keep it in, and the piles never overlap. That split works whenever there is at least one item to single out, so each count past row 0 is the sum of two smaller counts, and addition alone fills Pascal's triangle. A row adds to 2 multiplied in n times, since a pick of any size is one yes-or-no answer per item: row 5 adds to 32, row 10 to 1,024.
 
 ---
 
