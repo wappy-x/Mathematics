@@ -14,7 +14,7 @@ Its 9 cells are the points of a plane with 12 lines. Add 4 points "at infinity" 
 
 In 1782 Euler asked for 36 officers, 6 ranks from each of 6 regiments, in a 6 × 6 square: an orthogonal pair of order 6. None exists.
 
-**A full set of n − 1 orthogonal Latin squares of order n is the same object as a finite plane of order n; a field with q elements builds both, and order 6 has neither.**
+**For $`n \ge 2`$, a full set of n − 1 orthogonal Latin squares of order n is the same object as a finite plane of order n; a field with q elements builds both, and order 6 has neither.**
 
 **What kind of fact this is:** theorems, proved in Why it works, except four stated results: order 6 (also searched by the code), order 10 (a computer proof), the 1960 pairs result and Bruck–Ryser.
 
@@ -52,10 +52,10 @@ L_m(i, j) = i + m\,j \ \text{ computed in } \mathrm{GF}(q), \qquad m \in \mathrm
 **Read it aloud:** for each nonzero element m of the field, square m puts row plus m times column in each cell, in the field's arithmetic.
 
 ```math
-N(n) \le n - 1, \qquad N(n) = n - 1 \iff \text{an affine plane of order } n \text{ exists} \iff \text{a projective plane of order } n \text{ exists}
+N(n) \le n - 1, \qquad N(n) = n - 1 \iff \text{an affine plane of order } n \text{ exists} \iff \text{a projective plane of order } n \text{ exists} \qquad (n \ge 2)
 ```
 
-**Read it aloud:** order n allows at most n − 1 mutually orthogonal squares, and reaching that limit is the same as having a plane of order n.
+**Read it aloud:** order $`n \ge 2`$ allows at most n − 1 mutually orthogonal squares, and reaching that limit is the same as having a plane of order n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -68,6 +68,7 @@ N(n) \le n - 1, \qquad N(n) = n - 1 \iff \text{an affine plane of order } n \tex
 
 ### When it holds
 
+- **Order $`n \ge 2`$.** Order 1 fails both the $`n - 1`$ bound and the four-point rule.
 - **The arithmetic must divide.** On the 4-hour clock, row 0 of $`i + 2j`$ reads 0, 2, 0, 2: not Latin. Order 4 needs GF(4).
 - **Some orders have no plane.** Order 6 has no orthogonal pair; order 10 has pairs but no plane.
 - **The only known orders are prime powers.** Order 12 is the smallest open case as of 2026-11-23.
@@ -902,7 +903,7 @@ example : pairCount (fun i j : ZMod 6 => i + j) (fun i j => i + 5 * j) = 18 := b
 - **Card games.** A popular matching card game is cut from the plane of order 7: 57 symbols, 8 per card, any two cards sharing exactly one.
 
 > **Say it back**
-> A Latin square has each symbol once per row and column; two are orthogonal when every pair shows once on top. A field with q elements gives q − 1 such squares, the most any order allows. A full set is an affine plane; one point per direction makes a projective plane of n² + n + 1 points. Order 6 has no pair, and order 10 no plane.
+> A Latin square has each symbol once per row and column; two are orthogonal when every pair shows once on top. A field with q elements gives q − 1 such squares, the most order q allows. A full set is an affine plane; one point per direction makes a projective plane of n² + n + 1 points. Order 6 has no pair, and order 10 no plane.
 
 ---
 

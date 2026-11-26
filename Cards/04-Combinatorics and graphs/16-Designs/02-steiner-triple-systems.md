@@ -44,10 +44,10 @@ Each direction uses every point once, so every point sits on 4 lines.
 Notation: $`v`$ counts points, $`b`$ counts triples, and $`r`$ counts the triples through one point. "$`a \equiv c \pmod 6`$" says a and c leave the same remainder on division by 6 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
 ```math
-r = \frac{v-1}{2}, \qquad b = \frac{v(v-1)}{6}, \qquad \text{a system exists} \iff v \equiv 1 \text{ or } 3 \pmod 6
+r = \frac{v-1}{2}, \qquad b = \frac{v(v-1)}{6}, \qquad \text{for } v \ge 1,\ \text{a system exists} \iff v \equiv 1 \text{ or } 3 \pmod 6
 ```
 
-**Read it aloud:** each point is on (v − 1)/2 triples, there are v(v − 1)/6 triples in all, and a system exists exactly when v leaves remainder 1 or 3 on division by 6.
+**Read it aloud:** each point is on (v − 1)/2 triples, there are v(v − 1)/6 triples in all, and for v at least 1 a system exists exactly when v leaves remainder 1 or 3 on division by 6.
 
 The construction for $`v = 6n + 3`$, due to R. C. Bose (1939), uses a **halving rule** on the numbers $`0`$ to $`2n`$, counted round a clock of $`2n + 1`$:
 
@@ -398,7 +398,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the remainder rule and the counts for every v, Bose's construction for every n, and checks the worked examples.
+Lean proves the remainder rule for every $`v \ge 1`$ and the counts for every v, Bose's construction for every n, and checks the worked examples.
 
 - Take $`v \ge 1`$ points. Then a Steiner triple system on them exists exactly when v leaves remainder 1 or 3 on division by 6.
 - For remainder 1, Lean builds Skolem's system in full, where the card gives only an outline.
