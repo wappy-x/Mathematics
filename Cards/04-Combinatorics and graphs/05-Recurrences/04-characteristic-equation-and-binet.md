@@ -109,7 +109,7 @@ The rule ties three consecutive terms with the same weights. A sequence multiply
 r^n = c_1 r^{n-1} + c_2 r^{n-2}
 ```
 
-Every term holds r^(n−2); divide it out, since r = 0 only gives the all-zero sequence. What survives is r^2 = c1 r + c2. Both hallway weights are 1, so r^2 = r + 1, and the quadratic formula returns (1 ± √5)/2, the $`\varphi`$ and $`\psi`$ above.
+Every term holds r^(n−2); divide it out, since r = 0 fails the rule at n = 2 (it would need c2 = 0). What survives is r^2 = c1 r + c2. Both hallway weights are 1, so r^2 = r + 1, and the quadratic formula returns (1 ± √5)/2, the $`\varphi`$ and $`\psi`$ above.
 
 ### Step 1: mixtures of solutions are solutions
 

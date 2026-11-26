@@ -132,7 +132,7 @@ $`\displaystyle \Delta B(j, n) = C(n, j) - C(n-1, j) = C(n-1, j-1) = B(j-1, n).`
 
 Differencing shifts each list one place down the family, and B(0, n), 1 everywhere, differences to zero. So take numbers c(0) … c(k) and a(n) = c(0)·B(0, n) + … + c(k)·B(k, n). Differencing j times drops every piece j places, and at n = 1 only one survives: Δ^j a(1) = c(j), read straight off the edge — Newton's formula.
 
-A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−1, j) has degree j, the list has degree k. Its leading coefficient, the number in front of the largest power, is c(k) over 1 × 2 × … × k. For the tins, k = 2 and c(2) = 1 give the 1/2 in n(n+1)/2.
+A nonzero flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−1, j) has degree j, the list has degree k. Its leading coefficient, the number in front of the largest power, is c(k) over 1 × 2 × … × k. For the tins, k = 2 and c(2) = 1 give the 1/2 in n(n+1)/2.
 
 </details>
 
@@ -497,7 +497,7 @@ example : 5 ^ 2 = 25 ∧ ∑ k ∈ Icc 1 9, k = 45 := by decide
 - **Babbage's Difference Engine.** The machine designed in the 1820s to print mathematical tables could only add. A polynomial rule has a flat row, so setting the edge once and adding along each row grinds out every term.
 
 > **Say it back**
-> The difference of a list is the jump from each term to the next; doing it twice gives the jumps of the jumps. A flat second row means a degree-2 rule, which the triangle's top edge rebuilds. Backwards, a sum of jumps collapses to the far end minus the near end. The tins add to 55 by n(n+1)/2; the fractions to 0.99, because each is 1/k − 1/(k+1).
+> The difference of a list is the jump from each term to the next; doing it twice gives the jumps of the jumps. A nonzero flat second row means a degree-2 rule, which the triangle's top edge rebuilds. Backwards, a sum of jumps collapses to the far end minus the near end. The tins add to 55 by n(n+1)/2; the fractions to 0.99, because each is 1/k − 1/(k+1).
 
 ---
 

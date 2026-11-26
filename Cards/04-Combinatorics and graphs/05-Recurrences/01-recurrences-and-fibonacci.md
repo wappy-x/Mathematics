@@ -10,7 +10,7 @@ A hallway is 2 tiles wide and 10 tiles long. Its floor tiles are 1 × 2: each co
 
 Ask one question instead: what covers the far end? Two answers, no others. One upright tile fills the last column, leaving a hallway one tile shorter; or two flat tiles cover the last two columns, one per row, leaving a hallway two shorter.
 
-So the count at length 10 is the count at 9 plus the count at 8, and the same holds at every length. A rule of that shape — a term written out of the terms just behind it — is a **recurrence**, the term used from here on.
+So the count at length 10 is the count at 9 plus the count at 8, and the same holds at every length from 3 on. A rule of that shape — a term written out of the terms just behind it — is a **recurrence**, the term used from here on.
 
 Count the two shortest hallways by hand, 1 floor and 2, and the rule walks forward alone: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89. A 2 × 10 hallway has 89 floors.
 

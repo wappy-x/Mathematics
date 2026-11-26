@@ -76,7 +76,7 @@ That power counts the pieces at the bottom; $`f(n)`$ is the cost at the top. Wri
 ### When it holds
 
 - **n is an exact power of b**, so every piece is whole — the case proved below. Other sizes give pieces differing by one, and the same answers hold with rounding.
-- **a and b are fixed.** If the number of pieces changes with n, there is no single a, and the count $`a^k`$ is wrong.
+- **a and b are fixed, with a ≥ 1 and b ≥ 2.** If the number of pieces changes with n, there is no single a, and the count $`a^k`$ is wrong.
 - **f is a power of n.** A joining cost between two powers — n times $`\log_2 n`$, where the watershed power is 1 — is in no case at all.
 - **The answer is a growth class.** Fixed multiples and extras are dropped: ten halvings plus a last look at the survivor still counts as ten.
 
@@ -136,9 +136,9 @@ Multiply the bracket by $`r - 1`$ and all cancels but two terms, so the bracket 
 
 **r = 1**, that is $`d = \log_b a`$: the bracket is k, and $`T(n) = n^d \log_b n`$.
 
-**r < 1**, that is $`d > \log_b a`$: the bracket is $`(1 - r^k)/(1 - r)`$, between 1 and $`1/(1-r)`$ for every k, since $`r^k`$ is between 0 and 1. So $`T(n)`$ is between $`n^d`$ and a multiple of $`n^d`$.
+**r < 1**, that is $`d > \log_b a`$: the bracket is $`(1 - r^k)/(1 - r)`$, between 1 and $`1/(1-r)`$ for every k ≥ 1, since $`r^k`$ is between 0 and 1. So $`T(n)`$ is between $`n^d`$ and a multiple of $`n^d`$.
 
-**r > 1**, that is $`d < \log_b a`$: the bracket is between $`r^{k-1}`$ and $`r^k/(r-1)`$, and $`n^d r^k = n^d a^k/b^{dk} = a^k`$, since $`b^k = n`$ makes $`b^{dk} = n^d`$. So $`T(n)`$ is between two multiples of $`a^k`$, which is $`n^{\log_b a}`$. ∎
+**r > 1**, that is $`d < \log_b a`$: for every k ≥ 1, the bracket is between $`r^{k-1}`$ and $`r^k/(r-1)`$, and $`n^d r^k = n^d a^k/b^{dk} = a^k`$, since $`b^k = n`$ makes $`b^{dk} = n^d`$. So $`T(n)`$ is between two multiples of $`a^k`$, which is $`n^{\log_b a}`$. ∎
 
 </details>
 
@@ -382,13 +382,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the three cases for every rule of this shape, on sizes that are exact powers of b, with T(1) = 0.
+Lean proves the three cases for every rule of this shape with whole numbers a ≥ 1 and b ≥ 2, on sizes that are exact powers of b, with T(1) = 0.
 
 - When d is below the watershed power, T(n) grows like $`n^{\log_b a}`$: the bottom wins.
 - When d equals the watershed power, T(n) is exactly $`n^d \log_b n`$.
 - When d is above the watershed power, T(n) grows like $`n^d`$: the top wins.
 - The total is the sum of the levels, and also $`n^d(1 + r + \dots + r^{k-1})`$, with r the level multiplier.
-- The log law $`a^{\log_b n} = n^{\log_b a}`$ holds for every positive a and n.
+- The log law $`a^{\log_b n} = n^{\log_b a}`$ holds for every positive a and n and every positive base b other than 1.
 - The deck's numbers are exact: 10 halvings, 10,240 for merging, 10 looks, 116,050 for three pieces, 2,095,104 for the quadratic join, and the mistakes.
 
 The shuffled deck's 8,946 comparisons, the searches and the decimal watershed powers are left to the Python and Rust checks.
