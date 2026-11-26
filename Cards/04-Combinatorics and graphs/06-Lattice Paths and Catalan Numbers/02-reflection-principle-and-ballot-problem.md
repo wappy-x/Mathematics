@@ -67,7 +67,7 @@ The second term does double duty: it counts the orders opening with B, and throu
 ### When it holds
 
 - **Strictly ahead, from the first vote on.** Counting a level score as "still ahead" gives 28 orders, not 14.
-- **A wins, so $`a`$ is larger than $`b`$.** At $`a = b`$ the formula gives zero, rightly: the last vote levels the score. With $`b`$ larger it turns negative, though the count is zero.
+- **A wins, so $`a`$ is larger than $`b`$.** At $`a = b \ge 1`$ the formula gives zero, rightly: the last vote levels the score. With $`b`$ larger it turns negative, though the count is zero.
 - **One vote at a time.** In batches a lead can jump from 1 to −1 without landing on zero, and the argument breaks.
 - **Orders, not chances.** These count orders; "one in four" is favourable over possible, nothing more.
 
@@ -107,7 +107,7 @@ Of the 35 orders opening with A, 21 go level later, leaving 35 − 21 = 14 in wh
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-The factorial $`n!`$ is the product of the whole numbers from 1 up to $`n`$, and $`C(n, a) = n! / (a!\,b!)`$ when $`b = n - a`$. So $`C(n-1, a-1) = (n-1)! / ((a-1)!\,b!)`$ is $`a`$ times $`(n-1)! / (a!\,b!)`$, and $`C(n-1, a) = (n-1)! / (a!\,(b-1)!)`$ is $`b`$ times it. Their difference is $`(a - b) \times (n-1)! / (a!\,b!)`$; multiplying above and below by $`n`$ makes that $`\frac{a-b}{n} \times C(n, a)`$.
+The factorial $`n!`$ is the product of the whole numbers from 1 up to $`n`$, and $`C(n, a) = n! / (a!\,b!)`$ when $`b = n - a`$. So $`C(n-1, a-1) = (n-1)! / ((a-1)!\,b!)`$ is $`a`$ times $`(n-1)! / (a!\,b!)`$, and for $`b \ge 1`$, $`C(n-1, a) = (n-1)! / (a!\,(b-1)!)`$ is $`b`$ times it (at $`b = 0`$ both are 0). Their difference is $`(a - b) \times (n-1)! / (a!\,b!)`$; multiplying above and below by $`n`$ makes that $`\frac{a-b}{n} \times C(n, a)`$.
 
 </details>
 

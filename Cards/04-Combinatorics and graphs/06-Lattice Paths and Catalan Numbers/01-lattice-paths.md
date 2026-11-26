@@ -39,7 +39,7 @@ C(m+n,\ n) = \frac{(m+n)!}{m!\ n!}
 
 **Read it aloud:** a route is a row of m plus n steps; count the ways of saying which n go north.
 
-Naming the north steps names the east steps, so C(m+n, m) is the same 330. A named corner splits the walk. Write $`a`$ for its blocks east and $`b`$ for its blocks north, and pair every way of reaching it with every way of finishing:
+Naming the north steps names the east steps, so C(m+n, m) is the same 330. A named corner inside the grid ($`0 \le a \le m`$, $`0 \le b \le n`$) splits the walk. Write $`a`$ for its blocks east and $`b`$ for its blocks north, and pair every way of reaching it with every way of finishing:
 
 ```math
 C(a+b,\ b)\ \times\ C\big((m-a)+(n-b),\ n-b\big)

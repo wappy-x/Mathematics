@@ -122,7 +122,7 @@ With n notes of each kind the kept stretch still ends at −1, so it holds one m
 
 252 − 210 = 42. In letters, Cat(n) = C(2n, n) − C(2n, n+1).
 
-That subtraction is a scaling. Write m!, read "m factorial", for 1 × 2 × … × m. With factorials, C(2n, n+1) divided by C(2n, n) is n!·n! over (n+1)!·(n−1)!; all but two factors cancel, leaving n/(n + 1). The failures are n of every n + 1 orders, whatever n is:
+That subtraction is a scaling. Write m!, read "m factorial", for 1 × 2 × … × m. For n ≥ 1, with factorials, C(2n, n+1) divided by C(2n, n) is n!·n! over (n+1)!·(n−1)!; all but two factors cancel, leaving n/(n + 1) (which also gives 0 at n = 0). The failures are n of every n + 1 orders, whatever n is:
 
 ```math
 \mathrm{Cat}(n) = C(2n,\,n)\left(1 - \frac{n}{n+1}\right) = \frac{C(2n,\,n)}{n+1}

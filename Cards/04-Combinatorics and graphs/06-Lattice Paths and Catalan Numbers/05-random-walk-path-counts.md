@@ -114,7 +114,7 @@ Between them, eight flips carry the total from +1 back to +1 without touching ze
 
 Add the 1 back, glue the head and tail on again, and the excursion returns, so the two collections match one for one.
 
-Nothing in that argument used the number ten. Excursions of 2m flips are counted by the Dyck paths of 2m − 2, one Catalan number back:
+Nothing in that argument used the number ten. For m ≥ 1, excursions of 2m flips are counted by the Dyck paths of 2m − 2, one Catalan number back:
 
 ```math
 \mathrm{Cat}(m-1) = \frac{C(2m - 2,\ m - 1)}{m} \quad\longrightarrow\quad \frac{70}{5} = 14
@@ -352,7 +352,7 @@ Lean proves the three counts for every number of flips, not just ten.
 
 - Paths of n flips ending at height h number C(n, (n + h)/2). This needs n and h both even or both odd, and h between −n and n.
 - Of the paths of 2m flips that end at zero, the ones that never dip below zero number Cat(m).
-- Of those same 2m-flip paths, the excursions number Cat(m − 1). They stay strictly above zero from the first flip to the one before last.
+- For m ≥ 1, of those same 2m-flip paths, the excursions number Cat(m − 1). They stay strictly above zero from the first flip to the one before last.
 - Listing the ten-flip paths one by one gives 252 ending level, 210 ending at +2, 42 never below zero and 14 excursions.
 
 Listing the whole ten-flip row path by path, and the 50.4 from the wrong divisor, are left to the Python and Rust checks.
