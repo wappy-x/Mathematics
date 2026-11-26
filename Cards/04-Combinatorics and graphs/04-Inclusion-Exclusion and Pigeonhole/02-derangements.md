@@ -62,10 +62,10 @@ D(n) \;=\; \sum_{k=0}^{n} (-1)^k \, C(n,k)\,(n-k)! \;=\; \sum_{k=0}^{n} (-1)^k \
 A **recurrence** builds each count from the ones before it, starting from two seeds fixed by hand.
 
 ```math
-D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr), \qquad D(0) = 1, \quad D(1) = 0
+D(n) = (n-1)\bigl(D(n-1) + D(n-2)\bigr) \quad (n \ge 2), \qquad D(0) = 1, \quad D(1) = 0
 ```
 
-Person one has $`n-1`$ names to draw, and each case leaves a smaller draw of the same kind (Step 3). Shorter still is $`D(n) = n\,D(n-1) + (-1)^n`$.
+Person one has $`n-1`$ names to draw, and each case leaves a smaller draw of the same kind (Step 3). Shorter still is $`D(n) = n\,D(n-1) + (-1)^n`$ for $`n \ge 1`$.
 
 ### When it holds
 

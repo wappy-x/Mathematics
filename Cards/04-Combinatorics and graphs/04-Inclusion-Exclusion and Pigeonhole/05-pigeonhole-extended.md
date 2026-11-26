@@ -102,9 +102,9 @@ The items are not the ten numbers. They are the eleven **running totals**: 0 bef
 Eleven items, ten boxes, so two totals share a box: 89 and 189 both leave 9. Subtract, and equal remainders cancel: 189 − 89 = 100, a multiple of 10. The difference of two running totals is the sum of the numbers between them, here positions 5 to 7 (36 + 52 + 12 = 100).
 
 <details>
-<summary>Detailed proof: any n whole numbers hide a run summing to a multiple of n</summary>
+<summary>Detailed proof: any n ≥ 1 whole numbers hide a run summing to a multiple of n</summary>
 
-Call the numbers a(1) up to a(n) in order. Form the n + 1 running totals p(0) = 0, p(1) = a(1), p(2) = a(1) + a(2), on to p(n).
+Take n ≥ 1 and call the numbers a(1) up to a(n) in order. Form the n + 1 running totals p(0) = 0, p(1) = a(1), p(2) = a(1) + a(2), on to p(n).
 
 Each leaves one of the n remainders 0 to n − 1 after division by n, so n + 1 items go into n boxes and two totals must share. Call them p(u) and p(v), with u below v: they leave the same remainder.
 
@@ -333,11 +333,11 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves all three claims for any number of items and boxes, not just 100 emails in 12 folders.
+Lean proves all three claims for any number of items and at least one box (and n ≥ 1 for the running-total claim), not just 100 emails in 12 folders.
 
-- However n items are filed into k boxes, some box holds at least n/k rounded up.
-- Some filing keeps every box at or below n/k rounded up, so the bound cannot be sharpened.
-- Any n whole numbers in a row hide a run of consecutive ones totalling a multiple of n.
+- However n items are filed into k ≥ 1 boxes, some box holds at least n/k rounded up.
+- For k ≥ 1 boxes, some filing keeps every box at or below n/k rounded up, so the bound cannot be sharpened.
+- Any n ≥ 1 whole numbers in a row hide a non-empty run of consecutive ones totalling a multiple of n.
 - The card's own numbers come out exactly: the inbox, the even spread, the ten whole numbers and the mistakes.
 
 The 2,000 random ten-number lists and the search over every small filing are left to the Python and Rust checks.

@@ -157,7 +157,7 @@ Nothing is imported. Three roads reach the same count:
 
 - the sieve adds its four signed layers;
 - the listing builds all 243 handouts and keeps the onto ones;
-- the grouping road gets S(5, 3) from the recurrence S(n, k) = k × S(n−1, k) + S(n−1, k−1), checks it by listing the piles, and multiplies by 3!.
+- the grouping road gets S(5, 3) from the recurrence S(n, k) = k × S(n−1, k) + S(n−1, k−1) (for n, k ≥ 1), checks it by listing the piles, and multiplies by 3!.
 
 A fourth line splits the 243 by how many mechanics they use, which comes back to 243: 3 + 90 + 150. Two sweeps follow, over jobs and over mechanics, each sieve count met by listing. A second case, six jobs, runs the same roads.
 

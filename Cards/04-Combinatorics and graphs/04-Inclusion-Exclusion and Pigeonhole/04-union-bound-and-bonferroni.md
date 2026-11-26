@@ -147,7 +147,7 @@ Nineteen of the thirty days carried rain, wind or fog. The bracket was in hand b
 | --- | --- | --- |
 | Adding 12, 8 and 5 and stopping | 25 | Five days carry two headings or three, counted again in each |
 | Taking the pair overlaps off and stopping | 18 | The three-heading day went in three times and out three times |
-| Subtracting the triple overlap, not adding | 17 | A flipped sign: below the truth and below the floor, so no bound |
+| Subtracting the triple overlap, not adding | 17 | A flipped sign: below the truth and below the floor, so not the ceiling three layers promise |
 
 The code prints these three and the 21 from half a layer.
 
@@ -543,7 +543,7 @@ example : (List.range 4).map (fun i => ∑ j ∈ Icc 1 (i + 1), (-1 : ℤ) ^ (j 
 > **Reading the union bound as an estimate.** 25 is a ceiling, not a count. The truth here is 19, about a quarter lower, and the bound gives no hint how loose it is. It is exact only when no two sets share a member.
 >
 > - **Reporting 18 after the pair overlaps.** That is a floor; the missing 1 is the day under all three headings.
-> - **Getting a layer's sign wrong.** Subtracting the triple overlap gives 17, neither the answer nor a bound.
+> - **Getting a layer's sign wrong.** Subtracting the triple overlap gives 17, neither the answer nor a ceiling.
 > - **Using part of a layer.** Removing only the 4 rainy-and-windy days gives 21, which fails as an even-layer floor. Take off all three pair overlaps (7) and the result, 18, is a guaranteed floor at or below the true 19.
 
 ---
