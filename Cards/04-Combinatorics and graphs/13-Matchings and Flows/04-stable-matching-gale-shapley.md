@@ -371,7 +371,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the theorem for any number of doctors and hospitals, each ranking the whole other side with no ties.
+Lean proves the theorem for any equal number of doctors and hospitals, each ranking the whole other side with no ties.
 
 - A stable placement always exists.
 - One stable placement gives every doctor her best stable partner and every hospital its worst.

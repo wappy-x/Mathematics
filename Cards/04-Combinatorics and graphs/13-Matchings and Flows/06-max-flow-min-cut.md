@@ -38,7 +38,7 @@ Labels are capacities in loads a night. The box marks the cut the method hands b
 
 ## The formula
 
-Notation from [Flows](05-flow-networks-and-ford-fulkerson.md): a flow puts $`f(u,v)`$ loads on the road from junction $`u`$ to junction $`v`$, at most its capacity $`c(u,v)`$, stranding nothing between source $`s`$ and sink $`t`$. Its value $`\lvert f\rvert`$ is the net count leaving $`s`$. A cut splits the junctions into a side $`S`$ holding $`s`$ and a side $`T`$ holding $`t`$; its price adds the capacities of roads leaving $`S`$.
+Notation from [Flows](05-flow-networks-and-ford-fulkerson.md): a flow puts $`f(u,v)`$ loads on the road from junction $`u`$ to junction $`v`$, at most its capacity $`c(u,v)`$, stranding nothing between source $`s`$ and a different sink $`t`$. Its value $`\lvert f\rvert`$ is the net count leaving $`s`$. A cut splits the junctions into a side $`S`$ holding $`s`$ and a side $`T`$ holding $`t`$; its price adds the capacities of roads leaving $`S`$.
 
 ```math
 \max_{f}\ \lvert f\rvert \;=\; \min_{(S,T)}\ c(S,T), \qquad c(S,T) = \sum_{u \in S,\ v \in T} c(u,v)
@@ -381,7 +381,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the theorem for every network with finitely many junctions and capacities at least 0, real numbers included.
+Lean proves the theorem for every network with finitely many junctions, a source different from the sink, and capacities at least 0, real numbers included.
 
 - A largest flow and a cheapest cut always exist, and they are the same number.
 - When no augmenting route is left, the junctions still reachable from the source form a cheapest cut, priced at the flow's value.

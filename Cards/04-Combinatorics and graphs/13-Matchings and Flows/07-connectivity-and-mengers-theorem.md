@@ -41,7 +41,7 @@ Notation first, in words. A network is a graph $`G`$: stations are its vertex se
 
 The **line connectivity** $`\lambda(S,T)`$, read "lambda of S T", is the fewest lines whose closure leaves no route from $`S`$ to $`T`$. The **station connectivity** $`\kappa(S,T)`$, read "kappa", is the fewest stations, other than $`S`$ and $`T`$, whose closure does the same.
 
-Menger's theorem, line form:
+Menger's theorem, line form, for two different stations $`S`$ and $`T`$:
 
 ```math
 \text{most line-disjoint routes from } S \text{ to } T \;=\; \lambda(S,T)
@@ -49,7 +49,7 @@ Menger's theorem, line form:
 
 **Read it aloud:** trains running at once on separate lines number as many as the lines that must close to stop them all.
 
-Station form, for $`S`$ and $`T`$ not joined by a line:
+Station form, for two different stations $`S`$ and $`T`$ not joined by a line:
 
 ```math
 \text{most station-disjoint routes from } S \text{ to } T \;=\; \kappa(S,T)
@@ -59,7 +59,7 @@ Station form, for $`S`$ and $`T`$ not joined by a line:
 
 A line $`e`$ is a **bridge** when $`c(G - e) > c(G)`$. That happens exactly when $`e`$ lies on no loop: a loop through $`e`$ is a detour round it. A station is a **cut vertex** when removing it, with its lines, adds a piece.
 
-For a whole network, the connectivities are the fewest lines, or stations, whose removal splits it: a bridge makes the first 1, a cut vertex the second.
+For a whole connected network, the connectivities are the fewest lines whose removal splits it, or stations whose removal splits it or leaves one station: a bridge makes the first 1, a cut vertex the second.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -368,7 +368,7 @@ The two outputs match line for line.
 Lean proves Menger's theorem in both forms, and the bridge rule, for every finite network with two-way lines.
 
 - Line form: for any two different stations $`S`$ and $`T`$, the most line-disjoint routes equal $`\lambda(S,T)`$.
-- Station form: for $`S`$ and $`T`$ not joined by a line, the most station-disjoint routes equal $`\kappa(S,T)`$.
+- Station form: for two different stations $`S`$ and $`T`$ not joined by a line, the most station-disjoint routes equal $`\kappa(S,T)`$.
 - A line is a bridge exactly when it lies on no loop.
 - The railway has 9 lines, is one piece, and has no bridge.
 - Closing S–A and S–B parts S from T; closing S–A alone does not.

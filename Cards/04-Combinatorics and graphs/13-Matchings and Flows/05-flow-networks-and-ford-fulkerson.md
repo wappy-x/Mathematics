@@ -86,7 +86,7 @@ Where no road runs from $`u`$ to $`v`$, the leftover is $`f(v,u)`$ alone: a **ba
 
 - **Whole-number capacities.** Then the method stops (Step 3). Fractions are scaled to whole numbers first.
 - **Capacities on roads, not junctions.** A depot limited to 4 loads is split into an arrival half and a departure half, joined by a road of capacity 4.
-- **One source and one sink.** Several plants are joined to one new source by wide roads; several ports likewise.
+- **One source and one different sink.** Several plants are joined to one new source by wide roads; several ports likewise.
 - **The route is chosen after every push.** Leftover changes with the plan.
 
 ---
@@ -387,9 +387,9 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Steps 1 and 2 and the integrality theorem for every network with finitely many junctions, and checks the diamond's numbers.
+Lean proves Steps 1 and 2 and the integrality theorem for every network with finitely many junctions and a source different from the sink, and checks the diamond's numbers.
 
-- A push of up to the bottleneck, along a route visiting no junction twice, keeps a flow and adds exactly that amount to its value.
+- A push of at least 0 and up to the bottleneck, along a route visiting no junction twice, keeps a flow and adds exactly that amount to its value.
 - The push changes loads only on roads joining junctions that sit next to each other on the route.
 - No flow's value is more than any cut's price.
 - With whole-number capacities, some flow in whole loads has a value that no flow beats, fractional loads included.
