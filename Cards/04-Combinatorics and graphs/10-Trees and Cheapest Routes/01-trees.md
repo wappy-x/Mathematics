@@ -66,7 +66,7 @@ m = n - c(G)
 
 ### When it holds
 
-- **Finitely many houses.** A row running on for ever in both directions is joined up and loop-free with no leaf, and leaves $`n - 1`$ nothing to count.
+- **Finitely many houses, at least one.** A row running on for ever in both directions is joined up and loop-free with no leaf, and leaves $`n - 1`$ nothing to count.
 - **Lanes both ways, one per pair at most, none from a house to itself.** A second lane between one pair, or a lane looping back on one house, adds no house and breaks the count without making a cycle of three. One-way lanes split each question in two ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 - **The count never travels alone.** Maps neither joined up nor loop-free also spend six lanes on seven houses.
 
@@ -502,7 +502,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 > **Reading "one lane fewer than houses" as the whole test.** The number is right and not enough alone: a triangle A-B-C beside the path D-E-F-G spends six lanes on seven houses, with a loop and two pieces. Pair the count with joined-up, or with loop-free.
 >
 > - **Calling a forest a tree.** Cutting B-D leaves 5 lanes in 2 pieces, sized 3 and 4; loop-free maps obey $`m = n - c(G)`$, and only one piece makes that $`n - 1`$.
-> - **Expecting every house to have two lanes.** Give every house two and a loop appears somewhere: a finite tree has at least two leaves, four here.
+> - **Expecting every house to have two lanes.** Give every house two and a loop appears somewhere: a finite tree with two houses or more has at least two leaves, four here.
 > - **Reading "one route" as "one shortest route".** In a tree the route between a pair is the only one there is.
 
 ---
@@ -514,7 +514,7 @@ example : 2 ^ Nat.choose 5 2 = 1024 ∧ Nat.choose 10 4 = 210 ∧ 210 - 125 = 85
 - **What a search leaves behind.** The lanes a flood keeps as it marks new houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)) form a tree over the piece it reached; so does a sentence broken into phrases within phrases, [Grammars and a stack](../../24-Computability%20and%20complexity/01-Models%20of%20Computation/05-context-free-grammars-and-pushdown-automata.md).
 
 > **Say it back**
-> A tree is a map that is joined up and carries no loop. Loops and spare routes are the same thing, so exactly one route joins every pair. Peel off a one-lane house again and again — a finite tree always has two to start from — and each peel costs a house and a lane: one lane fewer than houses, six for seven. Cut a lane and the pieces rise; add one and a single loop appears.
+> A tree is a map that is joined up and carries no loop. Loops and spare routes are the same thing, so exactly one route joins every pair. Peel off a one-lane house again and again — a finite tree with two houses or more always has two to start from — and each peel costs a house and a lane: one lane fewer than houses, six for seven. Cut a lane and the pieces rise; add one and a single loop appears.
 
 ---
 

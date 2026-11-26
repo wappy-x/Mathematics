@@ -108,7 +108,7 @@ Step 1's claim and "every settled point's guess is its true cheapest cost" are p
 
 The predecessors read p[S] = E, p[E] = C, p[C] = A, p[A] = B, p[B] = D. Walk back from the stadium and reverse: D-B-A-C-E-S, whose own roads add to 2 + 1 + 5 + 2 + 3 = 13.
 
-Each point but the depot has one predecessor and every chain ends there. So the arrows form a tree rooted at the depot ([Rooted trees](02-rooted-and-binary-trees.md)), spanning all it reaches ([Spanning trees](03-spanning-trees-and-cayleys-formula.md)), here a single chain.
+Each reachable point but the depot has one predecessor and every chain ends there. So the arrows form a tree rooted at the depot ([Rooted trees](02-rooted-and-binary-trees.md)), spanning all it reaches ([Spanning trees](03-spanning-trees-and-cayleys-formula.md)), here a single chain.
 
 ```mermaid
 flowchart LR

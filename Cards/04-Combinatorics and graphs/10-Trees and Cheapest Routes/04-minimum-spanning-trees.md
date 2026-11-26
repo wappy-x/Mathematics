@@ -72,7 +72,7 @@ Split the vertices into a group $`S`$ and the rest, neither empty: that is a **c
 
 ### When it holds
 
-- **Some chain of edges joins any two vertices.** Otherwise no spanning tree exists at any price: Kruskal's walk returns a cheapest skeleton per piece, and Prim's walk covers only the piece it starts in ([Trees](01-trees.md)).
+- **Finitely many vertices, and some chain of edges joins any two.** Otherwise no spanning tree exists at any price: Kruskal's walk returns a cheapest skeleton per piece, and Prim's walk covers only the piece it starts in ([Trees](01-trees.md)).
 - **No directions, and weights fixed in advance.** Negative weights are fine; a price that shifts with the other choices breaks the swap.
 - **Ties may multiply the answers.** All weights different makes the answer unique; here runs tie at 5, 7, 8 and 9, and it is still the only one.
 

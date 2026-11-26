@@ -12,7 +12,7 @@ How many plans? Sixteen. Only two look different: a star, one village joined to 
 
 Roads that reach every village and never close a loop are a **spanning tree** of the map ([Trees](01-trees.md)): *spanning* because they touch every village, *tree* because they hold no loop. Add a fifth village, Ember, cost all ten roads, and the count jumps to 125.
 
-**Strip a map until no loop is left and every place is still reachable: that is a spanning tree, and where all n named places can be joined there are n to the power n − 2.**
+**Strip a map until no loop is left and every place is still reachable: that is a spanning tree, and where all n named places (one or more) can be joined there are n to the power n − 2.**
 
 **What kind of fact this is:** a theorem, Cayley's formula, proved on this card in Why it works; the spanning tree is a definition.
 
@@ -34,15 +34,15 @@ One of the sixteen plans; each dotted road would close a loop.
 
 ## The formula
 
-Notation first. A map is two lists: $`V`$ its places, $`E`$ its joined pairs, with $`n`$ and $`m`$ counting each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $`G`$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $`T`$ for a spanning subgraph with no loop: it always holds $`n - 1`$ roads.
+Notation first. A map is two lists: $`V`$ its places, $`E`$ its joined pairs, with $`n`$ and $`m`$ counting each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $`G`$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $`T`$ for a connected spanning subgraph with no loop: it always holds $`n - 1`$ roads.
 
 The map with every pair joined is the **complete map** $`K_n`$, so the six costed roads are $`K_4`$. Write $`\tau(G)`$, "tau of G", for the spanning trees $`G`$ has. Arthur Cayley, 1889:
 
 ```math
-\tau(K_n) = n^{\,n-2}
+\tau(K_n) = n^{\,n-2} \quad (n \ge 1)
 ```
 
-**Read it aloud:** with n named places and every pair available to join, the loop-free layouts reaching all of them number n to the power n − 2: n − 2 copies of n multiplied together.
+**Read it aloud:** with n named places and every pair available to join, the loop-free layouts reaching all of them number n to the power n − 2 (for $`n \ge 2`$, $`n - 2`$ copies of $`n`$ multiplied together; at $`n = 1`$ there is 1 trivial layout).
 
 So 4 × 4 = 16 for four villages, 5 × 5 × 5 = 125 for five. The proof writes each layout as a word of $`n - 2`$ names: its **Prüfer code**.
 
@@ -86,7 +86,7 @@ Heinz Prüfer's 1918 proof gives one. Repeatedly remove the **dead end** — a p
 
 Take the line Ayle-Brook-Crag-Dale. Its dead ends are Ayle and Dale, so remove Ayle and write Brook. What remains is Brook-Crag-Dale: remove Brook, write Crag. Two places left, stop. The word is Brook Crag.
 
-Each removal writes one letter and they stop two places short, so the word holds $`n - 2`$ letters from $`n`$ names. Write the neighbour, never the dead end: the star centred on Ayle codes as Ayle Ayle.
+For $`n \ge 2`$, each removal writes one letter and they stop two places short, so the word holds $`n - 2`$ letters from $`n`$ names. Write the neighbour, never the dead end: the star centred on Ayle codes as Ayle Ayle.
 
 ### Step 4: every word is a layout, so counting words counts layouts
 
@@ -341,7 +341,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Cayley's formula for every number of named places, along with the two facts behind it.
+Lean proves Cayley's formula for every number of named places from one up, along with the two facts behind it.
 
 - Where every pair can be joined and the map is in one piece, there are n to the power n − 2 spanning trees.
 - A map has a spanning tree exactly when it is in one piece.

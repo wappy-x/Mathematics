@@ -52,7 +52,7 @@ Write $`L_0`$ for $`L`$ with one switch's row and column crossed out, and $`\tau
 
 In the office, cutting P leaves `[[3, -1, -1], [-1, 2, 0], [-1, 0, 2]]`, determinant 8 ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)).
 
-A second form uses the **eigenvalues** of $`L`$: the numbers $`\lambda`$ for which some list $`v`$ of switch values gives $`Lv = \lambda v`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). Sorted, the first one is always 0. Then
+A second form uses the **eigenvalues** of $`L`$: the numbers $`\lambda`$ for which some list $`v`$ of switch values gives $`Lv = \lambda v`$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). With at least one switch, sorted, the first one is always 0. Then
 
 ```math
 \tau(G) = \frac{1}{n}\, \lambda_2 \lambda_3 \cdots \lambda_n
@@ -75,6 +75,7 @@ The office's eigenvalues are 0, 2, 4, 4, so 2 × 4 × 4 / 4 = 8.
 
 ### When it holds
 
+- **Finitely many switches, at least one.** Without a switch there is no row to cut and no $`n`$ to divide by.
 - **Cut a row and its own column.** The whole of $`L`$ has determinant 0, since every row adds to 0. Row P with column Q gives the count only up to sign.
 - **No cable from a switch to itself.** Such a cable is never in a tree but would raise the diagonal; delete it first.
 - **Two cables between one pair are fine.** Write −2 in that cell; each cable gives its own trees.
@@ -150,7 +151,7 @@ From the columns: column $`i`$ of $`xI - L`$ is $`x`$ times a 1 in place $`i`$, 
 For the complete network, $`L = nI - J`$, with $`I`$ the identity and $`J`$ all ones. $`J`$ wipes out any list of values adding to 0, so $`L`$ multiplies it by $`n`$. Such lists fill $`n - 1`$ directions, so $`\lambda_2 = \dots = \lambda_n = n`$:
 
 ```math
-\tau(K_n) = \frac{1}{n}\, n^{\,n-1} = n^{\,n-2}
+\tau(K_n) = \frac{1}{n}\, n^{\,n-1} = n^{\,n-2} \quad (n \ge 1)
 ```
 
 **Read it aloud:** n multiplied n − 1 times, divided by n once: Cayley's formula. For $`K_4`$, 4 × 4 × 4 / 4 = 16.
@@ -396,7 +397,7 @@ Lean proves the theorem for every finite network with at most one cable per pair
 
 - Take any finite network, and cut any one switch's row and its own column. Then the determinant of what is left is the number of spanning trees.
 - A network in pieces has no spanning tree, so its cut determinant is 0.
-- One eigenvalue of $`L`$ is always 0. Leave out one such 0. Then the other eigenvalues multiply to $`n\,\tau(G)`$.
+- With at least one switch, one eigenvalue of $`L`$ is always 0. Leave out one such 0. Then the other eigenvalues multiply to $`n\,\tau(G)`$.
 - Take the complete network $`K_n`$ with at least one switch. Then $`\tau(K_n) = n^{\,n-2}`$, Cayley's formula.
 - Take the office with P cut. Then the determinant is 12 − 2 − 2 = 8, and the eigenvalue product 2 × 4 × 4 is 4 × 8.
 - Take $`K_4`$ with its first row and column cut. Then the determinant is 16, which is $`4^{2}`$.
@@ -1037,7 +1038,7 @@ end MatrixTreeTheorem
 ## The usual mistake
 
 > [!warning]
-> **Taking the determinant of the whole Laplacian.** Every row of $`L`$ adds to 0, so the determinant is 0 for every network. Cut one row and the same column first.
+> **Taking the determinant of the whole Laplacian.** Every row of $`L`$ adds to 0, so the determinant is 0 for every network with at least one switch. Cut one row and the same column first.
 >
 > - **Keeping only the diagonal.** 3 × 2 × 2 = 12, not 8: the −1s off the diagonal subtract 2 and 2.
 > - **Forgetting to divide by n.** The nonzero eigenvalues multiply to 32; the trees number 32 / 4 = 8.
