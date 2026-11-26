@@ -57,13 +57,13 @@ n! \;=\; n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1, \qquad 0! 
 Two helper statements follow.
 
 ```math
-n! \;=\; n \times (n-1)!
+n! \;=\; n \times (n-1)! \qquad (n \ge 1)
 ```
 
 A line of n things is one thing at the front, then a line of the rest. Second, Stirling's estimate:
 
 ```math
-S_n \;=\; \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}
+S_n \;=\; \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n} \qquad (n \ge 1)
 ```
 
 Take n divided by $`e`$, use it as a factor n times over, then scale by the square root of $`2\pi n`$. An estimate, not an equality; Step 5 measures the error.
@@ -108,7 +108,7 @@ Setting 0! = 0 knocks the bottom out: 1! becomes 0, then 2! = 2 × 0 = 0, and ev
 <details>
 <summary>Detailed proof: the product counts the orderings, for every n</summary>
 
-Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n × (n-1)!. The method is induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n × (n-1)! for n ≥ 1. The method is induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 **Base case.** With nothing to line up there is one ordering, the empty one: L(0) = 1 = 0!.
 
