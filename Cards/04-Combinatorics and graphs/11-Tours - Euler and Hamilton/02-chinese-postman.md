@@ -64,17 +64,17 @@ L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)
 | $`M`$ | one pairing of $`O`$ | B with F, D with H | — |
 | $`L`$ | the shortest closed round | 1,600 m | — |
 
-The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). The first takes any of the other 2k − 1, and the rest pair the same way, so there are
+The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). For $`k \ge 1`$, the first takes any of the other $`2k - 1`$, and the rest pair the same way, so there are
 
 ```math
 1 \times 3 \times 5 \times \cdots \times (2k-1)
 ```
 
-of them: three for four odd junctions, 945 for ten.
+of them (and 1 empty pairing when $`k = 0`$): three for four odd junctions, 945 for ten.
 
 ### When it holds
 
-- **Every street covered, the map in one piece.** Split the estate and no round reaches both halves ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
+- **Finite map in one piece, every street covered.** Split the estate and no round reaches both halves ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
 - **Lengths positive, a street the same price either way.** One-way streets need flows, not pairings: a flow is an amount pushed along each street ([Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md)).
 - **A second pass allowed anywhere, at full price.** A street barred from repeats, or free the second time, changes the sum.
 
@@ -382,12 +382,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the method for every map in one piece with every street a positive length, not just the estate.
+Lean proves the method for every finite map in one piece with every street a positive length, not just the estate.
 
 - Some pairing of the odd junctions is cheapest, each pair charged the shortest walk between its two.
 - No closed round covering every street is shorter than the street total plus that cheapest pairing.
 - Some closed round reaches that length exactly, starting and ending at whichever junction you choose.
-- With 2k odd junctions there are $`1 \times 3 \times 5 \times \cdots \times (2k-1)`$ pairings.
+- With 2k odd junctions ($`k \ge 1`$) there are $`1 \times 3 \times 5 \times \cdots \times (2k-1)`$ pairings (and 1 empty pairing when $`k = 0`$).
 - On both maps: the streets, the counts at each junction, the odd junctions, and both rounds walked covering every street.
 
 The maps' shortest walks, the search over sets of streets and the open round stay with the Python and Rust checks.

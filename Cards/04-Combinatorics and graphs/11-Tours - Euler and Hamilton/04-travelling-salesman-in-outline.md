@@ -14,7 +14,7 @@ Greed comes close and loses: always drive to the nearest town not yet called on 
 
 **A round's cost is the sum of its legs: listing every round settles a few towns, but past about twenty towns no known method stays quick on every chart.**
 
-**What kind of fact this is:** a method, carrying a theorem proved below ($`n`$ towns hold $`(n-1)!/2`$ rounds) and an approximation with no fixed guarantee (the nearest-town rule). Whether a fast exact method can exist is an open question, unsettled as of 19 September 2026.
+**What kind of fact this is:** a method, carrying a theorem proved below ($`n \ge 3`$ towns hold $`(n-1)!/2`$ rounds) and an approximation with no fixed guarantee (the nearest-town rule). Whether a fast exact method can exist is an open question, unsettled as of 19 September 2026.
 
 ### The picture: the cheapest of the sixty rounds
 
@@ -56,7 +56,7 @@ A round calling at every town once and returning home is a **tour**: a Hamiltoni
 
 **Read it aloud:** add the miles of each leg in turn, then the miles home from the last town.
 
-The smallest cost any tour can have is written $`L`$: 148 miles here. With $`n`$ towns, how many tours must be searched:
+The smallest cost any tour can have is written $`L`$: 148 miles here. With $`n \ge 3`$ towns, how many tours must be searched:
 
 ```math
 \text{tours} = \frac{(n-1)!}{2}
@@ -76,6 +76,7 @@ One more quantity is needed below: the **cheapest connecting tree** (minimum spa
 
 ### When it holds
 
+- **Three towns or more.** Fewer than three towns cannot form a round without backtracking, and the formula $`(n-1)!/2`$ gives $`1/2`$ at $`n = 2`$.
 - **The chart is symmetric:** B to C equals C to B. Where one-way systems break that, the halving fails and the count rises to $`(n-1)!`$, 120 rounds.
 - **Every pair has a direct road:** no cell is blank. Where one is, orders needing that leg are not tours, and the count includes undrivable rounds.
 - **No detour beats the direct road:** A to C is 42 miles, A to E to C also 42, never less. Charts breaking this keep the floor, lose the ceiling.
@@ -383,7 +384,7 @@ The two outputs match line for line.
 
 Lean proves the tour count and both ends of the bracket for any number of towns, then checks the six-town chart.
 
-- With $`n`$ towns and a two-way road between every pair, there are exactly $`(n-1)!/2`$ tours.
+- With $`n \ge 3`$ towns and a two-way road between every pair, there are exactly $`(n-1)!/2`$ tours (and none for fewer than three).
 - For every tour, some connecting tree costs no more. So $`T \le L`$, with or without the detour rule.
 - With three or more towns and no detour beating the direct road, some tour costs at most twice any connecting tree. So $`L \le 2T`$.
 - The chart is symmetric, and no detour on it beats the direct road.

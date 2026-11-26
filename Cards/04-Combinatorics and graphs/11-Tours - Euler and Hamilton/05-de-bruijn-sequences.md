@@ -42,7 +42,7 @@ Each place is a two-digit window, each arrow a three-digit code: leaving a place
 
 ## The formula
 
-Two letters, both plain counts. $`n`$ is how many digits are available, 2 for the ring and 10 for the lock; $`k`$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $`k-1`$ digits long. There are $`n^k`$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $`n^{k-1}`$ windows.
+Two letters, both plain counts. $`n`$ is how many digits are available, 2 for the ring and 10 for the lock; $`k`$ is how long a code is, 3 and 4. For $`n \ge 1`$ and $`k \ge 1`$, a **window** is a code with one digit trimmed off, so $`k-1`$ digits long. There are $`n^k`$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $`n^{k-1}`$ windows.
 
 ```math
 \text{length of the ring} = n^k
@@ -55,7 +55,7 @@ Typed flat rather than bent round, the string repeats its first $`k-1`$ digits a
 How many rings exist is a second formula, in which $`n!`$ is the factorial, 1 × 2 × … × n:
 
 ```math
-\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k}
+\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k} \quad (n \ge 1,\ k \ge 1)
 ```
 
 **Read it aloud:** a factorial per window, since its $`n`$ arrows can leave in $`n!`$ orders, multiplied over the $`n^{k-1}`$ windows, then divided by the length, since a ring starts anywhere. Most such orders split the arrows into several small circuits, not one, so this reads the formula rather than proving it.
@@ -70,6 +70,7 @@ How many rings exist is a second formula, in which $`n!`$ is the factorial, 1 ×
 
 ### When it holds
 
+- **At least one digit ($`n \ge 1`$) and code length at least one ($`k \ge 1`$).** Zero digits leave no ring, and length zero leaves no $`(k-1)`$-digit window.
 - **No code is banned.** Ban some and a window can end with more arrows in than out; then no circuit exists, and some arrows must be walked twice — the postman's question ([The Chinese postman](02-chinese-postman.md)).
 - **The reading wraps round.** Stop after the lock's 10,000 digits and the 3 codes straddling the join never happen.
 - **Whatever reads the string judges every window.** An enter key, or a pad clearing every four presses, kills the overlap: back to 40,000. Repeated digits must count as codes too, since the ring includes 000 and 111.
@@ -111,9 +112,9 @@ Both roads agree at two more sizes: 16 rings for binary codes of length 4, and 2
 <details>
 <summary>Detailed proof: the ring exists for every alphabet and every code length</summary>
 
-Places: the $`n^{k-1}`$ windows; arrows: each code, from its first $`k-1`$ digits to its last $`k-1`$. For any $`n`$ and $`k`$, every window has $`n`$ arrows out and $`n`$ in, so in-degree equals out-degree. Typing a window's digits reaches it from any other in $`k-1`$ steps, so the graph is strongly connected.
+Places: the $`n^{k-1}`$ windows; arrows: each code, from its first $`k-1`$ digits to its last $`k-1`$. For any $`n \ge 1`$ and $`k \ge 1`$, every window has $`n`$ arrows out and $`n`$ in, so in-degree equals out-degree. Typing a window's digits reaches it from any other in $`k-1`$ steps, so the graph is strongly connected.
 
-As in [Euler circuits](01-euler-circuits.md), equal in- and out-degrees leave an unused outgoing arrow at any stop away from the start. Walks therefore close and leftover loops splice in, giving a closed walk using every arrow once. Steps 2 and 3 hold for any $`n`$ and $`k`$, so a shortest ring exists at every size.
+As in [Euler circuits](01-euler-circuits.md), equal in- and out-degrees leave an unused outgoing arrow at any stop away from the start. Walks therefore close and leftover loops splice in, giving a closed walk using every arrow once. Steps 2 and 3 hold for any $`n \ge 1`$ and $`k \ge 1`$, so a shortest ring exists at every positive size.
 
 </details>
 
@@ -345,11 +346,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the ring facts for every number of digits and every code length, and checks the binary ring's numbers.
+Lean proves the ring facts for every positive number of digits and every code length, and checks the binary ring's numbers.
 
 - With at least one digit to use, a ring of $`n^k`$ digits exists that reads every code exactly once.
 - A ring that holds every code is at least $`n^k`$ digits long, since each position starts one code.
-- Typed flat, $`n^k + k - 1`$ presses hold every code.
+- Typed flat, with at least one digit, $`n^k + k - 1`$ presses hold every code.
 - The ring 00010111 reads all eight codes once; typed flat with no wrap, it gives 6 codes of 8, missing 100 and 110.
 - Typed flat as 0001011100, ten presses hold all eight codes.
 - Of the 256 eight-digit strings, 16 hold every code round the ring, and the counting formula gives 2, 16 and 24.

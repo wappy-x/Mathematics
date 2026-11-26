@@ -16,7 +16,7 @@ Swapping "edge" for "vertex" changes everything. No quick test is known, and sin
 
 Enough edges still force a round; that guarantee is this card. No count of edges explains a failure, though. Ten depots on fifteen links, three at each — the Petersen network, as well wired per depot as a cube corner — carry no round. A search over all 274 partial routes confirms it.
 
-**A Hamiltonian cycle visits every vertex once and comes home; no quick test for one is known, but every vertex reaching at least half the vertices guarantees one.**
+**A Hamiltonian cycle visits every vertex once and comes home; no quick test for one is known, but on three or more vertices every vertex reaching at least half of them guarantees one.**
 
 **What kind of fact this is:** a theorem, Dirac's, proved on this card in Why it works; the Hamiltonian cycle itself is a definition.
 
@@ -362,7 +362,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Dirac's theorem and the two-sided test for every network, and checks the warehouse and depot numbers.
+Lean proves Dirac's theorem and the two-sided test for every finite network, and checks the warehouse and depot numbers.
 
 - Three vertices or more, simply joined, every degree at least $`n/2`$ as a fraction: a Hamiltonian cycle exists.
 - A two-sided network, every edge crossing, with sides of different sizes, has no Hamiltonian cycle.
