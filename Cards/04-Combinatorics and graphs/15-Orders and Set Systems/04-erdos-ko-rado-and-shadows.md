@@ -14,7 +14,7 @@ Ten is reached: take every group containing server 1. There are $`C(5,2) = 10`$ 
 
 A list of sets all of size $`k`$ is a **family of k-sets**, also called a **k-uniform hypergraph** (a graph whose edges join $`k`$ points, not two). A family is **intersecting** when every two members share at least one point. The family of all k-sets through one fixed point is a **star**.
 
-**If every two k-sets from n points share a point, and n is at least 2k, the family is no bigger than a star: at most C(n−1, k−1) members.**
+**For k at least 1, if every two k-sets from n points share a point, and n is at least 2k, the family is no bigger than a star: at most C(n−1, k−1) members.**
 
 **What kind of fact this is:** a theorem of Erdős, Ko and Rado (1961), proved on this card in Why it works by Katona's circle argument (1972). The Kruskal–Katona theorem near the end is stated and checked on small cases in the text, and proved in Lean.
 
@@ -34,7 +34,7 @@ flowchart TB
 Notation first, in words: $`n`$ is the number of points (servers), $`k`$ the size of every member, $`F`$ the family and $`\lvert F\rvert`$ its member count.
 
 ```math
-\lvert F\rvert \le C(n-1,\,k-1) \quad \text{when } F \text{ is intersecting and } n \ge 2k
+\lvert F\rvert \le C(n-1,\,k-1) \quad \text{when } F \text{ is intersecting, } k \ge 1 \text{ and } n \ge 2k
 ```
 
 **Read it aloud:** an intersecting family of k-sets has at most as many members as there are ways to fill the other $`k-1`$ places once one point is fixed.

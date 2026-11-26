@@ -54,7 +54,7 @@ The **interval** from $`x`$ to $`y`$ is every $`z`$ with $`x \le z \le y`$. The 
 \mu(x,x) = 1, \qquad \mu(x,y) = -\sum_{x \le z < y} \mu(x,z) \ \text{ when } x < y
 ```
 
-**Read it aloud:** start at 1, then give each higher member minus the total already given below it, so every interval's values add to 0.
+**Read it aloud:** start at 1, then give each higher member minus the total already given below it, so every interval with $`x < y`$ adds to 0.
 
 On the divisors of 6, taking $`x`$ = 1: $`\mu(1,2) = -1`$, $`\mu(1,3) = -1`$, and $`\mu(1,6) = -(1 - 1 - 1) = 1`$. The inversion formula is a pair of statements, each true exactly when the other is:
 
@@ -614,7 +614,7 @@ example : (100 : ℤ) - 120 + 45 - 5 = 20 := by norm_num
 - **Strings.** Each of the 9 necklaces has one turn first in dictionary order, a Lyndon word. String algorithms use them to factor text and to build [De Bruijn sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md). The 14 necklaces with repeats allowed come from [Polya counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md).
 
 > **Say it back**
-> Totals that add up unknowns over everything below can be solved from the bottom up. The coefficients depend only on the order: they are the Möbius function, whose values over every interval add to 0. On subsets it is an alternating sign, giving inclusion-exclusion. On divisors it is number theory's Möbius function. For six-bit strings it gives 64 − 8 − 4 + 2 = 54 primitive ones.
+> Totals that add up unknowns over everything below can be solved from the bottom up. The coefficients depend only on the order: they are the Möbius function, whose values over every interval of two or more members add to 0. On subsets it is an alternating sign, giving inclusion-exclusion. On divisors it is number theory's Möbius function. For six-bit strings it gives 64 − 8 − 4 + 2 = 54 primitive ones.
 
 ---
 

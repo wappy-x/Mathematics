@@ -776,7 +776,7 @@ example : (List.range 10).map (fun m => (m + 1).choose ((m + 1) / 2)) =
 ## Where this goes next
 
 - [Mobius inversion on an order](03-mobius-inversion-on-posets.md): undoing sums taken over every set below a set, on these same 16 groups and on any other order.
-- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): for sets all of one size $`k`$ (with $`n \ge 2k`$) where every two meet, a counting argument on circular orders caps the family at $`C(n-1, k-1)`$.
+- [Erdos-Ko-Rado](04-erdos-ko-rado-and-shadows.md): for sets all of one size $`k`$ (with $`k \ge 1`$ and $`n \ge 2k`$) where every two meet, a counting argument on circular orders caps the family at $`C(n-1, k-1)`$.
 
 Sperner says how large an antichain can be; how many antichains exist (168 for four things) has no known closed formula. Next on this shelf, [Mobius inversion on an order](03-mobius-inversion-on-posets.md) stays on these 16 sets and asks how to undo a sum taken over every set below a set.
 
