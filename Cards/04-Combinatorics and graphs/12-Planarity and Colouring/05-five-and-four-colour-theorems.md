@@ -380,7 +380,7 @@ The two outputs match line for line.
 
 - [Edge colouring](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
 - [List colouring](07-list-colouring-and-choosability.md): gives each region its own list of allowed inks, where Kempe chains fail and five per region is sharp.
-- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): extends the four-colour theorem to graphs with no $`K_t`$ minor.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): extends the four-colour theorem to graphs that cannot be shrunk down to $`t`$ dots all joined to each other.
 
 One question left open is about proofs: nobody knows a proof of four colours that one person can read end to end. Next on this shelf, [Edge colouring](06-edge-colouring-and-round-robin.md) moves the colours from the regions onto the borders themselves.
 

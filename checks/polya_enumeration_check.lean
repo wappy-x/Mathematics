@@ -1,4 +1,4 @@
--- Polya counting: for a finite group of moves rearranging a finite set of positions, putting k in every slot of the cycle index counts the k-colourings up to the moves, and putting c_1^i + ... + c_k^i in slot x_i counts them by how many positions get each colour.
+-- Polya counting: for a finite group of moves rearranging a finite set of positions, putting k in every slot of the cycle index counts the k-colourings up to the moves, and putting y_1^i + ... + y_k^i in slot x_i counts them by how many positions get each colour.
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.GroupTheory.Perm.Cycle.Type
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
@@ -313,9 +313,9 @@ theorem card_fixed_colourings_eq_pow_cycles (k : ℕ) (g : G) :
     Nat.card (fixedBy (α → Fin k) g) = k ^ (cycleLengths G α g).card := by
   exact natCard_fixedBy_eq G α k g
 
-/-- Pólya's theorem, colour by colour: put `x_i = c_1^i + ⋯ + c_k^i` in every slot of the cycle
+/-- Pólya's theorem, colour by colour: put `x_i = y_1^i + ⋯ + y_k^i` in every slot of the cycle
 index. Then for every colour count `e` (colour `j` used on `e j` positions), the coefficient of
-`c_1^(e 1) ⋯ c_k^(e k)` is the number of different patterns with exactly that colour count. -/
+`y_1^(e 1) ⋯ y_k^(e k)` is the number of different patterns with exactly that colour count. -/
 theorem card_patterns_of_colour_count_eq_coeff (k : ℕ) (e : Fin k → ℕ) :
     (Nat.card {o : orbitRel.Quotient G (α → Fin k) //
         ∃ f : α → Fin k, (Quotient.mk'' f : orbitRel.Quotient G (α → Fin k)) = o ∧

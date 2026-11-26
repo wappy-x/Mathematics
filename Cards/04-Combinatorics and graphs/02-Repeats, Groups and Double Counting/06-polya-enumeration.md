@@ -51,7 +51,7 @@ For the tile it is:
 Z = \tfrac{1}{8}\left(x_1^4 + 2\,x_4 + 3\,x_2^2 + 2\,x_1^2 x_2\right)
 ```
 
-Two substitutions turn it into counts, with entry $`i`$ of $`Z(\ldots)`$ filling slot $`x_i`$. Put $`k`$ in every slot, or, to sort by colour, the colour markers raised to the slot's number and added, $`x_i = c_1^i + \cdots + c_k^i`$:
+Two substitutions turn it into counts, with entry $`i`$ of $`Z(\ldots)`$ filling slot $`x_i`$. Put $`k`$ in every slot, or, to sort by colour, the colour markers raised to the slot's number and added, $`x_i = y_1^i + \cdots + y_k^i`$:
 
 ```math
 \text{tiles} = Z(k, k, k, k), \qquad \text{tiles by colour count} = Z(b + w,\; b^2 + w^2,\; b^3 + w^3,\; b^4 + w^4)
@@ -67,7 +67,7 @@ Two substitutions turn it into counts, with entry $`i`$ of $`Z(\ldots)`$ filling
 | $`x_i`$ | a slot for one cycle of length $`i`$ | $`x_2^2`$ for the half turn | — |
 | $`Z`$ | the cycle index: the average of the moves' slot products | the tile's $`Z`$ above | — |
 | $`k`$ | how many colours | 2 gives 6 tiles, 3 gives 21 | 4 colours give 55 |
-| $`c_j`$; $`b`$, $`w`$ | colour $`j`$'s marker; the power of $`b`$ counts black corners, of $`w`$ white ones | $`b^2 w^2`$: two of each | a third colour adds a third marker |
+| $`y_j`$; $`b`$, $`w`$ | colour $`j`$'s marker; the power of $`b`$ counts black corners, of $`w`$ white ones | $`b^2 w^2`$: two of each | a third colour adds a third marker |
 
 ### When it holds
 
@@ -202,7 +202,7 @@ def mul(p, q):                                 # multiply two polynomials in the
     for (a, u), (b, v) in ((s, t) for s in p.items() for t in q.items()):
         e = tuple(x + y for x, y in zip(a, b)); out[e] = out.get(e, 0) + u * v
     return out
-def fill(m, k, e, power=True):                 # each slot xn becomes c1^n + ... + ck^n;
+def fill(m, k, e, power=True):                 # each slot xn becomes y1^n + ... + yk^n;
     p = {(0,) * k: 1}                          # return the coefficient of the type e
     for n in cycles(m):
         p = mul(p, {tuple((n if power else 1) * (c == d) for d in range(k)): 1 for c in range(k)})
@@ -297,7 +297,7 @@ fn mul(p: &Poly, q: &Poly) -> Poly {                     // multiply two polynom
     for (a, u) in p { for (b, v) in q { *out.entry(a.iter().zip(b).map(|(x, y)| x + y).collect()).or_insert(0) += u * v; } }
     out
 }
-fn fill(m: &[usize], k: usize, e: &[usize], power: bool) -> usize {   // slot xn -> c1^n + ... + ck^n,
+fn fill(m: &[usize], k: usize, e: &[usize], power: bool) -> usize {   // slot xn -> y1^n + ... + yk^n,
     let mut p: Poly = [(vec![0; k], 1)].into_iter().collect();          // then the coefficient of type e
     for n in cycles(m) { p = mul(&p, &(0..k).map(|c| ((0..k).map(|d| if c != d { 0 } else if power { n } else { 1 }).collect(), 1)).collect()); }
     *p.get(e).unwrap_or(&0)
@@ -381,14 +381,14 @@ Lean proves Pólya's theorem for any finite group of moves on finite positions, 
 
 - Take any move and $`k`$ colours. Then the move fixes $`k`$ to the power of its cycle count.
 - Take $`k`$ colours. Then the number of different patterns is $`Z(k, k, \ldots)`$.
-- Put $`x_i = c_1^i + \cdots + c_k^i`$ in every slot. Then the coefficient of $`c_1^{e_1} \cdots c_k^{e_k}`$ counts the different patterns where colour $`j`$ covers $`e_j`$ positions.
+- Put $`x_i = y_1^i + \cdots + y_k^i`$ in every slot. Then the coefficient of $`y_1^{e_1} \cdots y_k^{e_k}`$ counts the different patterns where colour $`j`$ covers $`e_j`$ positions.
 - On the square tile, Lean lists the orbits by machine. It finds 6 tiles at two colours, 21 at three, and 2 with two black corners.
 - Lean also checks the tile's second substitution: it gives $`b^4 + b^3 w + 2\,b^2 w^2 + b w^3 + w^4`$.
 
 The six-bead ring, the benzene counts and the mistakes table are left to the Python and Rust checks.
 
 ```lean
--- Polya counting: for a finite group of moves rearranging a finite set of positions, putting k in every slot of the cycle index counts the k-colourings up to the moves, and putting c_1^i + ... + c_k^i in slot x_i counts them by how many positions get each colour.
+-- Polya counting: for a finite group of moves rearranging a finite set of positions, putting k in every slot of the cycle index counts the k-colourings up to the moves, and putting y_1^i + ... + y_k^i in slot x_i counts them by how many positions get each colour.
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.GroupTheory.Perm.Cycle.Type
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
@@ -703,9 +703,9 @@ theorem card_fixed_colourings_eq_pow_cycles (k : ℕ) (g : G) :
     Nat.card (fixedBy (α → Fin k) g) = k ^ (cycleLengths G α g).card := by
   exact natCard_fixedBy_eq G α k g
 
-/-- Pólya's theorem, colour by colour: put `x_i = c_1^i + ⋯ + c_k^i` in every slot of the cycle
+/-- Pólya's theorem, colour by colour: put `x_i = y_1^i + ⋯ + y_k^i` in every slot of the cycle
 index. Then for every colour count `e` (colour `j` used on `e j` positions), the coefficient of
-`c_1^(e 1) ⋯ c_k^(e k)` is the number of different patterns with exactly that colour count. -/
+`y_1^(e 1) ⋯ y_k^(e k)` is the number of different patterns with exactly that colour count. -/
 theorem card_patterns_of_colour_count_eq_coeff (k : ℕ) (e : Fin k → ℕ) :
     (Nat.card {o : orbitRel.Quotient G (α → Fin k) //
         ∃ f : α → Fin k, (Quotient.mk'' f : orbitRel.Quotient G (α → Fin k)) = o ∧

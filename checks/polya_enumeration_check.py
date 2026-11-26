@@ -18,7 +18,7 @@ def mul(p, q):                                 # multiply two polynomials in the
     for (a, u), (b, v) in ((s, t) for s in p.items() for t in q.items()):
         e = tuple(x + y for x, y in zip(a, b)); out[e] = out.get(e, 0) + u * v
     return out
-def fill(m, k, e, power=True):                 # each slot xn becomes c1^n + ... + ck^n;
+def fill(m, k, e, power=True):                 # each slot xn becomes y1^n + ... + yk^n;
     p = {(0,) * k: 1}                          # return the coefficient of the type e
     for n in cycles(m):
         p = mul(p, {tuple((n if power else 1) * (c == d) for d in range(k)): 1 for c in range(k)})

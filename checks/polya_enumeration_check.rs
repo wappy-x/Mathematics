@@ -25,7 +25,7 @@ fn mul(p: &Poly, q: &Poly) -> Poly {                     // multiply two polynom
     for (a, u) in p { for (b, v) in q { *out.entry(a.iter().zip(b).map(|(x, y)| x + y).collect()).or_insert(0) += u * v; } }
     out
 }
-fn fill(m: &[usize], k: usize, e: &[usize], power: bool) -> usize {   // slot xn -> c1^n + ... + ck^n,
+fn fill(m: &[usize], k: usize, e: &[usize], power: bool) -> usize {   // slot xn -> y1^n + ... + yk^n,
     let mut p: Poly = [(vec![0; k], 1)].into_iter().collect();          // then the coefficient of type e
     for n in cycles(m) { p = mul(&p, &(0..k).map(|c| ((0..k).map(|d| if c != d { 0 } else if power { n } else { 1 }).collect(), 1)).collect()); }
     *p.get(e).unwrap_or(&0)

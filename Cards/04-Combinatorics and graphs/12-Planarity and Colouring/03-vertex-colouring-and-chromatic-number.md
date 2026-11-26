@@ -607,10 +607,10 @@ example : (cycleGraph 5).cliqueNum = 2 ∧ (cycleGraph 5).chromaticNumber = 3 :=
 - [Colouring the plane](../../25-Frontier/04-Geometry%20and%20Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane.md): the same count over every point of the plane.
 - [Triangulating a polygon, and why n/3 guards can always watch a gallery with n walls](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/08-polygon-triangulation-and-art-gallery.md): three-colours the corners of a triangulated polygon to place at most $`n/3`$ guards.
 - [List colouring](07-list-colouring-and-choosability.md): gives each dot its own short list of allowed colours instead of one shared box.
-- [Perfect graphs](08-perfect-and-chordal-graphs.md): the family of graphs where the clique floor always equals the colour count in every induced part.
+- [Perfect graphs](08-perfect-and-chordal-graphs.md): the family of graphs where the clique floor always equals the colour count in the graph and in every piece made by keeping some dots and all the lines between them.
 - [Beyond Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/06-erdos-stone-and-kovari-sos-turan.md): uses a forbidden graph's chromatic number to set the edge cap on large networks (Erdős–Stone).
 - [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): uses compactness to extend finite $`k`$-colourings to an infinite map.
-- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): conjectures that a graph with no $`K_t`$ minor needs at most $`t - 1`$ colours.
+- [Hadwiger's conjecture](../../25-Frontier/04-Geometry%20and%20Combinatorics/12-hadwigers-conjecture.md): conjectures that a graph which cannot be shrunk down to $`t`$ dots all joined to each other needs at most $`t - 1`$ colours.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.
 

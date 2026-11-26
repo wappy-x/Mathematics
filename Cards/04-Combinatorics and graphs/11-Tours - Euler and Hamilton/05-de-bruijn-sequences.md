@@ -42,7 +42,7 @@ Each place is a two-digit window, each arrow a three-digit code: leaving a place
 
 ## The formula
 
-Two letters, both plain counts. $`n`$ is how many digits are available, 2 for the ring and 10 for the lock; $`k`$ is how long a code is, 3 and 4. For $`n \ge 1`$ and $`k \ge 1`$, a **window** is a code with one digit trimmed off, so $`k-1`$ digits long. There are $`n^k`$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $`n^{k-1}`$ windows.
+Two letters, both plain counts. $`n`$ is how many digits are available, 2 for the ring and 10 for the lock; $`k`$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $`k-1`$ digits long. For $`n \ge 1`$ and $`k \ge 1`$, there are $`n^k`$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $`n^{k-1}`$ windows.
 
 ```math
 \text{length of the ring} = n^k

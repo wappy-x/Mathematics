@@ -55,7 +55,7 @@ An empty crowd splits exactly one way: into no groups at all.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`n`$ | people already there, before the newest joins | 3: Ada, Ben and Cleo | climbs faster than doubling |
+| $`n`$ | people already there, before the newest joins | 3: Ada, Ben and Cleo | from two people up, climbs faster than doubling |
 | $`B(n)`$ | splits of $`n`$ named people into unnamed groups | B(4) = 15, B(5) = 52 | — |
 | $`k`$ | people left out of the newest person's group | 0, 1, 2 or 3 | — |
 | $`C(n,k)`$ | ways to pick $`k`$ of $`n`$, order ignored | C(3,2) = 3 | more ways to leave people out |
