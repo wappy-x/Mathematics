@@ -356,7 +356,7 @@ Lean proves the counts for any number of distinct things and any pile sizes, not
 
 - Named piles of fixed sizes adding up to $`n`$: the count is the multinomial coefficient, $`n!`$ over the product of the pile factorials.
 - Unnamed piles, none of them empty: divide that again by $`m!`$ for each size that $`m`$ piles share. A size held by one pile divides by 1.
-- $`k`$ unnamed piles all of one size: the named count divided by $`k!`$, the title's case.
+- $`k`$ unnamed non-empty piles all of one size: the named count divided by $`k!`$, the title's case.
 - The card's numbers come out exactly: 1,680, 280, 1,260, the three mistakes and the Try changing counts.
 
 Writing out all 19,683 handouts and collecting the distinct splits one by one is left to the Python and Rust checks.

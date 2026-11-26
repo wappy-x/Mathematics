@@ -41,7 +41,7 @@ All 24 orders appear, four to a row: 24 / 4 = 6 dinners. Every row starts with A
 
 Notation first, in words: $`n!`$ is the whole numbers from $`n`$ down to 1 multiplied together; it counts the ways of putting $`n`$ different things in a row.
 
-Round a table, where rotating everyone counts as the same:
+Round a table, where rotating everyone counts as the same (for $`n \ge 1`$):
 
 ```math
 \frac{n!}{n} = (n-1)!
@@ -49,7 +49,7 @@ Round a table, where rotating everyone counts as the same:
 
 **Read it aloud:** each arrangement turns up once per position it can be rotated into, so divide the row count by the number of positions.
 
-On a ring that can also be turned over, so an arrangement and its reverse are one:
+On a ring that can also be turned over, so an arrangement and its reverse are one (for $`n \ge 3`$):
 
 ```math
 \frac{n!}{2n} = \frac{(n-1)!}{2}
@@ -70,7 +70,7 @@ On a ring that can also be turned over, so an arrangement and its reverse are on
 - **All $`n`$ things different.** With a repeat, an arrangement can be its own mirror image and one division no longer serves for all: beads R R B B G Y make 16 bracelets, not the 15 halving predicts.
 - **Rotating must change nothing that matters.** Numbered chairs, a head of the table, a seat facing the window: positions differ and the answer is the plain 40,320.
 - **The flip must be possible and count as the same.** A bracelet turns over; a dinner table does not. Halving the table gives 2,520, and it is wrong: a flip swaps every guest's left neighbour for the right one.
-- **At least three things before halving.** With two beads, turning the ring over does what turning it round does, and half of $`(n-1)!`$ is no whole number.
+- **At least one thing round the table, and at least three before halving.** With none, $`n!/n`$ divides by zero; with two beads, turning the ring over does what turning it round does, and half of $`(n-1)!`$ is no whole number.
 
 ---
 
@@ -350,8 +350,8 @@ The two outputs match line for line.
 
 Lean proves these counts for any number $`n`$ of different things, not just eight guests or six beads.
 
-- Round a table, $`n`$ different guests make $`(n-1)!`$ dinners.
-- Every family of row-orders that turning makes the same holds exactly $`n`$ orders.
+- Round a table, for $`n \ge 1`$, $`n`$ different guests make $`(n-1)!`$ dinners.
+- For $`n \ge 1`$, every family of row-orders that turning makes the same holds exactly $`n`$ orders.
 - With $`n`$ at least 3, $`n`$ different beads make $`(n-1)!/2`$ bracelets.
 - The card's own numbers come out exactly: 40,320, 5,040, 2,520, 720, 120 and 60, and the arithmetic behind 15 and 16.
 

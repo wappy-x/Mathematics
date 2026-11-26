@@ -61,7 +61,7 @@ Double counting usually arrives as a listing that names each wanted thing the sa
 Here A is the 380 fixture slips, one per team per opponent, so team 3 holds a slip naming team 11. B is the matches, and d is 2. Worked for any number of teams, the two rules give this card's identities:
 
 ```math
-C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k)
+C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k) \quad (0 \le k \le n)
 ```
 
 For k, the league later sends 6 of its 20 teams to a playoff: C(20, 6) = 38760 possible sixes, counted in Step 3.
@@ -143,7 +143,7 @@ flowchart LR
 Swapping twice returns the original, so the swap undoes itself, and a rule with an undo is one to one and onto: nothing fused, nothing missed. The six-team and fourteen-team strings match one for one, and by Step 3 so do the playoff sixes and the also-ran fourteens — 38760 of each.
 
 ```math
-C(n, k) = C(n, n-k)
+C(n, k) = C(n, n-k) \qquad (0 \le k \le n)
 ```
 
 Choosing who is in is the same act as choosing who is out. Nothing is computed.
@@ -379,7 +379,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves both counting rules for any two finite collections, and both identities for every n and k.
+Lean proves both counting rules for any two finite collections, and both identities (for every n, and every k up to n in the second).
 
 - A rule that is one to one and onto, between two finite collections, makes them the same size.
 - When every member of B is named by exactly d members of A, the same d each time, A holds d times as many as B.
