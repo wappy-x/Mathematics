@@ -87,7 +87,7 @@ Shape $`(2, 1)`$ with entries 1 and 2 has two: top row 1 1 over 2, and top row 1
 
 A **corner** is a box with nothing right of it and nothing below. The number $`n`$ must sit in one, since a box right of it or below it would need a bigger number.
 
-Remove $`n`$ and a standard tableau of a smaller shape remains. So $`f^{\lambda}`$ is the sum of $`f^{\lambda - c}`$ over the corners $`c`$, where $`\lambda - c`$ is the shape without that box. For $`(3, 2)`$ the 5 sits at $`(1, 3)`$, leaving $`(2, 2)`$ with 2 fillings, or at $`(2, 2)`$, leaving $`(3, 1)`$ with 3: $`2 + 3 = 5`$.
+Remove $`n`$ and a standard tableau of a smaller shape remains. So for $`n \ge 1`$, $`f^{\lambda}`$ is the sum of $`f^{\lambda - c}`$ over the corners $`c`$, where $`\lambda - c`$ is the shape without that box. For $`(3, 2)`$ the 5 sits at $`(1, 3)`$, leaving $`(2, 2)`$ with 2 fillings, or at $`(2, 2)`$, leaving $`(3, 1)`$ with 3: $`2 + 3 = 5`$.
 
 So the formula holds for every shape if its right side obeys the same corner rule (induction on $`n`$). Divided through, that rule says some fractions add to 1: chances, as Greene, Nijenhuis and Wilf saw.
 
@@ -122,7 +122,7 @@ Each row above $`c`$ and each column left of $`c`$ is either visited or skipped.
 <details>
 <summary>Detailed proof: the chance of one set of rows and columns</summary>
 
-Start at $`(i, j)`$, with $`i \le r`$ and $`j \le s`$. The first jump goes down to the next visited row or right to the next visited column, each with chance $`1/(h(i, j) - 1)`$. By induction the rest of the walk has the full product with one factor missing: row $`i`$'s, or column $`j`$'s. So the chance is the full product times
+Start at $`(i, j) \ne c`$, with $`i \le r`$ and $`j \le s`$ (at $`c`$ the walk stops with chance 1). The first jump goes down to the next visited row or right to the next visited column, each with chance $`1/(h(i, j) - 1)`$. By induction the rest of the walk has the full product with one factor missing: row $`i`$'s, or column $`j`$'s. So the chance is the full product times
 
 $`\displaystyle \frac{(h(i, s) - 1) + (h(r, j) - 1)}{h(i, j) - 1}`$
 

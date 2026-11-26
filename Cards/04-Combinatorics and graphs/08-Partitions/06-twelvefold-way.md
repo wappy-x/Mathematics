@@ -120,7 +120,7 @@ With both labels on, the first parcel picks one of three vans and the second one
 
 Two more routes cross-check the grid. A loading that leaves vans empty fills fewer of them. So each "any" cell adds its row's "at least one" cell over how many vans are used, times the choice of which vans when they are named. For our depot: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, and 5 = 1 + 2 + 2.
 
-The alike-van rows also grow one thing at a time, and the code checks both rules. For named parcels, $`S(n, k) = k\,S(n-1, k) + S(n-1, k-1)`$. For identical sacks, $`p_k(n) = p_{k-1}(n-1) + p_k(n-k)`$. Either one van holds a single sack, leaving $`p_{k-1}(n-1)`$ ways for the rest. Or every van holds at least two, so taking one from each leaves $`p_k(n-k)`$ ways.
+The alike-van rows also grow one thing at a time, and the code checks both rules. For named parcels, $`S(n, k) = k\,S(n-1, k) + S(n-1, k-1)`$. For identical sacks, when $`n \ge k`$, $`p_k(n) = p_{k-1}(n-1) + p_k(n-k)`$ (and 0 when $`n < k`$). Either one van holds a single sack, leaving $`p_{k-1}(n-1)`$ ways for the rest. Or every van holds at least two, so taking one from each leaves $`p_k(n-k)`$ ways.
 
 ---
 

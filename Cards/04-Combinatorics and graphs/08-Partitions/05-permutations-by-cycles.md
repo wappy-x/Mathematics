@@ -38,7 +38,7 @@ Notation first, in words. A rehang is a **destination list**: under each hook in
 Write $`c(n,k)`$, said "c of n, k", for the rehangs of $`n`$ keys whose trace makes exactly $`k`$ loops, so $`c(5,3) = 35`$. These are the **unsigned Stirling numbers of the first kind**.
 
 ```math
-c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1
+c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1) \quad (n, k \ge 1), \qquad c(1,1) = 1
 ```
 
 **Read it aloud:** the last key either slips into a rehang of the other n − 1, in any of n − 1 places, or hangs on its own beside a rehang making one loop fewer.
@@ -57,7 +57,7 @@ For $`n \ge 1`$, $`c(n,k) = 0`$ outside 1 to $`n`$ (at zero keys, $`c(0,0) = 1`$
 A rehang makes one number of loops, so a row holds all of them ([Factorials](../01-Counting%20Principles/03-factorial.md)):
 
 ```math
-c(n,1) + c(n,2) + \cdots + c(n,n) = n!
+c(n,1) + c(n,2) + \cdots + c(n,n) = n! \qquad (n \ge 1)
 ```
 
 A rehang's **cycle type** is its loop lengths, largest first: `3 5 1 4 2` has type 2 + 2 + 1. Rehangs of one type are counted from $`n!`$: write $`a_j`$ for how many loops have length $`j`$, then divide by $`j`$ raised to $`a_j`$ and by $`a_j`$ factorial. For type 2 + 2 + 1:
@@ -71,7 +71,7 @@ A rehang's **cycle type** is its loop lengths, largest first: `3 5 1 4 2` has ty
 - **Keys and hooks are told apart.** Five identical keys give one rehang, not 120, and nothing to trace.
 - **Every hook ends holding one key.** Two on a hook leaves another empty, and the trace reaches one place twice.
 - **A hook keeping its own key is a loop, of length 1.** Leave those out and counts scatter: the traced rehang files under two loops, the 20 of type 3 + 1 + 1 under one.
-- **These counts carry no sign.** Many tables print a signed version instead, negative whenever n − k is odd; every count here is positive.
+- **These counts carry no sign.** Many tables print a signed version instead, negative whenever n − k is odd; no count here is negative.
 
 ---
 

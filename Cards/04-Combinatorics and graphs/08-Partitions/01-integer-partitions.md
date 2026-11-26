@@ -56,7 +56,7 @@ R_k(n) = C_k(n)
 The capped count is reachable without listing, from smaller capped counts — a **recurrence**:
 
 ```math
-R_k(n) = R_k(n-k) + R_{k-1}(n)
+R_k(n) = R_k(n-k) + R_{k-1}(n) \qquad (k \ge 1)
 ```
 
 Either the partition uses exactly $`k`$ parts, and then one unit comes off every part, leaving $`n-k`$ in at most $`k`$ parts; or it uses fewer than $`k`$. Start from $`R_k(0) = 1`$, $`R_0(n) = 0`$ for $`n`$ at least one, and $`R_k(n) = 0`$ whenever $`n`$ is below zero.
