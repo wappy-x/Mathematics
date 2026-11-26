@@ -111,17 +111,17 @@ Each coefficient is a finite sum: $`C(x)^k`$ starts at $`x^k`$, so $`k`$ never p
 Label $`n`$ sits in exactly one piece. Say that piece has $`j`$ labels. Pick its other $`j - 1`$ labels in $`\binom{n-1}{j-1}`$ ways, give it one of $`c_j`$ shapes, and build any structure on the $`n - j`$ labels left:
 
 ```math
-a_n = \sum_{j=1}^{n} \binom{n-1}{j-1}\, c_j\, a_{n-j}
+a_n = \sum_{j=1}^{n} \binom{n-1}{j-1}\, c_j\, a_{n-j} \qquad (n \ge 1)
 ```
 
-On the plugboard only $`j = 1`$ and $`j = 2`$ count, so $`a_n = a_{n-1} + (n - 1)\,a_{n-2}`$. That gives 1, 1, 2, 4, 10 and 10 + 4 × 4 = 26, the same list.
+On the plugboard only $`j = 1`$ and $`j = 2`$ count, so $`a_n = a_{n-1} + (n - 1)\,a_{n-2}`$ for $`n \ge 2`$ (from $`a_0 = a_1 = 1`$). That gives 1, 1, 2, 4, 10 and 10 + 4 × 4 = 26, the same list.
 
 ### Step 4: running it backwards
 
 Step 3's sum has $`c_n`$ in exactly one term, $`j = n`$, where it meets $`a_0 = 1`$. So any list of structures fixes its list of pieces, one size at a time:
 
 ```math
-c_n = a_n - \sum_{j=1}^{n-1} \binom{n-1}{j-1}\, c_j\, a_{n-j}
+c_n = a_n - \sum_{j=1}^{n-1} \binom{n-1}{j-1}\, c_j\, a_{n-j} \qquad (n \ge 1)
 ```
 
 That peeling is what $`\ln A(x)`$ does in one stroke. Graphs are the case: on $`n`$ computers there are $`n(n-1)/2`$ possible cables, each in or out, so $`a_n = 2^{n(n-1)/2}`$. Every network splits into connected parts, so $`\ln`$ of $`\sum 2^{n(n-1)/2} x^n / n!`$ counts connected networks: 1, 1, 4, 38, 728 on 1 to 5 computers.

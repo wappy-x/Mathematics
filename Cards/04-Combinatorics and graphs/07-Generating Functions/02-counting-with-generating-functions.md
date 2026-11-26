@@ -120,7 +120,7 @@ That is where 198 failed: each choice here pushes the exponent up by what it spe
 
 ### Step 3: stars and bars is the case where every factor is the same
 
-Let each of $`k`$ kinds contribute any whole number of single items. Every factor is then the all-ones list $`1 + x + x^{2} + \cdots`$ and the product is $`1/(1-x)^{k}`$. Its coefficient of $`x^{n}`$ collects exponents adding to $`n`$ — every way to share $`n`$ identical items among $`k`$ labelled kinds, the choose count $`C(n + k - 1, k - 1)`$ ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
+Let each of $`k`$ kinds ($`k \ge 1`$) contribute any whole number of single items. Every factor is then the all-ones list $`1 + x + x^{2} + \cdots`$ and the product is $`1/(1-x)^{k}`$. Its coefficient of $`x^{n}`$ collects exponents adding to $`n`$ — every way to share $`n`$ identical items among $`k`$ labelled kinds, the choose count $`C(n + k - 1, k - 1)`$ ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 
 Three kinds, total 5: three all-ones lists put 21 on $`x^{5}`$, and $`C(7, 2)`$ is 21, that card's count. Stars and bars is the flat case, every value 1; coin values make the till harder.
 
