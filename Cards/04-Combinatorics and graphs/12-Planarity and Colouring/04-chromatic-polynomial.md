@@ -57,7 +57,7 @@ P(G, q) = P(G - e, q) - P(G/e, q)
 Two shapes answer without the recurrence, both settled below: a row of n rooms — any tree, in fact, meaning one piece and no round trip — and a ring of n rooms.
 
 ```math
-P(\text{a row of } n \text{ rooms}, q) = q(q-1)^{n-1}, \qquad P(\text{a ring of } n \text{ rooms}, q) = (q-1)^n + (-1)^n(q-1)
+P(\text{a row of } n \text{ rooms}, q) = q(q-1)^{n-1} \ (n \ge 1), \qquad P(\text{a ring of } n \text{ rooms}, q) = (q-1)^n + (-1)^n(q-1) \ (n \ge 3)
 ```
 
 So $`(q-1)`$ is added when n is even and subtracted when n is odd — the difference between a four-room ring, which two tins paint, and a five-room ring, which they cannot.
@@ -367,7 +367,7 @@ Lean proves the recurrence and the polynomial claim for every finite network, an
 - The count is a polynomial in $`q`$ with whole-number coefficients. Its highest power is $`q^n`$ with a 1 in front.
 - The next coefficient down is minus the number of lines.
 - A ring of $`n`$ rooms, $`n`$ at least 3, has $`(q-1)^n + (-1)^n(q-1)`$ proper colourings.
-- A row of $`n`$ rooms has $`q(q-1)^{n-1}`$, proved on the way to the ring.
+- A row of $`n`$ rooms, $`n`$ at least 1, has $`q(q-1)^{n-1}`$, proved on the way to the ring.
 - The card's counts at three tins: row 24, ring 18, triangle 6, three-room row 12, hatch plan 6, five-room ring 30.
 - Two tins give rings of 3, 4 and 5 rooms the counts 0, 2 and 0.
 

@@ -14,7 +14,7 @@ Six masts allow $`2^6 = 64`$ on-off choices; sixty allow $`2^{60}`$, over a bill
 
 Cover the graph with small overlapping groups of vertices, called **bags**, arranged as a tree. For the ring, four bags in a row do it: {1, 2, 6}, {2, 3, 6}, {3, 5, 6}, {3, 4, 5}. The search then runs bag by bag, with at most $`2^3 = 8`$ on-off choices per bag.
 
-**Treewidth is the size of the largest bag, less one, in the thinnest tree of overlapping bags that covers a graph; trees score 1, cycles 2, the k by k grid k, and many problems that are hopeless on graphs in general become a short pass through the bags when that number is small.**
+**Treewidth is the size of the largest bag, less one, in the thinnest tree of overlapping bags that covers a graph; trees with an edge score 1, cycles 2, k by k grids ($`k \ge 2`$) score k, and many problems that are hopeless on graphs in general become a short pass through the bags when that number is small.**
 
 **What kind of fact this is:** tree decomposition and treewidth are definitions. The widths of trees and cycles and the bag-by-bag method are theorems, proved on this card in Why it works. The grid's lower bound is a theorem stated here and proved in the sources.
 
@@ -103,11 +103,11 @@ Every other vertex is A-only or B-only. An edge from an A-only vertex to a B-onl
 
 ### Step 1: a tree has width 1
 
-Hang the tree from a leaf ([Rooted trees](../10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md)). Give each edge its own bag of 2, and join each edge's bag to the bag of the edge just above it. Every vertex but the root leaf has one edge above it, and the bags holding the vertex all join through that edge's bag. The Trees card's seven-house village gets width 1. No graph with an edge goes lower: the edge needs a bag of 2.
+With an edge, hang the tree from a leaf ([Rooted trees](../10-Trees%20and%20Cheapest%20Routes/02-rooted-and-binary-trees.md)). Give each edge its own bag of 2, and join each edge's bag to the bag of the edge just above it. Every vertex but the root leaf has one edge above it, and the bags holding the vertex all join through that edge's bag. The Trees card's seven-house village gets width 1. No graph with an edge goes lower: the edge needs a bag of 2.
 
 ### Step 2: the floor, from the fewest neighbours
 
-Take a leaf of the decomposition tree. If its bag sits inside its neighbour's bag, delete it: nothing is lost. Repeat. If one bag is left, it holds every vertex. Otherwise the leaf bag holds a vertex $`v`$ found nowhere else (rule 3). Every edge at $`v`$ must then lie in this one bag (rule 2), so the bag holds $`v`$ and all its neighbours.
+On a nonempty finite graph, take a leaf of the decomposition tree. If its bag sits inside its neighbour's bag, delete it: nothing is lost. Repeat. If one bag is left, it holds every vertex. Otherwise the leaf bag holds a vertex $`v`$ found nowhere else (rule 3). Every edge at $`v`$ must then lie in this one bag (rule 2), so the bag holds $`v`$ and all its neighbours.
 
 That bag has at least $`\delta(G) + 1`$ vertices. So the width is at least $`\delta(G)`$, the fewest neighbours. Every vertex of a cycle has 2 neighbours: no cycle has width below 2.
 
@@ -119,7 +119,7 @@ The largest bag holds 3, so the width is 2, and Step 2's floor makes it exact. A
 
 ### Step 4: the k by k grid has width k
 
-Number a grid's vertices row by row. Each window of $`k + 1`$ consecutive numbers is a bag. A vertex's right neighbour is the next number and its lower neighbour $`k`$ further on, so each edge fits in the window starting at its first end (a bottom-row edge fits in the last window). Width: $`k`$.
+For $`k \ge 2`$, number a grid's vertices row by row. Each window of $`k + 1`$ consecutive numbers is a bag. A vertex's right neighbour is the next number and its lower neighbour $`k`$ further on, so each edge fits in the window starting at its first end (a bottom-row edge fits in the last window). Width: $`k`$.
 
 The matching lower bound is stated here without proof; Diestel's chapter 12 has the tools that prove it. Step 2's floor gives only 2, from the corners. Exhaustive search confirms 2, 3 and 4 for k = 2, 3 and 4.
 
@@ -819,7 +819,7 @@ end Treewidth
 - **Hardness theory.** No fast method is known for the largest independent set on all graphs. On graphs of bounded treewidth it is fast, and so is [Colouring](03-vertex-colouring-and-chromatic-number.md).
 
 > **Say it back**
-> A tree decomposition covers a graph with bags arranged as a tree: every edge in some bag, each vertex's bags joined. Treewidth is the smallest possible largest bag, less one. Trees score 1, cycles 2, the k by k grid k. Neighbouring bags hold the only contact between their sides, so the largest independent set is found bag by bag: 3 masts of 6, from 22 entries.
+> A tree decomposition covers a graph with bags arranged as a tree: every edge in some bag, each vertex's bags joined. Treewidth is the smallest possible largest bag, less one. Trees with an edge score 1, cycles 2, the k by k grid k ($`k \ge 2`$). Neighbouring bags hold the only contact between their sides, so the largest independent set is found bag by bag: 3 masts of 6, from 22 entries.
 
 ---
 

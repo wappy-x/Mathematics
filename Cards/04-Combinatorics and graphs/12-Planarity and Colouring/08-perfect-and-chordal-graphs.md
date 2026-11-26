@@ -110,9 +110,9 @@ So greedy uses at most $`\omega`$ colours, and the floor says it cannot use fewe
 
 Call a dot **simplicial** when its neighbours form a clique. Audit is simplicial: its only neighbour is Budget.
 
-Dirac's lemma (1961): every chordal graph has a simplicial dot. Remove it; the rest is still chordal, since deleting dots cannot create a hole. Repeat, and the removed dots, in order, form an elimination order.
+Dirac's lemma (1961): every nonempty finite chordal graph has a simplicial dot. Remove it; the rest is still chordal, since deleting dots cannot create a hole. Repeat, and the removed dots, in order, form an elimination order.
 
-The converse holds too. Each hole dot has two unjoined neighbours on the hole, so the first hole dot removed is not simplicial at its turn. So a graph has an elimination order exactly when it is chordal.
+The converse holds too. Each hole dot has two unjoined neighbours on the hole, so the first hole dot removed is not simplicial at its turn. So a finite graph has an elimination order exactly when it is chordal.
 
 Induced subgraphs of a chordal graph are chordal, so Step 2 applies to each. **Every chordal graph is perfect.**
 

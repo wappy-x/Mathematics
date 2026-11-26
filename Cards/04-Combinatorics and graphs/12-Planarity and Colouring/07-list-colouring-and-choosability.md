@@ -117,7 +117,7 @@ Let $`w`$ be the other outer neighbour of $`x`$, and $`u`$ the other outer neigh
 
 ### Step 6: from the stronger form to every flat graph
 
-Add lines to a flat graph until it is a near-triangulation; extra lines only add constraints. Colour two outer neighbours differently from their lists of 5. Every other list holds 5, at least 3, so Step 3 applies.
+With three or more vertices, add lines to a flat graph until it is a near-triangulation; extra lines only add constraints. Colour two outer neighbours differently from their lists of 5. Every other list holds 5, at least 3, so Step 3 applies. (A graph with fewer than three vertices can be coloured from lists of 2.)
 
 <details>
 <summary>Detailed proof: the smallest cases, and why the path and the split are sound</summary>

@@ -14,7 +14,7 @@ The reason is a count. A crossing-free drawing cuts the sheet into regions, Eule
 
 Kazimierz Kuratowski proved in 1930 that two small networks — this one, and five dots each joined to all the rest — are the only obstructions, dots along their lines allowed.
 
-**A flat drawing spends its lines walling regions, and no region closes with fewer than three, so V dots carry at most 3V − 6 lines: a network wanting more cannot be drawn flat.**
+**A flat drawing spends its lines walling regions, and no region closes with fewer than three, so V dots (three or more) carry at most 3V − 6 lines: a network wanting more cannot be drawn flat.**
 
 **What kind of fact this is:** a theorem, both ceilings proved on this card in Why it works; Kuratowski's characterisation is quoted, its easy half proved here, the hard half left to Diestel under Sources.
 
@@ -127,7 +127,7 @@ The first ceiling catches K(5), 10 lines against 3 × 5 − 6 = 9. It misses the
 
 ### Step 4: somewhere a dot of degree five or less
 
-Degrees add to $`2E`$, each line raising two. In a flat drawing $`2E \le 6V - 12`$, so degrees average below 6 and some dot carries 5 lines or fewer.
+Degrees add to $`2E`$, each line raising two. In a flat drawing on three dots or more, $`2E \le 6V - 12`$, so degrees average below 6 and some dot carries 5 lines or fewer (and on one or two dots, every dot has at most one line).
 
 Five cannot be lowered to four: the icosahedron's skeleton, the twenty-triangle solid flattened, has 12 dots and 30 lines, exactly 3 × 12 − 6, every dot of degree 5.
 
@@ -143,7 +143,7 @@ The code exhausts all 1024 cyclic orders (the orders in which lines leave each d
 
 ```mermaid
 flowchart TB
-    N["a simple network: V dots, E lines"] --> C1{"E above 3V - 6?"}
+    N["a simple network: V ≥ 3 dots, E lines"] --> C1{"E above 3V - 6?"}
     C1 -->|"yes"| NO1["no flat drawing<br/>K(5): 10 above 9"]
     C1 -->|"no"| C2{"no ring of three, and E above 2V - 4?"}
     C2 -->|"yes"| NO2["no flat drawing<br/>the utilities: 9 above 8"]
@@ -407,7 +407,7 @@ The two outputs match line for line.
 - **Map colouring.** Step 4's dot of degree 5 or less is the foothold for five colours and for the machine proof of four ([Colouring maps](05-five-and-four-colour-theorems.md), [Colouring](03-vertex-colouring-and-chromatic-number.md)).
 
 > **Say it back**
-> Lines have two sides, so they supply twice their number in region walls, while every region demands three sides — four with no rings of three. Euler's count of the regions turns that into a ceiling, 3V − 6 lines or 2V − 4, which also leaves some dot with 5 lines or fewer. The three houses ask for 9 lines on 6 dots where 8 is the ceiling; five dots all joined ask for 10 where 9 is. Under the ceiling nothing is settled, and Kuratowski finishes it: those two networks, dots along their lines allowed, are the only obstructions.
+> Lines have two sides, so they supply twice their number in region walls, while every region demands three sides — four with no rings of three. Euler's count of the regions turns that into a ceiling, 3V − 6 lines or 2V − 4 (from three dots up), which also leaves some dot with 5 lines or fewer. The three houses ask for 9 lines on 6 dots where 8 is the ceiling; five dots all joined ask for 10 where 9 is. Under the ceiling nothing is settled, and Kuratowski finishes it: those two networks, dots along their lines allowed, are the only obstructions.
 
 ---
 

@@ -59,7 +59,7 @@ The map becomes a network, written $`G`$: a dot per ward, a line per shared stre
 
 - **Drawn flat, no crossings.** The count belongs to the sheet and the sphere; on a doughnut it rises to seven.
 - **Each region in one piece, borders that are stretches, not points.** A ward printed as two patches sharing one ink can force a fifth; wards meeting at a corner are not neighbours.
-- **At least three regions.** Below three dots the bound $`E \le 3V - 6`$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)). One or two regions need no proof: they take at most two inks.
+- **Finitely many regions, at least three.** Below three dots the bound $`E \le 3V - 6`$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)). One or two regions need no proof: they take at most two inks.
 
 ---
 

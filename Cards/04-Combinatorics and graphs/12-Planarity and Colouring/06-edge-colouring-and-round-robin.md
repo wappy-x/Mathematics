@@ -48,7 +48,7 @@ Vizing's theorem, 1964:
 Two exact answers sit inside it. A **bipartite** network splits its dots into two sides with every line crossing between them — teachers one side, classes the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). There the lower end always holds: König, 1916.
 
 ```math
-\chi'(G) = \Delta(G) \quad \text{for bipartite } G, \qquad \chi'(K_n) = n - 1 \ \text{ for even } n, \qquad \chi'(K_n) = n \ \text{ for odd } n \ge 3
+\chi'(G) = \Delta(G) \quad \text{for bipartite } G, \qquad \chi'(K_n) = n - 1 \ \text{ for even } n \ge 2, \qquad \chi'(K_n) = n \ \text{ for odd } n \ge 3
 ```
 
 Six clubs: busiest count 5, chromatic index 5, five weekends. Five clubs: busiest count 4, chromatic index 5 — five weekends still, one resting.
@@ -366,7 +366,7 @@ Lean proves Vizing's bound, König's equality and the league answer for every fi
 
 - The lines need at least as many colours as the busiest dot has lines, and at most one more.
 - A bipartite network needs exactly the busiest dot's line count, never the spare colour.
-- All n dots pairwise joined need n − 1 colours when n is even, and n when n is odd and at least 3.
+- All n dots pairwise joined need n − 1 colours when n is even and at least 2, and n when n is odd and at least 3.
 - The six-club rotation: 15 matches, five weekends of three, no club twice in a weekend, and A meets B in weekend 3 (the fourth weekend, numbered from 0).
 - Rotating all six clubs with no pin schedules only 6 of the 15 matches, and A-B is not among them.
 
