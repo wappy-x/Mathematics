@@ -16,7 +16,7 @@ With 64512240 ten-sets and two carriers, the bad plans number at most 2 × 64512
 
 In graph language the sites are dots, the routes edges, the carriers two colours, and the network the complete graph K(32). A clique is a set of dots all joined to each other.
 
-R(k,k) is the smallest network size at which every plan has k sites linked all over one carrier ([Ramsey numbers](02-ramsey-numbers.md)). The same count for any clique size k gives R(k,k) > 2^(k/2). Each step up in k multiplies the guaranteed size by the square root of 2, so the guarantee grows exponentially.
+R(k,k) is the smallest network size at which every plan has k sites linked all over one carrier ([Ramsey numbers](02-ramsey-numbers.md)). The same count for any clique size k of 3 or more gives R(k,k) > 2^(k/2). Each step up in k multiplies the guaranteed size by the square root of 2, so the guarantee grows exponentially.
 
 **Count the bad cases, even roughly from above; if the count falls short of all cases, a good case exists, though the count shows none.**
 

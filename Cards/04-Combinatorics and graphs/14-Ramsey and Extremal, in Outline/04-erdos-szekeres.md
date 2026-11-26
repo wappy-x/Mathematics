@@ -43,7 +43,7 @@ A \times B \ \ge\ n
 
 **Read it aloud:** the longest climb times the longest slide is at least the length of the list.
 
-For Harlow Cement, 4 × 3 = 12, at least 10. Ask for a rising run of $`r`$ terms or a falling run of $`s`$ terms. A list with neither has length at most (r − 1)(s − 1), by the inequality, so
+For Harlow Cement, 4 × 3 = 12, at least 10. For $`r, s \ge 1`$, ask for a rising run of $`r`$ terms or a falling run of $`s`$ terms. A list with neither has length at most (r − 1)(s − 1), by the inequality, so
 
 ```math
 n = (r-1)(s-1) + 1
@@ -116,7 +116,7 @@ A rising run takes at most one number per block, so it stops at 3. A falling run
 
 Take $`n`$ different numbers, labelled as in Step 0. By Step 1 the $`n`$ label pairs are all different. Each $`a_i`$ lies in 1 up to $`A`$, and each $`b_i`$ lies in 1 up to $`B`$. That leaves at most $`A \times B`$ pairs, so $`n \le A \times B`$.
 
-With no rising run of $`r`$ and no falling run of $`s`$, the product $`A \times B`$ is at most (r − 1)(s − 1). A list one longer must hold a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
+For $`r, s \ge 1`$, with no rising run of $`r`$ and no falling run of $`s`$, the product $`A \times B`$ is at most (r − 1)(s − 1). A list one longer must hold a run. Step 4, with r − 1 falling blocks of s − 1 numbers, shows no shorter list is forced.
 
 </details>
 
@@ -372,7 +372,7 @@ Lean proves the theorem for every list of different numbers and every pair of ru
 
 - Any list of more than (r − 1)(s − 1) different numbers holds a rising run of r terms or a falling run of s terms.
 - If no rising run passes A terms and no falling run passes B terms, the list holds at most A × B different numbers.
-- For any r and s, r − 1 falling blocks of s − 1 numbers hold neither run, so the threshold is exact.
+- For any $`r, s \ge 1`$, r − 1 falling blocks of s − 1 numbers hold neither run, so the threshold is exact.
 - Harlow Cement's ten closes, in whole cents, are all different. Days 1, 3, 6 and 9 rise; days 1, 2 and 4 fall.
 - Every set of Harlow Cement's days was tried: the longest rising run is 4 and the longest falling run is 3.
 - The nine closes of Step 4 are all different, and no set of their days rises or falls past 3.

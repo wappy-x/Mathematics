@@ -36,7 +36,7 @@ A triangle and the Petersen graph need 3 colours; a 4-cycle needs 2.
 
 Notation first, in words. A network on $`n`$ points has $`e`$ links. $`C_4`$ is the 4-cycle. A **cherry** is two links sharing a point: a path a–v–b with **middle** v and **ends** a and b. The degree $`d(v)`$ counts the links at v. $`\mathrm{ex}(n, H)`$, the **extremal number**, is the most links on n points with no copy of H.
 
-The cap for no 4-cycle:
+The cap for no 4-cycle, for $`n \ge 1`$:
 
 ```math
 \mathrm{ex}(n, C_4) \le \frac{n}{4}\left(1 + \sqrt{4n - 3}\right)
@@ -46,7 +46,7 @@ The cap for no 4-cycle:
 
 For 10 stations: 2.5 × 7.083 ≈ 17.71, so at most 17. For large n the square root is close to $`2\sqrt{n}`$, so the cap nears its leading term $`n^{3/2}/2`$, which is 15.81 at n = 10.
 
-The Erdős–Stone theorem, for any forbidden network H:
+The Erdős–Stone theorem, for any forbidden network H with at least one link ($`\chi(H) \ge 2`$):
 
 ```math
 \mathrm{ex}(n, H) = \left(1 - \frac{1}{\chi(H) - 1}\right)\frac{n^2}{2} + o(n^2)
@@ -54,7 +54,7 @@ The Erdős–Stone theorem, for any forbidden network H:
 
 **Read it aloud:** the most links avoiding H is 1 − 1/(chi(H) − 1) of n squared over two, plus a vanishing share of n squared.
 
-Here $`\chi(H)`$, chi, is the fewest colours that colour H with linked points different ([Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)). A **two-sided** (bipartite) network splits into two sides with links only across: exactly $`\chi(H) = 2`$.
+Here $`\chi(H)`$, chi, is the fewest colours that colour H with linked points different ([Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)). A **two-sided** (bipartite) network splits into two sides with links only across: when it has at least one link, $`\chi(H) = 2`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -387,7 +387,7 @@ The outputs match.
 
 ### Lean
 
-Lean proves the 4-cycle cap, the cherry count and the easy half of Erdős–Stone, for every n and every H.
+Lean proves the 4-cycle cap, the cherry count and the easy half of Erdős–Stone, for every n and every H with $`\chi(H) \ge 2`$.
 
 - Take a network on n points with no 4-cycle, where any 4-cycle counts. Then it has at most (n/4)(1 + √(4n − 3)) links.
 - Suppose a network has no 4-cycle. Then its cherries, counted by their middles, number at most C(n, 2), the pairs of points.

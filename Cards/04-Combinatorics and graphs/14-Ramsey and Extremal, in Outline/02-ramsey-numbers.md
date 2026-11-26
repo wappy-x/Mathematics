@@ -43,7 +43,7 @@ Lines are the 12 high-band links: a ring of eight, plus a link from each tower s
 Notation first, in words. $`R(s,t)`$, read "R of s and t", is the fewest towers that force either $`s`$ towers all linked on the high band or $`t`$ towers all linked on the low band. $`C(n, k)`$ is "n choose k", the number of ways to pick k things from n ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
 ```math
-R(s,t) \le R(s-1,\,t) + R(s,\,t-1)
+R(s,t) \le R(s-1,\,t) + R(s,\,t-1) \qquad (s, t \ge 2)
 ```
 
 **Read it aloud:** the threshold is at most the threshold with one fewer high-band tower plus the one with one fewer low-band tower.
@@ -53,7 +53,7 @@ The two thresholds on the right are its feeders. A proved upper limit like this 
 Unrolled to the bottom, it becomes one count:
 
 ```math
-R(s,t) \le C(s+t-2,\ s-1)
+R(s,t) \le C(s+t-2,\ s-1) \qquad (s, t \ge 1)
 ```
 
 **Read it aloud:** the threshold is at most the number of ways to choose s − 1 things from s + t − 2.
@@ -112,7 +112,7 @@ The first picture's network dodges, so eight towers are not enough: $`R(3,4) = 9
 
 ### Step 4: the general recursion and the binomial ceiling
 
-Steps 1 and 2 used nothing special about 3 and 4, so the recursion holds for every $`s`$ and $`t`$.
+Steps 1 and 2 used nothing special about 3 and 4, so the recursion holds for every $`s`$ and $`t`$ of 2 or more.
 
 <details>
 <summary>Detailed proof: the recursion, the parity step, and the binomial ceiling</summary>

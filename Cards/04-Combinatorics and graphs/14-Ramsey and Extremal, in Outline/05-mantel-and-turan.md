@@ -55,7 +55,7 @@ Mantel's theorem, for a network with no triangle:
 
 **Read it aloud:** a graph on n points with no triangle has at most n squared over four links, rounded down.
 
-Turán's theorem, for a graph with no $`K(r+1)`$:
+Turán's theorem, for $`r \ge 1`$ and a graph with no $`K(r+1)`$:
 
 ```math
 \lvert E\rvert \le \text{links of } T(n, r) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}
@@ -128,7 +128,7 @@ Steps 1 and 2 hold the same sum between two bounds:
 
 When $`\lvert E\rvert > 0`$, divide by $`\lvert E\rvert`$ and multiply by n/4: $`\lvert E\rvert \le n^2/4`$, so a whole number of links sits at or below $`\lfloor n^2/4 \rfloor`$ (0 links trivially passes). For 10 jobs, 4 × 25 × 25 / 10 = 250 and the bounds meet; 26 links would push the left past the right.
 
-Equality needs every degree equal to n/2 and every link's ends to see all n jobs. So the two neighbour sets of any link split the jobs into two batches of n/2, neither linked inside and every cross pair linked.
+When $`n`$ is even and at least 2, equality needs every degree equal to n/2 and every link's ends to see all n jobs. So the two neighbour sets of any link split the jobs into two batches of n/2, neither linked inside and every cross pair linked.
 
 Thus $`K(5, 5)`$ is the only 25-link schedule, up to relabelling. It is bipartite, two sides with no link inside a side ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), so every loop is even and none is a triangle.
 
@@ -400,7 +400,7 @@ Lean proves both theorems, and when each cap is reached, for every network of pl
 - With no triangle, a network on n points has at most n^2/4 links, rounded down.
 - It has exactly that many only when it is two groups as equal as possible, every cross pair linked, none inside.
 - With no r + 1 points all linked, it has at most the links of $`T(n, r)`$, and only $`T(n, r)`$ has exactly that many, up to relabelling.
-- $`T(n, r)`$ itself has no r + 1 points all linked, and its links are at most $`(1 - 1/r)\,n^2/2`$.
+- For $`r \ge 1`$, $`T(n, r)`$ itself has no r + 1 points all linked, and its links are at most $`(1 - 1/r)\,n^2/2`$.
 
 The star, the search through every graph on up to six jobs, and the decimal shares are left to the Python and Rust checks.
 

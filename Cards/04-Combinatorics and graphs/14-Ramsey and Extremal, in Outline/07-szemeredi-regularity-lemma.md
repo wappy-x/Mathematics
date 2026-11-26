@@ -44,7 +44,7 @@ The pair has density 1/2 overall, but 1 or 0 on its halves.
 
 ## The formula
 
-A **graph** is a set of n points, called vertices, joined by links, called edges. For vertex sets X and Y, $`e(X, Y)`$ counts the edges between them and $`\lvert X\rvert`$ counts the vertices in X.
+A **graph** is a set of n points, called vertices, joined by links, called edges. For non-empty vertex sets X and Y, $`e(X, Y)`$ counts the edges between them and $`\lvert X\rvert`$ counts the vertices in X.
 
 ```math
 d(X, Y) = \frac{e(X, Y)}{\lvert X\rvert\,\lvert Y\rvert}
