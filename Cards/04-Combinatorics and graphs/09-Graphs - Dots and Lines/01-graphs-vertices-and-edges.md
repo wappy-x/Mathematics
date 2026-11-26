@@ -95,7 +95,7 @@ By listing: A pairs with five others, B with four not yet counted, then three, t
 
 - **K(n), complete:** every pair joined, C(n, 2) edges. K(6) has 15.
 - **C(n), the cycle:** n vertices (3 or more) in a closed ring, n edges — one number in the brackets, not the two of C(n, 2). C(6), 6.
-- **P(n), the path:** n in a row, ends loose, n − 1 edges. P(6), 5.
+- **P(n), the path:** n vertices (1 or more) in a row, ends loose, n − 1 edges. P(6), 5.
 - **K(m, n), complete bipartite:** two groups, every cross pair joined, none inside a group, m × n edges. K(3, 3), 9.
 - **Q(3), the 3-cube:** the 8 corners of a cube, joined when they differ in one coordinate. Each corner has 3 coordinates to flip and each line has two ends: 8 × 3 / 2 = 12 lines, 4 per direction.
 
@@ -380,7 +380,7 @@ The two outputs match line for line.
 Lean proves these facts for every graph with finitely many stations, one line at most per pair and no loops.
 
 - With n stations, a graph has at most C(n, 2) = n(n − 1)/2 lines.
-- K(n) has C(n, 2) lines, C(n) has n when n is at least 3, and P(n) has n − 1.
+- K(n) has C(n, 2) lines, C(n) has n when n is at least 3, and P(n) has n − 1 when n is at least 1.
 - K(m, n) has m × n lines.
 - If a renaming makes two graphs the same graph, they have equal counts of vertices, of edges and of triangles.
 - Under that renaming, each station meets as many lines as its new name does.

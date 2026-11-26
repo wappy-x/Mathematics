@@ -75,7 +75,7 @@ The **girth** $`g(G)`$ is the fewest stations in a cycle. A cycle's stations and
 ### When it holds
 
 - **Steps are counted, nothing else.** Put fares on the lines and the cheapest route can stop being the shortest.
-- **Every station reachable.** Otherwise two stations have no distance, and the map no diameter: [Connected or not](04-connectivity-and-breadth-first-search.md).
+- **At least one station, finitely many, and every station reachable.** Otherwise the map has no stations to measure, or two stations have no distance, and the map no diameter: [Connected or not](04-connectivity-and-breadth-first-search.md).
 - **Lines run both ways,** which makes $`d(u,v)`$ and $`d(v,u)`$ agree; one-way track breaks it ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 - **A cycle needs three different stations.** Out and back repeats a line, so it is a walk; a map with no loop has no girth ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)).
 
@@ -383,7 +383,7 @@ Lean proves the card's general facts for every map, of any size, and re-checks t
 - Every walk from $`u`$ to $`v`$ contains a path from $`u`$ to $`v`$, no longer, using only the walk's stations and lines.
 - When every station is reachable, $`d(u,v)`$ is the length of some path, and no walk from $`u`$ to $`v`$ is shorter.
 - When every station is reachable, $`d(u,v) = d(v,u)`$ and $`d(u,w) \le d(u,v) + d(v,w)`$.
-- When every station is reachable, the radius is at most the diameter, and the diameter at most twice the radius.
+- When there is at least one station and every station is reachable, the radius is at most the diameter, and the diameter at most twice the radius.
 - On the metro: eight lines, $`d(A,D) = 3`$, and four shortest routes from A to D.
 - The eccentricities are 3, 2, 2, 3, 2, 2, so the diameter is 3, the radius 2, and the centre B, C, E, F.
 - The girth is 4, with A-B-C-F-A a cycle of four steps.

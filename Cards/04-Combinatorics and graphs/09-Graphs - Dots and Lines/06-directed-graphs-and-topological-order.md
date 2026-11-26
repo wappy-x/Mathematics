@@ -87,7 +87,7 @@ Round a loop, each arrow demands the next vertex stand later, so the start must 
 
 ### Step 1: a finite DAG has a first step
 
-Suppose every vertex had an arrow pointing at it. A walk *backwards* along incoming arrows could then always carry on, and with only $`n`$ vertices it must revisit one, closing a loop. So where there is no loop, some vertex has nothing pointing at it: the recipe has four such sources.
+Suppose every vertex had an arrow pointing at it. A walk *backwards* along incoming arrows could then always carry on, and with only $`n`$ vertices it must revisit one, closing a loop. So where there is at least one vertex and no loop, some vertex has nothing pointing at it: the recipe has four such sources.
 
 ### Step 2: peel a source, the leftover is still a DAG
 

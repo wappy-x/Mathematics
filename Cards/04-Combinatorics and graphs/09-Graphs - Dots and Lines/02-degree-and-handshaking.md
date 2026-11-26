@@ -58,7 +58,7 @@ The degrees largest first are the **degree sequence**, here 3, 3, 3, 3, 2, 2. Ba
 | $`\sum_{v \in V}`$ | one term per vertex | six terms | — |
 | $`n`$ | how many dots | 6 | average falls |
 
-Shared out, that total is the average degree, $`2\lvert E\rvert`$ over $`n`$: 16 / 6 = 2.67 per station, a figure none has.
+Shared out (for $`n \ge 1`$), that total is the average degree, $`2\lvert E\rvert`$ over $`n`$: 16 / 6 = 2.67 per station, a figure none has.
 
 ### When it holds
 

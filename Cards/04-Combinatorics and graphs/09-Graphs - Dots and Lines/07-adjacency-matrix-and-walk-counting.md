@@ -66,7 +66,7 @@ The **trace** is the sum of a square table's diagonal. The **incidence matrix** 
 
 ### When it holds
 
-- **No loops.** Two tracks from B to C are no trouble: write 2 in that cell and the counts hold. A line from B to itself is trouble: degrees want 2 in that diagonal cell, walk counting wants 1, and the two readings part company.
+- **No loops.** Two tracks from B to C are no trouble for walk counts: write 2 in that cell and the walk counts hold (the degree and triangle shortcuts in Step 2 need at most one track per pair). A line from B to itself is trouble: degrees want 2 in that diagonal cell, walk counting wants 1, and the two readings part company.
 - **One station order, kept.** Reordering moves rows and columns together and changes no count; mixing two orders reports the wrong pairs in silence.
 - **Walks, not routes that never repeat.** Of the six three-line rides A to F, only two avoid a repeat.
 - **Counts, not distances.** A 0 means "no route of that exact length", not "unreachable"; the first length whose entry is positive is the distance.
