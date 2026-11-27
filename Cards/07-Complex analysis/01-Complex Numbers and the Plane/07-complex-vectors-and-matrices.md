@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A game sprite has a button that turns it a quarter turn anticlockwise. Row by row, that button is the matrix `[[0, -1], [1, 0]]` ([Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). It moves every real arrow, so it has no real eigenvector: no direction it only stretches ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+A game sprite has a button that turns it a quarter turn anticlockwise. Row by row, that button is the matrix `[[0, -1], [1, 0]]` ([Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). It turns every nonzero real arrow, so it has no real eigenvector: no direction it only stretches ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 
 Allow complex entries and two such directions appear. The pair (1, −i) comes back as (i, 1), i times itself; the pair (1, i) comes back as −i times itself. Multiplying by i is a quarter turn of the complex plane: the rotation's eigenvalues are rotations too.
 
-Complex pairs need a new ruler. The pair (1, i) is not zero, yet its old dot product with itself is 1 × 1 + i × i = 0. Conjugate the first copy's entries (a + bi becomes a − bi) and it is 1 × 1 + (−i) × i = 2. That dot product defines **Hermitian** matrices, with real eigenvalues, and **unitary** ones, which keep lengths.
+Complex pairs need a new ruler. The pair (1, i) is not zero, yet its old dot product with itself is 1 × 1 + i × i = 0.
 
-**For complex vectors, conjugate the first vector before the dot product; that gives lengths that cannot vanish, Hermitian matrices with real eigenvalues, and unitary matrices that keep length, like a quarter turn with eigenvalues i and −i.**
+Conjugate the first copy's entries (a + bi becomes a − bi) and it is 1 × 1 + (−i) × i = 2. That dot product defines **Hermitian** matrices, with real eigenvalues, and **unitary** ones, which keep lengths.
+
+**For complex vectors, conjugate the first vector before the dot product; that gives lengths that cannot vanish for nonzero vectors, Hermitian matrices with real eigenvalues, and unitary matrices that keep length, like a quarter turn with eigenvalues i and −i.**
 
 **What kind of fact this is:** three definitions (conjugate transpose, Hermitian, unitary); real eigenvalues and kept lengths are theorems proved in Why it works.
 
@@ -26,7 +28,9 @@ To scale, 60 units per 1; each panel is a copy of the complex plane. Solid arrow
 
 ## The formula
 
-Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $`v^T`$, is the same entries as a row. Its **conjugate transpose**, $`v^*`$, read "v-star", is that row with every entry conjugated. For a matrix, $`A^T`$ swaps rows for columns, and $`A^*`$ also conjugates every entry. A bar, $`\bar z`$, is the conjugate of a number z, and $`\lvert z\rvert`$ is its modulus: its distance from 0.
+Notation first, in words. A complex vector is a column of complex numbers. Its **transpose**, $`v^T`$, is the same entries as a row. Its **conjugate transpose**, $`v^*`$, read "v-star", is that row with every entry conjugated.
+
+For a matrix, $`A^T`$ swaps rows for columns, and $`A^*`$ also conjugates every entry. A bar, $`\bar z`$, is the conjugate of a number z, and $`\lvert z\rvert`$ is its modulus: its distance from 0.
 
 ```math
 v^* w = \sum_{j=1}^{n} \bar v_j\, w_j, \qquad \lVert v\rVert = \sqrt{v^* v} = \sqrt{\lvert v_1\rvert^2 + \dots + \lvert v_n\rvert^2}
@@ -94,13 +98,17 @@ $`R`$ is real, so $`R^* = R^T`$ = `[[0, 1], [-1, 0]]`, and $`R^* R = I`$: $`R`$ 
 
 An eigenvalue makes the determinant of $`R - \lambda I`$ zero. Trace 0 (the sum of the diagonal entries) and determinant 1 give $`\lambda^2 + 1 = 0`$, discriminant −4, so $`\lambda = \pm i`$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
 
-A second road needs no quadratic. Four quarter turns are no turn, $`R^4 = I`$, so $`\lambda^4 = 1`$: a fourth root of unity, 1, i, −1 or −i. The top row of $`R v = \lambda v`$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $`\lambda = i`$ the vector is (1, −i), and $`R`$(1, −i) = (i, 1) = i(1, −i), as drawn above.
+A second road needs no quadratic. Four quarter turns are no turn, $`R^4 = I`$, so $`\lambda^4 = 1`$: a fourth root of unity, 1, i, −1 or −i.
+
+The top row of $`R v = \lambda v`$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $`\lambda = i`$ the vector is (1, −i), and $`R`$(1, −i) = (i, 1) = i(1, −i), as drawn above.
 
 That is the homecoming: the quarter turn keeps two complex directions, and on them it is multiplication by i or −i, itself a quarter turn.
 
 ### Step 6: a Hermitian matrix built from the rotation
 
-Since $`R^* = -R`$, $`(-iR)^* = i R^* = -iR`$: so $`H = 2I - iR`$ = `[[2, i], [-i, 2]]` is Hermitian. On an eigenvector of $`R`$, $`H v = 2v - i\lambda v`$: same eigenvectors, eigenvalues $`2 - i\lambda`$: 2 − i × i = 3 and 2 − i × (−i) = 1. Both are real, as Step 3 promised; trace 4 and determinant 3 give the same pair by the quadratic formula.
+Since $`R^* = -R`$, $`(-iR)^* = i R^* = -iR`$: so $`H = 2I - iR`$ = `[[2, i], [-i, 2]]` is Hermitian.
+
+On an eigenvector of $`R`$, $`H v = 2v - i\lambda v`$: same eigenvectors, eigenvalues $`2 - i\lambda`$: 2 − i × i = 3 and 2 − i × (−i) = 1. Both are real, as Step 3 promised; trace 4 and determinant 3 give the same pair by the quadratic formula.
 
 <details>
 <summary>Detailed proof: the star rule, perpendicular eigenvectors, and the complex spectral theorem</summary>
@@ -109,11 +117,11 @@ Since $`R^* = -R`$, $`(-iR)^* = i R^* = -iR`$: so $`H = 2I - iR`$ = `[[2, i], [-
 
 **Perpendicular eigenvectors.** Let $`H v = \lambda v`$ and $`H w = \mu w`$ with $`\lambda \ne \mu`$, both real by Step 3. Then $`\mu\, w^* v = (H w)^* v = w^* H v = \lambda\, w^* v`$, so $`w^* v = 0`$, as for (1, −i) and (1, i).
 
-**The complex spectral theorem, stated.** Every Hermitian matrix is $`Q`$ times a real diagonal matrix times $`Q^*`$, with $`Q`$ unitary: its columns are perpendicular unit eigenvectors. The proof on [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on Adjoints.
+**The complex spectral theorem, stated.** Every Hermitian matrix is $`Q`$ times a real diagonal matrix times $`Q^*`$, with $`Q`$ unitary: its columns are perpendicular unit eigenvectors. The proof on [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md).
 
 </details>
 
-A third road to H's eigenvalues is Step 3's ratio $`v^* H v / v^* v`$: 3 on (1, −i), 1 on (1, i).
+On a nonzero eigenvector, a third road to H's eigenvalues is Step 3's ratio $`v^* H v / v^* v`$: 3 on (1, −i), 1 on (1, i).
 
 ---
 
@@ -519,7 +527,7 @@ example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3
 
 ## Where you meet it in real life
 
-- **Quantum computing.** A qubit's state is a complex vector of length 1; its gates are unitary, so probabilities keep adding to 1 (Qubits).
+- **Quantum computing.** A qubit's state is a complex vector of length 1; its gates are unitary, so probabilities keep adding to 1 ([Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md)).
 - **Measurement in physics.** Measurable quantities are Hermitian matrices, so their readings, the eigenvalues, are real ([States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md)).
 - **Signals and audio.** The scaled discrete Fourier transform is unitary, so a signal's energy is unchanged ([The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
 
@@ -531,20 +539,21 @@ example : star (![-1 - 2 * I, 3 + 4 * I] : Fin 2 → ℂ) ⬝ᵥ ![-1 - 2 * I, 3
 ## What this builds on
 
 - [Conjugate and modulus](02-conjugate-and-modulus.md): z times z-bar is a squared distance.
-- [Powers and roots](05-powers-roots-and-roots-of-unity.md): the fourth roots of unity.
-- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the trace-and-determinant quadratic.
+- [Powers and roots](05-powers-roots-and-roots-of-unity.md): the fourth roots of unity that test a quarter turn's eigenvalues.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): eigenvectors as stretched directions and the trace-and-determinant quadratic for 2-by-2 matrices.
 - [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): the real case Hermitian matrices extend.
 - [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the dot product the conjugate repairs.
 
 ## Where this goes next
 
+- [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): begins the next shelf with complex derivatives from every direction and the Cauchy-Riemann equations.
 - [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary matrix of roots of unity.
-- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): Hermitian measurements, unitary time steps.
+- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): quantum states as unit vectors, Hermitian measurements and unitary time steps.
 - [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): the star in infinitely many coordinates.
 - [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): the star turned into an axiom.
 - [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): unit complex vectors as quantum states.
 
-The question this card leaves open: what does the star become when a vector has infinitely many coordinates?
+The question this card leaves open: what does the star become when a vector has infinitely many coordinates? That leads on to [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md), while the main complex-analysis story continues on the next shelf with [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md).
 
 ---
 

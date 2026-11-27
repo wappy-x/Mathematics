@@ -12,11 +12,11 @@ Multiplying on this plane is "turn and stretch" ([Polar form](03-polar-form-and-
 
 Each resting point is a number whose 8th power is 1, an **8th root of unity** (unity is the old word for 1). The eight add to zero.
 
-Raising a number to the n-th power multiplies its angle by n and raises its length to the n-th power: **de Moivre's formula**. Undoing it divides the angle by n, but an angle is known only up to whole turns, so there are n answers.
+Raising a nonzero number to a whole-number n-th power multiplies its angle by n and raises its length to the n-th power: **de Moivre's formula**. Undoing it for a whole number n at least 1 divides the angle by n, but an angle is known only up to whole turns, so there are n answers.
 
 The cube roots of 8 are 2 and −1 ± 1.732051i. The equation z^4 = −16 has four roots of length 2, at 45, 135, 225 and 315 degrees.
 
-**A power multiplies the angle and powers the length, so every nonzero number has exactly n n-th roots, equally spaced on one circle, and the n-th roots of 1 add to zero.**
+**A whole-number power multiplies the angle and powers the length, so for any whole n at least 1 every nonzero number has exactly n n-th roots, equally spaced on one circle, and for n at least 2 the n-th roots of 1 add to zero.**
 
 **What kind of fact this is:** a theorem (de Moivre's formula, the count of n roots, the zero sum), proved on this card in Why it works; "root of unity" is a definition.
 
@@ -36,9 +36,9 @@ Reminder: polar form writes a nonzero number as $`r(\cos\theta + i\sin\theta)`$,
 \bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)
 ```
 
-**Read it aloud:** to raise a number to the n-th power, raise its length to the n-th power and multiply its angle by n.
+**Read it aloud:** to raise a number to a whole-number n-th power (with the number nonzero if n is negative), raise its length to the n-th power and multiply its angle by n.
 
-The n-th roots of a nonzero number $`c`$, of length $`r`$ and angle $`\theta`$, run it backwards:
+For a whole number $`n \ge 1`$, the n-th roots of a nonzero number $`c`$, of length $`r`$ and angle $`\theta`$, run it backwards:
 
 ```math
 z_k = r^{1/n}\Bigl(\cos\frac{\theta + 2\pi k}{n} + i\sin\frac{\theta + 2\pi k}{n}\Bigr), \qquad k = 0, 1, \dots, n-1
@@ -52,7 +52,7 @@ With $`c = 1`$ the roots are the powers of one click:
 \omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}, \qquad 1 + \omega + \omega^2 + \dots + \omega^{n-1} = 0 \quad (n \ge 2)
 ```
 
-**Read it aloud:** one click turns an n-th of a circle, and its n powers add to zero.
+**Read it aloud:** one click turns an n-th of a circle, and for n at least 2 its n powers add to zero.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ With $`c = 1`$ the roots are the powers of one click:
 
 ### When it holds
 
-- **n a whole number.** Negative n works too, for z not 0. For a fraction such as 1/3 the formula gives one of three roots; which one is the branch problem of [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md).
+- **n a whole number.** Negative n works too, for z not 0. For n-th roots, n must be a whole number at least 1. For a fraction such as 1/3 the answer depends on which angle θ you pick, giving one of three roots; which one is the branch problem of [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md).
 - **c not zero.** Zero has no angle; its only n-th root is 0.
 - **Angles up to whole turns.** The principal argument, in (−π, π], only picks which root is k = 0.
 - **n at least 2 for the zero sum.** For n = 1 the only root is 1.
@@ -88,7 +88,9 @@ The number −1 + 1.732051i is −1 + √3 i: length 2, since 1 + 3 = 4, angle 1
 
 ### Step 2: roots are angles shared out, plus whole turns
 
-To solve $`z^n = c`$, give the unknown length $`\rho`$ (rho) and angle $`\varphi`$ (phi). By Step 1, $`\rho^n = r`$ and $`n\varphi`$ must point where $`\theta`$ points. Lengths are positive numbers, so $`\rho = r^{1/n}`$, one answer. But angles differing by a whole turn point the same way, so $`n\varphi = \theta + 2\pi k`$ for any whole $`k`$, and $`\varphi = (\theta + 2\pi k)/n`$.
+To solve $`z^n = c`$, give the unknown length $`\rho`$ (rho) and angle $`\varphi`$ (phi). By Step 1, $`\rho^n = r`$ and $`n\varphi`$ must point where $`\theta`$ points.
+
+Lengths are positive numbers, so $`\rho = r^{1/n}`$, one answer. But angles differing by a whole turn point the same way, so $`n\varphi = \theta + 2\pi k`$ for any whole $`k`$, and $`\varphi = (\theta + 2\pi k)/n`$.
 
 Each step in $`k`$ turns the root by 2π/n. After n steps that is a full circle and the roots repeat. So $`k = 0`$ to $`n - 1`$ gives exactly n points, evenly spaced.
 
@@ -112,7 +114,7 @@ Call the sum S and multiply each term by ω. Every root moves on one click, and 
 
 On the spinner: one click leaves the set, and so its sum, unchanged, and the only point a turn fixes is 0.
 
-Other root sets are one root times the roots of unity, so they sum to zero too: 2 + (−1 + 1.732051i) + (−1 − 1.732051i) = 0.
+For n at least 2, other root sets are one root times the roots of unity, so they sum to zero too: 2 + (−1 + 1.732051i) + (−1 − 1.732051i) = 0.
 
 <details>
 <summary>Detailed proof: all whole powers, and exactly n roots</summary>
@@ -354,7 +356,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves de Moivre's formula, the n roots and the zero sum for every n, plus the card's worked values.
+Lean proves de Moivre's formula for every whole n (nonzero base when n is negative), the n roots for every n at least 1, and the zero sum for every n at least 2, plus the card's worked values.
 
 - De Moivre's formula, $`\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)`$, holds for every r, θ and whole n. Negative n needs r not 0.
 - Take n at least 1 and a nonzero c of length r at any angle θ. The n roots $`z_k`$, k = 0 to n − 1, are all different.
@@ -581,7 +583,7 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 ## The usual mistake
 
 > [!warning]
-> **Stopping at one root.** A calculator's cube root of 8 is 2: correct, but one answer of three. The angle of 8 is 0, and equally 360° and 720°; a third of each gives three different points. Every nonzero number has exactly n n-th roots.
+> **Stopping at one root.** A calculator's cube root of 8 is 2: correct, but one answer of three. The angle of 8 is 0, and equally 360° and 720°; a third of each gives three different points. For any whole n at least 1, every nonzero number has exactly n n-th roots.
 >
 > - **Dividing the length by n.** The length takes an ordinary root: 2, not 2.666667, whose cube is 18.962963.
 > - **A negative number at angle 0.** −16 points west, at 180°; angle 0 gives 2, and 2 to the 4th is 16.
@@ -595,7 +597,7 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 - **Signal processing.** The discrete Fourier transform measures a signal against the roots of unity; their zero sum keeps frequencies apart ([The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
 
 > **Say it back**
-> Multiplying multiplies lengths and adds angles, so an n-th power multiplies the angle by n. A root divides the angle by n; since an angle carries any number of whole turns, there are n roots, an n-th of a circle apart. The roots of 1 are the powers of one click, and add to zero because one click leaves the set unchanged.
+> Multiplying multiplies lengths and adds angles, so a whole-number n-th power multiplies the angle by n. For a whole n at least 1, an n-th root of a nonzero number divides the angle by n; since an angle carries any number of whole turns, there are n roots, an n-th of a circle apart. The n-th roots of 1 are the powers of one click, and for n at least 2 they add to zero because one click leaves the set unchanged.
 
 ---
 
@@ -606,14 +608,15 @@ example : (2 : ℂ) ^ 4 = 16 ∧ (2 : ℂ) ^ 4 ≠ -16 := by
 
 ## Where this goes next
 
-- [Complex vectors and matrices](07-complex-vectors-and-matrices.md): roots of unity filling the Fourier matrix.
-- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): choosing one root continuously.
+- [Limits and regions in the plane](06-complex-limits-series-and-regions.md): complex limits, infinite geometric series, and the words disc, boundary and domain.
+- [Complex vectors and matrices](07-complex-vectors-and-matrices.md): a quarter turn's eigenvalues, i and −i, found by testing the fourth roots of unity.
+- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): choosing one branch of a complex power and seeing the jump across its cut.
 - [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a signal split along the roots of unity.
 - [Dirichlet characters](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/01-dirichlet-characters.md): clock arithmetic mapped into roots of unity.
 - [Gauss sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/06-gauss-sums.md): sums of roots of unity that do not cancel.
 - [Cyclotomic fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/08-cyclotomic-extensions-and-roots-of-unity.md): number systems built from a primitive root.
 
-Left open: a fractional power such as 1/3 has three candidate roots, so which one should a formula return, and can that choice move smoothly as the number circles 0?
+Left open: a fractional power such as 1/3 has three candidate roots, so which one should a formula return, and can that choice move smoothly as the number circles 0? That question waits for [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md); first, [Limits and regions in the plane](06-complex-limits-series-and-regions.md) makes complex limits and infinite sums precise.
 
 ---
 

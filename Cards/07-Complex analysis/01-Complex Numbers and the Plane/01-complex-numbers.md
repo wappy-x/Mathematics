@@ -10,7 +10,9 @@ A delivery drone hovers 3 km east and 4 km north of its depot. Two coordinates f
 
 Pairs do not yet multiply. One new number makes them: i, whose square is −1. No number on the ordinary line has that property, since a real number times itself is never negative. So i sits off the line, at the point (0, 1).
 
-The drone's pair is then written 3 + 4i, a single number. Numbers of this form are the **complex numbers**: "complex" means built of two parts, and i is no less real than −1. Multiplying the drone by i moves it to −4 + 3i, the same 5 km out, turned a quarter turn anticlockwise. Multiplying by 1 + 2i sends it to −5 + 10i.
+The drone's pair is then written 3 + 4i, a single number. Numbers of this form are the **complex numbers**: "complex" means built of two parts, and i is no less real than −1.
+
+Multiplying the drone by i moves it to −4 + 3i, the same 5 km out, turned a quarter turn anticlockwise. Multiplying by 1 + 2i sends it to −5 + 10i.
 
 **A complex number is a point of the plane written a + bi; adding is adding coordinates, and multiplying follows from the one rule i × i = −1, which makes multiplying by i a quarter turn.**
 
@@ -60,7 +62,7 @@ i\,(a + bi) = -b + ai
 
 - **A definition, so always:** any two real numbers make a complex number, and any two complex numbers add and multiply.
 - **Real numbers sit inside unchanged:** a real number $`a`$ is the point $`a + 0i`$ on the east-west line, and two of them multiply as before, (2 + 0i)(−3 + 0i) = −6.
-- **No "bigger than":** no ordering of complex numbers respects multiplying, since any square, $`i^2`$ included, would then be positive. Only distances from 0 compare.
+- **No "bigger than":** no ordering of complex numbers respects adding and multiplying, since any nonzero square, $`i^2`$ included, would then be positive. Only distances from 0 compare.
 - **Quarter turn needs equal units:** stretch one axis and the turn becomes a skew.
 
 ---
@@ -99,7 +101,7 @@ Since $`w = c + di`$, the distributive law gives $`zw = c\,z + d\,(iz)`$: c copi
 zw = 1\,(3 + 4i) + 2\,(-4 + 3i) = -5 + 10i
 ```
 
-This road uses only adding and the quarter turn, never Step 1's rule, and lands on the same point: the dashed line in the picture. Every product turns and stretches; the turn as an angle is [Polar form](03-polar-form-and-argument.md).
+This road uses only adding and the quarter turn, never Step 1's rule, and lands on the same point: the dashed line in the picture. Multiplying by a nonzero number turns and stretches; the turn as an angle is [Polar form](03-polar-form-and-argument.md).
 
 ### Step 4: the usual laws survive
 
@@ -516,7 +518,7 @@ example : I * ((3 : ℂ) + 4 * I) ≠ 4 - 3 * I := by
 - [The Kuramoto model](../../08-Differential%20equations%20and%20dynamics/13-Rhythms%20and%20Synchronisation/03-the-kuramoto-model.md): a crowd of oscillators with different speeds falls into step once the coupling passes a threshold.
 - [Complex measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
-Times i turns the drone a quarter turn, but how far does w = 1 + 2i turn it, as an angle? That is [Polar form](03-polar-form-and-argument.md).
+Left open: every number except 0 has a reciprocal, so how do you divide by a complex number in practice, and how do you measure distances in the plane? That is [Conjugate and modulus](02-conjugate-and-modulus.md).
 
 ---
 

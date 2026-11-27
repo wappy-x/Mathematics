@@ -12,7 +12,7 @@ Reflect the drone in the east-west line and it lands at 3 − 4i, also 5 km out.
 
 Its square root is the distance from the depot, the **modulus**. The same product turns division by 3 + 4i into division by 25: (1 + 2i)/(3 + 4i) = (11 + 2i)/25. And the modulus of a difference is a distance: a second drone at 6 + 8i is 5 km from the first.
 
-**The conjugate flips a point across the real axis; a point times its flip is its squared distance from 0, a real number, and that one fact gives length, distance and division.**
+**The conjugate flips a point across the real axis; a point times its flip is its squared distance from 0, a real number, and that one fact gives length, distance and division by any nonzero number.**
 
 **What kind of fact this is:** two definitions; the rules they obey, the triangle inequality among them, are theorems proved in Why it works.
 
@@ -37,10 +37,10 @@ Notation first, in words. For $`z = a + bi`$, with real part $`a`$ and imaginary
 Three consequences carry the rest of the card:
 
 ```math
-\frac{p}{z} = \frac{p\,\bar z}{\lvert z\rvert^2}, \qquad \lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert, \qquad \lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert
+\frac{p}{z} = \frac{p\,\bar z}{\lvert z\rvert^2} \quad (z \ne 0), \qquad \lvert z w\rvert = \lvert z\rvert\,\lvert w\rvert, \qquad \lvert z + w\rvert \le \lvert z\rvert + \lvert w\rvert
 ```
 
-**Read it aloud:** to divide by z, multiply by z-bar and divide by a real number; the length of a product is the product of the lengths; the length of a sum is at most the sum of the lengths.
+**Read it aloud:** to divide by a nonzero z, multiply by z-bar and divide by a positive real number; the length of a product is the product of the lengths; the length of a sum is at most the sum of the lengths.
 
 The distance between two points is the modulus of their difference, $`\lvert w - z\rvert`$. The last rule is the **triangle inequality**, after the triangle with corners 0, $`z`$ and $`z + w`$.
 
@@ -94,9 +94,11 @@ Multiply top and bottom by the same nonzero number, $`\bar z`$:
 \frac{1 + 2i}{3 + 4i} = \frac{(1 + 2i)(3 - 4i)}{(3 + 4i)(3 - 4i)} = \frac{3 - 4i + 6i + 8}{25} = \frac{11 + 2i}{25} = 0.44 + 0.08i
 ```
 
-The bottom is now real. With $`p = 1`$ this gives the reciprocal, $`1/z = \bar z / \lvert z\rvert^2`$: for the drone, 0.12 − 0.16i.
+The bottom is now real. With $`p = 1`$ this gives the reciprocal for nonzero $`z`$, $`1/z = \bar z / \lvert z\rvert^2`$: for the drone, 0.12 − 0.16i.
 
-A second road skips the conjugate. Ask which $`x + iy`$ gives $`(3 + 4i)(x + iy) = 1 + 2i`$. Matching parts gives two real equations, $`3x - 4y = 1`$ and $`4x + 3y = 2`$, solved by $`x = 11/25`$, $`y = 2/25`$. The 25 reappears as their determinant, 3 × 3 + 4 × 4, the number both answers are divided by ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The conjugate solves the pair in one move.
+A second road skips the conjugate. Ask which $`x + iy`$ gives $`(3 + 4i)(x + iy) = 1 + 2i`$. Matching parts gives two real equations, $`3x - 4y = 1`$ and $`4x + 3y = 2`$, solved by $`x = 11/25`$, $`y = 2/25`$.
+
+The 25 reappears as their determinant, 3 × 3 + 4 × 4, the number both answers are divided by ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The conjugate solves the pair in one move.
 
 ### Step 4: lengths multiply
 
@@ -116,7 +118,9 @@ By Step 1:
 \lvert z + w\rvert^2 = (z + w)(\bar z + \bar w) = \lvert z\rvert^2 + \lvert w\rvert^2 + 2\,\mathrm{Re}(z\,\bar w)
 ```
 
-The middle terms, $`z\bar w`$ and $`\bar z w`$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $`a \le \sqrt{a^2 + b^2}`$, so $`\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert`$, by Step 4 and because the flip keeps length. The right side is then at most $`(\lvert z\rvert + \lvert w\rvert)^2`$; square roots give the triangle inequality.
+The middle terms, $`z\bar w`$ and $`\bar z w`$, are mirror images, so by Step 2 they add to twice the real part. A real part never exceeds the length, $`a \le \sqrt{a^2 + b^2}`$, so $`\mathrm{Re}(z\bar w) \le \lvert z\bar w\rvert = \lvert z\rvert\,\lvert w\rvert`$, by Step 4 and because the flip keeps length.
+
+The right side is then at most $`(\lvert z\rvert + \lvert w\rvert)^2`$; square roots give the triangle inequality.
 
 Drone plus beacon: $`\lvert z + p\rvert`$ ≈ 7.211103, under 5 + $`\sqrt 5`$ ≈ 7.236068. The second drone gives equality, $`\lvert w\rvert = \lvert z\rvert + \lvert w - z\rvert`$, 10 = 5 + 5: depot and drones share one line.
 
@@ -125,9 +129,9 @@ Applied to $`z = (z - w) + w`$, the same rule gives the **reverse triangle inequ
 <details>
 <summary>Detailed proof: equality, and the longest shadow</summary>
 
-**When the triangle inequality is an equality.** Equality needs $`\mathrm{Re}(z\bar w) = \lvert z\bar w\rvert`$, so $`z\bar w`$ is real and non-negative. For $`w \ne 0`$, $`z/w = z\bar w / \lvert w\rvert^2`$ is then a non-negative real number: $`z`$ is $`w`$ stretched, pointing the same way.
+**When the triangle inequality is an equality.** Equality needs $`\mathrm{Re}(z\bar w) = \lvert z\bar w\rvert`$, so $`z\bar w`$ is real and non-negative. For $`w \ne 0`$, $`z/w = z\bar w / \lvert w\rvert^2`$ is then a non-negative real number: either $`z = 0`$ or $`z`$ points the same way as $`w`$. If $`w = 0`$, equality holds automatically.
 
-**The modulus is the longest shadow.** The shadow of $`z = a + bi`$ on the direction at angle $`t`$ radians from east is how far $`z`$ reaches that way. It is $`a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})`$, with $`u = \cos t + i\sin t`$ of length 1. By Step 5 it is at most $`\lvert z\rvert`$, and $`u = z / \lvert z\rvert`$ reaches it. So $`\lvert z\rvert`$ is the largest shadow, found by a search over $`t`$ with no square root.
+**The modulus is the longest shadow.** The shadow of $`z = a + bi`$ on the direction at angle $`t`$ radians from east is how far $`z`$ reaches that way. It is $`a\cos t + b\sin t = \mathrm{Re}(z\,\overline{u})`$, with $`u = \cos t + i\sin t`$ of length 1. By Step 5 it is at most $`\lvert z\rvert`$; for $`z \ne 0`$, $`u = z / \lvert z\rvert`$ reaches it, and for $`z = 0`$ every direction gives 0. So $`\lvert z\rvert`$ is the largest shadow, found by a search over $`t`$ with no square root.
 
 </details>
 
@@ -495,7 +499,7 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 ## The usual mistake
 
 > [!warning]
-> **Treating the modulus as if it added.** Lengths multiply but do not add: $`\lvert z + w\rvert`$ is at most $`\lvert z\rvert + \lvert w\rvert`$, equal only when the arrows share a direction. The drone plus the beacon measure 7.211103, not 7.236068.
+> **Treating the modulus as if it added.** Lengths multiply but do not add: $`\lvert z + w\rvert`$ is at most $`\lvert z\rvert + \lvert w\rvert`$, equal only when one is 0 or both arrows point the same way. The drone plus the beacon measure 7.211103, not 7.236068.
 >
 > - **Mirror mistaken for reciprocal.** They agree only when $`\lvert z\rvert`$ is 1; the drone's are 3 − 4i and 0.12 − 0.16i.
 > - **Taking 4i as the imaginary part.** Im z is the real number 4, not 4i; the conjugate flips that number's sign.
@@ -509,7 +513,7 @@ example : ((3 : ℂ) + 4 * I) * ((1 : ℂ) + 2 * I) = -5 + 10 * I := by
 - **Complex vectors.** The squared length of a list of complex numbers adds $`z\bar z`$ over the entries, the starting point of [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
 > **Say it back**
-> The conjugate flips a point across the real axis. A point times its flip is its squared distance from 0, a real number; its square root is the modulus. Multiplying top and bottom by the conjugate turns any division into division by a real number. Lengths multiply, but a sum is never longer than its parts. The distance between two points is the modulus of their difference.
+> The conjugate flips a point across the real axis. A point times its flip is its squared distance from 0, a real number; its square root is the modulus. Multiplying top and bottom by the conjugate turns division by any nonzero number into division by a positive real number. Lengths multiply, but a sum is never longer than its parts. The distance between two points is the modulus of their difference.
 
 ---
 

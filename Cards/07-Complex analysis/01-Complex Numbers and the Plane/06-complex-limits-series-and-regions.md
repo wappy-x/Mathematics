@@ -12,7 +12,7 @@ Each tread is an arrow in the plane, so a complex number, and shrink-and-turn is
 
 Two facts find it. Points settle exactly when their east and north parts both settle, so real limits suffice. And turning, shrinking arrows add up by the same geometric-series formula as real numbers, for every ratio inside the unit circle.
 
-**A sequence in the plane converges exactly when its real and imaginary parts both converge, and the geometric series with complex ratio q sums to 1/(1 − q) for every q in the open unit disc, failing on its edge.**
+**A sequence in the plane converges exactly when its real and imaginary parts both converge, and the geometric series with complex ratio q sums to 1/(1 − q) for every q in the open unit disc, failing on and outside its edge.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; open disc, boundary, domain and bounded are definitions.
 
@@ -45,10 +45,10 @@ The link is a pair of inequalities for any complex number $`w`$:
 The staircase's n-th tread is $`q^n`$, where $`q = 0.8\,e^{i\pi/6}`$ shrinks to 0.8 and turns by π/6 radians, 30 degrees ([Euler's formula](04-eulers-formula.md)). The stop after $`N`$ treads is the partial sum $`S_N`$:
 
 ```math
-S_N = 1 + q + \cdots + q^{N-1} = \frac{1 - q^N}{1 - q}, \qquad S = \sum_{n=0}^{\infty} q^n = \frac{1}{1 - q} \text{ if } |q| < 1
+S_N = 1 + q + \cdots + q^{N-1} = \frac{1 - q^N}{1 - q} \quad (q \ne 1), \qquad S = \sum_{n=0}^{\infty} q^n = \frac{1}{1 - q} \text{ if } |q| < 1
 ```
 
-**Read it aloud:** for a ratio shorter than 1, the stops close in on one over one-minus-q, and the gap $`|S - S_N| = |q|^N/|1 - q|`$ shrinks by the factor 0.8 each tread.
+**Read it aloud:** for a ratio shorter than 1, the stops close in on one over one-minus-q, and the gap $`|S - S_N| = |q|^N/|1 - q|`$ shrinks by the factor $`|q|`$ each tread (here 0.8).
 
 A series with terms $`a_n`$ whose lengths have a finite total **converges absolutely**, and then converges:
 
@@ -71,16 +71,18 @@ A series with terms $`a_n`$ whose lengths have a finite total **converges absolu
 
 The words for regions:
 
-- **Open disc** $`D(c, r)`$: every point closer than $`r`$ to $`c`$, rim left out.
+- **Open disc** $`D(c, r)`$ (with $`r > 0`$): every point closer than $`r`$ to $`c`$, rim left out.
 - **Open set**: each point has a small disc round it inside the set.
 - **Boundary**: points whose every small disc meets both the set and points outside it; for $`D(0, 1)`$, the circle $`|q| = 1`$.
-- **Domain** (or region): open and **connected**, meaning any two points join by a path inside.
+- **Closed set**: contains all of its boundary points; a set can be open, closed, neither, or both (the empty set and the whole plane are both).
+- **Domain** (or region): non-empty, open and **connected**, meaning any two points join by a path inside.
 - **Bounded**: fits inside some disc of finite radius.
 
 ### When it holds
 
 - **Both coordinates, not length alone.** With a ratio of length 1 every tread is 1 metre, yet the stops circle forever.
 - **Ratio strictly inside the unit circle.** Outside, 1/(1 − q) still prints a number, but no sum exists.
+- **Absolute convergence is one-way.** A series can converge without its lengths having a finite total (as with $`1 - 1/2 + 1/3 - 1/4 + \cdots`$), though the geometric series either converges absolutely or fails altogether.
 - **Angles in radians.** Reading 30 as radians gives 0.629199 − 0.567346i.
 - **The region words are definitions**, with nothing to prove.
 
@@ -110,7 +112,9 @@ When $`|q| = 1`$ the leftover $`q^N`$ keeps length 1 and walks round the circle.
 
 ### Step 4: absolute convergence, and why the disc is open
 
-The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. The real comparison test says a real series converges when the sizes of its terms stay below the terms of a convergent series of positive numbers. Each tread's east and north parts are no longer than the tread, so the real comparison test ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes.
+The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. The real comparison test says a real series converges when the sizes of its terms stay below the terms of a convergent series of positive numbers.
+
+Each tread's east and north parts are no longer than the tread, so the real comparison test ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes.
 
 No stop lies beyond 2.566107 metres: the stops form a bounded set.
 
@@ -124,7 +128,7 @@ To scale: 80 units per 1, 0 at (180, 120). The ratio q sits at (235.43, 88.00), 
 
 ### Step 5: the point at infinity
 
-With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $`z_n \to \infty`$: $`|z_n|`$ passes every bound, in any direction, and $`\infty`$ counts as one extra point.
+With ratio 1.25 turned 30 degrees the stops are 11934.3 metres out after 40 treads. Such a sequence tends to infinity, $`z_n \to \infty`$: $`|z_n|`$ eventually passes every bound and stays beyond it, in any direction, and $`\infty`$ counts as one extra point.
 
 Rest a ball on the plane at 0. The straight line from a plane point to the ball's top meets the ball at exactly one other point; send the plane point there. Far points in every direction land near the top, and the top itself is the point at infinity. The ball, so labelled, is the **Riemann sphere**.
 
@@ -468,7 +472,7 @@ example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
 - **Power series.** Each converges on an open disc, the geometric series being the model: [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md).
 
 > **Say it back**
-> A complex sequence converges exactly when its real and imaginary parts both converge. The geometric series with ratio q sums to 1/(1 − q) when q is shorter than 1. A series whose term lengths have a finite total converges, no farther out than that total. The working ratios form the open unit disc, a bounded domain; on its boundary circle the sum fails. A sequence growing without bound tends to the one point at infinity.
+> A complex sequence converges exactly when its real and imaginary parts both converge. The geometric series with ratio q sums to 1/(1 − q) when q is shorter than 1. A series whose term lengths have a finite total converges, no farther out than that total. The working ratios form the open unit disc, a bounded domain; on its boundary circle the sum fails. A sequence whose distance from 0 eventually stays past every bound tends to the one point at infinity.
 
 ---
 
@@ -480,13 +484,14 @@ example : (1 - (4 / 5 : ℝ))⁻¹ = 5 := by norm_num
 
 ## Where this goes next
 
+- [Complex vectors and matrices](07-complex-vectors-and-matrices.md): the conjugate dot product, Hermitian matrices with real eigenvalues, and unitary matrices.
 - [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): limits from every direction, on a domain.
-- [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence.
-- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): series of spinning arrows.
-- [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): convergence on a half-plane.
+- [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): power series converging on an open disc out to the nearest singularity.
+- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): repeating signals written as sums of spinning complex arrows.
+- [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): an exponential integral that converges on a right half-plane of complex inputs.
 - [Filled Julia sets](../11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md): iterate z squared plus c, and the starting points that never escape form a fractal.
 
-Left open: if the ratio becomes a variable z, for which z does the sum converge, and what function of z does it make?
+Left open: if the ratio becomes a variable z, for which z does the sum converge, and what function of z does it make? That leads into [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md) on the next shelf, right after [Complex vectors and matrices](07-complex-vectors-and-matrices.md) finishes this shelf with complex linear algebra.
 
 ---
 

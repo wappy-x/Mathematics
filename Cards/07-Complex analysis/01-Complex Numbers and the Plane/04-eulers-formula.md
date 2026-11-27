@@ -80,7 +80,7 @@ The n-th term has size $`|z|^n/n!`$, with the modulus of [Conjugate and modulus]
 
 ### Step 2: each term turns a quarter
 
-The powers of i run 1, i, −1, −i, then repeat. So at iθ each term is the last turned a quarter anticlockwise and scaled by θ/n. At θ = π the lengths 1, π, π^2/2, π^3/6 grow, then the factorials win.
+The powers of i run 1, i, −1, −i, then repeat. So at iθ each term is the last turned a quarter anticlockwise and scaled by θ/n (turning clockwise when θ is negative). At θ = π the lengths 1, π, π^2/2, π^3/6 grow, then the factorials win.
 
 ### The picture: the series at iπ walking to −1
 
@@ -162,7 +162,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Both programs build $`e^z`$ from its own series and take three roads: the series, cosine and sine read off the circle, and compounding. The compounding road closes on −1 at distance 0.613543 for N = 10, 0.004947 for N = 1000 and 0.000049 for N = 100000. The four asserts compare the series with the circle, with 2 times i, with the shrinking compounding gap, and with itself a full turn later.
+Both programs build $`e^z`$ from its own series and take three roads: the series, cosine and sine read off the circle, and compounding. The compounding road closes on −1 at distance 0.613543 for N = 10, 0.004947 for N = 1000 and 0.000049 for N = 100000.
+
+The four asserts compare the series with the circle, with 2 times i, with the shrinking compounding gap, and with itself a full turn later.
 
 ### Python
 
@@ -462,7 +464,7 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 ## The usual mistake
 
 > [!warning]
-> **Reading $`e^{i\theta}`$ as e multiplied by itself iθ times.** An imaginary angle is not a count. The meaning comes from the series, whose terms at iθ turn a quarter each instead of growing, so the result has length 1 whatever θ is.
+> **Reading $`e^{i\theta}`$ as e multiplied by itself iθ times.** An imaginary angle is not a count. The meaning comes from the series, whose terms at iθ turn a quarter each instead of growing, so the result has length 1 whatever real angle θ is.
 >
 > - **Degrees for radians.** "e to the i times 180" gives −0.598460 − 0.801153i, not −1.
 > - **Dropping the 2π.** e to the i·440t spins 70.028175 turns a second, not 440.
@@ -490,21 +492,21 @@ example : Complex.exp (2 * (Real.pi : ℂ) * I) = 1 := by exact Complex.exp_two_
 
 ## Where this goes next
 
-- [Powers and roots](05-powers-roots-and-roots-of-unity.md): powers multiply angles.
-- [Limits and regions in the plane](06-complex-limits-series-and-regions.md): convergence, made careful.
-- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the derivative of $`e^z`$.
-- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): undoing it, with a choice.
-- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): circles traced as $`e^{i\theta}`$.
-- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): signals as arrows.
-- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): a decaying swing.
-- [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): the transform.
-- [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): a distribution as an average arrow.
-- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): that average prices options.
-- [Bode plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): stretch and turn per frequency.
-- [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): circuits with fixed arrows.
+- [Powers and roots](05-powers-roots-and-roots-of-unity.md): whole powers multiply the angle, and roots split a circle into n equal steps.
+- [Limits and regions in the plane](06-complex-limits-series-and-regions.md): complex limits, absolute convergence, and the geometric series inside the unit disc.
+- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): cosine, sine and their hyperbolic twins built directly from $`e^z`$.
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): undoing $`e^z`$ for nonzero inputs, with infinitely many answers 2πi apart.
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating along paths in the plane, with circles traced by $`e^{i\theta}`$.
+- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): repeating signals written as sums of spinning arrows $`e^{inx}`$.
+- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): damped oscillations written as $`e^{at}`$ times cosine and sine.
+- [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): complex Fourier series extended to the Fourier transform as the period grows.
+- [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): a probability distribution pinned down by the average spinning arrow $`e^{itX}`$.
+- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): pricing options with one integral of a complex characteristic function.
+- [Bode plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): how a stable linear system scales and phase-shifts each steady frequency.
+- [Phasors](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/02-phasors-and-impedance.md): steady AC voltages and currents turned into complex arithmetic with impedances.
 - [Complex measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/07-complex-measures-and-total-variation.md): sizes that are complex numbers, their total variation, and the polar form d nu = h d|nu| with |h| = 1.
 
-Left open: exponents 2πi apart give the same point, so which exponent should undo it?
+Left open: raising $`e^{i\theta}`$ to a whole power multiplies the angle, so how do you run that backwards to find every n-th root of a complex number? That is [Powers and roots](05-powers-roots-and-roots-of-unity.md).
 
 ---
 

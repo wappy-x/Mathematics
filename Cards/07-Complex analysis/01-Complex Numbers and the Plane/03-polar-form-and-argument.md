@@ -8,9 +8,9 @@
 
 A wind of 10 km/h blows toward the north-east. With east along the real axis and north up the imaginary axis, it is the arrow from 0 to 7.071068 + 7.071068i ([Complex numbers](01-complex-numbers.md)). A forecaster says "10 km/h at 45 degrees" instead: a length and a direction.
 
-Both name the same point; the second is the **polar form**. It earns its place in multiplication. The wind times 2i, the number of length 2 pointing straight up, is −14.142136 + 14.142136i: 20 at 135 degrees. The length doubled and the angle grew by 90. Every complex product works so: lengths multiply, angles add.
+Both name the same point; the second is the **polar form**. It earns its place in multiplication. The wind times 2i, the number of length 2 pointing straight up, is −14.142136 + 14.142136i: 20 at 135 degrees. The length doubled and the angle grew by 90. Every product of nonzero complex numbers works so: lengths multiply, angles add.
 
-One catch: adding a full turn leaves a direction unchanged, so each point has many angles. The standard choice lies above −180 degrees and at most 180. A wind toward the south-west, the direction of −1 − i, gets −135 degrees, not 225. Across the negative real axis that choice jumps by a full turn.
+One catch: adding a full turn leaves a direction unchanged, so each nonzero point has many angles. The standard choice lies above −180 degrees and at most 180. A wind toward the south-west, the direction of −1 − i, gets −135 degrees, not 225. Across the negative real axis that choice jumps by a full turn.
 
 **Every nonzero complex number is a length times a direction; multiplying two of them multiplies the lengths and adds the angles, and the angle is fixed only up to whole turns, so one range is chosen and it jumps on the negative real axis.**
 
@@ -26,7 +26,7 @@ To scale, 9 units per km/h, 0 where the axes cross. The arc with the triangle is
 
 ## The formula
 
-Notation first, in words. The **argument** of $`z`$, written $`\arg z`$ and read "arg z", is the angle of the arrow from 0 to $`z`$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π].
+Notation first, in words. For a nonzero $`z`$, the **argument** of $`z`$, written $`\arg z`$ and read "arg z", is the angle of the arrow from 0 to $`z`$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π].
 
 Below, $`r`$ and $`s`$ are lengths, and $`\theta`$ (theta) and $`\varphi`$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
 
@@ -34,7 +34,7 @@ Below, $`r`$ and $`s`$ are lengths, and $`\theta`$ (theta) and $`\varphi`$ (phi)
 z = a + bi = r(\cos\theta + i\sin\theta), \qquad a = r\cos\theta,\quad b = r\sin\theta,\quad r = \sqrt{a^2 + b^2}
 ```
 
-**Read it aloud:** a complex number is its length times the point at its angle on the circle of radius 1.
+**Read it aloud:** a nonzero complex number is its length times the point at its angle on the circle of radius 1.
 
 ```math
 r(\cos\theta + i\sin\theta)\cdot s(\cos\varphi + i\sin\varphi) = rs\,\bigl(\cos(\theta + \varphi) + i\sin(\theta + \varphi)\bigr)
@@ -42,7 +42,7 @@ r(\cos\theta + i\sin\theta)\cdot s(\cos\varphi + i\sin\varphi) = rs\,\bigl(\cos(
 
 **Read it aloud:** to multiply, multiply the lengths and add the angles.
 
-Any angle $`\theta + 2\pi k`$, with $`k`$ a whole number, names the same point. The principal argument is the one that lands in (−π, π], so $`\arg(zw)`$ is $`\arg z + \arg w`$ plus whichever whole number of turns brings the sum back into range.
+Any angle $`\theta + 2\pi k`$, with $`k`$ a whole number, names the same point. The principal argument is the one that lands in (−π, π], so for nonzero $`z`$ and $`w`$, $`\arg(zw)`$ is $`\arg z + \arg w`$ plus whichever whole number of turns brings the sum back into range.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -91,7 +91,7 @@ The brackets are the angle-addition identities ([Trig identities](../../05-Geome
 
 On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of [Complex numbers](01-complex-numbers.md), which multiplies the parts out with $`i^2 = -1`$ and uses no angle, reaches the same −14.142136 + 14.142136i.
 
-Division runs the rule backwards: divide lengths, subtract angles. The product divided by 2i is the wind again, 7.071068 + 7.071068i.
+Division of two nonzero numbers runs the rule backwards: divide lengths, subtract angles. The product divided by 2i is the wind again, 7.071068 + 7.071068i.
 
 ### Step 4: angles wrap, so the argument needs a range
 
@@ -147,7 +147,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads to each key number. The product comes from the pair rule, which uses no angle, and from lengths and angles. The argument comes from atan2 and from a bisection on the cosine alone plus the sign of the imaginary part, with no inverse trigonometry. Bisection halves the range 0 to π again and again, closing in on the angle whose cosine is a/r. Python uses its built-in complex type; Rust defines a pair type.
+Two independent roads to each key number. The product comes from the pair rule, which uses no angle, and from lengths and angles. The argument comes from atan2 and from a bisection on the cosine alone plus the sign of the imaginary part, with no inverse trigonometry.
+
+Bisection halves the range 0 to π again and again, closing in on the angle whose cosine is a/r. Python uses its built-in complex type; Rust defines a pair type.
 
 ### Python
 
@@ -520,7 +522,7 @@ example : arg (-5 : ℂ) = π ∧ -π ∉ Set.Ioc (-π) π := by
 - **Powers and roots.** Each repeated multiplication adds the angle again, which locates every root of a number: [Powers and roots](05-powers-roots-and-roots-of-unity.md).
 
 > **Say it back**
-> A nonzero complex number is a length and an angle: a = r cos θ, b = r sin θ. Multiplying multiplies lengths and adds angles, by the angle-addition identities. The angle is fixed only up to whole turns, so the principal argument takes the one in (−π, π], chosen by the signs of both parts: −1 − i is at −135°. It jumps a full turn on the negative real axis, and every single-valued choice jumps somewhere.
+> A nonzero complex number is a length and an angle: a = r cos θ, b = r sin θ. Multiplying two of them multiplies lengths and adds angles, by the angle-addition identities. The angle is fixed only up to whole turns, so the principal argument takes the one in (−π, π], chosen by the signs of both parts: −1 − i is at −135°. It jumps a full turn on the negative real axis, and every single-valued choice jumps somewhere.
 
 ---
 
