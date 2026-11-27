@@ -24,7 +24,7 @@ Python and Rust check every number. Lean proves key results.</p>
 
 ## What this library is
 
-This library teaches math with short, self-contained **cards**, one idea each. It is for adults without formal math training who want understanding, not memorized rules.
+This library teaches math with short, self-contained **cards**, one idea each. It is for adults without formal math training who want to see why each rule works.
 
 Cards build in order, using only ideas from earlier cards:
 
@@ -46,7 +46,7 @@ Every card uses the same sections:
 | **The formula** | The rule, every symbol defined, and how to read it aloud. |
 | **Why it works** | Step-by-step reasoning. Long proofs stay collapsed until you open them. |
 | **Worked numbers, by hand** | Full example you can follow on paper. |
-| **The code** | Python and Rust programs that compute every number by at least two independent methods each. |
+| **The code** | Python and Rust programs that print every number on the card and reach the main answer by at least two independent routes. |
 | **The proof** | Formal proof in **Lean** (a computer proof checker) for key results. States what Lean proves and what Python and Rust check. |
 | **What breaks** | Numbers showing what goes wrong when an assumption fails. |
 | **The usual mistake** | The common error and how to avoid it. |
@@ -100,24 +100,24 @@ Select any wing to open its shelves and cards.
 
 ## How cards are checked
 
-Every card passes automated checks and independent review.
+Each card has a Python check and a Rust check, almost every card has a Lean proof, and a second agent reviews each card.
 
 ### Code and review
 
-- **No hand-typed numbers.** Each card's Python and Rust programs compute every stated number and must print identical output.
-- **Independent methods.** Each check compares two routes (such as a formula against a brute-force count, simulation, or exact calculation).
-- **Failure-tested.** Tests break the math on purpose so a wrong formula fails the check.
-- **Strict linter.** An automated **linter** (format checker) verifies card structure, links, symbols, and sources. Every source DOI (Digital Object Identifier, a permanent link to a work) is verified.
-- **Independent review.** Reviewers recompute numbers, test proofs, and flag misleading text. Every issue they find is fixed.
+- No number on a card is typed by hand. The card's Python and Rust programs print every stated number, and their output must match exactly.
+- Each check reaches the main answer by at least two independent routes, such as a formula against a brute-force count, a simulation or an exact calculation.
+- During review, each Python check is broken on purpose in three ways, to confirm that a wrong formula fails.
+- A **linter** (an automated format checker) checks each card's structure, links, symbols and sources. Every source's DOI (Digital Object Identifier, a permanent link to a work) is checked.
+- A second AI agent that did not write the card reviews it. It recomputes the numbers, tests the proofs, flags misleading text and fixes what it finds.
 
 ### Lean proofs
 
-- **Computer-checked.** Almost every card has a [Lean 4](https://lean-lang.org) proof built on [Mathlib](https://leanprover-community.github.io) (Lean's math library).
-- **Complete.** Every proof uses only Lean's standard axioms (the basic assumptions Lean accepts without proof).
-- **Clear split.** Lean proves exact math; Python and Rust check worked numbers and real-world models. Each card states which is which.
-- **Waiting on Mathlib.** 23 of the 2,351 cards have no Lean yet because Mathlib does not yet cover enough of these subjects:
+- Almost every card has a proof in [Lean 4](https://lean-lang.org), built on [Mathlib](https://leanprover-community.github.io) (Lean's math library). A computer checks each proof.
+- Every proof uses only Lean's standard axioms (the basic assumptions Lean accepts without proof).
+- Lean proves the exact math. Python and Rust check the worked numbers and the real-world models. Each card says which is which.
+- 22 of the 2,351 cards have no Lean yet. For most of them, Mathlib does not yet cover enough of the subject:
   - planar drawings and polyhedra
-  - the homology of spheres
+  - the homology of spheres and Poincaré duality
   - interpolation of operators
   - Bézout's theorem
   - rational points on elliptic curves
@@ -128,7 +128,7 @@ Errors still happen sometimes. If you find one, [open an issue](https://github.c
 
 ## Run a check yourself
 
-All checks are in `checks/`.
+All checks are in [`checks/`](checks).
 
 ### Python and Rust
 
@@ -144,7 +144,7 @@ Each program prints its steps and confirms every check passed.
 
 ### Lean
 
-1. Install [elan](https://github.com/leanprover/elan) (Lean's installer). The `lean/` folder pins the Lean and Mathlib versions.
+1. Install [elan](https://github.com/leanprover/elan) (Lean's installer). The [`lean/`](lean) folder fixes the Lean and Mathlib versions.
 2. Fetch precompiled Mathlib and run Lean on a proof:
 
    ```bash
@@ -164,21 +164,28 @@ Read the cards on GitHub. They are **Markdown** files (plain text with light for
 - Long proofs stay collapsed until you open them.
 - Unwritten cards appear as plain text.
 
-## Layout
+## What is in this repository
 
-- `Cards/<wing>/README.md`: Wing page listing its shelves and cards.
-- `Cards/<wing>/<shelf>/<card>.md`: Individual cards.
-- `Cards/<wing>/figures/`: Diagrams shown on cards.
-- `checks/<card>_check.py`: Each card's Python check.
-- `checks/<card>_check.rs`: Each card's Rust check.
-- `checks/<card>_check.lean`: Each card's Lean proof.
-- `lean/`: Lean project with pinned Lean and Mathlib versions.
-- `SYLLABUS.md`: All 25 wings, linked to their pages.
-- `.github/`: Contributing guide, agent brief, and banner.
+Seven items sit at the top level:
+
+- [`Cards/`](Cards): the library itself. One folder per wing, one folder per shelf inside it, one file per card.
+- [`checks/`](checks): each card's Python check, Rust check and Lean proof, so you can test any card yourself.
+- [`lean/`](lean): settings only, no proofs. They fix the Lean and Mathlib versions that the proofs in `checks/` are checked with.
+- [`SYLLABUS.md`](SYLLABUS.md): the table of contents. All 25 wings in reading order, each linked to its own page.
+- `README.md`: this page.
+- [`LICENSE`](LICENSE): the terms for reusing the writing (CC BY 4.0). The terms for the code are in [`checks/LICENSE`](checks/LICENSE).
+- [`.github/`](.github): files that GitHub looks for under this fixed name. It holds the [contributing guide](.github/CONTRIBUTING.md), the [agent brief](.github/AGENTS.md) (the standard every card meets), the checklist for proposed changes, and the banner at the top of this page.
+
+Inside the folders:
+
+- `Cards/<wing>/README.md`: the wing's page, listing its shelves and cards.
+- `Cards/<wing>/<shelf>/<card>.md`: one card.
+- `Cards/<wing>/figures/`: the drawings shown on that wing's cards.
+- `checks/<card>_check.py`, `checks/<card>_check.rs`, `checks/<card>_check.lean`: one card's Python check, Rust check and Lean proof.
 
 ## How it is made
 
-AI agents write the cards to a strict house standard. Automated checks and independent reviewers verify every card. Read the full standard in the [agent brief](.github/AGENTS.md).
+AI agents write the cards, following the [agent brief](.github/AGENTS.md). It is the standard every card meets. A second agent that did not write the card then reviews it, and the automated checks above run on every card.
 
 ## Contributing
 
