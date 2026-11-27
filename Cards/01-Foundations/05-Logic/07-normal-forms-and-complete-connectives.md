@@ -467,7 +467,7 @@ example :
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 - [Proof complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long a proof that a CNF always fails must be.
 
-This ends Logic; Proof opens with Direct proof. Left open: what is the shortest formula for a given table?
+This card ends the Logic shelf, and the Proof shelf opens with Direct proof. Left open for the Algebra and Complexity cards above: the read-off forms can be long, so what is the shortest formula for a given table?
 
 ---
 
