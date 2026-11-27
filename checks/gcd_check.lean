@@ -65,7 +65,7 @@ example : ∀ d ∈ Finset.Icc 61 180, ¬(d ∣ 180 ∧ d ∣ 300) := by decide
 example : Nat.primeFactorsList 180 = [2, 2, 3, 3, 5] ∧ Nat.primeFactorsList 300 = [2, 2, 3, 5, 5] := by
   norm_num
 example : 2 * 2 * 3 * 5 = 60 := by decide
--- 12 = 2 × 2 × 3 goes into 180 with 15 left over; 8 = 2 × 2 × 2 does not, 180 has only two 2s.
+-- 12 = 2 × 2 × 3 goes into 180 fifteen times; 8 = 2 × 2 × 2 does not, 180 has only two 2s.
 example : 12 * 15 = 180 ∧ ¬ 8 ∣ 180 := by decide
 -- The tiling: 180 ÷ 60 = 3 across, 300 ÷ 60 = 5 down, 15 tiles.
 example : 180 / 60 = 3 ∧ 300 / 60 = 5 ∧ 3 * 5 = 15 := by decide

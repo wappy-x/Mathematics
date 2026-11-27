@@ -339,7 +339,7 @@ example : 5 * 7 + 1 = 36 ∧ 36 = 2 * 2 * 3 * 3 := by norm_num
 ## Where you meet it in real life
 
 - **The record-prime hunt.** Volunteers pool spare computer time to find the largest known prime, and the record falls every few years. Euclid is why the search can never finish: there is always a bigger one.
-- **Public-key encryption.** Keys are built from large primes nobody has used before, which works only because the supply never dries up ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)).
+- **Public-key encryption.** Keys are built from large primes nobody has used before, which works because primes of every size are plentiful; this card proves only that they never run out ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)).
 - **Proof by contradiction.** The example everyone learns it on: assume the opposite, build one object, watch it break ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 > **Say it back**

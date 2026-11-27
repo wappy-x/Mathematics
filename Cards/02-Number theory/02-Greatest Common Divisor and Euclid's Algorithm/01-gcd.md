@@ -8,7 +8,7 @@
 
 The bathroom floor is 180 cm by 300 cm. You want square tiles, whole ones, no cutting, flush along both walls.
 
-That rules almost every size out: the tile has to go into 180 exactly and into 300 exactly. Twelve sizes survive. The biggest is 60 cm — 3 across, 5 down, 15 tiles, no saw. A 30 cm tile takes 60 of them.
+That rules almost every size out: the tile has to go into 180 exactly and into 300 exactly. Twelve whole-centimetre sizes survive. The biggest is 60 cm — 3 across, 5 down, 15 tiles, no saw. A 30 cm tile takes 60 of them.
 
 A number that goes into another with nothing left over **divides** it ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). The sizes that work divide 180 and divide 300: the **common divisors**. The biggest is this card.
 
@@ -303,7 +303,7 @@ example : ∀ d ∈ Finset.Icc 61 180, ¬(d ∣ 180 ∧ d ∣ 300) := by decide
 example : Nat.primeFactorsList 180 = [2, 2, 3, 3, 5] ∧ Nat.primeFactorsList 300 = [2, 2, 3, 5, 5] := by
   norm_num
 example : 2 * 2 * 3 * 5 = 60 := by decide
--- 12 = 2 × 2 × 3 goes into 180 with 15 left over; 8 = 2 × 2 × 2 does not, 180 has only two 2s.
+-- 12 = 2 × 2 × 3 goes into 180 fifteen times; 8 = 2 × 2 × 2 does not, 180 has only two 2s.
 example : 12 * 15 = 180 ∧ ¬ 8 ∣ 180 := by decide
 -- The tiling: 180 ÷ 60 = 3 across, 300 ÷ 60 = 5 down, 15 tiles.
 example : 180 / 60 = 3 ∧ 300 / 60 = 5 ∧ 3 * 5 = 15 := by decide
@@ -324,7 +324,7 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 #print axioms common_divisors_are_divisors_of_gcd
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-27 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'gcd_is_largest_common_divisor' depends on axioms: [propext, Quot.sound]

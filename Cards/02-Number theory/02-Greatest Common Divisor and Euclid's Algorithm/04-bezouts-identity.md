@@ -384,7 +384,7 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 
 - **Undoing a multiplication on a clock.** What to multiply by to get back to 1 is exactly this, and needs gcd 1: [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md).
 - **Sharing no factors.** With gcd 1 the mix lands on 1 itself, the hinge of [Coprime numbers](05-coprime-numbers.md) and [Euclid's lemma](06-euclids-lemma.md).
-- **Measuring puzzles and gear teeth.** A target is reachable exactly when the gcd divides it: 21 and 15 can leave 6 or 9 litres, never 4, and two cogs line up on the multiples of their gcd.
+- **Measuring puzzles.** A target is reachable exactly when the gcd divides it: 21 and 15 can leave 6 or 9 litres, never 4.
 
 > **Say it back**
 > With two whole numbers not both zero, pour whole copies of one in and throw whole copies of the other away, and what is left is a multiple of their gcd — so 21 and 15 can never leave 1 or 2 litres. The gcd itself is always reachable: run Euclid down to it, then walk back up, swapping remainders out. Here, 21 × (−2) + 15 × 3 = 3. Slide by each jug over the gcd for another pair, forever.
