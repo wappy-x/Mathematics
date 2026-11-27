@@ -116,7 +116,7 @@ The roof sits in a 4 by 2 box with two right triangles of area 2 at its top corn
 
 Every polygon that does not cross itself cuts into triangles along inside diagonals (proved in [Shoelace formula](01-polygon-area-and-orientation.md)). Glue them back one at a time: each has score equal to area, and both totals add.
 
-A second proof cuts the polygon into the smallest grid triangles, those with no grid points except their corners. Euler's formula for flat networks, vertices minus edges plus faces equals 2 ([Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md)), counts them.
+A second proof cuts the polygon into the smallest grid triangles, those with no grid points except their corners. Euler's formula for flat networks in one piece, vertices minus edges plus faces equals 2 ([Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md)), counts them.
 
 Each has area 1/2: two copies form a parallelogram with no other grid points, whose copies tile the plane, one grid point per tile, so it covers one square.
 
