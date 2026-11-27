@@ -404,7 +404,7 @@ example : cmTie Maya ≤ cmTie Priya ∧ cmTie Priya ≤ cmTie Maya ∧ Maya ≠
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to the card's numbers, so expect one to fire.
 > - **Give everyone a self-loop.** Add the five loops to the email list: reflexive turns to yes, antisymmetric still no — Maya and Jon write both ways.
 > - **Make two heights tie.** Set Priya to 168 cm, Maya's height: antisymmetric turns to no, each now at least as tall as the other.
 
