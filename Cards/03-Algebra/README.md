@@ -90,7 +90,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [The inverse matrix: the matrix that undoes another, the 2 by 2 formula, and when no inverse exists](05-Solving%20Systems/03-inverse-matrix.md)
 4. [Determinants: the one number that says how much a square matrix stretches signed area, and zero means it squashed something flat](05-Solving%20Systems/04-determinants.md)
 5. [Rank and nullity: what a matrix keeps and what it kills, and why the two counts add up to the number of inputs](05-Solving%20Systems/05-rank-nullity.md)
-6. [Cramer's rule: when a square matrix has nonzero determinant, each unknown is a ratio of two determinants, and the inverse is the flipped cofactor table divided by it](05-Solving%20Systems/06-cramers-rule-and-the-adjugate.md)
+6. [Cramer's rule: when a square matrix has nonzero determinant, each unknown is a ratio of two determinants, and the inverse is the flipped cofactor table divided by that determinant](05-Solving%20Systems/06-cramers-rule-and-the-adjugate.md)
 
 [↑ Back to the shelves](#top)
 
