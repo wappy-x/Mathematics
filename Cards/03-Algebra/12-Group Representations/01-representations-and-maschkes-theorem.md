@@ -1,4 +1,4 @@
-# Representations: a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further
+# Representations: a group acting by matrices, and Maschke's theorem splitting every finite-dimensional complex one of a finite group into pieces that cannot split further
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Group Representations](../README.md#s12) → Representations
 
@@ -16,9 +16,9 @@ The heights split into three parts that no move can mix:
 - **twist**, +2 mm on corners 0 and 2, −2 mm on corners 1 and 3: the part no flat plane can fit;
 - **tilt**, the slope: two numbers, (1, 1), one per diagonal (corner 0 up, 2 down; corner 1 up, 3 down), giving the list (1, 1, −1, −1).
 
-They add back: (3, 3, 3, 3) + (2, −2, 2, −2) + (1, 1, −1, −1) = (6, 2, 4, 0). Heinrich Maschke proved in 1899 that such a split always exists.
+They add back: (3, 3, 3, 3) + (2, −2, 2, −2) + (1, 1, −1, −1) = (6, 2, 4, 0). Heinrich Maschke proved in 1899 that such a split exists for every finite group on a finite-dimensional complex space.
 
-**A representation turns each member of a group into a matrix, so that combining members matches multiplying matrices; Maschke's theorem says that for a finite group acting on a finite-dimensional space over the complex numbers, the space splits into kept pieces that cannot split further.**
+**A representation turns each member of a group into an invertible matrix, so that combining members matches multiplying matrices; Maschke's theorem says that for a finite group acting on a finite-dimensional space over the complex numbers, the space splits into kept pieces that cannot split further.**
 
 **What kind of fact this is:** representation, kept subspace and irreducible are definitions; Maschke's theorem is proved on this card in Why it works.
 
@@ -633,7 +633,7 @@ example : (!![2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2] : Matrix (Fin 4) (
 - **Checking a slab.** Four corner readings split into height, tilt and twist; the twist measures warp.
 
 > **Say it back**
-> A representation writes each member of a group as a matrix, so combining matches multiplying. A kept subspace is mapped into itself by every matrix; an irreducible representation is not zero and keeps only zero and everything. Averaging a projection over the group makes it commute with every move, so its zero set is a kept partner. Repeating splits any finite-dimensional representation of a finite group over the complex numbers into irreducible pieces. The tile's heights split as height, twist and tilt: 4 = 1 + 1 + 2.
+> A representation writes each member of a group as an invertible matrix, so combining matches multiplying. A kept subspace is mapped into itself by every matrix; an irreducible representation is not zero and keeps only zero and everything. Averaging a projection over the group makes it commute with every move, so its zero set is a kept partner. Repeating splits any finite-dimensional representation of a finite group over the complex numbers into irreducible pieces. The tile's heights split as height, twist and tilt: 4 = 1 + 1 + 2.
 
 ---
 
@@ -649,7 +649,7 @@ example : (!![2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2] : Matrix (Fin 4) (
 - [Schur's lemma and orthogonality](02-schurs-lemma-and-character-orthogonality.md): which matrices commute with every move on an irreducible piece, and reading the pieces from traces alone.
 - [Character tables](03-character-tables.md): how many irreducible pieces a group has, and its table of traces.
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): a snow crystal's symmetries on six arm lengths, quoting the theorem proved here.
-- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): finite-dimensional representations of a key symmetry split into stepped eigenvalue ladders rising by two.
 
 This card shows a split exists, but not how many different irreducible pieces a group has, or whether the split is unique.
 

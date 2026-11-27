@@ -1,4 +1,4 @@
-# Character tables: as many irreducible pieces as conjugacy classes, their sizes squared add up to the group's size, and the table fingerprints the group
+# Character tables: over the complex numbers, a finite group's irreducible pieces match its conjugacy classes, their squared sizes add to its size, and the table fingerprints it
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Group Representations](../README.md#s12) → Character tables
 
@@ -8,7 +8,7 @@
 
 A square tile fits its recess eight ways: four turns and four flips. As 2-by-2 matrices, with the corners on the axes, the quarter turn is `[[0, -1], [1, 0]]` and the diagonal flip is `[[1, 0], [0, -1]]`. Giving each move a matrix this way is a **representation** ([Representations](01-representations-and-maschkes-theorem.md)).
 
-Representations split into pieces; one that cannot split again is **irreducible**, and its **dimension** is the size of its matrices.
+Over the complex numbers, a finite group's representations split into pieces; one that cannot split again is **irreducible**, and its **dimension** is the size of its matrices.
 
 The tile has five irreducible pieces: four of dimension 1 and one of dimension 2, the matrices above. Two counts predict this:
 
@@ -52,7 +52,7 @@ The rows obey the orthogonality from [Schur's lemma and orthogonality](02-schurs
 \langle \chi_i, \chi_j \rangle = \frac{1}{\lvert G\rvert} \sum_{\text{classes } C} \lvert C\rvert \, \chi_i(C) \, \overline{\chi_j(C)} = \begin{cases} 1 & i = j \\ 0 & i \neq j \end{cases}
 ```
 
-**Read it aloud:** multiply two rows entry by entry, weight each column by its class size, add, and divide by the group's size; a row against itself gives 1, two different rows give 0. The bar is the complex conjugate (the sign of the imaginary part flipped); on these whole-number tables it changes nothing.
+**Read it aloud:** multiply two rows entrywise, weight by class sizes, add, and divide by the group's size; a row with itself gives 1, different rows 0. The bar is the complex conjugate (flipping the imaginary sign), unchanged on whole numbers.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -942,17 +942,17 @@ end CharacterTables
 
 - [Schur's lemma and orthogonality](02-schurs-lemma-and-character-orthogonality.md): the weighted inner product, and Schur's lemma for Step 3.
 - [Presentations](../08-Groups/15-group-presentations.md): generators and relations, which list the sign pieces, and the group Q8.
-- [Representations](01-representations-and-maschkes-theorem.md): Maschke's theorem, that every representation splits into irreducible pieces.
+- [Representations](01-representations-and-maschkes-theorem.md): Maschke's theorem, splitting any finite-dimensional complex representation of a finite group into irreducibles.
 - [Conjugacy and the class equation](../08-Groups/10-conjugacy-and-the-class-equation.md): the tile's five classes of look-alike moves.
 
 ## Where this goes next
 
-- [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): Fourier series on a compact group, with the matrix entries of its representations as the waves.
-- [Highest weights](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/04-highest-weight-theorem-and-weyl-dimension-formula.md): every irreducible representation is fixed by its top weight, and Weyl's formula gives its size.
+- [Peter-Weyl](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/04-peter-weyl-theorem.md): extending Fourier series to continuous, closed-and-bounded symmetry groups, using representation matrix entries as waves.
+- [Highest weights](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/04-highest-weight-theorem-and-weyl-dimension-formula.md): for continuous symmetry groups, each irreducible piece is fixed by its top eigenvalue list, giving its dimension.
 
-Natural next topics: building a group's pieces from a subgroup's (induced representations), and extra data that separates equal tables, such as where a member's square lands.
+Next topics: building a group's pieces from a subgroup's (induced representations), and extra data separating equal tables, such as where squares land.
 
-This card closes Algebra. The two links above carry representations into later wings. The reading order goes on with [The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md), the first card of Combinatorics and graphs, which starts counting from scratch.
+This card closes Algebra; the reading order continues with [The rules of sum and product](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/01-rules-of-sum-and-product.md) in Combinatorics and graphs, starting counting from scratch.
 
 The open question: what, beyond the table, pins down a finite group completely?
 

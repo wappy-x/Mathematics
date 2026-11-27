@@ -1,4 +1,4 @@
-# Schur's lemma and orthogonality: a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular
+# Schur's lemma and orthogonality: a move-respecting map between irreducible pieces is zero or an isomorphism, so different complex finite-group pieces have perpendicular traces
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Group Representations](../README.md#s12) → Schur's lemma and orthogonality
 
@@ -14,7 +14,7 @@ This card finds them with one number per move: the **trace**, the sum of a matri
 
 Look-alike moves have equal traces. They form five **conjugacy classes**: doing nothing (1 move), the half turn (1), quarter turns (2), diagonal flips (2) and edge flips (2). In that order, the corner traces are 4, 0, 0, 2, 0.
 
-**A map that respects the moves between two irreducible pieces is zero or an isomorphism, so the trace lists of different pieces are perpendicular, and averaging any representation's trace list against them counts its pieces.**
+**For a finite group over the complex numbers, a move-respecting map between irreducible pieces is zero or an isomorphism, so different pieces' trace lists are perpendicular, and averaging any trace list against them counts pieces.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the character and its inner product are definitions.
 
@@ -186,7 +186,7 @@ The corner representation holds three different pieces, once each, read from 5 t
 
 ## Code, from first principles, and it actually runs
 
-The 8 moves come from multiplying the quarter turn and the flip until nothing new appears, the classes from conjugating every move by every move. Each inner product takes two roads: by classes with class sizes, and by moves with each undo found by search. Schur's lemma is checked by averaging two maps and by brute force over 625 integer matrices.
+The 8 moves come from multiplying the quarter turn and flip, the classes from conjugating every move by every move. Each inner product takes two roads: by classes and by moves. Schur's lemma is checked by averaging two maps and searching 625 integer matrices.
 
 ### Python
 
@@ -606,7 +606,7 @@ end SchursLemmaAndCharacterOrthogonality
 - **Signal processing.** For a clock's turns, the characters are the discrete Fourier waves; their orthogonality splits a signal into frequencies.
 
 > **Say it back**
-> A respectful map keeps its kernel and image, so between irreducible pieces it is zero or a match, and over the complex numbers from a piece to itself a multiple of the identity. Averaging maps around the group turns that into orthogonality of characters: different pieces give 0, the same piece 1. So a trace list, averaged against each irreducible character, counts the pieces. The tile's corner character (4, 0, 0, 2, 0) gives trivial, diagonal sign and floor, once each.
+> A respectful map keeps its kernel and image, so between irreducible pieces it is zero or a match, and over the complex numbers from a piece to itself a multiple of the identity. Averaging maps around a finite group turns that into orthogonality of complex characters: different pieces give 0, the same piece 1. So a trace list, averaged against each irreducible character, counts the pieces. The tile's corner character (4, 0, 0, 2, 0) gives trivial, diagonal sign and floor, once each.
 
 ---
 

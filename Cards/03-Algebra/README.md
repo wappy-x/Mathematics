@@ -199,9 +199,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *A group acting by matrices: Maschke's splitting into irreducible pieces, Schur's lemma and character orthogonality, and character tables: as many pieces as conjugacy classes, squared dimensions adding to the group's size, and a table that fingerprints the group. Rests on shelves 07, 08, 10 and 11.*
 
-1. [Representations: a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further](12-Group%20Representations/01-representations-and-maschkes-theorem.md)
-2. [Schur's lemma and orthogonality: a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular](12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md)
-3. [Character tables: as many irreducible pieces as conjugacy classes, their sizes squared add up to the group's size, and the table fingerprints the group](12-Group%20Representations/03-character-tables.md)
+1. [Representations: a group acting by matrices, and Maschke's theorem splitting every finite-dimensional complex one of a finite group into pieces that cannot split further](12-Group%20Representations/01-representations-and-maschkes-theorem.md)
+2. [Schur's lemma and orthogonality: a move-respecting map between irreducible pieces is zero or an isomorphism, so different complex finite-group pieces have perpendicular traces](12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md)
+3. [Character tables: over the complex numbers, a finite group's irreducible pieces match its conjugacy classes, their squared sizes add to its size, and the table fingerprints it](12-Group%20Representations/03-character-tables.md)
 
 [↑ Back to the shelves](#top)
 
