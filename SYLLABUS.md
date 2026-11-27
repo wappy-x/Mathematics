@@ -2,7 +2,7 @@
 
 The whole library in reading order: **25 wings, 281 shelves and 2,351 cards**, from counting to the open problems of current research. Each card uses only ideas from the cards before it, so the library can be read from the first card to the last.
 
-**Each wing has its own page.** Click a wing to see its shelves and every card on them, then click a card's title to read it.
+Each wing has its own page. Click a wing to see its shelves and every card on them, then click a card's title to read it.
 
 **2,351 of 2,351 cards are ready to read.**
 
