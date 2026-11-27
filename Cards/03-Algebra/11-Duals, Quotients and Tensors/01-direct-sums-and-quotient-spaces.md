@@ -14,7 +14,7 @@ The $0 baskets form a plane through the empty basket. Blur that plane to a point
 
 The plane also splits the shop. Every basket is one $0 basket plus some milks, in exactly one way: (2, 3, 1) is (2, −5, 1) plus 8 milks. A negative amount is a return. That unique split is a **direct sum**. The blurred space is a **quotient space**.
 
-**A direct sum splits every vector uniquely into one piece per part; a quotient blurs a subspace to a point, losing its dimensions; blurring what a map ignores leaves a copy of what it reaches.**
+**A direct sum splits every vector uniquely into one piece per part; a quotient blurs a subspace to a point, losing its dimensions; blurring what a linear map ignores leaves a copy of what it reaches.**
 
 **What kind of fact this is:** direct sum and quotient space are definitions; the dimension count and the first isomorphism theorem are theorems, proved in Why it works.
 
@@ -519,7 +519,7 @@ example : ((Finset.range 5 ×ˢ Finset.range 5 ×ˢ Finset.range 5).image
 
 - [Dual spaces](02-dual-spaces.md): the price list itself as a vector, a linear reading of baskets.
 - [Tensor products](03-tensor-products.md): a space built from two, where dimensions multiply.
-- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
+- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): chains where each map's image is the next map's kernel, with a bridge linking quotients.
 
 The determinant test sorted the baskets just as the bill did; why such readings form a space of their own is the question left open.
 

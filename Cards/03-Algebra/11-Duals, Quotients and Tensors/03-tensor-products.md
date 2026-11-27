@@ -137,7 +137,7 @@ Times the flat table (3, 0, 1, 6, 0, 2), it gives (3, 0, 12, 9, 0, 36), the same
 
 If $`T = v \otimes w`$, row $`i`$ is $`v_i`$ times $`w`$: every row is a multiple of one row, so the rank is at most 1.
 
-Conversely, if the rank is 1, every row is a multiple of one non-zero row. Call it $`w`$ and the multipliers $`v_i`$; then $`T = v \otimes w`$.
+Conversely, if the rank is 1, every row is a multiple of one non-zero row. Call it $`w`$ and the multipliers $`v_i`$; then $`T = v \otimes w`$. The all-zero table (rank 0) is $`0 \otimes w`$.
 
 With two rows, "proportional" means every 2-by-2 cross-difference $`T_{1j} T_{2k} - T_{1k} T_{2j}`$ is 0. The code calls these `minors`. For $`T`$ all three are 0. For $`S`$ the first is 1 × 1 − 0 × 0 = 1, so $`S`$ is no single product.
 
@@ -540,14 +540,14 @@ example : vecMulVec ![(1 : ℤ), 1] ![1, 1, 0] = !![1, 1, 0; 1, 1, 0] ∧
 - [Qubits](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/05-qubits-superposition-and-measurement.md): two-qubit states as tensors, entanglement as rank 2.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): tensors that vary from point to point.
 - [Monoidal categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/09-monoidal-categories-and-string-diagrams.md): the tensor product as one case of placing things side by side.
-- [Two particles](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md): product states, the singlet, and the CHSH bound.
-- [Universal coefficients and Kunneth](../../17-Topology/05-Homology/11-universal-coefficients-and-kunneth.md): the same product for groups, used to change the number system of homology or to multiply two spaces.
-- [Quasi-coherent sheaves](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): modules spread over a space, read at one point by a tensor product with that point's field.
-- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
+- [Two particles](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/11-two-particle-states-and-entanglement.md): simple and entangled two-particle quantum states, and a correlation test classical rules cannot match.
+- [Universal coefficients and Kunneth](../../17-Topology/05-Homology/11-universal-coefficients-and-kunneth.md): tensoring groups to switch number systems when counting a shape's holes, or to combine shapes.
+- [Quasi-coherent sheaves](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/11-quasi-coherent-and-coherent-sheaves.md): ring-scalar spaces attached across a shape, read at one point through a tensor product.
+- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): ring-scalar spaces whose linear maps and tensor products preserve chains of matching kernels and images.
 - [Kahler differentials](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/01-kahler-differentials.md): derivatives built from algebra alone, read at a point by a tensor product.
-- [Chern classes and Hirzebruch-Riemann-Roch](../../22-Algebraic%20geometry/09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): classes of bundles that turn tensor products into products, and the Euler characteristic from them.
-- [Spinors and the Dirac operator](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): spinors twisted by a bundle through a tensor product, and the index theorem in outline.
-- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): ladders of weights, where the tensor product of two ladders splits back into ladders.
+- [Chern classes and Hirzebruch-Riemann-Roch](../../22-Algebraic%20geometry/09-Intersection%20Theory%20and%20Surfaces/02-chern-classes-and-hirzebruch-riemann-roch.md): numerical tags for twisted families of spaces that turn tensor products into ordinary products.
+- [Spinors and the Dirac operator](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/12-spinors-dirac-operators-and-the-index-theorem.md): quantum spin fields combined with extra spaces by tensoring, and counting their zero-energy solutions.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): how a key symmetry acts in stepped eigenvalue ladders, whose tensor products split into ladders.
 - [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): the next shelf, where a group acts on a space by matrices and the space splits as a direct sum.
 
 A weeks-by-goods-by-shops table has three indices and no row rank; what replaces rank there is left open. The next shelf, [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md), starts a new thread instead: groups acting by matrices.

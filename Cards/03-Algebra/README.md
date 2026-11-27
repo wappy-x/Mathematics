@@ -188,7 +188,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Building new vector spaces from old ones: direct sums and quotients, the dual space of price lists, and the tensor product that pairs two spaces. Rests on shelves 03 to 09.*
 
 1. [Direct sums and quotient spaces: split a space into independent pieces, or blur a subspace to a point and count what is left](11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md)
-2. [Dual spaces: the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map](11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md)
+2. [Dual spaces: the linear readings of a space form a space of their own, a finite basis gives a dual basis, and the transpose is the dual map](11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md)
 3. [Tensor products: pair every basis vector of one space with every basis vector of another, so a 2-space and a 3-space make a 6-space, and most of its members are not simple pairs](11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md)
 
 [↑ Back to the shelves](#top)

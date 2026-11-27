@@ -1,4 +1,4 @@
-# Dual spaces: the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map
+# Dual spaces: the linear readings of a space form a space of their own, a finite basis gives a dual basis, and the transpose is the dual map
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Duals, Quotients and Tensors](../README.md#s11) → Dual spaces
 
@@ -546,7 +546,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 
 - [Tensor products](03-tensor-products.md): pairs two spaces into a space of tables, so that readings of pairs, linear in each slot, become linear readings of tables.
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md) in functional analysis: the continuous readings of infinite-dimensional spaces.
-- [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): the dual of the dual.
+- [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): when taking the dual space twice brings you back to the original space.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): a dual space at every point of a curved space.
 - [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): when scalars come from a ring instead of a field, which spaces still behave well under linear maps and tensor products.
 
