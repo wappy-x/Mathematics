@@ -12,7 +12,7 @@ Its total signed area, lobes above minus lobes below, is π. Rebuilding the puls
 
 The contour method of [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md) trades sin x/x for e^(iz)/z, which has a pole at 0, right on the path. The fix is a tiny half-circle round it: a dent. The dent does not shrink to nothing; it keeps half the pole's residue. What the rest of the path measures is the principal value: the integral with equal gaps cut out either side of the pole. For 1/(x(1 + x^2)) the pieces left and right of 0 are each infinite, yet the principal value is 0.
 
-**A tiny half-circle round a simple pole on the path contributes −iπ times the residue, so the principal value of a real integral is 2πi times the residues above the axis plus iπ times the residues on it.**
+**A tiny clockwise half-circle over a simple pole on the path contributes −iπ times the residue, so when every real pole is simple and the big upper arc vanishes, the principal value of a real integral is 2πi times the residues above the axis plus iπ times the residues on it.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the principal value it computes is a definition.
 
@@ -44,7 +44,7 @@ The dent. Let $`\Gamma_\varepsilon`$ be the arc $`z = a + \varepsilon e^{it}`$, 
 
 **Read it aloud:** a shrinking arc round a simple pole picks up i times the angle it sweeps times the residue.
 
-The upper dent runs from angle π to 0, so it picks up −iπc. When the big arc $`C_R`$ fades as R grows,
+The upper dent runs from angle π to 0, so it picks up −iπc. When f is holomorphic on and above the real axis except at finitely many poles, every pole on the real line is simple, and the big arc $`C_R`$ fades as R grows,
 
 ```math
 \mathrm{PV}\,\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\mathrm{Im}\, b > 0} \mathrm{Res}(f, b) + i\pi \sum_{a \text{ real}} \mathrm{Res}(f, a).
@@ -129,7 +129,7 @@ F(x) = ln|x| − ½ ln(1 + x^2) has derivative 1/x − x/(1 + x^2) = f(x). So th
 
 </details>
 
-A second road needs no complex numbers: add the humps of sin x/x between multiples of π, then average neighbouring running totals until they settle. Pushing the pole off the line by a small iδ instead of denting gives the principal value plus or minus iπ times the residue; that split drives The Hilbert transform.
+A second road needs no complex numbers: add the humps of sin x/x between multiples of π, then average neighbouring running totals until they settle. Pushing the pole off the line by a small iδ instead of denting gives the principal value plus or minus iπ times the residue; that split drives [The Hilbert transform](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md).
 
 ---
 
@@ -815,10 +815,10 @@ end IndentedContoursAndPrincipalValues
 - **Optics and cameras.** A slit or a shutter has a sin x/x profile; its area π fixes the rebuilt pulse's height.
 - **Signal processing.** An ideal low-pass filter, keeping frequencies below a cut-off, smooths with a sin x/x kernel.
 - **Physics.** Poles on the real frequency axis are pushed off by a small iδ: a principal value plus or minus iπ times a residue.
-- **Analytic signals.** The principal value against 1/(x − t) is the Hilbert transform: The Hilbert transform.
+- **Analytic signals.** The principal value against 1/(x − t) is [The Hilbert transform](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md).
 
 > **Say it back**
-> A pole on the path is stepped round on a tiny half-circle. At a simple pole that half-circle keeps −iπ times the residue. The real line then carries the principal value: equal gaps cut round the pole. For e^(ix)/x nothing is inside, so the area under sin x/x is π. For 1/(x(1 + x^2)) each side is infinite, but the principal value is 0.
+> A pole on the path is stepped round above on a tiny clockwise half-circle. At a simple pole that half-circle keeps −iπ times the residue. The real line then carries the principal value: equal gaps cut round the pole. For e^(ix)/x nothing is inside, so the area under sin x/x is π. For 1/(x(1 + x^2)) each side is infinite, but the principal value is 0.
 
 ---
 
@@ -828,9 +828,10 @@ end IndentedContoursAndPrincipalValues
 
 ## Where this goes next
 
+- [The keyhole contour](05-keyhole-contours.md): a branch cut along the positive axis instead of a pole, wrapped so its two banks disagree and solve the integral.
 - [The Hilbert transform](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/09-hilbert-transform-and-analytic-signals.md): the principal value against 1/(x − t) as a transform in its own right.
 
-A dent handles one pole; taking the principal value against 1/(x − t) at every t at once is an operation on whole signals, and what it does to a wave is the Hilbert transform.
+A dent steps round an isolated pole on the path; next on this shelf, what if the integrand has a whole branch cut along the positive axis, like 1/(√x (1 + x)), where a tiny half-circle is not enough? (Taking the principal value against 1/(x − t) at every t at once leads separately to the Hilbert transform.)
 
 ---
 

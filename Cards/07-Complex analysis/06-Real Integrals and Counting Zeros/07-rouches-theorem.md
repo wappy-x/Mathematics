@@ -14,7 +14,7 @@ The owner has one root inside, at 0, so the polynomial has exactly one. On the c
 
 Likewise z^3 − 1/8: on the unit circle z^3 has size 1, more than 1/8, so z^3 − 1/8 has three roots inside, as z^3 does. Eugène Rouché published the theorem in 1862.
 
-**If one function is strictly bigger than a second at every point of a loop, adding the second changes nothing about how many zeros lie inside: the sum has exactly as many as the bigger function.**
+**If two functions are holomorphic on and inside a simple closed loop, and one is strictly bigger in size than the second at every point of the loop, adding the second changes nothing about how many zeros lie inside, counted with multiplicity: the sum has exactly as many as the bigger function.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the argument principle.
 
@@ -40,7 +40,7 @@ Let $`f`$ and $`g`$ be holomorphic on and inside a simple closed loop $`C`$ (one
 |g(z)| < |f(z)| \ \text{ for every } z \text{ on } C \quad\Longrightarrow\quad N(f + g) = N(f).
 ```
 
-**Read it aloud:** if the added function is smaller than the main one at every point of the loop, the sum has exactly as many zeros inside as the main one.
+**Read it aloud:** if the added function is strictly smaller in size than the main one at every point of the loop, the sum has exactly as many zeros inside as the main one.
 
 The metaphor hands over here: the owner is f(z), the dog f(z) + g(z), the lead g(z), the lamppost 0. The proof uses one helper, the dog divided by the owner:
 
@@ -143,7 +143,9 @@ The code finds the real root −0.331989 and two mirror-image pairs of sizes 1.2
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one walks each circle in 2000 steps and adds the dog's small turns, the angle of each step's ratio p(next)/p(this) from atan2: the winding number with no integral. Road two finds all five roots by the Durand–Kerner iteration (correct each guess by p over the product of its distances to the other guesses) and counts them by size. The cubics use de Moivre's rule: the cube roots of a positive number share one size and sit a third of a turn apart ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Four asserts demand the roads agree, every root solves its equation, and both breaks show.
+Two roads. Road one walks each circle in 2000 steps and adds the dog's small turns, the angle of each step's ratio p(next)/p(this) from atan2: the winding number with no integral.
+
+Road two finds all five roots by the Durand–Kerner iteration (correct each guess by p over the product of its distances to the other guesses) and counts them by size. The cubics use de Moivre's rule: the cube roots of a positive number share one size and sit a third of a turn apart ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Four asserts demand the roads agree, every root solves its equation, and both breaks show.
 
 ### Python
 
@@ -869,21 +871,22 @@ end RouchesTheorem
 - **Inverse transforms.** The poles of a Laplace transform decide whether a response dies away; [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md) reads each one as an exponential.
 
 > **Say it back**
-> A dog on a lead shorter than its owner's distance to a post goes round the post as often as she does. If |g| < |f| at every point of a loop, the ratio 1 + g/f stays in the right half-plane and never turns round 0. So f + g winds round 0 as often as f, and by the argument principle has as many zeros inside. So z^5 + 3z + 1 has one root inside the unit circle and all five inside radius 2.
+> A dog on a lead shorter than its owner's distance to a post goes round the post as often as she does. If f and g are holomorphic on and inside a simple closed loop and |g| < |f| at every point of it, the ratio 1 + g/f stays in the right half-plane and never turns round 0. So f + g winds round 0 as often as f, and by the argument principle has as many zeros inside, counted with multiplicity. So z^5 + 3z + 1 has one root inside the unit circle and all five inside radius 2.
 
 ---
 
 ## What this builds on
 
-- [The argument principle](06-the-argument-principle.md): zeros inside a loop equal the image's winding number.
+- [The argument principle](06-the-argument-principle.md): for a holomorphic function with no zero on a simple loop, zeros inside (with multiplicity) equal the image's winding number.
 
 ## Where this goes next
 
+- [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): the next shelf turns from counting zeros to geometry: a holomorphic function keeps angles where its derivative is not zero.
 - [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): where poles lie decides whether a system settles, the question root counts answer.
 - [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): counting zeros in a region, for a function with infinitely many.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the same count of turns as a stability test for feedback loops.
 
-Left open: one large circle holds all the roots of a polynomial, but how do you count the zeros of a function that has infinitely many?
+Left open: one large circle holds all the roots of a polynomial, but how do you count the zeros of a function that has infinitely many? Zeta's zeros and the primes, above, does that for one famous function. The next shelf turns to geometry: what a holomorphic function does to shapes and angles where its derivative is not zero.
 
 ---
 

@@ -12,7 +12,7 @@ At x km from the foot, the share of the half-turn landing on each kilometre is 1
 
 This card finds that area without an antiderivative. Walk the real line from −R to R and return along a half-circle of radius R above it: a closed loop. The residue theorem prices the loop from the one pole inside, at i, where 1/(1 + z^2) blows up. The half-circle's part shrinks to nothing as R grows, so the loop's value is the real integral. The same steps give π/2 for 1/(1 + x^2)^2, where the pole is double.
 
-**For a ratio of polynomials whose bottom degree beats the top by at least 2, with no zero of the bottom on the real line, the integral over the whole real line is 2πi times the sum of the residues at the poles above the real axis.**
+**For a ratio of polynomials whose bottom degree beats the top by at least 2, with no zero of the bottom on the real line, the integral over the whole real line converges and is 2πi times the sum of the residues at the poles above the real axis.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the residue theorem and the ML bound.
 
@@ -28,7 +28,7 @@ To scale: 40 units per 1, 0 at (180, 150). Segment from (100.00, 150.00) to (260
 
 A reminder: the residue of f at a pole a, written $`\mathrm{Res}(f, a)`$, is the coefficient of 1/(z − a) in f's expansion near a, and a loop integral equals 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
-Let $`f = p/q`$ be a ratio of polynomials, q never zero on the real line, and the degree of q at least that of p plus 2. Then
+Let $`f = p/q`$ be a ratio of polynomials, q never zero on the real line, and the degree of q at least that of p plus 2. Then the improper integral converges, and
 
 ```math
 \int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\mathrm{Im}\, a > 0} \mathrm{Res}(f, a).
@@ -327,11 +327,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the formula for every case the card allows, the engine at every radius, and both lighthouse integrals.
+Lean proves the formula for every case the card allows, the engine at every radius beyond the poles, and both lighthouse integrals.
 
 - If the bottom degree beats the top by at least 2, and the bottom has no real zero, both tails converge on their own.
 - For such a ratio, the integral over the whole real line is 2πi times the sum of the residues above the axis.
-- For a ratio with no pole on the real line, segment plus arc equals that residue sum once R exceeds every pole's distance from 0.
+- For a ratio whose bottom has no zero on the real line, segment plus arc equals that residue sum once R exceeds every pole's distance from 0.
 - The area under 1/(1 + x^2) is π, and the area under 1/(1 + x^2)^2 is π/2.
 - The hand arithmetic holds exactly: poles, both residues, both loop values, the share of 1, two mistakes and the ML bound at R = 2.
 
@@ -1243,7 +1243,7 @@ end SemicircleContours
 > **Dropping the arc because it "looks small".** The arc is zero only in the limit. At R = 2 it carries 0.927295 of the 3.141593. It may be dropped only once a bound such as ML shows it tends to 0, and that bound needs the degree gap of 2.
 >
 > - **Counting every pole.** Adding the residue at −i too gives 0; that pole is outside the loop.
-> - **Using the simple-pole rule at a double pole.** Evaluating $`1/(z + i)^2`$ at i gives −1.570796i, not π/2.
+> - **Using the simple-pole rule at a double pole.** Taking $`1/(z + i)^2`$ at i as the residue gives −0.25, and multiplying by 2πi gives −1.570796i, not π/2.
 > - **Taking the symmetric limit as the integral.** For x/(1 + x^2) it is 0, though the integral diverges.
 
 ---
@@ -1267,9 +1267,10 @@ end SemicircleContours
 
 ## Where this goes next
 
-- [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): the arc for integrals with a factor e^(ix).
+- [Integrals round a full turn](02-trigonometric-integrals-on-the-unit-circle.md): periodic trig integrals over one full turn, closed directly into the unit circle instead of a semicircle.
+- [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): how a factor e^(iax) with a > 0 kills the big arc even when the degree gap is only 1.
 
-For x e^(ix)/(1 + x^2) the degree gap is only 1, so the ML bound no longer kills the arc; Jordan's lemma shows why the factor e^(iz) still makes it vanish.
+Next on this shelf: what if the integral is not over the whole real line, but a trig fraction over one full turn from 0 to 2π? (For whole-line integrals with e^(ix) and a degree gap of only 1, Jordan's lemma takes over on the card after.)
 
 ---
 

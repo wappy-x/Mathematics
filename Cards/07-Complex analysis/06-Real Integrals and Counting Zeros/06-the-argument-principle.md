@@ -14,7 +14,7 @@ Poles push the other way. A **pole** is a point where the function blows up, lik
 
 From here on the needle's net number of turns is the **winding number** of the output curve round 0 ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). The count never locates a zero.
 
-**Walk a loop and follow the value of f: the number of times it winds round 0 equals the number of zeros inside minus the number of poles inside, each counted as often as its multiplicity or order.**
+**For a function holomorphic on and inside a simple closed loop except at poles, with no zero or pole on the loop, walk the loop once anticlockwise and follow f: the number of times it winds round 0 equals the number of zeros inside minus the number of poles inside, each counted as often as its multiplicity or order.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with the full argument in a folded Detailed proof.
 
@@ -39,7 +39,7 @@ N - P = \frac{1}{2\pi i}\oint_C \frac{f'(z)}{f(z)}\,dz = \frac{\Delta_C \arg f}{
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`f`$, $`z`$ | the function, and the point walking the loop | z(z − 0.4); z on \|z\| = 1 | — |
-| $`C`$ | the loop, walked once anticlockwise | \|z\| = 1 | may enclose more zeros or poles |
+| $`C`$ | a simple closed loop, walked once anticlockwise | \|z\| = 1 | may enclose more zeros or poles |
 | $`f'`$ | the complex derivative of f | 2z − 0.4 | — |
 | $`N`$ | zeros inside, each counted by its multiplicity | 2 | one more turn per zero |
 | $`P`$ | poles inside, each counted by its order | 0; for g on \|z\| = 3, 3 | one turn fewer per pole |
@@ -54,6 +54,7 @@ A zero of **multiplicity** m at a: f is (z − a)^m times a function nonzero at 
 - **f is holomorphic (has a complex derivative) inside and on C, except at poles.** Drop this and the count fails: z-bar, the conjugate, has one zero inside the unit circle, but its needle turns −1 times.
 - **No zero or pole on C.** On |z| = 0.4 the walk hits the zero at 0.4, where the needle has no direction and f′/f is infinite.
 - **f not identically zero.** Then its zeros are isolated, so a loop holds finitely many.
+- **C is a simple closed loop, walked once anticlockwise.** Walk it clockwise and the sign flips; walk it twice and the count doubles.
 
 ---
 
@@ -135,7 +136,9 @@ The code prints all three. At 5 points the compass reads 2.
 
 ## Code, from first principles, and it actually runs
 
-Three roads; the first two share nothing but f. Road one: (1/2πi) times a trapezoid sum of f′/f dz at 256 points, the derivative written out by hand; its error for z(z − 0.4) on |z| = 1 falls from 6.6e-4 at 8 points to 4.3e-7 at 16 and 1.8e-13 at 32. Road two: the compass, with no derivative; it adds the small turn from each value of f to the next, read off atan2 (the angle of a point from its two coordinates). Road three: the located zeros and poles. The asserts pin all four cases, the shrinking error, the missed turns and the z-bar break.
+Three roads; the first two share nothing but f. Road one: (1/2πi) times a trapezoid sum of f′/f dz at 256 points, the derivative written out by hand; its error for z(z − 0.4) on |z| = 1 falls from 6.6e-4 at 8 points to 4.3e-7 at 16 and 1.8e-13 at 32.
+
+Road two: the compass, with no derivative; it adds the small turn from each value of f to the next, read off atan2 (the angle of a point from its two coordinates). Road three: the located zeros and poles. The asserts pin all four cases, the shrinking error, the missed turns and the z-bar break.
 
 ### Python
 
@@ -327,7 +330,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the argument principle for every circle, both as a loop integral and as needle turns, and the residue at each zero and pole.
+Lean proves the argument principle for every circle of positive radius, both as a loop integral and as needle turns, and the residue at each zero and pole.
 
 - For f and any circle C meeting the three conditions in When it holds, the loop integral of f′/f round C, divided by 2πi, is N − P.
 - Under the same conditions, the needle's angle can be kept continuous along the walk. Every such angle gains exactly 2π(N − P): N − P turns.
@@ -792,11 +795,11 @@ end TheArgumentPrinciple
 
 - **Counting a polynomial's roots in a region.** Walk the circle and count turns; no root is located. [Rouche's theorem](07-rouches-theorem.md) makes it easier still.
 - **Stability of feedback control.** A feedback loop is stable when 1 + L(s) has no zeros in the right half-plane; L, the loop's transfer function, is a function of a complex variable s. The **Nyquist criterion** walks up the imaginary axis and round a large half circle, and counts how often the plot of L circles −1: [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
-- **Zeros of the zeta function.** Their count up to a given height is the argument principle round a rectangle: Counting the zeros.
-- **Topology.** The winding number is the degree of a circle-to-circle map, generalised to spheres: Homology of spheres, and degree.
+- **Zeros of the zeta function.** Their count up to a given height is the argument principle round a rectangle: [Counting the zeros](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md).
+- **Topology.** The winding number is the degree of a circle-to-circle map, generalised to spheres: [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md).
 
 > **Say it back**
-> Walk a loop and watch f as a needle from 0. Each zero inside adds turns, one per unit of multiplicity; each pole takes turns away, one per unit of order. The reason: f′/f has residue m at a zero of multiplicity m and −p at a pole of order p, and its loop integral is i times the needle's total turn. For z(z − 0.4) on the unit circle the needle turns twice; for (z − 0.5)/(z − 2)^3 once, and −2 times on the circle of radius 3.
+> For a function holomorphic on and inside a simple closed loop except at poles, with no zero or pole on the loop, walk the loop once anticlockwise and watch f as a needle from 0. Each zero inside adds turns, one per unit of multiplicity; each pole takes turns away, one per unit of order. The reason: f′/f has residue m at a zero of multiplicity m and −p at a pole of order p, and its loop integral is i times the needle's total angle change. For z(z − 0.4) on the unit circle the needle turns twice; for (z − 0.5)/(z − 2)^3 once, and −2 times on the circle of radius 3.
 
 ---
 
@@ -807,11 +810,11 @@ end TheArgumentPrinciple
 
 ## Where this goes next
 
-- [Rouche's theorem](07-rouches-theorem.md): two functions close on the loop have the same count.
+- [Rouche's theorem](07-rouches-theorem.md): when |g| < |f| everywhere on a loop, holomorphic f + g and f have the same zero count inside.
 - [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): where zeta's zeros sit, and why primes care.
-- [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the count as a stability test.
-- [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): winding number as degree.
-- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): no zeta zeros on the line Re s = 1.
+- [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the winding count of turns round −1 as a stability test for feedback loops.
+- [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): how the winding number generalises to the degree of a map between higher-dimensional spheres.
+- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): proving the prime count x/log x from a contour integral of zeta's logarithmic derivative.
 - [Counting the zeros](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md): the zero count up to height T.
 
 Left open: when f is hard to walk, can a simpler function that stays close to f on the loop give the same count?

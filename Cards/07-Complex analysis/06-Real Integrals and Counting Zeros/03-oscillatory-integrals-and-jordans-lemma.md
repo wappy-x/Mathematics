@@ -12,7 +12,7 @@ At a = 1 that integral is 1.155727. At a = 0 it is π, the area under the pulse,
 
 Two obstacles block the semicircle method. First, cos z is huge off the real line. The fix is to write cos(ax) as the real part of e^(iax), a wave that shrinks as it rises into the upper half-plane. Second, for a slower-falling partner such as x/(1 + x^2), the length-times-maximum bound no longer kills the arc. Jordan's lemma does: the wave's decay over most of the arc is worth a whole factor of R.
 
-**Replace the cosine by e^(iax), close the real line with an arc in the half-plane where that wave decays, and the arc vanishes whenever the rest of the integrand shrinks to zero there, however slowly; the integral is then the residues' contribution.**
+**For a nonzero frequency a, replace the cosine by e^(iax) and close the real line with an arc in the half-plane where that wave decays; the arc vanishes whenever the rest of the integrand shrinks to zero there, at every point of the arc at once, however slowly. With no poles on the real line, the integral with e^(iax) is then the residues' contribution, and its real part is the cosine integral when the rest of the integrand is real on the line.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the inequality sin t ≥ 2t/π.
 
@@ -35,7 +35,7 @@ One line: π e^(−|a|), to two decimals. The peak at a = 0 is π, the pulse's a
 
 A reminder from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, so on the real line cos(ax) is the real part of e^(iax). Off the line, at z = x + iy, the size of e^(iaz) is e^(−ay): for a > 0 it shrinks as y grows.
 
-**Jordan's lemma.** Let $`a > 0`$. Let $`C_R`$ be the upper half-circle of radius R about 0, and let $`M_R`$ be the largest size on it of a continuous function g. Then
+**Jordan's lemma.** Let $`a > 0`$ and $`R > 0`$. Let $`C_R`$ be the upper half-circle of radius R about 0, and let $`M_R`$ be the largest size on it of a continuous function g. Then
 
 ```math
 \left|\int_{C_R} g(z)\,e^{iaz}\,dz\right| \le \frac{\pi}{a}\,M_R.
@@ -66,10 +66,11 @@ Applied to the click, with the one pole i above the axis:
 
 ### When it holds
 
-- **a > 0, arc above.** For a < 0 the wave grows upward: at a = −1 the upper arc at R = 8 carries 7.354818. Close below, clockwise.
-- **g shrinks on the arc, at any rate.** With g = 1 the arc is −2 sin(aR)/a, which swings for ever: −1.978717 at R = 8, 0.575807 at R = 16.
+- **a > 0, arc above.** For a < 0 the wave grows upward: at a = −1 the upper arc at R = 8 carries 7.354818. Close below, clockwise. At a = 0 there is no decay, so Jordan's bound divides by zero and the semicircle method's degree gap of 2 is needed instead.
+- **g is continuous and shrinks uniformly to 0 on the arc ($`M_R \to 0`$), at any rate.** With g = 1 the arc is −2 sin(aR)/a, which swings for ever: −1.978717 at R = 8, 0.575807 at R = 16.
 - **e^(iax) in the loop, never cos(az).** Take the real part after integrating; this is valid because g is real on the real line.
 - **No pole on the real line.** Otherwise see [Poles on the path](04-indented-contours-and-principal-values.md).
+- **The real integral converges.** The loop gives the symmetric limit from −R to R; for a ratio of polynomials with degree gap 1 and a > 0, oscillation still makes each tail converge on its own.
 
 ---
 
@@ -126,7 +127,7 @@ For the click, $`M_R`$ ≤ 1/(R^2 − 1), so even ML suffices, and the real part
 Jordan earns its keep on the tilted pulse z e^(iaz)/(1 + z^2), where $`M_R`$ ≤ R/(R^2 − 1) falls only like 1/R. ML gives about π for every R, 3.153913 at R = 16. Jordan gives πR/(a(R^2 − 1)), 0.197120 at R = 16, tending to 0. The residue at i is e^(−a)/2, so the loop is πi e^(−a), and its imaginary part is the sine integral:
 
 ```math
-\int_{-\infty}^{\infty} \frac{x \sin ax}{1 + x^2}\,dx = \pi e^{-a} = 1.155727 \text{ at } a = 1.
+\int_{-\infty}^{\infty} \frac{x \sin ax}{1 + x^2}\,dx = \pi e^{-a} \quad (a > 0), \qquad 1.155727 \text{ at } a = 1.
 ```
 
 <details>
@@ -363,9 +364,9 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Jordan's lemma for every a > 0 and every radius, and both real-line integrals exactly.
+Lean proves Jordan's lemma for every a > 0 and every radius R > 0, and both real-line integrals exactly.
 
-- For a > 0 and any radius R, the arc integral of g e^(iaz) is at most π/a times $`M_R`$, or any larger bound.
+- For a > 0, any radius R > 0, and any g continuous on the upper arc, the arc integral of g e^(iaz) is at most π/a times $`M_R`$, or any larger bound.
 - For every frequency a, the click's integral of cos(ax)/(1 + x^2) over the real line is π e^(−|a|).
 - For a > 0, the tilted pulse's sine integral, x sin(ax)/(1 + x^2) from A to B, tends to π e^(−a) as A → −∞ and B → ∞ independently.
 - The hand steps hold exactly: 1 + z^2 = (z − i)(z + i), the residue at i, the loop value, and Jordan's bound at R = 16.
@@ -902,7 +903,7 @@ example : Real.pi * 16 / (1 * (16 ^ 2 - 1)) = 16 * Real.pi / 255 := by
 - **sin x / x.** The integral of sin x / x needs this lemma plus a detour round the pole at 0: [Poles on the path](04-indented-contours-and-principal-values.md).
 
 > **Say it back**
-> The cosine blows up off the real line, so write cos(ax) as the real part of e^(iax), which decays upward when a > 0. Close the real line with the upper arc and price the loop by its residues. Since sin t ≥ 2t/π, the arc is at most π/a times g's largest size there, so any g that shrinks at all loses its arc. For the click 1/(1 + x^2), the content at frequency a is π e^(−|a|), 1.155727 at a = 1.
+> The cosine blows up off the real line, so write cos(ax) as the real part of e^(iax), which decays upward when a > 0. With no poles on the real line, close it with the upper arc and price the loop by its residues. Since sin t ≥ 2t/π, the arc is at most π/a times g's largest size there, so any continuous g whose largest size on the arc shrinks to 0 loses its arc. For the click 1/(1 + x^2), the content at frequency a is π e^(−|a|), 1.155727 at a = 1.
 
 ---
 

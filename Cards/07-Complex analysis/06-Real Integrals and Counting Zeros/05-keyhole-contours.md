@@ -16,7 +16,7 @@ A square root has two values, so in the plane it needs a **branch cut**, a line 
 
 Opposite signs, walked in opposite directions, so the banks add: two copies of the area. The residue at −1 prices the loop, the circles fade, and an equation for the area is left, for any power between 0 and 1.
 
-**For 0 < a < 1, the area under x^(a−1)/(1 + x) from 0 to infinity is π/sin(πa), because the keyhole's two banks carry the same integral multiplied by 1 and by e^(2πia), and the residue at −1 fixes their difference.**
+**For 0 < a < 1, the area under x^(a−1)/(1 + x) from 0 to infinity is finite and equals π/sin(πa), because with the branch cut along the positive real axis and angle in (0, 2π), the keyhole's two banks carry the same integral multiplied by 1 and by e^(2πia), and 2πi times the residue at −1 fixes their difference.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the limits are in the folded Detailed proof.
 
@@ -44,7 +44,7 @@ I(a) = \int_0^\infty \frac{x^{a-1}}{1+x}\,dx = \frac{\pi}{\sin(\pi a)}, \qquad 0
 
 **Read it aloud:** the area under x to the a minus 1, over 1 plus x, from 0 to infinity, is π over the sine of π a.
 
-The engine is one exact equation, for every r below 1 and R above 1:
+The engine is one exact equation, for every $`0 < r < 1`$ and $`R > 1`$ (the big circle walked anticlockwise, the small one clockwise):
 
 ```math
 \big(1 - e^{2\pi i a}\big)\int_r^R \frac{x^{a-1}}{1+x}\,dx \;+\; \oint_{|z|=R} F \;+\; \oint_{|z|=r} F \;=\; 2\pi i\,\mathrm{Res}(F, -1), \qquad F(z) = \frac{z^{a-1}}{1+z}.
@@ -368,7 +368,7 @@ The outputs match line for line.
 Lean proves the area formula for every power a strictly between 0 and 1, and the worked numbers at a = 1/2 and a = 1/4.
 
 - For 0 < a < 1, the area under x^(a−1)/(1 + x) from 0 to infinity is finite and equals π/sin(πa).
-- Lean reaches that area by the swap x = t/(1 + t) and the beta function, not by the keyhole.
+- Lean reaches that area by the swap t = x/(1 + x) and the beta function, not by the keyhole.
 - Step 5's solve: (1 − e^(2πia)) times π/sin(πa) equals 2πi times the residue e^(iπ(a−1)).
 - The area for the power a equals the area for the power 1 − a, so I(3/4) = I(1/4).
 - At a = 1/2 the bottom-bank factor is −1, the residue at −1 is −i, and the loop is worth 2π.
@@ -585,10 +585,11 @@ example : π / Real.sin (π * (1 / 4)) = π * √2 := by
 
 ## Where this goes next
 
+- [The argument principle](06-the-argument-principle.md): turning contour integrals from real areas to counting zeros minus poles inside a loop.
 - [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this integral as Γ(a)Γ(1 − a), the reflection formula.
-- [The beta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md): the swap x = t/(1 + t) that turns this area into B(a, 1 − a), the beta function built from two gammas.
+- [The beta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md): the swap t = x/(1 + x) that turns this area into B(a, 1 − a), the beta function built from two gammas.
 
-This card finds the area but not why it equals Γ(a)Γ(1 − a), two gamma values multiplied; that is the open question.
+That finishes this shelf's contour methods for real integrals (why the area equals Γ(a)Γ(1 − a) is taken up on the gamma and beta cards above). Next on this shelf: can a contour integral count how many zeros and poles a function has inside a loop without locating any of them?
 
 ---
 

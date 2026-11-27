@@ -12,7 +12,7 @@ The average height over a turn is 2 radii, the hub. A different average takes on
 
 As t runs from 0 to 2π, the point e^(it) runs once round the circle of radius 1 about 0. So an integral over a full turn is a loop integral in disguise. Rewrite it in that point, find where it blows up inside the circle, and the residue theorem finishes.
 
-**Setting z = e^(it) turns a full-turn integral of a fraction in cos t and sin t into a loop integral round the unit circle, worth 2π i times the residues inside.**
+**Setting z = e^(it) turns a full-turn integral of a fraction in cos t and sin t, whose denominator is never zero, into a loop integral round the unit circle, worth 2π i times the residues inside.**
 
 **What kind of fact this is:** a method, justified in Why it works by Euler's formula and the residue theorem. The closed form for 1/(A + B cos t + C sin t) is a theorem, proved in the folded Detailed proof.
 
@@ -49,7 +49,7 @@ I = \int_0^{2\pi} \frac{dt}{2 + \cos t} = \oint_{|z|=1} \frac{2\,dz}{i\,(z^2 + 4
 
 **Read it aloud:** the integral over one turn is a loop integral of a fraction in z, which is 2π i times the residue at the one pole inside, z₊ = −2 + √3, giving 2π over root 3.
 
-The general shape, for constants with $`A > \sqrt{B^2 + C^2}`$:
+The general shape, for real constants with $`A > \sqrt{B^2 + C^2}`$:
 
 ```math
 \int_0^{2\pi} \frac{dt}{A + B\cos t + C\sin t} = \frac{2\pi}{\sqrt{A^2 - B^2 - C^2}}
@@ -72,7 +72,7 @@ The general shape, for constants with $`A > \sqrt{B^2 + C^2}`$:
 
 - **A full turn.** The range must be 0 to 2π so that z closes its loop. Over part of a turn the path is an arc, and the residue theorem says nothing about an arc.
 - **A fraction built from cos t and sin t.** Then the swap gives a fraction of polynomials in z, with only poles. A root such as √(2 + cos t) brings a branch cut: a line where the square root jumps, so the function in z is not just poles ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)).
-- **No pole on the circle.** The denominator must never be zero for real t: A > √(B^2 + C^2). At A = √(B^2 + C^2), as in 1/(1 + cos t), a pole lands on the circle and the integral is infinite. The code's sums for 1/(1 + cos t) grow without bound.
+- **No pole on the circle.** The denominator must never be zero for real t: for the formula above, A > √(B^2 + C^2) (if A < −√(B^2 + C^2), the answer gets a minus sign). At A = √(B^2 + C^2), as in 1/(1 + cos t), a pole lands on the circle and the integral is infinite. The code's sums for 1/(1 + cos t) grow without bound.
 - **Poles counted after simplifying.** The swap brings powers of 1/z. Here the z cancels, so 0 is not a pole; in other integrals it is one, and missing it gives a wrong answer.
 
 ---
@@ -105,7 +105,7 @@ So 0 is not a pole; the poles are the roots of z^2 + 4z + 1.
 
 The quadratic formula gives −2 + √3 = −0.267949 and −2 − √3 = −3.732051. Their product is the constant term, 1: each is the other's reciprocal.
 
-No accident: swapping z for 1/z̄ (read z-bar) turns z + 1/z and (z − 1/z)/(2i) into their conjugates. So for real A, B, C the roots pair off as z and 1/z̄: same direction, distances r and 1/r. That is reflection in the unit circle: unless a root sits on it, one of each pair lies inside.
+No accident: swapping z for 1/z̄ (read z-bar) turns z + 1/z and (z − 1/z)/(2i) into their conjugates. So for real A, B, C with B and C not both zero, the two roots pair off as z and 1/z̄: same direction, distances r and 1/r. That is reflection in the unit circle: unless a root sits on it, one of each pair lies inside.
 
 ### Step 5: the residue, then the answer
 
@@ -674,7 +674,7 @@ end TrigonometricIntegralsOnTheUnitCircle
 - **Numerical integration.** The trapezoid errors above fall this fast because the nearest pole sits well off the circle; a pole nearer the circle slows the fall.
 
 > **Say it back**
-> Over one full turn, z = e^(it) runs once round the unit circle. Cos t becomes (z + 1/z)/2 and dt becomes dz/(iz), so the integral is a loop integral of a fraction in z. Its poles pair off by reflection in the circle, and only those inside count. For the wheel, the pole inside is −2 + √3, its residue 1/(i√3), and the integral 2π/√3, an average of 0.577350.
+> Over one full turn, z = e^(it) runs once round the unit circle. Cos t becomes (z + 1/z)/2 and dt becomes dz/(iz), so when the denominator is never zero the integral is a loop integral of a fraction in z, and only the poles inside the circle count. For the wheel, the poles pair off by reflection in the circle: the one inside is −2 + √3, its residue 1/(i√3), and the integral 2π/√3, an average of 0.577350.
 
 ---
 
@@ -686,7 +686,7 @@ end TrigonometricIntegralsOnTheUnitCircle
 ## Where this goes next
 
 - [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): cos and sin again, along the whole line rather than round one turn.
-- [The argument principle](06-the-argument-principle.md): the same loop round a circle, used to count zeros instead of adding residues.
+- [The argument principle](06-the-argument-principle.md): the same loop round a circle, used to count zeros minus poles inside instead of evaluating a real integral.
 
 This card leaves open what to do when cos t and sin t sit along the whole real line, where no loop closes by itself.
 
