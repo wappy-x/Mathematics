@@ -1,4 +1,4 @@
-# Lagrange multipliers: the best point on a constraint is where the gradients line up
+# Lagrange multipliers: at the best point on a smooth constraint, the gradients line up
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Lagrange multipliers
 
@@ -12,7 +12,7 @@ There are two dials, length and width, and a rule tying them: the sides add to 4
 
 Lagrange's answer, published in 1788, adds one unknown. At the best point, the direction that grows the area fastest is the direction that uses fence fastest. The stretch factor between those two arrows is the **multiplier**, the word used from here on. It is also a price: one more metre of fence buys about 5 square metres.
 
-**At the best point allowed by a rule, the gradient of what is being optimised is a multiple of the gradient of the rule, and that multiple is the rate at which the best value improves as the rule is loosened.**
+**At a best point allowed by a rule, where the function and the rule are smooth and the rule's gradient is not zero, the gradient of what is being optimised is a multiple of the gradient of the rule. When the best point moves smoothly as the rule is loosened, that multiple is the rate at which the best value improves.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, price reading included.
 
@@ -66,6 +66,7 @@ The same equations say that the helper function $`\mathcal{L} = A - \lambda\,(g 
 - **A regular rule: $`\nabla g`$ is not the zero arrow.** Write the same fence as $`(2x + 2y - 40)^2 = 0`$ and its gradient is $`(0, 0)`$ all along it; the true best point then solves no multiplier equation.
 - **Equality, not a ceiling.** "At most 40 m" adds edges, such as zero width, which are checked by hand.
 - **Necessary, not sufficient.** A solution can be a worst point or neither; candidates still need comparing.
+- **Existence needs a separate check.** The method finds candidates if a best point exists; a closed, bounded constraint set guarantees one for a continuous function (or prove it directly, as in Step 5).
 
 ---
 
@@ -97,7 +98,9 @@ Along the fence, $`y = 20 - x`$, and the area is $`x(20 - x) = 100 - (x - 10)^2`
 
 ### Step 6: the multiplier is the price of the rule
 
-Let the fence length $`P`$ vary, and assume the best point moves smoothly with it; the best area $`A^*(P)`$ moves too. By the chain rule ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $`\nabla A`$ dotted with the best point's velocity, how fast it moves per metre of fence. Swap in $`\lambda \nabla g`$: the rate is $`\lambda`$ times the rate of $`g`$, and $`g`$ equals $`P`$ throughout, so that rate is 1. The best area grows at $`\lambda`$ square metres per metre of fence.
+Let the fence length $`P`$ vary, and assume the best point moves smoothly with it; the best area $`A^*(P)`$ moves too. By the chain rule ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $`\nabla A`$ dotted with the best point's velocity, how fast it moves per metre of fence.
+
+Swap in $`\lambda \nabla g`$: the rate is $`\lambda`$ times the rate of $`g`$, and $`g`$ equals $`P`$ throughout, so that rate is 1. The best area grows at $`\lambda`$ square metres per metre of fence.
 
 Here $`A^*(P) = P^2 / 16`$, with rate $`40 / 8 = 5`$ at 40 m. A 41 m fence gives a 10.25 m square, 105.0625 m^2: a gain of 5.0625, the extra from the bend.
 
@@ -151,7 +154,9 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the best paddock, for both fences. Road one solves the multiplier equations by Cramer's rule. Road two never mentions a multiplier: a golden-section search (a bracket shrunk by the golden ratio each step) walks the fence to the peak. The price comes from road two alone, as the best area's difference quotient over a millimetre of fence, checked against road one's $`\lambda`$. A third assert checks Step 5's identity at 141 points.
+Two roads to the best paddock, for both fences. Road one solves the multiplier equations by Cramer's rule. Road two never mentions a multiplier: a golden-section search (a bracket shrunk by the golden ratio each step) walks the fence to the peak.
+
+The price comes from road two alone, as the best area's difference quotient over a millimetre of fence, checked against road one's $`\lambda`$. A third assert checks Step 5's identity at 141 points.
 
 ### Python
 
@@ -342,7 +347,7 @@ The two outputs match line for line.
 Lean proves the line-up and the price for any smooth objective and regular rule in the plane, and the paddock's best shape.
 
 - Take smooth $`f`$ and $`g`$, and a point $`p`$ on the rule $`g = c`$ where $`\nabla g`$ is not the zero arrow. If $`p`$ is a local best point of $`f`$ among nearby points on the rule, then $`\nabla f = \lambda \nabla g`$ at $`p`$ for some number $`\lambda`$.
-- Let the allowed amount $`P`$ vary, and let the best point move smoothly with it, always on the rule. Then the best value grows at exactly $`\lambda`$ per unit of $`P`$.
+- Let the allowed amount $`P`$ vary on a smooth regular rule, and let the best point move smoothly with it, always on the rule. Then the best value grows at exactly $`\lambda`$ per unit of $`P`$.
 - Every rectangle on 40 m of fence holds at most 100 m^2, and only the 10 m by 10 m square holds exactly 100.
 - Step 5's identity $`100 - x(20 - x) = (x - 10)^2`$ holds for every real $`x`$.
 - The hand arithmetic holds exactly: the three pens, the fence-side area, the multiplier equations, the price at 40 m and 41 m, the river, and mistakes 2 and 3.
@@ -521,7 +526,7 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 - **Machine learning.** A support vector machine finds the widest gap between two classes; the multipliers pick out the points that matter, in [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md).
 
 > **Say it back**
-> A rule ties the dials, so only some steps are allowed. At the best point no allowed step pays, so both gradients are at right angles to every allowed step and share a line: one is $`\lambda`$ times the other. With the rule, that lists candidates, which still need checking. The multiplier is the rule's price: 5 m^2 per metre of fence.
+> A rule ties the dials, so only some steps are allowed. For smooth functions and an equality rule whose gradient is not zero, at the best point no allowed step pays, so both gradients are at right angles to every allowed step and share a line: one is $`\lambda`$ times the other. With the rule, that lists candidates, which still need checking. The multiplier is the rule's price: 5 m^2 per metre of fence.
 
 ---
 
@@ -535,16 +540,16 @@ example : 2 * (2 * 10 + 2 * 10 - 40 : ℤ) * 2 = 0 := by decide
 - [Convex functions](09-convex-functions.md): when a candidate is sure to be best.
 - [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md): many rules, and "at most" rules.
 - [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): the unknown is a whole curve.
-- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): least risk, set return.
+- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): chooses a portfolio with least risk for a set target return.
 - [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): selling a fixed block at least cost.
-- [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): the multiplier as a force.
-- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): multipliers pick support points.
-- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): prices as a transform.
-- [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): solve for the prices first.
+- [Lagrangian and Hamiltonian mechanics](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers.md): reads the multiplier as the constraint force holding a system on track.
+- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): uses multipliers to pick out the boundary points that set the margin.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): turns shadow prices into a dual function via the slope transform.
+- [Minimax](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/08-minimax-theorem-and-convex-duality.md): solves the dual optimisation problem for the multiplier prices first.
 - [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): a regular rule cuts a smooth surface.
-- [Riemannian gradient descent](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): walking the rule itself.
+- [Riemannian gradient descent](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/05-optimisation-on-manifolds.md): optimises by stepping directly along a curved constraint surface.
 
-This card proves the line-up for one equality rule in the plane. The open question is whether it survives many rules, many dials and "at most" rules: [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md) answers it.
+This card proves the line-up for one equality rule in the plane. The open question is whether it survives many rules, many dials and "at most" rules: [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md) answers it, while [Convex functions](09-convex-functions.md) next on this shelf shows when a candidate is automatically global.
 
 ---
 

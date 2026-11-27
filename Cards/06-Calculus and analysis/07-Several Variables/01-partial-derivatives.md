@@ -12,9 +12,9 @@ To compare a centimetre more board with a square metre less glass, move one and 
 
 Each is an ordinary derivative, taken with every other input frozen: a **partial derivative**, the term used from here on. The choices also interact. More glass means less wall, so it changes what board is worth; board changes what glass costs. The two cross-effects are the same number, and the card proves why.
 
-**A partial derivative is the rate of the output when one input moves and all others are held fixed; the two mixed rates, one partial stepped along the other input, agree when they are continuous.**
+**A partial derivative is the rate of the output when one input moves and all others are held fixed; the two mixed rates, one partial stepped along the other input, agree when both are continuous near the point.**
 
-**What kind of fact this is:** a definition; one theorem comes with it (the mixed rates agree, called Clairaut's theorem), proved on this card in Why it works.
+**What kind of fact this is:** a definition; one theorem comes with it (continuous mixed rates agree, called Clairaut's theorem), proved on this card in Why it works.
 
 ### The picture: two frozen slices
 
@@ -64,7 +64,7 @@ A partial of a partial is a **second partial**. A **mixed** one is written right
 | $`t`$ | insulation board, cm | 6 cm | loss falls, by less each cm |
 | $`g`$ | glass area, m^2, taken out of the wall | 20 m^2 | loss rises 40 W per m^2 |
 | $`R(t)`$ | wall's resistance to heat, m^2 °C per W: brick alone 0.5, and each cm of board (0.01 m conducting 0.04 W per m per °C) adds 0.25 | 2.00 at 6 cm | wall leaks less |
-| $`A`$, $`\Delta T`$, $`U`$ | whole wall area; temperature gap; glass's loss per m^2 per °C | 120 m^2; 20 °C; 2.5 W | $`\Delta T`$ scales every rate; $`A`$ only the board rate; $`U`$ only the glass rate |
+| $`A`$, $`\Delta T`$, $`U`$ | whole wall area; temperature gap; glass's loss per m^2 per °C | 120 m^2; 20 °C; 2.5 W per m^2 per °C | $`\Delta T`$ scales every rate; $`A`$ only the board rate; $`U`$ only the glass rate |
 | $`h`$, $`k`$ | steps in board (cm) and glass (m^2), never 0 | 1 down to 0.001 | quotient drifts from the rate |
 | $`\frac{\partial Q}{\partial t}`$, $`\frac{\partial Q}{\partial g}`$ | the partials: output units per unit of the input moved | −125 W per cm, 40 W per m^2 | — |
 | $`\frac{\partial^2 Q}{\partial g\,\partial t}`$, $`\frac{\partial^2 Q}{\partial t\,\partial g}`$ | the mixed partials, W per cm per m^2 | 1.25 both | — |
@@ -73,7 +73,7 @@ A partial of a partial is a **second partial**. A **mixed** one is written right
 
 - **The frozen inputs are named.** The total 120 m^2 stays fixed; freezing the brick area instead gives 50 W per m^2.
 - **The one-input limit exists.** A corner or a jump along the line where only that input moves leaves no partial there.
-- **For the mixed partials to agree: second partials continuous near the point.** Without it, G in Why it works gives −1 and +1.
+- **For the mixed partials to agree: both mixed partials exist and are continuous near the point.** Without it, G in Why it works gives −1 and +1.
 - **Partials see only two directions.** A function can have both and still jump along a diagonal; see [Tangent planes](02-differentiability-and-tangent-planes.md).
 
 ---
@@ -94,7 +94,7 @@ At 6 cm the resistance is 2.00, and 100 m^2 of wall lose 20 × 100 / 2 = 1,000 W
 
 Dividing by h is allowed because h is not zero. As h heads for 0 the quotient heads for **−125 W per cm**.
 
-The tolerance game: the quotient is off by 125h / (8 + h). So to land within 0.1 W per cm of −125, any step under 0.8 / 124.9, about 0.006405 cm, will do.
+The tolerance game: the quotient is off by 125h / (8 + h). So to land within 0.1 W per cm of −125, any positive step under 0.8 / 124.9, about 0.006405 cm, will do.
 
 For any setting, the quotient rule ([Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md)) gives
 
@@ -636,7 +636,7 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 - **Thermodynamics.** Equal mixed partials link tabulated rates ([The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md)).
 
 > **Say it back**
-> A function of several inputs has one rate per input: move it, freeze the rest, take the ordinary derivative. Board saves 125 W per centimetre; glass costs 40 W per square metre. Glass changes board's value by 1.25, and board changes glass's cost by the same 1.25. Mixed partials agree when continuous; G shows they can differ otherwise.
+> A function of several inputs has one rate per input: move it, freeze the rest, take the ordinary derivative. Board saves 125 W per centimetre; glass costs 40 W per square metre. Glass changes board's value by 1.25, and board changes glass's cost by the same 1.25. Mixed partials agree when continuous near the point; G shows they can differ otherwise.
 
 ---
 
@@ -646,24 +646,24 @@ example : (20 : ℚ) * (120 / 2 + 5 / 2 * 21) - 20 * (120 / 2 + 5 / 2 * 20) = 50
 
 ## Where this goes next
 
-- [Tangent planes](02-differentiability-and-tangent-planes.md): one tangent plane.
-- [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): an integral's partial.
-- [Divergence and curl](../09-Vector%20Calculus/03-divergence-and-curl.md): spreading and spin.
-- [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md), [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): partials forced to match.
-- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): mixed partials as a test.
-- [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): partials near a rest point.
-- [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md), A PDE problem: equations in partials.
-- [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): partials of a cost.
-- [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): an option's partials.
-- [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), [Gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/02-gamma.md), [Vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md), [Theta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/04-theta.md), [Rho and dividend rho](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): one input at a time.
-- [Vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md), [Volga](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/07-volga.md), [Charm](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/08-charm.md): mixed and second partials.
-- [Digital Greeks and pin risk](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Vanna and volga](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md), [Greeks of a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/05-spread-option-greeks.md): other contracts.
-- [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility from partials.
-- [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md): the frozen quantity named.
-- [Finite differences on a grid](../../16-Numerical%20analysis/07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md), [Two space dimensions](../../16-Numerical%20analysis/07-PDE%20Solvers/05-adi-and-multidimensional-grids.md): quotients on grids.
-- [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): rough functions.
-- [Smooth and singular points](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/08-smooth-and-singular-points.md): all partials vanishing.
-- [Levi-Civita connection](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/02-levi-civita-connection-and-christoffel-symbols.md): curved distance.
+- [Tangent planes](02-differentiability-and-tangent-planes.md): combines both partials into one tangent plane and tests when it fits.
+- [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): taking a partial derivative of an integral with respect to a parameter.
+- [Divergence and curl](../09-Vector%20Calculus/03-divergence-and-curl.md): combinations of partial derivatives that measure spreading out and local spin.
+- [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md), [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): real and imaginary partial derivatives forced to satisfy matching equations.
+- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): uses equal mixed partials to test whether a rate equation is exact.
+- [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): collects partial derivatives into a matrix to approximate flow near a rest point.
+- [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md), A PDE problem: laws of physics written as equations relating a function's partial derivatives.
+- [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): finds an optimal path using partial derivatives of a cost function.
+- [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): ties an option price's time partial to its stock-price partials.
+- [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), [Gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/02-gamma.md), [Vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md), [Theta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/04-theta.md), [Rho and dividend rho](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): option price sensitivities taken one market input at a time.
+- [Vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md), [Volga](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/07-volga.md), [Charm](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/08-charm.md): mixed and second partial derivatives of an option's price.
+- [Digital Greeks and pin risk](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Vanna and volga](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md), [Greeks of a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/05-spread-option-greeks.md): partial-derivative sensitivities applied to digital, currency and spread option contracts.
+- [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): recovers local market volatility from partial derivatives of call prices.
+- [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md): thermodynamic partial derivatives where the held-fixed quantity must always be named.
+- [Finite differences on a grid](../../16-Numerical%20analysis/07-PDE%20Solvers/02-finite-differences-consistency-stability-and-convergence.md), [Two space dimensions](../../16-Numerical%20analysis/07-PDE%20Solvers/05-adi-and-multidimensional-grids.md): approximates partial derivatives by difference quotients on discrete grids.
+- [Weak derivatives](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/07-weak-derivatives-and-sobolev-spaces.md): extends partial derivatives to rough functions that lack pointwise slopes.
+- [Smooth and singular points](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/08-smooth-and-singular-points.md): spots singular points of a curve or surface where all partials vanish.
+- [Levi-Civita connection](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/02-levi-civita-connection-and-christoffel-symbols.md): differentiates vectors on curved spaces where ordinary partials no longer suffice.
 - [Free energies](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
 
 Partials see two lines only, board alone or glass alone; whether they predict a change in both at once is [Tangent planes](02-differentiability-and-tangent-planes.md).

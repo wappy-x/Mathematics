@@ -147,9 +147,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [Hessian: the matrix of second derivatives and the quadratic model it gives](07-Several%20Variables/05-hessian-and-second-order-approximation.md)
 6. [Extrema in several variables: peaks, pits and saddles](07-Several%20Variables/06-multivariable-extrema.md)
 7. [Inverse and implicit function theorems: when an equation can be solved for one variable locally](07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)
-8. [Lagrange multipliers: the best point on a constraint is where the gradients line up](07-Several%20Variables/08-lagrange-multipliers.md)
-9. [Convex functions: bowls, chords above the graph, and why a local minimum is the global one](07-Several%20Variables/09-convex-functions.md)
-10. [Constant rank theorem: a map whose derivative keeps the same rank is a projection in disguise](07-Several%20Variables/10-constant-rank-theorem.md)
+8. [Lagrange multipliers: at the best point on a smooth constraint, the gradients line up](07-Several%20Variables/08-lagrange-multipliers.md)
+9. [Convex functions: bowls, chords above the graph, and why any local minimum is global](07-Several%20Variables/09-convex-functions.md)
+10. [Constant rank theorem: a smooth map of constant rank is locally a projection in disguise](07-Several%20Variables/10-constant-rank-theorem.md)
 
 [↑ Back to the shelves](#top)
 

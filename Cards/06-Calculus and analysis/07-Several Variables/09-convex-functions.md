@@ -1,4 +1,4 @@
-# Convex functions: bowls, chords above the graph, and why a local minimum is the global one
+# Convex functions: bowls, chords above the graph, and why any local minimum is global
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Convex functions
 
@@ -12,7 +12,7 @@ No line hits all four points. Square each miss and add: that total is the **squa
 
 Could a far-off pair do as well? Could a computer walking downhill stop in a lesser dip? No and no: over all pairs (a, b), squared error is a bowl with one bottom. A bowl-shaped function is **convex**.
 
-**A function is convex when every chord between two points of its graph lies on or above the graph; then any dip is the deepest one.**
+**On a domain holding every segment between its points, a function is convex when every chord between two points of its graph lies on or above the graph; then any dip is as low as the function ever gets.**
 
 **What kind of fact this is:** a definition; three theorems ride with it (the Hessian test, local minimum is global, Jensen's inequality), proved on this card in Why it works.
 
@@ -82,7 +82,7 @@ f\Big(\sum_{i=1}^{k}\theta_ip_i\Big)\le\sum_{i=1}^{k}\theta_if(p_i),\qquad \thet
 A definition; the theorems need:
 
 - **A domain holding every segment.** The (a, b) plane does; two separate intervals do not.
-- **Two derivatives for the Hessian test.** The absolute value has a corner at 0: convex, no Hessian there.
+- **Two derivatives on an open convex domain, for the Hessian test.** The absolute value has a corner at 0: convex, no Hessian there.
 - **The test everywhere.** One point is not enough: What breaks, row 1.
 - **Strictness for one answer.** Otherwise a flat floor: row 2. Strictness allows at most one bottom; e^x, strictly convex, has none.
 
@@ -108,12 +108,16 @@ For the seedling, H has entries 2n = 8, twice the week sum = 12, twice the squar
 v^{\top}Hv=2\sum_{i=1}^{n}\big(c+dx_i\big)^2,
 ```
 
-a sum of squares, 0 only if c + d x_i = 0 for every measurement: c = d = 0 unless all weeks are equal. So S is strictly convex. The eigenvalues (stretch factors) multiply to the determinant, 8 × 28 − 12^2 = 80, and add to the trace (the diagonal sum, 8 + 28), 36; both positive, so both eigenvalues are: 33.62 and 2.38.
+a sum of squares, 0 only if c + d x_i = 0 for every measurement: c = d = 0 unless all weeks are equal. So S is strictly convex.
+
+The eigenvalues (stretch factors) multiply to the determinant, 8 × 28 − 12^2 = 80, and add to the trace (the diagonal sum, 8 + 28), 36; both positive, so both eigenvalues are: 33.62 and 2.38.
 
 <details>
 <summary>Detailed proof: second derivative at least 0 puts the graph under every chord</summary>
 
-Let f'' ≥ 0 on an interval holding q < p, and L the chord through (q, f(q)) and (p, f(p)). Put g = f − L: g(q) = g(p) = 0 and g'' ≥ 0, so g' never decreases. If g(c) > 0 for some c between, the mean value theorem gives u in (q, c) with g'(u) = g(c)/(c − q) > 0 and s in (c, p) with g'(s) = −g(c)/(p − c) < 0: g' fell, a contradiction. So f ≤ L. In several variables each slice g(t) = f(p + t v) has g''(t) = v^T H(p + t v) v.
+Let f'' ≥ 0 on an interval holding q < p, and L the chord through (q, f(q)) and (p, f(p)). Put g = f − L: g(q) = g(p) = 0 and g'' ≥ 0, so g' never decreases.
+
+If g(c) > 0 for some c between, the mean value theorem gives u in (q, c) with g'(u) = g(c)/(c − q) > 0 and s in (c, p) with g'(s) = −g(c)/(p − c) < 0: g' fell, a contradiction. So f ≤ L. In several variables each slice g(t) = f(p + t v) has g''(t) = v^T H(p + t v) v.
 
 </details>
 
@@ -130,7 +134,9 @@ Two points is the definition. Three points are a two-point mix of the first and 
 <details>
 <summary>Detailed proof: Jensen for k points</summary>
 
-For k = 1 both sides are f(p_1). Assume k − 1 points work. If θ_k = 1 both sides are f(p_k). Otherwise let s = 1 − θ_k and m = Σ_{i<k} (θ_i / s) p_i. Then Σ θ_i p_i = s m + θ_k p_k, so f(Σ θ_i p_i) ≤ s f(m) + θ_k f(p_k) ≤ Σ_{i<k} θ_i f(p_i) + θ_k f(p_k): the definition, then the claim for k − 1.
+For k = 1 both sides are f(p_1). Assume k − 1 points work. If θ_k = 1 both sides are f(p_k).
+
+Otherwise let s = 1 − θ_k and m = Σ_{i<k} (θ_i / s) p_i. Then Σ θ_i p_i = s m + θ_k p_k, so f(Σ θ_i p_i) ≤ s f(m) + θ_k f(p_k) ≤ Σ_{i<k} θ_i f(p_i) + θ_k f(p_k): the definition, then the claim for k − 1.
 
 </details>
 
@@ -152,7 +158,7 @@ For S, with constant Hessian, the Jensen gap (right side minus left side) is exa
 | Jensen | weights 0.5, 0.3, 0.2 on (0, 2), (2, 1), (3, 0): S = 2, 2, 14 | average 4.4 |
 | Jensen's left side | S at the average point (1.2, 1.3) | 1.14, gap 3.26 |
 
-Rows two and three solve the normal equations of [Extrema in several variables](06-multivariable-extrema.md); convexity makes that flat point the answer.
+Rows two and three solve the normal equations of [Extrema in several variables](06-multivariable-extrema.md); strict convexity makes that flat point the unique answer.
 
 ### What breaks if you drop a piece
 
@@ -535,7 +541,7 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 ## The usual mistake
 
 > [!warning]
-> **Taking a flat spot as the answer without convexity.** Slopes of 0 find dips, humps and saddles alike; only convexity makes a dip the lowest. The wavy w has a dip at x = 1.3470, w = −2.6186; its bottom is −5.4442.
+> **Taking a flat spot as the answer without convexity.** Slopes of 0 find dips, humps and saddles alike; convexity guarantees a dip is lowest overall, while without it you can get trapped. The wavy w has a dip at x = 1.3470, w = −2.6186; its bottom is −5.4442.
 >
 > - **Testing the Hessian at one point.** w''(x) = 12x^2 − 8 passes at both dips and fails at 0: w''(0) = −8.00.
 > - **Reading convex as one answer.** With all four measurements in week 2, (3.5, 0) and (1.5, 1) both give 13.00.
@@ -550,23 +556,24 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 - **Planning.** A linear program's cost and allowed region are convex, so a local best plan is best: [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md).
 
 > **Say it back**
-> A convex function has every chord on or above its graph. A Hessian test in every direction, everywhere, proves it. Any dip is then the lowest point; strict convexity makes it unique. Squared error's Hessian is twice a sum of squares, so least squares has one answer: 1.1 cm and 1.6 cm per week. Jensen extends the chord to weighted averages.
+> On a domain holding every segment, a convex function has every chord on or above its graph. A Hessian test in every direction, everywhere on an open convex domain, proves it. Any local minimum then reaches the lowest value; strict convexity makes it unique. Squared error's Hessian is twice a sum of squares, so least squares has one answer: 1.1 cm and 1.6 cm per week. Jensen extends the chord to weighted averages.
 
 ---
 
 ## What this builds on
 
 - [Hessian](05-hessian-and-second-order-approximation.md): the Hessian and its quadratic form.
-- [Extrema in several variables](06-multivariable-extrema.md): flat points as candidates, which convexity makes the answer.
+- [Extrema in several variables](06-multivariable-extrema.md): flat points as candidates, which convexity makes global minima.
 
 ## Where this goes next
 
-- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): Jensen for expectations.
+- [Constant rank theorem](10-constant-rank-theorem.md): straightens any smooth map whose Jacobian keeps constant rank near a point.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): applies Jensen's inequality to expected values of random variables.
 - [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): sizes of functions, bounded by convexity.
-- [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): Jensen for integrals.
+- [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): extends Jensen's inequality from finite weighted averages to integrals.
 - [Shape across strikes and expiries](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): option prices convex in strike.
 - [KL divergence](../../14-Applied%20and%20computational/03-Information%20Theory/03-kl-divergence-and-cross-entropy.md): Jensen makes it never negative.
-- [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): linear cost, convex region.
+- [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): minimises a linear cost over a convex allowed region.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): how fast the downhill walk closes.
 - [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): a classifier from a convex problem.
 - [Convex functions](../../15-Optimization/01-Convexity/03-convex-functions-and-their-tests.md): more tests, and operations that keep convexity.
@@ -574,11 +581,11 @@ example : ((2 * 4) * (2 * (4 * 2 ^ 2)) - (2 * (4 * 2)) ^ 2 : ℚ) = 0 ∧
 - [Separation](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/07-hahn-banach-separation-and-supporting-walls.md): flat walls touching convex sets.
 - [Lax-Milgram](../../18-Functional%20analysis/02-Hilbert%20Spaces/07-lax-milgram-theorem.md): one answer in infinitely many variables.
 - [Krein-Milman](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/06-krein-milman-and-extreme-points.md): convex sets rebuilt from corners.
-- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): slopes at corners.
+- [The slope transform](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/07-legendre-fenchel-and-subgradients.md): defines subgradients and dual slopes where a convex function has corners.
 - [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the Hessian test on curved spaces.
 - [Relaxation and rounding](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/02-relaxation-and-rounding.md): a convex stand-in, then rounding back.
 
-One answer exists and downhill finds it; testing convexity when the Hessian varies from point to point is [Convex functions](../../15-Optimization/01-Convexity/03-convex-functions-and-their-tests.md).
+For further convexity tests when the Hessian varies from point to point, see [Convex functions](../../15-Optimization/01-Convexity/03-convex-functions-and-their-tests.md); next on this shelf, [Constant rank theorem](10-constant-rank-theorem.md) returns to smooth maps and asks what a map looks like locally when its Jacobian keeps the same rank.
 
 ---
 

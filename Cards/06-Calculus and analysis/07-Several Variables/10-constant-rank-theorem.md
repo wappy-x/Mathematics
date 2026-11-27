@@ -1,4 +1,4 @@
-# Constant rank theorem: a map whose derivative keeps the same rank is a projection in disguise
+# Constant rank theorem: a smooth map of constant rank is locally a projection in disguise
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Several Variables](../README.md#s07) → Constant rank theorem
 
@@ -6,13 +6,15 @@
 
 ## General Overview
 
-Two valves feed one water pipe. Valve one lets through x = 1 litre per second, valve two y = 2. Two meters sit on the pipe: one reads the total flow, s = 3 L/s, and one the pressure drop, t = 9 kPa. In this model the drop in kPa is the flow squared, because pipe friction grows with the square of the speed.
+Two valves feed one water pipe. Valve one lets through x = 1 litre per second, valve two y = 2.
+
+Two meters sit on the pipe: one reads the total flow, s = 3 L/s, and one the pressure drop, t = 9 kPa. In this model the drop in kPa is the flow squared, because pipe friction grows with the square of the speed.
 
 Two numbers go in and two come out, yet only one quantity gets through. Move 0.5 L/s from valve two to valve one and neither meter moves.
 
-The **constant rank theorem** says every smooth map whose derivative keeps the same number of independent directions works like this. Here, renaming the inputs and outputs gives the new input u = x + y, the flow, and the new output t − s², which is always 0.
+The **constant rank theorem** says every smooth map whose derivative keeps the same number of independent directions works like this locally. Here, renaming the inputs and outputs gives the new input u = x + y, the flow, and the new output t − s², which is always 0.
 
-**Near a point where the Jacobian has the same rank r all around, new coordinates on the input side and on the output side turn the map into keeping the first r numbers and setting the rest to zero.**
+**Near a point where a map has continuous partial derivatives and its Jacobian has the same rank r all around, new coordinates on the input side and on the output side turn the map into keeping the first r numbers and setting the rest to zero.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for any number of inputs and outputs.
 
@@ -82,7 +84,9 @@ Row operations rename outputs and column operations rename inputs ([Gaussian eli
 
 Renumber so the r by r corner of the Jacobian is invertible. Define φ to report the first r outputs, then the last m − r inputs unchanged. For the pipe, φ(x, y) = (x + y, y). Its Jacobian `[[1, 1], [0, 1]]` has determinant 1, so the [Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md) give a smooth undo near p.
 
-Read F in the new coordinates: G = F ∘ φ⁻¹. By construction its first r outputs are u₁ to u_r. Call the other n − r outputs R. For the pipe, φ⁻¹(u, v) = (u − v, v), so G(u, v) = (u, u²) and R = u². The code finds the undo blind by [Newton's method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md): from (3, 2) it lands on (1, 2) in one step, since φ is linear; step 2 moves 0 and ends the loop.
+Read F in the new coordinates: G = F ∘ φ⁻¹. By construction its first r outputs are u₁ to u_r. Call the other n − r outputs R.
+
+For the pipe, φ⁻¹(u, v) = (u − v, v), so G(u, v) = (u, u²) and R = u². The code finds the undo blind by [Newton's method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md): from (3, 2) it lands on (1, 2) in one step, since φ is linear; step 2 moves 0 and ends the loop.
 
 ### Step 3: constant rank makes the leftover ignore the extra inputs
 
@@ -155,7 +159,9 @@ A healthy pipe always gives 0 in the second slot. The ignored direction is v: F(
 
 ## Code, from first principles, and it actually runs
 
-Road 1 writes both renamings by hand. Road 2 runs the proof's recipe blind: it undoes φ by Newton's method and builds ψ from R sampled at v = 2 only. Both must agree on a 441-point grid; a determinant test checks the rank, and Q and P come from the computed Jacobian. Lean's Mathlib library has no constant rank theorem yet, so the Lean section below proves it in general.
+Road 1 writes both renamings by hand. Road 2 runs the proof's recipe blind: it undoes φ by Newton's method and builds ψ from R sampled at v = 2 only.
+
+Both must agree on a 441-point grid; a determinant test checks the rank, and Q and P come from the computed Jacobian. Lean's Mathlib library has no constant rank theorem yet, so the Lean section below proves it in general.
 
 ### Python
 
@@ -954,7 +960,7 @@ example : (3 : ℤ) ^ 2 - 6 * 3 + 9 = 0 ∧ (4 : ℤ) ^ 2 - 6 * 4 + 9 = 1 := by 
 - **Cameras.** A camera sends points in space to points in a picture, with rank 2. The lost direction is depth along the line of sight.
 
 > **Say it back**
-> A smooth map whose Jacobian keeps rank r near a point is a projection in disguise. Make r independent outputs the first new inputs, then subtract the leftover from the other outputs. For the pipe, u = x + y and t − s² turn (1, 2) into (3, 0). Constant rank makes the leftover ignore the extra inputs. With full rank the theorem becomes the inverse or implicit function theorem.
+> A smooth map whose Jacobian keeps rank r near a point is locally a projection in disguise. Make r independent outputs the first new inputs, then subtract the leftover from the other outputs. For the pipe, u = x + y and t − s² turn (1, 2) into (3, 0). Constant rank makes the leftover ignore the extra inputs. With full rank the theorem becomes the inverse or implicit function theorem.
 
 ---
 
@@ -966,9 +972,10 @@ example : (3 : ℤ) ^ 2 - 6 * 3 + 9 = 0 ∧ (4 : ℤ) ^ 2 - 6 * 4 + 9 = 1 := by 
 
 ## Where this goes next
 
+- [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md): moves from rates of several-variable functions to adding them up over a region.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): names the full-rank cases and carries them onto curved spaces.
 
-Left open: what a map looks like where its rank jumps, as in the fold.
+Left open: what a map looks like where its rank jumps, as in the fold; next in this wing, [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md) leaves derivatives behind and begins integrating functions of several variables over regions.
 
 ---
 

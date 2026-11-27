@@ -12,7 +12,7 @@ The tangent plane answers from two slopes: each extra centimetre saves 44.444 W,
 
 Those changes are second derivatives; with two choices there are four, set out in a square table, the **Hessian**. Adding half of what it predicts gives 1712.370 W. It holds a surprise too: insulation changes what a window costs, and glass changes what insulation saves, by exactly the same amount.
 
-**The Hessian is the table of second partial derivatives; when they are continuous it is symmetric, and adding half its quadratic form to the tangent plane gives a model whose error shrinks faster than the step squared.**
+**The Hessian is the table of second partial derivatives; when they are continuous near the point it is symmetric, and adding half its quadratic form to the tangent plane gives a model whose error shrinks faster than the step squared.**
 
 **What kind of fact this is:** the Hessian and the model are definitions; the symmetry and the error claim are theorems, proved on this card in Why it works.
 
@@ -110,7 +110,7 @@ The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-the
 <details>
 <summary>Detailed proof: mixed partials agree</summary>
 
-Let $`D(h,k)=Q(t+h,A+k)-Q(t+h,A)-Q(t,A+k)+Q(t,A)`$. With $`u(x)=Q(x,A+k)-Q(x,A)`$, the mean value theorem gives $`D=h\,u'(t+\theta h)`$, and $`u'(x)=Q_t(x,A+k)-Q_t(x,A)`$, so again $`D=hk\,Q_{tA}(t+\theta h,A+\theta' k)`$, with $`\theta,\theta'`$ in (0, 1). With $`v(y)=Q(t+h,y)-Q(t,y)`$ instead, $`D=hk\,Q_{At}(t+\psi h,A+\psi' k)`$, with $`\psi,\psi'`$ in (0, 1).
+Take small nonzero $`h`$ and $`k`$, and let $`D(h,k)=Q(t+h,A+k)-Q(t+h,A)-Q(t,A+k)+Q(t,A)`$. With $`u(x)=Q(x,A+k)-Q(x,A)`$, the mean value theorem gives $`D=h\,u'(t+\theta h)`$, and $`u'(x)=Q_t(x,A+k)-Q_t(x,A)`$, so again $`D=hk\,Q_{tA}(t+\theta h,A+\theta' k)`$, with $`\theta,\theta'`$ in (0, 1). With $`v(y)=Q(t+h,y)-Q(t,y)`$ instead, $`D=hk\,Q_{At}(t+\psi h,A+\psi' k)`$, with $`\psi,\psi'`$ in (0, 1).
 
 Given $`\varepsilon>0`$, continuity at $`(t,A)`$ gives $`\delta>0`$ with both mixed partials within $`\varepsilon`$ of their values at $`(t,A)`$ whenever $`|h|,|k|<\delta`$. Then $`|Q_{tA}(t,A)-Q_{At}(t,A)|<2\varepsilon`$ for every $`\varepsilon>0`$, so they are equal. ∎
 
@@ -773,16 +773,16 @@ example : (15368 / 9 : ℚ) + 100 / 27 = 46204 / 27 := by norm_num
 ## What this builds on
 
 - [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): the rate along a path, used twice in Step 1.
-- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what $`h^{\mathsf T} H h`$ is.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what the quadratic form $`h^{\mathsf T} H h`$ measures and how its sign behaves.
 
 ## Where this goes next
 
 - [Extrema in several variables](06-multivariable-extrema.md): at a flat point the Hessian sorts peak, pit and saddle.
 - [Convex functions](09-convex-functions.md): a Hessian form never negative means a bowl.
-- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): equal mixed partials test exactness.
+- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): uses equal mixed partials to test whether a rate equation is exact.
 - [Linearisation](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/02-linearisation-about-an-equilibrium.md): the expansion cut after one term, for moving systems.
-- [Optimality conditions](../../15-Optimization/02-Unconstrained%20Methods/01-optimality-conditions.md): tests for a best design.
-- [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): the Hessian on curved spaces.
+- [Optimality conditions](../../15-Optimization/02-Unconstrained%20Methods/01-optimality-conditions.md): first- and second-order Hessian tests for a best design in any dimension.
+- [Riemannian Hessian](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/06-riemannian-hessian-and-trust-regions.md): extends the Hessian and quadratic models onto curved spaces.
 - [Free energies](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/10-thermodynamic-potentials-and-maxwell-relations.md): the right potential for each pair of held-fixed variables.
 - [Morse theory](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/12-morse-theory-critical-points-and-handles.md): a height function's critical points build the shape.
 

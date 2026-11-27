@@ -14,7 +14,7 @@ Three maps sit in a line. Time sets position. Position sets air temperature and 
 
 The one-variable chain rule multiplied single rates ([Chain rule](../02-Derivatives/03-chain-rule.md)). Here each link passes on several numbers, so each rate becomes a table.
 
-**When maps are chained, the table of rates of the whole chain is the product of the links' tables, outer link on the left, each table read where the chain actually is.**
+**When differentiable maps are chained, the table of rates of the whole chain is the product of the links' tables, outer link on the left, each table read where the chain actually is.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the Jacobian matrix it multiplies (a map's table of rates) is a definition.
 
@@ -39,7 +39,7 @@ One new notation, in words first: the **Jacobian matrix** of a map g, written $`
 
 Row i, column j holds the rate of output i per unit of input j, in output units per input unit. A one-output map's Jacobian is its gradient (the list of its partial derivatives, [Gradient](03-gradient-and-directional-derivatives.md)) as a row; a path's is its velocity as a column.
 
-For $`g`$ after $`f`$, the chain rule reads
+When $`f`$ is differentiable at $`a`$ and $`g`$ is differentiable at $`f(a)`$, the chain rule reads
 
 ```math
 J_{g \circ f}(a) = J_g\big(f(a)\big)\,J_f(a)
@@ -113,19 +113,23 @@ The tolerance game, with numbers. The secant (the average rate over one step) mi
 <details>
 <summary>Detailed proof</summary>
 
-Let h be a small step in the input. Let f be differentiable at a with Jacobian M, and g at b = f(a) with Jacobian N; ‖v‖ is a vector's length. Then f(a + h) = f(a) + Mh + E(h) and g(b + v) = g(b) + Nv + R(v), with E(h)/‖h‖ → 0, R(v)/‖v‖ → 0, R(0) = 0. Fixed matrices stretch lengths by at most fixed factors: ‖Mz‖ ≤ m‖z‖, ‖Nz‖ ≤ n‖z‖.
+Let h be a small step in the input. Let f be differentiable at a with Jacobian M, and g at b = f(a) with Jacobian N; ‖v‖ is a vector's length.
 
-Put v = Mh + E(h). Then g(f(a + h)) − g(b) = NMh + N E(h) + R(v). Given 0 < ε < 1, choose δ > 0 so that 0 < ‖h‖ < δ gives ‖E(h)‖ < ε‖h‖, hence ‖v‖ ≤ (m + 1)‖h‖, with δ also small enough that this v obeys ‖R(v)‖ ≤ ε‖v‖. The leftover is at most (n + m + 1)ε‖h‖. So g after f has Jacobian NM at a. No step divides by v, which may be zero.
+Then f(a + h) = f(a) + Mh + E(h) and g(b + v) = g(b) + Nv + R(v), with E(h)/‖h‖ → 0, R(v)/‖v‖ → 0, R(0) = 0. Fixed matrices stretch lengths by at most fixed factors: ‖Mz‖ ≤ m‖z‖, ‖Nz‖ ≤ n‖z‖.
+
+Put v = Mh + E(h). Then g(f(a + h)) − g(b) = NMh + N E(h) + R(v). Given 0 < ε < 1, choose δ > 0 so that 0 < ‖h‖ < δ gives ‖E(h)‖ < ε‖h‖, hence ‖v‖ ≤ (m + 1)‖h‖.
+
+Choose δ also small enough that this v obeys ‖R(v)‖ ≤ ε‖v‖. The leftover is at most (n + m + 1)ε‖h‖. So g after f has Jacobian NM at a. No step divides by v, which may be zero.
 
 </details>
 
 ### Step 4: order is fixed, grouping is free
 
-The outer table sits on the left because it acts last; the shapes fit no other way. Grouping is free, since matrix multiplication is associative.
+The outer table sits on the left because it acts last; reversing the order either fails to fit or gives the wrong product. Grouping is free, since matrix multiplication is associative.
 
 Right pair first: the weather changes at (−6, 12), air in °C per hour and wind in km/h per hour; the felt row turns that into −12.
 
-Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map; its dot product with the velocity (2, 2), each entry times its partner and then added, is again −12, the directional rate of [Gradient](03-gradient-and-directional-derivatives.md).
+Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map. Its dot product with the velocity (2, 2), each entry times its partner and then added, is again −12, the directional rate of [Gradient](03-gradient-and-directional-derivatives.md).
 
 Left-first grouping over thousands of links is [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md).
 
@@ -578,19 +582,19 @@ The curve is the felt temperature along the walk; the straight line is its tange
 
 ## Where this goes next
 
-- [Hessian](05-hessian-and-second-order-approximation.md): the table of second rates.
+- [Hessian](05-hessian-and-second-order-approximation.md): the table of second partial rates, giving a quadratic model.
 - [Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md): an undoable Jacobian means a locally undoable map.
-- [Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant as an area scale.
+- [Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the Jacobian determinant as a local area or volume scale.
 - [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md): all price sensitivities in one backward pass.
-- [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): errors pushed through a formula.
+- [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): pushes measurement errors through a formula using its Jacobian.
 - [Gradient descent](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/02-gradient-descent-and-stochastic-gradient.md): steps downhill on chained gradients.
 - [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): the product grouped from the output end.
-- [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md): derivatives of whole programs.
+- [Automatic differentiation](../../15-Optimization/02-Unconstrained%20Methods/10-automatic-differentiation-and-backpropagation.md): applies the chain rule to compute exact derivatives of whole programs.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): the Jacobian as Newton's slope.
-- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): left-first grouping, mechanised.
+- [Reverse mode](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/07-reverse-mode-automatic-differentiation.md): mechanises the left-first grouping of Jacobian products across many steps.
 - [Canonical form](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/05-reduction-to-canonical-form.md): coordinates chosen to simplify an equation.
 - [Curvature and torsion at any speed](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/06-curvature-and-torsion-from-any-parametrisation.md): bending, whatever clock traces the curve.
-- [Tangent space and differential](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/03-tangent-spaces-and-differentials.md): the Jacobian without coordinates.
+- [Tangent space and differential](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/03-tangent-spaces-and-differentials.md): defines the Jacobian as a linear map without choosing coordinates.
 - [Constant rank theorem](10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 
 Each table here is read at one point; how the tables change from point to point, bending the flat prediction, is [Hessian](05-hessian-and-second-order-approximation.md).

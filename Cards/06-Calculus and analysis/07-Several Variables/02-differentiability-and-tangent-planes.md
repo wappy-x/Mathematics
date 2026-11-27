@@ -34,7 +34,9 @@ Orange: the hill's height along the path. Green: the tangent plane's height alon
 
 ## The formula
 
-Notation first, in words. A point on the map is written $`(x, y)`$: $`x`$ metres east and $`y`$ metres north of the peg. The hill's height there is $`f(x, y)`$. The slope east is written $`f_x`$, short for the partial derivative $`\partial f/\partial x`$; the slope north is $`f_y`$. The surveyor's point is $`(a, b)`$ = (100, 50). A step from there is $`h`$ metres east and $`k`$ metres north; its length on the map is $`\rho`$ (rho), by Pythagoras $`\rho = \sqrt{h^2 + k^2}`$.
+Notation first, in words. A point on the map is written $`(x, y)`$: $`x`$ metres east and $`y`$ metres north of the peg. The hill's height there is $`f(x, y)`$.
+
+The slope east is written $`f_x`$, short for the partial derivative $`\partial f/\partial x`$; the slope north is $`f_y`$. The surveyor's point is $`(a, b)`$ = (100, 50). A step from there is $`h`$ metres east and $`k`$ metres north; its length on the map is $`\rho`$ (rho), by Pythagoras $`\rho = \sqrt{h^2 + k^2}`$.
 
 The tangent plane at $`(a, b)`$ is the flat surface of heights
 
@@ -58,7 +60,7 @@ The definition. The hill is **differentiable** at $`(a, b)`$ when
 
 **Read it aloud:** the plane's error, measured per metre of step, heads for zero however the step shrinks.
 
-"Every direction at once" is the honest part: for any tolerance, one radius must serve every step inside it, east, north or slanting.
+"Every direction at once" is the honest part: for any tolerance, one radius must serve every step inside it, not one straight line at a time.
 
 The arrow $`(-f_x, -f_y, 1)`$, here (0.225, 0.250, 1), stands straight out of the plane, its **normal**. Every arrow lying in the plane has zero dot product with it ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
@@ -125,11 +127,13 @@ The tolerance game, with numbers: to keep the error below a thousandth of the st
 
 ### Step 4: a crease the slopes cannot see
 
-Take the surface $`g(x, y) = xy/\sqrt{x^2 + y^2}`$, with height 0 at the origin. It is a cone with its tip at the origin. Every line through the tip is straight on it, rising over two quarters of the map and falling over the other two. The east and north lines lie flat at height 0, so both slopes at the origin are 0 and the only candidate plane is $`z = 0`$.
+Take the surface $`g(x, y) = xy/\sqrt{x^2 + y^2}`$, with height 0 at the origin. It is a cone with its tip at the origin.
+
+Every line through the tip is straight on it, rising over two quarters of the map and falling over the other two. The east and north lines lie flat at height 0, so both slopes at the origin are 0 and the only candidate plane is $`z = 0`$.
 
 Walk out along the diagonal to the point $`(t, t)`$. The height is $`|t|/\sqrt{2}`$ and the step length is $`\sqrt{2}\,|t|`$, so the ratio is 0.5 however small $`t`$ is. At $`t`$ = 0.01 the height is 0.007071 m over a step of 0.014142 m.
 
-No tangent plane exists, though both slopes do and the surface is continuous (twice $`|xy|`$ is at most $`x^2 + y^2`$, so the height is at most half the step). The broken hypothesis: the east slope is 0.353553 at every diagonal point $`(t, t)`$ but 0 at the origin, so it is not continuous there.
+No tangent plane exists, though both slopes do and the surface is continuous (twice $`|xy|`$ is at most $`x^2 + y^2`$, so the height is at most half the step). The broken hypothesis: the east slope is 0.353553 at every diagonal point $`(t, t)`$ with $`t > 0`$ (and −0.353553 for $`t < 0`$) but 0 at the origin, so it is not continuous there.
 
 In one variable the same test is the tangent line of [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md), where one slope is enough.
 

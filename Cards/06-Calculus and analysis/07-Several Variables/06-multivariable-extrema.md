@@ -12,7 +12,7 @@ A long thin base wastes steel on long walls; a tiny base needs tall walls. With 
 
 The answer, proved below: a 2-metre square base, 1 metre tall, 12 square metres of steel.
 
-**A smooth lowest or highest point inside the region has every slope zero; the Hessian sorts such a flat spot into pit, peak or saddle; only a whole-region argument makes a pit lowest overall.**
+**A smooth lowest or highest point inside the region has every slope zero; where the Hessian determinant is non-zero, it sorts a two-variable flat spot into pit, peak or saddle; only a whole-region argument makes a pit lowest overall.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -61,7 +61,7 @@ D = AC - B^2.
 | D < 0 | saddle |
 | D = 0 | no verdict |
 
-**Read it aloud:** D is the table's corner products, AC, minus the mixed rate squared; its sign, with A's, names the flat spot.
+**Read it aloud:** D is the table's corner products, AC, minus the mixed rate squared; when D is not zero, its sign, with A's, names the flat spot.
 
 "Local" means best nearby; "global", best of all allowed points; "strict", no nearby tie. Near a flat spot a small step $`h`$ = ($`h_1`$ in x, $`h_2`$ in y) changes S by about
 
@@ -124,7 +124,9 @@ The bin: A = 2, D = 3. A pit. Negate the cost and A = −2, D = 3: a peak.
 
 ### Step 3: the bowl beats the remainder
 
-The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $`\lambda`$ = 1, times the squared step length. The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
+The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $`\lambda`$ = 1, times the squared step length.
+
+The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
 
 <details>
 <summary>Detailed proof</summary>
@@ -133,19 +135,23 @@ Let S have continuous second partials near p, with ∇S(p) = 0, and A > 0, D > 0
 
 With g(t) = S(p + th), [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives S(p + h) − S(p) = ½g''(τ) = ½ $`h^{\mathsf T}H(p + \tau h)h`$ for some τ in (0, 1), since g'(0) = 0.
 
-Set ε = λ/2. Continuity gives δ > 0 with every entry of H(q) − H(p) within ε/2 of zero when |q − p| < δ, so their quadratic forms differ by at most (ε/2)(|h₁| + |h₂|)^2 ≤ ε|h|^2. For 0 < |h| < δ, S(p + h) − S(p) ≥ ½(λ − ε)|h|^2 = ¼λ|h|^2 > 0. Use −S for a peak; for D < 0, Step 2's two steps, scaled small, keep their signs by the same bound.
+Set ε = λ/2. Continuity gives δ > 0 with every entry of H(q) − H(p) within ε/2 of zero when |q − p| < δ, so their quadratic forms differ by at most (ε/2)(|h₁| + |h₂|)^2 ≤ ε|h|^2.
+
+For 0 < |h| < δ, S(p + h) − S(p) ≥ ½(λ − ε)|h|^2 = ¼λ|h|^2 > 0. Use −S for a peak; for D < 0, Step 2's two steps, scaled small, keep their signs by the same bound.
 
 </details>
 
 ### Step 4: from the best nearby bin to the best bin
 
-The allowed region, all positive x and y, runs to infinity, so a pit need not be global. Fence it: the closed square with sides from 8/13 = 0.615385 to 169/8 = 21.125000 metres. Outside it, and on its edges, the steel is at least 13 square metres:
+The allowed region, all positive x and y, runs to infinity, so a pit need not be global. Fence it: the closed square with sides from 8/13 = 0.615385 to 169/8 = 21.125000 metres. Outside it, and on its edges, the steel is at least 13 square metres.
 
-a side below 0.615385 makes its walls, 8/x or 8/y, exceed 13, and a side above 21.125000 with the other at least 0.615385 makes the base exceed 13. The lowest edge value found is 17.437647. Inside, S is continuous on a closed bounded square, so the extreme value theorem ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)) gives a cheapest point. It costs at most 12, so it is off the fence, flat by Step 0, hence (2, 2). The pit is global.
+A side below 0.615385 makes its walls, 8/x or 8/y, exceed 13, and a side above 21.125000 with the other at least 0.615385 makes the base exceed 13. The lowest edge value found is 17.437647.
+
+Inside, S is continuous on a closed bounded square, so the extreme value theorem ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)) gives a cheapest point. It costs at most 12, so it is off the fence, flat by Step 0, hence (2, 2). The pit is global.
 
 A calculus-free grid search over the fence lands on (2.000, 2.000) with 12.000000.
 
-The other route to "local is global" is convexity, a Hessian passing the pit test everywhere ([Convex functions](09-convex-functions.md)). The bin fails it far out, where the wall curvatures shrink below the cross term.
+The other route to "local is global" is convexity, a Hessian whose quadratic form is never negative anywhere ([Convex functions](09-convex-functions.md)). The bin fails it far out, where the wall curvatures shrink below the cross term.
 
 ---
 
@@ -175,7 +181,9 @@ Base, one wall pair and the other split the steel 4, 4, 4.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads. Road one is calculus: Newton's method ([Newton's method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) on the gradient, with the Hessian as its slope, eight jumps from (1, 3); then difference quotients, eigenvalues and real rises. Road two is a grid search over the fence, plus a scan of two of its edges (the cost is symmetric in x and y). Four asserts: difference quotients against the formula, real rise against the quadratic model, grid winner against Newton, D's verdict against two steps.
+Two independent roads. Road one is calculus: Newton's method ([Newton's method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) on the gradient, with the Hessian as its slope, eight jumps from (1, 3); then difference quotients, eigenvalues and real rises.
+
+Road two is a grid search over the fence, plus a scan of two of its edges (the cost is symmetric in x and y). Four asserts: difference quotients against the formula, real rise against the quadratic model, grid winner against Newton, D's verdict against two steps.
 
 ### Python
 
@@ -711,7 +719,7 @@ example : (2 : ℤ) ^ 2 + 0 ^ 2 - 2 ^ 4 = -12 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating "gradient zero" as "found the minimum".** Level ground can be a pit, a peak or a pass; the second derivatives decide. Even a pit is only best nearby; the cheapest bin overall needed the fence.
+> **Treating "gradient zero" as "found the minimum".** Level ground can be a pit, a peak or a pass; when D is not zero, the second derivatives decide. Even a pit is only best nearby; the cheapest bin overall needed the fence.
 >
 > - **Checking only the axis directions.** For x^2 + 3xy + y^2, A and C are positive yet the step (0.1, −0.1) falls by 0.010000.
 > - **Reading D = 0 as "no extremum".** x^4 + y^4 has a strict pit with an all-zero Hessian.
@@ -736,14 +744,15 @@ example : (2 : ℤ) ^ 2 + 0 ^ 2 - 2 ^ 4 = -12 := by norm_num
 
 ## Where this goes next
 
+- [Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md): when an equation tying the inputs fixes one locally and gives its rates.
 - [Lagrange multipliers](08-lagrange-multipliers.md): flat spots when the inputs must satisfy an equation that cannot be solved by hand, as the volume was.
 - [Convex functions](09-convex-functions.md): every pit global, no fence needed.
-- [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): model fitting as a pit.
+- [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting a financial model as finding the pit of summed squared errors.
 - [The LQR](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/06-linear-quadratic-regulator.md): control as the pit of a quadratic cost.
-- [Local and global minima](../../15-Optimization/01-Convexity/01-local-and-global-minima.md): local against global in general.
+- [Local and global minima](../../15-Optimization/01-Convexity/01-local-and-global-minima.md): when a local minimum is or is not global in general.
 - [Optimality conditions](../../15-Optimization/02-Unconstrained%20Methods/01-optimality-conditions.md): these tests in any number of inputs.
 
-Left open: the volume rule let us solve for the height by hand; how is the best point found when the rule tying the inputs cannot be solved?
+Left open: the volume rule let us solve for the height by hand; when an equation tying the inputs cannot be rearranged, when does it still fix one variable locally and give its rates? [Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md) answers that, opening the door to constrained best points in [Lagrange multipliers](08-lagrange-multipliers.md).
 
 ---
 

@@ -10,9 +10,11 @@ One mole of air sits in a cylinder at 100 kPa and 300 K. The ideal gas law ties 
 
 Warm the gas by 1 K: how much does the volume grow? Here the law rearranges for volume. Under the van der Waals law, a closer fit for carbon dioxide, it becomes a cubic in volume and rearranging is hopeless, yet the same rate is wanted.
 
-The **implicit function theorem** says when an equation tying several quantities defines one of them as a function of the others near a known state, and gives that function's rates without writing it down. The **inverse function theorem** says when a map from several numbers to as many numbers can be run backwards near a point. Both test one thing: a matrix of rates must be invertible.
+The **implicit function theorem** says when an equation tying several quantities defines one of them as a function of the others near a known state, and gives that function's rates without writing it down.
 
-**Near a state that satisfies the equation, if the equation's rate in the unknown is not zero, the unknown is a smooth function of the rest (one with continuous partials), and its rates are minus the other rates divided by that one.**
+The **inverse function theorem** says when a map from several numbers to as many numbers can be run backwards near a point. Both test one thing: a matrix of rates must be invertible.
+
+**Near a state that satisfies a smooth equation (continuous partials near it), if the equation's rate in the unknown is not zero, the unknown is locally a smooth function of the rest, and its rates are minus the other rates divided by that one.**
 
 **What kind of fact this is:** two theorems, proved on this card in Why it works; the existence half is in the folded Detailed proof.
 
@@ -50,7 +52,7 @@ J_{G^{-1}}\big(G(x_0)\big) = J_G(x_0)^{-1}
 
 **Read it aloud:** where the rate grid can be inverted, the map can be undone nearby, and the undo's rate grid is the inverse grid.
 
-**Implicit function theorem.** Split the variables into $`x`$, left free, and $`y`$, the $`m`$ unknowns. Take $`m`$ equations $`F(x, y) = 0`$ holding at a known state $`x_0`$, $`y_0`$. If the square block ∂F/∂y, the equations' rates in the unknowns, is invertible there, then near $`x_0`$ exactly one nearby $`y`$ solves them, with continuous partials in $`x`$, and
+**Implicit function theorem.** Split the variables into $`x`$, left free, and $`y`$, the $`m`$ unknowns. Take $`m`$ equations $`F(x, y) = 0`$ with continuous partial derivatives near a known state $`x_0`$, $`y_0`$ where they hold. If the square block ∂F/∂y, the equations' rates in the unknowns, is invertible there, then near $`x_0`$ exactly one nearby $`y`$ solves them, with continuous partials in $`x`$, and
 
 ```math
 \frac{\partial y}{\partial x} = -\left(\frac{\partial F}{\partial y}\right)^{-1}\frac{\partial F}{\partial x}
@@ -105,15 +107,21 @@ To reach an output near $`G(x_0)`$, start at $`x_0`$ and correct repeatedly by t
 <details>
 <summary>Detailed proof</summary>
 
-Let J = J_G(x_0) be invertible; ||M|| is the largest stretch a matrix M applies, and I is the identity matrix. For a target y set φ(x) = x + J^{-1}(y − G(x)); its fixed points solve G(x) = y. By continuity of the partials pick r > 0 with ||I − J^{-1}J_G(x)|| ≤ 1/2 on the closed ball |x − x_0| ≤ r. The mean value inequality (a map moves points apart by at most its largest stretch times their distance) makes φ halve distances there.
+Let J = J_G(x_0) be invertible; ||M|| is the largest stretch a matrix M applies, and I is the identity matrix. For a target y set φ(x) = x + J^{-1}(y − G(x)); its fixed points solve G(x) = y.
 
-If |y − G(x_0)| < δ = r/(2||J^{-1}||), φ maps the ball into itself, so it has exactly one fixed point, G^{-1}(y). The same bound gives |x − x'| ≤ 2||J^{-1}|| |G(x) − G(x')|: G^{-1} is continuous. Inverting G(x + h) − G(x) = J_G(x)h + o(|h|), where o(|h|) is an error that vanishes faster than |h|, then shows G^{-1} is differentiable with Jacobian J_G(x)^{-1}, continuous in y.
+By continuity of the partials pick r > 0 with ||I − J^{-1}J_G(x)|| ≤ 1/2 on the closed ball |x − x_0| ≤ r. The mean value inequality (a map moves points apart by at most its largest stretch times their distance) makes φ halve distances there.
+
+If |y − G(x_0)| < δ = r/(2||J^{-1}||), φ maps the ball into itself, so it has exactly one fixed point, G^{-1}(y). The same bound gives |x − x'| ≤ 2||J^{-1}|| |G(x) − G(x')|: G^{-1} is continuous.
+
+Inverting G(x + h) − G(x) = J_G(x)h + o(|h|), where o(|h|) is an error that vanishes faster than |h|, then shows G^{-1} is differentiable with Jacobian J_G(x)^{-1}, continuous in y.
 
 </details>
 
 ### Step 3: the implicit theorem is the inverse theorem in disguise
 
-Let $`H`$ keep the free variables and record the equation: (p, T, V) to (p, T, F). Its Jacobian has rows (1, 0, 0), (0, 1, 0) and (∂F/∂p, ∂F/∂T, ∂F/∂V), so its determinant is ∂F/∂V = p = 100. Not zero, so $`H`$ can be undone. Feed the undo (p, T, 0): it returns the one nearby (p, T, V) with F = 0. With several unknowns the determinant is that of the block ∂F/∂y.
+Let $`H`$ keep the free variables and record the equation: (p, T, V) to (p, T, F). Its Jacobian has rows (1, 0, 0), (0, 1, 0) and (∂F/∂p, ∂F/∂T, ∂F/∂V), so its determinant is ∂F/∂V = p = 100.
+
+Not zero, so $`H`$ can be undone. Feed the undo (p, T, 0): it returns the one nearby (p, T, V) with F = 0. With several unknowns the determinant is that of the block ∂F/∂y.
 
 ### Step 4: the rate formula, and the tolerance game
 
@@ -360,7 +368,7 @@ Lean proves both theorems for every map with continuous partials, in any number 
 
 - Implicit theorem: take m equations in m unknowns, holding at a known state. If they have continuous partials there and the block ∂F/∂y is invertible, exactly one nearby y solves them.
 - That y has continuous partials in the free variables. Its rates are minus the inverse of the unknowns' block times the free variables' block.
-- One equation, one unknown: if the equation's rate in the unknown is not zero, the unknown is a function of the rest with continuous partials. Each of its rates is minus the other rate divided by that one.
+- One equation, one unknown, holding with continuous partials near a state: if the equation's rate in the unknown is not zero, the unknown is locally a function of the rest with continuous partials. Each of its rates is minus the other rate divided by that one.
 - Inverse theorem: let G take n numbers to n numbers, with continuous partials near x₀ and an invertible Jacobian there. Then G has an undo with continuous partials near G(x₀).
 - The undo's Jacobian at G(x₀) is the inverse of G's Jacobian at x₀.
 - The hand arithmetic holds exactly: the volume 24.942 L, both rates, Step 1's inverse top row, and the 3 K warmer, 2 kPa more prediction.
@@ -602,7 +610,7 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 - **Constrained optimisation.** The implicit theorem makes a surface given by one equation locally a graph, which is what [Lagrange multipliers](08-lagrange-multipliers.md) relies on.
 
 > **Say it back**
-> An equation defines one quantity as a smooth function of the rest near a known state, if its rate in that unknown is not zero. The unknown's rates are minus the other rates divided by that one: for one mole at 100 kPa and 300 K, 0.083140 L per kelvin and −0.249420 L per kPa. The implicit theorem is the inverse theorem applied to a map that keeps the free variables and records the equation. Where the rate is zero, as at carbon dioxide's critical point, it fails.
+> An equation with continuous partials defines one quantity as a smooth function of the rest near a known state, if its rate in that unknown is not zero. The unknown's rates are minus the other rates divided by that one: for one mole at 100 kPa and 300 K, 0.083140 L per kelvin and −0.249420 L per kPa. The implicit theorem is the inverse theorem applied to a map that keeps the free variables and records the equation. Where the rate is zero, as at carbon dioxide's critical point, it fails.
 
 ---
 
@@ -613,6 +621,7 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 
 ## Where this goes next
 
+- [Lagrange multipliers](08-lagrange-multipliers.md): uses the implicit theorem to find the best point on a constraint without solving it.
 - [Lagrange multipliers, proved](../../15-Optimization/03-Constrained%20Optimisation/01-lagrange-multipliers-revisited.md): constraints as local graphs, regularity made precise.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): an invertible Jacobian as a local change of coordinates.
 - [Regular value theorem](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem.md): the solutions of F = 0 forming a smooth surface.
@@ -621,6 +630,8 @@ example : ∀ V : ℚ, 0 * V - 1 * (8314 / 1000) * 1 ≠ 0 := by intro V; norm_n
 - [Change of variables in n dimensions, proved](../08-Multiple%20Integrals/08-change-of-variables-proved.md): break the map into moves that change one coordinate at a time.
 - [Solving every curve at once](../../12-Financial%20mathematics/33-Curves%20in%20Depth/07-multi-curve-calibration-and-jacobian-risk.md): Newton on OIS and basis quotes together, and the Jacobian that turns zero-rate risk into quote risk.
 - [Differential-algebraic equations](../../16-Numerical%20analysis/06-ODE%20Solvers/09-differential-algebraic-equations.md): when some equations carry no derivative, and the index that measures the trouble.
+
+Left open: once an equation defines a curve or surface locally, how do you find the highest or lowest value of another function along it? [Lagrange multipliers](08-lagrange-multipliers.md) answers that.
 
 ---
 

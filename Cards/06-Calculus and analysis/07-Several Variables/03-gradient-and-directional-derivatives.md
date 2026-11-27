@@ -12,7 +12,7 @@ Due east, the snow drops 0.3 m per metre of map distance. Due north it drops 0.4
 
 Two numbers, the east rate and the north rate, settle every heading. Packed into one arrow they are the **gradient**, the word used from here on. The arrow points up the steepest climb, its length is that climb's rate, and it crosses the map's contour lines at right angles.
 
-**Where a surface has a tangent plane, the rate in any direction is the gradient dotted with that direction, so the gradient points up the steepest climb, its length is the steepest rate, and it stands at right angles to the level contours.**
+**Where a surface has a tangent plane, the rate in any unit direction is the gradient dotted with it; where the gradient is non-zero, it points up the steepest climb, its length is that steepest rate, and it meets smooth level contours at right angles.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the gradient itself is a definition.
 
@@ -46,7 +46,7 @@ In lengths and an angle, with $`|\nabla h(p)|`$ the arrow's length (the square r
 \nabla h(p)\cdot u=|\nabla h(p)|\cos\theta
 ```
 
-**Read it aloud:** the rate is the gradient's length times the cosine of the angle away from it, so it peaks along the gradient, bottoms out against it, and is zero across it.
+**Read it aloud:** the rate is the gradient's length times the cosine of the angle away from it; when the gradient is non-zero, it peaks along it, bottoms out against it, and is zero across it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -85,7 +85,9 @@ On the ski slope the error can be written out exactly. Along the fall line h(p +
 
 ### Step 2: the steepest direction is along the gradient
 
-A dot product is the two lengths multiplied, times the cosine of the angle between the arrows ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). The direction has length 1, so the rate is the gradient's length times cos θ. A cosine is 1 only at angle 0 and −1 only at 180°. So the steepest climb runs along the gradient, the steepest descent straight against it, each at the gradient's length. Here the gradient (−0.3, −0.4) has length 0.5: the fall line is (0.6, 0.8), at 0.5 m per metre.
+A dot product is the two lengths multiplied, times the cosine of the angle between the arrows ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). The direction has length 1, so the rate is the gradient's length times cos θ.
+
+A cosine is 1 only at angle 0 and −1 only at 180°. When the gradient is non-zero, the steepest climb runs along it and the steepest descent straight against it, each at the gradient's length. Here the gradient (−0.3, −0.4) has length 0.5: the fall line is (0.6, 0.8), at 0.5 m per metre.
 
 A blind search agrees. Trying 3,600 headings a tenth of a degree apart, by difference quotients of h alone, the steepest is 53.1° from east, direction (0.600420, 0.799685), rate −0.500000.
 
@@ -93,7 +95,9 @@ A blind search agrees. Trying 3,600 headings a tenth of a degree apart, by diffe
 
 A contour is a level set: all points at one height, here 466 m. Along it the height does not change, so the rate along its direction is 0. By Step 1 that rate is the gradient dotted with the contour's direction, and a zero dot product of non-zero arrows is a right angle.
 
-The check tests this without the gradient. It fixes x at 120 ± d, finds by halving an interval the y back on 466 m, and measures the chord. Its slope is −0.756362 at d = 10, −0.750062 at d = 1, −0.750000 at d = 0.01; the gradient predicts −(∂h/∂x)/(∂h/∂y) = −0.750000. The gradient's dot product with the unit chord falls from 0.002030 to 0.000020 to 0.000000.
+The check tests this without the gradient. It fixes x at 120 ± d, finds by halving an interval the y back on 466 m, and measures the chord.
+
+Its slope is −0.756362 at d = 10, −0.750062 at d = 1, −0.750000 at d = 0.01; the gradient predicts −(∂h/∂x)/(∂h/∂y) = −0.750000. The gradient's dot product with the unit chord falls from 0.002030 to 0.000020 to 0.000000.
 
 The zero rate holds only at p itself. A straight 20 m traverse along the level direction (−0.8, 0.6) ends 0.68 m lower, because the contour curves away from the straight line; that curving is measured on [Hessian](05-hessian-and-second-order-approximation.md).
 
@@ -538,7 +542,7 @@ example : ((500 : ℚ) - 104 ^ 2 / 800 - 92 ^ 2 / 400) - 466 = -68 / 100 := by n
 - **Portfolio risk.** Risk's gradient in the position sizes splits it among holdings: [Whose risk is it](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md).
 
 > **Say it back**
-> The gradient is the east and north rates as one arrow. With a tangent plane, the rate along any direction of length 1 is the gradient dotted with it. That is the gradient's length times a cosine, so it peaks along the gradient and bottoms out against it. Along a contour the rate is zero, so the gradient crosses contours at right angles. On the slope the gradient is (−0.3, −0.4), and the fall line drops 0.5 m per metre along (0.6, 0.8).
+> The gradient is the east and north rates as one arrow. With a tangent plane, the rate along any direction of length 1 is the gradient dotted with it. That is the gradient's length times a cosine, so where the gradient is not zero the rate peaks along the gradient and bottoms out against it. Along a contour the rate is zero, so a non-zero gradient crosses the contour at right angles. On the slope the gradient is (−0.3, −0.4), and the fall line drops 0.5 m per metre along (0.6, 0.8).
 
 ---
 
@@ -549,7 +553,7 @@ example : ((500 : ℚ) - 104 ^ 2 / 800 - 92 ^ 2 / 400) - 466 = -68 / 100 := by n
 
 ## Where this goes next
 
-- [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): rates along curving paths.
+- [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): rates of change along curving paths and through chained maps.
 - [Lagrange multipliers](08-lagrange-multipliers.md): at a constrained best point, two gradients line up.
 - [Line integrals of a field](../09-Vector%20Calculus/02-line-integrals.md): the gradient summed along a path returns the height change.
 - [Whose risk is it](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): risk's gradient, shared among positions.
@@ -557,7 +561,7 @@ example : ((500 : ℚ) - 104 ^ 2 / 800 - 92 ^ 2 / 400) - 466 = -68 / 100 := by n
 - [Gradient descent](../../15-Optimization/02-Unconstrained%20Methods/02-gradient-descent-and-its-rate.md): how fast they reach the bottom.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): the gradient as a rule turning a direction into a rate.
 
-The gradient is read at one point; how it turns from point to point, bending the contours away from the level line, is [Hessian](05-hessian-and-second-order-approximation.md).
+The gradient gives the rate along a straight line; rates along curving paths and chained maps come next in [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md), while how the gradient turns from point to point is [Hessian](05-hessian-and-second-order-approximation.md).
 
 ---
 
