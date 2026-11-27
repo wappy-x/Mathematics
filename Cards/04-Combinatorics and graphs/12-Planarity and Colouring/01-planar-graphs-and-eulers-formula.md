@@ -1,4 +1,4 @@
-# Planar graphs: drawn flat with no crossings, and vertices minus edges plus faces is always 2
+# Planar graphs: drawn flat in one piece with no crossings, and vertices minus edges plus faces is always 2
 
 [Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Planarity and Colouring](../README.md#s12) → Planar graphs
 
