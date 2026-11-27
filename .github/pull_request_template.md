@@ -7,6 +7,7 @@
 - [ ] Both checks for every changed card run cleanly, print identical output, and match the output pasted on the card.
 - [ ] The code on each card is byte-for-byte the code in `checks/`.
 - [ ] Every number on each card is printed by both checks.
+- [ ] If a changed card has a Lean section, its proof compiles from the `lean/` folder with no `sorry`, and the block on the card equals `checks/<slug>_check.lean`.
 - [ ] Each new card was written in one pass and checked in a separate one (a fresh agent session or a second person), then read once by a person.
 - [ ] Every source was opened and confirmed, and every DOI was checked on Crossref.
 - [ ] New cards follow the specs from the claim issue: no frontmatter, the title first, then the path line.

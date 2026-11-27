@@ -20,7 +20,7 @@ If you're confident of the fix, send a pull request instead.
 
 ## Improve a card
 
-Typos, unclear sentences, a better example, a sharper check: send a pull request that changes one card, plus its two checks if the maths changes. Before you send it:
+Typos, unclear sentences, a better example, a sharper check: send a pull request that changes one card. If the maths changes, change the card's Python and Rust checks too, and its Lean proof if it has one. Before you send it:
 
 - keep the card's shape, with the same sections in the same order (the [agent brief](AGENTS.md#the-card-format) spells it out);
 - if any number changes, update both checks, run them, and paste the new output under the card's two "Ran …" lines with today's date and your platform.
@@ -42,7 +42,7 @@ You need:
 - git and a GitHub account, with your own fork of this repository;
 - Python 3.10 or newer, standard library only;
 - Rust, installed with [rustup](https://rustup.rs), standard library only;
-- for a card's Lean proof, [elan](https://github.com/leanprover/elan), Lean's installer (the `lean/` folder pins the versions);
+- for a card's Lean proof, [elan](https://github.com/leanprover/elan), Lean's installer (the [`lean/`](../lean) folder fixes the versions);
 - an AI coding agent that can read and write files and run commands in a terminal. Any capable one works.
 
 ```bash
@@ -108,8 +108,8 @@ Small fixes are usually quick. A new shelf gets a careful read.
 
 ## Ground rules
 
-- **Nothing typed by hand.** Every number on a card is printed by both programs.
-- **Real sources only.** Open every link and confirm it names the cited work. No Wikipedia.
-- **Your own words.** Don't paste text from books or websites.
-- **AI help is welcome.** You are responsible for what you send, so check it as if you'd written every line.
-- **Licences.** By sending a pull request you agree that your writing is released under [CC BY 4.0](../LICENSE) and your code under [Apache 2.0](../checks/LICENSE), like the rest of the library.
+- Every number on a card is printed by both programs. None is typed by hand.
+- Use real sources only. Open every link and confirm it names the cited work. No Wikipedia.
+- Write in your own words. Don't paste text from books or websites.
+- AI help is welcome. You are responsible for what you send, so check it as if you'd written every line.
+- By sending a pull request you agree that your writing is released under [CC BY 4.0](../LICENSE) and your code under [Apache 2.0](../checks/LICENSE), like the rest of the library.

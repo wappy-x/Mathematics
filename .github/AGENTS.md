@@ -194,7 +194,7 @@ The rules:
 
 - State the card's claims faithfully. A statement weaker than the card, or one that assumes what the card proves, does not count.
 - No `sorry`, `admit` or `native_decide`. Every theorem rests only on `propext`, `Classical.choice` and `Quot.sound`, shown by a `#print axioms` line for each.
-- Use the Lean and Mathlib versions pinned in `lean/`. Check from that folder: `lake env lean ../checks/<slug>_check.lean`.
+- Use the Lean and Mathlib versions fixed in [`lean/`](../lean). Check from that folder: `lake env lean ../checks/<slug>_check.lean`.
 - If Mathlib cannot state a claim yet, prove what it can and say so on the card. A card with nothing Lean can state has no Lean section.
 
 ## Pictures
