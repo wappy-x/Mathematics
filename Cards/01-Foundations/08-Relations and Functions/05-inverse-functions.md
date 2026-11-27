@@ -236,7 +236,7 @@ Lean proves three facts for every function, whatever its inputs and outputs, and
 
 - A function has an inverse exactly when it is a bijection: no two inputs share an output, and every output is reached.
 - Only one rule undoes a function both ways round.
-- Two rules done one after the other are undone in reverse order: the last one on comes off first.
+- Two undoable rules done one after the other are undone in reverse order: the last one on comes off first.
 - The temperatures, with 1.8 written exactly as 9/5: 20 °C goes out to 68 °F and home, and all 4 round trips come home.
 - The clock: 01:00 and 13:00 both read 1, every reading has 2 hours behind it, and the morning has 1.
 

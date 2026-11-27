@@ -358,7 +358,7 @@ example : (born 2 + 1 : Fin 12) = 7 ∧ (born 12 + 1 : Fin 12) = 7 := by decide
 
 ## Where this goes next
 
-- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): the last card on this shelf, back to orders. A rule that keeps order leaves some guess unchanged, and on finitely many guesses a climb must stop. Finiteness does the work again.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): the last card on this shelf, back to orders. On an order where every group has a nearest item above and below, a rule that keeps order leaves some guess unchanged, and on finitely many guesses the climb from the bottom must stop.
 - [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): finiteness is the whole condition here. Double every whole number and you land in the even numbers — half of them, seemingly, and still nothing doubles up. That is what infinite means.
 - [Friends and strangers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): push the counting further and you get Ramsey theory, where enough pigeons force a whole pattern, not just a shared hole.
 

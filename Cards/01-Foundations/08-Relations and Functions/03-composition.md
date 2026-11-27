@@ -365,7 +365,7 @@ example : percentOff 50 = 40 ∧ percentOff (couponOff 50) = 36 := by norm_num [
 
 - [One-to-one and onto](04-injective-surjective-bijective.md): next on this shelf. The two tests a rule must pass before it can be run backwards.
 - [Inverse functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
-- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): a rule that keeps order, composed with itself again and again, until the answer stops changing.
+- [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md): an order-keeping rule on finitely many subsets, composed with itself from the bottom until the answer stops changing.
 
 Left open: before a chain can run backwards, from the money paid to the tag price, what two tests must each rule pass?
 

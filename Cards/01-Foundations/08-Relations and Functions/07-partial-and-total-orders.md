@@ -59,7 +59,7 @@ Divides fails that one at 2 and 3. A rule passing all four is a **total order**;
 - **No two-way links.** If 4 were below 6 and 6 below 4, the antisymmetric test fails.
 - **No gaps.** If 1 is below 2 and 2 below 4, then 1 must be below 4, or the transitive test fails.
 - **Every pair compares, for a total order.** Divides misses 3 of the 15 pairs.
-- **A finite set, for the Hasse diagram.** On the number line, any two points have another between them, so there are no covers.
+- **A finite set, for the Hasse diagram.** On the number line, any two different points have another between them, so there are no covers.
 
 ---
 
@@ -381,7 +381,7 @@ example : ∀ a ∈ Nat.divisors 8, ∀ b ∈ Nat.divisors 8, a ∣ b ∨ b ∣ 
 - [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): given two incomparable things, is there a nearest thing above both, and a nearest below? Lattices answer that.
 - [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where one more at the end makes a longer order but one more at the front does not.
 - [Zorn's lemma and the well-ordering theorem](../09-Sizes%20of%20Infinity/08-zorns-lemma-and-well-ordering.md): the axiom of choice stated two more ways, both about orders, and why all three say the same thing.
-- [Dilworth's theorem](../../04-Combinatorics%20and%20graphs/15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): the fewest chains that cover an order equals the most items no two of which compare.
+- [Dilworth's theorem](../../04-Combinatorics%20and%20graphs/15-Orders%20and%20Set%20Systems/01-dilworths-theorem.md): in a finite order, the fewest chains that cover it equals the most items no two of which compare.
 
 Left open: when every group of items has a nearest item above it and a nearest below, what must a rule that keeps order do? [Knaster-Tarski](09-complete-lattices-and-knaster-tarski.md) answers that, after the counting detour through Pigeonhole.
 

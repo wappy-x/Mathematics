@@ -396,7 +396,7 @@ example : ((2 * (7 / 5 : ℚ) + 2) / (7 / 5 + 2)) = 24 / 17 := by norm_num
 ## Where this goes next
 
 - [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): the first card of the next shelf, Sizes of Infinity. It compares endless sets by pairing them off, the road to Cantor–Bernstein.
-- [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): states Cantor–Bernstein; one fixed point of this kind proves it.
+- [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): states Cantor–Bernstein (fitting both ways means the same size); one fixed point of this kind proves it.
 - [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the laws meet and join obey, and lattices as a structure.
 
 Left open: the climb here stopped because there are only 16 guesses. When a set has no end, how do you tell whether two sets are the same size?
