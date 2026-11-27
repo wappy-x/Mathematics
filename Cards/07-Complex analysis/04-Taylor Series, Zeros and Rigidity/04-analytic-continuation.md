@@ -1,4 +1,4 @@
-# Analytic continuation: push a function past the edge of its formula, and the extension is the only one possible
+# Analytic continuation: push a function past the edge of its formula, uniquely on any connected region
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Analytic continuation
 
@@ -10,7 +10,7 @@ A perpetuity pays $1 at the end of every year, for ever. At annual rate r a doll
 
 From 18 September 2019 until 27 July 2022 the European Central Bank paid −0.5% on deposits. Then z is above 1, and the payments never settle: 100 add to about $130, 1,000 to about $29,857. Yet 1 divided by the rate still gives −200.
 
-The sum describes a function only where it settles; the formula 1/r describes the same function almost everywhere. Carrying a function past the region where its first description works is **analytic continuation**, the term used from here on. There is no choice in it: the continued values are forced.
+The sum describes a function only where it settles; the formula 1/r describes the same function almost everywhere. Carrying a function past the region where its first description works is **analytic continuation**, the term used from here on. On a fixed connected region there is no choice in it: if a holomorphic extension exists there, its values are forced (though walking round a hole along two different paths can give different answers).
 
 **A function given by a series on a small region has at most one holomorphic extension to a larger connected region, so 1/r is the only continuation of the perpetuity price to negative rates; the value −200 is not a sum of payments.**
 
@@ -64,6 +64,7 @@ f,\ g \text{ holomorphic on a connected open } U,\ \ f = g \text{ on a set pilin
 - **Holomorphic, not merely smooth.** A smooth function of x and y can equal 1/(1 − z) on the unit disc and anything outside it. On the real line alone, the gap at r = 0 cuts negative rates off, so any formula would do there.
 - **A connected region.** On a region in two pieces, one piece says nothing about the other.
 - **Agreement piling up inside the region.** The rival 1/r + sin(π/r) matches 1/r at every rate 1/n (100%, 50%, …, 5%), but those pile up at 0, the pole. At −0.75% it gives −132.467308, not −133.333333.
+- **Path dependence and connected overlaps.** Walking a chain of discs round a hole can land on different values by different routes (one lap round 0 adds 2πi to the logarithm). Gluing two overlapping regions gives a unique function only when their overlap is in one piece.
 - **Uniqueness, not existence.** Nothing extends 1/(1 − z) across 1, where it grows without bound.
 
 ---
@@ -518,31 +519,31 @@ example : ∑ n ∈ Finset.range 101, n = 5050 := by decide
 
 ## Where you meet it in real life
 
-- **Annuities at negative rates.** N years of payments are worth (1 − z^N)/r, a finite sum valid at any rate but 0.
+- **Annuities at negative rates.** N years of payments are worth (1 − z^N)/r, a finite sum valid at any rate other than 0 and −100% (at 0 the sum is simply N).
 - **Special functions.** The factorial, as an integral, continues uniquely: [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
 - **Prime numbers.** Zeros of the continued zeta function, beyond the edge of its sum, govern how evenly primes are spread: [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md).
 
 > **Say it back**
-> A series may describe a function only on a disc. A holomorphic function is fixed on a connected region by any patch, so it extends in at most one way. The perpetuity sum settles for positive rates; 1/r, or a chain of discs, continues it to −200 at −0.5%. That is a value, not a sum, and so is −1/12.
+> A series may describe a function only on a disc. A holomorphic function is fixed on a connected region by any patch, so it extends to that region in at most one way (though walking round a hole by different paths can land on different values). The perpetuity sum settles for positive rates; 1/r, or a chain of discs, continues it to −200 at −0.5%. That is a value, not a sum, and so is −1/12.
 
 ---
 
 ## What this builds on
 
 - [Taylor series in the plane](01-taylor-series-in-the-plane.md): a holomorphic function equals its power series on a disc, the fact behind Step 0 and the walk in Step 4.
-- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): the engine of Step 3.
-- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): two holomorphic functions agreeing on a piling-up set agree everywhere on a connected domain, the engine of Step 3.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): present value of future payments and the discount factor z = 1/(1 + r).
 
 ## Where this goes next
 
-- [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): the factorial continued.
-- [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): zeta continued, and −1/12 computed.
-- [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): continued zeta at work on primes.
-- [The maximum modulus principle](05-maximum-modulus-principle.md): size peaks on the rim, from the same rigidity.
+- [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): the factorial continued past positive integers to the whole plane except non-positive integers.
+- [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): the zeta function continued past Re s = 1, with ζ(−1) = −1/12 computed.
+- [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): how zeros of the continued zeta function govern the prime staircase.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): a non-constant holomorphic function on a bounded region takes its largest modulus on the boundary.
 - [Schwarz reflection](08-schwarz-reflection-principle.md): a function real on the real axis extends across it by its own mirror image.
 - [The monodromy theorem](09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
-Uniqueness forces a continuation once it exists; which formula carries zeta past s = 1 is the question [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) answers.
+Uniqueness forces a continuation once it exists; [The maximum modulus principle](05-maximum-modulus-principle.md) uses the same rigidity to push every peak of |f| to the boundary (while [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) carries zeta past s = 1).
 
 ---
 

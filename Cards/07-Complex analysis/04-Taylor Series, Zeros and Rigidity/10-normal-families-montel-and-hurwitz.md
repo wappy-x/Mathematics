@@ -1,4 +1,4 @@
-# Normal families: bounded holomorphic functions always have a convergent subsequence, and limits keep their zero count
+# Normal families: bounded holomorphic functions always have a convergent subsequence, and non-zero limits keep their zero count
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Normal families
 
@@ -8,13 +8,13 @@
 
 Take the powers z, z², z³, … on the unit disc, the points less than 1 from 0. Each stays below 1 in size there. On the closed disc of radius 0.9 their worst sizes fall fast: 0.9, then 0.590490 at the fifth power, 0.014781 at the fortieth. They settle on the zero function.
 
-Any endless list of holomorphic functions (with a complex derivative at every point) sharing one bound has a sub-list that settles. A size bound caps every slope, and capped slopes force settling.
+Any endless list of holomorphic functions (with a complex derivative at every point) sharing one bound on each closed bounded piece has a sub-list that settles there. A size bound caps every slope, and capped slopes force settling.
 
 Each z − 1/n has one zero, at 1/n. For n ≥ 3 it lies inside the circle of radius 1/2, and so does the one zero of the limit z. Zero counts survive the limit.
 
 Together they give the key step of the Riemann mapping theorem, met later: a map that stretches the most exists and is one-to-one.
 
-**Holomorphic functions sharing one bound always contain a sub-list converging evenly on every closed disc inside the region (Montel), and the limit keeps the zero count inside each circle (Hurwitz), so a limit of one-to-one maps is one-to-one or constant.**
+**Holomorphic functions sharing one bound on each closed bounded piece always contain a sub-list converging evenly on every closed disc inside the region (Montel), and a non-zero limit keeps the zero count inside each circle with no limit zero on it (Hurwitz), so such a limit of one-to-one maps is one-to-one or constant.**
 
 **What kind of fact this is:** two theorems, proved on this card in Why it works.
 
@@ -35,9 +35,11 @@ On a closed disc inside, the bars shrink to nothing; on the open disc the worst 
 
 ## The formula
 
-Notation first. A **region** $`U`$ is an open set in one piece. A **compact** set $`K`$ is closed and bounded, such as a closed disc inside $`U`$. A list $`f_1, f_2, \ldots`$ converges **locally uniformly** when it converges uniformly (one error bound for all points at once) on every compact K in U. A family is **normal** when every list from it has a locally uniformly convergent sub-list.
+Notation first. A **region** $`U`$ is an open set in one piece. A **compact** set $`K`$ is closed and bounded, such as a closed disc inside $`U`$.
 
-**Montel's theorem.** A family of holomorphic functions on $`U`$ that all obey $`\lvert f\rvert \le M`$ is normal. The engine is a slope cap from Cauchy's estimate, at each point $`\xi`$ of a closed disc K at least $`\delta`$ inside U:
+A list $`f_1, f_2, \ldots`$ converges **locally uniformly** when it converges uniformly (one error bound for all points at once) on every compact K in U. A family is **normal** when every list from it has a locally uniformly convergent sub-list.
+
+**Montel's theorem.** A family of holomorphic functions on $`U`$ that shares one bound $`\lvert f\rvert \le M`$ on each compact set inside $`U`$ is normal. The engine is Cauchy's slope cap, at each point $`\xi`$ of a closed disc K at least $`\delta`$ inside U:
 
 ```math
 \lvert f'(\xi)\rvert \le \frac{M}{\delta} \quad\Longrightarrow\quad \lvert f(z) - f(w)\rvert \le \frac{M}{\delta}\,\lvert z - w\rvert \quad \text{for } z, w \text{ in a closed disc } K
@@ -55,14 +57,14 @@ N(f_n, C) = \frac{1}{2\pi i}\oint_C \frac{f_n'(z)}{f_n(z)}\,dz \;=\; \frac{1}{2\
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`U`$, $`K`$ | the region; a closed disc (or other compact set) inside it | the unit disc; $`\lvert z\rvert \le 0.9`$ | a bigger K needs a smaller δ |
+| $`U`$, $`K`$ | the region; a compact set inside it | the unit disc; $`\lvert z\rvert \le 0.9`$ | a bigger K needs a smaller δ |
 | $`f_n`$, $`f`$, $`n`$, $`j`$ | the n-th function; its limit; list positions | $`z^n`$, limit 0 | — |
-| $`M`$ | one bound on the size of every function | 1 | the slope cap grows with it |
-| $`\delta`$, $`\rho`$ | how far K sits inside U; a circle's radius in Cauchy's estimate | 0.1; just under 0.1 | a smaller slope cap |
-| $`z`$, $`w`$, $`\xi`$, $`a`$, $`b`$, $`q`$ | points of K; ξ where a slope is read; a, b tested for equal values; q a checkpoint | $`\lvert \xi\rvert \le 0.9`$; a = −0.3, b = −0.7 | — |
-| $`C`$, $`N(f, C)`$, $`m`$, $`k`$, $`h`$ | a circle; zeros of f inside it, with multiplicity; a floor under $`\lvert f\rvert`$ on C; a zero's order; the zero-free leftover | $`\lvert z\rvert = 1/2`$; 1 for $`z - 1/n`$ | — |
-| $`g_n`$, $`z_0`$, $`D`$, $`F`$, $`s`$ | a one-to-one map of a region D into the unit disc; the point sent to 0; the limit; the largest stretch $`\lvert g'(z_0)\rvert`$ | $`(z + z^2/n)/(1 + 1/n)`$; 0; z; 1 | — |
-| $`\varepsilon`$, $`\eta`$ | an allowed error; a distance keeping every function within ε/3 | η = ε/30 here | a smaller ε needs a smaller η |
+| $`M`$ | one shared bound on each compact set | 1 | the slope cap grows with it |
+| $`\delta`$, $`\rho`$ | the distance from K to the edge; a circle's radius | 0.1; just under 0.1 | a smaller slope cap |
+| $`z`$, $`w`$, $`\xi`$, $`a`$, $`b`$, $`q`$ | points of K; the slope point; tested points; a checkpoint | $`\lvert \xi\rvert \le 0.9`$; −0.3, −0.7 | — |
+| $`C`$, $`N(f, C)`$, $`m`$, $`k`$, $`h`$ | a circle; the zero count inside; the floor on C; order; leftover | $`\lvert z\rvert = 1/2`$; 1 for $`z - 1/n`$ | — |
+| $`g_n`$, $`z_0`$, $`D`$, $`F`$, $`s`$ | one-to-one maps into the unit disc; base point; limit; top stretch | $`(z + z^2/n)/(1 + 1/n)`$; 0; z; 1 | — |
+| $`\varepsilon`$, $`\eta`$ | an allowed error; a step keeping every function within ε/3 | η = ε/30 | a smaller ε needs a smaller η |
 
 ### When it holds
 
@@ -102,19 +104,25 @@ This holds for every z at once, so the list converges uniformly on K.
 
 ### Step 3: one sub-list for every compact set
 
-Take closed discs of radius 1 − 1/(j + 1), j = 1, 2, …, which fill the unit disc. Pick a sub-list converging on the first, a sub-list of that converging on the second, and so on. The j-th function of the j-th sub-list converges on all of them. The limit is holomorphic by [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md). Any region U works the same way, with compact sets filling U.
+Take closed discs of radius 1 − 1/(j + 1), j = 1, 2, …, which fill the unit disc. Pick a sub-list converging on the first, a sub-list of that on the second, and so on.
+
+The j-th function of the j-th sub-list converges on all of them, with a holomorphic limit by [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md). Any region U works the same way using compact sets that fill U.
 
 ### Step 4: Hurwitz, by counting zeros with an integral
 
-Each zero a of f inside C factors out as $`(z - a)^k`$, k its order ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)); the leftover h has no zeros inside C. So $`f'/f`$ is a sum of terms $`k/(z - a)`$ plus $`h'/h`$. Round C each $`1/(z - a)`$ integrates to $`2\pi i`$ ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)) and $`h'/h`$ to 0 (Cauchy's theorem), so the formula's integral is the zero count: the argument principle, met in full later.
+Each zero a of f inside C factors out as $`(z - a)^k`$, k its order ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)); the leftover h has no zeros on or inside C. So $`f'/f`$ is a sum of $`k/(z - a)`$ plus $`h'/h`$.
 
-On C, $`\lvert f\rvert`$ stays above some m > 0, so $`\lvert f_n\rvert > m/2`$ there for large n. Derivatives converge too (the limits card), so $`f_n'/f_n \to f'/f`$ uniformly on C. The integrals converge, and converging whole numbers are eventually equal.
+Round C each $`1/(z - a)`$ integrates to $`2\pi i`$ ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)) and $`h'/h`$ to 0 (Cauchy's theorem), giving the zero count: the argument principle, met in full later.
+
+On C, $`\lvert f\rvert`$ stays above some m > 0, so $`\lvert f_n\rvert > m/2`$ for large n. Derivatives converge too (the limits card), so $`f_n'/f_n \to f'/f`$ uniformly on C. The integrals converge, and converging whole numbers are eventually equal.
 
 ### Step 5: limits of one-to-one maps
 
-Let each $`f_n`$ be one-to-one, with a non-constant limit f. If $`f(a) = f(b)`$ with a ≠ b, a small circle round b, avoiding a, holds a zero of $`f - f(a)`$ and none on it (zeros are isolated). Hurwitz, applied to $`f_n - f_n(a) \to f - f(a)`$, gives a zero there too for large n: a second point with value $`f_n(a)`$, impossible. So **the limit of one-to-one maps is one-to-one or constant**.
+Let each $`f_n`$ be one-to-one on a region U, with a locally uniform, non-constant limit f. If $`f(a) = f(b)`$ with a ≠ b, a small circle round b, avoiding a, holds a zero of $`f - f(a)`$ and none on it (zeros are isolated).
 
-The example: the gap of $`f_n(z) = z + z^2/n`$ factors as $`f_n(a) - f_n(b) = (a - b)(1 + (a + b)/n)`$. Inside the disc $`\lvert a + b\rvert < 2`$, so for n ≥ 2 the second factor is never 0, and the limit z is one-to-one too. For n = 1 it fails: $`f_1(-0.3) = f_1(-0.7) = -0.21`$. The constant case is real: z/n tends to 0.
+Hurwitz, applied to $`f_n - f_n(a) \to f - f(a)`$, gives a zero there too for large n: a second point with value $`f_n(a)`$, impossible. So **a locally uniform limit of one-to-one maps on a region is one-to-one or constant**.
+
+For $`f_n(z) = z + z^2/n`$, $`f_n(a) - f_n(b) = (a - b)(1 + (a + b)/n)`$. Inside the unit disc $`\lvert a + b\rvert < 2`$, so for n ≥ 2 the second factor is never 0, and the limit z is one-to-one too. For n = 1 it fails: $`f_1(-0.3) = f_1(-0.7) = -0.21`$. The constant case is real: z/n tends to 0.
 
 ### Step 6: the existence step of the Riemann mapping theorem
 
@@ -152,18 +160,16 @@ The zero count 2 carries over although the two zeros merge.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Counting the limit's distinct zeros | 1 for $`z^2`$, against 2 for each $`z^2 + 1/n`$, n ≥ 5 | Hurwitz counts with multiplicity |
-| Circle through the limit's zero | $`z - 1/2 + 1/n`$: 1 zero inside; the limit: 0 | the limit's zero sits on C |
-| Dropping "or constant" | z/n is one-to-one, worst size 0.01 at n = 100, limit 0 | a constant limit is allowed |
-| Expecting uniform convergence on the open disc | $`z^{40}`$ at 0.9999 is 0.996008 | Montel promises closed discs inside |
-
-The code prints all four.
+| Counting distinct zeros | 1 for $`z^2`$, vs 2 for $`z^2 + 1/n`$ ($`n \ge 5`$) | Hurwitz counts with multiplicity |
+| Circle through a limit zero | $`z - 1/2 + 1/n`$: 1 inside; limit: 0 | Limit's zero sits on C |
+| Dropping "or constant" | z/n is one-to-one, worst size 0.01 at n = 100 | Limit 0 is constant |
+| Expecting uniform convergence on open disc | $`z^{40}`$ at 0.9999 is 0.996008 | Montel promises compact sets inside |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Every claim takes two roads. Worst sizes: a polar grid against $`0.9^n`$. Zero counts: the turns of f round a circle against roots found by algebra. One-to-one: counts of solutions of $`f(z) = f(a)`$ against the factor $`1 + (a + b)/n`$. Stretches $`g_n'(0)`$: Cauchy's formula on a circle against n/(n + 1).
+Every claim takes two roads: a polar grid against $`0.9^n`$, circle turns against algebraic roots, solution counts against $`1 + (a + b)/n`$, and Cauchy's formula for $`g_n'(0)`$ against n/(n + 1).
 
 ### Python
 
@@ -342,7 +348,7 @@ The two outputs match line for line.
 Lean proves Montel, Hurwitz and the limit of one-to-one maps for every list of functions, and checks the worked numbers exactly.
 
 - Take holomorphic functions on an open set, sharing one bound on each compact set inside it. Then some sub-list converges locally uniformly to a holomorphic limit.
-- Suppose holomorphic functions converge locally uniformly to a limit with no zero on a circle C. Suppose C and its inside lie in the open set. Then late functions have as many zeros inside C as the limit, counted with multiplicity.
+- Suppose holomorphic functions converge locally uniformly to a non-zero limit with no zero on a circle C of positive radius. Suppose C and its inside lie in the open set. Then late functions have as many zeros inside C as the limit, counted with multiplicity.
 - On a region, a locally uniform limit of one-to-one holomorphic functions is one-to-one or constant.
 - Take $`f_n(z) = z + z^2/n`$ with $`n \ne 0`$. Then $`f_n(a) - f_n(b) = (a - b)(1 + (a + b)/n)`$.
 - For n = 1 it fails: $`f_1(-0.3)`$ and $`f_1(-0.7)`$ both equal −0.21.
@@ -961,23 +967,23 @@ example : ((-1 + (-1) ^ 2 / 10) / (1 + 1 / 10) : ℚ) - (-1) = 2 / 11 := by norm
 ## The usual mistake
 
 > [!warning]
-> **Trusting "bounded" off the complex plane.** The proof needs Cauchy's estimate, which only holomorphic functions obey. On $`0 \le x \le \pi`$, $`\sin(nx)`$ stays below 1 but has slope n at 0, and no sub-list converges uniformly.
+> **Trusting "bounded" off the complex plane.** The proof needs Cauchy's estimate, which only holomorphic functions obey: on $`0 \le x \le \pi`$, $`\sin(nx)`$ stays below 1 with slope n at 0, so no sub-list converges uniformly.
 >
-> - **Counting distinct zeros.** $`z^2`$ has one zero point, counted twice, matching $`z^2 + 1/n`$ for n ≥ 5.
-> - **Drawing C through the limit's zero.** For n ≥ 2, each $`z - 1/2 + 1/n`$ has 1 zero inside $`\lvert z\rvert = 1/2`$; the limit has 0.
-> - **Forgetting the constant case.** One-to-one maps z/n converge to 0.
-> - **Expecting even convergence on the open disc.** $`z^{40}`$ is still 0.996008 at 0.9999.
+> - **Counting distinct zeros.** $`z^2`$ has multiplicity 2, matching $`z^2 + 1/n`$.
+> - **Drawing C through a limit zero.** $`z - 1/2 + 1/n`$ has 1 inside $`\lvert z\rvert = 1/2`$; its limit has 0.
+> - **Forgetting constant limits.** One-to-one z/n converges to 0.
+> - **Expecting uniform convergence on the open disc.** $`z^{40}`$ is 0.996008 at 0.9999.
 
 ---
 
 ## Where you meet it in real life
 
-- **Conformal maps in engineering.** Flow and heat problems on awkward shapes are solved by mapping them onto a disc; this card is why the map exists.
-- **Roots under rounding.** A polynomial with slightly wrong coefficients keeps its root count inside any circle that avoids the exact roots.
-- **Fractals of iteration.** Where the repeats of a map form a normal family is the calm Fatou set; the rest is the Julia set.
+- **Conformal maps in engineering.** Flow and heat problems on awkward shapes map onto a disc; this card proves the map exists.
+- **Roots under rounding.** Slightly perturbed polynomials keep their root count inside any circle avoiding the exact roots.
+- **Fractals of iteration.** Where a map's iterates form a normal family is the calm Fatou set; the rest is the Julia set.
 
 > **Say it back**
-> A size bound on holomorphic functions caps their slopes (Cauchy's estimate), so a diagonal choice finds a sub-list converging on every closed disc inside: Montel. The zero count, an integral of f′/f, is a converging whole number, so it stays fixed: Hurwitz. So a limit of one-to-one maps is one-to-one or constant. Together they build the Riemann map.
+> One shared size bound on each compact piece caps the slopes of holomorphic functions (Cauchy's estimate), so a diagonal choice finds a sub-list converging on every closed disc inside: Montel. For a non-zero limit with no zero on a circle C, the zero count inside C is a converging whole number, so it stays fixed: Hurwitz. Thus a locally uniform limit of one-to-one maps on a region is one-to-one or constant. Together they build the Riemann map.
 
 ---
 
@@ -1002,7 +1008,7 @@ Montel needs a shared bound; whether missing two values is enough is left to Pic
 
 Verified 2026-11-23: every link below resolves to the publisher's page.
 
-- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 8, section 3: Montel, one-to-one limits, and the Riemann mapping proof.
-- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [doi:10.1007/978-1-4612-6313-5](https://doi.org/10.1007/978-1-4612-6313-5). Chapter VII: normal families, Hurwitz and the Riemann mapping theorem.
-- Montel, Paul. "Sur les suites infinies de fonctions." *Annales scientifiques de l'École normale supérieure* 24 (1907): 233–334. [doi:10.24033/asens.580](https://doi.org/10.24033/asens.580). The original paper on bounded families.
-- Hurwitz, A. "Ueber die Nullstellen der Bessel'schen Function." *Mathematische Annalen* 33 (1888): 246–266. [doi:10.1007/BF01443855](https://doi.org/10.1007/BF01443855). Bessel zeros counted through a limit: the source of Hurwitz's theorem.
+- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 8, section 3: Montel and Riemann mapping.
+- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [doi:10.1007/978-1-4612-6313-5](https://doi.org/10.1007/978-1-4612-6313-5). Chapter VII: normal families and Hurwitz.
+- Montel, Paul. "Sur les suites infinies de fonctions." *Annales scientifiques de l'École normale supérieure* 24 (1907): 233–334. [doi:10.24033/asens.580](https://doi.org/10.24033/asens.580). Original paper.
+- Hurwitz, A. "Ueber die Nullstellen der Bessel'schen Function." *Mathematische Annalen* 33 (1888): 246–266. [doi:10.1007/BF01443855](https://doi.org/10.1007/BF01443855). Source of Hurwitz's theorem.

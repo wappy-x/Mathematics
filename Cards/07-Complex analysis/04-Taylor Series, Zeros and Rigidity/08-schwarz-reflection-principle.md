@@ -1,4 +1,4 @@
-# Schwarz reflection: a function real on the real axis extends across it by its own mirror image
+# Schwarz reflection: a holomorphic function, continuous up to a real segment and real on it, extends across it by its mirror image
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Schwarz reflection
 
@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Suppose a function is known only on the upper half of a disc, and it is real all along the diameter, the stretch of the real axis from −1 to 1. Then its values below the axis are already decided: mirror the point, look up the value, and mirror the answer back.
+Suppose a holomorphic function is known only on the upper half of a disc, and it is continuous up to and real all along the diameter, the stretch of the real axis from −1 to 1. Then its values below the axis are already decided: mirror the point, look up the value, and mirror the answer back.
 
 Take f(z) = e^z, real on the whole real axis. Above the axis, at p = 0.3 + 0.4i, it gives 1.243302 + 0.525660i. To get a value at the mirror point 0.3 − 0.4i, flip the sign of the imaginary part: 1.243302 − 0.525660i. That is exactly e^(0.3 − 0.4i).
 
@@ -14,7 +14,7 @@ The payoff is Step 6: mirrors carry a map known only on a half disc to the whole
 
 The axis values must be real: the constant i above mirrors to −i below, and the halves jump. From here on, mirroring in the real axis is called **reflection**, and the glued function the **reflected extension**.
 
-**If f is holomorphic (complex-differentiable) above a stretch of the real axis, continuous up to it and real on it, then the conjugate of f at the mirror point, conj f(conj z), continues f across that stretch, and this continuation is the only one.**
+**If f is holomorphic (complex-differentiable) above a stretch of the real axis, continuous up to it and real on it, then the conjugate of f at the mirror point, conj f(conj z), continues f across that stretch, and on a connected symmetric region this continuation is the only one.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from Morera's theorem.
 
@@ -34,12 +34,12 @@ $`\bar z`$, read "z-bar", is z mirrored in the real axis: x + iy becomes x − i
 F(z) = \begin{cases} f(z) & z \in \Omega^+ \cup I \\ \overline{f(\bar z)} & z \in \Omega^- \end{cases}
 ```
 
-**Read it aloud:** F is f above the axis and on it; below, F mirrors the point, applies f, and mirrors the answer.
+**Read it aloud:** F is f above the axis and on it; below, F mirrors the point, applies f, and mirrors the answer. Here f is holomorphic on $`\Omega^+`$, continuous up to $`I`$ and real on $`I`$.
 
 For a circle, the mirror in the unit circle is $`z^* = 1/\bar z`$: the point on the same ray from 0, at 1 over the distance.
 
 ```math
-F(z) = \overline{g\left(1/\bar z\right)} \quad \text{for } |z| > 1 \text{ near the arc, when } g \text{ is real on an arc of the unit circle}
+F(z) = \overline{g\left(1/\bar z\right)} \quad \text{for } |z| > 1 \text{ near the arc, when } g \text{ is holomorphic inside, continuous up to the arc, and real on it}
 ```
 
 **Read it aloud:** outside the circle, F mirrors the point into the circle, applies g, and mirrors the answer in the real axis.
@@ -109,19 +109,21 @@ F is uniformly continuous near T: for every η > 0 there is δ > 0 such that poi
 
 ### Step 4: the extension is forced
 
-Any holomorphic function on the whole region that equals f above the axis is F ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). F's Taylor coefficients $`a_n`$ at 0, read from a circle of radius 0.5 that is half f and half mirror, are 1, 1, 0.5, 0.166667, 0.041667: the 1/n! of e^z, all real.
+When $`\Omega`$ is in one piece, any holomorphic function on it that equals f above the axis is F ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). F's Taylor coefficients $`a_n`$ at 0, read from a circle of radius 0.5 that is half f and half mirror, are 1, 1, 0.5, 0.166667, 0.041667: the 1/n! of e^z, all real.
 
 ### Step 5: circles, by carrying the rule through Mobius maps
 
 A **Mobius map**, a non-constant ratio of two first-degree expressions in z, sends circles and lines to circles and lines (Ahlfors, ch. 3, sec. 3). The Cayley map C(z) = (z − i)/(z + i) sends the real axis onto the unit circle, except the point 1. It also sends mirror pairs to mirror pairs:
 
 ```math
-C(\bar z) = \frac{\bar z - i}{\bar z + i} = \frac{1}{\overline{C(z)}}
+C(\bar z) = \frac{\bar z - i}{\bar z + i} = \frac{1}{\overline{C(z)}} \qquad (z \ne \pm i)
 ```
 
 **Read it aloud:** the Cayley map of the mirror point is the mirror, in the unit circle, of the Cayley map of the point. Proof: the conjugate of C(z) is (z̄ + i)/(z̄ − i), whose reciprocal is C(z̄). With numbers, C(p) = −0.365854 − 0.292683i and C(conj p) = −1.666667 − 1.333333i = 1/conj C(p).
 
-So let f be holomorphic on one side of an arc, continuous up to it, with values on the arc lying on a second circle or line. Mobius maps carry both curves to the real axis, where Steps 1 to 3 apply. Carrying back turns each conjugate into the mirror in the right curve: F is f at the mirror point, mirrored in the second curve.
+So let f be holomorphic on one side of an arc, continuous up to it, with values on the arc lying on a second circle or line.
+
+Mobius maps carry both curves to the real axis, where Steps 1 to 3 apply. Carrying back turns each conjugate into the mirror in the right curve: F is f at the mirror point, mirrored in the second curve.
 
 ### Step 6: extending a map defined on a half disc
 
@@ -146,8 +148,6 @@ The formula g agrees at both points. Repeated mirrors carry g to the whole plane
 | non-example round the triangle | −2i × 0.625 | −1.25i |
 | reflected value at 0.3 − 0.4i | conjugate of f(p) | **1.243302 − 0.525660i** |
 
-Built only from values above the axis, the reflected extension is e^z itself.
-
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
@@ -160,7 +160,9 @@ Built only from values above the axis, the reflected extension is e^z itself.
 
 ## Code, from first principles, and it actually runs
 
-Three roads. Road one compares the mirror of e^z above with e^z below, from the real exponential, cosine and sine. Road two is Morera's test: a midpoint-rule integral of the glued function round the triangle, 0 for e^z and −2i times the chord for the jump. Road three reads the glued function's Taylor coefficients from 64 points on a circle and compares them with 1/n!. The Cayley mirrors and the half-disc map are checked against their formulas.
+Three roads. Road one compares the mirror of e^z above with e^z below, from the real exponential, cosine and sine. Road two is Morera's test: a midpoint-rule integral of the glued function round the triangle, 0 for e^z and −2i times the chord for the jump.
+
+Road three reads the glued function's Taylor coefficients from 64 points on a circle and compares them with 1/n!. The Cayley mirrors and the half-disc map are checked against their formulas.
 
 ### Python
 
@@ -656,7 +658,7 @@ example : (List.range 5).map Nat.factorial = [1, 1, 2, 6, 24] := by decide
 - **Image charges.** A field near a flat conductor continues past it as a mirror copy, the image source behind the wall.
 
 > **Say it back**
-> A function holomorphic above a stretch of the real axis and real on it extends below as conj f(conj z). Mirroring twice keeps it holomorphic, and reality makes the halves meet. Morera's theorem removes the seam; the identity theorem makes the extension unique. e^z at 0.3 + 0.4i is 1.243302 + 0.525660i, and its mirror is e^z at 0.3 − 0.4i. Mobius maps carry the rule to circles, so a map known on a half disc reaches the whole plane.
+> A function holomorphic above a stretch of the real axis, continuous up to it and real on it, extends below as conj f(conj z). Mirroring twice keeps it holomorphic, and reality makes the halves meet. Morera's theorem removes the seam; on a connected region, the identity theorem makes the extension unique. e^z at 0.3 + 0.4i is 1.243302 + 0.525660i, and its mirror is e^z at 0.3 − 0.4i. Mobius maps carry the rule to circles, so a map known on a half disc reaches the whole plane except 1.
 
 ---
 
@@ -669,7 +671,7 @@ example : (List.range 5).map Nat.factorial = [1, 1, 2, 6, 24] := by decide
 ## Where this goes next
 
 - [The Riemann mapping theorem](../07-Conformal%20Maps%20and%20Harmonic%20Functions/08-riemann-mapping-theorem-and-schwarz-christoffel.md): reflection across polygon sides behind the Schwarz-Christoffel formula.
-- [Mobius transformations](../07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): the full theory behind Step 5.
+- [Mobius transformations](../07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): maps of the form (az + b)/(cz + d) carrying circles and lines to circles and lines, behind Step 5.
 
 Reflection crosses one line or circle at a time; whether continuations along different paths agree is the question [The monodromy theorem](09-monodromy-theorem.md) answers.
 

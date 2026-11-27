@@ -1,4 +1,4 @@
-# Zeros and the identity theorem: zeros come singly, so a function known on a tiny stretch is known everywhere
+# Zeros and the identity theorem: a non-zero holomorphic function's zeros come singly, so a tiny stretch fixes it on a connected region
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Zeros and the identity theorem
 
@@ -10,9 +10,9 @@ A locksmith copying a key needs only a short stretch of it: match a few millimet
 
 The sine function, sin z, is zero at 0, then next at π, 3.141593 along the real line. The cubic z^2(z − 1) is zero at 0 and at 1, and near 0 it hugs zero harder: at 0.1 it is −0.009, where sine is about 0.1. How many times a zero repeats is its **order**: 1 for sine at 0, 2 for the cubic.
 
-Each zero of a holomorphic function that is not zero everywhere has a small disc round it holding no other zero. So two holomorphic functions agreeing at points that pile up inside their region agree everywhere in it. So sin^2 z + cos^2 z = 1, true on the real line, stays true at 1 + 2i. From here on the locksmith drops out; the real terms are **isolated zero** and **identity theorem**.
+On a connected region, each zero of a holomorphic function that is not zero everywhere has a small disc round it holding no other zero. So two holomorphic functions agreeing at points that pile up inside their connected region agree everywhere in it. So sin^2 z + cos^2 z = 1, true on the real line, stays true at 1 + 2i. From here on the locksmith drops out; the real terms are **isolated zero** and **identity theorem**.
 
-**Near a zero, a holomorphic function is a whole power of (z − a) times a factor not zero there; so its zeros stand apart, and two holomorphic functions agreeing on points that pile up inside a connected region agree on all of it.**
+**Near a zero, a holomorphic function on a connected region that is not zero everywhere is a whole power of (z − a) times a factor not zero there; so its zeros stand apart, and two holomorphic functions agreeing on points that pile up inside a connected region agree on all of it.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the order of a zero is a definition.
 
@@ -32,13 +32,13 @@ Notation first, in words. The letter $`a`$ names a zero, a point with f(a) = 0. 
 f(z) = (z - a)^m\, g(z), \qquad g(a) = c_m \neq 0
 ```
 
-**Read it aloud:** near a zero, f is (z − a) multiplied in m times, then a leftover g not zero at a; the order m is the place of the first non-zero Taylor coefficient, so also of the first non-zero derivative at a.
+**Read it aloud:** near a zero of a function not zero everywhere on its domain, f is (z − a) multiplied in m times, then a leftover g not zero at a; the order m is the place of the first non-zero Taylor coefficient, so also of the first non-zero derivative at a.
 
 ```math
 f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad z_n \to a \in D \;\Longrightarrow\; f_1 = f_2 \text{ on all of } D
 ```
 
-**Read it aloud:** two holomorphic functions that agree along points closing in on a point inside a domain are the same function on the whole domain.
+**Read it aloud:** two holomorphic functions that agree along points (other than the limit) closing in on a point inside a domain are the same function on the whole domain.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -54,6 +54,7 @@ f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad z_
 ### When it holds
 
 - **Holomorphic, not merely smooth.** The real bump e^(−1/x^2) for x > 0, and 0 for x ≤ 0, is zero on a half-line yet 0.018316 at 0.5.
+- **Not the zero function (for isolated zeros).** The constant 0 is holomorphic on every domain, yet every point is a zero, with no finite order.
 - **A connected domain.** A function that is 0 on one disc and 1 on a separate disc agrees with 0 on a whole disc, yet it is 1 at 3.
 - **The pile-up point inside D.** The zeros of sin(1/z), at 1/(kπ), crowd onto 0, outside its domain; yet sin(1/0.2) = −0.958924.
 - **Piling up, not just many.** sin z and 0 agree at points 3.141593 apart, which pile up nowhere.
@@ -88,7 +89,9 @@ The difference h = f_1 − f_2 is holomorphic and zero at every z_n, and by cont
 
 ### Step 4: connectedness carries the zero across the domain
 
-Join a to any point b of D by a path inside D. The path stays a fixed distance from the edge of D, so every point on it has a Taylor disc at least that wide; walk it in shorter hops. Each new stop lies in a disc where h is zero, so Step 3 applies there too. Finitely many hops reach b, so h(b) = 0 and f_1 = f_2 on all of D. Taking f_2 = 0 closes a gap in Step 1. A holomorphic f that is zero on one disc is zero on all of D. So if f is not zero everywhere, every zero has a finite order.
+Join a to any point b of D by a path inside D. Every point on the path has a Taylor disc inside D of at least some fixed positive radius; walk the path in shorter hops. Each new stop lies in a disc where h is zero, so Step 3 applies there too, and finitely many hops reach b, giving h(b) = 0 and f_1 = f_2 on all of D.
+
+Taking f_2 = 0 closes a gap in Step 1. A holomorphic f that is zero on one disc is zero on all of D. So if f is not zero everywhere, every zero has a finite order.
 
 <details>
 <summary>Detailed proof</summary>
@@ -101,7 +104,9 @@ Join a to any point b of D by a path inside D. The path stays a fixed distance f
 
 ### Step 5: the identity sin^2 + cos^2 = 1 goes complex
 
-Let h(z) = sin^2 z + cos^2 z − 1. Sums and products of power series are power series, so h is holomorphic on the whole plane, which is connected. It is zero at every real number, including every 1/n, and 1/n closes in on 0. By Steps 3 and 4, h is zero everywhere. At 1 + 2i the two squares are 6.182117 + 12.407326i and −5.182117 − 12.407326i, and they add to 1. Yet sine there, 3.165779 + 1.959601i, lies far outside the unit circle. The identity is algebra between power series, not a fact about the unit circle.
+Let h(z) = sin^2 z + cos^2 z − 1. Sums and products of power series are power series, so h is holomorphic on the whole plane, which is connected. It is zero at every real number, including every 1/n, and 1/n closes in on 0. By Steps 3 and 4, h is zero everywhere.
+
+At 1 + 2i the two squares are 6.182117 + 12.407326i and −5.182117 − 12.407326i, and they add to 1. Yet sine there, 3.165779 + 1.959601i, lies far outside the unit circle. The identity is algebra between power series, not a fact about the unit circle.
 
 A direct road for this one identity: sin^2 z + cos^2 z = e^(iz) e^(−iz) = 1, from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md).
 
@@ -494,7 +499,7 @@ example : Complex.sin (1 + 2 * I) ^ 2 + Complex.cos (1 + 2 * I) ^ 2 = 1 :=
 - **Signal processing.** A signal built from a finite band of frequencies is holomorphic in complex time, so it cannot fall silent for an interval without being silent always.
 
 > **Say it back**
-> Near a zero, a holomorphic function is (z − a) to a whole power m, the order, times a factor not zero there. So every zero stands alone in a small disc. If two holomorphic functions agree on points piling up inside a connected domain, their difference has a zero that is not alone. So the difference vanishes on a disc, and hopping along paths spreads that everywhere. So sin^2 z + cos^2 z = 1 holds at 1 + 2i.
+> Near a zero, a holomorphic function on a connected domain, not zero everywhere, is (z − a) to a whole power m, the order, times a factor not zero there. So every zero stands alone in a small disc. If two holomorphic functions agree on points piling up inside a connected domain, their difference has a zero that is not alone. So the difference vanishes on a disc, and hopping along paths spreads that everywhere. So sin^2 z + cos^2 z = 1 holds at 1 + 2i.
 
 ---
 
@@ -505,9 +510,9 @@ example : Complex.sin (1 + 2 * I) ^ 2 + Complex.cos (1 + 2 * I) ^ 2 = 1 :=
 ## Where this goes next
 
 - [Analytic continuation](04-analytic-continuation.md): uniqueness used to push a function past the disc where its series converges.
-- [The maximum modulus principle](05-maximum-modulus-principle.md): a second rigidity, no peak of the modulus inside the domain.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): a second rigidity: no interior peak of the modulus for a non-constant holomorphic function.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): a contour integral that counts zeros with their orders.
-- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a non-constant holomorphic function is z to the m in disguise, so open sets go to open sets.
 - [The monodromy theorem](09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
 A small piece now fixes the function, but only inside the domain it came with. Whether the piece can be carried further, and whether the route matters, is what [Analytic continuation](04-analytic-continuation.md) settles.

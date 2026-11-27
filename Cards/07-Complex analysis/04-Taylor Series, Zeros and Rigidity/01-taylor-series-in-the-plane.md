@@ -8,11 +8,13 @@
 
 Take one over one-plus-x-squared on the real line. At x = 1.2 it equals 0.409836. It is smooth everywhere and never blows up. Its Taylor series at 0 is 1 − x^2 + x^4 − x^6 + …, and at x = 1.2 that series fails: stopping after x^8 gives 2.947433, after x^18 −15.302295. Nothing on the real line explains why.
 
-The explanation sits off the line. With complex inputs, one-plus-z-squared is zero at z = i and z = −i, one unit north and south of 0, and the function blows up there. Such a point, where the size grows without bound, is a **pole**. A series centred at a point behaves like a radar dish: its reach is the distance to the nearest obstacle. From 0 the obstacles ±i are 1 away, so the reach is 1, and 1.2 lies outside it. Move the dish to 2 and the obstacles are √5 = 2.236068 away; 1.2 is now well inside, and the series centred at 2 gives 0.409836 to six decimals.
+The explanation sits off the line. With complex inputs, one-plus-z-squared is zero at z = i and z = −i, one unit north and south of 0, and the function blows up there. Such a point, where the size grows without bound, is a **pole**.
+
+A series centred at a point behaves like a radar dish: its reach is the distance to the nearest obstacle. From 0 the obstacles ±i are 1 away, so the reach is 1, and 1.2 lies outside it. Move the dish to 2 and the obstacles are √5 = 2.236068 away; 1.2 is now well inside, and the series centred at 2 gives 0.409836 to six decimals.
 
 From here on the reach is called the **radius of convergence**, and an obstacle is a **singularity**: a point where the function stops being holomorphic, that is, stops having a complex derivative, and no choice of value there repairs it. A function is **analytic** when, near each point, it equals a convergent power series.
 
-**A function with a complex derivative throughout a disc equals its Taylor series on the whole disc, so its power series about a point reaches out to the nearest singularity: holomorphic and analytic are the same property.**
+**A function with a complex derivative throughout an open disc equals its Taylor series on the whole disc, so its power series about a point reaches across the largest open disc in its region, out to the nearest singularity: holomorphic and analytic are the same property.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from Cauchy's integral formula.
 
@@ -32,9 +34,9 @@ Notation first, in words. The loop integral sign ∮ is a contour integral once 
 f(z) = \sum_{n=0}^{\infty} c_n (z - a)^n \quad\text{for } |z - a| < R, \qquad c_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw
 ```
 
-**Read it aloud:** near the centre a, the function is a sum of powers of the step z − a; the n-th coefficient comes from the n-th derivative, or from an average round a circle about a; the sum is exact everywhere closer to a than the nearest singularity.
+**Read it aloud:** near the centre a, the function is a sum of powers of the step z − a; the n-th coefficient comes from the n-th derivative, or from an average round a circle of positive radius r below R about a; the sum is exact on every open disc inside the region, out to the nearest singularity.
 
-The radius $`R`$ is the distance from $`a`$ to the nearest singularity. For $`f(z) = 1/(1 + z^2)`$ and real $`a`$ it is $`|a - i| = \sqrt{a^2 + 1}`$: 1 about 0, √5 = 2.236068 about 2.
+On an open region, the series converges on at least the largest open disc about $`a`$ that fits inside the region; when the function has singularities it cannot cross, $`R`$ is the distance to the nearest one (and infinite if there are none). For $`f(z) = 1/(1 + z^2)`$ and real $`a`$ it is $`|a - i| = \sqrt{a^2 + 1}`$: 1 about 0, √5 = 2.236068 about 2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -42,12 +44,12 @@ The radius $`R`$ is the distance from $`a`$ to the nearest singularity. For $`f(
 | $`a`$ | the centre: where the dish stands | 0, then 2 | the reach changes with the distance to ±i |
 | $`c_n`$, $`n`$ | the n-th coefficient; the power it multiplies | about 2: c0 = 0.200000, c1 = −0.160000 | sizes shrink roughly by a factor 1/R per step |
 | $`R`$ | radius of convergence | 1 about 0; 2.236068 about 2 | a larger disc |
-| $`r`$, $`w`$ | the integral's circle radius; a point on it | r = 1 about 2, r = 0.5 about 0 | any r below R gives the same c_n |
+| $`r`$, $`w`$ | the integral's circle radius; a point on it | r = 1 about 2, r = 0.5 about 0 | any positive r below R gives the same c_n |
 | $`q`$ | the ratio \|z − a\|/r | 0.8/√5 = 0.357771 at z = 1.2, r pushed to R | slower convergence; at 1, none |
 | $`N`$ | how many terms are kept | 5, 10, 20, 60 | smaller error |
 | $`M`$ | the largest \|f\| on the circle | error bound only | a larger error bound |
 
-The error after $`N`$ terms is at most $`M q^N/(1 - q)`$. At z = 1.2 about 2 the true errors after 5, 10 and 20 terms are 0.0004813136, 0.0000179175 and 0.0000000004: on average each term cuts the error by a factor near 0.357771.
+For any circle of radius $`r`$ with $`|z - a| < r < R`$, the error after $`N`$ terms is at most $`M q^N/(1 - q)`$. At z = 1.2 about 2 the true errors after 5, 10 and 20 terms are 0.0004813136, 0.0000179175 and 0.0000000004: on average each term cuts the error by a factor near 0.357771.
 
 ### When it holds
 
@@ -65,7 +67,7 @@ Cauchy's integral formula writes $`f(z)`$ as a weighted average of $`f(w)`$ over
 
 ### Step 1: write the value as a circle average
 
-Take a circle of radius $`r`$ about $`a`$, with $`r`$ below $`R`$. For any $`z`$ strictly inside,
+Take a circle of positive radius $`r`$ about $`a`$, with $`r`$ below $`R`$. For any $`z`$ strictly inside,
 
 ```math
 f(z) = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.
@@ -89,7 +91,7 @@ With one rate all round the circle, integrating term by term is allowed (the fol
 
 ### Step 4: the reach is the nearest singularity
 
-Steps 1 to 3 needed only a holomorphic closed disc of radius $`r`$. Every $`r`$ below the distance to the nearest singularity works, so the series converges on that whole open disc. It cannot pass a pole: a power series is bounded on closed discs inside its radius, while $`f`$ grows without bound near ±i.
+Steps 1 to 3 needed only $`f`$ to be holomorphic on an open disc holding the closed disc of positive radius $`r`$. Every positive $`r`$ below $`R`$ works, so the series converges on the whole open disc inside the region, out to the nearest singularity. It cannot pass a pole: a power series is bounded on closed discs inside its radius, while $`f`$ grows without bound near ±i.
 
 ### Step 5: holomorphic equals analytic
 
@@ -114,7 +116,7 @@ A second road to the coefficients needs no integral: multiply out $`(1 + z^2) f(
 
 ## Worked numbers, by hand
 
-About $`a = 2`$, $`1 + z^2 = 5 + 4(z - 2) + (z - 2)^2`$. Matching powers in $`(1 + z^2)f(z) = 1`$ gives the recursion $`5c_n + 4c_{n-1} + c_{n-2} = 0`$ for $`n \ge 1`$, with $`5c_0 = 1`$.
+About $`a = 2`$, $`1 + z^2 = 5 + 4(z - 2) + (z - 2)^2`$. Matching powers in $`(1 + z^2)f(z) = 1`$ gives $`5c_0 = 1`$, $`5c_1 + 4c_0 = 0`$, and the recursion $`5c_n + 4c_{n-1} + c_{n-2} = 0`$ for $`n \ge 2`$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -504,7 +506,7 @@ example : (2 : ℕ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 >
 > - **Measuring the reach along the axis.** From 2 the poles are not 2 or 1 away but √(2^2 + 1^2) = 2.236068.
 > - **Treating real smoothness as enough.** The real bump e^(−1/x^2), set to 0 at 0, has every real derivative 0 there, so its Taylor series is 0 while the function is not. It has no complex derivative at 0.
-> - **Stretching the circle past a pole.** The coefficient integral holds only for r below R.
+> - **Stretching the circle past a pole.** The coefficient integral holds only for positive r below R.
 
 ---
 
@@ -514,7 +516,7 @@ example : (2 : ℕ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 - **Rigidity.** A holomorphic function's values near one point fix it wherever it continues: [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) and [Analytic continuation](04-analytic-continuation.md).
 
 > **Say it back**
-> Cauchy's formula writes a holomorphic function's value as a circle average. Expanding one over w − z as a geometric series turns it into a power series. The series is exact on every disc the function fills, and a pole stops it. For 1/(1 + z^2) the poles ±i give reach 1 about 0 and √5 about 2. Holomorphic and analytic are one property.
+> Cauchy's formula writes a holomorphic function's value as a circle average. Expanding one over w − z as a geometric series turns it into a power series. The series is exact on every open disc the function fills, and a pole stops it. For 1/(1 + z^2) the poles ±i give reach 1 about 0 and √5 about 2. Holomorphic and analytic are one property.
 
 ---
 
@@ -526,12 +528,12 @@ example : (2 : ℕ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 
 ## Where this goes next
 
-- [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md): limits of holomorphic functions stay holomorphic, by the same circle average.
-- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): a power series' zeros are isolated, so a function is pinned by a small piece.
+- [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md): holomorphic functions converging uniformly on every closed disc have a holomorphic limit, by the same circle average.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): a non-zero holomorphic function's zeros are isolated, so a small piece pins it on a connected region.
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): past the pole, on a ring, a series needs negative powers.
 - [Runge's theorem](11-runges-theorem.md): holomorphic functions on a compact set are uniform limits of rational functions with poles you choose.
 
-The question this card leaves open: what does a function look like right around a pole, where no power series centred there can reach?
+The question this card leaves open: if a sequence of holomorphic functions converges uniformly on every closed disc, does the limit stay holomorphic? [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md) answers it (while [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md) handles the ring round a pole).
 
 ---
 

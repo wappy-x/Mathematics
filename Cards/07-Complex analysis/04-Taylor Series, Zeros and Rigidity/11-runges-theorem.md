@@ -6,64 +6,66 @@
 
 ## General Overview
 
-Take the circle of radius 1 round 0, and call it K. The function 1/z is smooth on it: no division by zero, a complex derivative at every point. Try to copy 1/z on that circle with a polynomial, the only kind of function a machine computes with adding and multiplying alone. It cannot be done. Every polynomial misses 1/z by at least 1 somewhere on the circle.
+Take the unit circle K. On K, 1/z has a complex derivative everywhere, yet no polynomial can copy it closely: every polynomial misses 1/z by at least 1 somewhere on K.
 
-The reason is the hole. The circle surrounds the disc inside it, and 1/z has a pole at 0, in that hole. A **pole** is a point where a function blows up like one over a power of the distance. Allow one pole at 1/4, also in the hole, and 11 powers of 1/(z − 1/4) copy 1/z on the circle to within 0.000005645.
+The obstruction is the hole. K surrounds a disc holding 1/z's **pole** at 0 (a point where it blows up like one over a power of the distance). Allow one pole at 1/4, inside that hole, and 11 powers of 1/(z − 1/4) copy 1/z on K to within 0.000005645.
 
-Now fill the hole: let K be the whole closed disc, rim included. The function 1/(z − 2) has its pole outside, and nothing stops a polynomial. Its degree-10 geometric series misses by at most 2^(−11) = 0.000488.
+Fill the hole so K is the closed unit disc. Then 1/(z − 2) has its pole outside, and its degree-10 geometric series misses by at most 2^(−11) = 0.000488.
 
-Carl Runge proved in 1885 that holes are the only obstruction. The proof turns Cauchy's integral formula into a finite sum of simple fractions, then moves each fraction's pole to wherever it is allowed to go.
+Carl Runge proved in 1885 that holes are the only obstruction: turn Cauchy's integral formula into a finite sum of simple fractions, then push each fraction's pole to an allowed spot.
 
-**A function holomorphic on an open set round a compact set K can be matched on K, to any tolerance, by a rational function whose poles sit only at points chosen in advance, one in each hole of K; when K has no holes, polynomials do it.**
+**A function holomorphic on an open set round a closed, bounded (compact) set K can be matched on K, to any tolerance, by a rational function whose poles sit only at points chosen in advance, at least one in each hole of K; when K's complement is in one piece (no holes), polynomials do it.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; Cauchy's formula for cycles, which it uses, is stated with a link to the card that proves it.
+**What kind of fact this is:** a theorem, proved on this card in Why it works; Cauchy's formula for cycles is linked.
 
 ### The picture: the circle, its hole, and the poles being pushed
 
 <p align="center"><img src="../figures/runges-theorem.svg" alt="The circle K of radius 1, a dashed inner loop of radius 1/2 and a dashed outer loop of radius 2 each carrying 8 poles, arrows pushing the outer poles away to infinity, and the points 0 and 1/4 in the hole" width="420"></p>
 
-To scale: 60 units per 1, 0 at (200, 150). The circle K has radius 60, the inner loop 30, the outer loop 120, and the point 1/4 sits at (215, 150). The dots are the poles of an 8-point Riemann sum on each loop (Step 3). The outer poles go off to infinity, which makes polynomials. The inner poles can only move inside the hole.
+To scale: 60 units per 1, 0 at (200, 150). K has radius 60, inner loop 30, outer loop 120, and 1/4 sits at (215, 150). Outer Riemann-sum poles push to infinity (making polynomials); inner ones stay in the hole.
 
 ---
 
 ## The formula
 
-Words first. A set is **compact** when it is closed (it contains its own edge) and bounded. Its **complement** is every point of the plane not in it. A **hole** is a bounded piece of the complement: a region K surrounds and cannot be left without crossing K. A **rational function** is one polynomial divided by another; its poles are the zeros of the bottom polynomial. "Holomorphic near K" means having a complex derivative on some open set U that contains K.
+A set is **compact** when it is closed (contains its edge) and bounded. Its **complement** is the rest of the plane; a **hole** is a bounded piece of the complement.
 
-Runge's theorem. Let f be holomorphic near K, and let P hold at least one point in each hole of K. Then for every tolerance ε > 0 there is a rational function R, with poles only in P, such that
+A **rational function** is one polynomial divided by another, with poles at the bottom polynomial's zeros. "Holomorphic near K" means complex-differentiable on an open set U containing K.
+
+Runge's theorem. Let K be compact, f holomorphic near K, and P a set outside K holding at least one point in each hole of K. Then for every tolerance ε > 0 there is a rational function R, with poles only in P (none on K), such that
 
 ```math
-\max_{z \in K} \big| f(z) - R(z) \big| \;<\; \varepsilon .
+\big| f(z) - R(z) \big| \;<\; \varepsilon \qquad \text{for every } z \in K .
 ```
 
-**Read it aloud:** the worst gap anywhere on K between the function and a rational function with poles only at the chosen points can be made as small as you like.
+**Read it aloud:** the gap between f and a rational function with poles only at the chosen points can be kept below any tolerance everywhere on K.
 
-The engine is one identity, which moves a pole from a to b:
+One identity moves a pole from a to b:
 
 ```math
 \frac{1}{z-a} \;=\; \sum_{n=0}^{\infty} \frac{(a-b)^n}{(z-b)^{n+1}}, \qquad \text{valid where } |a-b| < |z-b| .
 ```
 
-**Read it aloud:** a pole at a equals a series of powers of a pole at b, wherever z is further from b than a is.
+**Read it aloud:** a pole at a equals a series of powers of a pole at b wherever z is further from b than a is.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`z`$, $`n`$, $`N`$, $`j`$ | a point of K; the term counter; terms kept; a pole's power | z on the circle; N = 11 | more terms, a smaller gap |
-| $`K`$ | the compact set the copy must work on | the circle $`\lvert z \rvert = 1`$, or the disc $`\lvert z \rvert \le 1`$ | a bigger K can grow new holes |
-| $`f`$, $`U`$ | the function; an open set holding K where $`f`$ has a complex derivative | 1/z or $`e^z/z`$; the plane without 0 | — |
-| $`P`$ | the allowed poles: one point per hole, plus infinity for the outside | 0 or 1/4 | — |
-| $`R`$, $`p`$, $`\varepsilon`$ | the rational copy; a polynomial; the tolerance | $`\varepsilon`$ = 0.000488 for degree 10 | a looser $`\varepsilon`$, fewer terms |
-| $`a`$, $`b`$ | the pole being moved; where it lands | 0 to 1/4; 2 to infinity | b nearer the edge of K, slower series |
-| $`\Gamma`$, $`\zeta`$, $`r`$, $`\theta`$ | the cycle: loops round K outside it; a point on them; a loop's radius; its angle | radius 2 anticlockwise, radius 1/2 clockwise | — |
-| $`m`$, $`w_k`$; $`d`$, $`\delta`$, $`Q`$, $`S`$, $`V`$, $`b'`$ | points per loop in a Riemann sum, and those points. Detailed proof only: distance from K to the outside of U; grid square side; a grid square; the reachable poles; a piece of the complement; a nearby pole | m = 8, 16, 32 | more points, a smaller gap |
+| $`z`$, $`n`$, $`N`$, $`j`$ | a point of K; the term counter; terms kept; a pole's power | points on the circle; N = 11 | more terms, a smaller gap |
+| $`K`$ | the compact (closed, bounded) set the copy must work on | $`\lvert z\rvert = 1`$ or $`\lvert z\rvert \le 1`$ | a bigger K can create holes |
+| $`f`$, $`U`$ | the holomorphic function; an open set holding K | 1/z or $`e^z/z`$; the plane without 0 | — |
+| $`P`$ | the allowed poles outside K (at least one per hole) | 0 or 1/4 | — |
+| $`R`$, $`p`$, $`\varepsilon`$ | the rational copy; a polynomial; the tolerance | ε = 0.000488 for degree 10 | a looser ε needs fewer terms |
+| $`a`$, $`b`$ | the pole being moved; where it lands | 0 to 1/4; 2 to infinity | b nearer K gives a slower series |
+| $`\Gamma`$, $`\zeta`$, $`r`$, $`\theta`$ | the cycle round K; a point on it; a loop's radius; its angle | radius 2 anticlockwise, 1/2 clockwise | — |
+| $`m`$, $`w_k`$ | the Riemann-sum count and nodes (fold: $`d, \delta, Q, S, V, b'`$) | m = 8, 16, 32 | more points, a smaller gap |
 
 ### When it holds
 
-- **Holomorphic, not only continuous.** On the closed disc the conjugate $`\bar z`$ (z reflected in the real axis) is continuous, but no polynomials converge to it there: their limit would be holomorphic inside ([Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md)). This proof also uses an open set round K, for its loops; when K has no holes, Mergelyan's theorem shows continuity on K plus holomorphy inside is enough.
-- **K compact.** On the open disc $`\lvert z \rvert < 1`$, the function 1/(z − 1) is holomorphic and the complement has no hole, yet every polynomial is bounded there and 1/(z − 1) is not.
-- **One chosen pole in every hole.** Miss a hole and the loop integral round it blocks the copy, as with 1/z on the circle.
-- **Polynomials exactly when there are no holes.** Then every pole can be pushed to infinity. With a hole, 1/(z − a) for a in it has no polynomial copy.
-- **The match is on K only.** The degree-10 copy of 1/(z − 2) is built for $`\lvert z \rvert \le 1`$; its series stops converging at $`\lvert z \rvert = 2`$.
+- **Holomorphic near K, not merely continuous.** $`\bar z`$ is continuous on the closed disc, yet no polynomials converge to it there ([Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md)). When K has no holes, Mergelyan's theorem softens "open set round K" to continuous on K and holomorphic inside.
+- **K closed and bounded.** On the open disc $`\lvert z\rvert < 1`$, 1/(z − 1) is unbounded while every polynomial is bounded.
+- **At least one chosen pole per hole.** Miss a hole and its loop integral blocks the fit, as with 1/z on the circle.
+- **Polynomials only when the complement is in one piece (no holes).** Otherwise 1/(z − a) for a in a hole has no polynomial copy.
+- **Match is on K only.** The degree-10 copy of 1/(z − 2) diverges past $`\lvert z\rvert = 2`$.
 
 ---
 
@@ -71,88 +73,78 @@ The engine is one identity, which moves a pole from a to b:
 
 ### Step 0: write f as simple fractions, then move their poles
 
-Cauchy's formula writes f on K as an average of simple fractions $`1/(\zeta - z)`$, with $`\zeta`$ running over loops outside K. A Riemann sum turns that average into a finite sum: a rational function with poles on the loops. Each pole can then be slid, by one geometric series per move, anywhere within its own piece of the complement. Only a hole can trap a pole.
+Cauchy's formula writes f on K as an average of simple fractions $`1/(\zeta - z)`$ on loops outside K. A Riemann sum turns this into a rational function, and geometric series slide each pole anywhere in its piece of the complement. Only a hole traps a pole.
 
 ### Step 1: why a hole blocks polynomials
 
-Integrate round the circle $`\lvert z \rvert = 1`$. A polynomial p has an antiderivative, so its loop integral is 0 ([Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)). The loop integral of 1/z is $`2\pi i`$.
+Round $`\lvert z\rvert = 1`$, any polynomial p integrates to 0 ([Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)), while 1/z integrates to $`2\pi i`$.
 
-Suppose $`\lvert 1/z - p(z) \rvert < 1`$ all round the circle. A loop integral is at most the length times the largest size, here $`2\pi \times 1`$. But the integral of $`1/z - p`$ is exactly $`2\pi i`$, of size $`2\pi`$. So the gap reaches 1 somewhere.
+Since an integral's size is at most length times peak value:
 
 ```math
 \Big| \oint_{|z|=1} \Big(\frac1z - p(z)\Big)\,dz \Big| \;=\; 2\pi \;\le\; 2\pi \max_{|z|=1} \Big| \frac1z - p(z) \Big| .
 ```
 
-The check tries 300 random polynomials of degree 5; the best misses by 1.129898.
+Thus the worst gap is at least 1. Among 300 random degree-5 polynomials, the best misses by 1.129898.
 
 ### Step 2: Cauchy's formula on a cycle
 
 A **cycle** is a finite set of closed loops, each run in a set direction. The **winding number** of a cycle round a point counts its turns round that point, anticlockwise positive.
 
-There is always a cycle $`\Gamma`$ in U that misses K, winds once round every point of K, and winds zero times round every point outside U. For such a cycle ([Cauchy's theorem for cycles](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md)):
+By [Cauchy's theorem for cycles](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md), there is always a cycle $`\Gamma`$ in U that misses K, winds once round every point of K, and winds zero times round every point outside U, giving:
 
 ```math
 f(z) \;=\; \frac{1}{2\pi i} \oint_{\Gamma} \frac{f(\zeta)}{\zeta - z}\, d\zeta \qquad \text{for every } z \in K .
 ```
 
-For the circle and $`e^z/z`$, $`\Gamma`$ is the circle of radius 2 run anticlockwise plus the circle of radius 1/2 run clockwise. The fold below builds $`\Gamma`$ for any K from a grid of squares.
+For $`e^z/z`$ on the unit circle, $`\Gamma`$ is the circle of radius 2 run anticlockwise plus the circle of radius 1/2 run clockwise. The fold below builds $`\Gamma`$ for any K from a grid of squares.
 
 ### Step 3: Riemann sums give rational functions
 
-On a circle of radius r, put $`\zeta = r e^{i\theta}`$, so $`d\zeta = i\zeta\, d\theta`$. Sampling m equally spaced points $`w_k`$ turns the integral into a sum:
+On $`\lvert\zeta\rvert = r`$, put $`\zeta = r e^{i\theta}`$ ($`d\zeta = i\zeta\,d\theta`$) and sample m equal points $`w_k`$:
 
 ```math
 \frac{1}{2\pi i} \oint_{|\zeta| = r} \frac{f(\zeta)}{\zeta - z}\, d\zeta \;\approx\; \frac{1}{m} \sum_{k=0}^{m-1} \frac{f(w_k)\, w_k}{w_k - z} .
 ```
 
-Each term is a constant over $`(w_k - z)`$: a simple pole at $`w_k`$. The distance from $`\Gamma`$ to K stays above a fixed number, so the integrand is uniformly continuous, and the sums close in on f at every point of K at once.
-
-For $`e^z/z`$ on the circle, with m points on each loop, the worst gaps are 0.022102852 (m = 8), 0.000082957 (m = 16) and 0.000000001 (m = 32).
+Each term has a simple pole at $`w_k`$. Because $`\Gamma`$ keeps a positive distance from K, the integrand is uniformly continuous and the sums converge uniformly on K. For $`e^z/z`$, worst gaps are 0.022102852 (m = 8), 0.000082957 (m = 16), 0.000000001 (m = 32).
 
 ### Step 4: pushing a pole inside its piece
 
-The identity under The formula moves a pole from a to b. Stopping after N terms leaves an exact remainder:
+Stopping the pole-moving series after N terms leaves an exact remainder:
 
 ```math
 \frac{1}{z-a} - \sum_{n=0}^{N-1} \frac{(a-b)^n}{(z-b)^{n+1}} \;=\; \Big(\frac{a-b}{z-b}\Big)^{N} \frac{1}{z-a} .
 ```
 
-When $`\lvert a - b \rvert`$ is smaller than the distance from b to K, the bracket is below a fixed number under 1 on all of K, so the gap shrinks geometrically.
+When $`\lvert a - b\rvert`$ is less than the distance from b to K, the bracket stays below a constant under 1 on K, so the gap shrinks geometrically. Moving 0 to 1/4 for the unit circle gives bracket at most (1/4)/(3/4) = 1/3, and N = 11 gives gap at most $`3^{-11}`$ = 0.000005645, reached at z = 1.
 
-Moving 0 to 1/4 with the circle as K: $`\lvert a - b \rvert = 1/4`$ and $`\lvert z - 1/4 \rvert \ge 3/4`$, so the bracket is at most 1/3. With N = 11 the gap is at most $`3^{-11}`$ = 0.000005645, reached at z = 1.
-
-A long move is a chain of short ones along a path inside the same piece of the complement. Powers $`1/(z-a)^j`$ move too, as products of moved copies.
+Long moves chain short ones inside the same complement piece, and powers $`1/(z-a)^j`$ move as products.
 
 ### Step 5: pushing a pole to infinity
 
-In the unbounded piece of the complement, first move the pole to some b with $`\lvert b \rvert`$ larger than every $`\lvert z \rvert`$ on K. Then a geometric series in z/b replaces it by a polynomial:
+In the unbounded piece, move the pole to some b with $`\lvert b\rvert`$ larger than every $`\lvert z\rvert`$ on K, then expand in z/b to get a polynomial:
 
 ```math
 \frac{1}{z-2} \;=\; -\frac12 \sum_{n=0}^{\infty} \Big(\frac z2\Big)^n, \qquad \max_{|z|\le 1}\, \Big| \frac{1}{z-2} + \frac12 \sum_{n=0}^{10} \Big(\frac z2\Big)^n \Big| \;=\; 2^{-11} .
 ```
 
-The remainder is $`(z/2)^{11}/(z-2)`$. On the disc its top is $`(1/2)^{11}/1`$ = 0.000488281, at z = 1.
+The remainder $`(z/2)^{11}/(z-2)`$ peaks at z = 1 with value 0.000488281.
 
 ### Step 6: put the pieces together
 
-Choose the Riemann sum within ε/2 of f on K. It is a finite sum of terms, each a constant over $`(w_k - z)`$. Move each term's pole, keeping that term within ε/2 divided by the number of terms, to a chosen point of its hole or to infinity. The total gap is under ε. If K has no holes, every pole went to infinity, and R is a polynomial.
+Pick a Riemann sum within ε/2 of f on K. Move each term's pole to its hole's chosen point (or to infinity) within ε/2 divided by the number of terms, keeping total error under ε. With no holes, every pole goes to infinity, leaving a polynomial.
 
 <details>
 <summary>Detailed proof: building the cycle, and why a pole reaches every point of its piece</summary>
 
-**The cycle.** Let d be the distance from K to the outside of U (any positive number if U is the whole plane). Cover the plane with a grid of closed squares of side $`\delta < d/2`$. Keep the finitely many squares that meet K, each with its edge run anticlockwise.
+**The cycle.** Let d be the distance from K to the outside of U (any $`d > 0`$ if $`U = \mathbb{C}`$). Tile the plane with closed squares of side $`\delta < d/2`$, keeping the finitely many squares meeting K, oriented anticlockwise.
 
-Add their edge integrals. An edge shared by two kept squares is run once each way and cancels. What is left is a cycle $`\Gamma`$ of edges belonging to exactly one kept square. Such an edge touches no point of K, since a point of K on it would make the neighbouring square a kept one too.
+Shared edges cancel in the sum of boundary integrals, leaving a cycle $`\Gamma`$ of edges belonging to one kept square each. None touches K, or the neighbouring square would be kept too. Inside any kept square Q, Cauchy's formula on Q gives $`2\pi i f(z)`$ and every other square gives 0; continuity covers grid lines. Every kept square lies within $`\delta\sqrt2 < d`$ of K, inside U, so points outside U have winding number 0.
 
-For z in K inside a kept square Q, Cauchy's formula on Q gives f(z) times $`2\pi i`$, and every other kept square gives 0. Summing proves the formula of Step 2 for such z; continuity covers z on a grid line. Every kept square lies within $`\delta\sqrt2 < d`$ of K, so inside U, and a point outside U lies in no kept square: the winding number there is 0.
+**Reaching the whole piece.** In a complement piece V holding a, let S be the set of points b in V such that $`1/(z-a)`$ is a uniform limit on K of polynomials in $`1/(z-b)`$.
 
-**Reaching the whole piece.** Fix a piece V of the complement of K and a point a in it. Let S be the set of points b in V such that $`1/(z-a)`$ is a uniform limit on K of polynomials in $`1/(z-b)`$.
-
-S is open: if b is in S and $`\lvert b' - b \rvert`$ is less than the distance from b' to K, then $`1/(z-b)`$ is a uniform limit of polynomials in $`1/(z-b')`$ by Step 4, so b' is in S.
-
-V without S is open by the same move run the other way. V is connected, and a is in S, so S is all of V.
-
-For the unbounded piece, take b with $`\lvert b \rvert`$ above twice the largest $`\lvert z \rvert`$ on K: polynomials in $`1/(z-b)`$ are uniform limits of polynomials in z by Step 5.
+S is open: if b is in S and $`\lvert b' - b\rvert`$ is below the distance from $`b'`$ to K, Step 4 puts $`b'`$ in S. Running the move backwards shows V without S is open too. Since V is connected and a is in S, S is all of V. In the unbounded piece, moving to $`\lvert b\rvert`$ past $`2\max_{K}\lvert z\rvert`$ lets Step 5 replace $`1/(z-b)`$ by polynomials in z.
 
 </details>
 
@@ -165,7 +157,7 @@ For the unbounded piece, take b with $`\lvert b \rvert`$ above twice the largest
 | Loop integral of 1/z round the circle | $`2\pi i`$ | 6.283185i |
 | Every polynomial's worst gap from 1/z | at least $`2\pi / 2\pi`$ | 1.000000 |
 | Best of 300 random degree-5 tries | sampled on 720 points | 1.129898 |
-| 1/(z − 2), degree 10, worst gap at z = 1 | $`(1/2)^{11} / \lvert 1 - 2 \rvert`$ | **0.000488281** |
+| 1/(z − 2), degree 10, worst gap at z = 1 | $`(1/2)^{11} / \lvert 1 - 2\rvert`$ | **0.000488281** |
 | 1/z from poles at 1/4, 11 terms, at z = 1 | $`(1/4 \div 3/4)^{11} / 1`$ | **0.000005645** |
 | $`e^z/z`$ by 32-point Riemann sums | on both loops | 0.000000001 |
 
@@ -175,17 +167,15 @@ Once the hole is filled or given a pole, the copy is as close as wanted; without
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Pole moved from 0 to 1/2 in one jump | 1.000000 after 11 terms, and after 101 | $`\lvert a - b \rvert`$ = 1/2 equals the distance from 1/2 to K: the bracket reaches 1 at z = 1 |
-| Taylor polynomial of 1/z about 1, degree 10 | 2048.000000 | a polynomial tries to send the pole at 0 out of the hole; the series converges only where $`\lvert z - 1 \rvert < 1`$ |
+| Pole moved from 0 to 1/2 in one jump | 1.000000 after 11 terms, and after 101 | $`\lvert a - b\rvert = 1/2`$ equals the distance from 1/2 to K: the bracket reaches 1 at z = 1 |
+| Taylor polynomial of 1/z about 1, degree 10 | 2048.000000 | the series converges only where $`\lvert z - 1\rvert < 1`$ |
 | Riemann sum of $`e^z/z`$ with the inner loop dropped | 1.000000 | the cycle no longer winds zero times round the pole at 0, so the sum copies $`e^z/z - 1/z`$ |
-
-The code prints all three.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds every copy and measures its worst gap by sampling K: 720 points on the circle, 792 on the disc. It takes three roads that share no arithmetic. Loop integrals give the lower bound of 1, and a random search must respect it. The geometric-series remainder predicts each pushed pole's gap, and sampling must hit it. Riemann sums of Cauchy's formula are compared with $`e^z/z`$ itself.
+The code builds every copy and measures its worst gap by sampling 720 points on the circle and 792 on the disc. It takes three independent roads: loop integrals against random degree-5 polynomials, geometric-series remainders against sampling, and Cauchy Riemann sums against $`e^z/z`$.
 
 ### Python
 
@@ -1433,38 +1423,37 @@ example : (1 : ℚ) / (-1) - (Finset.range 11).sum (fun n => (-1 : ℚ) ^ n * (-
 ## The usual mistake
 
 > [!warning]
-> **Carrying Weierstrass's real-line theorem into the plane.** On a closed interval every continuous function is a uniform limit of polynomials. On a circle in the plane even 1/z, holomorphic all round it, is not: every polynomial misses by at least 1, because a polynomial's loop integral is 0 and 1/z's is $`2\pi i`$. The hole, not the function, is the obstruction.
+> **Carrying Weierstrass's real-line theorem into the plane.** On a closed interval every continuous function is a uniform limit of polynomials. On a circle, even holomorphic 1/z cannot be matched by polynomials: every polynomial misses by at least 1, because its loop integral is 0 while 1/z's is $`2\pi i`$. The hole is the obstruction.
 >
-> - **Jumping too far.** A pole moved from 0 to 1/2 in one step leaves the gap at 1.000000 however many terms are kept. Short steps along a path fix it.
-> - **Expanding about a point of K.** The Taylor polynomial of 1/z about 1 reaches a gap of 2048.000000 at z = −1.
-> - **Forgetting an inner loop.** Without the clockwise loop the Riemann sums of $`e^z/z`$ miss by 1.000000.
-> - **Thinking the poles must stay where f has them.** Any point of the hole will do: poles at 1/4 copy 1/z to within 0.000005645.
+> - **Jumping too far.** Moving a pole from 0 to 1/2 at once leaves gap 1.000000; chain short steps instead.
+> - **Expanding on K.** The degree-10 Taylor polynomial of 1/z about 1 misses by 2048.000000 at z = −1.
+> - **Dropping an inner loop.** Without it, $`e^z/z`$'s Riemann sums miss by 1.000000.
+> - **Fixing poles where f blows up.** Any point in the hole works: poles at 1/4 copy 1/z within 0.000005645.
 
 ---
 
 ## Where you meet it in real life
 
-- **Rational approximation software.** Modern solvers for Laplace's equation on polygons place poles just outside the corners. Runge's theorem is the reason poles placed outside the region can work at all.
-- **Filter design.** A filter's response is a rational function, and its poles must sit in the stable half of the plane. A closed frequency band has no holes, so Runge's theorem promises close rational fits with every pole at one chosen stable point (the fold's pole-moving argument: any point of the outside piece can replace infinity).
-- **Building functions with given poles.** The Mittag-Leffler theorem constructs a function with poles at a prescribed list of points in any open region; Runge's theorem makes its correction terms converge.
+- **Rational approximation software.** Solvers for Laplace's equation on polygons place poles just outside corners; Runge's theorem explains why poles outside the region suffice.
+- **Filter design.** A stable filter's rational response keeps its poles in the stable half-plane. Because a closed frequency band has no holes, Runge's pole-moving guarantees close fits using poles placed at one chosen stable point.
 
 > **Say it back**
-> Cauchy's formula writes a holomorphic function on a compact set as an average of simple fractions with poles on loops round the set. A Riemann sum makes that a rational function. A geometric series moves each pole anywhere in its own piece of the complement, and to infinity in the outside piece, which gives polynomials. A hole traps its poles: on the circle every polynomial misses 1/z by at least 1. So poles chosen one per hole always suffice, and polynomials suffice when there are no holes.
+> For a function holomorphic on an open set round a closed, bounded (compact) set K, Cauchy's formula gives an average of simple fractions, and a Riemann sum makes it a rational function. Geometric series move each pole anywhere in its complement piece, and to infinity in the outside piece to form polynomials. A hole traps poles (on the circle every polynomial misses 1/z by at least 1), so poles chosen one per hole suffice, and polynomials suffice when K's complement is in one piece (no holes).
 
 ---
 
 ## What this builds on
 
-- [Cauchy's theorem for cycles](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md): Cauchy's formula on a cycle of loops that winds zero times round every point outside U, used in Step 2.
-- [Taylor series in the plane](01-taylor-series-in-the-plane.md): the geometric-series expansion of a simple fraction, which moves a pole to infinity in Step 5.
+- [Cauchy's theorem for cycles](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md): Cauchy's formula on cycles winding zero times outside U (Step 2).
+- [Taylor series in the plane](01-taylor-series-in-the-plane.md): geometric-series expansion moving a pole to infinity (Step 5).
 
 ## Where this goes next
 
-- [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): series in negative powers; on a ring, Runge's copy is a truncated Laurent series.
+- [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): first card of the next shelf, expanding functions in positive and negative powers on a ring; there Runge's copy is a truncated Laurent series.
 - [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): the real-line cousin, where an interval has no holes and every continuous function is a polynomial limit.
 - [Mittag-Leffler](../10-Entire%20and%20Meromorphic%20Functions/04-mittag-leffler-theorem.md): functions with prescribed poles; on open regions other than the plane, its correction terms are rational functions built with Runge's theorem.
 
-Runge needs f holomorphic on an open set round K; whether continuity on K plus holomorphy inside is enough, when K has no holes, is Mergelyan's theorem, and the answer is yes.
+Runge needs f holomorphic on an open set round K; whether continuity on K plus holomorphy inside is enough when K has no holes is Mergelyan's theorem (the answer is yes). Meanwhile, the next shelf starts with [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md) to study functions right round a hole.
 
 ---
 

@@ -6,15 +6,17 @@
 
 ## General Overview
 
-Take the strip of points z = x + iy with $`\lvert y\rvert < \pi/2`$: a band of height $`\pi`$ that runs forever left and right. On it put $`f(z) = \exp(\exp z)`$, a holomorphic function (one with a complex derivative at every point).
+Take the strip of points z = x + iy with $`\lvert y\rvert < \pi/2`$: a band of height $`\pi`$ running forever left and right. On it put $`f(z) = \exp(\exp z)`$, a holomorphic function (one with a complex derivative everywhere).
 
-On the top edge, $`y = \pi/2`$, the inner exponential is $`\exp z = i e^x`$: a pure imaginary number. The exponential of a pure imaginary number has modulus 1 ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)). The bottom edge is the same, with $`-i e^x`$. So $`\lvert f\rvert = 1`$ on both edges, everywhere.
+On both edges $`y = \pm\pi/2`$, the inner exponential is $`\pm i e^x`$, a pure imaginary number, so $`\lvert f\rvert = 1`$ everywhere on both edges ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)).
 
-Yet on the centre line, at z = 1, $`f(1) = e^e = 15.154262`$. On a bounded region this is forbidden by [The maximum modulus principle](05-maximum-modulus-principle.md): the modulus (distance from 0) cannot be larger inside than on the edge. The strip is not bounded, and that is the gap $`\exp(\exp z)`$ slips through.
+Yet on the centre line, $`f(1) = e^e = 15.154262`$. [The maximum modulus principle](05-maximum-modulus-principle.md) forbids this on a bounded region, where the modulus (distance from 0) cannot exceed its edge values. The strip is unbounded, and $`\exp(\exp z)`$ slips through that gap.
 
-The repair is a speed limit. Along the strip, the modulus of $`\exp(\exp z)`$ is at most $`\exp(e^{\lvert x\rvert})`$, and it reaches that size on the centre line to the right. Any function that grows a little slower, like $`\exp(e^{c\lvert x\rvert})`$ with c below 1, is caught: if its modulus is at most 1 on both edges, it is at most 1 everywhere inside. Number theorists rely on exactly this to bound the Riemann zeta function between two lines where its size is already known.
+The repair is a speed limit. On the strip, $`\lvert\exp(\exp z)\rvert \le \exp(e^{\lvert x\rvert})`$, reached on the centre line for $`x > 0`$.
 
-**On an unbounded strip the maximum principle still holds for every function that grows slower than a fixed double-exponential rate, and $`\exp(\exp z)`$ sits exactly on that rate, which is why it escapes.**
+Any holomorphic function, continuous up to both edges, that grows a little slower, like $`\exp(A e^{c\lvert x\rvert})`$ with c below 1, is caught: if $`\lvert f\rvert \le 1`$ on both edges, then $`\lvert f\rvert \le 1`$ inside. Number theorists use this to bound the Riemann zeta function between two vertical lines.
+
+**On an unbounded strip the maximum principle still holds for every holomorphic function, continuous up to its edges, that grows slower than a double-exponential rate set by the strip's height, and $`\exp(\exp z)`$ sits exactly on that rate for height $`\pi`$, which is why it escapes.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with Hadamard's three-lines theorem as a consequence.
 
@@ -46,7 +48,7 @@ Notation first, in words. S is the strip $`\lvert \mathrm{Im}\, z\rvert < \pi/2`
 
 Here f is holomorphic on S and continuous up to its edges. For $`\exp(\exp z)`$ the rate is exactly c = 1, so the theorem says nothing about it.
 
-The consequence, **Hadamard's three-lines theorem**, works on the strip $`0 \le \mathrm{Re}\, z \le 1`$. Write $`M(\theta)`$ for the least upper bound of the modulus of a bounded f on the vertical line $`\mathrm{Re}\, z = \theta`$ (its largest value, or the level it approaches if no point reaches it), and $`M_0`$, $`M_1`$ for the two edges:
+The consequence, **Hadamard's three-lines theorem**, applies to a bounded function f that is holomorphic on $`0 < \mathrm{Re}\, z < 1`$ and continuous up to its edges. Write $`M(\theta)`$ for the least upper bound of $`\lvert f\rvert`$ on $`\mathrm{Re}\, z = \theta`$ (its largest value, or the level it approaches), and $`M_0`$, $`M_1`$ for the two edges:
 
 ```math
 M(\theta) \le M_0^{\,1-\theta}\, M_1^{\,\theta}, \qquad 0 \le \theta \le 1
@@ -56,21 +58,21 @@ M(\theta) \le M_0^{\,1-\theta}\, M_1^{\,\theta}, \qquad 0 \le \theta \le 1
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`z = x + iy`$, $`w`$ | a point: x along the strip, y across it; w is a second point used when one region is mapped onto another | z = 1 | — |
-| $`f`$ | the holomorphic function under study | $`\exp(\exp z)`$, and $`\exp(z^2)`$ for three lines | — |
-| $`S`$, $`\beta`$ | the strip $`\lvert y\rvert < \pi/2`$, edges $`y = \pm\pi/2`$; in the fold, a sector has opening angle $`\pi/\beta`$ | height $`\pi`$ | a wider strip or sector lowers the allowed rate |
-| $`A`$, $`c`$ | size and rate of the growth bound | A = 1, c = 0.5 | c up to 1 is the limit |
-| $`b`$, $`\varepsilon`$, $`\delta`$, $`R`$ | in the proof: damper rate, damper strength, $`\delta = \cos(b\pi/2)`$, half-length of the rectangle | 0.75, 0.01, 0.382683, 22.26 | smaller $`\varepsilon`$, longer rectangle needed |
-| $`h`$, $`g`$ | the damper; f times a correcting factor (the damper h, or $`M_0^{z-1}M_1^{-z}`$ in three lines) | $`h = \exp(-2\varepsilon\cosh bz)`$ | — |
-| $`M_0`$, $`M_1`$, $`M(\theta)`$ | least upper bound of the modulus on the left edge, right edge, line $`\theta`$ | 1, e, $`e^{\theta^2}`$ | larger edges, larger bound |
-| $`\theta`$ | where the line sits, from 0 to 1 | 1/2 | moves weight to $`M_1`$ |
+| $`z = x + iy`$, $`w`$ | a point on the strip (x along, y across); a mapped point | z = 1 | — |
+| $`f`$ | the holomorphic function under study | $`\exp(\exp z)`$, $`\exp(z^2)`$ | — |
+| $`S`$, $`\beta`$ | the strip $`\lvert y\rvert < \pi/2`$; a sector has opening angle $`\pi/\beta`$ | height $`\pi`$ | a wider strip lowers the limit |
+| $`A`$, $`c`$ | the size and rate of the growth bound | A = 1, c = 0.5 | c below 1 is required |
+| $`b`$, $`\varepsilon`$, $`\delta`$, $`R`$ | the damper rate and strength; $`\cos(b\pi/2)`$; the box half-length | 0.75, 0.01, 0.382683, 22.26 | smaller $`\varepsilon`$, longer box |
+| $`h`$, $`g`$ | the damper; f times the damper or $`M_0^{z-1}M_1^{-z}`$ | $`\exp(-2\varepsilon\cosh bz)`$ | — |
+| $`M_0`$, $`M_1`$, $`M(\theta)`$ | the least upper bounds on the edges and middle line | 1, e, $`e^{\theta^2}`$ | larger edges, larger bound |
+| $`\theta`$ | the vertical line's position, from 0 to 1 | 1/2 | shifts weight to $`M_1`$ |
 
 ### When it holds
 
-- **A growth bound with c below 1.** At c = 1, $`\exp(\exp z)`$ is 1 on the edges and 15.154262 at z = 1.
-- **The rate matches the strip's height.** The limit is $`\pi`$ divided by the height. On the strip $`\lvert y\rvert < \pi`$, twice as tall, the limit halves: $`\exp(\exp(z/2))`$ has rate 1/2 and still reaches 15.154262 at z = 2.
-- **Continuous up to the edges.** The edge bound must reach the boundary, as on the card [The maximum modulus principle](05-maximum-modulus-principle.md). Without it, the edge values say nothing about the points just inside.
-- **Bounded is always enough.** A bounded f has rate 0, so the three-lines theorem needs only boundedness.
+- **Growth rate c below 1.** At c = 1, $`\exp(\exp z)`$ hits 15.154262 at z = 1 despite being 1 on the edges.
+- **Rate matches the strip's height.** The limit is $`\pi`$ over the height: on $`\lvert y\rvert < \pi`$, the limit halves to 1/2, where $`\exp(\exp(z/2))`$ escapes.
+- **Continuous up to the edges.** Without continuity up to the boundary, edge bounds cannot control interior points ([The maximum modulus principle](05-maximum-modulus-principle.md)).
+- **Bounded is always enough.** A bounded f has rate 0, which is why three lines needs only boundedness.
 
 ---
 
@@ -78,13 +80,13 @@ M(\theta) \le M_0^{\,1-\theta}\, M_1^{\,\theta}, \qquad 0 \le \theta \le 1
 
 ### Step 0: damp the far ends, then take the damping away
 
-A long rectangle cut from the strip has four sides. Its top and bottom lie on the edges, where $`\lvert f\rvert \le 1`$. Its two end walls are the problem: on $`\lvert x\rvert \le 2`$, $`\exp(\exp z)`$ reaches 1618.177992 on the right end wall.
+A rectangle cut from the strip has top and bottom on the edges, where $`\lvert f\rvert \le 1`$, and two end walls where f may blow up: on $`\lvert x\rvert \le 2`$, $`\exp(\exp z)`$ reaches 1618.177992 at x = 2.
 
-So multiply f by a **damper** h: a function of modulus at most 1 on the whole strip that crushes everything at the far ends faster than f can grow. Then the end walls come under control, the plain maximum principle applies, and at the end the damper is made weaker and weaker until it is gone.
+Multiply f by a **damper** h of modulus at most 1 that crushes the far ends faster than f can grow. Then the plain maximum principle controls the rectangle, and letting the damper fade recovers the bound on f.
 
 ### Step 1: the damper
 
-Pick a rate b between c and 1, and a small $`\varepsilon > 0`$. Let
+Pick a positive rate b with $`0 < b < 1`$ and $`b > c`$, and a small $`\varepsilon > 0`$. Let
 
 ```math
 h(z) = \exp\!\left(-\varepsilon\left(e^{bz} + e^{-bz}\right)\right) = \exp\!\left(-2\varepsilon\cosh bz\right).
@@ -108,9 +110,9 @@ Let $`g = f h`$. On the edges, $`\lvert g\rvert \le 1 \cdot 1`$. Far out, the gr
 \log\lvert g\rvert \le A\, e^{c\lvert x\rvert} - \varepsilon\delta\, e^{b\lvert x\rvert},
 ```
 
-which is negative once $`\lvert x\rvert \ge R = \ln\!\big(A/(\varepsilon\delta)\big)/(b - c)`$, because b beats c. With our numbers R = 22.26.
+which is at most 0 once $`\lvert x\rvert \ge R = \ln\!\big(A/(\varepsilon\delta)\big)/(b - c)`$, because b beats c. With our numbers R = 22.26.
 
-On the rectangle $`\lvert x\rvert \le R`$, $`\lvert g\rvert \le 1`$ on all four sides. The rectangle is bounded, so [The maximum modulus principle](05-maximum-modulus-principle.md) gives $`\lvert g\rvert \le 1`$ inside it. The same holds on every longer rectangle, since its end walls lie further out, where $`\lvert g\rvert`$ is below 1 too. Every point of the strip lies in a long enough rectangle, so $`\lvert g\rvert \le 1`$ on the whole strip.
+On any rectangle $`\lvert x\rvert \le L`$ with $`L \ge R`$, $`\lvert g\rvert \le 1`$ on all four sides. Because the rectangle is bounded, [The maximum modulus principle](05-maximum-modulus-principle.md) gives $`\lvert g\rvert \le 1`$ inside. Every point of the strip lies in such a rectangle, so $`\lvert g\rvert \le 1`$ on all of S.
 
 ### Step 3: take the damper away
 
@@ -118,20 +120,20 @@ At a fixed point, $`\lvert f\rvert \le 1/\lvert h\rvert = \exp(2\varepsilon\,\ma
 
 ### Step 4: why c below 1 is the exact limit
 
-The damper needs b above c, to beat f at the ends. It also needs b below 1, so that $`\cos(b\pi/2) > 0`$ and the damper stays at most 1 on the edges. Both fit only when c < 1.
+The damper needs b above c to beat f at the ends, and b below 1 so $`\cos(b\pi/2) > 0`$ keeps $`\lvert h\rvert \le 1`$ on the edges. Both hold only when c < 1.
 
-$`\exp(\exp z)`$ has c = 1, so no damper exists, and the theorem fails for it: 15.154262 at z = 1. Rescaling the strip rescales the limit, which is why the strip of height $`2\pi`$ allows only rates below 1/2.
+At c = 1, $`\exp(\exp z)`$ has no damper and reaches 15.154262 at z = 1. Rescaling the strip rescales the limit, so height $`2\pi`$ allows only rates below 1/2.
 
 <details>
 <summary>The same theorem on a half-plane and on a sector</summary>
 
-The map $`w \mapsto e^w`$ sends the strip $`\lvert \mathrm{Im}\, w\rvert < \pi/2`$ onto the right half-plane $`\mathrm{Re}\, z > 0`$. Its edges go to the imaginary axis, and $`e^{\lvert x\rvert}`$ becomes $`\lvert z\rvert`$ (or $`1/\lvert z\rvert`$ near 0).
+The map $`w \mapsto e^w`$ sends $`\lvert \mathrm{Im}\, w\rvert < \pi/2`$ onto the right half-plane $`\mathrm{Re}\, z > 0`$, sending the edges to the imaginary axis and $`e^{\lvert x\rvert}`$ to $`\lvert z\rvert`$ (or $`1/\lvert z\rvert`$ near 0).
 
-So on the right half-plane: if $`\lvert f\rvert \le 1`$ on the imaginary axis and $`\lvert f(z)\rvert \le \exp(A\lvert z\rvert^{c})`$ with c < 1, then $`\lvert f\rvert \le 1`$.
+So on $`\mathrm{Re}\, z > 0`$: if f is holomorphic inside, continuous up to the entire imaginary axis (including 0) with $`\lvert f\rvert \le 1`$ there, and $`\lvert f(z)\rvert \le \exp(A\lvert z\rvert^{c})`$ with c < 1, then $`\lvert f\rvert \le 1`$.
 
-The borderline function is $`e^z`$, which is $`\exp(\exp w)`$ seen through the map. It is the failure case "e^z on the half-plane" from the maximum modulus card. At z = e (that is, w = 1) its modulus is $`e^e = 15.154262`$, the same number.
+The borderline function is $`e^z`$, which is $`\exp(\exp w)`$ seen through the map: the failure case from the maximum modulus card. At z = e (w = 1) its modulus is $`e^e = 15.154262`$.
 
-A sector of opening angle $`\pi/\beta`$ is turned into the half-plane by the power $`z^\beta`$, so there the limit is $`\exp(\lvert z\rvert^{\beta})`$.
+A sector of opening angle $`\pi/\beta`$ ($`\beta > 1/2`$) maps to the half-plane via $`z^\beta`$. Its angle sets the allowed growth: any holomorphic f, continuous up to both rays including 0, with growth $`\exp(A\lvert z\rvert^c)`$ and $`c < \beta`$ is caught, while $`\exp(z^\beta)`$ escapes.
 
 </details>
 
@@ -143,11 +145,11 @@ Take f bounded and continuous on $`0 \le \mathrm{Re}\, z \le 1`$, holomorphic in
 g(z) = f(z)\, M_0^{\,z-1}\, M_1^{\,-z}.
 ```
 
-The modulus of $`M_0^{z-1}`$ is $`M_0^{x-1}`$, a real power. So on the left edge $`\lvert g\rvert \le M_0 \cdot M_0^{-1} = 1`$, and on the right edge $`\lvert g\rvert \le M_1 \cdot M_1^{-1} = 1`$. g is bounded, so Steps 1 to 3 (on this strip, turned a quarter and stretched by $`w = i\pi(z - 1/2)`$) give $`\lvert g\rvert \le 1`$ inside. On the line $`\mathrm{Re}\, z = \theta`$ that reads $`\lvert f\rvert \le M_0^{1-\theta}M_1^{\theta}`$.
+Since $`\lvert M_0^{z-1}\rvert = M_0^{x-1}`$, $`\lvert g\rvert \le 1`$ on both edges. Because g is bounded, Steps 1 to 3 (after rotating and scaling via $`w = i\pi(z - 1/2)`$) give $`\lvert g\rvert \le 1`$ inside, which reads $`\lvert f\rvert \le M_0^{1-\theta}M_1^{\theta}`$ on $`\mathrm{Re}\, z = \theta`$. (If $`M_0`$ or $`M_1`$ is 0, replace it with a tiny positive number and let it shrink: $`f = 0`$.)
 
-Taking logarithms: $`\log M(\theta)`$ lies below the straight line joining $`\log M_0`$ and $`\log M_1`$. The same argument on every narrower strip inside makes $`\log M(\theta)`$ a **convex** function of $`\theta`$ (it bends upward and never rises above its chords).
+Taking logarithms shows $`\log M(\theta)`$ stays below its chords on every sub-strip, so it is a **convex** function of $`\theta`$.
 
-For $`f(z) = \exp(z^2)`$, $`\lvert f\rvert = e^{x^2 - y^2}`$, largest at y = 0, so $`M(\theta) = e^{\theta^2}`$: $`M_0 = 1`$, $`M_1 = e`$. Here $`g(z) = \exp(z^2 - z)`$, and its largest modulus over the strip is 1, reached on the edges.
+For $`f(z) = \exp(z^2)`$, $`\lvert f\rvert = e^{x^2 - y^2}`$ peaks at y = 0, giving $`M(\theta) = e^{\theta^2}`$, $`M_0 = 1`$ and $`M_1 = e`$. Here $`g(z) = \exp(z^2 - z)`$ has largest modulus 1, reached on the edges.
 
 ---
 
@@ -163,8 +165,6 @@ For $`f(z) = \exp(z^2)`$, $`\lvert f\rvert = e^{x^2 - y^2}`$, largest at y = 0, 
 | bound at $`\theta = 1/2`$ | $`1^{1/2} \cdot e^{1/2}`$ | 1.648721 |
 | true value at $`\theta = 1/2`$ | $`e^{1/4}`$ | **1.284025** |
 
-The first function escapes the principle because it sits on the rate limit; the second obeys three lines with room to spare, since $`\log M(\theta) = \theta^2`$ bends below its chord.
-
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
 xychart-beta
@@ -175,24 +175,22 @@ xychart-beta
     line [1.000, 1.284, 1.649, 2.117, 2.718]
 ```
 
-Orange: the true largest modulus $`M(\theta) = e^{\theta^2}`$, found by grid search. Green: the three-lines bound $`M_0^{1-\theta}M_1^{\theta} = e^{\theta}`$.
+Orange: true $`M(\theta) = e^{\theta^2}`$ by grid search. Green: three-lines bound $`e^{\theta}`$.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| No growth bound: $`\exp(\exp z)`$ | 1 on the edges, 15.154262 at z = 1 | Rate c = 1, on the limit |
-| Rate below 1 on a strip twice as tall | $`\exp(\exp(z/2))`$: 1 on the edges, 15.154262 at z = 2 | The limit there is 1/2 |
-| Long rectangle, end walls ignored | 1618.177992 on the end wall x = 2 | Only the damper controls the ends |
-| Arithmetic mean in three lines | 1.859141, not 1.648721 | A true but weaker bound; the theorem gives the geometric mean |
-
-The code prints all four.
+| No growth bound: $`\exp(\exp z)`$ | 1 on edges, 15.154262 at z = 1 | Rate c = 1 sits on the limit |
+| Rate below 1 on a strip twice as tall | $`\exp(\exp(z/2))`$: 15.154262 at z = 2 | The limit there is 1/2 |
+| Long rectangle, end walls ignored | 1618.177992 on x = 2 | Only the damper controls the ends |
+| Arithmetic mean in three lines | 1.859141 vs 1.648721 | Weaker than the geometric mean |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code builds the complex exponential from cosine and sine, nothing more. It takes two roads to each claim: closed forms ($`\exp(e^x)`$, $`e^{\theta^2}`$, the formula for R) against grid searches and a step-by-step scan. It also checks the damper bound of Step 1 on a grid over the strip, and builds the three-lines function g with complex powers and confirms its largest modulus sits on an edge.
+The code builds the complex exponential from cosine and sine and checks closed forms ($`\exp(e^x)`$, $`e^{\theta^2}`$, R) against grid searches and a scan, verifying Step 1's damper bound and three-lines g on a grid.
 
 ### Python
 
@@ -534,39 +532,38 @@ theorem hadamard_three_lines (f : ℂ → ℂ)
 ## The usual mistake
 
 > [!warning]
-> **Treating the strip like a bounded region.** The maximum modulus principle needs the modulus controlled on the whole boundary. A strip's boundary is its two edges plus the far ends, which no bound on the edges reaches: $`\exp(\exp z)`$ is 1 on both edges and 15.154262 at z = 1.
+> **Treating an unbounded strip like a bounded region.** The strip's boundary includes its far ends, which edge bounds never reach: $`\exp(\exp z)`$ is 1 on both edges and 15.154262 at z = 1.
 >
-> - **Forgetting the end walls of a rectangle.** On $`\lvert x\rvert \le 2`$ the largest modulus of $`\exp(\exp z)`$ is 1618.177992, on the end wall x = 2.
-> - **Using rate 1 on any strip.** The limit is $`\pi`$ over the strip's height. On a strip of height $`2\pi`$, $`\exp(\exp(z/2))`$ has rate 1/2 and reaches 15.154262 at z = 2.
-> - **The arithmetic mean in three lines.** $`(1 + e)/2 = 1.859141`$ is a weaker bound than the geometric mean $`e^{1/2} = 1.648721`$; the true value is 1.284025.
+> - **Forgetting the end walls.** On $`\lvert x\rvert \le 2`$, $`\exp(\exp z)`$ reaches 1618.177992 on x = 2.
+> - **Using rate 1 on every strip.** The limit is $`\pi`$ over the height: on height $`2\pi`$, $`\exp(\exp(z/2))`$ escapes.
+> - **The arithmetic mean in three lines.** $`(1 + e)/2 = 1.859141`$ is weaker than the geometric mean 1.648721.
 
 ---
 
 ## Where you meet it in real life
 
-- **Signal processing and harmonic analysis.** The three-lines theorem proves the Riesz–Thorin theorem: a linear map that is bounded for two ways of measuring a signal's size is bounded for every way in between. See [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md).
-- **Prime numbers.** Bounds on the Riemann zeta function come from its two sides: it is bounded a little right of the line $`\mathrm{Re}\, s = 1`$, and [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md) gives its size a little left of $`\mathrm{Re}\, s = 0`$. A Phragmen-Lindelof argument fills in between, giving the "convexity bound": on the critical line zeta grows at most about like the quarter power of the height.
-- **Uniqueness on unbounded regions.** Two functions with equal edge values on a strip, both growing below the limit, differ by a function that is 0 on the edges, so they agree everywhere.
+- **Signal processing and harmonic analysis.** Three lines proves the Riesz–Thorin theorem: a linear map bounded for two signal sizes is bounded for every size in between ([Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md)).
+- **Prime numbers.** The Riemann zeta function is bounded right of $`\mathrm{Re}\, s = 1`$, and [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md) bounds it left of $`\mathrm{Re}\, s = 0`$. Phragmen-Lindelof interpolates between them, bounding zeta on the critical line by roughly the quarter power of the height.
 
 > **Say it back**
-> On a bounded region a holomorphic function's largest modulus sits on the edge. A strip is unbounded, and $`\exp(\exp z)`$ is 1 on both edges of $`\lvert y\rvert < \pi/2`$ but 15.154262 at z = 1. Any function growing slower than $`\exp(e^{c\lvert x\rvert})`$ with c below 1 is caught: multiply by a damper that dies faster at the far ends, apply the maximum principle on a long rectangle, then remove the damper. Applied to a bounded function on a strip, the same idea gives Hadamard's three lines: the largest modulus on a middle line is at most a weighted geometric mean of the edges.
+> On an unbounded strip $`\lvert y\rvert < \pi/2`$, $`\exp(\exp z)`$ is 1 on both edges yet 15.154262 at z = 1. Any holomorphic function, continuous up to both edges, that grows at most like $`\exp(A e^{c\lvert x\rvert})`$ with c below 1 is caught: multiply by a damper that crushes the far ends, apply the maximum principle on a rectangle, then remove the damper. For a bounded holomorphic function continuous up to the edges of a strip, this gives Hadamard's three lines: the largest modulus on a middle line is at most a weighted geometric mean of the edges.
 
 ---
 
 ## What this builds on
 
-- [The maximum modulus principle](05-maximum-modulus-principle.md): the bounded-region version, applied here to each long rectangle; its failure case $`e^z`$ on the half-plane is this card's example.
-- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): $`e^{x+iy} = e^x(\cos y + i\sin y)`$ and cosh, which build both the example and the damper.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): the bounded-region version applied to each rectangle; its failure case $`e^z`$ on the half-plane is this card's example.
+- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): $`e^{x+iy} = e^x(\cos y + i\sin y)`$ and cosh, building both the example and the damper.
 
 ## Where this goes next
 
+- [Schwarz reflection](08-schwarz-reflection-principle.md): next on this shelf, extending a holomorphic function across a straight edge where its values are real rather than merely bounded.
 - [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): three lines turned into bounds for linear maps under different ways of measuring a signal's size.
 - [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md): the far-side bound that Phragmen-Lindelof carries across the critical strip.
 - [Paley-Wiener-Schwartz](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/11-paley-wiener-schwartz-theorem.md): a signal confined to a window has an entire spectrum whose growth gives the window's width.
+- [Normal families](10-normal-families-montel-and-hurwitz.md): uses uniform bounds of the kind proved here to extract convergent sub-lists.
 
-Shelf neighbours: [Schwarz reflection](08-schwarz-reflection-principle.md) extends functions across a straight edge like these, and [Normal families](10-normal-families-montel-and-hurwitz.md) uses uniform bounds of the kind proved here.
-
-The card leaves one question open: how large zeta really is on the critical line; the conjecture that it grows slower than every small power of the height is the Lindelöf hypothesis, unproved as of 2026-11-23.
+The card leaves one question open in number theory: how large zeta really is on the critical line; the conjecture that it grows slower than every small power of the height is the Lindelöf hypothesis, unproved as of 2026-11-23. Next on the shelf, Schwarz reflection asks what happens when edge values are real instead of bounded.
 
 ---
 
@@ -574,6 +571,6 @@ The card leaves one question open: how large zeta really is on the critical line
 
 Verified 2026-11-23: every link below resolves to the publisher's page.
 
-- Phragmén, E., and E. Lindelöf. "Sur une extension d'un principe classique de l'analyse et sur quelques propriétés des fonctions monogènes dans le voisinage d'un point singulier." *Acta Mathematica* 31 (1908), 381–406. [doi:10.1007/BF02415450](https://doi.org/10.1007/BF02415450). The original paper: the maximum principle extended to unbounded regions under a growth bound.
-- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [Chapter VI, The Maximum Modulus Theorem, doi:10.1007/978-1-4612-6313-5_6](https://doi.org/10.1007/978-1-4612-6313-5_6). Hadamard's three-circles theorem and the Phragmén–Lindelöf theorem on strips and sectors.
-- Grafakos, Loukas. *Classical Fourier Analysis*, 3rd ed. Springer, 2014. [Chapter 1, Lp Spaces and Interpolation, doi:10.1007/978-1-4939-1194-3_1](https://doi.org/10.1007/978-1-4939-1194-3_1). The three-lines lemma and its use in Riesz–Thorin.
+- Phragmén, E., and E. Lindelöf. "Sur une extension d'un principe classique de l'analyse…" *Acta Mathematica* 31 (1908), 381–406. [doi:10.1007/BF02415450](https://doi.org/10.1007/BF02415450). Original paper.
+- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [Chapter VI, doi:10.1007/978-1-4612-6313-5_6](https://doi.org/10.1007/978-1-4612-6313-5_6). Strips, sectors and three circles.
+- Grafakos, Loukas. *Classical Fourier Analysis*, 3rd ed. Springer, 2014. [Chapter 1, doi:10.1007/978-1-4939-1194-3_1](https://doi.org/10.1007/978-1-4939-1194-3_1). Three-lines lemma and Riesz–Thorin.

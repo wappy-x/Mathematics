@@ -31,18 +31,18 @@ To scale: 80 units per 1, 0 at (180, 120). The points 1 and −1 sit at (260, 12
 Notation first, in words. $`\max`$ over a set means the largest value there. An open region is a set of points in the plane that holds a small disc round each of its points, so it has no rim of its own. A **closed disc inside** an open region is a disc, rim included, that sits wholly in the region.
 
 ```math
-\max_{|z| \le 1} \big|f(z) - S_N(z)\big| \;\le\; \sum_{n > N} M_n \;<\; \frac{1}{N}, \qquad M_n = \frac{1}{n^2}
+\max_{|z| \le 1} \big|f(z) - S_N(z)\big| \;\le\; \sum_{n > N} M_n \;<\; \frac{1}{N} \quad \text{for } N \ge 1, \qquad M_n = \frac{1}{n^2}
 ```
 
-**Read it aloud:** the worst gap anywhere on the disc between the tower and its first N floors is at most the sum of the remaining ceilings, which is under one over N.
+**Read it aloud:** for N ≥ 1, the worst gap anywhere on the disc between the tower and its first N floors is at most the sum of the remaining ceilings, which is under one over N.
 
 ```math
 f'(z_0) \;=\; \frac{1}{2\pi i}\oint_{|\zeta - z_0| = \rho} \frac{f(\zeta)}{(\zeta - z_0)^2}\,d\zeta \;=\; \lim_{N\to\infty} S_N'(z_0) \;=\; \sum_{n=1}^{\infty} \frac{z_0^{\,n-1}}{n}
 ```
 
-**Read it aloud:** the slope of the tower at a point inside is an average of its values round a small circle, and it equals the stack of the floors' slopes.
+**Read it aloud:** the slope of the tower at a point strictly inside is an average of its values round a small circle that stays inside, and it equals the stack of the floors' slopes.
 
-The two are linked by the **Cauchy estimate**: the error in the slope at $`z_0`$ is at most the worst error in value round the circle, divided by $`\rho`$.
+The two are linked by the **Cauchy estimate**: for any circle of positive radius $`\rho`$ sitting with its inside in $`U`$, the error in the slope at $`z_0`$ is at most the worst error in value round the circle, divided by $`\rho`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -58,7 +58,7 @@ The two are linked by the **Cauchy estimate**: the error in the slope at $`z_0`$
 ### When it holds
 
 - **Holomorphic approximations on an open region $`U`$.** A real interval is not enough: sin(nx)/n shrinks evenly on the line, yet its slope at 0 stays 1.
-- **Uniform on every closed disc inside $`U`$, not point by point.** Evenness lets the limit pass through the integral in Step 2.
+- **Uniform on every closed disc inside $`U`$ (equivalently, every closed, bounded piece $`K`$ inside $`U`$), not point by point.** Evenness lets the limit pass through the integral in Step 2.
 - **The conclusion is for the open region only.** The tower is continuous on the closed disc, but its slope series at the rim point 1 never settles.
 - **Uniform on the whole region is not required.** Each closed disc inside is enough.
 
@@ -72,7 +72,7 @@ A holomorphic function's value at a point is an average of its values round a ci
 
 ### Step 1: the ceilings make the tower converge evenly
 
-On the closed disc $`|z| \le 1`$, so $`|z^n/n^2| \le 1/n^2`$. Each 1/n^2 is below 1/((n − 1)n) = 1/(n − 1) − 1/n, and those differences telescope: everything past floor N totals less than 1/N. By the M-test the partial sums converge uniformly on the closed disc.
+On the closed disc $`|z| \le 1`$, so $`|z^n/n^2| \le 1/n^2`$. For n ≥ 2, each 1/n^2 is below 1/((n − 1)n) = 1/(n − 1) − 1/n, and those differences telescope: for N ≥ 1, everything past floor N totals less than 1/N. By the M-test the partial sums converge uniformly on the closed disc.
 
 After 10 floors the worst gap is 0.095166 against the promise 0.1. It sits at z = 1, since every coefficient is positive.
 
@@ -92,7 +92,7 @@ Differentiating under the integral sign works for any continuous values on the c
 
 The derivative formula applied to $`f - S_N`$ gives the Cauchy estimate. With $`\rho`$ = 0.4 and a gap below 1/10, the slope of 10 floors at 1/2 is within 0.25 of the truth; the actual error is 0.000165. The bound shrinks with N, so $`S_N'`$, the stack of floor slopes $`z^{n-1}/n`$, tends to $`f'`$.
 
-Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $`f'(z) = -\log(1 - z)/z`$: at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
+Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $`f'(z) = -\log(1 - z)/z`$ for $`z \neq 0`$ (and $`f'(0) = 1`$): at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
 
 ### Step 5: the rim is left out
 
@@ -100,7 +100,7 @@ At z = 1 the floor slopes are 1, 1/2, 1/3, …: the harmonic series, 7.485471 af
 
 ### Step 6: why the zeta function will be holomorphic
 
-The zeta function, zeta(s), is the sum of $`n^{-s}`$ over n = 1, 2, 3, …. Each floor $`n^{-s} = e^{-s\ln n}`$ is holomorphic in $`s`$, with size $`n^{-\text{Re}\,s}`$, where Re s is the real part of s. At s = 2 + 3i, floor 5 is 0.004627 + 0.039732i, of size 0.040000 = 1/5^2.
+On the half-plane Re s > 1, the zeta function, zeta(s), is the sum of $`n^{-s}`$ over n = 1, 2, 3, …. Each floor $`n^{-s} = e^{-s\ln n}`$ is holomorphic in $`s`$, with size $`n^{-\text{Re}\,s}`$, where Re s is the real part of s. At s = 2 + 3i, floor 5 is 0.004627 + 0.039732i, of size 0.040000 = 1/5^2.
 
 Any closed disc inside Re s > 1 sits in a half-plane Re s ≥ σ with σ > 1, whose ceilings $`n^{-\sigma}`$ add up; so zeta is holomorphic there.
 
@@ -119,7 +119,7 @@ Any closed disc inside Re s > 1 sits in a half-plane Re s ≥ σ with σ > 1, wh
 
 </details>
 
-A second road to Step 3 is Morera's theorem: a continuous function with zero integral round every small triangle is holomorphic. The Cauchy route also gives the derivative bound.
+A second road to Step 3 is Morera's theorem: a continuous function on an open region with zero integral round every small triangle is holomorphic. The Cauchy route also gives the derivative bound.
 
 ---
 
@@ -608,12 +608,13 @@ example : (1 : ℚ) / 5 ^ 2 = 1 / 25 := by norm_num
 
 ## Where this goes next
 
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): a non-zero holomorphic function's zeros stand apart, so a small piling-up set fixes it on a connected region.
 - [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products of holomorphic factors, shown holomorphic by taking logs and this theorem.
 - [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): an integral as a uniform limit of holomorphic pieces.
 - [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the sum of n^(−s), holomorphic on Re s > 1 by Step 6.
-- [Normal families](10-normal-families-montel-and-hurwitz.md): bounded holomorphic functions always have a convergent subsequence, and limits keep their zero count.
+- [Normal families](10-normal-families-montel-and-hurwitz.md): holomorphic functions sharing a bound have a locally uniformly convergent subsequence, and non-zero limits keep their zero count.
 
-The tower is known on the disc and the zeta sum on Re s > 1; whether a function known on a small set is fixed everywhere is [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md).
+The question this card leaves open: the tower is known on the disc and the zeta sum on Re s > 1, so is a holomorphic function known on a small set fixed everywhere on a connected region? [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) answers it.
 
 ---
 

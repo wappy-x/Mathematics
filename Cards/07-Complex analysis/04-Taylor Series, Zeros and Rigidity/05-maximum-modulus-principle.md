@@ -1,4 +1,4 @@
-# The maximum modulus principle: |f| has no interior peak, so its largest value sits on the boundary
+# The maximum modulus principle: for a non-constant holomorphic f, |f| has no interior peak, so on a bounded region its largest value sits on the boundary
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → The maximum modulus principle
 
@@ -12,7 +12,7 @@ Take e^z on the closed unit disc, the points at distance at most 1 from 0. With 
 
 Neither is luck. A holomorphic function's value at a point is the average of its values round any small circle about it, and an average cannot stick out above everything it averages.
 
-**On a bounded region, a holomorphic function that is continuous up to the edge and not constant takes its largest modulus only on the boundary; if it has no zeros, its smallest modulus is there too.**
+**On a bounded region in one piece, a holomorphic function that is continuous up to the edge and not constant takes its largest modulus only on the boundary; if it has no zeros, its smallest modulus is there too.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the Schwarz lemma follows from it in a folded callout.
 
@@ -32,9 +32,9 @@ Notation first, in words. A **region** D is an open set in the plane, in one pie
 \max_{z \text{ in closure of } D} \lvert f(z)\rvert = \max_{z \text{ on } \partial D} \lvert f(z)\rvert = M
 ```
 
-**Read it aloud:** the largest modulus of f over the region and its edge equals the largest over the edge alone, called M.
+**Read it aloud:** for a holomorphic function continuous up to the edge of a bounded region, the largest modulus of f over the region and its edge equals the largest over the edge alone, called M.
 
-The engine is the mean-value form of Cauchy's formula. Take any circle of radius r about a that lies, with its inside, in D; the point $`a + re^{it}`$ walks once round it as t runs from 0 to $`2\pi`$:
+The engine is the mean-value form of Cauchy's formula. Take any circle of positive radius r about a that lies, with its inside, in D; the point $`a + re^{it}`$ walks once round it as t runs from 0 to $`2\pi`$:
 
 ```math
 f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt
@@ -57,6 +57,7 @@ f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt
 - **Holomorphic inside D.** The hill 1 − |z|^2, with no complex derivative away from 0, peaks at the centre.
 - **D in one piece.** A function equal to 1 on one disc and 2 on a separate one has interior maxima yet is not constant.
 - **D bounded, f continuous up to the edge.** On the half-plane of real part at least 0, |e^z| is 1 on the edge but e at z = 1.
+- **f not constant (for "no interior peak").** A constant function ties its boundary maximum at every interior point; the max-on-the-boundary equality still holds, just not strictly.
 - **For the minimum, no zeros.** On the disc of radius 2, z^2 + 1 is 0 at i, inside; its edge minimum is 3.
 
 ---
@@ -127,7 +128,7 @@ If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to
 
 </details>
 
-A second road is the **[open mapping theorem](06-open-mapping-theorem-and-local-normal-form.md)**: a non-constant holomorphic function sends a small disc about a onto a set containing a whole disc about f(a). That disc holds a value of larger modulus near any candidate peak. Stein and Shakarchi prove it.
+A second road is the open mapping theorem (proved on [Local normal form](06-open-mapping-theorem-and-local-normal-form.md)): a non-constant holomorphic function on a region sends a small disc about a onto a set containing a whole disc about f(a). That disc holds a value of larger modulus near any candidate peak. Stein and Shakarchi prove it.
 
 ---
 
@@ -495,22 +496,22 @@ example : ‖(2 * I) ^ 2 + 1‖ = 3 := by norm_num [mul_pow]
 - **Uniqueness from the boundary.** Two holomorphic functions, continuous up to a bounded region's edge and equal there, differ by a function with largest modulus 0, so agree inside; compare [Analytic continuation](04-analytic-continuation.md).
 
 > **Say it back**
-> A holomorphic function's value at a point is the average of its values round any small circle about it. So its modulus there cannot beat every modulus on the circle, and a tie forces the function to be constant nearby, then everywhere. On a bounded region the largest modulus sits on the edge: e for e^z on the unit disc, at z = 1. With no zeros the smallest does too: 1/e at z = −1.
+> A holomorphic function's value at a point is the average of its values round any small circle about it. So its modulus there cannot beat every modulus on the circle, and a tie forces the function to be constant nearby, then everywhere on a region in one piece. On a bounded region in one piece, if f is continuous up to the edge, the largest modulus sits on the edge (and only there unless f is constant): e for e^z on the unit disc, at z = 1. With no zeros the smallest does too: 1/e at z = −1.
 
 ---
 
 ## What this builds on
 
 - [Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): the centre value as a contour integral, which becomes the circle average.
-- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): zero on a disc means zero everywhere, which spreads local constancy.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): zero on a disc means zero everywhere on a connected region, which spreads local constancy.
 
 ## Where this goes next
 
 - [Interpolation](../../20-Harmonic%20analysis/06-Maximal%20Functions%20and%20Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz.md): on a strip, the principle becomes the three-lines bound. It says the largest modulus on a line between the two edges is at most a weighted geometric mean of the largest moduli on the edges. That bound proves Riesz–Thorin: a linear map bounded at two sizes is bounded at every size between.
-- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [Local normal form](06-open-mapping-theorem-and-local-normal-form.md): near any point a non-constant holomorphic function is z to the m in disguise, so open sets go to open sets.
 - [Phragmen-Lindelof](07-phragmen-lindelof-principle.md): the maximum principle on an unbounded strip, provided the function does not grow too fast.
 
-On an unbounded region the plain statement fails, as e^z on the half-plane showed; how two edges and a limit on growth restore control is the three-lines bound on that card.
+A second road to this principle asks what a non-constant holomorphic map does to small open discs. [Local normal form](06-open-mapping-theorem-and-local-normal-form.md) answers that next. On an unbounded region the plain statement fails, and [Phragmen-Lindelof](07-phragmen-lindelof-principle.md) restores it on a strip with a limit on growth.
 
 ---
 

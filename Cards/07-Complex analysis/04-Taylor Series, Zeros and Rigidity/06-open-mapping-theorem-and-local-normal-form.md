@@ -1,4 +1,4 @@
-# Local normal form: near any point a holomorphic function is z to the m in disguise, so open sets go to open sets
+# Local normal form: near any point a non-constant holomorphic function is z to the m in disguise, so open sets go to open sets
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Taylor Series, Zeros and Rigidity](../README.md#s04) → Local normal form
 
@@ -6,71 +6,64 @@
 
 ## General Overview
 
-A pendulum 1 m long swings. At one instant a height sensor reports the bob 0.02 m above its lowest point. The cosine of the swing angle is then 1 − 0.02/1 = 0.98, and arccos 0.98 = 0.200335 radians, 11.478341 degrees. But the angle −0.200335 gives the same height. Near the bottom, the height cannot tell a swing to the left from a swing to the right.
+A 1 m pendulum bob sits 0.02 m above its lowest point, so the cosine of its angle is 1 − 0.02/1 = 0.98. Both +0.200335 and −0.200335 radians (±11.478341 degrees) give that height, so height cannot distinguish a left swing from a right swing.
 
-That two-to-one behaviour has a clean cause. Near 0, cos z = 1 − h(z)^2, where h(z) = √2 sin(z/2) behaves like z scaled by 0.707107 near 0. So cos z near 0 is "square it", seen through a change of coordinate. Every value near 1, other than 1 itself, has exactly two preimages (points sent to it) near 0. That holds for complex values too: 1 + 0.1i has two, at ±(0.313535 − 0.318802i).
+Near 0, cos z = 1 − h(z)^2, where h(z) = √2 sin(z/2) has derivative 0.707107 at 0. Seen through the coordinate h, cos z near 0 is just squaring. Every nearby value other than 1 has two preimages (inputs sent to it) near 0, including complex ones: 1 + 0.1i has ±(0.313535 − 0.318802i).
 
-The same holds for every non-constant holomorphic function (one with a complex derivative throughout a region). Near a point a, it is z ↦ z^m for some whole number m, seen through a change of coordinate. Three classic theorems drop out:
+Every non-constant holomorphic function (one with a complex derivative throughout a region) behaves like z ↦ z^m near each point a in a bent coordinate, yielding the **open mapping theorem** and (for m = 1) the **holomorphic inverse function theorem**. An **open set** holds a small disc about each of its points.
 
-- the **open mapping theorem**: an open set (one that holds a small disc about each of its points) goes to an open set;
-- the **maximum modulus principle**: the size |f| has no peak inside the region;
-- the **holomorphic inverse function theorem**: where m = 1, f has a holomorphic inverse near a.
+**Near any point a of a connected region, a non-constant holomorphic function is f(a) + h(z)^m with h a local change of coordinate, so it is m-to-1 near a, it covers a whole disc about f(a), and every open subset goes to an open set.**
 
-**Near any point a, a non-constant holomorphic function is f(a) + h(z)^m with h a local change of coordinate, so it is m-to-1 near a, it covers a whole disc about f(a), and an open set goes to an open set.**
-
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the maximum modulus principle and the inverse function theorem follow as corollaries.
+**What kind of fact this is:** a theorem, proved on this card in Why it works; the open mapping and inverse function theorems follow as corollaries.
 
 ### The picture: a disc about 0 covers a disc about 1 twice
 
-<p align="center"><img src="../figures/open-mapping-theorem-and-local-normal-form.svg" alt="Left: the circle of radius 0.5 about 0, with the two preimages of 0.98 at plus and minus 0.2003 and the two preimages of 1.05 at plus and minus 0.3149i. Right: the image of that circle under cos z, a loop about 1 traced twice, enclosing a shaded disc of radius 0.1224 about 1, with 0.98 and 1.05 inside" width="420"></p>
+<p align="center"><img src="../figures/open-mapping-theorem-and-local-normal-form.svg" alt="Left: circle of radius 0.5 about 0 with preimages of 0.98 at ±0.2003 and 1.05 at ±0.3149i. Right: cos z image loop traced twice round the shaded disc of radius 0.1224 about 1." width="420"></p>
 
-To scale. Left: 150 units per unit, 0 at (110, 110). Right: 600 units per unit, 1 at (330, 110). The image loop runs from 1 − 0.122417 to 1 + 0.127626 along the real axis. Cos is even, so the second half of the circle retraces the first half's image exactly. The shaded disc, radius δ = 0.122417, is the disc that Why it works guarantees.
+To scale: left, 150 units per unit, 0 at (110, 110); right, 600 units per unit, 1 at (330, 110). The image loop runs from 1 − 0.122417 to 1 + 0.127626, traced twice, enclosing the shaded disc of radius δ = 0.122417.
 
 ---
 
 ## The formula
 
-Notation first. A **region** is an open set in the plane, in one piece. The **order** m of f at a is the place of the first non-zero Taylor coefficient of f(z) − f(a) ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). A **local change of coordinate** is a holomorphic map h, one-to-one near a, with h(a) = 0 and h′(a) ≠ 0.
+A **region** is a connected open set in the plane. The **order** m of f at a is the index of the first non-zero Taylor coefficient of f(z) − f(a) ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). A **local change of coordinate** is a holomorphic map h, one-to-one near a, with h(a) = 0 and h′(a) ≠ 0.
 
 ```math
 f(z) = f(a) + h(z)^m, \qquad h(a) = 0, \quad h'(a) \neq 0
 ```
 
-**Read it aloud:** near a, f is its value at a plus the m-th power of a new coordinate h, which starts at 0 and has a non-zero derivative.
+**Read it aloud:** near a, a holomorphic function not constant near a equals f(a) plus the m-th power of a new coordinate h starting at 0 with non-zero derivative.
 
-For the pendulum:
+For the pendulum (keeping h real on the real axis; (ih)^2 = −h^2 absorbs the minus):
 
 ```math
 \cos z = 1 - h(z)^2, \qquad h(z) = \sqrt{2}\,\sin(z/2), \qquad h'(0) = \tfrac{1}{\sqrt 2} = 0.707107
 ```
 
-**Read it aloud:** cos z is 1 minus the square of √2 sin(z/2). The minus sign is a constant. It folds into the coordinate as i·h, since (ih)^2 = −h^2; the card keeps h real on the real axis.
-
-The count of preimages comes from a contour integral, the **argument principle**, proved in the form needed here in Step 2:
+Preimages are counted by a contour integral, the **argument principle**, proved in Step 2:
 
 ```math
 N(w) = \frac{1}{2\pi i}\oint_{\lvert z - a\rvert = r} \frac{f'(z)}{f(z) - w}\,dz = m \quad \text{whenever } \lvert w - f(a)\rvert < \delta = \min_{\lvert z - a\rvert = r} \lvert f(z) - f(a)\rvert
 ```
 
-**Read it aloud:** the number of points within r of a that f sends to w, counted with multiplicity, is m, for every w closer to f(a) than the smallest gap between f and f(a) on the circle.
+**Read it aloud:** for small enough positive r, the count of preimages of w in |z − a| < r (with multiplicity) is m whenever w is closer to f(a) than the smallest gap on the circle.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$, $`a`$ | the holomorphic function; the point studied | cos z; a = 0 (and a = 1 for the inverse) | — |
-| $`z`$, $`w`$, $`z(w)`$ | an input (the swing angle); a target value; when m = 1, the single preimage of w (Step 3) | w = 0.98, 1 + 0.1i, 1.05; z(0.550302) = 0.988070 | — |
-| $`c_k`$ | the k-th Taylor coefficient of f(z) − f(a) at a | c_1 = 0, c_2 = −0.5 | — |
-| $`m`$ | the order: how many preimages each nearby value has, counted with multiplicity | 2 | more preimages, angles at a multiplied by m |
-| $`g`$, $`\gamma`$ | the leftover in f(z) − f(a) = (z − a)^m g(z), with g(a) ≠ 0; γ, a fixed m-th root of g(a) (Step 4) | g(0) = −0.5; γ^2 = −0.5 | — |
-| $`h`$ | the new coordinate | √2 sin(z/2); h′(0) = 0.707107 | — |
-| $`r`$, $`\delta`$, $`\rho`$ | the radius of the disc about a; the radius of the disc about f(a) that it is sure to cover; ρ, the same δ for h in place of f (Step 4 fold) | r = 0.5; δ = 0.122417 | larger r, larger δ, until a new zero of f′ or of f − f(a) enters |
-| $`N(w)`$, $`z_j`$, $`q`$ | the number of preimages of w within r of a, counted with multiplicity; in the Step 2 fold, those n preimages $`z_1, \dots, z_n`$ and the zero-free factor q left after taking them out | 2 for 0.98; 0 for 0.85; 6 for 0.98 when r = 7 | — |
+| $`f`$, $`a`$ | holomorphic function; base point | cos z; a = 0 (or 1) | — |
+| $`z`$, $`w`$, $`z(w)`$ | input; target; unique preimage (m = 1) | w = 0.98, 1 + 0.1i; z(0.550302) = 0.988070 | — |
+| $`c_k`$, $`m`$ | k-th Taylor coefficient of f − f(a); order | c_1 = 0, c_2 = −0.5; m = 2 | more preimages; angles times m |
+| $`g`$, $`\gamma`$ | factor in (z − a)^m g; m-th root of g(a) | g(0) = −0.5; γ^2 = −0.5 | — |
+| $`h`$ | new coordinate | √2 sin(z/2); h′(0) = 0.707107 | — |
+| $`r`$, $`\delta`$, $`\rho`$ | input radius; covered radius; same for h | r = 0.5; δ = 0.122417 | larger δ until a zero enters |
+| $`N(w)`$, $`z_j`$, $`q`$ | preimage count; preimages; zero-free factor | 2 (0.98); 0 (0.85); 6 (r = 7) | — |
 
 ### When it holds
 
-- **f holomorphic on an open set of the plane about a.** The real cosine, fed only the real interval (−0.5, 0.5), has image (0.877583, 1], which is not open: its top end 1 is reached at 0, with nothing beyond it.
-- **f not constant.** A constant sends every disc to a single point. The theorem needs a finite order m, which the identity theorem gives every non-constant f on a region.
-- **w close enough to f(a).** The value w = 0.85 lies farther than δ = 0.122417 from 1, and the disc |z| < 0.5 holds no preimage: they sit at ±0.554811.
-- **r small enough.** On the closed disc |z − a| ≤ r, f must take the value f(a) only at a. On |z| < 7, cos is 1 again at ±2π, and the count for 0.98 is 6.000000, not m = 2.
+- **f holomorphic near a.** Real cosine on (−0.5, 0.5) has image (0.877583, 1], not open: its top end 1 is reached, with nothing beyond.
+- **f not constant near a.** A constant maps every disc to one point; finite order m holds for every non-constant f on a region.
+- **w close enough to f(a).** The value w = 0.85 lies farther than δ = 0.122417 from 1, and |z| < 0.5 holds no preimage: they sit at ±0.554811.
+- **Positive r small enough.** On |z − a| ≤ r, f must equal f(a) only at a (and f′ ≠ 0 away from a for distinct preimages). On |z| < 7, cos equals 1 at ±2π, so 0.98 has count 6.000000, not 2.
 
 ---
 
@@ -78,87 +71,71 @@ N(w) = \frac{1}{2\pi i}\oint_{\lvert z - a\rvert = r} \frac{f'(z)}{f(z) - w}\,dz
 
 ### Step 0: the idea
 
-Factor f(z) − f(a) as (z − a)^m g(z), with g(a) ≠ 0. Near a, g is close to the constant g(a), so it has a holomorphic m-th root. Push that root into the coordinate: h(z) = (z − a)·(m-th root of g(z)). Then f(z) − f(a) = h(z)^m exactly. Because h′(a) ≠ 0, h is one-to-one near a, so f really is "raise to the m-th power", only measured in a bent coordinate. A contour integral that counts zeros, proved on this card, then gives the m-to-1 claim and the open disc directly.
+Factor f(z) − f(a) = (z − a)^m g(z) with g(a) ≠ 0, take a holomorphic m-th root of g, and set h(z) = (z − a)·(that root). Then f(z) = f(a) + h(z)^m, and a zero-counting integral gives the m-to-1 and open-disc claims directly.
 
 ### Step 1: the order is a whole number
 
-f is not constant on its region, so f − f(a) is not zero near a, and its first non-zero Taylor coefficient sits at a finite place m ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). For cos z − 1 the Cauchy coefficient integrals give c_1 = 0 and c_2 = −0.5: m = 2.
+Because f is non-constant on its region, f − f(a) is not zero near a, so its first non-zero Taylor coefficient sits at a finite order m ≥ 1 ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). For cos z − 1, Cauchy's coefficient integral gives c_1 = 0 and c_2 = −0.5, so m = 2.
 
-### Step 2: a contour integral counts m preimages near every nearby value
+### Step 2: a contour integral counts m preimages for every nearby value
 
-Pick r so small that, on the closed disc |z − a| ≤ r, f takes the value f(a) only at a and f′ is zero at most at a. Both are possible because zeros are isolated. Let δ be the smallest value of |f(z) − f(a)| on the circle |z − a| = r.
+Because zeros are isolated, pick r > 0 small enough that on |z − a| ≤ r, f equals f(a) only at a and f′ vanishes at most at a. Set δ = min |f(z) − f(a)| on |z − a| = r.
 
-For w in the disc |w − f(a)| < δ, the function f − w has no zero on the circle. So N(w) is defined, and it changes continuously with w. It is also a whole number: the fold below shows that it counts the zeros of f − w inside the circle, each as often as its order. A continuous whole number on a disc is constant, so N(w) = N(f(a)) = m, since a is the only zero of f − f(a) inside, of order m.
+For |w − f(a)| < δ, f − w has no zero on the circle, so N(w) is defined and continuous in w. By the fold below, N(w) is an integer counting zeros of f − w inside with multiplicity. A continuous integer on a disc is constant, so N(w) = N(f(a)) = m.
 
-When w ≠ f(a), each preimage z has f′(z) ≠ 0, so it is a simple zero of f − w. So w has exactly m different preimages within r of a.
-
-For cos at 0 with r = 0.5: δ = 1 − cos 0.5 = 0.122417, the smallest gap on the circle, reached on the real axis. The count gives 2.000000 for 0.98 and for 1 + 0.1i.
+For w ≠ f(a), every preimage has f′(z) ≠ 0, so each zero is simple and w has m distinct preimages in |z − a| < r. For cos at 0 with r = 0.5, δ = 1 − cos 0.5 = 0.122417 (on the real axis), and N(w) = 2.000000 for 0.98 and 1 + 0.1i.
 
 <details>
 <summary>Detailed proof: why the integral counts zeros</summary>
 
-Let $`z_1, \dots, z_n`$ be the zeros of f − w inside the circle, each listed as often as its order. There are finitely many, because zeros are isolated and the closed disc is bounded. Factor them out one at a time ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)):
+Let $`z_1, \dots, z_n`$ be the zeros of f − w inside the circle, repeated by order (finitely many since zeros are isolated on the closed bounded disc). Factoring them out ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)) gives
 
 $`\displaystyle f(z) - w = (z - z_1)\cdots(z - z_n)\, q(z),`$
 
-with q holomorphic and never 0 on the closed disc. The product rule for the derivative, divided through by f − w, gives
+with q holomorphic and zero-free on the closed disc. Dividing the product rule by f − w yields
 
 $`\displaystyle \frac{f'(z)}{f(z) - w} = \sum_{j=1}^{n} \frac{1}{z - z_j} + \frac{q'(z)}{q(z)}.`$
 
-Round the circle, each $`1/(z - z_j)`$ integrates to $`2\pi i`$ ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)), and q′/q, holomorphic on the disc, integrates to 0 ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). So N(w) = n.
-
-Multiply the split by z and write $`z/(z - z_j) = 1 + z_j/(z - z_j)`$. The same two facts make the integral of z f′(z)/(f(z) − w), divided by 2πi, equal to $`z_1 + \dots + z_n`$, the sum of the preimages. Step 3 uses this with n = 1.
-
-This is the argument principle in the special form this card needs (Stein and Shakarchi, ch. 3, sec. 4).
+Each $`1/(z - z_j)`$ integrates to $`2\pi i`$ ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)) and q′/q to 0 ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)), so N(w) = n. Multiplying by z and writing $`z/(z - z_j) = 1 + z_j/(z - z_j)`$ makes the integral of z f′/(f − w) over 2πi equal $`z_1 + \dots + z_n`$, used in Step 3 for n = 1.
 
 </details>
 
 ### Step 3: when m = 1, the inverse is holomorphic
 
-If m = 1, each w within δ of f(a) has exactly one preimage, call it z(w). By the fold in Step 2, the same integral with an extra factor z picks out z(w) itself, so
+When m = 1, each w within δ of f(a) has one preimage z(w). By the Step 2 fold with n = 1,
 
 ```math
 z(w) = \frac{1}{2\pi i}\oint_{\lvert z - a\rvert = r} \frac{z\,f'(z)}{f(z) - w}\,dz
 ```
 
-The integrand is holomorphic in w, so z(w) is holomorphic, with derivative 1/f′(z(w)). This is the **holomorphic inverse function theorem**, proved here with no appeal to the real one used in [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
-
-For cos at a = 1: f′(1) = −0.841471 is not zero, so m = 1. At w = cos 1 + 0.01 = 0.550302 the count in |z − 1| < 0.3 is 1.000000. The contour integral gives 0.988070, and arccos 0.550302 = 0.988070.
+The integrand is holomorphic in w, so z(w) is holomorphic with derivative 1/f′(z(w)), proving the **holomorphic inverse function theorem** without the real version used in [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md). For cos at a = 1, f′(1) = −0.841471 ≠ 0 (m = 1); at w = cos 1 + 0.01 = 0.550302, the count in |z − 1| < 0.3 is 1.000000 and the integral gives 0.988070 = arccos 0.550302.
 
 ### Step 4: the normal form
 
-On a small disc g(z)/g(a) stays close to 1, so its principal logarithm is holomorphic there. Fix one m-th root γ of g(a) and set
+Near a, g(z)/g(a) stays close to 1, so its principal logarithm is holomorphic. Fix an m-th root γ of g(a) and set
 
 ```math
 h(z) = (z - a)\, \gamma\, \exp\!\Big(\tfrac{1}{m}\,\mathrm{Log}\,\tfrac{g(z)}{g(a)}\Big)
 ```
 
-Then h^m = (z − a)^m g = f − f(a), h(a) = 0 and h′(a) = γ ≠ 0. By Step 3, h has a holomorphic inverse near a. So the preimages of w are the m points that h sends to the m different m-th roots of w − f(a). This is Step 2's count again, now with the points named.
-
-For cos z = 1 − h^2: h^2 = 1 − w. For w = 0.98, h = ±0.141421, and Newton's method finds the angles ±0.200335, where h is ±0.141421. For w = 1 + 0.1i, h^2 = −0.1i, and h at the two preimages is ±(0.223607 − 0.223607i).
+Then h^m = (z − a)^m g = f − f(a), h(a) = 0, and h′(a) = γ ≠ 0. By Step 3, h has a holomorphic inverse near a, so the preimages of w are the m points mapped to the m distinct m-th roots of w − f(a). For cos z = 1 − h^2, w = 0.98 gives h = ±0.141421 and angles ±0.200335; w = 1 + 0.1i gives h^2 = −0.1i and h = ±(0.223607 − 0.223607i).
 
 <details>
 <summary>Detailed proof: why the m-th root exists and h is one-to-one</summary>
 
-g is continuous with g(a) ≠ 0, so on some disc about a, |g(z)/g(a) − 1| < 1. There g(z)/g(a) avoids the negative real axis, and the principal logarithm Log, holomorphic off that axis ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), composes with it to a holomorphic function. Then
+Since g is continuous with g(a) ≠ 0, some disc about a has |g(z)/g(a) − 1| < 1, avoiding the negative real axis. Composing with Log ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) gives a holomorphic function satisfying
 
 $`\displaystyle \Big(\gamma\,\exp\big(\tfrac{1}{m}\mathrm{Log}\,\tfrac{g(z)}{g(a)}\big)\Big)^m = \gamma^m \,\frac{g(z)}{g(a)} = g(z),`$
 
-so h^m = f − f(a). The product rule gives h′(a) = γ, since the second factor equals γ at a. With h′(a) ≠ 0, Step 3 applied to h gives a radius r about a and a radius ρ about 0 such that every value within ρ of 0 has exactly one preimage under h within r of a. For 0 < |w − f(a)| < ρ^m, all m different m-th roots of w − f(a) lie within ρ of 0, and each has exactly one preimage under h within r of a. So the equation h(z)^m = w − f(a) has exactly m solutions within r of a.
+so h^m = f − f(a) and h′(a) = γ ≠ 0. By Step 3, h maps some disc |z − a| < r one-to-one over |ζ| < ρ. For 0 < |w − f(a)| < ρ^m, all m distinct m-th roots of w − f(a) lie in |ζ| < ρ, giving m solutions to h(z)^m = w − f(a) in |z − a| < r.
 
 </details>
 
 ### Step 5: the open mapping theorem
 
-Let f be holomorphic and not constant on a region, and take any open set inside the region. Take any point a of that set and a disc about a inside it. Step 2 shows that f of that disc contains the whole disc of radius δ about f(a). So every value that f takes on the open set has a whole disc of values around it, all taken on the set too: **the image of an open set is open**.
+Take any open set inside the region and any point a in it, with a small disc about a inside it. By Step 2, the image of that disc contains |w − f(a)| < δ, so **the image of an open set is open**. For cos, the image of |z| < 0.5 contains |w − 1| < 0.122417, and the circle's image sits between 0.122417 and 0.127626 from 1.
 
-For cos, the image of |z| < 0.5 contains every w with |w − 1| < 0.122417. The image loop of the circle sits between 0.122417 and 0.127626 from 1.
-
-### Step 6: the maximum modulus principle follows
-
-Suppose |f| had a local maximum at an interior point a. By Step 5, f of a small disc about a contains a disc about f(a). That disc holds points of larger modulus: f(a) scaled up by a factor slightly above 1, or any non-zero point if f(a) = 0. So |f| is beaten near a, and the maximum cannot be there. This is the second road mentioned in [The maximum modulus principle](05-maximum-modulus-principle.md).
-
-For cos: |cos 0| = 1, and the real cosine never exceeds 1. But the value 1.05 is hit at 0.314925i, since cos(iy) = cosh y and arccosh 1.05 = 0.314925. The peak at 0 is a peak only along the real line.
+[The maximum modulus principle](05-maximum-modulus-principle.md) follows at once: a covered disc about f(a) always contains points of larger modulus, so |f| has no interior peak. For cos, |cos 0| = 1 is beaten at 0.314925i, where cos(0.314925i) = cosh(0.314925) = 1.05 (arccosh 1.05 = 0.314925).
 
 ---
 
@@ -173,16 +150,16 @@ For cos: |cos 0| = 1, and the real cosine never exceeds 1. But the value 1.05 is
 | in degrees | 0.200335 × 180/π | **±11.478341 degrees** |
 | the covered disc | 1 − cos 0.5 | δ = 0.122417 |
 
-Two angles, one height: the sensor reading of 0.02 m fits a swing of 11.478341 degrees either way. Any value within 0.122417 of 1, except 1 itself, has exactly two angles within 0.5 of 0.
+A height of 0.02 m matches ±11.478341 degrees, and every w ≠ 1 within 0.122417 of 1 has two angles in |z| < 0.5.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| m = 1 assumed at 0 | the inverse integral for 0.98 gives 0.000000 + 0.000000i, not a preimage; the count says 2 | f′(0) = 0, so the order is 2, and the integral adds both preimages ±0.200335 |
-| Real cosine on (−0.5, 0.5) | image (0.877583, 1], not open; a maximum 1 at 0 | a real function has no disc of values to fill |
-| w = 0.85, outside the δ disc | count 0.000000 in \|z\| < 0.5 | the preimages ±0.554811 lie outside |
-| Disc sized by \|f′(0)\| × 0.5 | 0.000000, yet δ = 0.122417 | the square term, not the linear one, sets the size |
+| m = 1 assumed at 0 | inverse integral for 0.98 gives 0.000000 + 0.000000i; count is 2 | f′(0) = 0, so m = 2 and the integral sums ±0.200335 |
+| Real cosine on (−0.5, 0.5) | image (0.877583, 1], not open; maximum 1 at 0 | a real function has no complex disc to fill |
+| w = 0.85, outside δ disc | count 0.000000 in \|z\| < 0.5 | preimages ±0.554811 lie outside |
+| Disc sized by \|f′(0)\| × 0.5 | 0.000000, yet δ = 0.122417 | the quadratic term sets the size |
 
 The code prints all four.
 
@@ -190,7 +167,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The code builds cos and sin of a complex number from real cos, sin, cosh and sinh, then takes three independent roads. Road one: closed forms through h, such as 2 asin(0.1) and arccos 0.98. Road two: Newton's method, repeated tangent-line steps towards a root of cos z − w. Road three: the argument principle, a 400-point trapezoid sum of f′/(f − w) round a circle, which counts preimages without finding them. A 720-point search of the circle checks δ, and the same contour sum gives the Taylor coefficients, h′(0) and the inverse.
+The code builds complex cos and sin from real trig and hyperbolic functions, checking three roads: closed forms via h, Newton's method on cos z − w = 0, and a 400-point trapezoid sum of f′/(f − w) round a circle. A 720-point search checks δ, and the contour sum also yields c_1, c_2, h′(0) and the inverse.
 
 ### Python
 
@@ -640,40 +617,39 @@ example (h : ℂ) : (Complex.I * h) ^ 2 = -h ^ 2 := by
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Widen the counting circle.** In `count`, change `r=0.5` to `r=0.6`. Break 3 now counts 2.000000, because ±0.554811 is inside, and the second assert stops the run.
-> - **Coarsen the sum.** Change `n=400` to `n=12` in `contour`. The count for 1 + 0.1i reads 1.586170 and the run stops: a sum that coarse misses the fast turn of f − w near its zeros.
-> - **Move w further from cos 1.** Change `+ 0.01` to `+ 0.1` in `a1`. The count stays 1 and the inverse still equals arccos: 0.875905. With `+ 0.3` the count is 0, since arccos 0.840302 = 0.572956 lies outside |z − 1| < 0.3, and the last assert stops the run.
+> - **Widen the circle.** In `count`, change `r=0.5` to `r=0.6`. Break 3 now counts 2.000000 (since ±0.554811 fits inside), failing the second assert.
+> - **Coarsen the sum.** Change `n=400` to `n=12` in `contour`. The count for 1 + 0.1i reads 1.586170 and stops the run.
+> - **Move w further from cos 1.** Change `+ 0.01` to `+ 0.1` in `a1`: count stays 1 and the inverse matches arccos = 0.875905.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading the open mapping theorem off the real graph.** On the real line, cos has a top at 0 and its image of (−0.5, 0.5) is (0.877583, 1], not open. In the plane the same function covers a full disc about 1: 1.05 is hit at 0.314925i. Real intuition about peaks does not transfer.
+> **Reading the open mapping theorem off the real graph.** On the real line, cos maps (−0.5, 0.5) to (0.877583, 1], not open, with peak 1 at 0. In the plane it covers a disc about 1, hitting 1.05 at 0.314925i.
 >
-> - **Trusting f′(a) to size the image.** At a critical point f′(a) = 0, so a linear guess gives a covered disc of radius 0; the true δ for cos at 0 is 0.122417.
-> - **Expecting one inverse at a critical point.** Near 0, arccos returns only 0.200335 for 0.98; the other preimage −0.200335 is just as close.
-> - **Forgetting the size limit on w.** Only values within δ are sure to have m preimages near a: 0.85 has none in |z| < 0.5.
+> - **Trusting f′(a) to size the image.** At a critical point f′(a) = 0 gives a linear guess of 0, yet δ = 0.122417 for cos at 0.
+> - **Expecting one inverse at a critical point.** Near 0, arccos returns only 0.200335 for 0.98; −0.200335 is just as close.
+> - **Forgetting the bound on w.** Only values within δ are sure to have m preimages near a: 0.85 has none in |z| < 0.5.
 
 ---
 
 ## Where you meet it in real life
 
-- **Sensing near a turning point.** A pendulum's height, a cable's sag or a lens's focus reading near its extreme is two-to-one in the quantity behind it. The sign must come from somewhere else.
-- **Airfoil design.** The Joukowski map z + 1/z has derivative 0 at z = 1, an order-2 point. It doubles angles there, which turns a smooth circle into the sharp trailing edge of a wing profile.
-- **Root finding.** Where m ≥ 2, nearby equations have m roots close together. Solvers such as Newton's method slow down there, and the count tells how many roots to look for.
+- **Airfoil design.** The Joukowski map z + 1/z has derivative 0 at z = 1, an order-2 point. It doubles angles there, turning a smooth circle into the sharp trailing edge of a wing profile.
+- **Root finding.** Where m ≥ 2, nearby equations have m roots close together, and Newton's method slows there.
 - **Mapping theorems.** The open mapping theorem keeps images of regions as regions, a step in [The Riemann mapping theorem](../07-Conformal%20Maps%20and%20Harmonic%20Functions/08-riemann-mapping-theorem-and-schwarz-christoffel.md).
 
 > **Say it back**
-> Near any point a, a non-constant holomorphic function is f(a) plus the m-th power of a new coordinate h, where m is the order of f − f(a) at a. So every value near f(a), other than f(a) itself, has exactly m preimages near a, as a contour integral counts. A whole disc about f(a) is covered, so open sets go to open sets, and |f| cannot peak inside. When m = 1 the preimage is unique and depends holomorphically on the value. For cos near 0, m = 2: the height 0.98 fits the angles ±0.200335.
+> Near any point a of a connected region, a non-constant holomorphic function is f(a) + h(z)^m for a local coordinate h and finite order m. Every value near f(a) other than f(a) has m distinct preimages near a, counted by a contour integral. So a disc about f(a) is covered, open sets map to open sets, and m = 1 gives a holomorphic inverse. For cos near 0, m = 2: height 0.98 fits ±0.200335.
 
 ---
 
 ## What this builds on
 
-- [The maximum modulus principle](05-maximum-modulus-principle.md): the result that Step 6 re-proves as a corollary, the second road named there.
-- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): the order m and the factor g with g(a) ≠ 0, and isolated zeros.
-- [Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): the integral of 1/(z − z_j) round a circle, 2πi, which turns the contour integral into a count.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): the corollary that Step 5 re-proves as the second road named there.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): the finite order m, the non-zero factor g, and isolated zeros.
+- [Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): the 2πi loop integral of 1/(z − z_j) that turns the contour integral into a count.
 - [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): the principal logarithm that builds the m-th root in Step 4.
 
 ## Where this goes next
@@ -681,9 +657,9 @@ example (h : ℂ) : (Complex.I * h) ^ 2 = -h ^ 2 := by
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): the general zero count, with poles as well as zeros, of which the Step 2 fold is the special case.
 - [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): angles kept where m = 1, and multiplied by m where f′ = 0.
 - [Phragmen-Lindelof](07-phragmen-lindelof-principle.md): the maximum modulus principle stretched to unbounded regions, with a limit on growth.
-- [Normal families](10-normal-families-montel-and-hurwitz.md): Hurwitz's theorem uses the same continuous count to show that limits of one-to-one functions stay one-to-one or become constant.
+- [Normal families](10-normal-families-montel-and-hurwitz.md): Hurwitz's theorem uses the same continuous count to show that locally uniform limits of one-to-one holomorphic functions stay one-to-one or become constant.
 
-Left open: the normal form is local. How far from a does f stay m-to-1, and which regions can a one-to-one f carry onto a disc?
+Left open: the normal form is local, so [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md) tracks angles globally and [The Riemann mapping theorem](../07-Conformal%20Maps%20and%20Harmonic%20Functions/08-riemann-mapping-theorem-and-schwarz-christoffel.md) decides which regions map one-to-one onto a disc; next on this shelf, [Phragmen-Lindelof](07-phragmen-lindelof-principle.md) extends the maximum modulus principle to unbounded strips.
 
 ---
 
@@ -691,6 +667,6 @@ Left open: the normal form is local. How far from a does f stay m-to-1, and whic
 
 Verified 2026-11-23: every link below resolves to the publisher's or author's page.
 
-- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 3, section 4: the argument principle and its applications, including the open mapping and maximum modulus theorems.
-- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [DOI](https://doi.org/10.1007/978-1-4612-6313-5). Chapter IV, Complex Integration: the open mapping theorem and the local m-to-1 picture.
-- Lebl, Jiří. *Guide to Cultivating Complex Analysis*. [Author page and full text](https://www.jirka.org/ca/). Free; the chapter on counting zeros has sections on the open mapping theorem and on inverses of holomorphic functions, with the contour formula for the inverse.
+- Stein, Elias M., and Rami Shakarchi. *Complex Analysis*. Princeton University Press, 2003. [Publisher page](https://press.princeton.edu/books/hardcover/9780691113852/complex-analysis). Chapter 3, section 4: argument principle, open mapping and maximum modulus.
+- Conway, John B. *Functions of One Complex Variable I*, 2nd ed. Springer, Graduate Texts in Mathematics 11, 1978. [DOI](https://doi.org/10.1007/978-1-4612-6313-5). Chapter IV: open mapping theorem and local m-to-1 picture.
+- Lebl, Jiří. *Guide to Cultivating Complex Analysis*. [Author page and full text](https://www.jirka.org/ca/). Free; open mapping theorem and contour inverse formula.

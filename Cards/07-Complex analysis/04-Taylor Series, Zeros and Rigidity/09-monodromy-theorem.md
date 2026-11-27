@@ -6,15 +6,15 @@
 
 ## General Overview
 
-Start at the point 1 with the square root √1 = 1. Walk to −1 along the top half of the unit circle, and carry the square root with you without any jump. You arrive with i. Walk the bottom half instead and you arrive with −i.
+Start at 1 with √1 = 1 and walk to −1 along the top half of the unit circle, carrying the square root without jumping. You arrive with i. Walk the bottom half instead and you arrive with −i.
 
-Same function, same start, same finish, two answers. Keep going once round the circle and √1 comes back as −1. Twice round, it is +1 again. [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md) met this sign flip; this card says exactly when it can happen.
+Keep going once round the circle and √1 returns as −1; twice round, +1 again ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)).
 
-The carrying is **analytic continuation along a path**: a chain of discs along the route, each holding a power series, each agreeing with the one before where they overlap. [Analytic continuation](04-analytic-continuation.md) showed there is no choice at any step. The answer can still depend on the route.
+Carrying a function this way is **analytic continuation along a path**: a chain of overlapping discs along the route, each holding a holomorphic function that agrees with the previous one on their overlap. [Analytic continuation](04-analytic-continuation.md) showed there is no choice at any step, yet the answer can still depend on the route.
 
-The **monodromy theorem** says when it cannot. Two routes that slide into each other, ends held still, through routes that can all be continued, give the same answer. The two half-circles cannot slide into each other without passing through 0, and no disc of √z can sit at 0. That is the whole failure.
+The **monodromy theorem** says when it cannot: two routes with the same ends that slide into each other through paths where continuation works give the same answer. The two half-circles cannot slide into each other without crossing 0, where no disc of √z can sit.
 
-**Continuation along a path is forced step by step, and it does not change when the path slides without leaving the region where continuation works; so on a region with no holes, every route gives one and the same function.**
+**Continuation along a path is forced step by step, and it does not change when the path slides with both ends held still through paths where continuation is possible; so on a region with no holes where every path continues, every route from the same start gives one and the same holomorphic function.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; continuation along a path is a definition.
 
@@ -22,53 +22,53 @@ The **monodromy theorem** says when it cannot. Two routes that slide into each o
 
 <p align="center"><img src="../figures/monodromy-theorem.svg" alt="The unit circle with the start at 1 and the end at minus 1. The upper half, walked right to left, gives the square root i at minus 1; the lower half gives minus i. Dashed half-ellipses of heights 0.5 and 0.1, above and below, show a slide from one route to the other; the hollow dot at 0 sits on the line every such slide must cross." width="420"></p>
 
-To scale: 100 units per 1, 0 at (180, 130), the start 1 at (280, 130), the end −1 at (80, 130). The solid halves are the routes. The dashed half-ellipses, tops at (180, 80), (180, 120), (180, 140) and (180, 180), are stages of the straight slide from top to bottom. The hollow dot is 0.
+To scale: 100 units per 1; 0 at (180, 130), start 1 at (280, 130), end −1 at (80, 130), dashed half-ellipse tops at y = 80, 120, 140, 180.
 
 ---
 
 ## The formula
 
-Notation first, in words. A **path** $`\gamma`$ is a continuous route $`\gamma(s)`$, with time $`s`$ running from 0 to 1. A **disc** $`D_j`$ has centre $`c_j`$, and $`f_j`$ is a holomorphic function on it (one with a complex derivative at every point). A chain of $`n`$ discs **continues** $`f_1`$ along $`\gamma`$ when, for times $`0 = s_0 < s_1 < \dots < s_n = 1`$:
+A **path** $`\gamma`$ is a continuous route $`\gamma(s)`$ for $`0 \le s \le 1`$. A chain of $`n`$ discs $`D_j`$ (centres $`c_j`$, holding holomorphic functions $`f_j`$) **continues** $`f_1`$ along $`\gamma`$ when, for $`0 = s_0 < s_1 < \dots < s_n = 1`$:
 
 ```math
 \gamma([s_{j-1}, s_j]) \subset D_j \quad \text{and} \quad f_j = f_{j+1} \text{ on } D_j \cap D_{j+1}
 ```
 
-**Read it aloud:** each piece of the path lies in its own disc, and each disc's function agrees with the next one where the two discs overlap.
+**Read it aloud:** each piece of the path lies in its own disc, and each disc's function agrees with the next on their overlap.
 
-The function in the last disc, $`f_n`$, is the answer at the end. Two paths are **homotopic**, written $`\gamma_0 \simeq \gamma_1`$, when a family of paths $`\gamma_t`$, with slide time $`t`$ from 0 to 1, deforms one into the other continuously, all with the same two ends. The theorem:
+The last disc's function $`f_n`$ is the end answer. Two paths are **homotopic**, $`\gamma_0 \simeq \gamma_1`$, when a continuous family $`\gamma_t`$ ($`0 \le t \le 1`$) deforms one into the other with both ends held still. The theorem:
 
 ```math
-\gamma_0 \simeq \gamma_1 \text{ in } U, \ \ f \text{ continues along every } \gamma_t \implies \text{the two chains end with the same } f_n
+\text{same start } f,\ \ \gamma_0 \simeq \gamma_1 \text{ in } U,\ \ f \text{ continues along every } \gamma_t \implies \text{the two chains end with the same } f_n
 ```
 
-**Read it aloud:** if one path slides into the other inside the region $`U`$, and the function can be carried along every path of the slide, then both paths deliver the same function at the end.
+**Read it aloud:** if one path slides into the other inside $`U`$ with both ends held still, and the same starting function continues along every path of the slide, both paths deliver the same function at the end.
 
-For the square root carried round the unit circle $`e^{i\theta}`$ from √1 = 1, through a total angle $`\Theta`$ (theta), and for the logarithm from log 1 = 0:
+For √z from √1 = 1 and log z from log 1 = 0, carried round $`e^{i\theta}`$ through total angle $`\Theta`$ (theta):
 
 ```math
 \sqrt{z} \to e^{i\Theta/2}, \qquad \log z \to i\Theta
 ```
 
-Upper half, $`\Theta = \pi`$: i. Lower half, $`\Theta = -\pi`$: −i. Once round, $`2\pi`$: −1. Twice round, $`4\pi`$: +1.
+Upper half ($`\Theta = \pi`$): i. Lower half ($`-\pi`$): −i. Once round ($`2\pi`$): −1. Twice ($`4\pi`$): +1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`\gamma`$, $`\delta`$, $`s`$ | a path; a nearby path; the time along them, 0 to 1 | the upper half-circle | — |
-| $`D_j`$, $`c_j`$, $`f_j`$, $`n`$, $`\varepsilon`$ | a disc, its centre, the function on it; the number of discs; a safe distance from the discs' edges (a second chain in the fold: $`E_k`$, $`g_k`$, $`r_k`$, $`m`$) | 4 discs centred $`e^{i\pi(j-1)/4}`$, radius 1 | more discs: shorter steps |
-| $`u`$ | one step, measured from the centre: $`z/c_j - 1`$ | size 0.765367 for 4 discs | past 1 the series diverges |
-| $`\gamma_t`$, $`t`$, $`\simeq`$ | the paths of a slide; slide time 0 to 1; "slides into, ends held" | half-ellipses of height $`b = 1 - 2t`$ | at $`t = 1/2`$ the path hits 0 |
-| $`b`$ | the height of a half-ellipse $`\cos \pi s + i b \sin \pi s`$ | 1, 0.5, 0.1, −0.1, −0.5, −1 | positive gives i, negative −i |
-| $`\theta`$, $`\Theta`$ | angle on the circle; total angle turned | π, −π, 2π, 4π | each lap: √ times −1, log plus 2πi |
-| $`U`$, $`F`$ | the region; the one function on it | the plane without 0; on the cut plane, $`F`$ is the principal √ | — |
-| $`z`$, $`z_0`$, $`w`$ | a point; the start; the square root carried so far (in Step 4, its value at a disc's centre) | $`z = -1`$, $`z_0 = 1`$, $`w = i`$ | — |
+| $`\gamma`$, $`\delta`$, $`s`$ | a path; a nearby path; the time along them, from 0 to 1 | the upper half-circle | — |
+| $`D_j`$, $`c_j`$, $`f_j`$, $`n`$, $`\varepsilon`$ | a disc, its centre, the function on it, the count, a safe margin (second chain in the fold: $`E_k, g_k, r_k, m`$) | 4 discs at $`e^{i\pi(j-1)/4}`$, radius 1 | more discs give shorter steps |
+| $`u`$ | one step from the centre: $`z/c_j - 1`$ | size 0.765367 for 4 discs | past 1, the series diverges |
+| $`\gamma_t`$, $`t`$, $`\simeq`$ | the paths of a slide; slide time 0 to 1; "slides into, ends held" | half-ellipses of height $`b = 1 - 2t`$ | at $`t = 1/2`$, the path hits 0 |
+| $`b`$ | the height of a half-ellipse $`\cos\pi s + ib\sin\pi s`$ | 1, 0.5, 0.1, −0.1, −0.5, −1 | positive gives i, negative −i |
+| $`\theta`$, $`\Theta`$ | the angle on the circle; the total angle turned | π, −π, 2π, 4π | each lap: √ times −1, log plus 2πi |
+| $`U`$, $`F`$ | the region; the one holomorphic function on it | the plane without 0; the principal √ on the cut plane | — |
+| $`z`$, $`z_0`$, $`w`$ | a point; the start; the square root carried so far | $`z = -1`$, $`z_0 = 1`$, $`w = i`$ | — |
 
 ### When it holds
 
-- **Each step stays inside its disc.** The disc at $`c_j`$ for √z has radius $`\lvert c_j\rvert`$, the distance to 0. A step with $`\lvert u\rvert \ge 1`$ leaves the open disc, and past $`\lvert u\rvert = 1`$ the series diverges.
-- **The slide stays where continuation works.** The straight slide from top half to bottom half passes through 0 at $`t = 1/2`$. No disc of √z is centred at 0, so the theorem does not apply.
-- **The ends are held.** Slide the end point too, and the two answers live at different points; nothing is compared.
-- **For one function on all of U: no holes, and every path continues.** The region must be **simply connected**: open, in one piece, and every loop in it shrinks to a point inside it ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). The plane without 0 fails this; the plane cut along the negative real axis passes.
+- **Each step stays inside its disc.** At $`c_j`$, √z's disc has radius $`\lvert c_j\rvert`$, the distance to 0; for $`\lvert u\rvert \ge 1`$, the step leaves it.
+- **Continuation works along every path of the slide.** The straight slide hits 0 at $`t = 1/2`$, where no disc of √z sits.
+- **Both ends are held still.** Moving an end compares answers at different points.
+- **For one function on all of U: no holes, and every path continues.** $`U`$ must be **simply connected** (open, connected, every loop shrinks to a point: [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). The cut plane passes; the plane without 0 fails.
 
 ---
 
@@ -76,85 +76,83 @@ Upper half, $`\Theta = \pi`$: i. Lower half, $`\Theta = -\pi`$: −i. Once round
 
 ### Step 0: forced, and blind to small wiggles
 
-Two facts carry the proof. First, along one path there is no choice: any two chains deliver the same final function. Second, a path that stays very close to another can use the other's chain of discs unchanged. A slide is made of small wiggles, and an answer that cannot change under a small wiggle cannot change at all.
+Two facts carry the proof. Along one path, any two chains starting from the same function deliver the same final function. And a path close to another can reuse its chain unchanged, so a small wiggle cannot change the answer, and neither can a whole slide made of small wiggles.
 
 ### Step 1: the answer along one path is forced
 
-Take two chains along the same path. At the start they hold the same function near $`\gamma(0)`$. Where a disc of one chain overlaps a disc of the other at the same moment of the path, the overlap is an intersection of two discs: convex, so in one piece. Two holomorphic functions that agree on a small patch of a connected region agree on all of it ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)). So agreement passes from disc to disc, all the way to the end.
+Take two chains along $`\gamma`$ holding the same function near $`\gamma(0)`$. Where two discs overlap at a common moment of $`\gamma`$, their intersection is convex, hence connected.
+
+By [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md), agreement on a small patch spreads over the whole overlap, passing disc by disc to the end.
 
 <details>
 <summary>Detailed proof: two chains along one path end with the same function</summary>
 
-Let chain A have discs $`D_1, \dots, D_n`$ on time pieces $`[s_{j-1}, s_j]`$, and chain B have discs $`E_1, \dots, E_m`$ on pieces $`[r_{k-1}, r_k]`$, with $`f_1 = g_1`$ near $`\gamma(0)`$.
+Let chain A use discs $`D_1,\dots,D_n`$ on $`[s_{j-1}, s_j]`$ with $`f_j`$, and chain B use $`E_1,\dots,E_m`$ on $`[r_{k-1}, r_k]`$ with $`g_k`$, with $`f_1 = g_1`$ near $`\gamma(0)`$.
 
-Claim: whenever the time pieces $`[s_{j-1}, s_j]`$ and $`[r_{k-1}, r_k]`$ overlap, $`f_j = g_k`$ on $`D_j \cap E_k`$. Induct on $`j + k`$. For $`j = k = 1`$ it is the start, spread over the convex set $`D_1 \cap E_1`$ by the identity theorem.
+Induct on $`j + k`$ to show $`f_j = g_k`$ on $`D_j \cap E_k`$ whenever $`[s_{j-1}, s_j]`$ meets $`[r_{k-1}, r_k]`$. For $`j = k = 1`$, apply the identity theorem on the convex overlap $`D_1 \cap E_1`$.
 
-For larger $`j + k`$, say $`s_{j-1} \ge r_{k-1}`$, so $`s_{j-1}`$ lies in $`[r_{k-1}, r_k]`$. The point $`\gamma(s_{j-1})`$ lies in $`D_{j-1}`$, $`D_j`$ and $`E_k`$. By induction $`f_{j-1} = g_k`$ near it, and $`f_{j-1} = f_j`$ there by chain A's overlap condition. So $`f_j = g_k`$ near $`\gamma(s_{j-1})`$, and by the identity theorem on the convex set $`D_j \cap E_k`$, on all of it. The other case swaps the roles. At $`j = n`$, $`k = m`$, the two chains end with the same function near $`\gamma(1)`$.
+For larger $`j + k`$, assume $`s_{j-1} \ge r_{k-1}`$ (the other case is symmetric). Then $`\gamma(s_{j-1})`$ lies in $`D_{j-1}`$, $`D_j`$ and $`E_k`$. By induction $`f_{j-1} = g_k`$ near it, and $`f_{j-1} = f_j`$ by chain A's overlap rule, so $`f_j = g_k`$ near $`\gamma(s_{j-1})`$ and hence on all of $`D_j \cap E_k`$. At $`j = n, k = m`$, the end functions agree near $`\gamma(1)`$.
 
 </details>
 
 ### Step 2: a nearby path uses the same chain
 
-Each piece $`\gamma([s_{j-1}, s_j])`$ is a closed, bounded set inside the open disc $`D_j`$, so it keeps some distance $`\varepsilon_j > 0`$ from the disc's edge. Let $`\varepsilon`$ be the smallest of them. Any path $`\delta`$ with the same ends that stays within $`\varepsilon`$ of $`\gamma`$ at every time puts each piece $`\delta([s_{j-1}, s_j])`$ inside the same $`D_j`$. The same discs and the same functions form a chain along $`\delta`$, ending with the same $`f_n`$.
+Each piece $`\gamma([s_{j-1}, s_j])`$ is a closed, bounded set inside the open disc $`D_j`$, so it keeps a positive margin $`\varepsilon_j`$ from $`D_j`$'s edge. Let $`\varepsilon`$ be the smallest margin.
+
+Any path $`\delta`$ with the same ends staying within $`\varepsilon`$ of $`\gamma`$ keeps every piece inside the same $`D_j`$, so the same chain works along $`\delta`$ and ends with the same $`f_n`$.
 
 ### Step 3: a slide cannot change the answer
 
-Let $`\gamma_t`$ slide $`\gamma_0`$ into $`\gamma_1`$, and suppose every $`\gamma_t`$ has a chain. The slide, as a map of $`(s, t)`$ on the unit square, is continuous on a closed, bounded set, so it is uniformly continuous: for each $`t`$ there is a width such that every $`\gamma_{t'}`$ with $`t'`$ that close stays within the $`\varepsilon`$ of Step 2 for $`\gamma_t`$. So the answer is the same for all $`t'`$ near $`t`$.
+Let $`\gamma_t`$ slide $`\gamma_0`$ into $`\gamma_1`$ with ends held, and suppose every $`\gamma_t`$ has a chain starting from the same function. Because the slide is continuous on the closed unit square $`[0,1]^2`$, it is uniformly continuous.
 
-Now the set of slide times whose answer equals the answer at $`t = 0`$ is open, and so is the set where it differs. The interval [0, 1] cannot split into two disjoint non-empty open pieces. The first set holds 0, so it holds 1. **That is the monodromy theorem.**
+Thus near any $`t`$, every $`\gamma_{t'}`$ stays within Step 2's $`\varepsilon`$ of $`\gamma_t`$, giving the same end function. The sets of times where the end function matches $`t = 0`$, and where it differs, are both open. Since [0, 1] is connected and 0 lies in the first set, 1 does too. **That is the monodromy theorem.**
 
 ### Step 4: why the half-circles must differ
 
-At any point $`c \ne 0`$, the disc of radius $`\lvert c\rvert`$ round $`c`$ carries $`w\,(1 + u)^{1/2}`$, with $`u = z/c - 1`$ and w the square root of c carried so far ($`w^2 = c`$), as a convergent binomial series ([Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md)). So √z continues along every path that avoids 0.
+At any $`c \ne 0`$, the disc of radius $`\lvert c\rvert`$ carries $`w(1 + u)^{1/2}`$ ($`u = z/c - 1`$, $`w^2 = c`$) as a convergent binomial series ([Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md)), so √z continues along every path avoiding 0.
 
-Suppose the upper and lower half-circles slid into each other inside the plane without 0. Step 3 would make i equal −i. So no such slide exists. The straight slide shows where every attempt breaks: the half-ellipses of height $`b = 1 - 2t`$ all end at i while $`b > 0`$ and at −i while $`b < 0`$, and at $`t = 1/2`$ the path runs through 0. The loop made of the two halves winds once round 0, the count kept by [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md).
+If the two half-circles slid into each other avoiding 0, Step 3 would force i = −i. In the straight slide $`b = 1 - 2t`$, every $`b > 0`$ gives i, every $`b < 0`$ gives −i, and $`t = 1/2`$ hits 0. The two halves form a loop of winding number 1 round 0 ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 
 ### Step 5: no holes, one function
 
-On a simply connected region $`U`$, two paths with the same ends always slide into each other: the first path, then the second run backwards, is a loop, and it shrinks. Fix a start $`z_0`$ and a function near it that continues along every path in $`U`$. Define $`F(z)`$ as the end of the continuation along any path from $`z_0`$ to $`z`$. Step 3 makes $`F`$ independent of the path. Near each $`z`$, $`F`$ equals the last disc's function, so $`F`$ is holomorphic.
+In a simply connected region $`U`$, any two paths with the same ends are homotopic because going out along one and back along the other makes a loop that shrinks. Fix a start $`z_0`$ and a holomorphic function near it that continues along every path in $`U`$.
 
-Example: the plane cut along the negative real axis has no holes. A wandering path from 1 to 4i through −3 + 0.5i and −3 + 3i, never crossing the cut, delivers 1.414214 + 1.414214i, the principal √(4i).
+Setting $`F(z)`$ to the continued value along any path from $`z_0`$ to $`z`$ is path-independent by Step 3 and locally equals the final disc's function, so $`F`$ is holomorphic on $`U`$. On the plane cut along the negative real axis, a wandering path from 1 to 4i via −3 + 0.5i and −3 + 3i delivers 1.414214 + 1.414214i, the principal √(4i).
 
 ### Step 6: what one loop does
 
-The name is Greek for "a single course": a function is single-valued when every run round a loop brings it back unchanged, and the theorem says when that is guaranteed. A loop round 0 that cannot shrink may return a changed function. For √z one lap multiplies by −1, so two laps cancel. For log z one lap adds 2πi, and nothing cancels: 6.283185i after one lap, 12.566371i after two. For √z, carrying it along a path means choosing at each moment a w with w² = z that moves without jumps; later cards call this lifting a path through the map z ↦ z².
+The name is Greek for "a single course": a function is single-valued when every loop brings it back unchanged, and the theorem says when that is guaranteed. A loop round 0 that cannot shrink can return a different branch. One lap round 0 multiplies √z by −1 (so two laps cancel) and adds 2πi to log z: 6.283185i after one lap, 12.566371i after two.
 
 ---
 
 ## Worked numbers, by hand
 
-Four discs on the upper half-circle, centres 1, $`e^{i\pi/4}`$, i and $`e^{3i\pi/4}`$, each of radius 1. Each step multiplies the carried value by $`(1 + u)^{1/2}`$ with $`u = e^{i\pi/4} - 1`$, which is $`e^{i\pi/8}`$.
+Four discs of radius 1 on the upper half-circle, with centres 1, $`e^{i\pi/4}`$, i and $`e^{3i\pi/4}`$, multiply the carried value by $`(1 + u)^{1/2} = e^{i\pi/8}`$ at each step ($`u = e^{i\pi/4} - 1`$):
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| step size | $`\lvert e^{i\pi/4} - 1\rvert = 2 \sin(\pi/8)`$ | 0.765367, inside radius 1 |
+| step size | $`\lvert e^{i\pi/4} - 1\rvert = 2\sin(\pi/8)`$ | 0.765367, inside radius 1 |
 | at $`e^{i\pi/4}`$ | $`1 \times e^{i\pi/8}`$ | 0.923880 + 0.382683i |
 | at i | $`e^{i\pi/4}`$ | 0.707107 + 0.707107i |
 | at $`e^{3i\pi/4}`$ | $`e^{3i\pi/8}`$ | 0.382683 + 0.923880i |
-| at −1, upper half | $`e^{i\pi/2}`$ | **i** |
-| at −1, lower half | mirror image: $`e^{-i\pi/2}`$ | **−i** |
-| once round | i, then the same four steps again: i × i | **−1** |
-| twice round | (−1) × (−1) | +1 |
-| log, once round | πi + πi | 6.283185i |
-
-The two routes deliver √(−1) as i and as −i: both are square roots of −1, and the route picks one.
+| at −1, upper / lower | $`e^{\pm i\pi/2}`$ | **i** / **−i** |
+| once / twice round | $`i \times i`$ / $`(-1) \times (-1)`$ | **−1** / +1 |
+| log, once round | $`\pi i + \pi i`$ | 6.283185i |
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Principal √ recomputed at the end of the lower path | i, not −i | the principal value jumps at the cut; it is not the continuation |
-| A loop expected to return √1 = 1 | −1 after one lap | the loop circles 0 and cannot shrink |
-| Sliding the upper path straight onto the lower one | at $`t = 1/2`$ the path meets 0, distance 0.000000 | no disc of √z is centred at 0 |
-| log expected back at 0 after a loop | 6.283185i | each lap adds 2πi |
-
-The code prints all four.
+| Expecting a loop to return √1 = 1 | −1 after one lap | the loop circles 0 and cannot shrink |
+| Sliding the upper path straight onto the lower one | hits 0 at $`t = 1/2`$, distance 0.000000 | no disc of √z is centred at 0 |
+| Expecting log back at 0 after a loop | 6.283185i | each lap adds 2πi |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Three roads to every square root, and nothing imported holds the answer. Road one walks a chain of discs, summing the binomial series $`(1 + u)^{1/2}`$ in each, with no angles and no principal values. Road two runs Newton's method (repeat $`w \to (w + z/w)/2`$) from the last value at each step, so it follows the nearest root. Road three is the closed form $`e^{i\Theta/2}`$. The log is walked by its own series and checked against $`i\Theta`$. Asserts compare the roads on four routes, the six slide stages, and the cut-plane path against the principal √ built from the angle.
+The code takes three independent roads. Road one sums the binomial series $`(1 + u)^{1/2}`$ along disc chains; road two tracks roots by Newton's method $`w \to (w + z/w)/2`$; road three uses $`e^{i\Theta/2}`$. The log series is checked against $`i\Theta`$, alongside the six slide stages and the cut-plane path.
 
 ### Python
 
@@ -359,9 +357,9 @@ Lean proves the monodromy theorem for every slide, the square root round the cir
 
 - Chains are exactly as in The formula. Each piece of the path lies in its own disc, and each function agrees with the next on the overlap.
 - Along one path, two chains that start with the same function end with the same function.
-- Suppose $`\gamma_0`$ slides into $`\gamma_1`$ with ends held, and $`f`$ continues along every path of the slide. Then any chain along $`\gamma_0`$ and any chain along $`\gamma_1`$ end with the same function.
+- Suppose $`\gamma_0`$ slides into $`\gamma_1`$ with ends held, and $`f`$ continues along every path of the slide. Then any chain along $`\gamma_0`$ and any chain along $`\gamma_1`$ starting from $`f`$ end with the same function.
 - Take the circle $`e^{i\theta}`$ walked through a total angle $`\Theta`$, starting from the principal √ near 1. Then a chain carrying √z exists, and every such chain arrives with $`e^{i\Theta/2}`$.
-- Suppose $`U`$ is simply connected, $`z_0`$ lies in $`U`$, and $`f`$ continues along every path in $`U`$ from $`z_0`$. Then one holomorphic $`F`$ on $`U`$ exists, and every such chain ends with $`F`$.
+- Suppose $`U`$ is open and simply connected, $`z_0`$ lies in $`U`$, and $`f`$ continues along every path in $`U`$ from $`z_0`$. Then one holomorphic $`F`$ on $`U`$ exists, and every such chain ends with $`F`$.
 - The hand arithmetic holds exactly: i² = −1, (−i)² = −1, i × i = −1 and (−1) × (−1) = +1.
 
 The decimals, the six slide stages, the log, the cut-plane path and the figure are left to the Python and Rust checks.
@@ -937,39 +935,39 @@ example : (-1 : ℂ) * (-1) = 1 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Treating the square root as one function on the plane without 0.** Continuation is forced along each path, so it feels like it should give one answer at each point. It gives one answer per route up to sliding: i along the top half, −i along the bottom. The theorem only promises agreement for routes that slide into each other without crossing 0.
+> **Treating √z as one function on the plane without 0.** Continuation is forced along each path, yet depends on the route up to sliding: i along the top half, −i along the bottom. The theorem needs a slide that avoids 0.
 >
-> - **Recomputing instead of carrying.** The principal √ at the end of the lower path reads i, not −i: it jumped at the cut.
+> - **Recomputing instead of carrying.** The principal √ at the lower path's end is i, not −i.
 > - **Expecting a loop to come home.** One lap round 0 returns √1 as −1.
-> - **Sliding through the branch point.** The straight slide meets 0 at $`t = 1/2`$, distance 0.000000; a slide through a point with no disc proves nothing.
-> - **Expecting the log to cancel like the root.** Two laps bring √ back to 1, but log keeps climbing: 6.283185i, then 12.566371i.
+> - **Sliding through 0.** The straight slide hits 0 at $`t = 1/2`$, proving nothing.
+> - **Expecting log to cancel.** Log climbs by 2πi per lap: 6.283185i, then 12.566371i.
 
 ---
 
 ## Where you meet it in real life
 
-- **Software that follows a phase.** Option-pricing codes for the Heston model take the log of a quantity that winds round 0. Following it step by step, as a chain of discs does, avoids the jump of the principal log ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)).
-- **Defining branches.** Every branch of √z or log z on a cut plane exists because of Step 5: the cut plane has no holes.
-- **Solving equations by continuation.** Numerical path-tracking solvers follow each root of a polynomial system as a parameter moves. Two parameter routes round a point where roots collide can swap the roots, exactly as the half-circles swap i and −i.
+- **Option-pricing phase tracking.** Heston-model solvers take the log of a quantity winding round 0. Following it step by step avoids the principal log's jump ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)).
+- **Polynomial continuation solvers.** Path-tracking algorithms follow roots as parameters vary. Two routes round a collision point can swap roots, just as the half-circles swap i and −i.
 
 > **Say it back**
-> Analytic continuation along a path carries a function through a chain of overlapping discs, and the identity theorem leaves no choice at any step. A path close to another can reuse its chain, so the answer cannot change while the path slides. Hence routes that slide into each other, inside the region where continuation works, give the same answer. On a region with no holes every route agrees, and one function results. Round 0 the half-circles cannot slide into each other, so √z arrives as i or −i, a full lap turns √1 into −1, and log gains 2πi per lap.
+> Continuation along a path carries a function through overlapping discs with no choice at any step. A nearby path reuses the same chain, so the end function cannot change as the path slides with both ends held still through paths where continuation works. On a region with no holes where every path continues, every route from the same start agrees, giving one holomorphic function. Round 0 the half-circles cannot slide into each other, so √z arrives as i or −i, a full lap gives −1, and log gains 2πi.
 
 ---
 
 ## What this builds on
 
-- [Analytic continuation](04-analytic-continuation.md): chains of discs, and uniqueness on a fixed connected region, which Step 1 applies disc by disc.
-- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): the sign flip after one loop, followed continuously, which this card explains.
-- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): agreement on a small patch spreads over a connected region.
-- [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): the working meaning of a region with no holes.
+- [Analytic continuation](04-analytic-continuation.md): disc chains and uniqueness on a connected region.
+- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): the sign flip after one loop, explained here.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): agreement on a patch spreads across a connected region.
+- [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): working meaning of a region with no holes.
 
 ## Where this goes next
 
+- [Normal families](10-normal-families-montel-and-hurwitz.md): next on this shelf, turning uniform bounds on holomorphic functions into convergent sub-lists and stable zero counts.
 - [Contractible and simply connected](../../17-Topology/04-Homotopy/02-contractible-and-simply-connected.md): makes "no holes" exact, and proves the annulus and the plane without 0 have holes.
 - [Covering spaces](../../17-Topology/04-Homotopy/05-covering-spaces.md): continuing √z or log z is lifting a path through z ↦ z² or through the exponential, and Step 3 is homotopy lifting.
 
-The square root needs two copies of the plane to become one function, and the log infinitely many; how to build the surface that holds them is the question this card leaves open.
+The square root needs two copies of the plane to become one function, and the log infinitely many; how to build the surface that holds them leads into covering spaces, while the next card on this shelf turns to sequences of holomorphic functions.
 
 ---
 
