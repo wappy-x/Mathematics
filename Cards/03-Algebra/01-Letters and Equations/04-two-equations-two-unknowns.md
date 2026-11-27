@@ -156,7 +156,7 @@ Now suppose the slip had read 82.00 instead. The crossing number is still 0, but
 
 The two lines lie on top of one another, and every pair on that line fits both: (10.00, 7.00) does, and so does (13.00, 5.00). That is **infinitely many** answers. It is the same failure wearing the other face: a second fact that was never a second fact.
 
-So the crossing number sorts the three outcomes. Not zero: one answer. Zero, with the totals disagreeing: no answer, parallel lines. Zero, with the totals agreeing too: a whole line of answers, one line drawn twice.
+So the crossing number sorts the three outcomes. Not zero: one answer. Zero, with the totals disagreeing: no answer, parallel lines. Zero, with the totals agreeing too: infinitely many answers (a whole line, when not all four counts are zero).
 
 A fourth route: draw both lines and read the crossing off the paper — honest, fast, and only as accurate as your pencil. [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) runs this same elimination with the counts stacked in a grid, which is what you want with ten unknowns rather than two.
 
