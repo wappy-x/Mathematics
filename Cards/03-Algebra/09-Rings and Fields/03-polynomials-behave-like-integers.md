@@ -76,7 +76,7 @@ Long division makes one move, repeated: subtract the multiple of the divisor car
 
 Each subtraction kills the top term, so what is left has lower degree, and a count that falls cannot fall forever. The division halts when what is left has degree below the divisor's, or is nothing: f = q g + r.
 
-No other pair works, since two quotients would differ by a nonzero polynomial times g, of degree at least deg g — more than remainders can differ by.
+No other pair works, since two different quotients would make the remainders differ by a nonzero polynomial times g, of degree at least deg g — more than remainders can differ by.
 
 ### Step 1: the remainder keeps every common divisor
 
@@ -571,9 +571,9 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 - **Error-correcting codes.** A QR code's data are coefficients of a polynomial over a finite field (a field with finitely many numbers). Decoding is division with remainder and gcd work ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
-> Over a field, one polynomial divided by another leaves a quotient and a remainder of lower degree, which is all Euclid's algorithm ever needed. So the loop runs on polynomials: divide, keep the remainder, repeat. Two rounds on the sheet return x - 1, the factor the top and bottom of the fraction share.
+> Over a field, one polynomial divided by a nonzero one leaves a quotient and a remainder that is zero or of lower degree, which is all Euclid's algorithm ever needed. So the loop runs on polynomials: divide, keep the remainder, repeat. Two rounds on the sheet return x - 1, the factor the top and bottom of the fraction share.
 >
-> Each swap keeps every common divisor, so nothing is lost, and the answer is pinned once it is made monic. Irreducible polynomials are the primes here, and a factorisation into them never changes.
+> Each swap keeps every common divisor, so nothing is lost, and the answer is pinned once it is made monic. Irreducible polynomials are the primes here, and a factorisation into them never changes, up to order and nonzero constants.
 
 ---
 

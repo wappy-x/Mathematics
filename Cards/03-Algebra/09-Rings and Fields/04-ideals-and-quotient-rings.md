@@ -94,7 +94,7 @@ Small names first: 47 leaves 2, 23 leaves 5, and 2 × 5 = 10 leaves 1. Large nam
 
 ### Step 3: the clock is Z over 9Z
 
-Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $`R`$ the whole numbers, $`I`$ the multiples of 9. Every ideal of Z is the multiples of some n: its smallest positive member divides the rest.
+Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $`R`$ the whole numbers, $`I`$ the multiples of 9. Every ideal of Z is the multiples of some n: either {0} alone, or its smallest positive member divides the rest.
 
 ### Step 4: kernels are ideals
 
@@ -125,7 +125,7 @@ Write K for the kernel, and send the class a + K to its image.
 
 Collapsing promises nothing about division: in Z mod 9 the class 3 is not 0, yet 3 × 3 = 0, a pair of zero divisors. Two conditions govern them where multiplication order does not matter.
 
-An ideal is **prime** when a product landing inside forces a factor inside, and no zero divisors survive: an **integral domain**. It is **maximal** when no ideal fits between it and the ring, and every nonzero class then has a reciprocal: a **field** ([Fields](02-fields.md)).
+A proper ideal is **prime** when a product landing inside forces a factor inside, and no zero divisors survive: an **integral domain**. A proper ideal is **maximal** when no ideal fits strictly between it and the ring, and every nonzero class then has a reciprocal: a **field** ([Fields](02-fields.md)).
 
 | The ideal | The collapsed world | The ideal is |
 | --- | --- | --- |
@@ -493,7 +493,7 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 - **Geometry.** The polynomials vanishing on a set of points form an ideal: [Ideals and varieties](../../22-Algebraic%20geometry/01-Polynomial%20Systems/01-ideals-and-varieties.md).
 
 > **Say it back**
-> An ideal is a set inside a ring, closed under subtraction, that absorbs multiplication by the whole ring. Throw it away and the ring falls into classes, two members sharing a class when their difference was thrown away, and those classes add and multiply: the quotient ring.
+> An ideal is a nonempty set inside a ring, closed under subtraction, that absorbs multiplication by the whole ring. Throw it away and the ring falls into classes, two members sharing a class when their difference was thrown away, and those classes add and multiply: the quotient ring.
 >
 > The multiples of 9 give Z mod 9, which is why casting out nines checks the invoice: 47 and 23 become 2 and 5, and 2 × 5 = 10 is class 1, matching 1,081. Every ring map's kernel is an ideal, and collapsing by it leaves the image.
 

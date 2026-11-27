@@ -36,7 +36,7 @@ Same four symbols on both branches; only the arithmetic differs.
 
 A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0.
 
-A polynomial over GF(2) has coefficients 0 and 1 only. Its letter $`x`$ is a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). It is **irreducible** when it is not two smaller polynomials multiplied.
+A polynomial over GF(2) has coefficients 0 and 1 only. Its letter $`x`$ is a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). A polynomial of degree at least 1 is **irreducible** when it is not two smaller polynomials multiplied.
 
 Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($`p`$)[$`x`$] means polynomials in $`x`$ over GF($`p`$):
 
@@ -48,7 +48,7 @@ Discarding every multiple of one chosen polynomial and keeping remainders is wri
 \mathrm{GF}(4) = \mathrm{GF}(2)[x] \,/\, (x^2 + x + 1), \qquad a = x, \qquad a^2 = a + 1
 ```
 
-**Read it aloud:** polynomials with coefficients on a prime clock, the multiples of one that does not factor discarded, leave a field of the prime raised to that polynomial's degree.
+**Read it aloud:** polynomials with coefficients on a prime clock, the multiples of one of degree at least 1 that does not factor discarded, leave a field of the prime raised to that polynomial's degree.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ flowchart LR
     P2 --> P3["a^3 = 1, back to the start"]
 ```
 
-In GF(4) it is a: one loop over the three nonzero elements, which is how hardware multiplies by look-up. The other road skips the wrap: wherever $`x^4 + x`$ has all four of its roots, those roots are GF(4) already.
+In GF(4) it is a: one loop over the three nonzero elements, which is how hardware multiplies by look-up. The other road skips the wrap: wherever $`x^4 + x`$ over GF(2) has all four of its roots, those roots are GF(4) already.
 
 ---
 
@@ -373,7 +373,7 @@ Lean proves the card's four main facts in general: for every finite field, every
 - A finite field's size is always a prime raised to a positive whole power.
 - A clock is a field exactly when its number of hours is prime.
 - Wrap polynomials over the prime clock GF($`p`$) by a nonzero one of degree $`k`$. Exactly $`p^k`$ elements are left.
-- That wrap gives a field exactly when the polynomial does not factor.
+- That wrap gives a field exactly when the polynomial is irreducible (degree at least 1 and does not factor).
 - It also re-checks the card's numbers: the four-, seven- and twelve-hour clocks, the GF(4) table, and the missing sizes 6 and 10.
 
 Multiplying by shift and XOR, matching it against the coordinate rule, and Euclid's road to reciprocals are left to the Python and Rust checks.

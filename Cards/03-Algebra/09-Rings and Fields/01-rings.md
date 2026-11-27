@@ -66,7 +66,7 @@ Sums and products must also stay inside. The top line makes adding alone a group
 
 Three more words. A ring is **commutative** when $`ab = ba`$ always: the dial is, the matrices below are not.
 
-A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $`a`$ with $`ab = 0`$ for a nonzero $`b`$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
+A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $`a`$ with $`ab = 0`$ for a nonzero $`b`$, as 3 and 4 are; a commutative ring with 1 ≠ 0 and none is an **integral domain**.
 
 ### When it holds
 
@@ -92,7 +92,7 @@ Nothing above says that $`a`$ multiplied by 0 is 0. It follows: since 0 + 0 = 0,
 a0 = a(0+0) = a0+a0
 ```
 
-Adding the additive undo of $`a0`$ to both sides leaves $`0 = a0`$; the right-hand rule gives $`0a = 0`$. So 0 is never a unit.
+Adding the additive undo of $`a0`$ to both sides leaves $`0 = a0`$; the right-hand rule gives $`0a = 0`$. So 0 is never a unit when 1 ≠ 0.
 
 ### Step 2: a unit is never a zero divisor
 
@@ -104,7 +104,7 @@ a^{-1}(ab) = a^{-1}0
 
 The right side is 0 by Step 1; the left regroups into $`(a^{-1}a)b`$, which is $`b`$. So $`b = 0`$.
 
-That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero divisor has an undo. It also gives cancelling: $`ab = ac`$ makes $`a(b-c) = 0`$, and with no zero divisors and $`a`$ nonzero, $`b = c`$ — an integral domain cancels but cannot divide.
+That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero divisor has an undo. It also gives cancelling: $`ab = ac`$ makes $`a(b-c) = 0`$, and with no zero divisors and $`a`$ nonzero, $`b = c`$ — an integral domain cancels even when it cannot divide.
 
 ### Step 3: on a dial, every nonzero reading is a unit or a zero divisor
 
@@ -154,7 +154,7 @@ The dial, reading by reading.
 | the rest, each with a partner | 12 divided by the shared factor | 2 3 4 6 8 9 10, with **6 4 3 2 3 4 6** |
 | the whole numbers | 2 times each from −20 to 20 | never 1; units **−1 and 1** |
 
-Four readings of the twelve can be divided by; the other seven each pair off to 0.
+Four readings of the twelve can be divided by; the other seven nonzero ones each pair off to 0.
 
 ### What breaks if you drop a piece
 
@@ -373,7 +373,7 @@ The two outputs match line for line.
 
 Lean proves three facts for every dial size and every ring, and checks the card's dial, whole-number and matrix numbers.
 
-- On a dial of any size, every nonzero reading is a unit or a zero divisor, never both.
+- On a dial of any positive size, every nonzero reading is a unit or a zero divisor, never both.
 - In every ring, commutative or not, a unit is never a zero divisor.
 - On a dial of any size, a reading is a unit exactly when its greatest common divisor with the dial size is 1.
 - On the 12-hour dial, 3 × 4 = 0 and 5 × 5 = 1.

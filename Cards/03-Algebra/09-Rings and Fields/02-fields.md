@@ -14,9 +14,9 @@ Multiplying by 5 undoes multiplying by 3 here: 3 × 5 = 15, a fortnight and a da
 
 That 5 is the **reciprocal** of 3 on the week: the partner multiplying with it to give 1. Every nonzero day has one — 2 × 4 ≡ 1, 6 × 6 ≡ 1 — so "divide by 3" is legal here, meaning "multiply by 5".
 
-Add, subtract and multiply under the usual laws and a set is a ring ([Rings](01-rings.md)). A ring where multiplication commutes, ab = ba, and every nonzero element also has a reciprocal inside the set is a **field**. Shorten the cycle to six days and that fails: 2 × 3 ≡ 0 (mod 6), and 2 has no reciprocal.
+Add, subtract and multiply under the usual laws and a set is a ring ([Rings](01-rings.md)). A ring with 1 ≠ 0 where multiplication commutes, ab = ba, and every nonzero element also has a reciprocal inside the set is a **field**. Shorten the cycle to six days and that fails: 2 × 3 ≡ 0 (mod 6), and 2 has no reciprocal.
 
-**A field is a ring with two rules added — multiplication commutes, and every nonzero element has a reciprocal inside the set — which is what makes dividing legal, so ax = b with a nonzero has exactly one answer.**
+**A field is a ring with 1 ≠ 0 and two rules added — multiplication commutes, and every nonzero element has a reciprocal inside the set — which is what makes dividing legal, so ax = b with a nonzero has exactly one answer.**
 
 **What kind of fact this is:** a definition. Two theorems follow and are proved below: a nonzero coefficient gives one answer, and the n-day cycle is a field exactly when n is prime.
 
@@ -81,7 +81,7 @@ No second exists: multiply ax = b by $`a^{-1}`$ and regroup, and the left collap
 
 ### Step 2: zero can never be handed a reciprocal
 
-In any ring 0 times anything is 0, never 1 ([Rings](01-rings.md)). So "every nonzero element" is the most any set can promise. It is also why 0x ≡ 0 (mod 7) has all seven days as answers, and 0x ≡ 1 (mod 7) none.
+In any ring with 1 ≠ 0, 0 times anything is 0, never 1 ([Rings](01-rings.md)). So "every nonzero element" is the most any set can promise. It is also why 0x ≡ 0 (mod 7) has all seven days as answers, and 0x ≡ 1 (mod 7) none.
 
 ### Step 3: no zero divisors, so a composite cycle is out
 
@@ -125,7 +125,7 @@ Upper line: the nonzero labels, one less than the size; lower line, those with a
 <details>
 <summary>Field of fractions</summary>
 
-Pairs with a nonzero element underneath, counted equal when the cross-multiples agree and combined by the school rules for fractions, form a field: from the integers, the rationals. Every commutative ring with no zero divisors — an integral domain — sits inside a field this way.
+Pairs with a nonzero element underneath, counted equal when the cross-multiples agree and combined by the school rules for fractions, form a field: from the integers, the rationals. Every commutative ring with 1 ≠ 0 and no zero divisors — an integral domain — sits inside a field this way.
 
 </details>
 
@@ -485,7 +485,7 @@ example : (Finset.Icc 2 12).filter Nat.Prime = {2, 3, 5, 7, 11} := by decide
 - **Cryptography and error correction.** Key exchange runs modulo a prime, disc and QR codes in finite fields, where division is exact ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
-> A field is a ring where multiplication commutes and every nonzero element also has a reciprocal inside the set, so dividing is allowed.
+> A field is a ring with 1 ≠ 0 where multiplication commutes and every nonzero element also has a reciprocal inside the set, so dividing is allowed.
 >
 > That forces ax = b with a nonzero to have exactly one answer, b times the reciprocal of a: on the week 3x ≡ 4 (mod 7) gives x = 6, because 3 × 5 ≡ 1. Zero never gets a reciprocal, so 0x ≡ 0 has every answer, 0x ≡ 1 none. The n-day cycle is a field exactly when n is prime.
 
