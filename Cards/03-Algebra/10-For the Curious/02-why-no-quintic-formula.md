@@ -68,7 +68,7 @@ Collect the commutators of every pair in a group of shuffles and close them unde
 ### When it holds
 
 - **Radicals means that alphabet and no more.** Widen it and the wall moves: other functions write quintic roots, and halving a bracket writes them as decimals.
-- **The stock starts at the whole numbers and their ratios.** Hand the recipe the wanted root as a constant and the question empties out.
+- **The formula may start only from whole numbers and fractions.** If it may also use the wanted root as a given number, the question becomes trivial.
 - **One formula for all quintics fails, not every quintic.** A case is decided by the shuffles that equation's roots admit, not by its degree.
 
 ---
@@ -175,12 +175,12 @@ def comp(a, b): return tuple(a[j - 1] for j in b)       # do b first, then a
 def inv(a): return tuple(a.index(i) + 1 for i in range(1, len(a) + 1))
 def odd(a): return sum(1 for i in range(len(a))         # pairs out of order
                        for j in range(i + 1, len(a)) if a[i] > a[j]) % 2
-def bracket(a, b): return comp(comp(a, b), comp(inv(a), inv(b)))
+def commutator(a, b): return comp(comp(a, b), comp(inv(a), inv(b)))
 def close(gens, ident):                        # smallest group holding the gens
     G = set(gens) | {ident}
     while G != (bigger := G | {comp(a, b) for a in G for b in G}): G = bigger
     return sorted(G)
-def peel(G, ident): return close([bracket(a, b) for a in G for b in G], ident)
+def peel(G, ident): return close([commutator(a, b) for a in G for b in G], ident)
 def ladder(n, steps=4):                     # group sizes down the peeling chain
     ident, G, sizes = tuple(range(1, n + 1)), shuffles(n), []
     for _ in range(steps): sizes.append(len(G)); G = peel(G, ident)
@@ -189,9 +189,9 @@ def chain(sizes): return " -> ".join(str(v) for v in sizes)
 E5, S5 = tuple(range(1, 6)), shuffles(5)       # road two is the even shuffles,
 A5, first = [s for s in S5 if not odd(s)], peel(S5, E5)    # road one the commutators
 threes = [s for s in A5 if sum(1 for i, d in enumerate(s, 1) if d != i) == 3]
-commutators = {bracket(a, b) for a in A5 for b in A5}
+commutators = {commutator(a, b) for a in A5 for b in A5}
 built, s3, s4, s5 = close(threes, E5), ladder(3), ladder(4), ladder(5)
-lo_pair = next((a, b) for a in A5 for b in A5 if bracket(a, b) == (2, 3, 1, 4, 5))
+lo_pair = next((a, b) for a in A5 for b in A5 if commutator(a, b) == (2, 3, 1, 4, 5))
 print(f"shuffles of 3, 4 and 5 roots: {len(shuffles(3))}, {len(shuffles(4))} and {len(S5)}")
 print(f"peeled by commutators, 3 roots: {chain(s3)}; 4 roots: {chain(s4)} -- both reach 1")
 print(f"peeled by commutators, 5 roots: {chain(s5)} -- stuck at {s5[-1]}")
@@ -225,7 +225,7 @@ assert abs(hb - hn) < 1e-12 and abs(five(hb) - hb - 1) < 1e-12 and abs(five(eb) 
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-14 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 shuffles of 3, 4 and 5 roots: 6, 24 and 120
@@ -263,7 +263,7 @@ fn inv(a: &P) -> P { (1..=a.len() as i32).map(|i| a.iter().position(|&d| d == i)
 fn odd(a: &P) -> bool {                            // pairs standing out of order
     (0..a.len()).map(|i| (i + 1..a.len()).filter(|&j| a[i] > a[j]).count()).sum::<usize>() % 2 == 1
 }
-fn bracket(a: &P, b: &P) -> P { comp(&comp(a, b), &comp(&inv(a), &inv(b))) }
+fn commutator(a: &P, b: &P) -> P { comp(&comp(a, b), &comp(&inv(a), &inv(b))) }
 fn uniq(mut v: Vec<P>) -> Vec<P> { v.sort(); v.dedup(); v }
 fn close(gens: Vec<P>, ident: &P) -> Vec<P> {      // smallest group holding the gens
     let mut g = uniq([gens, vec![ident.clone()]].concat());
@@ -274,7 +274,7 @@ fn close(gens: Vec<P>, ident: &P) -> Vec<P> {      // smallest group holding the
     }
 }
 fn peel(g: &[P], ident: &P) -> Vec<P> {
-    close(g.iter().flat_map(|a| g.iter().map(move |b| bracket(a, b))).collect(), ident)
+    close(g.iter().flat_map(|a| g.iter().map(move |b| commutator(a, b))).collect(), ident)
 }
 fn ladder(n: i32) -> Vec<usize> {                  // group sizes down the peeling chain
     let (ident, mut g, mut sizes): (P, Vec<P>, Vec<usize>) = ((1..=n).collect(), uniq(shuffles(n)), vec![]);
@@ -299,10 +299,10 @@ fn main() {
     let (a5, first): (Vec<P>, Vec<P>) = (s5.iter().filter(|s| !odd(s)).cloned().collect(), peel(&s5, &e5));
     let threes: Vec<P> = a5.iter().filter(|s| s.iter().enumerate()
         .filter(|(i, &d)| d != *i as i32 + 1).count() == 3).cloned().collect();
-    let commutators = uniq(a5.iter().flat_map(|a| a5.iter().map(move |b| bracket(a, b))).collect());
+    let commutators = uniq(a5.iter().flat_map(|a| a5.iter().map(move |b| commutator(a, b))).collect());
     let (built, s3, s4, sizes) = (close(threes.clone(), &e5), ladder(3), ladder(4), ladder(5));
     let pair = a5.iter().flat_map(|a| a5.iter().map(move |b| (a, b)))
-        .find(|(a, b)| bracket(a, b) == vec![2, 3, 1, 4, 5]).unwrap();
+        .find(|(a, b)| commutator(a, b) == vec![2, 3, 1, 4, 5]).unwrap();
     let every_three = threes.iter().all(|t| commutators.contains(t));
     println!("shuffles of 3, 4 and 5 roots: {}, {} and {}", shuffles(3).len(), shuffles(4).len(), s5.len());
     println!("peeled by commutators, 3 roots: {}; 4 roots: {} -- both reach 1", chain(&s3), chain(&s4));
@@ -329,7 +329,7 @@ a peel stuck at {} instead of 1, and a root of {:.10} all the same", hard(eb), e
 }
 ```
 
-**Ran 2026-09-14 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 shuffles of 3, 4 and 5 roots: 6, 24 and 120
@@ -624,7 +624,7 @@ example : (Finset.univ.filter fun σ : Perm (Fin 5) => σ.support.card = 3).card
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. An assert halts the program on a wrong number.
-> - **Peel with the wrong bracket.** In `bracket`, return `comp(a, b)`: nothing shrinks, the peel of the 120 is 120, first assert halts it.
+> - **Peel with the wrong commutator.** In `commutator`, return `comp(a, b)`: nothing shrinks, the peel of the 120 is 120, first assert halts it.
 > - **Take one Newton step, not eight.** Set `steps` to 1 in `newton`: the root prints 1.1692228864 against the halvings' 1.1673039783, fourth assert halts it.
 > - **Peel one time fewer.** Set `steps` to 3 in `ladder`: four roots read 24 → 12 → 4 and look as jammed as five.
 
@@ -645,7 +645,7 @@ example : (Finset.univ.filter fun σ : Perm (Fin 5) => σ.support.card = 3).card
 
 - **Eigenvalues of a 5 by 5 matrix.** Roots of a degree-five polynomial: no radical formula gives them in general, and every library iterates ([Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 - **Computer algebra.** Asked to solve a quintic, a package returns radicals where the equation allows, else numbers or a name for the roots.
-- **Engineering and graphics.** Polynomial roots in control design, ray tracing and orbit work are found by bracketing and iteration. Abel–Ruffini sits with the other proved impossibilities, such as trisecting an angle: knowing a tool cannot do a job redirects the work.
+- **Engineering and graphics.** Polynomial roots in control design, ray tracing and orbit work are found by bracketing and iteration. Abel–Ruffini sits with the other proved impossibilities, such as trisecting an angle with compass and straightedge: knowing a tool cannot do a job redirects the work.
 
 > **Say it back**
 > Degrees 2, 3 and 4 have formulas built from plus, minus, times, divide and root-taking; degree 5 has none, and that is proved, not unknown. The reason is the shuffles of the roots: a radical formula would break them into order-free layers, and the 120 shuffles of five break to 60 and stop. The root is still there, 1.1673039783, found twice over.

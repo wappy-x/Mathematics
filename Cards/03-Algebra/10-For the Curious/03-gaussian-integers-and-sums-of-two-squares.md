@@ -102,13 +102,13 @@ But 3 cannot split: it sits at 3 + 0i, norm 9, so a split needs two factors of n
 
 ### Step 3: the norm rules a divisor out, never in
 
-To divide, multiply top and bottom by the conjugate of the bottom, turning the bottom into its own norm:
+To divide by a nonzero c + di, multiply top and bottom by its conjugate, turning the bottom into its own norm:
 
 ```math
 \frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}
 ```
 
-So c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the top. Dividing 5 by 2 + i gives numerators (10, -5) over 5: quotient 2 - i, exact.
+So a nonzero c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the top. Dividing 5 by 2 + i gives numerators (10, -5) over 5: quotient 2 - i, exact.
 
 Dividing 2 + i by 2 - i gives numerators (3, 4) over 5 — three fifths and four fifths, off the grid, though both norms are 5 and their ratio a clean 1. Failing the norm test finishes a candidate; passing it shows nothing.
 
@@ -386,10 +386,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's main facts for every whole number and every Gaussian integer, not just the examples.
+Lean proves the card's main facts for every non-negative whole number and every Gaussian integer, not just the examples.
 
-- A whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image.
-- A whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power. This includes the half the card leaves to [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
+- A non-negative whole number is a sum of two squares exactly when it is a Gaussian integer times its mirror image.
+- A non-negative whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power. This includes the half the card leaves to [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 - The norm of a + bi is a^2 + b^2, and the norm of a product is the product of the norms.
 - The only units are 1, -1, i and -i.
 - It also re-checks the card's numbers: 5, 13, 21, 45 and 65, the two divisions, and the norm grid.
@@ -568,7 +568,7 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): proves the half stated here, and counts representations.
 - [Pell's equation](04-pell-equation-and-root-two.md): the same norm trick with root 2 in place of i, where the units never run out.
-- [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): the same norm-and-split idea on a triangular grid of whole numbers, used to decide when 2 is a perfect cube on a prime clock.
+- [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): the same norm-and-split idea on a triangular grid of whole numbers, used to decide when 2 is a perfect cube in remainder arithmetic with a prime number of hours (a prime clock).
 
 This card says which whole numbers are sums of two squares; it cannot say why remainder 1 suffices, nor why 65 has two representations and 45 one. [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md) answers both.
 

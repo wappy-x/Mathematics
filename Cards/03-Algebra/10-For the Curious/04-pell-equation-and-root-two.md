@@ -14,7 +14,7 @@ And the near miss pays: 3/2 = 1.5000000, 17/12 = 1.4166667, 99/70 = 1.4142857, a
 
 **The pairs that leave exactly one counter over never stop coming: each is the pair before it multiplied by 3 + 2 root 2, and each is a sharper fraction for root 2.**
 
-**What kind of fact this is:** a theorem, proved in Why it works. Every power of 3 + 2 root 2 solves the equation, and nothing else does.
+**What kind of fact this is:** a theorem, proved in Why it works. Among positive whole-number pairs, every positive whole power of 3 + 2 root 2 solves the equation, and nothing else does.
 
 ### The picture: one multiplication, the whole list
 
@@ -110,7 +110,7 @@ An endless list could still have gaps; this one does not, because the multiplica
 
 On (17, 12): 51 - 48 = 3, 36 - 34 = 2, so (3, 2); on (3, 2) it gives (1, 0), the end of the line.
 
-Each backward step lands on a smaller solution, still above zero; whole numbers cannot shrink for ever, so the steps reach (1, 0), and read forwards that path is the chain.
+Each backward step past (3, 2) lands on a smaller solution, still above zero; whole numbers cannot shrink for ever, so the steps reach (3, 2) and then (1, 0), and read forwards that path is the chain.
 
 <details>
 <summary>Detailed proof</summary>
@@ -386,7 +386,7 @@ The two outputs match line for line.
 
 Lean proves the card's three main claims, for every pair of whole numbers above zero.
 
-- x^2 - 2y^2 = 1 holds exactly when x + y root 2 is a power of 3 + 2 root 2. Every power solves it, and nothing else does.
+- x^2 - 2y^2 = 1 holds exactly when x + y root 2 is a positive whole power of 3 + 2 root 2. Every positive whole power solves it, and nothing else above zero does.
 - The pairs never run out, and the step rule (3x + 4y, 2x + 3y) turns every solution into another.
 - Each fraction x/y sits above root 2 by less than 1 over (2 root 2 × y^2), and the next fraction sits closer.
 - The worked pairs, the backward step, the three mistakes and A4 paper come out exactly as shown.

@@ -14,7 +14,7 @@ One list of laws governs all three. Boolean algebra is that list stripped of sub
 
 An order hides underneath. "Is inside" orders sets, but only partly: neither {a, b} nor {b, c} is inside the other. Draw the eight subsets of {a, b, c}, an arrow per added member, and the picture is a cube. The meet of two sets is the highest set below both, the join the lowest above both; an order giving every pair both is a **lattice**.
 
-**Truth values, the subsets of a fixed collection and switch networks obey one list of laws; drawn as an order, a Boolean algebra is a lattice whose operations spread across each other, with a complement for every element.**
+**Truth values, the subsets of a fixed collection and switch networks obey one list of laws; drawn as an order, a Boolean algebra is a lattice with a bottom and a top whose operations spread across each other, with a complement for every element.**
 
 **What kind of fact this is:** a definition — both names stand for lists of laws, and Why it works shows the light rule, the subsets and the switches obeying them.
 
@@ -124,7 +124,7 @@ So every pair has both and the cube is a lattice, empty set at the bottom, {a, b
 
 A **lattice** is a partial order where every pair has a meet and a join. A **Boolean algebra** adds a bottom 0, a top 1, distributivity both ways, and for every element a complement meeting it at 0 and joining it at 1.
 
-Truth values are the smallest case, a universe's subsets the everyday one. Order the divisors of 12 by which divides which: meet is the greatest common divisor, join is the smallest common multiple, and 2 and 6 have no complement.
+Truth values are the smallest case with 0 ≠ 1, a universe's subsets the everyday one. Order the divisors of 12 by which divides which: meet is the greatest common divisor, join is the smallest common multiple, and 2 and 6 have no complement.
 
 <details>
 <summary>The same algebra written as a ring</summary>

@@ -14,7 +14,7 @@ fn inv(a: &P) -> P { (1..=a.len() as i32).map(|i| a.iter().position(|&d| d == i)
 fn odd(a: &P) -> bool {                            // pairs standing out of order
     (0..a.len()).map(|i| (i + 1..a.len()).filter(|&j| a[i] > a[j]).count()).sum::<usize>() % 2 == 1
 }
-fn bracket(a: &P, b: &P) -> P { comp(&comp(a, b), &comp(&inv(a), &inv(b))) }
+fn commutator(a: &P, b: &P) -> P { comp(&comp(a, b), &comp(&inv(a), &inv(b))) }
 fn uniq(mut v: Vec<P>) -> Vec<P> { v.sort(); v.dedup(); v }
 fn close(gens: Vec<P>, ident: &P) -> Vec<P> {      // smallest group holding the gens
     let mut g = uniq([gens, vec![ident.clone()]].concat());
@@ -25,7 +25,7 @@ fn close(gens: Vec<P>, ident: &P) -> Vec<P> {      // smallest group holding the
     }
 }
 fn peel(g: &[P], ident: &P) -> Vec<P> {
-    close(g.iter().flat_map(|a| g.iter().map(move |b| bracket(a, b))).collect(), ident)
+    close(g.iter().flat_map(|a| g.iter().map(move |b| commutator(a, b))).collect(), ident)
 }
 fn ladder(n: i32) -> Vec<usize> {                  // group sizes down the peeling chain
     let (ident, mut g, mut sizes): (P, Vec<P>, Vec<usize>) = ((1..=n).collect(), uniq(shuffles(n)), vec![]);
@@ -50,10 +50,10 @@ fn main() {
     let (a5, first): (Vec<P>, Vec<P>) = (s5.iter().filter(|s| !odd(s)).cloned().collect(), peel(&s5, &e5));
     let threes: Vec<P> = a5.iter().filter(|s| s.iter().enumerate()
         .filter(|(i, &d)| d != *i as i32 + 1).count() == 3).cloned().collect();
-    let commutators = uniq(a5.iter().flat_map(|a| a5.iter().map(move |b| bracket(a, b))).collect());
+    let commutators = uniq(a5.iter().flat_map(|a| a5.iter().map(move |b| commutator(a, b))).collect());
     let (built, s3, s4, sizes) = (close(threes.clone(), &e5), ladder(3), ladder(4), ladder(5));
     let pair = a5.iter().flat_map(|a| a5.iter().map(move |b| (a, b)))
-        .find(|(a, b)| bracket(a, b) == vec![2, 3, 1, 4, 5]).unwrap();
+        .find(|(a, b)| commutator(a, b) == vec![2, 3, 1, 4, 5]).unwrap();
     let every_three = threes.iter().all(|t| commutators.contains(t));
     println!("shuffles of 3, 4 and 5 roots: {}, {} and {}", shuffles(3).len(), shuffles(4).len(), s5.len());
     println!("peeled by commutators, 3 roots: {}; 4 roots: {} -- both reach 1", chain(&s3), chain(&s4));

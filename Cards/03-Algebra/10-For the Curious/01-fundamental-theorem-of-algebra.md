@@ -131,7 +131,7 @@ The two i terms cancel and -i × i becomes +1. Restore the 5: 5(t - 2 - i)(t - 2
 
 The same square settles the physical question with no i at all: the height is 20 - 5(t - 2)^2, and a real square is never negative, so the height never passes 20 metres — 5.00 metres short of the target.
 
-The roots share their real part and carry opposite i parts: a **conjugate pair**. Real coefficients force that pairing, and it is why the brackets multiplied back with no i in sight.
+The roots share their real part and carry opposite i parts: a **conjugate pair**. Real coefficients force every non-real root into such a pair, and it is why the brackets multiplied back with no i in sight.
 
 ---
 
@@ -510,7 +510,7 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 - **Whole-number questions.** Which whole numbers are a sum of two squares is settled by factoring inside the complex numbers: [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md).
 
 > **Say it back**
-> A football kicked at 20 metres a second never reaches 25, so 5t^2 - 20t + 25 = 0 has no answer on a stopwatch: its discriminant is -100. Admit i, whose square is -1, and the answers are 2 + i and 2 - i; multiply their brackets back and the i cancels. This always happens: one complex root exists, and peeling one bracket per root leaves exactly n brackets, repeats included.
+> A football kicked at 20 metres a second never reaches 25, so 5t^2 - 20t + 25 = 0 has no answer on a stopwatch: its discriminant is -100. Admit i, whose square is -1, and the answers are 2 + i and 2 - i; multiply their brackets back and the i cancels. For any polynomial of degree n ≥ 1 with complex coefficients, this always happens: one complex root exists, and peeling one bracket per root leaves exactly n brackets, repeats included.
 
 ---
 

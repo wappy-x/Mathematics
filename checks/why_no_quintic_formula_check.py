@@ -10,12 +10,12 @@ def comp(a, b): return tuple(a[j - 1] for j in b)       # do b first, then a
 def inv(a): return tuple(a.index(i) + 1 for i in range(1, len(a) + 1))
 def odd(a): return sum(1 for i in range(len(a))         # pairs out of order
                        for j in range(i + 1, len(a)) if a[i] > a[j]) % 2
-def bracket(a, b): return comp(comp(a, b), comp(inv(a), inv(b)))
+def commutator(a, b): return comp(comp(a, b), comp(inv(a), inv(b)))
 def close(gens, ident):                        # smallest group holding the gens
     G = set(gens) | {ident}
     while G != (bigger := G | {comp(a, b) for a in G for b in G}): G = bigger
     return sorted(G)
-def peel(G, ident): return close([bracket(a, b) for a in G for b in G], ident)
+def peel(G, ident): return close([commutator(a, b) for a in G for b in G], ident)
 def ladder(n, steps=4):                     # group sizes down the peeling chain
     ident, G, sizes = tuple(range(1, n + 1)), shuffles(n), []
     for _ in range(steps): sizes.append(len(G)); G = peel(G, ident)
@@ -24,9 +24,9 @@ def chain(sizes): return " -> ".join(str(v) for v in sizes)
 E5, S5 = tuple(range(1, 6)), shuffles(5)       # road two is the even shuffles,
 A5, first = [s for s in S5 if not odd(s)], peel(S5, E5)    # road one the commutators
 threes = [s for s in A5 if sum(1 for i, d in enumerate(s, 1) if d != i) == 3]
-commutators = {bracket(a, b) for a in A5 for b in A5}
+commutators = {commutator(a, b) for a in A5 for b in A5}
 built, s3, s4, s5 = close(threes, E5), ladder(3), ladder(4), ladder(5)
-lo_pair = next((a, b) for a in A5 for b in A5 if bracket(a, b) == (2, 3, 1, 4, 5))
+lo_pair = next((a, b) for a in A5 for b in A5 if commutator(a, b) == (2, 3, 1, 4, 5))
 print(f"shuffles of 3, 4 and 5 roots: {len(shuffles(3))}, {len(shuffles(4))} and {len(S5)}")
 print(f"peeled by commutators, 3 roots: {chain(s3)}; 4 roots: {chain(s4)} -- both reach 1")
 print(f"peeled by commutators, 5 roots: {chain(s5)} -- stuck at {s5[-1]}")
