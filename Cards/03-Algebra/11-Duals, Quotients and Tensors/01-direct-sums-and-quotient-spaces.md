@@ -499,12 +499,12 @@ example : ((Finset.range 5 ×ˢ Finset.range 5 ×ˢ Finset.range 5).image
 
 ## Where you meet it in real life
 
-- **Solving linear equations.** The solutions of a linear system are one solution plus every solution with zeros on the right: one coset of the kernel, like the $16 baskets.
+- **Solving linear equations.** When a linear system is solvable, its solutions are one plus every zero-right-hand solution: one coset of the kernel, like the $16 baskets.
 - **Error-correcting codes.** A receiver finds a garbled message's coset of the code from a short check, the syndrome; one table of fixes, one per coset, covers every message.
 - **Statistics.** Measurements split as a direct sum: the mean, repeated, plus deviations adding to zero. Analysis of variance rests on it.
 
 > **Say it back**
-> A direct sum splits every vector into one piece from each part, in exactly one way; the parts share only zero. A quotient blurs a subspace to a point: its members are parallel copies of that subspace. Its dimension is the whole space's minus the subspace's, so blurring the $0 plane leaves a line of bills. Blurring what a linear map ignores leaves a copy of what it reaches.
+> A direct sum splits every vector into one piece from each part, in exactly one way; the parts share only zero. A quotient blurs a subspace to a point: its members are parallel copies of that subspace. In finite dimension, its dimension is the whole's minus the subspace's, so blurring the $0 plane leaves a line of bills. Blurring what a linear map ignores leaves a copy of what it reaches.
 
 ---
 

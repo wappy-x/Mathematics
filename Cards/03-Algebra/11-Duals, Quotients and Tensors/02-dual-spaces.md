@@ -16,7 +16,7 @@ Price lists can be added and scaled too: a $1 rise on milk adds (0, 1, 0). So th
 - **Bundle prices.** A hamper is a fixed bundle of items. Item prices become hamper prices through the **transpose** of the hamper matrix (rows and columns swapped).
 - **Row rank equals column rank.** Every matrix has as many independent rows as independent columns. Hidden price changes prove it.
 
-**The linear readings of a space form a space of the same size; a basis hands over one reading per basis vector, and a linear map pulls readings back through its transpose.**
+**The linear readings of a finite-dimensional space form a space of the same size; a finite basis hands over one reading per basis vector, and a linear map pulls readings back through its transpose.**
 
 **What kind of fact this is:** definitions carrying four theorems, each proved in Why it works.
 
@@ -152,7 +152,7 @@ So the rows carry $`r`$ independent directions, like the columns. For the hamper
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the house bill | (3, 2, 4) · (2, 3, 1) = 6 + 6 + 4 | $16 |
+| the weekly shop's bill | (3, 2, 4) · (2, 3, 1) = 6 + 6 + 4 | $16 |
 | $`f_1`$ from the bundles | 2x + y = 1 and x + y = 0 | **(1, −1)** |
 | $`f_2`$ from the bundles | 2x + y = 0 and x + y = 1 | **(−1, 2)** |
 | check the readings | (1, −1) · (2, 1) = 1, (1, −1) · (1, 1) = 0, and so on | 1, 0, 0, 1 |
@@ -229,7 +229,7 @@ for _ in range(3600):                             # 300 matrices, 3 by 4, entrie
     vals.append(seed // 65536 % 2)
 batch = [[vals[12 * k + 4 * i:12 * k + 4 * i + 4] for i in range(3)] for k in range(300)]
 same = all(rank(m) == rank(transpose(m)) for m in batch)
-print(f"house: price list (3, 2, 4) reads basket (2, 3, 1) as ${bill((3, 2, 4), (2, 3, 1))}")
+print(f"the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as ${bill((3, 2, 4), (2, 3, 1))}")
 print(f"dual basis by inverting: {f}; by search: {dual_by_search(b1, b2)}")
 print(f"readings f_i(b_j): {readings}")
 print(f"price list {p} = {bill(p, b1)} f1 + {bill(p, b2)} f2 -> {p_back}")
@@ -249,10 +249,10 @@ assert rank(hidden) == len(q) - rank(A) and same                # annihilator si
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-house: price list (3, 2, 4) reads basket (2, 3, 1) as $16
+the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as $16
 dual basis by inverting: [(1, -1), (-1, 2)]; by search: [(1, -1), (-1, 2)]
 readings f_i(b_j): [[1, 0], [0, 1]]
 price list (3, 2) = 8 f1 + 5 f2 -> (3, 2)
@@ -334,7 +334,7 @@ fn main() {
     let mut seen: Vec<usize> = batch.iter().map(|m| rank(m)).collect();
     seen.sort(); seen.dedup();
     let hid: Vec<(i64, i64, i64)> = hidden.iter().map(|h| (h[0], h[1], h[2])).collect();
-    println!("house: price list (3, 2, 4) reads basket (2, 3, 1) as ${}", bill(&[3, 2, 4], &[2, 3, 1]));
+    println!("the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as ${}", bill(&[3, 2, 4], &[2, 3, 1]));
     println!("dual basis by inverting: {:?}; by search: {:?}", f, dual_by_search(b1, b2));
     println!("readings f_i(b_j): {:?}", readings);
     println!("price list {:?} = {} f1 + {} f2 -> {:?}", p, s1, s2, p_back);
@@ -355,10 +355,10 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-house: price list (3, 2, 4) reads basket (2, 3, 1) as $16
+the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as $16
 dual basis by inverting: [(1, -1), (-1, 2)]; by search: [(1, -1), (-1, 2)]
 readings f_i(b_j): [[1, 0], [0, 1]]
 price list (3, 2) = 8 f1 + 5 f2 -> (3, 2)
@@ -382,7 +382,7 @@ Lean proves the card's four theorems in every finite size, and checks the shop n
 - Take a linear map $`T`$ with matrix $`A`$. Then its dual map $`T^*`$ has matrix $`A^{\mathsf T}`$ in the two dual bases.
 - Take a subspace $`U`$ of a space of dimension $`n`$. Then its annihilator $`U^0`$ has dimension $`n - \dim U`$.
 - Every matrix, of any size, has row rank equal to column rank.
-- The house bill is $16, and the counters (1, −1) and (−1, 2) read the bundles as 1, 0, 0, 1.
+- The weekly shop's bill is $16, and the counters (1, −1) and (−1, 2) read the bundles as 1, 0, 0, 1.
 - The counters rebuild the price list (3, 2) and give the basket (2, 3) coordinates −1 and 4.
 - Hamper prices are (16, 11), both roads bill the order (1, 2) at $38, and the price change (−2, 1, 1) stays hidden.
 - The three mistakes, the Try changing prices (1, 3, 5) and the failed basis (2, 1), (4, 2) come out as on the card.
@@ -450,7 +450,7 @@ theorem annihilator_dim_and_row_rank_eq_column_rank {K V m n : Type*} [Field K]
     omega
   · rw [← Matrix.rank_eq_finrank_span_row, ← Matrix.rank_eq_finrank_span_cols]
 
--- The house bill: the price list (3, 2, 4) reads the basket (2, 3, 1) as $16.
+-- The weekly shop's bill: the price list (3, 2, 4) reads the basket (2, 3, 1) as $16.
 example : (![3, 2, 4] : Fin 3 → ℤ) ⬝ᵥ ![2, 3, 1] = 16 := by simp [dotProduct, Fin.sum_univ_succ]
 -- Dual basis of the bundles (2, 1) and (1, 1): (1, -1) and (-1, 2) read 1, 0, 0, 1.
 example : (![1, -1] : Fin 2 → ℤ) ⬝ᵥ ![2, 1] = 1 ∧ (![1, -1] : Fin 2 → ℤ) ⬝ᵥ ![1, 1] = 0 ∧
@@ -531,7 +531,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 - **Differentials.** A function's differential reads a direction of travel and returns the rate of change that way: a covector. The gradient arrow is made from it only once a way to measure lengths is chosen ([Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md)).
 
 > **Say it back**
-> A linear reading turns a vector into a number, as a price list turns a basket into a bill. The readings form the dual space, of the same dimension. A basis gives a dual basis of counters, each depending on the whole basis. A linear map pulls readings back through its transpose. Counting the readings blind to a subspace proves that rows and columns have the same rank.
+> A linear reading turns a vector into a number, as a price list turns a basket into a bill. The readings form the dual space, of the same dimension when the space is finite-dimensional. A finite basis gives a dual basis of counters, each depending on the whole basis. A linear map pulls readings back through its transpose. Counting the readings blind to a subspace proves that rows and columns have the same rank.
 
 ---
 
@@ -548,7 +548,7 @@ example : ¬ ∃ f : Fin 2 → ℚ, f ⬝ᵥ ![2, 1] = 1 ∧ f ⬝ᵥ ![4, 2] = 
 - [Dual spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/09-dual-spaces-and-lp-duality.md) in functional analysis: the continuous readings of infinite-dimensional spaces.
 - [Reflexive spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/10-reflexive-spaces-and-the-second-dual.md): the dual of the dual.
 - [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): a dual space at every point of a curved space.
-- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): the modules that keep Hom and tensor exact.
+- [Projective, injective and flat](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/02-projective-injective-and-flat-modules.md): when scalars come from a ring instead of a field, which spaces still behave well under linear maps and tensor products.
 
 A linear reading takes one vector and returns a number. A bill can also read a pair, such as a week and a shopping list, linearly in each. What space turns such a reading of pairs into a reading of one thing is the question [Tensor products](03-tensor-products.md) answers next.
 

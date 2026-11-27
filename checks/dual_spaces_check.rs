@@ -59,7 +59,7 @@ fn main() {
     let mut seen: Vec<usize> = batch.iter().map(|m| rank(m)).collect();
     seen.sort(); seen.dedup();
     let hid: Vec<(i64, i64, i64)> = hidden.iter().map(|h| (h[0], h[1], h[2])).collect();
-    println!("house: price list (3, 2, 4) reads basket (2, 3, 1) as ${}", bill(&[3, 2, 4], &[2, 3, 1]));
+    println!("the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as ${}", bill(&[3, 2, 4], &[2, 3, 1]));
     println!("dual basis by inverting: {:?}; by search: {:?}", f, dual_by_search(b1, b2));
     println!("readings f_i(b_j): {:?}", readings);
     println!("price list {:?} = {} f1 + {} f2 -> {:?}", p, s1, s2, p_back);

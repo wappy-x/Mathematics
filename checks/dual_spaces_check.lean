@@ -58,7 +58,7 @@ theorem annihilator_dim_and_row_rank_eq_column_rank {K V m n : Type*} [Field K]
     omega
   · rw [← Matrix.rank_eq_finrank_span_row, ← Matrix.rank_eq_finrank_span_cols]
 
--- The house bill: the price list (3, 2, 4) reads the basket (2, 3, 1) as $16.
+-- The weekly shop's bill: the price list (3, 2, 4) reads the basket (2, 3, 1) as $16.
 example : (![3, 2, 4] : Fin 3 → ℤ) ⬝ᵥ ![2, 3, 1] = 16 := by simp [dotProduct, Fin.sum_univ_succ]
 -- Dual basis of the bundles (2, 1) and (1, 1): (1, -1) and (-1, 2) read 1, 0, 0, 1.
 example : (![1, -1] : Fin 2 → ℤ) ⬝ᵥ ![2, 1] = 1 ∧ (![1, -1] : Fin 2 → ℤ) ⬝ᵥ ![1, 1] = 0 ∧

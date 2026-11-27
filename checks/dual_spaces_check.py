@@ -40,7 +40,7 @@ for _ in range(3600):                             # 300 matrices, 3 by 4, entrie
     vals.append(seed // 65536 % 2)
 batch = [[vals[12 * k + 4 * i:12 * k + 4 * i + 4] for i in range(3)] for k in range(300)]
 same = all(rank(m) == rank(transpose(m)) for m in batch)
-print(f"house: price list (3, 2, 4) reads basket (2, 3, 1) as ${bill((3, 2, 4), (2, 3, 1))}")
+print(f"the weekly shop's bill: price list (3, 2, 4) reads basket (2, 3, 1) as ${bill((3, 2, 4), (2, 3, 1))}")
 print(f"dual basis by inverting: {f}; by search: {dual_by_search(b1, b2)}")
 print(f"readings f_i(b_j): {readings}")
 print(f"price list {p} = {bill(p, b1)} f1 + {bill(p, b2)} f2 -> {p_back}")

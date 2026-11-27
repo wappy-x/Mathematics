@@ -84,7 +84,7 @@ Maps on both sides act through the **Kronecker product**, and rank decides simpl
 ### When it holds
 
 - **The rule is linear in each slot.** A flat $1 delivery fee per order is not: it charges for the empty list, and no linear rule on tables matches it.
-- **Factors come back only up to scale.** (2, 4) ⊗ (1.5, 0, 0.5) is the same table as (1, 2) ⊗ (3, 0, 1).
+- **For a nonzero table, factors come back only up to scale.** (2, 4) ⊗ (1.5, 0, 0.5) is the same table as (1, 2) ⊗ (3, 0, 1).
 - **Factor order is kept.** W ⊗ V holds the 3-by-2 transposes, and B ⊗ A is a different matrix from A ⊗ B.
 
 ---
@@ -384,7 +384,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the card's three general facts for spaces of every size, and checks the shop's numbers exactly.
+Lean proves the card's three general facts for spaces of every finite size, and checks the shop's numbers exactly.
 
 - The rank test: a table is a single product of two vectors exactly when its rank is at most 1.
 - The universal property: every rule on pairs that is linear in each slot is a linear rule on tables, in exactly one way.
@@ -506,7 +506,7 @@ example : vecMulVec ![(1 : ℤ), 1] ![1, 1, 0] = !![1, 1, 0; 1, 1, 0] ∧
 ## The usual mistake
 
 > [!warning]
-> **Treating every tensor as a pair.** A tensor is a whole table. Only rank-1 tables are pairs; the rest are sums of them. $`S`$ has rank 2, and the search finds 0 pairs that make it.
+> **Treating every tensor as a pair.** A tensor is a whole table. Only tables of rank at most 1 are pairs; the rest are sums of them. $`S`$ has rank 2, and the search finds 0 pairs that make it.
 >
 > - **Adding dimensions.** 2 + 3 = 5 is the direct sum; the tensor product has 6.
 > - **Expanding a product of sums too early.** $`(e_1 + e_2) \otimes (f_1 + f_2)`$ is `[[1, 1, 0], [1, 1, 0]]`, not $`S`$.
