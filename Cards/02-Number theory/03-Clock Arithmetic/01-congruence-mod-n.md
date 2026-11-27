@@ -358,7 +358,7 @@ example : ((List.range 15).map fun i : ℕ => ((96 + i : ℕ) : ℤ) % 12) =
 - [Residue classes](03-residue-classes.md): the numbers sharing a leftover, in buckets with their own small tables.
 - [The modular inverse](04-modular-inverse.md): dividing on a clock, which needs a number sharing no factor with the modulus ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
 - [Solving a x ≡ b (mod n)](05-linear-congruences.md): unknown hours, solved on a clock.
-- [Steiner triple systems](../../04-Combinatorics%20and%20graphs/16-Designs/02-steiner-triple-systems.md): triples covering every pair exactly once, which exist exactly when v leaves remainder 1 or 3 on division by 6.
+- [Steiner triple systems](../../04-Combinatorics%20and%20graphs/16-Designs/02-steiner-triple-systems.md): triples of points covering every pair of points exactly once, which exist exactly when the number of points leaves remainder 1 or 3 on division by 6.
 - [Decidable theories](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/14-decidable-theories-presburger-and-tarski.md): Presburger's method decides whole-number questions with plus but no times, and its tests "m divides t" are congruences in other words.
 
 This card compares two numbers but does no sums with them: since 109 ≡ 1 (mod 12), can 1 stand in for 109 inside an addition or a multiplication?
