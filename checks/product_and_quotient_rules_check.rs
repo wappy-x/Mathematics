@@ -40,7 +40,7 @@ fn main() {
     let quot = (rate(t) * q(t) - rev(t) * DQ) / (q(t) * q(t));   // price = revenue / bags
     let back = dquot(&price_back, t, 0.001);
     println!("quotient by hand: 36*184 = {:.0}, 2576*(-4) = {:.0}, top {:.0}, 184^2 = {:.0}; bags reach 0 at week {:.0}",
-             rate(t) * q(t), rev(t) * DQ, rate(t) * q(t) - rev(t) * DQ, q(t) * q(t), -q(0.0) / DQ);
+             rate(t) * q(t), rev(t) * DQ, rate(t) * q(t) - rev(t) * DQ, q(t) * q(t), q(0.0) / (q(0.0) - q(1.0)));
     println!("quotient rule on revenue/bags: {:.6}; quotient h = 0.001: {:.6}", quot, back);
     let cube = |x: f64| pw(x, 3);
     println!("cube at 2: rule {:.6}, repeated products {:.6}, h = 0.001: {:.6}",

@@ -14,7 +14,7 @@ No formula "y equals something in x" was needed. The shore is a **relation**, a 
 
 The post's compass bearing, clockwise from north, is the angle whose sine is 3/5: arcsin 0.6, arcsin being the undo of sine. Its rate at 0.6, 1.25 radians per unit of sine, is read off sine's own rate: **inverse differentiation**.
 
-**When x and y are tied by an equation, differentiate both sides and solve for the slope; when a function is undone, the undo's rate is one over the original rate, read at the matching input.**
+**Where an equation tying x and y gives y as a differentiable function of x, differentiate both sides and solve for the slope; when a one-to-one, continuous function on an open interval is undone, the undo's rate is one over the original rate at the matching input, provided that rate is not zero.**
 
 **What kind of fact this is:** the inverse rule is a theorem, proved on this card in Why it works; implicit differentiation is a method, resting on the chain rule.
 
@@ -28,7 +28,7 @@ To scale, 20 pixels per metre. Dashed: north; θ: the post's bearing, 36.87°. T
 
 ## The formula
 
-Recall from [The derivative](01-the-derivative.md): $`y'`$, or dy/dx, is the rate of y per unit of x. Treat y as a function of x along the northern shore and differentiate both sides:
+Recall from [The derivative](01-the-derivative.md): $`y'`$, or dy/dx, is the rate of y per unit of x. Treat y as a differentiable function of x along the northern shore and differentiate both sides:
 
 ```math
 x^2 + y^2 = 25 \quad\Longrightarrow\quad 2x + 2y\,y' = 0 \quad\Longrightarrow\quad y' = -\frac{x}{y} \quad (y \neq 0)
@@ -36,7 +36,7 @@ x^2 + y^2 = 25 \quad\Longrightarrow\quad 2x + 2y\,y' = 0 \quad\Longrightarrow\qu
 
 **Read it aloud:** the shore's slope is minus the eastward distance over the northward one: −0.75 m north per m east at the post.
 
-For the inverse rule, recall from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $`f^{-1}`$ is the undo of f, not one over f. Call it g, with b = f(a).
+For the inverse rule, recall from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $`f^{-1}`$ is the undo of f, not one over f. Call it g, with b = f(a). When $`f`$ is one-to-one and continuous on an open interval around $`a`$, with a nonzero derivative $`f'(a)`$:
 
 ```math
 g'(b) = \frac{1}{f'(a)} = \frac{1}{f'(g(b))} \qquad (f'(a) \neq 0)
@@ -50,7 +50,7 @@ For arcsin, f is sine on the window from −π/2 to π/2, and sine's rate is cos
 \frac{d}{du}\arcsin u = \frac{1}{\cos(\arcsin u)} = \frac{1}{\sqrt{1 - u^2}} \qquad (-1 < u < 1)
 ```
 
-On tangent, whose rate is 1 + tan^2, the rule gives arctan the rate 1/(1 + u^2): 0.5 at u = 1.
+On tangent on $`(-\pi/2, \pi/2)`$, whose rate is 1 + tan^2, the rule gives arctan the rate 1/(1 + u^2) for every real $`u`$: 0.5 at u = 1.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ On tangent, whose rate is 1 + tan^2, the rule gives arctan the rate 1/(1 + u^2):
 
 - **A differentiable branch exists near the point.** Here it is the graph y = √(25 − x^2). Differentiating an equation says what the slope must be *if* a branch exists; it does not make one.
 - **The coefficient of y' is not zero.** At (5, 0), 2y is 0: the tangent is vertical, and dx/dy, x's rate per unit of y, is 0. For the crossing lines y^2 = x^2, the origin gives 0 = 0: two slopes, 1 and −1.
-- **The function undone is one-to-one and continuous on an interval.** Sine qualifies on −π/2 to π/2; outside it, arcsin returns a different angle.
+- **The function undone is one-to-one and continuous on an open interval around a.** Sine qualifies on −π/2 to π/2; outside it, arcsin returns a different angle.
 - **The original rate is not zero at the matching input.** Cubing has rate 0 at 0; the cube root's quotients there run 100, then 10000: no finite rate.
 
 ---
@@ -86,7 +86,7 @@ At the post: 6 + 8y' = 0, so y' = −0.75. At (3, −4), on the southern shore, 
 
 ### Step 2: two more roads to the same slope
 
-Differentiate the branch directly: y = √(25 − x^2) has rate −x/√(25 − x^2) by the chain rule, −3/4 at x = 3.
+Differentiate the branch directly: y = √(25 − x^2) has rate −x/√(25 − x^2) by the chain rule (for $`-5 < x < 5`$), −3/4 at x = 3.
 
 Or use geometry. The radius to the post has slope 4/3 = 1.333333. A tangent meets the radius at a right angle, and perpendicular slopes multiply to −1, so the tangent's slope is −3/4.
 
@@ -100,7 +100,7 @@ Take a small nonzero output step k from b = 0.6, and let h = g(b + k) − a be t
 \frac{g(b + k) - g(b)}{k} = \frac{h}{f(a + h) - f(a)} = \frac{1}{\,(f(a + h) - f(a))/h\,}
 ```
 
-Does h shrink when k does? Yes: the undo of a continuous, steadily rising function on an interval is continuous (proved below). So the bottom heads for f'(a), not 0, and the whole for 1/f'(a).
+Does h shrink when k does? Yes: the undo of a continuous, steadily rising (or falling) function on an open interval is continuous (proved below). So the bottom heads for f'(a), not 0, and the whole for 1/f'(a).
 
 The tolerance game, with numbers. The arcsin quotient misses 1.25 by 0.068964 at k = 0.1, 0.005948 at 0.01, 0.000587 at 0.001 and 0.000059 at 0.0001. To land within 0.001 of 1.25, any positive k under 0.00170 will do.
 
@@ -119,7 +119,7 @@ Let f be continuous and strictly increasing on an open interval I containing a, 
 
 Let θ = arcsin u, so sin θ = u with θ between −π/2 and π/2. The rule gives 1/cos θ. On that window cosine is never negative, so cos θ = +√(1 − u^2), from cos^2 θ + sin^2 θ = 1. At u = 0.6: cos θ = 0.8, rate 1.25. At u = ±1, cos θ = 0: arcsin exists there, its rate does not.
 
-Arccos uses the window 0 to π, where cosine falls. The rule gives 1/(−sin θ) = −1/√(1 − u^2): −1.25 at 0.6. The minus sign comes from the window.
+Arccos uses the window 0 to π, where cosine falls. For $`-1 < u < 1`$, the rule gives 1/(−sin θ) = −1/√(1 − u^2): −1.25 at 0.6. The minus sign comes from the window.
 
 A second route: differentiate f(g(b)) = b by the chain rule to get f'(a)·g'(b) = 1. It is quicker, but assumes g has a rate; Step 3 proves it.
 
@@ -136,7 +136,7 @@ A second route: differentiate f(g(b)) = b by the chain rule to get f'(a)·g'(b) 
 | sine's rate there | cos θ = √(1 − 0.36) | 0.8 |
 | arcsin's rate at 0.6 | 1 / 0.8 | **1.25 rad per unit of sine** |
 
-Moving the post east round the rim turns its bearing 1.25 / 5 = 0.25 rad per metre.
+Moving the post east round the rim turns its bearing 1.25 / 5 = 0.25 rad per metre east.
 
 ### What breaks if you drop a piece
 
@@ -343,7 +343,7 @@ The two outputs match line for line.
 
 Lean proves the inverse rule and the slope rule in general, and the arcsin rate for every u strictly between −1 and 1.
 
-- If f is one-to-one and continuous on an open interval, and f'(a) is not 0, the undo g has rate 1/f'(a) at b = f(a).
+- If f is one-to-one and continuous on an open interval containing a, and f has a nonzero derivative f'(a) at a, the undo g has rate 1/f'(a) at b = f(a).
 - If a differentiable branch y of x^2 + y^2 = R^2 exists near a point, and y is not 0 there, its slope is −x/y.
 - For u strictly between −1 and 1, arcsin's rate is 1/cos(arcsin u), and cos(arcsin u) = √(1 − u^2).
 - At the post: 3 × 3 + 4 × 4 = 25, the slope is −6/8 = −3/4, and at (3, −4) it is +3/4.
@@ -508,7 +508,7 @@ example : ((1 / 10 : ℚ) / (1 / 10) ^ 3) = 100 ∧ ((1 / 100 : ℚ) / (1 / 100)
 - **Tilt sensors.** A sensor reports the sine of its tilt; the angle is arcsin of the reading, and 1/√(1 − u^2) turns a reading error into an angle error, without bound near 90°.
 
 > **Say it back**
-> A relation that holds all along a curve has total rate zero. Differentiating both sides, with the chain rule on every y, gives the slope: −x/y on the pond, −0.75 at the post. An undo's rate is one over the original rate, read at the matching input: arcsin's is 1/√(1 − u^2), 1.25 at 0.6. Both fail where the divisor is zero.
+> A relation that holds along a differentiable branch has total rate zero. Differentiating both sides, with the chain rule on every y, gives the slope: −x/y on the pond, −0.75 at the post. For a one-to-one, continuous function on an open interval, the undo's rate is one over the original rate at the matching input: arcsin's is 1/√(1 − u^2) for −1 < u < 1, 1.25 at 0.6. Both fail where the divisor is zero.
 
 ---
 

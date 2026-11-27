@@ -14,7 +14,7 @@ Acceleration is the rate of change of velocity, itself the rate of change of pos
 
 **The second derivative is the derivative of the derivative: it measures how fast a rate is changing, and its sign says whether a graph bends up or down.**
 
-**What kind of fact this is:** a definition (the second derivative, concave up and down, inflection point). One theorem comes with it: where the second derivative is negative, the graph lies below each of its tangent lines. It is proved on this card in Why it works.
+**What kind of fact this is:** a definition (the second derivative, concave up and down, inflection point). One theorem comes with it: on any open interval where a twice-differentiable function has a negative second derivative, its graph lies below each of its tangent lines on that interval. It is proved on this card in Why it works.
 
 ### The picture: the whole trip
 
@@ -41,7 +41,7 @@ s''(t) = \lim_{h \to 0} \frac{s'(t+h) - s'(t)}{h}
 
 **Read it aloud:** the change in velocity over a step h, divided by h, as h shrinks to zero.
 
-The same number comes straight from positions:
+When $`s''(t)`$ exists, the same number comes straight from positions:
 
 ```math
 s''(t) = \lim_{h \to 0} \frac{s(t+h) - 2\,s(t) + s(t-h)}{h^2}
@@ -51,7 +51,7 @@ s''(t) = \lim_{h \to 0} \frac{s(t+h) - 2\,s(t) + s(t-h)}{h^2}
 
 For the car, $`s(t) = 1.5t^2 - 0.1t^3`$ metres at $`t`$ seconds, from 0 to 10 s. Velocity $`s'(t) = 3t - 0.3t^2`$ m/s, acceleration $`s''(t) = 3 - 0.6t`$ m/s^2. At 7 s: 39.2 m, 6.3 m/s, −1.2 m/s^2.
 
-The bend has its own measure, **curvature** $`\kappa`$ (Greek kappa): for a graph $`y = f(t)`$, its turning per metre along it, with a second and a metre drawn the same length:
+The bend has its own measure, **curvature** $`\kappa`$ (Greek kappa): for a twice-differentiable graph $`y = f(t)`$, its turning per metre along it, with a second and a metre drawn the same length:
 
 ```math
 \kappa = \frac{\lvert f''\rvert}{\left(1 + (f')^2\right)^{3/2}}
@@ -96,7 +96,7 @@ At 7 s the acceleration is 3 − 0.6 × 7 = −1.2 m/s^2.
 
 Average velocity over a window is distance gained over h. Take it for the window after t and the window before, subtract, divide by h again: the second formula above, a difference of differences. Whole seconds at 7 s give 5.6 − 6.8 = −1.2. This central form is exact here at any window, because its error is set by the fourth derivative, which is 0.
 
-The one-sided form, $`\frac{s(t+2h) - 2s(t+h) + s(t)}{h^2}`$, is off by jerk times h: −1.8 at h = 1 s, −1.26 at 0.1 s, −1.206 at 0.01 s, closing on −1.2. To land within 0.001 of −1.2, any window under 0.001 / 0.6 of a second will do.
+The one-sided form, $`\frac{s(t+2h) - 2s(t+h) + s(t)}{h^2}`$, is off by jerk times h: −1.8 at h = 1 s, −1.26 at 0.1 s, −1.206 at 0.01 s, closing on −1.2. To land within 0.001 of −1.2, any nonzero window under 0.001 / 0.6 of a second in size will do.
 
 ### Step 3: the sign decides the bend
 
@@ -112,7 +112,7 @@ That is **concave down**: below the tangents, an upturned bowl. **Concave up** i
 
 ### Step 4: the switch is an inflection point
 
-An **inflection point** is where the second derivative changes sign. Here $`3 - 0.6t`$ crosses zero at 5 s, at 25 m, at top speed 7.5 m/s; the tangent there crosses the curve. The check finds 5 s by halving on raw second differences alone.
+An **inflection point** is where the curve switches between concave up and concave down (where $`f''`$ changes sign when $`f''`$ exists). Here $`3 - 0.6t`$ crosses zero at 5 s, at 25 m, at top speed 7.5 m/s; the tangent there crosses the curve. The check finds 5 s by halving on raw second differences alone.
 
 ### Step 5: why curvature divides by the steepness
 
@@ -349,8 +349,8 @@ The two outputs agree line for line. The circle at 10 s starts further off, 2% a
 
 Lean proves the below-the-tangent theorem and the raw-readings limit for every function that meets their conditions, and the car's numbers exactly.
 
-- Let the second derivative be negative throughout an open interval. Then the graph lies below each tangent there: f(t) < f(a) + f'(a)(t − a) whenever a ≠ t.
-- Let f have a derivative on a stretch around t, and let that derivative have no corner at t. Then (f(t + h) − 2f(t) + f(t − h)) / h^2 heads for f''(t) as h shrinks to 0.
+- Let f and f' both be differentiable on an open interval I, with f'' negative throughout I. Then for any two different points a and t in I, the graph lies below the tangent: f(t) < f(a) + f'(a)(t − a).
+- Let f have a derivative on a stretch around t, and let that derivative itself have a derivative at t. Then (f(t + h) − 2f(t) + f(t − h)) / h^2 heads for f''(t) as h shrinks to 0.
 - The car's odometer s(t) = 1.5t^2 − 0.1t^3 has velocity 3t − 0.3t^2, acceleration 3 − 0.6t and jerk −0.6 at every instant.
 - For the car, the central second difference equals the acceleration exactly, at every window h other than 0.
 - The readings at 6, 7 and 8 s are 32.4, 39.2 and 44.8 m. Whole seconds give 5.6 − 6.8 = −1.2, matching 3 − 0.6 × 7.
@@ -563,7 +563,7 @@ example : (12 * 0 ^ 2 : ℚ) = 0 ∧ (12 * (-1 / 10) ^ 2 : ℚ) = 3 / 25 ∧ (12
 - **Hanging chains.** The curve on [Hyperbolic functions](07-hyperbolic-functions.md) is concave up everywhere: cosh, the hyperbolic cosine $`(e^t + e^{-t})/2`$, is its own second derivative.
 
 > **Say it back**
-> The second derivative is the derivative of the derivative; for position, acceleration. Raw positions give it as a difference of differences over the window squared. Negative means the graph lies below its tangents: concave down. Where the sign changes is an inflection point, here 5 s into the trip. Curvature is the second derivative shrunk by the graph's steepness.
+> The second derivative is the derivative of the derivative; for position, acceleration. Where it exists, raw positions give it as a difference of differences over the window squared. Negative throughout an open interval means the graph lies below its tangents there: concave down. Where concavity switches is an inflection point, here 5 s into the trip. Curvature is the second derivative shrunk by the graph's steepness.
 
 ---
 
@@ -573,12 +573,13 @@ example : (12 * 0 ^ 2 : ℚ) = 0 ∧ (12 * (-1 / 10) ^ 2 : ℚ) = 3 / 25 ∧ (12
 
 ## Where this goes next
 
+- [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): using the tangent line to forecast nearby values, with the second derivative bounding the error.
 - [Optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the second derivative telling a peak from a trough.
 - [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): Step 3's bracket extended to every derivative, with its error stated.
 - [Stress, strain and bending](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/07-stress-strain-and-beam-bending.md): a beam's bending as the second derivative of its sag.
 - [Cubic splines](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/05-splines.md): curves stitched so their second derivatives agree at the joins.
 
-The question this card leaves open: Step 3's bracket predicts the car's position near 7 s, but how far from 7 s can that prediction be trusted?
+The question this card leaves open: Step 3's tangent predicts the car's position near 7 s, with the second derivative setting the gap; how far from 7 s can a tangent forecast be trusted, and how big can its error get?
 
 ---
 

@@ -14,7 +14,7 @@ Three rates sit in a line. Time drives distance at 100 km per hour; distance dri
 
 That multiplication is the chain rule. The theorem says the product is exact at that instant, although every rate in it changes as the car moves.
 
-**When one quantity drives another, the rate of the last per unit of the first is the product of the rates along the chain, each read where the chain actually is.**
+**When one quantity drives another and each link has a derivative where the chain is, the rate of the last per unit of the first is the product of the rates along the chain, each read where the chain actually is.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -38,7 +38,7 @@ The curving line is the fuel bill. The straight line is its tangent at one hour:
 
 A reminder from [The derivative](01-the-derivative.md): $`f'(x)`$, also written dy/dx, is the rate of y per unit of x at one point.
 
-One new notation, in words first: $`f \circ g`$, read "f after g", hands an input to $`g`$ and the result to $`f`$. So $`(f \circ g)(t) = f(g(t))`$. Here $`g`$ is the **inner** function and $`f`$ the **outer** one.
+One new notation, in words first: $`f \circ g`$, read "f after g", hands an input to $`g`$ and the result to $`f`$. So $`(f \circ g)(t) = f(g(t))`$. Here $`g`$ is the **inner** function and $`f`$ the **outer** one. When $`g`$ is differentiable at $`t`$ and $`f`$ is differentiable at $`g(t)`$:
 
 ```math
 (f \circ g)'(t) = f'(g(t))\,g'(t)
@@ -513,6 +513,7 @@ example : (9 / 5 : ℚ) * (3 / 50) * 100 = 54 / 5 ∧ (9 / 5 : ℚ) * (9 / 100) 
 
 > [!TIP]
 > **Try changing**
+> Guess first, then run it.
 > - **Dearer fuel.** Set `P` to 2.10. The cost rate becomes 2.10 × 0.082 × 100 = 17.22 dollars per hour, and every assert still passes.
 > - **Later in the drive.** Set `T` to 2.0. The car is at 200 km doing 140 km/h, burning 0.13 L/km, so the rate is 32.76 dollars per hour. The second assert stops the run: the bill bends harder there, and the smallest secant still misses by 0.001174.
 > - **A steeper road.** Change 0.0002 to 0.0003 in `G` only. The secants follow the new road to 17.64; roads 1 and 2 were written for the old one and still say 14.76, so the second assert stops the run.
@@ -539,7 +540,7 @@ example : (9 / 5 : ℚ) * (3 / 50) * 100 = 54 / 5 ∧ (9 / 5 : ℚ) * (9 / 100) 
 - **Motion along a track.** Height depends on position along the track, position on time; climbing speed is their chain.
 
 > **Say it back**
-> When one quantity drives another, the rates multiply, each read where the chain is: the fuel rate at the car's position, not the clock time. The proof writes each change as (rate + slippage) × step, so it never divides by a change that might be zero. As the step shrinks, the slippages vanish and the product is exact: 14.76 dollars per hour on the drive.
+> When one quantity drives another and each link is differentiable where the chain is, the rates multiply: the fuel rate at the car's position, not the clock time. The proof writes each change as (rate + slippage) × step, so it never divides by a change that might be zero. As the step shrinks, the slippages vanish and the product is exact: 14.76 dollars per hour on the drive.
 
 ---
 
@@ -549,16 +550,16 @@ example : (9 / 5 : ℚ) * (3 / 50) * 100 = 54 / 5 ∧ (9 / 5 : ℚ) * (9 / 100) 
 
 ## Where this goes next
 
-- [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md): sine and cosine through the chain.
-- [Derivatives of exp and log](05-derivatives-of-exp-and-log.md): growth and logs, chained.
-- [Substitution](../04-Integrals/03-substitution.md): the chain rule run backwards.
+- [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md): the derivatives of sine, cosine, tangent and secant, and how they enter the chain.
+- [Derivatives of exp and log](05-derivatives-of-exp-and-log.md): the derivatives of the exponential and natural log, chained with inner rates.
+- [Substitution](../04-Integrals/03-substitution.md): the chain rule run backwards to compute integrals of composite functions.
 - [Parametric motion](../05-Curves%20and%20Solids/01-parametric-motion.md): speed along a curve traced in time.
 - [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate equations solved through the chain.
 - [Lyapunov functions](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/04-lyapunov-functions.md): an energy's rate along a moving state.
 - [The transport equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a quantity carried along a moving line.
 - [The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): waves as shapes sliding at fixed speed.
 - [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md): an option's rate per dollar of stock.
-- [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): sensitivities chained across currencies.
+- [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the rates of a currency option's price against the exchange rate, volatility, time and two interest rates.
 - [Forward-mode automatic differentiation](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/06-forward-mode-automatic-differentiation.md): the chain carried out by computer.
 
 The chain rule needs each link's rate; for sine, cosine and the exponential none is known yet, and [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md) supplies the first of them.

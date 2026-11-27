@@ -12,7 +12,7 @@ How fast is the money growing at that moment? At 5% of whatever is there: 0.05 �
 
 Behind it is one function: e^x, e raised to the power x, changes at a rate equal to its own value. Its inverse, the natural log ln x, answers how long until a target is reached, and changes at rate 1/x.
 
-**The function e^x changes at a rate equal to its own value, its inverse ln x changes at rate 1/x, and every other base picks up the factor ln b.**
+**The function e^x changes at a rate equal to its own value, its inverse ln x changes at rate 1/x for x > 0, and every positive base b picks up the factor ln b.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from two compounding inequalities.
 
@@ -40,7 +40,7 @@ A reminder from [The derivative](01-the-derivative.md): f'(x), also written dy/d
 \frac{d}{dx}\,e^x = e^x, \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \quad (x > 0)
 ```
 
-**Read it aloud:** e to the x grows at a rate equal to itself; the natural log of x grows at one over x.
+**Read it aloud:** e to the x grows at a rate equal to itself; for positive x, the natural log of x grows at one over x.
 
 The balance after $`t`$ years is $`B`$ = 100 e^(rt), with $`r`$ = 0.05. The chain rule ([Chain rule](03-chain-rule.md)) adds the inner rate r:
 
@@ -50,13 +50,13 @@ The balance after $`t`$ years is $`B`$ = 100 e^(rt), with $`r`$ = 0.05. The chai
 
 Units: r per year times dollars gives dollars per year.
 
-For any positive base $`b`$, and the log to that base when b ≠ 1:
+For any positive base $`b`$, and for $`x > 0`$ with $`b \ne 1`$ in the log:
 
 ```math
-\frac{d}{dx}\,b^x = b^x \ln b, \qquad \frac{d}{dx}\,\log_b x = \frac{1}{x \ln b}
+\frac{d}{dx}\,b^x = b^x \ln b, \qquad \frac{d}{dx}\,\log_b x = \frac{1}{x \ln b} \quad (x > 0)
 ```
 
-And for a positive quantity f built from products and powers, **logarithmic differentiation** reads its relative rate, its rate divided by its value, off its log:
+And for a positive, differentiable quantity f built from products and powers, **logarithmic differentiation** reads its relative rate, its rate divided by its value, off its log:
 
 ```math
 \frac{f'}{f} = \frac{d}{dx}\,\ln f
@@ -75,7 +75,7 @@ And for a positive quantity f built from products and powers, **logarithmic diff
 
 ### When it holds
 
-- **Positive base, positive log input.** (−2)^0.5 and ln 0 are not real numbers; there is no curve to differentiate.
+- **Positive base, positive log input.** (−2)^0.5 and ln 0 are not real numbers; there is no curve to differentiate. Base $`b = 1`$ also fails for $`\log_b x`$, since $`\ln 1 = 0`$.
 - **The balance moves smoothly.** A bank crediting interest once a year makes a staircase with no rate at a credit date. Over a 0.001-year step the secant from the left is 7756.6 dollars per year, from the right 0.0; shrink the step and the left one grows without bound.
 
 ---
@@ -107,7 +107,7 @@ Subtract 1 and divide by a positive h:
 
 For negative h the division flips the walls: the quotient sits between 1/(1 − h) and 1. At h = 0.01 the quotient is 1.005017, between 1 and 1.010101. At h = −0.01 it is 0.995017, between 0.990099 and 1.
 
-The tolerance game: to land within 0.001 of 1, the wall 1/(1 − h) must be within 0.001 of 1, which holds once h is no more than 0.000999 in size, either sign. Both walls close on 1, so the limit is 1.
+The tolerance game: to land within 0.001 of 1, the wall 1/(1 − h) must be within 0.001 of 1, which holds once nonzero h is no more than 0.000999 in size, either sign. Both walls close on 1, so the limit is 1.
 
 <details>
 <summary>Detailed proof</summary>
@@ -116,7 +116,7 @@ The tolerance game: to land within 0.001 of 1, the wall 1/(1 − h) must be with
 
 *The limit.* For 0 < |h| < 1 the walls give |(e^h − 1)/h − 1| ≤ |h|/(1 − |h|). Given ε > 0, δ = ε/(1 + ε) makes this below ε whenever 0 < |h| < δ.
 
-*The log.* For u > −1 put h = ln(1 + u) in e^h ≥ 1 + h and e^(−h) ≥ 1 − h: ln(1 + u) ≤ u and ln(1 + u) ≥ u/(1 + u). With u = k/x, x > 0, the quotient (ln(x + k) − ln x)/k lies between 1/(x + k) and 1/x, for either sign of k. Both tend to 1/x.
+*The log.* For u > −1 put h = ln(1 + u) in e^h ≥ 1 + h and e^(−h) ≥ 1 − h: ln(1 + u) ≤ u and ln(1 + u) ≥ u/(1 + u). With u = k/x, x > 0, the quotient (ln(x + k) − ln x)/k lies between 1/(x + k) and 1/x, for nonzero k > −x of either sign. Both tend to 1/x.
 
 </details>
 
@@ -126,7 +126,7 @@ The chain rule feeds rt into e^x and multiplies by the inner rate r: dB/dt = r �
 
 ### Step 3: the log is squeezed the same way
 
-The log undoes the exponential: y = ln x exactly when e^y = x. Put a log in place of h in the same two inequalities and they trap the log's difference quotient over a step k > 0 between 1/(x + k) and 1/x. Both walls close on 1/x.
+The log undoes the exponential: y = ln x exactly when e^y = x. For x > 0, put a log in place of h in the same two inequalities and they trap the log's difference quotient over a step k > 0 between 1/(x + k) and 1/x. Both walls close on 1/x.
 
 In money terms, the years to reach a balance B are $`T`$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year.
 
@@ -136,11 +136,11 @@ At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar
 
 A positive base is a power of e: b = e^(ln b), so b^x = e^(x ln b), and the chain rule supplies the inner rate ln b. Yearly compounding at 5% is base 1.05, and ln 1.05 = 0.048790. At ten years that balance is 162.889463 dollars, growing at 7.947404 dollars per year.
 
-The log to base b is ln x divided by the constant ln b, so its rate is 1/(x ln b). Likewise, for a constant power a, x^a = e^(a ln x) has rate a x^(a−1) for x > 0.
+For $`b > 0`$, $`b \ne 1`$ and $`x > 0`$, the log to base b is ln x divided by the constant ln b, so its rate is 1/(x ln b). Likewise, for a constant power a, x^a = e^(a ln x) has rate a x^(a−1) for x > 0.
 
 ### Step 5: logarithmic differentiation adds relative rates
 
-Logs turn products into sums: ln(np) = ln n + ln p. Differentiate with the chain rule:
+For positive, differentiable quantities n and p, logs turn products into sums: ln(np) = ln n + ln p. Differentiate with the chain rule:
 
 ```math
 \frac{V'}{V} = \frac{n'}{n} + \frac{p'}{p}.
@@ -451,19 +451,19 @@ example : (10 : ℚ) / 200 + 1 / 20 = 1 / 10 := by norm_num
 - **Log charts.** A straight line on a log scale is steady relative growth, since the slope of ln B is B'/B.
 
 > **Say it back**
-> Powers of e multiply, so the slope of e^x anywhere is e^x times its slope at zero. Compounding traps that slope between 1 and 1/(1 − h), so it is 1. The log is trapped the same way and has rate 1/x. Other bases pick up ln b.
+> Powers of e multiply, so the slope of e^x anywhere is e^x times its slope at zero. Compounding traps that slope between 1 and 1/(1 − h), so it is 1. The log is trapped the same way and has rate 1/x for x > 0. Other positive bases pick up ln b (with b ≠ 1 for $`\log_b`$).
 
 ---
 
 ## What this builds on
 
-- [Chain rule](03-chain-rule.md): the inner rates r, ln b and a.
+- [Chain rule](03-chain-rule.md): the rule that brings out the inner rates r, ln b and a.
 - [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): e, and compounding beating simple interest.
 - [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): ln as the time a balance needs.
 
 ## Where this goes next
 
-- [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): the rate of any inverse function.
+- [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): the rate of an inverse function where the forward rate is nonzero.
 - [Hyperbolic functions](07-hyperbolic-functions.md): sinh and cosh, built from e^x and e^(−x).
 - [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): "rate equals r times amount" as an equation.
 - [Exp, log, sine, cosine and pi from series alone](../06-Series/14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.

@@ -14,7 +14,7 @@ This chain is pulled sideways at its bottom by the weight of 8 m of itself. So i
 
 Cosh squared minus sinh squared is always 1, so the point (cosh t, sinh t) sits on the hyperbola across^2 − up^2 = 1, as cosine and sine sit on a circle: hence the name.
 
-**Cosh and sinh are the even and odd halves of the exponential; their squares differ by exactly 1, each is the other's rate, and a hanging chain takes the shape of a cosh.**
+**Cosh and sinh are the even and odd halves of the exponential; their squares differ by exactly 1, each is the other's rate, and a uniform hanging chain takes the shape of a cosh.**
 
 **What kind of fact this is:** a definition; the identity, rates and inverse formulas are theorems proved in Why it works, and the chain's cosh shape is a physical model, derived on [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md).
 
@@ -48,7 +48,7 @@ Notation: e^−t is 1 divided by e^t; $`\cosh^2 t`$ is cosh t times itself; d/dt
 
 **Read it aloud:** cosh is the average of e^t and e^−t, sinh half their difference, tanh their ratio; cosh squared minus sinh squared is one; each of sinh and cosh changes at the other's rate, with no minus sign.
 
-The chain, measured from a level $`a`$ below its lowest point, and its slope:
+The chain, measured from a level $`a > 0`$ below its lowest point, and its slope:
 
 ```math
 y = a\cosh\frac{x}{a}, \qquad \frac{dy}{dx} = \sinh\frac{x}{a}
@@ -77,7 +77,7 @@ The inverses undo the functions. Cosh is equal at t and −t, so it is undone on
 
 The definitions hold for every real t; the conditions belong to the inverses and the chain.
 
-- **Arcosh needs an input of at least 1.** Cosh is never below 1: no point of the chain lies below its bottom.
+- **Arcosh needs an input of at least 1.** Cosh is never below 1: no point of the chain lies below its bottom. Its derivative needs an input above 1: at an input of 1, cosh's rate at the matching point is 0, so arcosh has no finite rate there.
 - **Artanh needs an input strictly between −1 and 1.** Tanh approaches both without reaching them.
 - **The chain is a cosh only if flexible, unstretched, at rest, with equal weight per metre of chain.** A cable carrying a deck spread evenly along the ground hangs as a parabola.
 - **Rates are per unit of t.** On the chain t is x/a, so the chain rule brings 1/a, which the leading a cancels.
@@ -88,7 +88,7 @@ The definitions hold for every real t; the conditions belong to the inverses and
 
 ### Step 0: every function splits into an even half and an odd half
 
-An even function takes the same value at t and −t; an odd one flips sign. Any function f splits into the two:
+An even function takes the same value at t and −t; an odd one flips sign. Any function $`f`$ defined at both $`t`$ and $`-t`$ splits into the two:
 
 ```math
 f(t) = \frac{f(t) + f(-t)}{2} + \frac{f(t) - f(-t)}{2}
@@ -540,12 +540,13 @@ example : arcosh (5 / 4) = log 2 := by
 
 ## Where this goes next
 
+- [Second derivatives](08-higher-derivatives-and-concavity.md): differentiating twice to measure how a curve bends, as the chain bends up everywhere.
 - [The elementary functions](../../07-Complex%20analysis/02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): cosine and sine as the same split of an exponential.
 - [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): sinh and cosh fitted to values at two ends.
 - [Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md): sinh carries steady heat across a rectangle.
-- [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): derives the chain's cosh shape.
+- [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): derives why a uniform hanging chain takes the cosh shape.
 
-Left open: of all the curves of the same length between the two hooks, why does the chain settle on the cosh?
+Left open: the chain's slope has its own positive rate, (1/8) cosh(x/8); what does a rate's own rate tell you about how a curve bends? (Why a hanging chain settles on the cosh belongs to the calculus of variations, in Paths with a budget above.)
 
 ---
 

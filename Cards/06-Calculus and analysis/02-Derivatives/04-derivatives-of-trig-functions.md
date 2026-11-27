@@ -55,7 +55,7 @@ For the piston, with arm length r, $`y = r\sin x`$, so dy/dx = r cos x cm per ra
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`x`$ | crank angle above the horizontal, radians | 30° | the rate r cos x falls, to 0 at 90° |
+| $`x`$ | crank angle above the horizontal, radians | 30° (π/6 rad) | the rate r cos x falls, to 0 at 90° |
 | $`h`$ | a small extra turn: the run | 0.1, 0.01, 0.001 | the quotient drifts from the rate |
 | $`r`$ | crank arm length | 4 cm | every rate scales with it |
 | $`y`$ | piston height above the centre | 2 cm | — |
@@ -68,7 +68,7 @@ For the piston, with arm length r, $`y = r\sin x`$, so dy/dx = r cos x cm per ra
 
 - **The angle is in radians.** The sandwich uses a slice of a radius-1 circle having area h/2, true only in radians. In degrees, sine's rate at 0 is 0.017453, not 1.
 - **The addition formula holds for every pair of angles** ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)), so sine and cosine have a rate at every angle.
-- **Tangent and secant need cos x not zero.** At 90° neither has a value, so neither has a rate: rise over run from 0.01 below 90° to 0.01 above reads −9999.67, though tangent climbs wherever it is defined.
+- **Tangent and secant need cos x not zero.** At 90° (and every odd multiple of 90°) neither has a value, so neither has a rate: rise over run from 0.01 below 90° to 0.01 above reads −9999.67, though tangent climbs wherever it is defined.
 - **For speeds, the angle must change smoothly in time.** The chain rule needs x to have its own rate; a jerking crank has no speed at the jerk.
 
 ---
@@ -97,7 +97,7 @@ For h between 0 and a right angle, in radians, [Small angles](../../05-Geometry%
 
 Dividing the left half by h gives (sin h)/h < 1. Dividing the right half by h and multiplying by cos h, positive there, gives cos h < (sin h)/h. The ratio is trapped between cos h and 1.
 
-The tolerance game makes "heads for 1" precise: name a target band around 1, then find a step h small enough to land inside it ([Limits](../01-Limits%20and%20Continuity/01-limits.md)). To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $`h^2/2`$, so any h below 0.044721 will do.
+The tolerance game makes "heads for 1" precise: name a target band around 1, then find a step h small enough to land inside it ([Limits](../01-Limits%20and%20Continuity/01-limits.md)). To land within 0.001 of 1, cos h above 0.999 suffices. Step 2 shows 1 − cos h is at most $`h^2/2`$, so any nonzero h smaller than 0.044721 in size will do.
 
 At h = 0.04, cos h is 0.999200 and (sin h)/h is 0.999733: inside the band. Every tighter target gets its own h the same way: that is lim (h → 0) (sin h)/h = 1, read "(sin h)/h heads for 1 as h heads for 0".
 
@@ -105,7 +105,7 @@ A negative h changes nothing: sin(−h)/(−h) equals sin h/h, since sine is odd
 
 ### Step 2: (cos h − 1)/h heads for 0
 
-The half-angle identity gives $`1 - \cos h = 2\sin^2(h/2)`$. The sandwich says sin(h/2) < h/2, so $`1 - \cos h < 2(h/2)^2 = h^2/2`$. Divide by h:
+For $`h > 0`$, the half-angle identity gives $`1 - \cos h = 2\sin^2(h/2)`$. The sandwich says sin(h/2) < h/2, so $`1 - \cos h < 2(h/2)^2 = h^2/2`$. Divide by h:
 
 ```math
 0 < \frac{1 - \cos h}{h} < \frac{h}{2}
@@ -135,7 +135,7 @@ The pin's sideways reach, 4 cos x, changes at −2.000000 cm per radian: it move
 
 ### Step 5: tangent and secant by the quotient rule
 
-Tangent is sin x over cos x. The quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $`\cos^2 x`$: the rate is $`\sec^2 x`$, 1.333333 at 30°.
+Wherever cos x is not zero, tangent is sin x over cos x. The quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $`\cos^2 x`$: the rate is $`\sec^2 x`$, 1.333333 at 30°.
 
 Secant is 1 over cos x, so its rate is sin x over $`\cos^2 x`$, which is sec x tan x: 0.666667 at 30°.
 
@@ -143,7 +143,7 @@ Secant is 1 over cos x, so its rate is sin x over $`\cos^2 x`$, which is sec x t
 
 The crank turns at 50 radians a second, so x = 50t with t in seconds. The chain rule ([Chain rule](03-chain-rule.md)) multiplies the rates: 3.464102 cm per radian × 50 radians per second = 173.205 cm/s.
 
-Most engines use a connecting rod of length L from the pin to a piston above the centre. The piston sits $`r\sin x`$ up plus the rod's upright part, $`\sqrt{L^2 - (r\cos x)^2}`$ by Pythagoras. The rate of cosine and the chain rule give:
+Most engines use a connecting rod of length $`L > r`$ from the pin to a piston above the centre. The piston sits $`r\sin x`$ up plus the rod's upright part, $`\sqrt{L^2 - (r\cos x)^2}`$ by Pythagoras. The rate of cosine and the chain rule give:
 
 ```math
 \frac{dy}{dx} = r\cos x + \frac{r^2 \cos x \sin x}{\sqrt{L^2 - r^2\cos^2 x}}
@@ -475,7 +475,7 @@ example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
 - **Second rates.** Applying the rule twice returns minus sine: the piston's acceleration points against its height ([Second derivatives](08-higher-derivatives-and-concavity.md)).
 
 > **Say it back**
-> The addition formula splits sine's rise-over-run into cos x times (sin h)/h plus sin x times (cos h − 1)/h. The sandwich sends the first quotient to 1 and the second to 0. So sine's rate is cosine, and the same split gives minus sine for cosine. The quotient rule gives tangent and secant. All of it holds in radians only.
+> The addition formula splits sine's rise-over-run into cos x times (sin h)/h plus sin x times (cos h − 1)/h. The sandwich sends the first quotient to 1 and the second to 0. So sine's rate is cosine, and the same split gives minus sine for cosine. The quotient rule gives tangent and secant wherever cos x is not zero. All of it holds in radians only.
 
 ---
 
@@ -484,7 +484,7 @@ example : (sin (π / 6) / cos (π / 6)) ^ 2 = 1 / 3 := by
 - [Product and quotient rules](02-product-and-quotient-rules.md): the quotient rule that turns the rates of sine and cosine into those of tangent and secant in Step 5.
 - [Chain rule](03-chain-rule.md): turns cm per radian into cm per second, and handles the rod engine.
 - [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition formulas that do Step 0, and the half-angle identity of Step 2.
-- [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sandwich sin h < h < tan h.
+- [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sandwich sin h < h < tan h for angles between 0 and π/2 radians.
 
 ## Where this goes next
 

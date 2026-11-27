@@ -57,9 +57,9 @@ A derivative's units are the output's units per input unit: metres per second he
 
 A definition names something; what can fail is the limit, and then there is no derivative at that point:
 
-- **The function is defined on both sides of a.** At an end point only one side exists, and the result is labelled a one-sided rate.
+- **The function is defined at a and on both sides of a.** At an end point only one side exists, and the result is labelled a one-sided rate.
 - **Both sides head for the same number.** A car stopping dead at 5 s gives left averages near 20, right ones 0.
-- **The number is finite.** A trip meter reset at 5 s gives left averages that grow without bound in size.
+- **The number is finite.** A trip meter reset at 5 s gives left averages that grow without bound in size; a continuous curve with a vertical tangent, like $`x^{1/3}`$ at 0, fails the same way.
 
 ---
 
@@ -112,7 +112,7 @@ The tolerance form of the definition: f'(a) = L means that for every tolerance �
 
 </details>
 
-Whole-second readings reach the same number with no limit: 18 m in the fifth second, 22 m in the sixth; their mean is 20 m/s. That is exact only because the odometer curve is a parabola (a curve whose formula has t^2 as its highest power); elsewhere it is an estimate.
+Whole-second readings reach the same number with no limit: 18 m in the fifth second, 22 m in the sixth; their mean is 20 m/s. That is exact because the odometer curve is a parabola (a curve whose formula has t^2 as its highest power); for most curves it is only an estimate.
 
 ---
 
@@ -410,7 +410,7 @@ example : (50 / 5 : ℚ) = 10 ∧ (10 : ℚ) * 2 = 20 := by norm_num
 - **Every derivative rule.** All come from this one limit: [Product and quotient rules](02-product-and-quotient-rules.md), [Chain rule](03-chain-rule.md), [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md), [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 > **Say it back**
-> An average rate is output change over input change across a window. Shrink the window and the averages head for one number, the derivative. The car's average from 5 s is 20 + 2h, so its speed at 5 s is 20 m/s. On a graph it is the tangent's slope. A derivative forces continuity; a corner shows the reverse fails.
+> An average rate is output change over input change across a window. When those averages head for one finite number as the window shrinks, that number is the derivative. The car's average from 5 s is 20 + 2h, so its speed at 5 s is 20 m/s. On a graph it is the tangent's slope. A derivative forces continuity; a corner shows the reverse fails.
 
 ---
 
@@ -421,10 +421,10 @@ example : (50 / 5 : ℚ) = 10 ∧ (10 : ℚ) * 2 = 20 := by norm_num
 
 ## Where this goes next
 
-- [Product and quotient rules](02-product-and-quotient-rules.md): derivatives of products and quotients.
+- [Product and quotient rules](02-product-and-quotient-rules.md): how to differentiate products, quotients and whole-number powers without taking a new limit.
 - [Second derivatives](08-higher-derivatives-and-concavity.md): the rate of the rate; the car's acceleration.
 - [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent used to predict nearby values.
-- [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): some instant in every window matches its average.
+- [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): for a continuous curve differentiable inside a window, some instant matches the average rate.
 - [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): several inputs, one moved at a time.
 - [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the window may point any direction in a plane.
 - [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): equations that state a rate and ask for the function.

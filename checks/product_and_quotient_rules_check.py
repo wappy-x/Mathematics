@@ -29,7 +29,7 @@ print(f"figure, 20 units a dollar, 1 a bag: old right {20 + 20 * p(t):.0f} top {
 quot = (rate(t) * q(t) - R(t) * dq) / (q(t) * q(t))           # price = revenue / bags
 def price_back(s): return R(s) / q(s)
 print(f"quotient by hand: 36*184 = {rate(t) * q(t):.0f}, 2576*(-4) = {R(t) * dq:.0f}, top {rate(t) * q(t) - R(t) * dq:.0f}, "
-      f"184^2 = {q(t) * q(t):.0f}; bags reach 0 at week {-q(0) / dq:.0f}")
+      f"184^2 = {q(t) * q(t):.0f}; bags reach 0 at week {q(0) / (q(0) - q(1)):.0f}")
 print(f"quotient rule on revenue/bags: {quot:.6f}; quotient h = 0.001: {dquot(price_back, t, 0.001):.6f}")
 print(f"cube at 2: rule {3 * pw(2, 2):.6f}, repeated products {power_by_products(2.0, 3):.6f}, "
       f"h = 0.001: {dquot(lambda x: pw(x, 3), 2.0, 0.001):.6f}")

@@ -12,7 +12,7 @@ In week 4 a bag costs $14.00, 184 bags sell, and revenue is $2,576.00 a week. Is
 
 Multiplying the two rates gives 0.5 × (−4) = −2: wrong sign, wrong size. The right answer adds each factor's rate times the other factor's current value. That is the **product rule**. It yields the rate of a ratio, the **quotient rule**, and the rate of every whole-number power.
 
-**The rate of a product is the first factor's rate times the second factor, plus the first factor times the second's rate; the rate of a ratio follows from it.**
+**Where both factors have a derivative, the rate of their product is the first's rate times the second, plus the first times the second's rate; where the bottom is also not zero, the rate of their ratio follows from it.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the limit that defines a derivative.
 
@@ -65,7 +65,7 @@ For a whole number $`n \ne 0`$, written with d/dx meaning "the derivative with r
 | $`p'`$, $`q'`$, $`R'`$ | rates per week: dollars, bags, dollars a week | 0.5, −4, 36 | — |
 | $`h`$ | a small step in time, weeks | 4 down to 0.001 | a bigger step leaves a bigger gap to the rate |
 | $`f`$, $`g`$ | any two functions with derivatives at the point | R on top, q below | — |
-| $`n`$ | a whole-number power, possibly negative | 3 and −2 | — |
+| $`n`$ | a nonzero whole-number power, possibly negative | 3 and −2 | — |
 
 Units: $`R'`$ is dollars a week, per week, the output's unit per input unit.
 
@@ -73,7 +73,7 @@ Units: $`R'`$ is dollars a week, per week, the output's unit per input unit.
 
 - **Both factors have a derivative at the point.** A price held at $14 until week 4, rising after, gives revenue a left rate of −56 and a right rate of 36 there: a corner, no single rate.
 - **A bottom that is not zero.** Bags reach 0 in week 50, and revenue ÷ bags has no value there.
-- **Whole-number powers.** Other powers need logarithms, in [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
+- **Whole-number powers, with $`x \ne 0`$ when $`n < 0`$.** For $`n = 0`$, the constant $`1`$ has rate $`0`$ (the formula $`0 \cdot x^{-1}`$ is not used at $`x = 0`$); non-whole powers need $`x > 0`$ and logarithms, in [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 ---
 
@@ -126,7 +126,7 @@ $`\displaystyle \frac{1/g(x+h) - 1/g(x)}{h} = -\frac{g(x+h)-g(x)}{h}\cdot\frac{1
 
 ### Step 3: a reciprocal, then any ratio
 
-The gap 1/g(x+h) − 1/g(x) equals −(g(x+h) − g(x)) over g(x+h) × g(x). Divide by $`h`$ and shrink it: the rate of 1/g is −g′ / g^2. A ratio f/g is f times 1/g, so the product rule gives f′/g − f g′/g^2, which over a common bottom is the quotient rule.
+Where g(x) is not zero, the gap 1/g(x+h) − 1/g(x) equals −(g(x+h) − g(x)) over g(x+h) × g(x). Divide by $`h`$ and shrink it: the rate of 1/g is −g′ / g^2. A ratio f/g is f times 1/g, so the product rule gives f′/g − f g′/g^2, which over a common bottom is the quotient rule.
 
 Test it: price is revenue ÷ bags. With R′ = 36: (36 × 184 − 2576 × (−4)) / 184^2 = (6624 + 10304) / 33856 = 16928 / 33856 = 0.5. The quotient rule hands back the 50 cents a week the story started with.
 
@@ -204,7 +204,7 @@ print(f"figure, 20 units a dollar, 1 a bag: old right {20 + 20 * p(t):.0f} top {
 quot = (rate(t) * q(t) - R(t) * dq) / (q(t) * q(t))           # price = revenue / bags
 def price_back(s): return R(s) / q(s)
 print(f"quotient by hand: 36*184 = {rate(t) * q(t):.0f}, 2576*(-4) = {R(t) * dq:.0f}, top {rate(t) * q(t) - R(t) * dq:.0f}, "
-      f"184^2 = {q(t) * q(t):.0f}; bags reach 0 at week {-q(0) / dq:.0f}")
+      f"184^2 = {q(t) * q(t):.0f}; bags reach 0 at week {q(0) / (q(0) - q(1)):.0f}")
 print(f"quotient rule on revenue/bags: {quot:.6f}; quotient h = 0.001: {dquot(price_back, t, 0.001):.6f}")
 print(f"cube at 2: rule {3 * pw(2, 2):.6f}, repeated products {power_by_products(2.0, 3):.6f}, "
       f"h = 0.001: {dquot(lambda x: pw(x, 3), 2.0, 0.001):.6f}")
@@ -229,7 +229,7 @@ assert abs(lo - grid[1]) < 0.002                                   # rate zero w
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-27 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 week 4: price 14.00, bags 184, revenue 2576.00
@@ -300,7 +300,7 @@ fn main() {
     let quot = (rate(t) * q(t) - rev(t) * DQ) / (q(t) * q(t));   // price = revenue / bags
     let back = dquot(&price_back, t, 0.001);
     println!("quotient by hand: 36*184 = {:.0}, 2576*(-4) = {:.0}, top {:.0}, 184^2 = {:.0}; bags reach 0 at week {:.0}",
-             rate(t) * q(t), rev(t) * DQ, rate(t) * q(t) - rev(t) * DQ, q(t) * q(t), -q(0.0) / DQ);
+             rate(t) * q(t), rev(t) * DQ, rate(t) * q(t) - rev(t) * DQ, q(t) * q(t), q(0.0) / (q(0.0) - q(1.0)));
     println!("quotient rule on revenue/bags: {:.6}; quotient h = 0.001: {:.6}", quot, back);
     let cube = |x: f64| pw(x, 3);
     println!("cube at 2: rule {:.6}, repeated products {:.6}, h = 0.001: {:.6}",
@@ -334,7 +334,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 week 4: price 14.00, bags 184, revenue 2576.00
@@ -459,7 +459,7 @@ example : (1 / 2 : ℚ) * (-4) = -2 ∧ ((2576 * (-4) - 36 * 184) / 184 ^ 2 : �
 - **Trigonometry.** tan x is sin x ÷ cos x, so its derivative comes from the quotient rule once [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md) supplies the rates of sine and cosine.
 
 > **Say it back**
-> Multiply two moving quantities and the product changes by two strips and a corner. Divided by the step, the corner vanishes and the strips give first's rate times second plus first times second's rate. A ratio is a product with a reciprocal, whose rate is minus the bottom's rate over the bottom squared. Repeated products give n x^(n−1) for every whole-number power, away from 0 for negative ones. The roaster's revenue climbs $36 a week in week 4, not −2.
+> When two moving quantities both have a derivative, their product changes by two strips and a corner. Divided by the step, the corner vanishes and the strips give first's rate times second plus first times second's rate. Where the bottom is not zero, a ratio is a product with a reciprocal, whose rate is minus the bottom's rate over the bottom squared. Repeated products give n x^(n−1) for every nonzero whole-number power, away from 0 for negative ones. The roaster's revenue climbs $36 a week in week 4, not −2.
 
 ---
 
