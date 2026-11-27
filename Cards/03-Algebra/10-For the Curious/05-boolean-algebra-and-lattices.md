@@ -12,7 +12,7 @@ A record filter has the same shape: in both the staff list and the on-shift list
 
 One list of laws governs all three. Boolean algebra is that list stripped of subject matter: two operations on pairs, one reversing a single thing, a bottom and a top. The pair take neutral names — **meet** for "and, both, series", **join** for "or, either, parallel".
 
-An order hides underneath. "Is inside" orders sets, but only partly: neither {a, b} nor {b, c} is inside the other. Draw the eight subsets of {a, b, c}, an arrow per added member, and the picture is a cube. The meet of two sets is the highest set below both, the join the lowest above both; an order giving every pair both is a **lattice**.
+An order hides underneath. "Is inside" orders sets, but only partly: neither {a, b} nor {b, c} is inside the other. Draw the **power set** of {a, b, c} — all eight of its subsets — an arrow per added member, and the picture is a cube. The meet of two sets is the highest set below both, the join the lowest above both; an order giving every pair both is a **lattice**.
 
 **Truth values, the subsets of a fixed collection and switch networks obey one list of laws; drawn as an order, a Boolean algebra is a lattice with a bottom and a top whose operations spread across each other, with a complement for every element.**
 
