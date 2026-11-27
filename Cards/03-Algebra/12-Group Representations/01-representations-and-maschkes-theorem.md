@@ -18,7 +18,7 @@ The heights split into three parts that no move can mix:
 
 They add back: (3, 3, 3, 3) + (2, −2, 2, −2) + (1, 1, −1, −1) = (6, 2, 4, 0). Heinrich Maschke proved in 1899 that such a split always exists.
 
-**A representation turns each member of a group into a matrix, so that combining members matches multiplying matrices; Maschke's theorem says that for a finite group over the complex numbers the space splits into kept pieces that cannot split further.**
+**A representation turns each member of a group into a matrix, so that combining members matches multiplying matrices; Maschke's theorem says that for a finite group acting on a finite-dimensional space over the complex numbers, the space splits into kept pieces that cannot split further.**
 
 **What kind of fact this is:** representation, kept subspace and irreducible are definitions; Maschke's theorem is proved on this card in Why it works.
 
@@ -633,7 +633,7 @@ example : (!![2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2; 2, 2, 2, 2] : Matrix (Fin 4) (
 - **Checking a slab.** Four corner readings split into height, tilt and twist; the twist measures warp.
 
 > **Say it back**
-> A representation writes each member of a group as a matrix, so combining matches multiplying. A kept subspace is mapped into itself by every matrix; an irreducible representation keeps only zero and everything. Averaging a projection over the group makes it commute with every move, so its zero set is a kept partner. Repeating splits any finite-group representation over the complex numbers into irreducible pieces. The tile's heights split as height, twist and tilt: 4 = 1 + 1 + 2.
+> A representation writes each member of a group as a matrix, so combining matches multiplying. A kept subspace is mapped into itself by every matrix; an irreducible representation is not zero and keeps only zero and everything. Averaging a projection over the group makes it commute with every move, so its zero set is a kept partner. Repeating splits any finite-dimensional representation of a finite group over the complex numbers into irreducible pieces. The tile's heights split as height, twist and tilt: 4 = 1 + 1 + 2.
 
 ---
 

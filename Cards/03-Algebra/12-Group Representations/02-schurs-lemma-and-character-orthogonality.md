@@ -35,7 +35,7 @@ Dimensions add 1 + 1 + 2 = 4. Trivial: every move acts as 1. Diagonal sign: quar
 ## The formula
 
 - A **representation** gives each move $`g`$ of a group $`G`$ an invertible matrix $`\rho(g)`$, with $`\rho(g h) = \rho(g)\rho(h)`$ ([Representations](01-representations-and-maschkes-theorem.md)). $`V`$ is the space the matrices act on, and $`d`$ its dimension.
-- It is **irreducible** when no subspace except zero and all of $`V`$ is kept in place by every move.
+- It is **irreducible** when $`V`$ is nonzero and only zero and $`V`$ are kept by every move.
 - A **map that respects the moves** from $`V`$ to $`W`$ is a matrix $`T`$ with $`T\rho_V(g) = \rho_W(g)T`$ for every move: moving then mapping gives what mapping then moving gives.
 
 **Schur's lemma** is two sentences:
@@ -606,7 +606,7 @@ end SchursLemmaAndCharacterOrthogonality
 - **Signal processing.** For a clock's turns, the characters are the discrete Fourier waves; their orthogonality splits a signal into frequencies.
 
 > **Say it back**
-> A respectful map keeps its kernel and image in place, so between irreducible pieces it is zero or a perfect match, and from a piece to itself a multiple of the identity. Averaging maps around the group turns that into orthogonality of characters: different pieces give 0, the same piece 1. So a trace list, averaged against each irreducible character, counts the pieces. The tile's corner character (4, 0, 0, 2, 0) gives trivial, diagonal sign and floor, once each.
+> A respectful map keeps its kernel and image, so between irreducible pieces it is zero or a match, and over the complex numbers from a piece to itself a multiple of the identity. Averaging maps around the group turns that into orthogonality of characters: different pieces give 0, the same piece 1. So a trace list, averaged against each irreducible character, counts the pieces. The tile's corner character (4, 0, 0, 2, 0) gives trivial, diagonal sign and floor, once each.
 
 ---
 

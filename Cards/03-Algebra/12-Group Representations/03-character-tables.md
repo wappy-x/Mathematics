@@ -19,7 +19,7 @@ The six moves of a triangle, the group S3, work the same way: 3 classes, pieces 
 
 A piece's **character** lists the **trace** (sum of the diagonal) of each move's matrix. One row per piece and one column per class make the **character table**, a fingerprint of the group. It is not perfect: Q8, a different group of eight quaternions, has the same table.
 
-**A finite group has exactly as many irreducible pieces as conjugacy classes, their dimensions squared add up to the group's size, and the table of their traces identifies the group closely but not completely.**
+**Over the complex numbers, a finite group has as many irreducible pieces as conjugacy classes, their squared dimensions add to its size, and the trace table identifies it closely but not completely.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the orthogonality of characters; the tables are finite computations.
 
@@ -143,7 +143,7 @@ Second road: shuffling the three corners has trace (3, 0, 1), the corners left i
 
 The quaternion $`q_0 + q_1 i + q_2 j + q_3 k`$ acts on pairs of complex numbers by the matrix `[[q0 + q1 i, q2 + q3 i], [-q2 + q3 i, q0 - q1 i]]`, where this i is the complex number. Its trace is $`2 q_0`$: the row (2, −2, 0, 0, 0).
 
-That is the tile's table, entry for entry. Yet the tile has 5 members of order 2 (done twice they give $`e`$), and Q8 has only $`-1`$.
+That is the tile's table, entry for entry. Yet the tile has 5 members of order 2 (not $`e`$, yet done twice they give $`e`$), and Q8 has only $`-1`$.
 
 ---
 
@@ -384,7 +384,7 @@ ALL CHECKS PASS
 
 Lean proves the two counts and the dimension-1 count for every finite group, and that the tile and Q8 differ.
 
-- Take a finite group $`G`$ and numbers like the complex numbers, where division by $`\lvert G\rvert`$ is possible. Then $`G`$ has exactly $`s`$ different irreducible pieces, one per conjugacy class.
+- Take a finite group $`G`$ and a field like the complex numbers, where every polynomial has a root and $`\lvert G\rvert`$ is invertible. Then $`G`$ has $`s`$ irreducible pieces, one per conjugacy class.
 - Take the same group and numbers. Then $`d_1^2 + d_2^2 + \cdots + d_s^2 = \lvert G\rvert`$.
 - Take the same group and numbers. Then the dimension-1 pieces number $`\lvert G\rvert`$ divided by the size of the commutator subgroup.
 - The tile and Q8 are different groups: no relabelling turns one into the other.
@@ -934,7 +934,7 @@ end CharacterTables
 - **Fourier analysis.** When order never matters, every class has one member and every piece has dimension 1. The characters are the waves of a discrete Fourier transform.
 
 > **Say it back**
-> A character lists the traces of a representation's matrices, one per class. The group shuffling its own members holds each irreducible piece as often as its dimension, so squared dimensions add to the group's size. Orthogonality and Schur's lemma give one irreducible character per class. The tile: 1 + 1 + 1 + 1 + 4 = 8; S3: 1 + 1 + 4 = 6. Q8 shares the tile's table without being the same group.
+> A character lists the traces of a representation's matrices, one per class. For a finite group over the complex numbers, the group shuffling its own members holds each irreducible piece as often as its dimension, so squared dimensions add to the group's size. Orthogonality and Schur's lemma give one irreducible character per class. The tile: 1 + 1 + 1 + 1 + 4 = 8; S3: 1 + 1 + 4 = 6. Q8 shares the tile's table without being the same group.
 
 ---
 
