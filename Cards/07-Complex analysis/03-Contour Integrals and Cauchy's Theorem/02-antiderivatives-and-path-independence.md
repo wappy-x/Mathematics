@@ -1,4 +1,4 @@
-# Antiderivatives: when f = F' the path does not matter, and the one function that has none
+# Antiderivatives: when f = F' the path does not matter, and the one power that has none
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Antiderivatives
 
@@ -12,7 +12,7 @@ A complex integral along a path ([Contour integrals](01-contour-integrals.md)) a
 
 Now climb a spiral ramp round a pillar: one lap ends one floor above the start. The complex logarithm, log z, the natural altimeter for 1/z, is such a ramp: one lap round 0 raises it by 2πi. So a loop of 1/z round 0 gives 2πi, not 0. From here on, the altimeter is called an **antiderivative**.
 
-**If F′ = f on an open set holding the path, the integral of f along it is F(end) − F(start), whatever route inside that set joins them; 1/z has no antiderivative on any region that circles 0, and among the powers of z it is the only one without.**
+**If F′ = f on an open set holding a piecewise smooth path, the integral of f along it is F(end) − F(start), whatever route inside that set joins them; 1/z has no antiderivative on any region that circles 0, and among the whole powers of z away from 0 it is the only one without.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; which regions guarantee an antiderivative is proved on [Cauchy's theorem](03-cauchys-theorem.md).
 
@@ -95,8 +95,8 @@ Only the ends are left.
 
 ### Step 3: two consequences
 
-- **Path independence.** Any two paths from a to b give the same integral, since both give F(b) − F(a).
-- **Loops give zero.** A closed path ends where it starts, so the integral is F(a) − F(a) = 0. The triangle 0 → 2 → 1 + i → 0 gives 0 for z^2.
+- **Path independence.** Any two paths from a to b inside that open set give the same integral, since both give F(b) − F(a).
+- **Loops give zero.** A closed path inside that open set ends where it starts, so the integral is F(a) − F(a) = 0. The triangle 0 → 2 → 1 + i → 0 gives 0 for z^2.
 
 ### Step 4: the converse, every loop zero gives an antiderivative
 
@@ -117,7 +117,7 @@ So, for a continuous f on a connected open region, three statements are equivale
 
 ### Step 5: the one power with no antiderivative
 
-For every integer n except −1, positive, negative or zero, z^n has antiderivative z^(n+1)/(n+1), so its loops give 0. At n = −1 that recipe divides by zero. Direct computation on γ(t) = e^(2πit), velocity 2πi e^(2πit), gives f(γ)γ′ = 2πi at every instant, so the loop integral is 2πi. By Step 3, no antiderivative of 1/z exists on any region containing that circle.
+For every integer n except −1, positive, negative or zero, z^n has antiderivative z^(n+1)/(n+1) away from 0, so its loops avoiding 0 give 0. At n = −1 that recipe divides by zero. Direct computation on γ(t) = e^(2πit), velocity 2πi e^(2πit), gives f(γ)γ′ = 2πi at every instant, so the loop integral is 2πi. By Step 3, no antiderivative of 1/z exists on any region containing that circle.
 
 A local one exists: log z = ln|z| + i times the angle of z ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) has derivative 1/z. Carried once round 0, the angle grows by 2π: the ramp does not close up, and that climb is the 2πi. Cut the plane along the negative real axis and no lap is possible; there the principal Log works.
 
@@ -358,14 +358,14 @@ The two outputs match line for line.
 Lean proves the antiderivative formula for every path of finitely many smooth pieces, the facts about 1/z, and the worked numbers.
 
 - Let F′ = f on an open set holding the path, with f continuous and the path made of finitely many smooth pieces. The integral of f along it is F(end) − F(start).
-- Once anticlockwise round the unit circle, 1/z adds up to 2πi. No antiderivative of 1/z exists on any open set holding a circle centred at 0.
+- Once anticlockwise round the unit circle, 1/z adds up to 2πi. No antiderivative of 1/z exists on any open set holding a circle of positive radius centred at 0.
 - For every integer n except −1, z^n has an antiderivative on the plane with 0 removed: z^(n+1)/(n+1). 1/z has none there.
 - (1 + i)^3 = −2 + 2i. z^2 from 0 to 1 + i gives (−2 + 2i)/3 by the straight route, the broken route, and F at the ends.
 - The triangle 0 → 2 → 1 + i → 0 gives 0 for z^2.
 - For z-bar, the straight route gives 1 and the broken route gives 1 + i.
 - 1/z from 1 to −1 gives πi along the upper half and −πi along the lower half. Log(−1) − Log(1) gives πi.
 
-The trapezoid sums and their error, log z carried step by step, and the figures are left to the Python and Rust checks.
+The converse (Step 4) is proved in prose; the trapezoid sums and their error, log z carried step by step, and the figures are left to the Python and Rust checks.
 
 ```lean
 -- Antiderivatives: if F' = f on an open set holding a piecewise smooth path, the integral of f along the path is F(end) − F(start), while 1/z has no antiderivative on any open set holding a circle round 0 and is the only power of z without one.
@@ -662,7 +662,7 @@ example : (∫ t in (0 : ℝ)..1, (exp (π * I * t))⁻¹ * (π * I * exp (π * 
 - **Counting laps.** The 2πi left by 1/z becomes a counter of how many times a loop winds round a point, on [Deforming a loop](04-deforming-contours-and-winding-numbers.md).
 
 > **Say it back**
-> An antiderivative of f is a function F with F′ = f. Where one exists, the integral of f is the change in F: only the ends matter, and loops give 0. If every loop gives 0, integrating from a fixed point builds one. z^2 from 0 to 1 + i gives (−2 + 2i)/3 by any route. 1/z is the one power with none round 0: log z climbs 2πi per lap.
+> An antiderivative of f is a function F with F′ = f. On an open set where one exists, the integral of f along any piecewise smooth path there is the change in F: only the ends matter, and loops give 0. For a continuous f on a connected open region, if every loop gives 0, integrating from a fixed point builds one. z^2 from 0 to 1 + i gives (−2 + 2i)/3 by any route. 1/z is the one whole power with none away from 0: log z climbs 2πi per lap.
 
 ---
 

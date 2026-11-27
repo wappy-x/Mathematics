@@ -10,11 +10,11 @@ A car drives an oval roundabout: the lane runs 12 metres east and west of the is
 
 That count has a formula: integrate 1/(z − a) round the loop, where a is the point circled, and divide by 2πi. The result, always a whole number, is called the **winding number** from here on.
 
-It rests on [Cauchy's theorem](03-cauchys-theorem.md): a loop round a region with no hole gives 0. So a loop can be slid, stretched and shrunk freely, provided it never crosses a **singularity**, or hole for short, a point where the function has no value: here the island. The oval then gives the same integral as a small circle round the island.
+It rests on [Cauchy's theorem](03-cauchys-theorem.md): a loop round a region with no hole gives 0. So a loop can be slid, stretched and shrunk freely, provided it never crosses a **singularity**, or hole for short, a point where the function fails to be holomorphic (or has no value): here the island. The oval then gives the same integral as a small circle round the island.
 
 A double roundabout has islands at 5 and −5. A figure-eight lap winds +1 round the east island and −1 round the west: its integral is one small circle per island, counted with sign.
 
-**A loop may be slid anywhere without crossing a singularity and its integral does not change; so an integral round a loop is the sum, over the holes it circles, of a small circle's integral times the winding number, the whole number of times the loop goes round that hole.**
+**For a function holomorphic away from finitely many singularities, a closed loop of smooth pieces may be slid anywhere without crossing one and its integral does not change; so its integral is the sum, over the holes it circles, of a small anticlockwise circle's integral times the winding number, the whole number of times the loop goes round that hole.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for the functions used here and in general on [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md); the winding number is a definition, and that it is whole is proved here.
 
@@ -34,7 +34,7 @@ Notation first, in words. The loop integral sign $`\oint`$ means a contour integ
 n(\gamma, a) = \frac{1}{2\pi i}\oint_\gamma \frac{dz}{z - a}
 ```
 
-**Read it aloud:** integrate one over the arrow from the island to the car, once round, and divide by 2πi; the result counts laps.
+**Read it aloud:** for a closed loop that misses the island, integrate one over the arrow from the island to the car, once round, and divide by 2πi; the result counts laps.
 
 Now let $`f`$ be holomorphic (it has a complex derivative) everywhere in the plane except at $`m`$ holes $`a_1, \dots, a_m`$, none on the loop, and let $`C_k`$ be a small anticlockwise circle round $`a_k`$ alone.
 
@@ -68,6 +68,8 @@ so its holes are 5 and −5, with strengths 3 and 1.
 - **No hole on the loop.** Through the island, $`1/z`$ has no value: the integral is undefined.
 - **The loop is closed.** Stopped halfway, the arrow from the island has turned half a turn: only a loop ending where it began gives a whole number.
 - **Sliding never crosses a hole.** Shift the lane 20 metres east so the island falls outside, and the integral of dz/z jumps from 6.283185i to 0.
+- **Holomorphic everywhere else.** A non-holomorphic function such as z-bar changes its integral when the loop changes shape.
+- **Finitely many smooth pieces.** Corners are allowed; the loop must have finite length.
 
 ---
 
@@ -79,7 +81,7 @@ A loop surrounding only points where $`f`$ is holomorphic gives 0, so two loops 
 
 ### Step 1: one lap of a small circle gives 2πi
 
-Walk a circle of radius $`r`$ round the island: $`z = r(\cos t + i\sin t)`$ as $`t`$ runs from 0 to 2π. Then $`dz/dt = r(-\sin t + i\cos t) = i z`$. So $`dz/z = i\,dt`$, and one lap gives $`\int_0^{2\pi} i\,dt = 2\pi i`$, whatever $`r`$ is.
+Walk a circle of radius $`r`$ round the island: $`z = r(\cos t + i\sin t)`$ as $`t`$ runs from 0 to 2π. Then $`dz/dt = r(-\sin t + i\cos t) = i z`$. So $`dz/z = i\,dt`$, and one lap gives $`\int_0^{2\pi} i\,dt = 2\pi i`$, for every positive radius $`r`$.
 
 With the island at $`a_k`$ and strength $`c_k`$ the same steps give $`2\pi i\,c_k`$: at 5 with strength 3, 18.849556i.
 
@@ -115,7 +117,7 @@ The double roundabout's $`f`$ splits into $`3/(z - 5)`$ and $`1/(z + 5)`$. By th
 \oint_\gamma f\,dz = (+1)(2\pi i \cdot 3) + (-1)(2\pi i \cdot 1) = 4\pi i.
 ```
 
-For a general $`f`$, subtract near each hole the part that blows up there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: The circle's fundamental group is the integers.
+For a general $`f`$, subtract near each hole the part that blows up there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md).
 
 ### The picture: the figure-eight round two islands
 
@@ -351,8 +353,8 @@ Lean proves the three general facts for every loop and function that obey When i
 - A loop's integral is the sum, over the holes, of its winding number round each hole times that hole's small-circle integral.
 - This holds for any f holomorphic except at finitely many holes, and any closed loop of smooth pieces that misses them.
 - Each small circle runs anticlockwise round one hole alone, with any radius that keeps the other holes outside.
-- The winding number of a closed loop round any point off it is a whole number.
-- For a building block c/(z − a), one anticlockwise lap of a circle round a gives 2πi c, whatever the radius.
+- The winding number of a closed loop of smooth pieces round any point off it is a whole number.
+- For a building block c/(z − a), one anticlockwise lap of a circle round a gives 2πi c, whatever the positive radius.
 - The double roundabout's f splits into 3/(z − 5) + 1/(z + 5), so its strengths are 3 and 1.
 - Dividing 2 × 2πi and −2πi by 2πi gives 2 and −1. The figure-eight gives 4πi; the oval lane round both holes gives 8πi.
 - The mistakes miss: direction ignored gives 8πi, not 4πi; two laps read as once give 2πi, not 4πi.
@@ -961,24 +963,24 @@ example : (1 : ℤ) * 3 + 1 * 1 ≠ 1 * 3 + (-1) * 1 ∧ (1 : ℤ) ≠ 2 := by d
 - **Counting roots.** Winding a polynomial's value round 0 as its input circles a loop counts the roots inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
 > **Say it back**
-> A loop's integral is unchanged when the loop slides without crossing a hole. So any loop trades for small circles round its holes, each giving 2πi times the hole's strength. The winding number, the integral of dz/(z − a) over 2πi, counts net anticlockwise laps round a and is always whole. Each circle times its winding number, added up, is the loop's integral.
+> For a holomorphic function, a closed loop's integral is unchanged when the loop slides without crossing a hole. So when f is holomorphic away from finitely many holes, a closed loop of smooth pieces trades for small anticlockwise circles round those holes. For a closed loop missing a, the winding number, the integral of dz/(z − a) over 2πi, counts net anticlockwise laps round a and is always whole. Each small circle's integral times its winding number, added up, is the loop's integral.
 
 ---
 
 ## What this builds on
 
-- [Cauchy's theorem](03-cauchys-theorem.md): a loop round a hole-free region gives 0, the one fact every step here applies.
+- [Cauchy's theorem](03-cauchys-theorem.md): a holomorphic function integrates to 0 round any loop in a hole-free region, the fact every step here applies.
 
 ## Where this goes next
 
 - [Cauchy's integral formula](05-cauchys-integral-formula.md): a small circle reads off $`f`$ at its centre.
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the part that blows up at a hole.
-- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum in general.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum for any holomorphic function with isolated singularities.
 - [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): a loop that never crosses itself winds ±1 inside, 0 outside.
-- [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md): winding without integrals.
+- [The circle's fundamental group is the integers](../../17-Topology/04-Homotopy/04-fundamental-group-of-the-circle.md): counting how loops on a circle wrap round it without integrals.
 - [Turning and winding numbers](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/08-turning-number-and-winding-number.md): the turns of a curve's own direction.
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 - [Index theory](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/11-index-theory-in-the-plane.md): count how often the arrows turn as you walk round a loop, and a closed orbit must enclose rests whose counts add to one.
 
 A small circle round a hole gives 2πi times its strength; what the circle gives for $`f(z)/(z - a)`$, with $`f`$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).

@@ -1,4 +1,4 @@
-# Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every polynomial has a root
+# Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every non-constant polynomial has a root
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Liouville's theorem
 
@@ -12,7 +12,7 @@ A sharper case: on the real line z^4 + 1 never drops below 1, so it has no real 
 
 The proof goes through a fact about functions. Call a function **entire** when it is holomorphic (has a complex derivative) at every point of the plane. If an entire function's size never passes a fixed ceiling, it cannot change at all. Were a polynomial rootless, 1 divided by it would be entire and, being tiny far out, bounded. So it would be constant. It is not.
 
-**A bounded entire function is constant (Liouville's theorem); applied to 1 divided by a polynomial, it forces a root, and peeling roots one at a time splits degree n into n brackets.**
+**A bounded entire function is constant (Liouville's theorem); applied to 1 divided by a non-constant complex polynomial, it forces a root, and peeling roots one at a time splits degree n into n brackets.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with the fundamental theorem of algebra as its corollary.
 
@@ -26,13 +26,13 @@ To scale, 50 units per 1. Four dots at distance 1 are the roots of z^4 + 1; two 
 
 ## The formula
 
-$`f'(a)`$ is the complex derivative of $`f`$ at the point $`a`$. The loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)). $`M(r)`$ is the largest size $`|f(z)|`$ on the circle of radius $`r`$ round $`a`$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
+$`f'(a)`$ is the complex derivative of $`f`$ at the point $`a`$. The loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)). For $`f`$ holomorphic on and inside the circle of radius $`r > 0`$ round $`a`$, let $`M(r)`$ be the largest size $`|f(z)|`$ on that circle. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
 
 ```math
 |f'(a)| \le \frac{M(r)}{r}
 ```
 
-**Read it aloud:** the slope at the centre is at most the largest size on the circle over the radius.
+**Read it aloud:** for f holomorphic on and inside a circle of positive radius, the slope at the centre is at most the largest size on the circle over the radius.
 
 Liouville's theorem: if $`f`$ is entire and $`|f(z)| \le M`$ for every $`z`$, then
 
@@ -52,7 +52,7 @@ p(z) = a_n (z - z_1)(z - z_2)\cdots(z - z_n)
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$ | the function, holomorphic inside the circle | 1/(z^4 + 1) | — |
+| $`f`$ | the function, holomorphic on and inside the circle | 1/(z^4 + 1) | — |
 | $`a`$ | the centre, where the slope is taken | 1 | — |
 | $`f'(a)`$ | the complex derivative at $`a`$ | -1, by two roads | — |
 | $`r`$ | the circle's radius | 0.25, 0.5, 0.75 | bound shrinks if $`M(r)`$ holds still |
@@ -90,7 +90,7 @@ Take p(z) = z^4 + 1, f = 1/p, a = 1. Here p(1) = 2 and p'(1) = 4, and the recipr
 
 ### Step 2: a bounded entire function has no slope, so it is constant
 
-If $`f`$ is entire, the circle round $`a`$ may have any radius; if $`|f(z)| \le M`$ everywhere, then $`|f'(a)| \le M/r`$ for every $`r`$. That tends to 0, so $`f'(a) = 0`$ at every $`a`$. Between two points, $`f`$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
+If $`f`$ is entire, the circle round $`a`$ may have any positive radius; if $`|f(z)| \le M`$ everywhere, then $`|f'(a)| \le M/r`$ for every $`r > 0`$. That tends to 0, so $`f'(a) = 0`$ at every $`a`$. Between two points, $`f`$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
 
 1/(z^4 + 1) escapes. Round 1 its M(r)/r falls from 3.038576 at r = 0.25 to 2.306999 at r = 0.5, then jumps to 21.883435 at r = 0.75. The root 0.765367 away, where 1/p blows up, stops the circle growing.
 
@@ -481,7 +481,7 @@ example (z : ℂ) :
 - **Root-finding software.** Solvers peel roots one at a time, as the code does; the theorem guarantees each hunt has a quarry.
 
 > **Say it back**
-> The slope at a point is at most the largest size on a circle round it, over the radius. A bounded entire function can use every radius, so its slope is 0 and it is constant. A rootless polynomial would make 1/p bounded and entire, hence constant, which it is not. Peeling roots gives n brackets: z^4 + 1 four, the football 5(z - 2 - i)(z - 2 + i).
+> For a function holomorphic on and inside a circle of positive radius, the slope at its centre is at most the largest size on the circle over the radius. A bounded entire function can use every positive radius, so its slope is 0 and it is constant. A rootless complex polynomial of degree at least 1 would make 1/p bounded and entire, hence constant, which it is not. Peeling roots gives n brackets: z^4 + 1 four, the football 5(z - 2 - i)(z - 2 + i).
 
 ---
 
@@ -496,10 +496,10 @@ example (z : ℂ) :
 - [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): the winding-count proof, with no derivatives.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
 - [Rouche's theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
-- [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): a number system where every polynomial splits is **algebraically closed**.
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): a number system where every non-constant polynomial splits is **algebraically closed**.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 
-This card proves the n roots exist but not where they lie; how many sit inside a given loop is the question [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) answers.
+This card proves the n roots exist but not where they lie; how many sit inside a given loop is the question [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) answers. Next on this shelf, [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md) uses Liouville's theorem to prove Cauchy's theorem on regions with holes.
 
 ---
 

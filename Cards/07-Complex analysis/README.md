@@ -61,13 +61,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Integrals along paths and the ML bound, antiderivatives and path independence, Cauchy's theorem, deforming loops and winding numbers, Cauchy's integral formula, derivatives from the boundary with Cauchy's estimates, Liouville and the fundamental theorem of algebra. Needs wing 06 line integrals and Green's theorem.*
 
 1. [Contour integrals: add up f(z) dz along a path, and the loop round the origin that gives 2 pi i](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)
-2. [Antiderivatives: when f = F' the path does not matter, and the one function that has none](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)
+2. [Antiderivatives: when f = F' the path does not matter, and the one power that has none](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)
 3. [Cauchy's theorem: a holomorphic function integrates to zero round any loop with no hole inside](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)
 4. [Deforming a loop: slide it anywhere without crossing a singularity, and count how many times it winds](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)
-5. [Cauchy's integral formula: the values on a loop fix every value inside](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)
+5. [Cauchy's integral formula: for a holomorphic function, the values on a loop fix every value inside](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)
 6. [Derivatives from the boundary: differentiate under the integral, so holomorphic once means holomorphic forever, with a size limit on every derivative](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)
-7. [Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every polynomial has a root](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)
-8. [Cauchy's theorem for cycles: a loop integral is zero whenever the loops wind zero times round every point outside the domain](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md)
+7. [Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every non-constant polynomial has a root](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)
+8. [Cauchy's theorem for cycles: a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain](03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/08-homology-form-of-cauchys-theorem.md)
 
 [↑ Back to the shelves](#top)
 

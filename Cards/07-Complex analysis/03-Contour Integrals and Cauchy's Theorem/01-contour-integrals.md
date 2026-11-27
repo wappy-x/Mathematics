@@ -12,7 +12,7 @@ Each stride is a small arrow from one footfall to the next, itself a complex num
 
 Round one lap, the conjugate, z mirrored in the real axis, gives 2πi, which is 6.283185i. The function z gives 0. One over z gives 2πi again. A fourth, e^z divided by z^2, is bounded before it is computed: size at most 2πe, 17.079468; true size 6.283185.
 
-**A contour integral adds, stride by stride along a directed path, the value of f times the complex step taken; one lap of the unit circle, 1/z times each stride points straight up, so they add to 2πi.**
+**A contour integral adds, stride by stride along a directed path of smooth pieces, the value of f times the complex step taken; on one anticlockwise lap of the unit circle, 1/z times each stride points straight up, so they add to 2πi.**
 
 **What kind of fact this is:** a definition, with two theorems proved on this card in Why it works: the 2πi lap, and the bound of size by largest value times length.
 
@@ -26,7 +26,7 @@ To scale: 80 units per 1, centre 0 at (180, 120). The runner at angle π/4 is at
 
 ## The formula
 
-Notation first, in words. A path C is traced by a point z(t) as a real t runs from a to b, direction included. Its integral is a tall S with C beneath; on a closed loop the S carries a small circle, the loop integral sign, read "integral round C".
+Notation first, in words. A path C of finitely many smooth pieces is traced by a point z(t) as a real t increases from a to b, direction included. Its integral is a tall S with C beneath; on a closed loop the S carries a small circle, the loop integral sign, read "integral round C".
 
 ```math
 \int_C f(z)\,dz = \int_a^b f\big(z(t)\big)\,z'(t)\,dt
@@ -48,7 +48,7 @@ The track's two facts:
 \oint_{|z|=1} z^n\,dz = \begin{cases} 2\pi i & n=-1\\ 0 & \text{every other whole number } n\end{cases} \qquad\qquad \left|\int_C f(z)\,dz\right| \le M L
 ```
 
-**Read it aloud:** round the unit circle a whole power of z gives 2πi only for 1/z; along any path the integral's size is at most f's largest size there times the length: the ML bound.
+**Read it aloud:** once anticlockwise round the unit circle, a whole power of z gives 2πi only for 1/z. Along a path of smooth pieces and finite length, the integral's size is at most f's largest size there times the length: the ML bound.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ The track's two facts:
 - **f continuous on the path.** Then the stride sums settle to one number. A path through 0 gives 1/z no integral.
 - **Direction counts.** Clockwise, dz/z gives −2πi.
 - **M bounds f everywhere on the path.** Read at z = −1 only, e^z/z^2 has size 0.367879, and 0.367879 × 6.283185 = 2.311455, below the true 6.283185.
-- **No holomorphy needed.** The conjugate has no complex derivative anywhere, yet its integral is defined.
+- **No complex derivative needed.** The conjugate has no complex derivative anywhere, yet its integral is defined.
 
 ---
 
@@ -353,7 +353,7 @@ Lean proves the track's whole-power laps, the conjugate's lap for every radius, 
 
 - Round the unit circle, run once anticlockwise, z^n dz gives 2πi when n = −1 and 0 for every other whole number n.
 - Round a circle of radius R centred at 0, run once anticlockwise, the conjugate's lap gives 2πiR². On the unit circle that is 2πi.
-- Take a path of finitely many smooth pieces, f continuous on it, and f's size at most M everywhere on it. The integral's size is at most M times the length.
+- Take a path of finite length made of finitely many smooth pieces, f continuous on it, and f's size at most M everywhere on it. The integral's size is at most M times the length.
 
 The stride sums, the e^z/z^2 lap, the clockwise, joined and repeated laps, and the figure are left to the Python and Rust checks.
 
@@ -447,21 +447,21 @@ theorem norm_contour_integral_le_ml (f : ℂ → ℂ) (z z' : ℝ → ℂ) (a b 
 - **Counting primes.** A contour integral of a function built from the primes counts them: Perron's formula.
 
 > **Say it back**
-> A contour integral adds f times each directed stride along a path. Parametrising turns it into an ordinary integral of f(z(t)) z'(t). Round the unit circle 1/z turns every stride straight up, so the lap gives 2πi; so does the conjugate, equal to 1/z there; z gives 0. Reversing flips the sign, and joined paths add. The size is at most f's largest size on the path times the length.
+> A contour integral adds f times each directed stride along a path of finitely many smooth pieces. Parametrising turns it into an ordinary integral of f(z(t)) z'(t). Once anticlockwise round the unit circle, 1/z turns every stride straight up, so the lap gives 2πi; so does the conjugate, equal to 1/z there; z gives 0. Reversing flips the sign, and joined paths add. On a path of finite length, the size is at most f's largest size on the path times the length.
 
 ---
 
 ## What this builds on
 
-- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it), the track's parametrisation.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it) traces the unit circle, giving the track's parametrisation and velocity.
 - [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): holomorphic, having a complex derivative throughout a region; z is, z̄ is not.
-- [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): the real integrals inside, and Green's theorem.
+- [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): the real line integrals that make up the real and imaginary parts.
 
 ## Where this goes next
 
 - [Antiderivatives](02-antiderivatives-and-path-independence.md): when an integral depends only on the path's two ends.
 - [Perron's formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/04-perrons-formula.md): a contour integral that counts primes.
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 
 Round the track z gave 0 while z̄ and 1/z gave 2πi; why some functions give 0 on every loop is where the shelf goes from here.
 

@@ -1,4 +1,4 @@
-# Cauchy's theorem for cycles: a loop integral is zero whenever the loops wind zero times round every point outside the domain
+# Cauchy's theorem for cycles: a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Cauchy's theorem for cycles
 
@@ -48,7 +48,7 @@ n(\sigma, a) = 0 \text{ for every } a \notin U \quad\Longrightarrow\quad \oint_\
 
 **Read it aloud:** if the cycle winds zero times round everything outside U, every function holomorphic on U integrates to zero over it.
 
-On the way, the proof gives Cauchy's integral formula for cycles, for $`z`$ in U off σ:
+Under the same conditions ($`\sigma`$ homologous to zero in U, $`f`$ holomorphic on U), the proof gives Cauchy's integral formula for cycles, for $`z`$ in U off σ:
 
 ```math
 n(\sigma, z)\, f(z) = \frac{1}{2\pi i}\oint_\sigma \frac{f(w)}{w - z}\,dw
@@ -71,7 +71,7 @@ C(r) is the circle of radius r round 0, run anticlockwise; the example cycle is 
 
 - **The cycle winds zero times round every point outside U.** C(2) alone winds once round 0, outside the washer: 6.283185i, not 0.
 - **The condition is also necessary.** If the cycle winds round an outside point $`a`$, then 1/(z − a) gives $`2\pi i\, n(\sigma, a)`$, not 0.
-- **Every path is closed and lies in U.** Off U, f may have no value; an open path has no winding number.
+- **Every path is closed, piecewise smooth and lies in U.** Off U, f may have no value; an open path has no winding number.
 - **f is holomorphic on all of U.** 1/(z − 1.75) has its bad point between the circles, where the cycle winds once: 2πi, not 0.
 
 ---
@@ -147,7 +147,7 @@ Nothing above used the washer's shape. Take a disc of radius 4 minus two holes, 
 g(z) = \frac{1}{z - 1.5} + \frac{3}{z + 1.5}
 ```
 
-with strengths 1 and 3, like two springs in the holes. The cycle is the circle of radius 3 round 0 minus a circle of radius 1 round each hole. It winds 1 − 1 = 0 times round each hole and 0 times beyond radius 4, so every function holomorphic there gives 0.
+with strengths 1 and 3, like two springs in the holes. The cycle is the circle of radius 3 round 0 minus a circle of radius 1 round each hole. It winds 1 − 1 = 0 times round each hole and 0 times at or beyond radius 4, so every function holomorphic there gives 0.
 
 ---
 
@@ -983,27 +983,28 @@ example : (-1 : ℚ) / (3 / 2) + 3 / (3 / 2) = 4 / 3 := by norm_num
 - **Counting eigenvalues in a ring.** Contour-integral eigenvalue solvers count a matrix's eigenvalues in a ring as the outer circle's integral minus the inner one's.
 
 > **Say it back**
-> A cycle is a sum of closed paths with whole-number coefficients. If it winds zero times round every point outside the open set U, every function holomorphic on U integrates to zero over it. Dixon glues two integrals into one function on the plane, and Liouville makes it zero. On the washer, C(2) − C(1.5) gives 2πi − 2πi = 0 for 1/z: the fountain's band lets out the water it takes in.
+> A cycle in an open set U is a sum of closed piecewise smooth paths in U with whole-number coefficients. If it winds zero times round every point outside U, every function holomorphic on U integrates to zero over it. Dixon glues two integrals into one function on the plane, and Liouville makes it zero. On the washer, C(2) − C(1.5) gives 2πi − 2πi = 0 for 1/z: the fountain's band lets out the water it takes in.
 
 ---
 
 ## What this builds on
 
-- [Contour integrals](01-contour-integrals.md): the ML bound in Step 4.
+- [Contour integrals](01-contour-integrals.md): contour integrals along piecewise smooth paths, and the ML bound in Step 4.
 - [Cauchy's theorem](03-cauchys-theorem.md): zero round the lemma's small triangles.
-- [Deforming a loop](04-deforming-contours-and-winding-numbers.md): the winding number, a whole number fixed while the point moves.
+- [Deforming a loop](04-deforming-contours-and-winding-numbers.md): the winding number, a whole number fixed while the point moves without crossing the loop.
 - [Cauchy's integral formula](05-cauchys-integral-formula.md): the single-loop formula, here extended to cycles.
 - [Derivatives from the boundary](06-derivatives-from-the-boundary.md): f' is continuous, and Morera's theorem, both in the lemma.
 - [Liouville's theorem](07-liouville-and-the-fundamental-theorem-of-algebra.md): bounded and holomorphic everywhere means constant (Step 4).
 
 ## Where this goes next
 
+- [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): the next shelf starts here, turning Cauchy's integral formula into a power series out to the nearest singularity.
 - [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): cycles in general, where "homologous to zero" means "the rim of something filled in".
 - [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the formula on outer minus inner circle, expanded in powers of z and 1/z.
 - [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): bad points inside, counted with their laps. That card proves it for one loop in a disc; this card carries it to any cycle homologous to zero.
 - [Runge's theorem](../04-Taylor%20Series,%20Zeros%20and%20Rigidity/11-runges-theorem.md): which functions on a region with holes rational functions can approximate.
 
-Left open: what a cycle gives when U itself holds bad points, which the residue theorem answers.
+Left open: what a cycle gives when U itself holds bad points, which [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md) answers; meanwhile, the next shelf starts with [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md), expanding Cauchy's formula into power series.
 
 ---
 

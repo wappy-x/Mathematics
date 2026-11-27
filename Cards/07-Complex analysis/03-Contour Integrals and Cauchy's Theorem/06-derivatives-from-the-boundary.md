@@ -12,7 +12,7 @@ Holomorphic functions (those with a complex derivative at every point of a regio
 
 The same integrals give a ceiling. On this loop the size of z^3 never passes 8, reached at 2. That alone caps the second derivative at 1 at 2 × 8 = 16; the true 6 sits under it.
 
-**The n-th derivative of a holomorphic f at a is n!/(2πi) times one loop integral of f divided by (z − a)^(n+1); so one complex derivative brings all the others, each capped by n! M / r^n on a circle of radius r where |f| stays below M.**
+**For f holomorphic on and inside a simple anticlockwise loop and a strictly inside it, the n-th derivative of f at a is n!/(2πi) times the loop integral of f divided by (z − a)^(n+1); so one complex derivative brings all the others, each capped by n! M / r^n on a circle of positive radius r round a where |f| stays at most M.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with Cauchy's estimate as a corollary and Morera's theorem as its converse.
 
@@ -32,17 +32,17 @@ Notation first, in words. $`f^{(n)}`$ means f differentiated n times: $`f^{(0)}`
 f^{(n)}(a) = \frac{n!}{2\pi i}\oint_C \frac{f(z)}{(z-a)^{n+1}}\,dz
 ```
 
-**Read it aloud:** the n-th derivative of f at a is n factorial over two-pi-i, times the loop integral of f of z over z minus a to the power n plus one.
+**Read it aloud:** for f holomorphic on and inside a simple anticlockwise loop and a strictly inside it, the n-th derivative of f at a is n factorial over two-pi-i, times the loop integral of f of z over z minus a to the power n plus one.
 
 With n = 0 this is Cauchy's integral formula ([Cauchy's integral formula](05-cauchys-integral-formula.md)). Two consequences follow.
 
-**Cauchy's estimate.** If C is the circle of radius r round a and $`|f(z)| \le M`$ on it, then
+**Cauchy's estimate.** If f is holomorphic on and inside the circle C of radius r > 0 round a and $`|f(z)| \le M`$ on it, then
 
 ```math
 |f^{(n)}(a)| \le \frac{n!\,M}{r^n}
 ```
 
-**Morera's theorem.** If f is continuous on a disc and its loop integral round every triangle inside the disc is 0, then f is holomorphic there: Cauchy's theorem run backwards.
+**Morera's theorem.** If f is continuous on an open disc and its loop integral round every triangle inside the disc is 0, then f is holomorphic there: Cauchy's theorem run backwards.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -58,9 +58,9 @@ With n = 0 this is Cauchy's integral formula ([Cauchy's integral formula](05-cau
 ### When it holds
 
 - **f holomorphic on and inside the loop.** For 1/z on the circle of radius 1.5 round 1, which circles 0 too, the loop gives 0, not f″(1) = 2.
-- **a strictly inside, one anticlockwise lap.** Outside gives 0; clockwise flips the sign.
-- **The estimate needs a circle centred at a, with M measured on it.** M taken at the centre, 1, gives a "bound" of 2, below the true 6.
-- **Morera needs continuity and every triangle.** One nonzero triangle proves f is holomorphic on no disc containing it.
+- **a strictly inside, one anticlockwise lap of a simple piecewise smooth loop.** Outside gives 0; on the loop the integral does not exist; clockwise flips the sign.
+- **The estimate needs a circle of positive radius centred at a, with M measured on it.** M taken at the centre, 1, gives a "bound" of 2, below the true 6.
+- **Morera needs a continuous function on an open disc and every triangle.** One nonzero triangle proves f is holomorphic on no open disc containing it.
 
 ---
 
@@ -129,7 +129,7 @@ Upper line: the bound 2(1 + r)^3/r^2, lowest at r = 2. Flat lower line: the true
 
 ### Step 6: Morera's theorem, the converse
 
-Suppose f is continuous on a disc and its integral round every triangle there is 0. Fix the disc's centre c and let F(z) be the integral of f along the straight segment from c to z. The triangle condition and the continuity of f make F's difference quotients tend to f, so F′ = f and F is holomorphic ([Antiderivatives](02-antiderivatives-and-path-independence.md)). By Step 3, F′ is holomorphic too. That is f.
+Suppose f is continuous on an open disc and its integral round every triangle there is 0. Fix the disc's centre c and let F(z) be the integral of f along the straight segment from c to z. The triangle condition and the continuity of f make F's difference quotients tend to f, so F′ = f and F is holomorphic ([Antiderivatives](02-antiderivatives-and-path-independence.md)). By Step 3, F′ is holomorphic too. That is f.
 
 Round the regatta triangle 0 → 2 → 1 + i, z^3 gives 0 ([Cauchy's theorem](03-cauchys-theorem.md)). The conjugate z-bar (z reflected in the real axis) gives 2i: twice the triangle's area, 1, times i. A holomorphic function gives 0 round every triangle, so z-bar is holomorphic on no disc containing the course.
 
@@ -365,13 +365,13 @@ The two outputs match line for line.
 Lean proves the derivative formula, holomorphic once means holomorphic forever, and Cauchy's estimate, for every f, circle and n, plus the card's arithmetic.
 
 - Let f be holomorphic on and inside a circle, with a strictly inside it. Then $`f^{(n)}(a)`$ is n!/(2πi) times the loop integral of f(z)/(z − a)^(n+1), for every n.
-- If f is holomorphic on a region, then every derivative $`f^{(n)}`$ is holomorphic on that region too.
+- If f is holomorphic on an open set, then every derivative $`f^{(n)}`$ is holomorphic on that open set too.
 - Cauchy's estimate: let f be holomorphic on and inside the circle of radius r > 0 round a. If |f(z)| ≤ M on that circle, then $`|f^{(n)}(a)| \le n!\,M/r^n`$ for every n.
 - The worked arithmetic: the power-rule values 1, 3, 6, 6, 0, the coefficients 1, 3, 3, 1, and f″(1) = 2! × 3 = 6.
 - The bounds 8, 8, 16, 48, 192 for n = 0 to 4, and 27, 16, 13.5 at r = 0.5, 1, 2.
 - The mistakes: the loop round 0 adds 2! × 1/(0 − 1)^3 = −2, and M read at the centre gives the "bound" 2, below 6.
 
-Morera's theorem, the loop sums, the regatta triangle, the e^z errors and the x|x| contrast are left to the Python and Rust checks.
+Morera's theorem is proved in prose; the loop sums, the regatta triangle, the e^z errors and the x|x| contrast are left to the Python and Rust checks.
 
 ```lean
 -- Derivatives from the boundary: for f holomorphic on and inside a circle, every derivative at an inside point is n!/(2πi) times the loop integral of f(z)/(z - a)^(n+1), every derivative of a holomorphic function is again holomorphic, and Cauchy's estimate caps the n-th derivative at the centre by n! M / r^n.
@@ -556,7 +556,7 @@ example : ((0 : ℚ) * 0 - 2 * 0 + (2 * 1 - 1 * 0) + (1 * 0 - 0 * 1)) / 2 = 1 :=
 - **Proving limits holomorphic.** Triangle integrals pass to a uniform limit (the largest gap shrinks to 0 everywhere at once), so by Morera the limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 > **Say it back**
-> In Cauchy's integral formula a sits only in 1/(z − a). Differentiating that n times gives n!/(z − a)^(n+1), so every derivative is a loop integral, and each is again holomorphic. The integral's size gives the cap n! M / r^n. Morera: zero round every triangle means holomorphic.
+> In Cauchy's integral formula, for f holomorphic on and inside a simple anticlockwise loop and a strictly inside it, a sits only in 1/(z − a). Differentiating that n times gives n!/(z − a)^(n+1), so every derivative is a loop integral, and each is again holomorphic. On a circle of positive radius r round a where |f| stays at most M, the integral's size gives the cap n! M / r^n. Morera: a continuous function on an open disc with zero integral round every triangle there is holomorphic.
 
 ---
 
@@ -569,7 +569,7 @@ example : ((0 : ℚ) * 0 - 2 * 0 + (2 * 1 - 1 * 0) + (1 * 0 - 0 * 1)) / 2 = 1 :=
 - [Liouville's theorem](07-liouville-and-the-fundamental-theorem-of-algebra.md): the estimate |f′(a)| ≤ M/r on ever larger circles forces a bounded function holomorphic on the whole plane to be constant.
 - [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): all the derivatives assembled into a power series that equals f.
 - [Harmonic functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of f has second derivatives because f″ exists, which is what lets it be harmonic (its second derivatives in x and in y add to 0).
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 
 The question this card leaves open: if one function stays below the same M on circles of every radius, how small must its derivatives be?
 

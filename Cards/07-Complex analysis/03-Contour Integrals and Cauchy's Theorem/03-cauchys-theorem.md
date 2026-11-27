@@ -12,7 +12,7 @@ Multiply a function's value by each small step of the boat and add: that sum is 
 
 Now take 1/z, which has no value at 0, the start buoy. Move the course one kilometre east and the total is 0. Triple it, with corners −2 − i, 4 − i, 1 + 2i, and the total is 2πi, about 6.283185i. Both boats pass only points where 1/z is defined; what changed is the water inside, which now holds 0.
 
-**If a function has a complex derivative at every point of a region with no holes, its integral round every closed loop in that region is 0, so it has an antiderivative there.**
+**If a function has a complex derivative at every point of a region with no holes, its integral round every closed loop of smooth pieces in that region is 0, so it has an antiderivative there.**
 
 **What kind of fact this is:** a theorem, proved in Why it works when the derivative is continuous; Goursat's stronger version is stated there and proved in a folded callout.
 
@@ -40,7 +40,7 @@ The proof's engine, Green's theorem in complex form:
 \oint_\gamma f(z)\,dz = i \iint_D \left(f_x + i\,f_y\right) dA
 ```
 
-**Read it aloud:** the loop integral is i times the area integral of f's eastward slope plus i times its northward slope.
+**Read it aloud:** round an anticlockwise non-crossing loop where f has continuous slopes on and inside it, the loop integral is i times the area integral of f's eastward slope plus i times its northward slope.
 
 The consequence, an antiderivative:
 
@@ -48,7 +48,7 @@ The consequence, an antiderivative:
 F(z) = \int_{z_0}^{z} f(w)\,dw, \qquad F'(z) = f(z)
 ```
 
-**Read it aloud:** integrating f from a base point to z, by any path, gives a function whose derivative is f.
+**Read it aloud:** integrating f from a base point to z, by any path in that hole-free region, gives a function whose derivative is f.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,6 +67,7 @@ F(z) = \int_{z_0}^{z} f(w)\,dw, \qquad F'(z) = f(z)
 - **No holes.** On the plane with 0 removed, 1/z is holomorphic everywhere, and the loop round 0 still gives 2πi.
 - **A complex derivative, not mere smoothness.** z-bar has smooth parts but no complex derivative, and gives 2i round the course.
 - **A closed loop.** An open path gives F(end) − F(start): 0.468694 + 2.287355i for e^z from 0 to 1 + i.
+- **Finitely many smooth pieces.** Corners are allowed, as on the triangle; the path must have finite length.
 
 ---
 
@@ -84,7 +85,7 @@ Write f = u + iv and dz = dx + i dy, and multiply out:
 f\,dz = (u\,dx - v\,dy) + i\,(v\,dx + u\,dy)
 ```
 
-Each bracket is a real line integral of the kind Green's theorem handles: the loop integral of P dx + Q dy equals the area integral of Q_x − P_y, for real functions P and Q.
+Each bracket is a real line integral of the kind Green's theorem handles: round an anticlockwise simple loop, the integral of P dx + Q dy equals the area integral of Q_x − P_y, for smooth real functions P and Q.
 
 ### Step 2: apply Green twice
 
@@ -813,7 +814,7 @@ example : (140 + 50 * (-2), 150 - 50 * (-1)) = ((40 : ℤ), (200 : ℤ)) ∧
 - **Inverse transforms.** Sliding an inverse transform's vertical line across a strip with no singularities leaves it unchanged: this theorem on the rectangle between the lines ([Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)).
 
 > **Say it back**
-> A complex loop integral is two real line integrals. Green turns them into area integrals, and Cauchy-Riemann makes both integrands zero. Goursat gets the same zero without a continuous derivative. So in a region with no holes, a holomorphic function integrates to 0 round every loop and has an antiderivative. A hole, like 0 for 1/z, can leave 2πi.
+> A complex loop integral is two real line integrals. Green turns them into area integrals, and Cauchy-Riemann makes both integrands zero. Goursat gets the same zero without a continuous derivative. So in a region with no holes, a holomorphic function integrates to 0 round every closed loop of smooth pieces and has an antiderivative. A hole, like 0 for 1/z, can leave 2πi.
 
 ---
 
@@ -828,8 +829,8 @@ example : (140 + 50 * (-2), 150 - 50 * (-1)) = ((40 : ℤ), (200 : ℤ)) ∧
 
 - [Deforming a loop](04-deforming-contours-and-winding-numbers.md): sliding loops, and counting turns round a hole.
 - [Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): moving a transform's line of integration.
-- [Cauchy's integral formula](05-cauchys-integral-formula.md): a loop round one hole recovers the function's value there.
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Cauchy's integral formula](05-cauchys-integral-formula.md): for a function holomorphic on and inside a loop, the rim values fix every value inside.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 
 Left open: when a loop does surround a hole, what decides the total, and why does 1/z give exactly 2πi?
 

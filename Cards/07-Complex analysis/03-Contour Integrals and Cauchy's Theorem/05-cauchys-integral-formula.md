@@ -1,4 +1,4 @@
-# Cauchy's integral formula: the values on a loop fix every value inside
+# Cauchy's integral formula: for a holomorphic function, the values on a loop fix every value inside
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Contour Integrals and Cauchy's Theorem](../README.md#s03) → Cauchy's integral formula
 
@@ -12,7 +12,7 @@ From the rim alone, the value at the centre comes back: 1, which is e^0. The val
 
 From here on the rim is called the loop, and the function must be holomorphic: it has a complex derivative at every point on and inside the loop. For such a function the inside has no freedom. The rim decides it.
 
-**For a function with a complex derivative on and inside a loop, the value at any inside point equals one loop integral of the rim values, and on a circle round that point the value is the plain average of the rim.**
+**For a function with a complex derivative on and inside a simple anticlockwise loop, the value at any point strictly inside equals one loop integral of the rim values, and on a circle round that point the value is the plain average of the rim.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -32,7 +32,7 @@ Notation first, in words. The loop integral sign $`\oint_C`$ means: walk once ro
 f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz
 ```
 
-**Read it aloud:** the value of f at the inside point a is one over two-pi-i times the loop integral of f of z over z minus a.
+**Read it aloud:** for f holomorphic on and inside a simple anticlockwise loop and a strictly inside it, the value of f at a is one over two-pi-i times the loop integral of f of z over z minus a.
 
 On a circle of radius r centred at a itself, write each rim point as $`z = a + re^{i\theta}`$, with θ the angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The formula becomes:
 
@@ -40,7 +40,7 @@ On a circle of radius r centred at a itself, write each rim point as $`z = a + r
 f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta
 ```
 
-**Read it aloud:** the value at the centre is the average of the values round the rim.
+**Read it aloud:** for f holomorphic on and inside a circle of positive radius, the value at the centre is the average of the values round the rim.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta
 
 - **f holomorphic on and inside the loop.** Drop it and the formula fails: z-bar has no complex derivative, and the loop returns 0 at the point 0.5, not 0.5.
 - **a strictly inside.** Outside, the recipe returns 0: at 4 it gives 0, not e^4 = 54.598150. On the loop itself the integral does not exist, since z − a hits 0.
-- **One anticlockwise lap.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number (the count of laps round a) times f(a) ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)).
+- **One anticlockwise lap of a simple piecewise smooth loop.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number (the count of laps round a) times f(a) ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)).
 - **The average form needs a circle centred at a.** On any other loop only the integral form holds.
 
 ---
@@ -107,7 +107,7 @@ Outside, the integrand has no bad point inside, and Cauchy's theorem gives 0.
 
 ### Step 6: any integral with one simple pole inside
 
-A simple pole is a point where the integrand blows up like 1/(z − a). Any integrand of the form g(z)/(z − a), with g holomorphic inside and a inside, is Cauchy's formula read backwards:
+A simple pole is a point where the integrand blows up like 1/(z − a). Any integrand of the form g(z)/(z − a), with g holomorphic on and inside a simple anticlockwise loop and a strictly inside, is Cauchy's formula read backwards:
 
 ```math
 \oint_C \frac{g(z)}{z-a}\,dz = 2\pi i\, g(a)
@@ -115,7 +115,7 @@ A simple pole is a point where the integrand blows up like 1/(z − a). Any inte
 
 Take e^z/(z(z − 3)) round the rim. The point 3 lies outside, so write it as g(z)/(z − 0) with g(z) = e^z/(z − 3), holomorphic inside. The answer is 2πi × e^0/(0 − 3) = −2.094395i. The loop sum with 128 points prints the same.
 
-A second road to the formula: the function (f(z) − f(a))/(z − a) is holomorphic inside except at a, where it stays bounded, close to f′(a), the complex derivative of f at a. Its loop integral is still 0: shrink the loop round a, and a bounded integrand on an ever shorter circle gives an ever smaller integral. What is left is f(a) times the loop integral of 1/(z − a), which is 2πi. The shelf's house example is this with f = 1: 1/z round the regatta course of [Cauchy's theorem](03-cauchys-theorem.md), tripled to enclose the origin, gives 2πi.
+A second road to the formula: the function (f(z) − f(a))/(z − a) is holomorphic inside except at a, where it stays bounded, close to f′(a), the complex derivative of f at a. Its loop integral is still 0: shrink the loop round a, and a bounded integrand on an ever shorter circle gives an ever smaller integral. What is left is f(a) times the loop integral of 1/(z − a), which is 2πi. The regatta example on [Cauchy's theorem](03-cauchys-theorem.md) is this with f = 1: 1/z round the tripled course, which encloses the origin, gives 2πi.
 
 ---
 
@@ -340,7 +340,7 @@ Lean proves the formula, the average form and the outside case for every holomor
 
 - For f holomorphic on and inside a circle, the value at any point strictly inside equals one over 2πi times the loop integral.
 - On a circle of radius r > 0 centred at a, f(a) is the plain average of the rim values.
-- For a point strictly outside the circle, the same loop integral is 0.
+- For a circle of radius R ≥ 0 and a point strictly outside the closed disc, the same loop integral is 0.
 - On the pizza stone, 0 and 0.5 lie inside, 4 and 3 lie outside, and e^0 = 1.
 
 The numbers, the clockwise sign, z-bar and the one-pole example of Step 6 are left to the Python and Rust checks.
@@ -458,7 +458,7 @@ example : Complex.exp 0 = 1 := by norm_num
 - **Evaluating real integrals.** Many integrals along the real line are turned into loop integrals with one pole inside, then read off in one line as in Step 6.
 
 > **Say it back**
-> Divide a holomorphic f by z − a and integrate round the loop. Shrunk onto a small circle round a, the integral is 2πi times the average of f there. That average cannot change as the circle shrinks, so it is f(a). A point outside gives 0; z-bar breaks it.
+> For f holomorphic on and inside a simple anticlockwise loop and a strictly inside it, divide f by z − a and integrate round the loop. Shrunk onto a small circle round a, the integral is 2πi times the average of f there. That average cannot change as the circle shrinks, so it is f(a). A point outside gives 0; z-bar breaks it.
 
 ---
 
@@ -472,7 +472,7 @@ example : Complex.exp 0 = 1 := by norm_num
 - [Derivatives from the boundary](06-derivatives-from-the-boundary.md): differentiate under the integral and every derivative of f comes from the rim too.
 - [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md): the centre is an average, so it cannot be a strict peak of |f|.
 - [Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the rim average for steady temperatures and voltages.
-- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a loop integral is zero whenever the loops wind zero times round every point outside the domain.
+- [Cauchy's theorem for cycles](08-homology-form-of-cauchys-theorem.md): a holomorphic function integrates to zero whenever the loops wind zero times round every point outside the domain.
 - [Holomorphic functional calculus](../../18-Functional%20analysis/03-Bounded%20Operators/14-holomorphic-functional-calculus-and-riesz-projections.md): put any operator into an analytic function, and cut out part of its spectrum.
 
 The rim fixes f(a); whether it also fixes f′(a), f″(a) and every higher derivative, so that one complex derivative forces infinitely many, is the question [Derivatives from the boundary](06-derivatives-from-the-boundary.md) answers.
