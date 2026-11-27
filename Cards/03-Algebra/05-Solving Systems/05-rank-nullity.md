@@ -509,7 +509,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): simplifies any square matrix over the complex numbers into near-diagonal blocks whose sizes are counted from ranks.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): blur the null space to a point and what is left is the image, rank plus nullity again.
 - [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): shows how transposing acts on linear readings and why row rank equals column rank.
-- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a full-rank matrix proves blocks never number fewer than points.
+- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a full-rank matrix proves blocks never number fewer than points when blocks are smaller than the whole set, with at least two points and every pair meeting at least once.
 
 Nullity 0 on a square matrix says there is exactly one answer, but not what it is. A formula that writes each unknown straight from determinants is [Cramer's rule](06-cramers-rule-and-the-adjugate.md), the last card on this shelf.
 

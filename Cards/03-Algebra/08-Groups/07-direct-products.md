@@ -552,7 +552,7 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 - [Group actions](08-group-actions-and-counting.md): the next card; a group moving the members of a set, used to count patterns its moves cannot tell apart.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
 - [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): the rational points on a cubic curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
-- [The Sylow theorems](11-sylow-theorems.md): for the largest power of a prime p dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
+- [The Sylow theorems](11-sylow-theorems.md): for the largest power of a prime p dividing a finite group's size, subgroups of that size exist, are all conjugate (each is any other seen from another position in the group, $`g H g^{-1}`$), and number 1 more than a multiple of p.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
 - [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): breaking functions on a finite commutative group into basic waves (characters), including patterns on bit strings.
 
