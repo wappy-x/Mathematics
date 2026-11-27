@@ -577,7 +577,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 ## The usual mistake
 
 > [!warning]
-> **Subtracting the shadows cast on the original lines rather than on the finished directions.** The originals are not perpendicular to each other, so their shadows overlap and too much comes off: the leftover is at a right angle to nothing.
+> **Subtracting the shadows cast on the original lines rather than on the finished directions.** From the third line on, the originals are not perpendicular to each other, so their shadows overlap and too much comes off: the leftover is no longer at a right angle to the earlier lines.
 >
 > - **Perpendicular is half of it.** Skip the scaling and the directions still meet at right angles, but the stake rebuilds at (41.680000, 14.960000), not (4.000000, 2.000000).
 > - **Dividing by the wrong thing.** On a raw line the shadow's size needs dividing by that line dotted with itself, 10 here; forget it and the leftover is (-22.000000, -6.000000).
@@ -609,7 +609,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
 - [Wavelets](../../13-Engineering%20mathematics/05-Signals/08-wavelets-and-multiresolution.md): perpendicular unit directions, one per band of frequencies.
 - [Lattices](../../14-Applied%20and%20computational/04-Cryptography/09-lattices-and-post-quantum-cryptography.md): a skewed basis published as the lock, whole-number straightening as the attack.
-- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, steady at machine size.
+- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): the same factorisation from reflections, which stays accurate in a computer's rounded arithmetic.
 - [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): endlessly many such directions, squared length still a sum of squares.
 - [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): this loop on 1, x, x^2, with an integral as the dot product.
 - [The Haar wavelet](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md): the plainest one, built by halving an interval.
@@ -617,7 +617,7 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have.
 - [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
 
-Gram-Schmidt straightens any list of directions, and projection splits a point along them. How to fit a line to data that no line hits exactly is the question [Least squares](04-least-squares.md) answers next, by projecting onto a matrix's columns.
+Gram-Schmidt straightens any independent list of directions, and projection splits a point along them. How to fit a line to data that no line hits exactly is the question [Least squares](04-least-squares.md) answers next, by projecting onto a matrix's columns.
 
 ---
 
