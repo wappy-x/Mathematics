@@ -369,7 +369,7 @@ example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (
 - **Lab and engineering measurements.** A gap of 1.5 x 10^-9 m is a length no ruler shows: the power carries the smallness, the front number the precision.
 
 > **Say it back**
-> Very big and very small numbers are hard to read because they are mostly zeros. Split any positive number into a front number (1 up to, not including, 10) times a power of ten. The power counts the places the dot moved, right if positive, left if negative. The Sun is 1.5 x 10^11 m away, a red blood cell 7 x 10^-6 m across. Divide the front numbers and subtract the powers: 2.142857 x 10^16 cell widths.
+> Very big and very small numbers are hard to read because they are mostly zeros. Split any positive number into a front number (1 up to, not including, 10) times a power of ten. The power counts the places the dot moved; to write the number back out, slide it right if positive, left if negative. The Sun is 1.5 x 10^11 m away, a red blood cell 7 x 10^-6 m across. Divide the front numbers and subtract the powers: 2.142857 x 10^16 cell widths.
 
 ---
 
