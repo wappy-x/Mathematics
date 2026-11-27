@@ -236,7 +236,7 @@ The two outputs match line for line: whole counts, nothing to round.
 
 ### Lean
 
-Lean proves the parity table and the switch rule for every whole number, negatives included, not just 33, 37 and 38.
+Lean proves the parity table for every whole number, negatives included, and the switch rule for any count of presses from 0 up, not just 33, 37 and 38.
 
 - Every whole number is even or odd, and never both.
 - A sum is even exactly when the two numbers going in have the same parity.
@@ -352,7 +352,7 @@ example : Even (6 : ℤ) ∧ Even (2 : ℤ) ∧ (6 : ℤ) / 2 = 3 ∧ Odd (3 : �
 ## Where this goes next
 
 - [Divisibility rules](03-divisibility-rules.md): the 2 test is a glance at the last digit; the digits also answer for 3, 4, 5, 6, 8, 9 and 10.
-- [Division with a remainder](04-division-with-remainder.md): the leftover when you split by any number, not just by 2.
+- [Division with a remainder](04-division-with-remainder.md): the leftover when you split by any whole number of 1 or more, not just by 2.
 - [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
 
 Whether 2 divides a number shows in its last digit. Can the digits show whether 3 or 9 divides it, without dividing?

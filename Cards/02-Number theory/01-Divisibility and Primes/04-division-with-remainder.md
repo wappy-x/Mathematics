@@ -356,7 +356,7 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 - **Loading a van.** 365 chairs into vans holding 7 needs 52 full vans plus one carrying a single chair. The leftover still costs a van.
 
 > **Say it back**
-> Take a whole count and a divisor, 1 or more. Fit in as many whole copies of the divisor as you can: that is the quotient. What is left is the remainder, smaller than the divisor — otherwise another copy would fit. Only one such pair works. A year is 52 weeks and 1 day, so a birthday walks one weekday a year, two across a 29 February.
+> Take a whole count, 0 or more, and a divisor, 1 or more. Fit in as many whole copies of the divisor as you can: that is the quotient. What is left is the remainder, smaller than the divisor — otherwise another copy would fit. Only one such pair works. A year is 52 weeks and 1 day, so a birthday walks one weekday a year, two across a 29 February.
 
 ---
 
@@ -372,7 +372,7 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
 
-Next on this shelf, [Primes and composites](05-primes-and-composites.md) asks a new question of the leftover: which numbers leave one on every try except 1 and themselves? The question this card leaves open, the remainder of a negative count, waits for [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
+Next on this shelf, [Primes and composites](05-primes-and-composites.md) asks a new question of the leftover: which whole numbers above 1 leave one on every try except 1 and themselves? The question this card leaves open, the remainder of a negative count, waits for [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
 
 ---
 

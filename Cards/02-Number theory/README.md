@@ -31,9 +31,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 2. [Even and odd: the two-way split, and what adding and multiplying do to it](01-Divisibility%20and%20Primes/02-even-and-odd.md)
 3. [Divisibility rules: reading the digits to see whether 2, 3, 4, 5, 6, 8, 9 or 10 divides a number](01-Divisibility%20and%20Primes/03-divisibility-rules.md)
 4. [Division with a remainder: the quotient and the leftover are unique, and the leftover is smaller than the divisor](01-Divisibility%20and%20Primes/04-division-with-remainder.md)
-5. [Primes and composites: the numbers that will not split into equal rows, and the ones that will](01-Divisibility%20and%20Primes/05-primes-and-composites.md)
-6. [The sieve of Eratosthenes: cross out every multiple and the primes are what is left standing](01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md)
-7. [Prime factorisation: a factor tree breaks any number into prime atoms, and every route reaches the same atoms](01-Divisibility%20and%20Primes/07-prime-factorisation.md)
+5. [Primes and composites: whole numbers above 1 that will not split into equal rows, and the ones that will](01-Divisibility%20and%20Primes/05-primes-and-composites.md)
+6. [The sieve of Eratosthenes: cross out 1 and every larger multiple of each survivor, and the primes are what is left standing](01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md)
+7. [Prime factorisation: a factor tree breaks any whole number above 1 into prime atoms, and every route reaches the same atoms](01-Divisibility%20and%20Primes/07-prime-factorisation.md)
 8. [Counting divisors: read how many divisors a number has straight off its prime factorisation](01-Divisibility%20and%20Primes/08-counting-divisors.md)
 
 [↑ Back to the shelves](#top)

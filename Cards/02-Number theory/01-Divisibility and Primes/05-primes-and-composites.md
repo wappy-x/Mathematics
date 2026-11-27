@@ -1,4 +1,4 @@
-# Primes and composites: the numbers that will not split into equal rows, and the ones that will
+# Primes and composites: whole numbers above 1 that will not split into equal rows, and the ones that will
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Primes and composites
 
@@ -10,9 +10,9 @@ You are setting out chairs in a hall. 97 of them, in equal rows, nothing left st
 
 Now 91 chairs. Rows of 2, 3, 4, 5, 6 all leave something over — as stubborn as 97. Then rows of 7 land exactly: 7 rows of 13.
 
-A number bigger than 1 that will not split into equal rows of more than one is **prime**; one that will is **composite**. This card tells the two apart without the chairs.
+A whole number bigger than 1 that will not split into equal rows of more than one is **prime**; one that will is **composite**. This card tells the two apart without the chairs.
 
-**A number bigger than 1 is prime when nothing divides it but 1 and itself; try 2, 3, 4 and up until the trial divisor, times itself, passes the number.**
+**A whole number bigger than 1 is prime when no positive whole number divides it but 1 and itself; try 2, 3, 4 and up until the trial divisor, times itself, passes the number.**
 
 **What kind of fact this is:** a definition, plus a theorem: the stop rule, proved in Why it works.
 
@@ -225,7 +225,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's rules for every whole number, not just 97 and 91.
+Lean proves the card's rules for every whole number from 0 up, not just 97 and 91.
 
 - A number bigger than 1 is prime exactly when nothing divides it but 1 and itself.
 - The stop rule holds: such a number is prime exactly when no trial divisor goes in with nothing left over.
@@ -367,7 +367,7 @@ example : ((Finset.range 100).filter (fun n => 1 < n ∧ n % 2 = 1)).card = 49 :
 - **Gears.** A gear with a prime number of teeth, paired with a gear whose count it does not divide, meets every tooth on its partner before repeating, spreading the wear.
 
 > **Say it back**
-> Equal rows, nothing left standing. A number bigger than 1 that will not make them is prime; one that will is composite. Divide by 2, then 3, then 4, while the number you are trying, times itself, stays at or below the number tested; if nothing has gone in by then, nothing will. 97 is prime; 91 is 7 rows of 13. 1 is neither, and 2 is the only even prime.
+> Equal rows, nothing left standing. A whole number bigger than 1 that will not make them is prime; one that will is composite. Divide by 2, then 3, then 4, while the number you are trying, times itself, stays at or below the number tested; if nothing has gone in by then, nothing will. 97 is prime; 91 is 7 rows of 13. 1 is neither, and 2 is the only even prime.
 
 ---
 

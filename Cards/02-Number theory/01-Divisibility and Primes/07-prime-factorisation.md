@@ -1,4 +1,4 @@
-# Prime factorisation: a factor tree breaks any number into prime atoms, and every route reaches the same atoms
+# Prime factorisation: a factor tree breaks any whole number above 1 into prime atoms, and every route reaches the same atoms
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → Prime factorisation
 
@@ -14,7 +14,7 @@ Now start differently. 360 = 6 × 60, then 60 = 6 × 10, then 6 = 2 × 3 and 10 
 
 A number bigger than 1 that will not split is prime ([Primes and composites](05-primes-and-composites.md)). Splitting until every piece is prime is a **factor tree**; the primes at the ends are the **prime factorisation**.
 
-**Split a number, split the pieces, keep going until every piece is prime. That always finishes, and whichever splits you choose you end with the same primes, each the same number of times.**
+**Start with any whole number above 1: split any composite piece into smaller whole factors above 1, and keep going until every piece is prime. That always finishes, and whichever splits you choose you end with the same primes, each the same number of times.**
 
 **What kind of fact this is:** a theorem. Why it works proves the splitting always finishes. [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md) proves every route ends at the same primes; here the code checks every number from 2 to 1,000.
 
@@ -85,7 +85,7 @@ A prime is already finished: 7 is just 7, a tree with no branches.
 
 ### The splitting always finishes
 
-Not prime means something other than 1 and the number itself goes in. Split there: 360 = 6 × 60. Neither piece is 1, so both are smaller than 360.
+Above 1, not prime means something other than 1 and the number itself goes in. Split there: 360 = 6 × 60. Neither piece is 1, so both are smaller than 360.
 
 Every split shrinks the pieces, and whole numbers cannot shrink forever — the floor is 2. So each branch runs out, and stops only where its number refuses to split, which is what prime means. Every number bigger than 1 has a prime factorisation.
 
@@ -99,7 +99,7 @@ Take the 5 that road one found. Road two's list also multiplies to 360, so 5 goe
 
 Cross a 5 off each list and start again; neither list runs out first.
 
-That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 nor 3, so only primes pass it: [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md), next shelf. Until then, the code runs two roads over every number to 1,000 and checks the ends match.
+That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 nor 3, so only primes pass it: [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md), next shelf. Until then, the code runs two roads over every number from 2 to 1,000 and checks the ends match.
 
 ---
 
@@ -126,7 +126,7 @@ Three 2s, two 3s and a 5 are the whole of 360. Every number that divides it is b
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one peels the smallest prime off 360, over and over. Road two follows the hand tree from the picture, one split per row. Road three splits at the biggest factor instead. The lists are sorted and compared, and roads one and three are run against each other on every number to 1,000.
+Nothing is imported. Road one peels the smallest prime off 360, over and over. Road two follows the hand tree from the picture, one split per row. Road three splits at the biggest factor instead. The lists are sorted and compared, and roads one and three are run against each other on every number from 2 to 1,000.
 
 ### Python
 
@@ -341,7 +341,7 @@ example : Nat.Prime 7 := by norm_num
 - **Splitting a rota.** Anything halved and also cut in thirds wants a 2 and a 3 in it. Shared pieces between two numbers: [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md).
 
 > **Say it back**
-> Split a number into two factors, split those, until every piece is prime. That is a factor tree; its ends are the prime factorisation. It always finishes: the pieces shrink and cannot go below 2. The ends do not depend on the route: 360 is 2 × 2 × 2 × 3 × 3 × 5. Repeats count: three 2s, not one.
+> Start with a whole number above 1, split any composite piece into two smaller factors above 1, and keep going until every piece is prime. That is a factor tree; its ends are the prime factorisation. It always finishes: the pieces shrink and cannot go below 2. The ends do not depend on the route: 360 is 2 × 2 × 2 × 3 × 3 × 5. Repeats count: three 2s, not one.
 
 ---
 
@@ -353,7 +353,7 @@ example : Nat.Prime 7 := by norm_num
 
 ## Where this goes next
 
-- [Counting divisors](08-counting-divisors.md): how many divisors a number has, read off this list.
+- [Counting divisors](08-counting-divisors.md): how many positive divisors a whole number above 1 has, read off this list.
 - [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md): two numbers side by side, and the pieces they share.
 - [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the proof that the route cannot change the ends.
 - [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the atoms never run out.

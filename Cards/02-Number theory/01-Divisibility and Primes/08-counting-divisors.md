@@ -12,9 +12,9 @@ You start listing. 1 by 96. 2 by 48. 3 by 32. 4 by 24. 6 by 16. 8 by 12. Six, an
 
 Each side of each shape divides 96 with nothing left over — it is a **divisor** ([Divides](01-divides.md)). So the question is how many divisors 96 has.
 
-The prime factorisation answers it without listing. A prime has no divisor but 1 and itself, and the prime factorisation breaks a number into primes ([Prime factorisation](07-prime-factorisation.md)). 96 is 2 × 2 × 2 × 2 × 2 × 3: five 2s and one 3. Add one to each count and multiply: (5 + 1) × (1 + 1) = 12 divisors, which pair off into six rectangles.
+The prime factorisation answers it without listing. A prime is a whole number above 1 with no positive divisor but 1 and itself, and the prime factorisation breaks any whole number above 1 into primes ([Prime factorisation](07-prime-factorisation.md)). 96 is 2 × 2 × 2 × 2 × 2 × 3: five 2s and one 3. Add one to each count and multiply: (5 + 1) × (1 + 1) = 12 divisors, which pair off into six rectangles.
 
-**Add one to how many times each prime appears in the factorisation, multiply those numbers together, and that is how many divisors there are.**
+**For any whole number above 1, add one to how many times each prime appears in its factorisation, multiply those numbers together, and that is how many positive divisors it has.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works: each divisor is one choice per prime.
 
@@ -41,13 +41,14 @@ On the box, and on a second number:
 
 | Piece | Plain meaning | In our box of 96 |
 | --- | --- | --- |
-| a prime | no divisor but 1 and itself ([Primes and composites](05-primes-and-composites.md)) | 2 and 3 |
+| a prime | above 1, no positive divisor but 1 and itself ([Primes and composites](05-primes-and-composites.md)) | 2 and 3 |
 | how often it appears | count it in the factorisation | five 2s, one 3 |
 | one more than that count | the choices for that prime, counting the choice of taking none | 6 and 2 |
 | a divisor | goes in with nothing left over ([Divides](01-divides.md)) | any cell of the grid |
 
 ### When it holds
 
+- **A positive whole number.** Every number divides 0, so 0 has no prime factorisation and infinitely many divisors; 1 has no prime factors and 1 divisor (itself).
 - **The number is broken all the way down to primes.** Stop at 4 × 24 and the counts mean nothing.
 - **Divisors means positive divisors.** Count the negative ones too and the answer doubles.
 - **Shapes are half the divisors only when the number is not a square.** A square has one side that pairs with itself, so its count is odd.
@@ -430,7 +431,7 @@ example : #(Nat.divisors 97) = 2 := by decide
 - **Adding divisors rather than counting.** The grid gives 252 for 96: [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md).
 
 > **Say it back**
-> Every divisor is built from the number's own primes, never using more of a prime than the number has. Building one is a decision per prime: how many to take, from none up to all. Those decisions multiply, so add one to each count and multiply. 96 is five 2s and one 3: (5 + 1) × (1 + 1) = 12 divisors, pairing off into 6 rectangles.
+> For any positive whole number, every positive divisor is built from the number's own primes, never using more of a prime than the number has. Building one is a decision per prime: how many to take, from none up to all. Those decisions multiply, so add one to each count and multiply. 96 is five 2s and one 3: (5 + 1) × (1 + 1) = 12 divisors, pairing off into 6 rectangles.
 
 ---
 

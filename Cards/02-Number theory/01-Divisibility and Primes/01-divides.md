@@ -12,7 +12,7 @@ A 15-minute lesson works: four of them fill the hour. A 12-minute lesson works: 
 
 Twelve lengths work, and only twelve. Each goes into 60 a whole number of times. There is a word for that: each of them **divides** 60.
 
-**One number divides another when the second is the first multiplied by a whole number, with nothing left over.**
+**One whole number divides another when the second is the first multiplied by a whole number, with nothing left over.**
 
 **What kind of fact this is:** a definition. It gives a name to an idea, so there is nothing to prove. The facts in Why it works, such as divisors coming in pairs, follow from it.
 
@@ -237,7 +237,7 @@ The two outputs match line for line: whole minutes, nothing to round.
 
 ### Lean
 
-Lean proves the rule for every whole number, not just 60, and re-checks the card's numbers for the hour.
+Lean proves the rule for every whole number from 0 up, not just 60, and re-checks the card's numbers for the hour.
 
 - One number divides another exactly when the second is the first times a whole number.
 - That is the same as nothing being left over.
@@ -358,7 +358,7 @@ example : Nat.divisors 59 = {1, 59} := by decide
 - **Head-checks.** Whether 2 divides a number is [Even and odd](02-even-and-odd.md); digit tricks for 3, 4, 5, 6, 8, 9 and 10 are [Divisibility rules](03-divisibility-rules.md).
 
 > **Say it back**
-> One number divides another when it goes in with nothing left over: 4 divides 60, because 60 = 4 × 15. Divisors come in pairs — 4 brings 15 with it — so test upwards and write both ends down, stopping once the ends cross. Sixty has twelve divisors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. 1 divides everything, every number divides 0, and "12 divides 60" is a yes-or-no, not a number.
+> One whole number divides another when it goes in with nothing left over: 4 divides 60, because 60 = 4 × 15. For any positive whole number, positive divisors come in pairs — 4 brings 15 with it — so test upwards and write both ends down, stopping once the ends cross. Sixty has twelve divisors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. 1 divides everything, every number divides 0, and "12 divides 60" is a yes-or-no, not a number.
 
 ---
 
@@ -371,7 +371,7 @@ example : Nat.divisors 59 = {1, 59} := by decide
 - [Even and odd](02-even-and-odd.md): whether 2 divides a number, and what that does to sums and products.
 - [Divisibility rules](03-divisibility-rules.md): reading the digits to tell whether 2, 3, 4, 5, 6, 8, 9 or 10 divides.
 - [Division with a remainder](04-division-with-remainder.md): the 4 stranded minutes, and why there is only one answer.
-- [Primes and composites](05-primes-and-composites.md): numbers whose only divisors are 1 and themselves.
+- [Primes and composites](05-primes-and-composites.md): whole numbers above 1 whose only positive divisors are 1 and themselves.
 
 This card leaves one question open: why does 60 have 12 divisors and not some other count? The answer needs primes first, so it waits for [Counting divisors](08-counting-divisors.md), the last card on this shelf. Next comes the simplest divisor of all, 2, in [Even and odd](02-even-and-odd.md).
 

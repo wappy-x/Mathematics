@@ -12,7 +12,7 @@ Nobody divides 1,236 to find out. Add the digits: 1 + 2 + 3 + 6 = 12, a multiple
 
 Those are **divisibility rules**: tests that read a few digits instead of dividing.
 
-**Every rule reads a small number — a tail, or the digit sum — and ignores the rest, because the rest is a multiple of the number you are testing.**
+**Each basic rule reads a small number — a tail, or the digit sum — and ignores the rest, because the rest is a multiple of the number you are testing; 6 combines the rules for 2 and 3.**
 
 **What kind of fact this is:** a theorem for each divisor, proved on this card in Why it works; the 7 and 11 tests in the fold are stated without proof.
 
@@ -49,10 +49,10 @@ The **digit sum** is the digits added up, 1 + 2 + 3 + 6 = 12. **The last digits*
 
 ### When it holds
 
-- **Ordinary tens columns.** The tail rules need 10 = 2 × 5, 100 = 4 × 25 and 1000 = 8 × 125. Count in columns of anything but ten and those splits fail, so the rules change.
+- **Ordinary tens columns.** The tail rules need 10 = 2 × 5, 100 = 4 × 25 and 1000 = 8 × 125. Count in another base and those splits need not hold, so the rules can change.
 - **A tail long enough for the divisor.** 100 is not a whole number of 8s, so 8 needs three digits. Two digits say no on a $1,136 bill, but 1,136 = 8 × 142.
-- **The digit sum only for 3 and 9.** Every column is a row of 9s plus 1, and only 3 and 9 go evenly into 9. For any other divisor the sum can give the wrong answer.
-- **For 6, two tests with no shared factor.** 2 and 3 share none, so together they test 6. The 2 and 4 tests are no test for 8: 12 passes both and fails 8.
+- **The digit sum only for 3 and 9.** Every column is a row of 9s plus 1, and above 1 only 3 and 9 divide 9. For any other divisor in the table the sum can give the wrong answer.
+- **For 6, two tests with no shared factor above 1.** 2 and 3 share none above 1, so together they test 6. The 2 and 4 tests are no test for 8: 12 passes both and fails 8.
 
 ---
 
@@ -76,7 +76,7 @@ Sweep the nines together: 1 × 999 + 2 × 99 + 3 × 9 = 1224, which is 9 × 136.
 
 Six is 2 × 3. Splitting three ways gives 1,236 = 3 × 412. The bill is even and 3 is odd, so 412 must be even: odd times odd is odd ([Even and odd](02-even-and-odd.md)). So 412 = 2 × 206, and 1,236 = 6 × 206.
 
-The same steps work for any number that passes both tests. The pairing needs testers with no shared factor. The 2 and 4 tests together are no test for 8 — 12 passes 2 and 4, but fails 8.
+The same steps work for any number that passes both tests. The pairing needs testers with no shared factor above 1. The 2 and 4 tests together are no test for 8 — 12 passes 2 and 4, but fails 8.
 
 <details>
 <summary>7 and 11, if you want them</summary>
@@ -234,7 +234,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves every rule in the table for every whole number, not just the $1,236 bill. The 7 and 11 tests in the fold are left out.
+Lean proves every rule in the table for every whole number from 0 up, not just the $1,236 bill. The 7 and 11 tests in the fold are left out.
 
 - 2, 5 and 10 are decided by the last digit, 4 by the last two digits, and 8 by the last three.
 - 3 and 9 are decided by the digit sum.
@@ -372,7 +372,7 @@ example : 2 ∣ 12 ∧ 4 ∣ 12 ∧ ¬ 8 ∣ 12 := by decide
 ## The usual mistake
 
 > [!warning]
-> **Using the digit sum for everything.** It works for 3 and 9, nothing else. This bill's digit sum, 12, is a multiple of 4, and 4 does divide the bill, so the wrong method looks right by accident. The 4 test is the last two digits, 36.
+> **Using the digit sum for everything.** Among the divisors in the table, it works for 3 and 9 and nothing else. This bill's digit sum, 12, is a multiple of 4, and 4 does divide the bill, so the wrong method looks right by accident. The 4 test is the last two digits, 36.
 >
 > - **Mixing 3 with 9.** Digit sum 12 passes for 3 and fails for 9. Read it as a pass for both and you claim nine can split the bill: 1,236 = 9 × 137 + 3.
 
@@ -385,7 +385,7 @@ example : 2 ∣ 12 ∧ 4 ∣ 12 ∧ ¬ 8 ∣ 12 := by decide
 - **Factoring by hand.** The rules for 2, 3 and 5 strip out the easy primes: [Prime factorisation](07-prime-factorisation.md).
 
 > **Say it back**
-> A rule reads a small number — a tail, or the digit sum — and ignores the rest, which is already a multiple of the number being tested. Last digit for 2, 5 and 10; last two for 4; last three for 8. Digit sum for 3 and 9, since every column is one more than a row of 9s. For 6, pass 2 and 3 both.
+> Each tail or digit-sum rule reads a small number and ignores the rest, which is already a multiple of the number being tested. Last digit for 2, 5 and 10; last two for 4; last three for 8. Digit sum for 3 and 9, since every column is one more than a row of 9s. For 6, pass 2 and 3 both.
 
 ---
 

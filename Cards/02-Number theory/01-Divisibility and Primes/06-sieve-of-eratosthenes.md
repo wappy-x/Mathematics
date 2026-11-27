@@ -1,4 +1,4 @@
-# The sieve of Eratosthenes: cross out every multiple and the primes are what is left standing
+# The sieve of Eratosthenes: cross out 1 and every larger multiple of each survivor, and the primes are what is left standing
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Divisibility and Primes](../README.md#s01) → The sieve of Eratosthenes
 
@@ -21,7 +21,7 @@ You never asked whether a number was prime. You slammed multiples of numbers you
 
 On paper it is crossing numbers out on a 1-to-100 grid; the lockers are that grid.
 
-**Keep the first door still open, slam every multiple of it, repeat. Stop once the door you keep, times itself, runs past the end of the corridor. Everything still open is prime.**
+**Shut locker 1; then keep the next door still open, slam every larger multiple of it, and repeat. Stop once the door you keep, times itself, runs past the end of the corridor. Everything still open is prime.**
 
 **What kind of fact this is:** a method, proved in Why it works to leave exactly the primes.
 
@@ -46,11 +46,11 @@ The corridor is the method:
 
 **Shut locker 1. Keep 2 and slam every second door after it; keep 3 and slam every third; then 5, then 7. Stop, because 11 × 11 = 121 is past 100. The 25 doors still open are the primes.**
 
-**Read it aloud:** shut locker 1; for each door still open whose number times itself fits in the corridor, slam its multiples; what stays open is prime.
+**Read it aloud:** shut locker 1; for each door still open whose number times itself fits in the corridor, slam its larger multiples; what stays open is prime.
 
 | Piece | Plain meaning | In our corridor |
 | --- | --- | --- |
-| a pass | a kept number, every multiple of it slammed | 3's pass slams 16 doors |
+| a pass | a kept number, every larger multiple of it slammed | 3's pass slams 16 doors |
 | where a pass starts | the kept number times itself | 9, not 6 |
 | the stopping rule | the next kept number times itself passes the end | 11 × 11 = 121 |
 | a door still open | prime: only 1 and itself divide it | 97 |
@@ -76,11 +76,11 @@ Every door a pass slams is a multiple of the kept number — that number goes in
 
 Take 91. It splits: 91 = 7 × 13. Its smallest divisor above 1 is 7.
 
-A smallest divisor is always prime. If it split further, its smaller piece would divide 91 too, and be smaller still.
+A smallest divisor above 1 is always prime. If it split further, its smaller piece would divide 91 too, and be smaller still.
 
 And 13 is at least 7, so 91 sits at or past 49, where 7's pass begins. Every composite has a prime divisor; that prime's door stayed open, and its pass slammed the composite.
 
-Slammed means composite. Open means prime. Nothing in between.
+Past locker 1, slammed means composite and open means prime — nothing in between.
 
 ### Why the slamming stops at 7
 
@@ -495,7 +495,7 @@ example : ((passNumbers 100).foldl (sievePass (fun p => p * p)) (Finset.Icc 1 10
 - **Checking a conjecture by computer.** Record searches, like the check of Goldbach's guess up to a 4 with eighteen zeros, sieve each block of numbers for its primes before testing the guess: [Goldbach, twin primes and friends](../07-For%20the%20Curious/04-goldbach-and-open-problems.md).
 
 > **Say it back**
-> 100 lockers, all open. Shut locker 1. Leave the first open door, slam every multiple of it, then move to the next open door. 2, then 3, then 5, then 7. Stop when the next open door times itself passes the end: 11 × 11 = 121. Every slammed door is composite; every composite was slammed by its smallest prime divisor's pass. The 25 still open are the primes.
+> 100 lockers, all open. Shut locker 1. Leave the first open door, slam every larger multiple of it, then move to the next open door. 2, then 3, then 5, then 7. Stop when the next open door times itself passes the end: 11 × 11 = 121. Every door slammed by a pass is composite; every composite was slammed by its smallest prime divisor's pass. The 25 still open are the primes.
 
 ---
 
@@ -507,7 +507,7 @@ example : ((passNumbers 100).foldl (sievePass (fun p => p * p)) (Finset.Icc 1 10
 ## Where this goes next
 
 - [Prime factorisation](07-prime-factorisation.md): every composite splits into the primes the sieve just handed you.
-- [Counting divisors](08-counting-divisors.md): how many divisors a number has, read straight off that split.
+- [Counting divisors](08-counting-divisors.md): how many positive divisors a whole number above 1 has, read straight off that split.
 
 The question this card leaves open: once you hold the primes, how does each composite break into them, and is there only one way?
 
