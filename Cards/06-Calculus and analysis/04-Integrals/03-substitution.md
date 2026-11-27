@@ -12,7 +12,7 @@ The way in is a matched pair. The exponent x^2 has rate 2x, and the factor x in 
 
 That renaming is **substitution**: change the variable, move the two limits (the ends of the range, here 0 and 1) with it, and integrate the simpler thing. The chain rule says how fast a function of a function changes; substitution spots such a rate inside an integral and undoes it.
 
-**Substitution replaces an inner function and its rate together: the integrand f(g(x)) times g'(x), accumulated from a to b, equals f(u) accumulated from g(a) to g(b).**
+**Substitution replaces an inner function and its rate together: when g has a continuous rate from a to b, and f is continuous at every value g takes there, f(g(x)) times g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b).**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, and used as a method.
 
@@ -65,7 +65,7 @@ The line du = g'(x) dx is bookkeeping: a strip of width dx on the x ruler become
 
 ### When it holds
 
-- **g has a continuous rate from a to b.** The proof runs the chain rule at every point; a corner in g, where no rate exists, breaks that step.
+- **g is differentiable with a continuous rate from a to b.** The proof runs the chain rule at every point; a corner in g, where no rate exists, breaks that step.
 - **f is continuous at every value g takes, not only at g(a) and g(b).** Otherwise the formula prints a number where no area exists (Step 4).
 - **The limits keep the order g(a), g(b), even downhill.** Sorting them flips the sign: x from 1 to 0 gives −0.859141.
 - **g need not be one-to-one.** When u turns back, the retraced stretch cancels (Step 3).
@@ -88,7 +88,9 @@ Scale: one unit on either ruler is 300 px, both starting at px 30; the dashed li
 
 Four equal x strips land as four unequal u strips: 0.0625, 0.1875, 0.3125, 0.4375. Each is 2 times its centre times 0.25: the strip from 0.25 to 0.5 has centre 0.375, and 2 × 0.375 × 0.25 = 0.1875. The multiplier, the rate g'(x) = 2x, is the stretch.
 
-Now read one strip of area. In x it is height x e^(x^2) times width dx. Split the height as (e^u / 2) times 2x. The piece 2x times dx is the strip's width on the u ruler, du. So each strip is also height e^u / 2 times width du, and as strips thin the sum in x and the sum in u close on one number; Step 2 proves it. The lone factor x pays for the stretch.
+Now read one strip of area. In x it is height x e^(x^2) times width dx. Split the height as (e^u / 2) times 2x. The piece 2x times dx is the strip's width on the u ruler, du.
+
+So each strip is also height e^u / 2 times width du, and as strips thin the sum in x and the sum in u close on one number; Step 2 proves it. The lone factor x pays for the stretch.
 
 ### Step 2: the proof, in words
 
@@ -117,7 +119,7 @@ Extend to x = 2. The u path is 1 down to 0, then 0 up to 4. The retraced part ca
 
 ### Step 4: domain, when u leaves the outer function's reach
 
-The integrand 2x/(x^2 − 1) has the shape f(g(x)) g'(x) with g(x) = x^2 − 1 and f(u) = 1/u. From x = 0 to x = 2 the formula offers ln|u| from −1 to 3, which is ln 3 = 1.098612. But u passes through 0 at x = 1, where 1/u has no value. The area from 0 to 0.99 is −3.917036; to 0.9999 it is −8.517243; it has no floor. No area equals 1.098612.
+The integrand 2x/(x^2 − 1) has the shape f(g(x)) g'(x) with g(x) = x^2 − 1 and f(u) = 1/u. From x = 0 to x = 2 the formula offers ln|u| from −1 to 3, which is ln 3 = 1.098612. But u passes through 0 at x = 1, where 1/u has no value. The integral from 0 to 0.99 is −3.917036; to 0.9999 it is −8.517243; it has no floor. No finite integral equals 1.098612.
 
 Substitution can also run the other way: write x = h(t) for a new variable t and read the theorem right to left. That direction needs h to cover the whole interval and drives [Trig substitution](06-trig-substitution.md).
 
@@ -143,7 +145,7 @@ The area under x e^(x^2) from 0 to 1 is 0.859141 square units, equal to the area
 | x limits 1, 2 kept for u | 2.335387, not 25.939934 | the upper limit moves to 4 |
 | the 1/2 dropped | 1.718282, not 0.859141 | x is half the stretch 2x |
 | limits sorted, x from 1 to 0 | 0.859141, not −0.859141 | backward limits carry a minus |
-| 2x/(x^2 − 1) from 0 to 2 | 1.098612, but no area exists | u crosses 0, where 1/u fails |
+| 2x/(x^2 − 1) from 0 to 2 | 1.098612, but no finite integral exists | u crosses 0, where 1/u fails |
 
 ---
 
@@ -337,14 +339,14 @@ The two outputs match line for line. The midpoint sum up to 0.9999 lags the true
 
 ### Lean
 
-Lean proves the substitution rule for every f, g, a and b that meet its conditions, and the card's areas under x e^(x^2).
+Lean proves the substitution rule for every f, g, a and b that meet its conditions, and the card's integrals of x e^(x^2).
 
-- Let g have a continuous rate from a to b, and f be continuous at every value g takes. Then f(g(x)) g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b).
+- Let g be differentiable with a continuous rate from a to b, and f be continuous at every value g takes there. Then f(g(x)) g'(x) accumulated from a to b equals f(u) accumulated from g(a) to g(b).
 - The limits keep the order g(a), g(b), even downhill, and g need not be one-to-one.
 - The rate of e^(x^2)/2 is x e^(x^2).
-- For any limits a and b, the area under x e^(x^2) from a to b is (e^(b^2) − e^(a^2))/2.
+- For any limits a and b, the integral of x e^(x^2) from a to b is (e^(b^2) − e^(a^2))/2.
 - From x = 0 to x = 1 the area is (e − 1)/2.
-- From x = −1 to x = 2, where u turns back, the area is (e^4 − e)/2, the same as from x = 1 to x = 2.
+- From x = −1 to x = 2, where u turns back, the integral is (e^4 − e)/2, the same as from x = 1 to x = 2.
 - The moved limits: 0^2 and 1^2 are 0 and 1; 1^2 and 2^2 are 1 and 4; (−1)^2 and 1^2 are both 1.
 - The four quarter strips land as u strips 1/16, 3/16, 5/16 and 7/16, each 2 times its centre times 1/4.
 
@@ -453,7 +455,7 @@ example : ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 2 * (7 / 8) * (1 / 4)) ∧
 > - **Dropping the constant that matches the rate.** The front factor is x, the rate 2x; forgetting the 1/2 gives 1.718282.
 > - **Sorting the limits.** x from 1 to 0 gives −0.859141, not 0.859141.
 > - **Dividing by a zero rate.** dx = du/(2x) fails at x = 0; the theorem needs no division.
-> - **Substituting across a hole in f.** For 2x/(x^2 − 1) from 0 to 2, ln 3 = 1.098612 is not an area.
+> - **Substituting across a hole in f.** For 2x/(x^2 − 1) from 0 to 2, ln 3 = 1.098612 is not a valid integral.
 
 ---
 
@@ -465,7 +467,7 @@ example : ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 2 * (7 / 8) * (1 / 4)) ∧
 - **Rate equations.** Separating a rate equation and integrating turns an integral in time into one in the unknown quantity: a substitution ([Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md)).
 
 > **Say it back**
-> Substitution is the chain rule run in reverse. When the integrand is an outer function of an inner function times the inner rate, rename the inner function u. The rate is the stretch between the two rulers, so strips in x and in u carry the same area. Move the limits, keep their order, and check the outer function is continuous wherever u goes. For x e^(x^2) from 0 to 1 the area is 0.859141.
+> Substitution is the chain rule run in reverse. When the integrand is an outer function of an inner function times the inner rate, and that rate is continuous, rename the inner function u. The rate is the stretch between the two rulers, so strips in x and in u carry the same signed area. Move the limits, keep their order, and check the outer function is continuous wherever u goes. For x e^(x^2) from 0 to 1 the area is 0.859141.
 
 ---
 
@@ -476,12 +478,13 @@ example : ((1 : ℚ) ^ 2 - (3 / 4) ^ 2 = 2 * (7 / 8) * (1 / 4)) ∧
 
 ## Where this goes next
 
+- [Integration by parts](04-integration-by-parts.md): the next technique on this shelf, running the product rule backwards when no inner rate appears.
 - [Trig substitution](06-trig-substitution.md): substitution run the other way, x = sin t, to clear square roots.
 - [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): both sides of a rate equation integrated by substitution.
 - [Variation of parameters](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/07-variation-of-parameters.md): the integrals it produces, often settled by a substitution.
 - [Transforming a variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): the stretch g'(x) as the factor that keeps total probability at 1.
 
-Substitution needs the inner rate already sitting in the integrand; when one such as the square root of 1 − x^2 offers none, the variable must change the other way round, the job of [Trig substitution](06-trig-substitution.md).
+Substitution needs the inner rate already sitting in the integrand; what if the integrand is a product such as x e^x with no matching inner rate? Integration by parts runs the product rule backwards instead (while for square roots such as √(1 − x^2), the variable changes the other way round in [Trig substitution](06-trig-substitution.md)).
 
 ---
 

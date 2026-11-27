@@ -14,7 +14,7 @@ Each piece has a log as its antiderivative (a function whose rate is the piece).
 
 A ratio of two polynomials is a **rational function**; taking one apart into simple fractions is **partial fractions**.
 
-**Every rational function is a polynomial plus simple fractions, one per power of each factor of its bottom, and each piece integrates to a polynomial, a fraction, a log or an arctangent.**
+**Every rational function with a nonzero bottom splits into a polynomial plus simple fractions, one per power of each factor of its bottom; on any interval avoiding the bottom's roots, each piece integrates to polynomials, fractions, logs or arctangents.**
 
 **What kind of fact this is:** a method; that the split always exists is a theorem of algebra, outlined in a folded proof in Why it works.
 
@@ -47,10 +47,10 @@ Middle line: the curve. Top line: half of 1/(x − 1). Bottom line: minus half o
 
 **Read it aloud:** one over x squared minus one is half of one over x minus one, less half of one over x plus one, so its area from 2 to 3 is half the log of 1.5.
 
-Bars mean size with the sign dropped; square brackets with two limits mean "at the top limit minus at the bottom limit". The degree of a polynomial is its highest power of x. In general, first divide the top P by the bottom Q:
+Bars mean size with the sign dropped; square brackets with two limits mean "at the top limit minus at the bottom limit". The degree of a polynomial is its highest power of x. In general, for nonzero bottom Q, first divide the top P by Q:
 
 ```math
-\frac{P(x)}{Q(x)} = H(x) + \frac{R(x)}{Q(x)}, \qquad \text{the degree of } R \text{ below the degree of } Q
+\frac{P(x)}{Q(x)} = H(x) + \frac{R(x)}{Q(x)}, \qquad R = 0 \text{ or the degree of } R \text{ below the degree of } Q
 ```
 
 Then split the remainder part, one piece per power of each factor of Q:
@@ -104,7 +104,7 @@ Setting x = 1 is legitimate here, never in the fractions. Two polynomials that a
 
 ### Step 2: each piece is a log
 
-The rate of ln x is 1/x for positive x; for negative x, ln(−x) has rate (−1)/(−x) = 1/x too. So on either side of r,
+The rate of ln x is 1/x for positive x; for negative x, ln(−x) has rate (−1)/(−x) = 1/x too. So on any interval on one side of r (never across r, where 1/(x − r) blows up and C can differ on the two sides),
 
 ```math
 \int \frac{A}{x-r}\,dx = A\ln\lvert x-r\rvert + C.
@@ -191,7 +191,7 @@ The area is 0.202733 square units.
 | 1/(x^2 − 1)^2 with log pieces only | −0.101366, not 0.044467 | Squared pieces left out |
 | Logs from 0 to 2, across x = 1 | −0.549306; no finite area exists | The antiderivative breaks at the root |
 
-The code prints all four, plus the area from 0 sliding to −4.951719 at 0.9999 and −7.254329 at 0.999999.
+The code prints all four, plus the integral from 0 sliding to −4.951719 at 0.9999 and −7.254329 at 0.999999.
 
 ---
 
@@ -365,7 +365,7 @@ The two outputs match line for line.
 
 Lean proves the split for every fully factored bottom, and the piece integrals on every interval that avoids the bottom's roots.
 
-- Take any top and a bottom fully factored over the real numbers, with distinct factors. The rational function equals a polynomial plus simple fractions, one per power of each factor.
+- Take any top and a nonzero bottom fully factored over the real numbers, with distinct factors. At every x where the bottom is nonzero, the rational function equals a polynomial plus simple fractions, one per power of each factor.
 - Each top over a linear factor is a constant; each top over a quadratic with no real root is a straight line Mx + N.
 - If the top's degree is below the bottom's, the polynomial part is zero.
 - A/(x − r) integrates to A ln|x − r| on any interval without r, ends included.
@@ -716,7 +716,7 @@ example : ((3 : ℚ) - 2) / (1 + 3 * 2) = 1 / 7 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Carrying the two logs across a root of the bottom.** From 0 to 2 they give −0.549306, a tidy number. But the curve shoots to infinity at x = 1, and the area from 0 to 0.999999 is already −7.254329. The split holds wherever the curve is defined; the logs measure area only on a stretch with no root on it, ends included ([Improper integrals](07-improper-integrals.md)).
+> **Carrying the two logs across a root of the bottom.** From 0 to 2 they give −0.549306, a tidy number. But the curve shoots to infinity at x = 1, and the integral from 0 to 0.999999 is already −7.254329. The split holds wherever the curve is defined; the logs give the integral only on a stretch with no root on it, ends included ([Improper integrals](07-improper-integrals.md)).
 >
 > A second trap is **dropping the bars**: ln(x + 1) fails below x = −1; ln|x + 1| does not.
 
@@ -729,7 +729,7 @@ example : ((3 : ℚ) - 2) / (1 + 3 * 2) = 1 / 7 := by norm_num
 - **Chemical kinetics.** Two reactants give a rate k(a − x)(b − x), with k a constant. The time to reach x is the integral of 1/(k(a − x)(b − x)): two logs.
 
 > **Say it back**
-> A rational function is a ratio of polynomials. If the top is too big, divide first. Factor the bottom and write one simple fraction per power of each factor. Clear the bottom and find the constants by setting x to each root or matching coefficients. Each piece integrates to a log, a fraction or an arctangent, on any stretch that avoids the roots.
+> A rational function is a ratio of polynomials with nonzero bottom. If the top is too big, divide first. Factor the bottom and write one simple fraction per power of each factor. Clear the bottom and find the constants by setting x to each root or matching coefficients. Each piece integrates to a log, a fraction or an arctangent, on any stretch that avoids the roots.
 
 ---
 
@@ -740,11 +740,12 @@ example : ((3 : ℚ) - 2) / (1 + 3 * 2) = 1 / 7 := by norm_num
 
 ## Where this goes next
 
+- [Trig substitution](06-trig-substitution.md): the next technique on this shelf, clearing square roots of quadratics through a right triangle.
 - [Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): over the complex numbers every quadratic splits, and each cover-up constant is a residue.
 - [Logistic growth](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/07-logistic-growth.md): the split that solves the logistic equation.
 - [Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md): the same split, turned into a system's response over time.
 
-Left open: x^2 + 1 kept a straight-line top because it has no real root; with complex roots allowed, does every bottom split into linear factors?
+Left open: partial fractions handles ratios of polynomials, but what if a quadratic sits inside a square root such as √(9 − x^2)? Trig substitution answers that next (while Rational functions answers whether x^2 + 1 splits into linear factors once complex roots are allowed).
 
 ---
 

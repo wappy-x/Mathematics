@@ -12,7 +12,7 @@ The integral is a limit of slice sums ([The integral](01-riemann-integral.md)), 
 
 Each rule's error has a ceiling set by how sharply the curve bends, known before the truth is. Inverted, it gives the slices a target needs: 12 for Simpson at six decimals.
 
-**Replace the curve on each slice by a flat line, a chord or a parabola, add their exact areas, and bound the error by a ceiling on the second or fourth derivative times a power of the slice width.**
+**Replace the curve on each slice by a flat line, a chord or a parabola, add their exact areas, and, when the second or fourth derivative exists and is bounded on the interval, bound the error by that ceiling times a power of the slice width.**
 
 **What kind of fact this is:** a method; its three error bounds are theorems, proved on this card in Why it works.
 
@@ -26,7 +26,7 @@ To scale: 280 px per unit across, 400 up. The curve sits above each rectangle on
 
 ## The formula
 
-Notation first. The interval from a to b is cut into n equal slices of width h = (b − a)/n, at the points $`x_i = a + ih`$. f″ is the second derivative, how fast the slope changes; $`f^{(4)}`$ is the fourth ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
+Notation first. The interval from a to b (with a ≤ b) is cut into n equal slices (n ≥ 1) of width h = (b − a)/n, at the points $`x_i = a + ih`$. f″ is the second derivative, how fast the slope changes; $`f^{(4)}`$ is the fourth ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
 
 ```math
 M_n = h\sum_{i=1}^{n} f\bigl(a + (i - \tfrac12)h\bigr)
@@ -42,7 +42,7 @@ S_n = \tfrac{h}{3}\Bigl[f(x_0) + 4f(x_1) + 2f(x_2) + \dots + 4f(x_{n-1}) + f(x_n
 
 **Read it aloud:** midpoint is width times the sum of the centre heights; trapezoid, width times the sum of the cut heights with the two ends halved; Simpson, a third of the width times the heights weighted 1, 4, 2, …, 4, 1.
 
-If the size of f″ never exceeds $`K_2`$ on the interval, and that of $`f^{(4)}`$ never exceeds $`K_4`$:
+When f has a second derivative f″ on [a, b] with size at most $`K_2`$, and a fourth derivative $`f^{(4)}`$ on [a, b] with size at most $`K_4`$ (with a ≤ b, n ≥ 1, and n even for Simpson):
 
 ```math
 |I - M_n| \le \frac{K_2\,(b-a)\,h^2}{24}, \qquad |I - T_n| \le \frac{K_2\,(b-a)\,h^2}{12}, \qquad |I - S_n| \le \frac{K_4\,(b-a)\,h^4}{180}
@@ -65,7 +65,7 @@ For a target error $`E`$, set a bound equal to it and solve for n, rounding up (
 
 ### When it holds
 
-- **The named derivative exists and is bounded.** At a corner or spike the ceiling fails; split there, or see [Improper integrals](07-improper-integrals.md) when the curve runs off to infinity.
+- **The named derivative exists and is bounded on the whole closed interval [a, b], with a ≤ b.** At a corner or spike the ceiling fails; split there, or see [Improper integrals](07-improper-integrals.md) when the curve runs off to infinity.
 - **The ceiling covers every point.** Read at x = 1, where f″ is 0, it claims zero error; one midpoint slice is off by 0.010721.
 - **Simpson needs an even count.** Its weights forced onto 5 slices give 0.323594.
 - **Exact arithmetic.** The bounds ignore computer rounding, far smaller here.
@@ -117,7 +117,7 @@ Six decimals means an error below 5e-7. The bounds ask for 183 midpoint, 258 tra
 
 Midpoint's error is about half the trapezoid's, with opposite sign (0.000632441 against 0.001262902); their two-to-one blend is Simpson's rule on twice the slices. Halving h from n = 8 to 16 cuts the errors by 4.00, 4.00 and 16.07, as $`h^2`$ and $`h^4`$ predict.
 
-The second road: e^u is the sum of u^k/k! (wing 01). Put u = −x^2/2 and integrate each power: the area is 1/√(2π) times the sum of (−1)^k/(2^k k! (2k + 1)). Taylor's theorem bounds the tail after 13 terms by (1/2)^13/13! times 1/√(2π), below 7.8e-15, so I = 0.341344746069.
+The second road: e^u is the sum of u^k/k!. Put u = −x^2/2 and integrate each power: the area is 1/√(2π) times the sum of (−1)^k/(2^k k! (2k + 1)). Taylor's theorem bounds the integrand's tail after 13 terms by (1/2)^13/13! times 1/√(2π), about 7.8e-15 (and integrating cuts it 27-fold), so I = 0.341344746069.
 
 ---
 
@@ -354,13 +354,13 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the three error bounds for every curve with the needed derivatives, on any interval and any slice count.
+Lean proves the three error bounds for every curve with the needed derivatives, on any closed interval [a, b] with a ≤ b and any positive slice count.
 
-- Take a curve whose f″ exists at every point of [a, b], with size never above K₂. Cut into n equal slices of width h. The midpoint total misses the true area by at most K₂(b − a)h^2/24.
+- Take a curve whose first and second derivatives exist at every point of [a, b] (with a ≤ b, one-sided at the ends), with the size of f″ never above K₂. Cut into n ≥ 1 equal slices of width h. The midpoint total misses the true integral by at most K₂(b − a)h^2/24.
 - Under the same ceiling, the trapezoid total misses by at most K₂(b − a)h^2/12.
-- Take a curve whose $`f^{(4)}`$ exists at every point of [a, b], with size never above K₄. For an even count n, Simpson misses by at most K₄(b − a)h^4/180.
+- Take a curve whose first four derivatives exist at every point of [a, b] (with a ≤ b, one-sided at the ends), with the size of $`f^{(4)}`$ never above K₄. For a positive even count n, Simpson misses by at most K₄(b − a)h^4/180.
 - The tank, filling at 3 + 2t litres per minute for 10 minutes, holds exactly 130 litres. With 10 slices, all three rules give 130.
-- With h = 1, Simpson's weights on one pair of slices give the true areas 2, 0, 2/3 and 0 for 1, t, t^2 and t^3.
+- With h = 1, Simpson's weights on one pair of slices give the true integrals 2, 0, 2/3 and 0 for 1, t, t^2 and t^3.
 
 The bell curve's numbers, its ceilings, the slice counts for six decimals, the figure and the mistakes are left to the Python and Rust checks.
 
@@ -851,7 +851,7 @@ example : (1 : ℚ) / 3 * ((-1) ^ 3 + 4 * 0 ^ 3 + 1 ^ 3) = 0 := by norm_num
 - **Digital audio.** The trapezoid rule turns an analogue filter into a digital one: [Digital filters](../../13-Engineering%20mathematics/05-Signals/04-digital-filters-fir-and-iir.md).
 
 > **Say it back**
-> With no antiderivative, weight sampled heights: centres, ends, or a parabola per pair of slices. The errors are at most a derivative ceiling over the whole interval times h^2 or h^4, over 24, 12 or 180. Solving for n guarantees a target. For the bell curve from 0 to 1, twelve Simpson slices give 0.341345.
+> With no antiderivative, weight sampled heights: centres, ends, or a parabola per pair of slices. When the second or fourth derivative exists and is bounded on [a, b] (a ≤ b), the error is at most that ceiling times (b − a) times h^2 or h^4, over 24, 12 or 180 (with n positive and even for Simpson). Solving for n guarantees a target. For the bell curve from 0 to 1, twelve Simpson slices give 0.341345.
 
 ---
 
@@ -862,12 +862,13 @@ example : (1 : ℚ) / 3 * ((-1) ^ 3 + 4 * 0 ^ 3 + 1 ^ 3) = 0 := by norm_num
 
 ## Where this goes next
 
+- [Averages, mass and work](09-average-value-mass-and-work.md): the next card on this shelf, turning rates and densities into averages, mass and work.
 - [Stirling's approximation](../06-Series/09-stirlings-approximation.md): n! sized by comparing a sum with an integral.
-- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by quadrature.
+- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by numerical integration when no antiderivative exists.
 - [Digital filters](../../13-Engineering%20mathematics/05-Signals/04-digital-filters-fir-and-iir.md): the trapezoid rule as a filter design.
 - [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): the whole family of weighted rules.
 
-Equal slices and fixed weights are one choice; which points and weights buy the most accuracy per height is the question Trapezoid, midpoint and Simpson takes up.
+With evaluation rules in hand, what physical totals and averages do integrals define? Averages, mass and work takes that up next (while Trapezoid, midpoint and Simpson asks which points and weights buy the most accuracy per height).
 
 ---
 

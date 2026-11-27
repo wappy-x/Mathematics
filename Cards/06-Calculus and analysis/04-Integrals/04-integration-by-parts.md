@@ -12,7 +12,7 @@ The first curve is a product, x times e^x. Antiderivatives (functions whose rate
 
 So the method trades the integral wanted for another: differentiate one factor, integrate the other, and pay with a term measured at the two ends. It pays when the new integral is easier. Here x differentiates to 1 and e^x integrates to itself; ln x is read as ln x times 1.
 
-**Integrating a product equals the product's change between the ends, minus the integral with the two factors' roles swapped.**
+**When u and v are differentiable with continuous rates on a closed interval, the integral of u times v' equals the change in uv between the ends, minus the integral of v times u'.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; choosing which factor to differentiate is a method, a rule of thumb that can fail.
 
@@ -27,6 +27,8 @@ Drawn to scale: 1 unit across is 200 px, 1 unit up is 70 px; the curve's points 
 ## The formula
 
 Notation first. A dash marks a rate: u'(x) is the rate of u per unit of x. Square brackets with two limits mean "at the top end minus at the bottom end": $`[uv]_a^b`$ is u(b)v(b) − u(a)v(a). And $`du`$ is shorthand for u'(x) dx.
+
+When u and v are differentiable with continuous rates on the closed interval between a and b:
 
 ```math
 \int_a^b u(x)\,v'(x)\,dx \;=\; \Big[\,u(x)\,v(x)\,\Big]_a^b \;-\; \int_a^b v(x)\,u'(x)\,dx
@@ -55,11 +57,11 @@ J_n = e - n\,J_{n-1}, \qquad J_0 = e - 1
 | $`[uv]_a^b`$ | the boundary term: product at b minus product at a | e | rises one for one |
 | $`e`$, $`x`$ | Euler's number, 2.718282; the variable | x from 0 to 1 | — |
 | $`J_n`$, $`n`$, $`J_0`$ | area under x^n e^x from 0 to 1; a whole number; the start | J_0 = 1.718282, J_1 = 1 | the area falls: 1, 0.718282, 0.563436, 0.464536 |
-| $`C`$ | the constant any antiderivative may carry | e^x (x − 1) + C | cancels from any area |
+| $`C`$ | the constant any antiderivative may carry | e^x (x − 1) + C | cancels from any definite integral |
 
 ### When it holds
 
-- **u and v have continuous rates on the closed interval.** Take u = x on 0 to 3 and let v jump from 0 to 1 at x = 1. The rate of v is 0 wherever it exists, so the left side is 0; the right side is 1, u at the jump times the jump.
+- **u and v are differentiable with continuous rates on the closed interval** (one-sided at the ends). Take u = x on 0 to 3 and let v jump from 0 to 1 at x = 1. The rate of v is 0 wherever it exists, so the left side is 0; the right side is 1, u at the jump times the jump.
 - **The interval is finite and both factors are defined on it.** The log is undefined at 0, so the area under ln x from 0 to 1 needs its boundary term as a limit ([Improper integrals](07-improper-integrals.md)).
 - **The leftover must be easier.** Every split is true; u = e^x for x e^x leaves x^2 e^x, a higher power.
 - **The reduction needs n of at least 1, and exact arithmetic.** Each step multiplies rounding error by n: at n = 20 it prints −129.263708 for an area of 0.123804.
@@ -435,7 +437,7 @@ theorem area_x_mul_exp_and_area_log_eq_one :
 > **Taking the boundary term for the answer.** For x e^x on 0 to 1 it gives e, 2.718282, against a true area of 1. Parts leaves an integral behind.
 >
 > - **The wrong sign.** Adding the leftover gives 4.436564.
-> - **A constant carried into an area.** An indefinite answer needs one + C; an area needs none.
+> - **A constant carried into a definite integral.** An indefinite answer needs one + C; a definite integral needs none.
 > - **A long reduction trusted in floating point.** Run $`J_{n-1} = (e - J_n)/n`$ downward from a high n instead, and errors shrink.
 
 ---
@@ -447,34 +449,34 @@ theorem area_x_mul_exp_and_area_log_eq_one :
 - **Option markets.** Parts, applied twice, rebuilds a payoff from calls and puts, the step behind the VIX index, a gauge of expected stock-market swings ([Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md)).
 
 > **Say it back**
-> The product rule splits a product's rate into two shares; integrated, they give the product's change between the ends. So one share's integral is that change minus the other's. Differentiate the factor that gets simpler; integrate the one that does not get worse. Repeating the trade on x^n e^x gives a reduction formula that ends at e − 1.
+> When u and v have continuous rates on a closed interval, the product rule splits their product's rate into two shares; integrated, they give the product's change between the ends. So one share's integral is that change minus the other's. Differentiate the factor that gets simpler; integrate the one that does not get worse. Repeating the trade on x^n e^x gives a reduction formula that ends at e − 1.
 
 ---
 
 ## What this builds on
 
 - [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): integrating a rate gives the change between the ends.
-- [Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md): the rule being run backwards.
+- [Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md): the product rule for derivatives that this card runs backwards.
 
 ## Where this goes next
 
-- [Partial fractions](05-partial-fractions.md): quotients of polynomials.
-- [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): coefficients that parts evaluates.
-- [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): a transform whose derivative rule is parts.
-- [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this reduction, taken to infinity.
+- [Partial fractions](05-partial-fractions.md): splitting quotients of polynomials into simple pieces you can integrate.
+- [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): wave coefficients evaluated and bounded by repeated integration by parts.
+- [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): a transform whose derivative rule comes straight from parts.
+- [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this reduction formula taken to infinity to extend factorials.
 - [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the product rule run backwards on a rate equation.
 - [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): parts twice, boundary terms made to vanish.
-- [Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): one parts step per derivative.
+- [Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): one integration-by-parts step for each derivative in an equation.
 - [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): parts moves the derivative off a change of path.
 - [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): average waiting times by this reduction.
 - [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): parts that counts a jump's share.
 - [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off call prices.
-- [Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): any payoff from calls and puts.
+- [Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): any payoff rebuilt from calls and puts.
 - [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): the weak form, made by parts.
 - [Transcendence of e and pi](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/13-transcendence-of-e-and-pi.md): Hermite's integral trick, and Lindemann's step from e to pi.
 - [Apery's theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/15-irrationality-of-zeta-three.md): zeta of 3 is irrational, by Beukers' triple integral.
 
-This card leaves open how fast the coefficients of a repeating curve, the weights of its waves, shrink; repeated parts answers it in [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): smoother curves, faster-shrinking coefficients.
+Parts handles products, but leaves quotients of polynomials such as 1/(x^2 − 1) untouched; how do you split those into pieces you can integrate? Partial fractions answers that next (while repeated parts also answers how fast a repeating curve's wave weights shrink in [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): smoother curves, faster-shrinking coefficients).
 
 ---
 

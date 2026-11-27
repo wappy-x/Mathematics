@@ -12,7 +12,7 @@ The root blocks the power rule, and no inner rate sits in front for plain substi
 
 That swap is **trig substitution**: write x as a sine, tangent or secant, restrict the angle so each x has exactly one, and the root becomes a trig function. The pond comes to 9π = 28.274334 square metres.
 
-**For a root of a^2 − x^2, put x = a sin θ with θ between −π/2 and π/2: the root becomes a cos θ, the strip width a cos θ dθ, and a double-angle identity finishes the integral.**
+**For a root of a^2 − x^2 with a > 0, put x = a sin θ with θ between −π/2 and π/2: the root becomes a cos θ, the strip width a cos θ dθ, and a double-angle identity finishes the integral.**
 
 **What kind of fact this is:** a method, justified by the substitution theorem in Why it works; the area it recovers was first proved by polygons.
 
@@ -26,7 +26,7 @@ Scale: 1 m = 32 units. Centre O (180, 124), top of the bank (180, 28.00), P (228
 
 ## The formula
 
-Reminder: the substitution rule, with its moved limits, is [Substitution](03-substitution.md). Here it runs right to left: the old variable x is written as a function of a new one, θ.
+Reminder: the substitution rule, with its moved limits, is [Substitution](03-substitution.md). Here it runs right to left: the old variable x is written as a function of a new one, θ. For a radius a > 0:
 
 ```math
 \int_{-a}^{a} \sqrt{a^2 - x^2}\,dx \;=\; \int_{-\pi/2}^{\pi/2} a\cos\theta \cdot a\cos\theta\,d\theta \;=\; \frac{\pi a^2}{2}
@@ -34,7 +34,7 @@ Reminder: the substitution rule, with its moved limits, is [Substitution](03-sub
 
 **Read it aloud:** the half circle's area is the root a cos θ times the restretched width a cos θ, accumulated over a half turn: half of pi a squared.
 
-Doubled, the pond is $`A = \pi a^2 = 9\pi`$ = 28.274334 m^2. Without limits, the same steps give the antiderivative
+Doubled, the pond is $`A = \pi a^2 = 9\pi`$ = 28.274334 m^2. Without limits, for a > 0 and −a < x < a, the same steps give the antiderivative
 
 ```math
 \int \sqrt{a^2 - x^2}\,dx = \tfrac12\left(x\sqrt{a^2 - x^2} + a^2\,\theta\right) + C, \qquad \sin\theta = \frac{x}{a},\ -\tfrac{\pi}{2} \le \theta \le \tfrac{\pi}{2}
@@ -44,7 +44,7 @@ That θ is the inverse sine of x/a, written arcsin(x/a): the angle on the branch
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`a`$ | the radius | 3 m | area grows as its square |
+| $`a`$ | the radius (positive) | 3 m | area grows as its square |
 | $`x`$ | position along the line | −3 m to 3 m | — |
 | $`\theta`$ | angle from the dashed upright, radians | −π/2 to π/2 | x moves right |
 | $`dx`$, $`d\theta`$ | strip widths on the x and θ rulers | dx = 3 cos θ dθ | — |
@@ -53,7 +53,7 @@ That θ is the inverse sine of x/a, written arcsin(x/a): the angle on the branch
 | $`\sin`$, $`\cos`$, $`\tan`$, $`\sec`$ | trig functions; sec θ = 1/cos θ | root = 3 cos θ | tan, sec blow up at π/2 |
 | $`\pi`$ | a half turn; circumference over diameter | 3.141592653590 | — |
 
-The other two shapes, each with its own identity:
+The other two shapes (with a > 0), each with its own identity:
 
 | Root | Put | Identity used | Root becomes | Branch |
 | --- | --- | --- | --- | --- |
@@ -63,7 +63,7 @@ The other two shapes, each with its own identity:
 
 ### When it holds
 
-- **The root is real on the interval:** here x from −3 to 3.
+- **a > 0, and the root is real on the interval:** here x from −3 to 3.
 - **The substitution has a continuous rate,** here 3 cos θ; it need not be one-to-one.
 - **The branch is named before the root is removed.** √(cos^2 θ) is |cos θ|, the size without the sign. Off the branch, 14.137167 comes out where −14.137167 is true.
 - **Angles are in radians.** Only then is the rate of sin θ equal to cos θ.
@@ -500,7 +500,7 @@ example : (5 / 3 : ℚ) + 4 / 3 = 3 := by norm_num
 - **Arc length of a parabola.** The length of y = x^2 needs √(1 + 4x^2), cleared by a tangent substitution.
 
 > **Say it back**
-> A root of a^2 − x^2 is a leg of a right triangle with hypotenuse a. Writing x = a sin θ, θ between −π/2 and π/2, makes it a cos θ. The strip width becomes a cos θ dθ and the limits become angles. A pond of radius 3 m comes to 9π = 28.274334 m^2. Tangent and secant do the same for a^2 + x^2 and x^2 − a^2.
+> For a > 0, a root of a^2 − x^2 is a leg of a right triangle with hypotenuse a. Writing x = a sin θ, θ between −π/2 and π/2, makes it a cos θ. The strip width becomes a cos θ dθ and the limits become angles. A pond of radius 3 m comes to 9π = 28.274334 m^2. Tangent and secant do the same for a^2 + x^2 and x^2 − a^2.
 
 ---
 

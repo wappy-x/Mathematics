@@ -14,7 +14,7 @@ The first tap has poured 0.9 litres by minute 10, 0.99 by minute 100, 0.999 by m
 
 A rate that shoots up without bound, a spike, is handled the same way: stop short of it and let the gap close.
 
-**An improper integral is the limit of ordinary integrals over finite pieces as the cut-off heads for the trouble: a finite limit means it converges, anything else means it diverges.**
+**An improper integral is a limit of ordinary integrals over finite pieces, taken separately at each trouble spot (an endless end or a spike): if every limit is finite it converges, otherwise it diverges.**
 
 **What kind of fact this is:** a definition; the power rule and the comparison test that decide convergence are theorems, proved on this card in Why it works.
 
@@ -38,7 +38,7 @@ The lower line is the 1/t^2 tap, levelling off at 1 litre. The climbing line is 
 
 Notation first, in words. The sign $`\infty`$, read "infinity", is not a number: as an integral's upper end it means no end; in a limit, B growing past every number. A small plus after the 0 under a limit says the cut-off approaches 0 from above.
 
-The first kind, an endless interval:
+The first kind, an endless interval (for f integrable on [a, B] for every B > a, when the limit exists and is finite):
 
 ```math
 \int_a^\infty f(t)\,dt = \lim_{B\to\infty} \int_a^B f(t)\,dt
@@ -46,7 +46,7 @@ The first kind, an endless interval:
 
 **Read it aloud:** the total from a for ever is where the total from a to B heads as B grows without bound.
 
-The second kind, a spike at 0:
+The second kind, a spike at 0 only (for f integrable on [s, 1] for every s between 0 and 1, when the limit exists and is finite):
 
 ```math
 \int_0^1 f(t)\,dt = \lim_{s\to 0^+} \int_s^1 f(t)\,dt
@@ -62,7 +62,7 @@ The power rule, the usual yardstick:
 
 and each diverges otherwise, p = 1 included.
 
-The comparison test: if $`0 \le f(t) \le g(t)`$ from some point on, a finite total for g forces one for f, and an endless total for f forces one for g.
+The comparison test: for rates f and g integrable on every finite piece, if $`0 \le f(t) \le g(t)`$ from some point on, a finite total for g forces one for f, and a divergent total for f forces one for g.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -147,7 +147,7 @@ Turned round: 1/√t is at least 1/t from minute 1, so it diverges; its totals 2
 <details>
 <summary>Detailed proof</summary>
 
-**Claim.** Let f and g be integrable from a to every B, with $`0 \le f(t) \le g(t)`$ for t ≥ a. If g's integral from a to infinity converges to G, f's converges, to at most G.
+**Claim.** Let f and g be integrable from a to every B > a, with $`0 \le f(t) \le g(t)`$ for t ≥ a. If g's integral from a to infinity converges to G, f's converges, to at most G.
 
 **Proof.** Write F(B) for the integral of f from a to B. For B < C, F(C) − F(B) is f's integral from B to C, at least 0, so F never falls. By the comparison property F(B) is at most g's integral to B, itself at most G. So F has an upper bound, and by the no-gaps property a least upper bound $`L`$.
 
@@ -624,7 +624,7 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 - **Heavy tails.** Some averages in statistics are integrals whose rate fades like a power; they exist only when the integral converges: [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md).
 
 > **Say it back**
-> An improper integral totals a finite piece and moves the cut-off toward the trouble. If the totals settle, it converges; otherwise it diverges. 1/t^2 from 1 settles at 1 because its doubling blocks halve; 1/t does not, because its blocks stay at ln 2. Powers above 1 converge far out, powers below 1 at a spike. A never-negative rate below a convergent one converges too.
+> An improper integral totals a finite piece and moves the cut-off toward the trouble. If the totals settle, it converges; otherwise it diverges. 1/t^2 from 1 settles at 1 because its doubling blocks halve; 1/t does not, because its blocks stay at ln 2. Powers above 1 converge far out, powers below 1 at a spike. An integrable, never-negative rate below a convergent one converges too.
 
 ---
 
@@ -637,6 +637,7 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 
 ## Where this goes next
 
+- [Numerical integration](08-numerical-integration.md): the next card on this shelf, evaluating finite integrals by weighted strips with proved error bounds.
 - [Convergence tests](../06-Series/02-comparison-ratio-and-root-tests.md): the doubling blocks made this integral a sum; the same comparison, run on sums.
 - [The Gaussian integral](../08-Multiple%20Integrals/04-gaussian-integral.md): an endless integral found without an antiderivative.
 - [The semicircle contour](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): endless integrals by closing a loop.
@@ -645,14 +646,14 @@ example : (-1 : ℚ) / 1 - (-1 / (-1)) = -2 := by norm_num
 - [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): a spike and a tail at once.
 - [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): the transform applied to rate equations.
 - [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): a series stretched into an integral.
-- [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): averages that diverge.
-- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): what a stronger integral accepts.
-- [Adaptive quadrature and awkward integrals](../../16-Numerical%20analysis/05-Quadrature/05-adaptive-and-improper-quadrature.md): computing them to a stated error.
-- [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): sums turned into integrals.
+- [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): probability averages whose improper integrals diverge because the tail fades too slowly.
+- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): which rough and unbounded functions a stronger integral accepts.
+- [Adaptive quadrature and awkward integrals](../../16-Numerical%20analysis/05-Quadrature/05-adaptive-and-improper-quadrature.md): computing improper and spiky integrals to a stated error.
+- [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): turning weighted sums into integrals via summation by parts.
 - [The logarithmic integral](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/06-the-logarithmic-integral-and-the-error-term.md): an integral of 1/ln t that estimates prime counts.
 - [Improper integrals with a dial](../08-Multiple%20Integrals/09-uniform-convergence-of-improper-integrals.md): the Weierstrass test that lets limits and derivatives pass inside.
 
-Left open: comparison can prove a total is finite without saying what it is; when no antiderivative exists, how is the exact value found?
+Left open: comparison can prove a total is finite without saying what it is; when no antiderivative exists, how do you compute an integral accurately? Numerical integration answers that for finite integrals next (while The Gaussian integral and The semicircle contour find exact improper values).
 
 ---
 

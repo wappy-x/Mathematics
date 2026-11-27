@@ -83,7 +83,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *The integral as accumulated change, the theorem that connects it to derivatives, and the techniques that evaluate it*
 
-1. [The integral: area as a limit of thin rectangles](04-Integrals/01-riemann-integral.md)
+1. [The integral: signed area as a limit of thin rectangles](04-Integrals/01-riemann-integral.md)
 2. [Fundamental theorem of calculus: accumulation and rate are inverse operations](04-Integrals/02-fundamental-theorem-of-calculus.md)
 3. [Substitution: the chain rule run backwards](04-Integrals/03-substitution.md)
 4. [Integration by parts: the product rule run backwards](04-Integrals/04-integration-by-parts.md)

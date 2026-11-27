@@ -12,9 +12,9 @@ A cone-shaped tank, point down, stands 4 m deep with a rim 2 m in radius. It is 
 
 Both questions have one shape. A quantity is known piece by piece: a temperature at each moment, a mass per metre of height, a lift for each layer. Multiply each piece by its width, add, and let the pieces shrink: an integral ([The integral](01-riemann-integral.md)), evaluated by an antiderivative, a function whose rate of change is that quantity ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)). The answers: 16,755.2 kg of water, 164,368.1 joules of work.
 
-**A total is the integral of an amount-per-unit over the units; an average is that total divided by how many units there were.**
+**A total is the integral of an amount-per-unit over the units; on a stretch of positive length, the average is that total divided by the length.**
 
-**What kind of fact this is:** definitions: average value, mass and work are each defined as integrals. One theorem rides along: a continuous quantity takes its average value somewhere, proved on this card in Why it works.
+**What kind of fact this is:** definitions: average value, mass and work are each defined as integrals. One theorem rides along: a continuous quantity on a closed interval of positive length takes its average value somewhere, proved on this card in Why it works.
 
 ### The picture: the day's temperature against its mean
 
@@ -35,6 +35,8 @@ The curve is the temperature, T(t) = 10 + t(24 − t)/10 °C at t hours after mi
 ## The formula
 
 Notation first, in words. A bar marks an average: $`\bar{f}`$, read "f bar". The Greek letter $`\lambda`$ (lambda) is a **linear density**: mass per metre, here per metre of height.
+
+For an integrable quantity f on an interval with a < b:
 
 ```math
 \bar{f} = \frac{1}{b-a}\int_a^b f(t)\,dt
@@ -71,7 +73,7 @@ Units multiply: kg per metre times metres is kg; newtons times metres is joules.
 
 ### When it holds
 
-- **The interval has length.** b must exceed a; a zero-length stretch has no average.
+- **The interval has positive length and the quantity is integrable.** b must exceed a; a zero-length stretch has no average.
 - **A continuous quantity, for the "reached somewhere" claim.** A heater that switches the room from 10 °C to 20 °C at noon averages 15 °C over the day, yet the room is never at 15 °C.
 - **Each thin piece is uniform.** Density and lift are treated as constant within a layer; salty water, denser at the bottom, needs that variation inside $`\lambda`$.
 - **Work counts only lifting.** The integral is the least energy that raises the water to the rim. A real pump also loses energy to friction and heat, so its meter reads more.
@@ -557,7 +559,7 @@ example : ∫ x in (0 : ℝ)..(3 / 10), -200 * x = -9 := by
 - **Cables.** A cable whose mass per metre varies weighs the integral of that density, found by [Numerical integration](08-numerical-integration.md) when no antiderivative is at hand.
 
 > **Say it back**
-> Over a thin piece, amount is rate times width; adding and shrinking the pieces gives an integral. The average is that total divided by the interval's length, and a continuous quantity passes through it somewhere. Mass is linear density integrated over length. Work is weight times lift, added layer by layer.
+> Over a thin piece, amount is rate times width; adding and shrinking the pieces gives an integral. The average is that total divided by the interval's positive length, and a continuous quantity on a closed interval passes through it somewhere. Mass is linear density integrated over length. Work is weight times lift, added layer by layer.
 
 ---
 
@@ -567,9 +569,10 @@ example : ∫ x in (0 : ℝ)..(3 / 10), -200 * x = -9 := by
 
 ## Where this goes next
 
+- [Parametric motion](../05-Curves%20and%20Solids/01-parametric-motion.md): the next shelf begins by tracking position, velocity and acceleration along a curved path as vectors.
 - [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md): the balance point, an average of position weighted by mass.
 
-Left open: where is the water's balance point, and why does lifting all of it through that point's 1 m lift give the same work?
+Left open: where is the water's balance point, and why does lifting all of it through that point's 1 m lift give the same work? Centre of mass answers that at the end of the next shelf, which starts by moving from one-dimensional rates to motion along curves in Parametric motion.
 
 ---
 

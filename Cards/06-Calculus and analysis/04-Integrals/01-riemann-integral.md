@@ -1,4 +1,4 @@
-# The integral: area as a limit of thin rectangles
+# The integral: signed area as a limit of thin rectangles
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Integrals](../README.md#s04) → The integral
 
@@ -8,13 +8,15 @@
 
 An empty tank is filled for 10 minutes by a pump that speeds up steadily: at minute t it delivers 3 + 2t litres per minute, so 3 at the start and 23 at the end. How much water is in the tank?
 
-At a fixed rate the answer is rate times time. This rate never holds still, so cut the 10 minutes into thin slices. In each slice, lowest rate times width is too little and highest rate times width too much. With 5 slices the tank holds between 110 and 150 litres; with 100 slices, between 129 and 131. The bracket closes on one number: 130 litres.
+At a fixed rate the answer is rate times time. This rate never holds still, so cut the 10 minutes into thin slices. In each slice, lowest rate times width is too little and highest rate times width too much.
+
+With 5 slices the tank holds between 110 and 150 litres; with 100 slices, between 129 and 131. The bracket closes on one number: 130 litres.
 
 Drawn against time, each slice is a thin rectangle and the water is the area under the rate line.
 
-**The integral is the one number above every lower total and below every upper total, when finer slicing can close the gap between them.**
+**For a bounded rate on a closed, finite interval, the integral is the one number above every lower total and below every upper total, when finer slicing can close the gap between them.**
 
-**What kind of fact this is:** a definition; that continuous and monotone rates always close the gap are theorems, proved on this card in Why it works.
+**What kind of fact this is:** a definition; that continuous and monotone rates on a closed, finite interval always close the gap are theorems, proved on this card in Why it works.
 
 ### The picture: five slices under the rate line
 
@@ -28,7 +30,9 @@ To scale: 28 px per minute across, 8 px per litre per minute up. Shaded rectangl
 
 Notation first, in words. The **integral sign** is a stretched S, for "sum", with the start a below and the end b above. After it comes what is added; the closing dt names the variable sliced, here time.
 
-Write $`f(t)`$ for the rate at time t. Cut the interval from a to b at points $`a = t_0 < t_1 < \dots < t_n = b`$. That list of cuts is a **partition**, named $`P`$. Slice k runs from $`t_{k-1}`$ to $`t_k`$ and has width $`\Delta t_k = t_k - t_{k-1}`$. On it, $`m_k`$ is the rate's **infimum** $`\inf`$ (the greatest number it never drops below) and $`M_k`$ its supremum $`\sup`$ (the least number it never rises above). For a rising rate these are the rates at the slice's two ends.
+Write $`f(t)`$ for a bounded rate at time t on a closed interval from a to b with a < b. Cut the interval at points $`a = t_0 < t_1 < \dots < t_n = b`$. That list of cuts is a **partition**, named $`P`$.
+
+Slice k runs from $`t_{k-1}`$ to $`t_k`$ and has width $`\Delta t_k = t_k - t_{k-1}`$. On it, $`m_k`$ is the rate's **infimum** $`\inf`$ (the greatest number it never drops below) and $`M_k`$ its supremum $`\sup`$ (the least number it never rises above). For a rising rate these are the rates at the slice's two ends.
 
 ```math
 L(P) = \sum_{k=1}^{n} m_k\,\Delta t_k \qquad U(P) = \sum_{k=1}^{n} M_k\,\Delta t_k
@@ -61,8 +65,8 @@ Units multiply: litres per minute times minutes gives litres.
 
 - **A bounded rate.** A rate like 1/t grows without limit near t = 0, so a slice starting there has no highest rate and no upper sum; [Improper integrals](07-improper-integrals.md) adds a second limit.
 - **A closed, finite interval.** An endless interval needs the same second limit.
-- **Continuous or monotone is enough.** Continuous means the rate has no jumps or holes ([Continuity](../01-Limits%20and%20Continuity/05-continuity.md)). Monotone means only rising or only falling, jumps allowed. A rate with neither can fail: the fraction rule in What breaks.
-- **Signs count.** A negative rate (the tank draining) subtracts, so the integral is a signed area.
+- **Continuous or monotone is enough.** Continuous means the rate has no jumps or holes ([Continuity](../01-Limits%20and%20Continuity/05-continuity.md)). Monotone means only rising or only falling, jumps allowed. A bounded rate with neither can fail: the fraction rule in What breaks.
+- **Signs and limit order count.** A negative rate (the tank draining) subtracts, so the integral is a signed area. When a = b the integral is 0, and swapping a and b flips its sign.
 
 ---
 
@@ -84,7 +88,7 @@ If every tolerance has a slicing whose upper minus lower is smaller, the best lo
 
 ### Step 3: monotone rates pass the test
 
-Cut a rising rate into n equal slices. Upper minus lower is, slice by slice, right-end rate minus left-end rate, times the width. Each slice's right end is the next one's left end, so the differences cancel in a chain and leave f(b) − f(a). A falling rate swaps the ends:
+Cut a rising rate on [a, b] (a < b) into n equal slices (n ≥ 1). Upper minus lower is, slice by slice, right-end rate minus left-end rate, times the width. Each slice's right end is the next one's left end, so the differences cancel in a chain and leave f(b) − f(a). A falling rate swaps the ends:
 
 ```math
 U - L = \frac{b - a}{n}\,\bigl|f(b) - f(a)\bigr|
@@ -105,7 +109,7 @@ Write ε (epsilon) for a tolerance and δ (delta) for a width.
 
 **Gap test.** Let I₋ = sup L(P) and I₊ = inf U(P); Step 1 gives I₋ ≤ I₊. If every ε > 0 has a P with U(P) − L(P) < ε, then 0 ≤ I₊ − I₋ < ε for all ε, so they are equal.
 
-**Continuous implies integrable.** A continuous f on [a, b] is uniformly continuous. Given ε, take δ so that |s − u| < δ forces |f(s) − f(u)| < ε/(2(b − a)). On any slice narrower than δ every two rates differ by less than that, so M_k − m_k ≤ ε/(2(b − a)). Multiplying by widths and adding, U − L ≤ ε/2 < ε.
+**Continuous implies integrable.** A continuous f on [a, b] with a < b is uniformly continuous. Given ε, take δ so that |s − u| < δ forces |f(s) − f(u)| < ε/(2(b − a)). On any slice narrower than δ every two rates differ by less than that, so M_k − m_k ≤ ε/(2(b − a)). Multiplying by widths and adding, U − L ≤ ε/2 < ε.
 
 </details>
 
@@ -362,11 +366,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the definition's key facts for every continuous or monotone rate, and the tank's sums for every slice count.
+Lean proves the definition's key facts for every continuous or monotone rate on [a, b] with a < b, and the tank's sums for every positive slice count.
 
-- Take a rate that is continuous on a closed interval, or only rising or only falling there, jumps allowed. Exactly one number lies above every lower sum and below every upper sum. That number is the integral.
-- For any bounded rate, a lower sum never passes an upper sum, even when the two come from different slicings.
-- Cut the tank's 10 minutes into n equal slices, for any n. The lower sum is 130 − 100/n litres and the upper sum is 130 + 100/n.
+- Take a rate that is continuous on a closed, finite interval [a, b] with a < b, or only rising or only falling there, jumps allowed. Exactly one number lies above every lower sum and below every upper sum. That number is the integral.
+- For any bounded rate on [a, b], a lower sum never passes an upper sum, even when the two come from different slicings.
+- Cut the tank's 10 minutes into n equal slices, for any positive whole number n. The lower sum is 130 − 100/n litres and the upper sum is 130 + 100/n.
 - The hand arithmetic holds exactly: the 5-slice table, the chart, the extra cut at 2, the geometry, the valve's 60 litres and the 270.
 
 The valve's sums, the 200- and 20000-slice searches, the figure and the fraction rule are left to the Python and Rust checks.
@@ -946,7 +950,7 @@ example : (Finset.range 20).sum (fun k => 3 + (k + 1)) = 270 ∧ 270 / 2 = 135 :
 - **Credit risk.** A default rate integrated over years sets a borrower's survival chance: [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
-> Slice the interval. Lowest rate times width is too little, highest too much. Extra cuts only tighten the bracket, and no lower total passes an upper one. When the bracket closes below any tolerance, the number left is the integral. Monotone and continuous rates always close it; the tank closes on 130 litres.
+> Slice the interval. Lowest rate times width is too little, highest too much. Extra cuts only tighten the bracket, and no lower total passes an upper one. When the bracket closes below any tolerance, the number left is the integral. Monotone and continuous rates on a closed, finite interval always close it; negative rates subtract, so the integral is a signed area. The tank closes on 130 litres.
 
 ---
 
@@ -958,22 +962,22 @@ example : (Finset.range 20).sum (fun k => 3 + (k + 1)) = 270 ∧ 270 / 2 = 135 :
 ## Where this goes next
 
 - [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): integrals from antiderivatives, functions whose rate of change is the rate being added up.
-- [Numerical integration](08-numerical-integration.md): sample points that close the gap fast.
-- [Arc length](../05-Curves%20and%20Solids/02-arc-length.md): length as an integral.
-- [Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): limits passing through integrals.
-- [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md): brackets over a rectangle.
-- [Stieltjes integrals](../08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): widths measured by another function.
-- [Why a new integral](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): an integral for the fraction rule.
-- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): which rates this definition accepts.
-- [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): sums against a random path.
-- [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival from a default rate.
-- [Pricing a CDS](../../12-Financial%20mathematics/42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): swap legs as integrals over time.
-- [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): slicing rules with error bounds.
-- [Average orders](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/05-average-orders-and-the-hyperbola-method.md): sums compared with integrals.
-- [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): sums turned into integrals.
+- [Numerical integration](08-numerical-integration.md): sample points and weights that close the gap fast, with error bounds.
+- [Arc length](../05-Curves%20and%20Solids/02-arc-length.md): the length of a smooth curve built as an integral of speed.
+- [Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): when the limit of a sequence of integrals equals the integral of the limit.
+- [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md): lower and upper brackets extended to surfaces over a rectangle.
+- [Stieltjes integrals](../08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): slice widths measured by another function that can jump.
+- [Why a new integral](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): a wider integral that handles rough functions like the fraction rule.
+- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): the exact condition saying which bounded rates this definition accepts.
+- [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): slice sums built against a random path rather than smooth time.
+- [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival probability obtained by integrating a default rate over time.
+- [Pricing a CDS](../../12-Financial%20mathematics/42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): credit swap payment legs valued as integrals over time.
+- [Trapezoid, midpoint and Simpson](../../16-Numerical%20analysis/05-Quadrature/01-newton-cotes-and-composite-rules.md): composite slicing rules and how their error bounds scale with width.
+- [Average orders](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/05-average-orders-and-the-hyperbola-method.md): discrete sums of arithmetic functions estimated by comparing with integrals.
+- [Partial summation](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/06-abel-and-partial-summation.md): turning weighted sums into integrals via summation by parts.
 - [Jordan content](../08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md): which regions have an area, and Fubini on them in any dimension.
 
-The tank reached 130 only because a counting formula was at hand; most rates have none, and the fundamental theorem of calculus replaces the sum with an antiderivative.
+The tank reached 130 only because a counting formula was at hand; how do you evaluate an integral when no counting formula exists? The fundamental theorem of calculus replaces the sum with an antiderivative.
 
 ---
 

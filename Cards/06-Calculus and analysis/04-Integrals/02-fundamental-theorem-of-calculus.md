@@ -14,7 +14,7 @@ A one-line route exists. The formula 3t + t^2, with t in minutes, grows at 3 + 2
 
 Accumulating and taking a rate undo each other. Pile up a rate and a running total appears; ask how fast that total grows and the rate comes back.
 
-**Adding up a rate over an interval gives the change in any function whose rate it is, and the running total of a continuous rate grows at exactly that rate.**
+**For an integrable rate on a closed interval, adding it up gives the change in any continuous antiderivative; for a continuous rate, the running total grows at exactly that rate.**
 
 **What kind of fact this is:** a theorem, both halves proved on this card in Why it works, for continuous rates.
 
@@ -32,7 +32,7 @@ Notation first, in words. A function's derivative is its rate: $`A'(x)`$, read "
 
 A function whose derivative is f is an **antiderivative** of f: it runs the derivative backwards. An integral with a letter x as its upper end is a **running total**, a function of where the interval stops; the t inside only counts time along the way.
 
-The first half says the running total grows at the rate:
+The first half says that when f is continuous on the closed interval from a to b, the running total grows at the rate (one-sided at the ends):
 
 ```math
 A(x) = \int_a^x f(t)\,dt \quad\text{has}\quad A'(x) = f(x)
@@ -40,7 +40,7 @@ A(x) = \int_a^x f(t)\,dt \quad\text{has}\quad A'(x) = f(x)
 
 **Read it aloud:** the litres in by minute x grow at the flow rate at minute x.
 
-The second half turns an antiderivative into a total:
+The second half turns an antiderivative into a total, whenever G is continuous on the closed interval from a to b, has rate f at every inside point, and f is integrable:
 
 ```math
 \int_a^b f(t)\,dt = G(b) - G(a) \quad\text{whenever}\quad G'(t) = f(t)
@@ -62,10 +62,10 @@ Units: the running total is in litres, so its rate is litres per minute, the sam
 
 ### When it holds
 
-- **The rate is continuous.** A valve snapping open at minute 5, from 0 to 4 litres a minute, leaves a total with slope 0 just before and 4 just after: a corner, no derivative. (The second half needs only that the rate has an integral.)
+- **The rate is continuous on the closed interval** (for the first half). A valve snapping open at minute 5, from 0 to 4 litres a minute, leaves a total with slope 0 just before and 4 just after: a corner, no derivative. (The second half needs only that the rate has an integral and G is continuous on the closed interval with G' = f inside.)
 - **The rate stays finite on a closed interval.** 1/t^2 on −1 to 1 is never negative, yet the formula gives −2 while the sums climb past 4,900: [Improper integrals](07-improper-integrals.md).
 - **G has rate f at every inside point, with no break.** −1/t has rate 1/t^2 everywhere except 0; that gap produced the −2.
-- **The total is signed.** A draining tank's water counts negative; swapping a and b flips the sign.
+- **The total is signed.** A draining tank's water counts negative, a = b gives 0, and swapping a and b flips the sign.
 
 ---
 
@@ -108,7 +108,7 @@ The inner rate stays within $`\varepsilon`$ of 0 across the slice, so the slice'
 
 ### Step 3: every continuous rate has an antiderivative, and the constant cancels
 
-Step 1 builds an antiderivative for every continuous rate, the running total A, even for e^(−t^2), whose running total has no formula in powers, roots, exponentials, logs or trig. Two antiderivatives differ by a constant C, since their difference has rate 0 and the mean value theorem forbids it to change. C shifts G(b) and G(a) alike and cancels.
+Step 1 builds an antiderivative for every continuous rate, the running total A, even for e^(−t^2), whose running total has no formula in powers, roots, exponentials, logs or trig. On one closed interval, two continuous antiderivatives differ by a single constant C, since their difference has rate 0 and the mean value theorem forbids it to change. (Across a gap, like 0 for 1/t, the constant can differ on the two sides.) C shifts G(b) and G(a) alike and cancels.
 
 A second case: sin has antiderivative −cos, so one arch of sin, from 0 to pi, holds −cos(pi) + cos(0) = 2. A thousand midpoint strips give 2.000001.
 
@@ -333,7 +333,7 @@ Lean proves both halves and the constant rule in general, plus the tank's number
 - Continuity of f is not needed for that second half.
 - Let the rate f be continuous on the closed interval. Then the running total A has rate f(x) at every x in it.
 - At a and b only the inward step counts: a one-sided derivative.
-- Two antiderivatives of f, both continuous on the closed interval, differ by one constant C across it.
+- Two antiderivatives of f, both continuous on the closed interval with rate f at every inside point, differ by one constant C across it.
 - The tank: G(10) − G(0) = 130, G(10) − G(2) = 120, and f(4) = 11.
 - Each one-minute change in G is 2k + 2, the flow at the half minute. The ten changes, 4 to 22, add to 130.
 - The level at each whole minute is 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130.
@@ -479,7 +479,7 @@ example : ∫ t in (0 : ℝ)..Real.pi, Real.sin t = 2 := by
 - **Physics.** Work and mass are integrals evaluated by antiderivatives: [Averages, mass and work](09-average-value-mass-and-work.md).
 
 > **Say it back**
-> The running total of a continuous rate grows at that rate, because a short slice's average is trapped between rates that close on the rate at the point. Any function with that rate, read at the ends and subtracted, gives the total, because its changes telescope into a rectangle sum for every cut. The tank's flow of 3 + 2t has antiderivative 3t + t^2, so ten minutes bring 130 litres. The answer is a change, not a level. A jump in the rate or a break in the antiderivative spoils it.
+> The running total of a continuous rate grows at that rate, because a short slice's average is trapped between rates that close on the rate at the point. When the rate is integrable, any continuous antiderivative, read at the ends and subtracted, gives the total, because its changes telescope into a rectangle sum for every cut. The tank's flow of 3 + 2t has antiderivative 3t + t^2, so ten minutes bring 130 litres. The answer is a change, not a level. A jump in the rate or a break in the antiderivative spoils it.
 
 ---
 
@@ -490,16 +490,16 @@ example : ∫ t in (0 : ℝ)..Real.pi, Real.sin t = 2 := by
 
 ## Where this goes next
 
-- [Substitution](03-substitution.md): the chain rule run backwards.
-- [Integration by parts](04-integration-by-parts.md): the product rule run backwards.
-- [Improper integrals](07-improper-integrals.md): endless intervals and rates that blow up.
-- [Averages, mass and work](09-average-value-mass-and-work.md): totals in physics.
-- [Volumes](../05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): volume as accumulated slices.
-- [Antiderivatives](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the second half along complex curves.
-- [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate laws solved by integrating.
-- [Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): a rate law as a running total, repeated.
-- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a density and its running total.
-- [Absolutely continuous functions and the fundamental theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the theorem for far rougher rates.
+- [Substitution](03-substitution.md): finding antiderivatives by running the chain rule backwards and moving the limits.
+- [Integration by parts](04-integration-by-parts.md): integrating products by running the product rule backwards.
+- [Improper integrals](07-improper-integrals.md): endless intervals and rates that blow up, handled by taking a limit.
+- [Averages, mass and work](09-average-value-mass-and-work.md): physical totals and averages computed from rates and densities.
+- [Volumes](../05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): volume of a solid built as accumulated slices or shells.
+- [Antiderivatives](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the second half extended along curves in the complex plane.
+- [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate laws solved by separating variables and integrating both sides.
+- [Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): a rate law rewritten as a running total, then iterated.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a probability density and its running cumulative total.
+- [Absolutely continuous functions and the fundamental theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the theorem extended to far rougher rates via the Lebesgue integral.
 
 The antiderivative here was guessed; finding one when guessing fails, by running the chain rule backwards, is [Substitution](03-substitution.md).
 
