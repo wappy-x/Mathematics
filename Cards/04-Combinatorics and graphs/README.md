@@ -272,7 +272,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Arranging points into blocks so every pair meets equally often: block designs and Fisher's inequality, Steiner triple systems, finite planes with orthogonal Latin squares, and Hadamard matrices.*
 
-1. [Block designs: v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points](16-Designs/01-block-designs-and-fishers-inequality.md)
+1. [Block designs: v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points when k is below v, v at least 2 and lambda at least 1](16-Designs/01-block-designs-and-fishers-inequality.md)
 2. [Steiner triple systems: triples covering every pair exactly once, which exist exactly when v leaves remainder 1 or 3 on division by 6](16-Designs/02-steiner-triple-systems.md)
 3. [Finite planes and orthogonal Latin squares: build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none](16-Designs/03-projective-planes-and-orthogonal-latin-squares.md)
 4. [Hadamard matrices: square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have](16-Designs/04-hadamard-matrices.md)

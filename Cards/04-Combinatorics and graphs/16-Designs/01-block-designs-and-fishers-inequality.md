@@ -1,4 +1,4 @@
-# Block designs: v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points
+# Block designs: v points in b blocks of size k with every pair together exactly lambda times, two counts any design must obey, and Fisher's inequality that blocks never number fewer than points when k is below v, v at least 2 and lambda at least 1
 
 [Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Designs](../README.md#s16) → Block designs
 
