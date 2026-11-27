@@ -49,7 +49,7 @@ The **rank** is how many independent directions a matrix outputs ([Rank and null
 
 **Read it aloud:** each extra power of A − λI loses one rank per block still long enough to feel it.
 
-Since λI commutes with $`N_2`$ and $`N_2^2 = 0`$, the binomial theorem gives, for $`n \ge 1`$ (at $`n = 0`$ the power is $`I`$):
+Since λI commutes with $`N_2`$ (order does not matter) and $`N_2^2 = 0`$, [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md) gives, for $`n \ge 1`$ (at $`n = 0`$ the power is $`I`$):
 
 ```math
 J_2(\lambda)^n = \lambda^n I + n\lambda^{n-1} N_2 = \begin{pmatrix} \lambda^n & n\lambda^{n-1} \\ 0 & \lambda^n \end{pmatrix}
@@ -87,11 +87,11 @@ Apply N repeatedly: v, Nv, N²v, … until zero. That list is a **Jordan chain**
 
 [Generalised eigenvectors](09-generalised-eigenvectors.md) proves every vector splits in exactly one way into pieces, one per eigenvalue. The λ piece is what some power of A − λI kills; A maps each piece into itself. So A is block-diagonal, one block per eigenvalue, with A − λI nilpotent on the λ block. Ours has one eigenvalue, so the piece is everything.
 
-The eigenvalue comes from the characteristic polynomial (whose roots are the eigenvalues, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). For a 3 × 3 matrix it is x³ − (trace)x² + (sum of 2 × 2 diagonal minors)x − det; a diagonal minor keeps two rows and the same two columns. Here it is x³ − 6x² + 12x − 8 = (x − 2)³.
+The eigenvalue comes from the characteristic polynomial (whose roots are the eigenvalues, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). For a 3 × 3 matrix it is x³ − (trace)x² + (sum of 2 × 2 diagonal minors)x − det: trace sums the diagonal entries, and a diagonal minor keeps two matching rows and columns. Here it is x³ − 6x² + 12x − 8 = (x − 2)³.
 
 ### Step 2: every nilpotent map has a basis of chains
 
-By induction on dimension (0 takes the empty basis):
+By [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md) on dimension (assume it for smaller spaces; dimension 0 takes the empty basis):
 
 1. Above dimension 0, N's image (its outputs) is smaller than the space, since N kills a nonzero vector.
 2. By induction, the image has a chain basis.
@@ -144,7 +144,7 @@ The start (1, 6, 1) is 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1). So a(n)
 | the start in chain terms | (1, 6, 1) = 1 × (1, 2, 0) + 4 × (0, 1, 0) + 1 × (0, 0, 1) | 1, 4 and 1 |
 | a(10) | 2^10 + 4 × 10 × 2^9 = 1,024 + 20,480 | **21,504** |
 
-The extra 20,480 exists only because an eigenvector is missing. It is twenty times the doubling part, and its share grows with n.
+The extra 20,480 comes from the missing eigenvector: twenty times the doubling part, growing with n.
 
 ### What breaks if you drop a piece
 
@@ -161,7 +161,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; all numbers are whole, so nothing rounds. Block sizes come twice: from ranks of powers of N, and from the longest chain starting at a basis vector, other dimensions being lone eigenvectors (enough for 3 × 3 with one eigenvalue). A^10 is found three ways: ten products of A, P times the block formula for $`J^{10}`$ times P⁻¹, and $`2^{10} I + 10 \times 2^9 N`$. A fourth runs the step rules ten times: 21,504 again.
+Nothing is imported; all arithmetic is exact integers. Block sizes come two ways: from ranks of powers of N, and from the longest chain from a basis vector (enough for 3 × 3 with one eigenvalue). A^10 comes three ways — ten products of A, P $`J^{10}`$ P⁻¹, and $`2^{10} I + 10 \times 2^9 N`$ — plus ten steps of the rules: 21,504 again.
 
 ### Python
 
@@ -984,7 +984,7 @@ example : (0 : ℤ) ^ 10 * 1 + 1 ^ 10 * 6 + 0 ^ 10 * 1 = 6 ∧ (2 : ℕ) ^ 10 + 
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): $`e^{At}`$ of a Jordan block, by the same binomial step.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): builds a block form over any number system without needing complex eigenvalues.
 
-Jordan form shows what happens when a matrix cannot be diagonalised. It leaves open the opposite extreme: which matrices have all blocks of size 1 and perpendicular eigenvectors? That is the next card's question.
+Jordan form handles matrices that will not diagonalise; the opposite extreme — all blocks of size 1 with perpendicular eigenvectors — is the next card's question.
 
 ---
 

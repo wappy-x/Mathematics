@@ -65,7 +65,7 @@ u_i = \frac{A v_i}{\sigma_i}
 
 - **Real entries, any number of rows and columns.** Nothing else is required: rectangular and flattening matrices included. Complex entries have their own version.
 - **Lengths by the dot product, one unit system throughout.** Rescale a coordinate and the factors change, so "large" and "small" depend on the units.
-- **Two sets of axes, not one.** Demand a single set for both sides and most matrices refuse; that stricter demand is [Diagonalisation](03-diagonalisation-and-matrix-powers.md).
+- **Two sets of axes, not one.** Demand a single set for both sides — even slanted, not perpendicular — and many matrices refuse; that stricter demand is [Diagonalisation](03-diagonalisation-and-matrix-powers.md) (demanding one perpendicular set is stricter still).
 - **The factors are unique, the axes are not.** Reverse a matched pair $`v_1`$ and $`u_1`$ and the same matrix returns. Building $`G`$ by hand suits small cases only: forming $`A^T A`$ doubles the number of digits lost to rounding.
 
 ---
@@ -800,7 +800,7 @@ Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid ma
 - [Several inputs, several outputs](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md): uses singular values to measure sensitivity and input-output pairing in multi-channel feedback control.
 - [Subspace identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): reads a hidden system's number of states off the rank of a shifted data table.
 - [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fills missing table entries by minimising the sum of singular values, called the nuclear norm.
-- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): splits a bounded operator on an infinite-dimensional space into a stretch followed by a length-keeping turn.
+- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): splits a bounded operator on an infinite-dimensional space into a stretch followed by a partial turn (one that keeps length on part of the space and sends the rest to zero).
 
 The decomposition always works because it may use two different sets of perpendicular axes, one for inputs and one for outputs. What can a square matrix still be made to look like when both sides must share one perpendicular basis? That is the next card's question.
 

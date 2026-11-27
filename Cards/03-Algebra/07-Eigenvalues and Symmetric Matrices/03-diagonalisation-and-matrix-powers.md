@@ -570,7 +570,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - **Page ranking, and masses on springs.** A link matrix applied over and over lands on the largest stretch's direction; coupled springs come apart into independent motions.
 
 > **Say it back**
-> A square matrix usually turns and stretches at once, but a few directions it only stretches. When there are enough independent eigenvectors, put them in the columns of P and their stretches on the diagonal of D, and the matrix comes apart as P D P inverse: translate into eigenvector amounts, stretch each amount, translate back. Apply it n times and the inner translations cancel in pairs, so only D is raised to the power. The fleet is 200 lots of (3, 2) plus 400 lots of (1, −1), and the second halves monthly, so a year on city A holds 600.1 cars.
+> A square matrix usually turns and stretches at once, but often there are a few directions it only stretches. When there are enough independent eigenvectors, put them in the columns of P and their stretches on the diagonal of D, and the matrix comes apart as P D P inverse: translate into eigenvector amounts, stretch each amount, translate back. Apply it n times and the inner translations cancel in pairs, so only D is raised to the power. The fleet is 200 lots of (3, 2) plus 400 lots of (1, −1), and the second halves monthly, so a year on city A holds 600.1 cars.
 
 ---
 
