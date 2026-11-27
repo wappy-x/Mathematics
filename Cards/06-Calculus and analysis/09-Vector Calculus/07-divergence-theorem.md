@@ -10,9 +10,9 @@ A tank 2 m long, 1 m wide and 1 m tall has walls, floor and lid of fine mesh. It
 
 Count the leaving water two ways. Meter each of the six faces and add the readings. Or ignore the walls and add what the pipes deliver: 30 litres a second in each of 2 cubic metres. Both give 60 litres a second.
 
-This holds for any smooth flow and any solid with a closed skin. The flow out is the **flux** through the surface ([Surface integrals](05-surface-integrals-and-flux.md)). The supply per cubic metre is the **divergence** of the flow ([Divergence and curl](03-divergence-and-curl.md)). That the two always match is the divergence theorem, also called Gauss's theorem.
+This holds for any bounded solid with a closed skin and any flow smooth everywhere inside and on it. The flow out is the **flux** through the surface ([Surface integrals](05-surface-integrals-and-flux.md)). The supply per cubic metre is the **divergence** of the flow ([Divergence and curl](03-divergence-and-curl.md)). That the two always match is the divergence theorem, also called Gauss's theorem.
 
-**The flux of a smooth field out through a solid's whole closed boundary equals the triple integral of its divergence inside: what leaves through the skin is what is made inside.**
+**The flux of a field out through a bounded solid's whole closed boundary equals the triple integral of its divergence inside, when the field is smooth on the solid and its boundary: what leaves through the skin is what is made inside.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for boxes and for solids bounded by graphs, which covers the ball.
 
@@ -72,7 +72,9 @@ Cut the tank into small cells. Water crossing a wall between two cells leaves on
 
 ### Step 1: one pair of opposite faces is the fundamental theorem of calculus
 
-Take the end faces, x = −1 and x = 1. Only $`F_1`$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $`F_1`$ at x = 1; the left end's is (−1, 0, 0), giving minus the integral at x = −1. Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). For each fixed width and height, it turns the difference into an integral along the length:
+Take the end faces, x = −1 and x = 1. Only $`F_1`$ crosses them. The right end's normal is (1, 0, 0), so its flux is the area integral of $`F_1`$ at x = 1. The left end's normal is (−1, 0, 0), giving minus the integral at x = −1.
+
+Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). For each fixed width and height, it turns the difference into an integral along the length:
 
 ```math
 F_1(1, y, z) - F_1(-1, y, z) = \int_{-1}^{1} \frac{\partial F_1}{\partial x}\,dx
@@ -80,7 +82,9 @@ F_1(1, y, z) - F_1(-1, y, z) = \int_{-1}^{1} \frac{\partial F_1}{\partial x}\,dx
 
 Integrate over width and height: the end faces' flux equals the triple integral of the divergence's first term.
 
-With numbers, pack the pipes toward both ends: $`F_1 = k\,(x^3 + x)`$, the rest unchanged. At each end the speed is 0.02 m/s through 1 m^2: 40 L/s from the pair. Inside, the rate of $`F_1`$ per metre is k(3x^2 + 1); along the length 3x^2 adds to 2 and 1 adds to 2, so 0.04 m^3/s per square metre of cross-section, 40 L/s again.
+With numbers, pack the pipes toward both ends: $`F_1 = k\,(x^3 + x)`$, the rest unchanged. At each end the speed is 0.02 m/s through 1 m^2: 40 L/s from the pair.
+
+Inside, the rate of $`F_1`$ per metre is k(3x^2 + 1). Along the length, 3x^2 adds to 2 and 1 adds to 2, so 0.04 m^3/s per square metre of cross-section: 40 L/s again.
 
 ### Step 2: the other two pairs, then the box
 
@@ -97,9 +101,13 @@ Take the height part; the other two swap letters. The solid lies over a flat reg
 
 Inside: for each (x, y) in D, the fundamental theorem of calculus gives $`\int_g^h \partial F_3/\partial z\,dz = F_3(x, y, h) - F_3(x, y, g)`$; integrate that over D.
 
-Skin: parametrise the ceiling by (x, y). Its tangent arrows are (1, 0, h_x) and (0, 1, h_y), with h_x, h_y the partial derivatives of h. Their cross product (−h_x, −h_y, 1) points out, and its length is the area stretch, so the flux of (0, 0, F_3) through the ceiling is the integral over D of $`F_3(x, y, h)`$. The floor's outward arrow (g_x, g_y, −1) gives minus the integral of $`F_3(x, y, g)`$. Vertical side walls have no height part in their normal and pass nothing.
+Skin: parametrise the ceiling by (x, y). Its tangent arrows are (1, 0, h_x) and (0, 1, h_y), with h_x, h_y the partial derivatives of h. Their cross product (−h_x, −h_y, 1) points out, and its length is the area stretch. So the flux of (0, 0, F_3) through the ceiling is the integral over D of $`F_3(x, y, h)`$.
 
-The sides match; add the three parts. A ball qualifies in every direction, with the hemispheres as floor and ceiling. Their slopes blow up at the rim, so take D a disc slightly smaller than the equator and let it grow: F is bounded and the uncovered band's area and volume shrink to zero, so both sides converge. Finitely many such pieces glue by Step 0. The general smooth-skinned solid needs a limit argument, in Marsden and Tromba and in Apostol, below.
+The floor's outward arrow (g_x, g_y, −1) gives minus the integral of $`F_3(x, y, g)`$. Vertical side walls have no height part in their normal and pass nothing.
+
+The sides match; add the three parts. A ball qualifies in every direction, with the hemispheres as floor and ceiling. Their slopes blow up at the rim, so take D a disc slightly smaller than the equator and let it grow. Because F is bounded and the uncovered band's area and volume shrink to zero, both sides converge.
+
+Finitely many such pieces glue by Step 0. The general smooth-skinned solid needs a limit argument, in Marsden and Tromba and in Apostol, below.
 
 </details>
 
@@ -109,7 +117,7 @@ A spherical tank of radius $`R`$ = 1 m, pipes spread evenly. Inside: 30 L/s per 
 
 ### Step 5: read it as conservation
 
-Divergence is supply per unit volume; flux is loss through the skin; the books balance for every solid. With zero divergence, as in water with no pipes, whatever enters a closed surface leaves it. Where fluid can build up, the amount inside grows at supply minus outflow; written for every small cell, that is the continuity equation.
+Divergence is supply per unit volume; flux is loss through the skin; the books balance for every solid. For a smooth field with zero divergence everywhere inside, as in water with no pipes, whatever enters a closed surface leaves it. Where fluid can build up, the amount inside grows at supply minus outflow; written for every small cell, that is the continuity equation.
 
 The flat version, flow across a closed curve against divergence over the region inside, is one form of [Green's theorem](06-greens-theorem.md).
 
@@ -336,7 +344,7 @@ ALL CHECKS PASS
 Lean proves the theorem for every box, and its height part for every solid between a floor graph and a ceiling graph.
 
 - Take any box and any field whose first partial derivatives are continuous on the box and just beyond. The flux out through all six faces, with outward normals, equals the divergence added through the box.
-- Take a solid over a closed, bounded flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y). Both have continuous partial derivatives. Suppose $`F_3`$ and $`\partial F_3/\partial z`$ are continuous on the solid. Then the flux of (0, 0, $`F_3`$) through ceiling plus floor equals $`\partial F_3/\partial z`$ added through the solid.
+- Take a solid over a closed, bounded flat region D, between a floor z = g(x, y) and a ceiling z = h(x, y) never below it. Both have continuous partial derivatives. Suppose $`F_3`$ and $`\partial F_3/\partial z`$ are continuous on the solid. Then the flux of (0, 0, $`F_3`$) through ceiling plus floor equals $`\partial F_3/\partial z`$ added through the solid.
 - The hand arithmetic holds exactly: the tank's 60 L/s both ways, and the ends supply's 30, 60, 40 and 80. So do the ball's 40π and 320π, and the breaks' −60 and 50.
 
 The ball's curved skin, the hose at the centre, the Simpson sums and the figure are left to the Python and Rust checks.
@@ -528,7 +536,7 @@ example : -((6:ℚ) * 10) = -60 ∧ (5:ℚ) * 10 = 50 ∧ (50:ℚ) ≠ 60 := by 
 - **Fluids.** The continuity equation (Navier-Stokes) is Step 5 for every small cell.
 
 > **Say it back**
-> Flow out through a solid's whole closed skin equals divergence added through the inside: the tank's faces pass 60 L/s and its pipes supply 60 L/s. On a box, each pair of opposite faces is the fundamental theorem of calculus. Shared walls cancel, so gluing keeps it, and graphs carry it to the ball. It needs a closed skin, outward normals and a field smooth throughout; a hose at the centre breaks it.
+> Flow out through a bounded solid's whole closed skin equals divergence added through the inside: the tank's faces pass 60 L/s and its pipes supply 60 L/s. On a box, each pair of opposite faces is the fundamental theorem of calculus. Shared walls cancel, so gluing keeps it, and graphs carry it to the ball. It needs a bounded solid, a closed skin, outward normals and a field smooth throughout; a hose at the centre breaks it.
 
 ---
 

@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A cart crosses a field 40 m wide and 30 m deep, from corner A in the south-west to corner B in the north-east. Wind blows over the field. A hedge shelters the south edge, so the wind's eastward push grows by 0.1 N for every metre north: nothing at the hedge, 3 N along the north edge. A steady 1 N drift pushes south everywhere.
+A cart crosses a field 40 m wide and 30 m deep, from corner A in the south-west to corner B in the north-east. Wind blows over the field.
+
+A hedge shelters the south edge, so the wind's eastward push grows by 0.1 N for every metre north: nothing at the hedge, 3 N along the north edge. A steady 1 N drift pushes south everywhere.
 
 On each short stretch, only the part of the push along the cart's motion helps; a push across it does nothing, a push against it takes energy away. The help is **work**, in joules: newtons along the motion times metres moved.
 
@@ -18,7 +20,7 @@ To scale, 6 units per metre; wind arrows run from their dots, 1 m per newton. So
 
 **A line integral of a field adds, along a directed route, the field's part along the motion times each small step; reversing the route flips the sign, and another route may give another answer.**
 
-**What kind of fact this is:** a definition. Three facts about it are theorems, proved in Why it works: it is the limit of force-times-step sums, it ignores the pace, and it flips sign on reversal.
+**What kind of fact this is:** a definition. For a smooth route and continuous field, three facts are theorems proved in Why it works: it is the limit of force-times-step sums, it ignores any forward pace, and it flips sign on reversal.
 
 ---
 
@@ -54,7 +56,7 @@ A definition holds wherever it makes sense; the bullets say where.
 
 - **Smooth pieces.** Corners are fine: split there and add. Each L-shaped route is two straight pieces.
 - **A field with at most a few jumps along the route.** A field jumping at every scale leaves the sums with no limit.
-- **A forward clock.** Any forward pace gives the same work; a backward clock reverses the route and the sign.
+- **A forward clock covering the route once.** Any forward pace from start to end gives the same work; a backward clock flips the sign, and running a loop twice doubles it.
 - **A finite route.** One spiralling in forever can have sums that never settle.
 
 ---
@@ -94,7 +96,9 @@ with L the route's length. As ε shrinks, S tends to W, whatever readings are pi
 
 Push straight from A to B, starting slowly: position $`(40s^2, 30s^2)`$ as a new clock s runs from 0 to 1. The chain rule multiplies the velocity by $`2s`$, the rate of $`t = s^2`$; the substitution rule ([Substitution](../04-Integrals/03-substitution.md)) removes exactly that factor, so the work is 30 J again.
 
-In general, a forward clock change $`t = \varphi(s)`$ leaves the integral unchanged. A backward one, B to A, swaps the limits, which flips the sign: −30 J. Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [Line integrals of a function](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
+In general, a forward clock change $`t = \varphi(s)`$ with a continuous rate, starting at $`a`$ and ending at $`b`$, leaves the integral unchanged. A backward one, B to A, swaps the limits and flips the sign: −30 J.
+
+Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [Line integrals of a function](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
 
 ### Step 3: the curve, by hand
 
@@ -108,9 +112,9 @@ Every route covers 40 m east and 30 m north, but one doing its eastward travel f
 
 Go out north-then-east (90 J) and back along the hedge route reversed (+30 J). The cart ends where it began, yet the wind did 120 J: 0.1 N per metre times the area, 40 m × 30 m.
 
-No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([Divergence and curl](03-divergence-and-curl.md)), here −0.1 N per metre. [Green's theorem](06-greens-theorem.md) proves that the work round an anticlockwise loop is the curl added over the enclosed area. This loop runs clockwise, so its work is the negative: +120 J.
+No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([Divergence and curl](03-divergence-and-curl.md)), here −0.1 N per metre. [Green's theorem](06-greens-theorem.md) proves that, for a smooth field on the whole enclosed region, the work round an anticlockwise loop is the curl added over the area inside. This loop runs clockwise, so its work is the negative: +120 J.
 
-A gradient field is made of one function's rates of change, east and north ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). For such a field, each step's dot product is that function's rate along the step. So the work is its change from A to B, and every loop gets 0 J. This wind is no gradient; [Conservative fields](04-conservative-fields-and-potentials.md) takes that road.
+A gradient field is made of one function's rates of change, east and north ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). Where that function is smooth, each step's dot product is its rate along the step. So the work along any route inside that region is its change from A to B, and every loop gets 0 J. This wind is no gradient; [Conservative fields](04-conservative-fields-and-potentials.md) takes that road.
 
 ---
 
@@ -345,14 +349,14 @@ The two outputs match line for line.
 Lean proves the three facts of Why it works for any route with a continuous velocity, and any field continuous along it.
 
 - Run a route backwards, from B to A, and its work is the negative of the forward work.
-- Change to a forward clock that starts and ends where the old one does, and the work stays the same.
+- Change to a forward clock (never going back, with a continuous rate) that starts and ends where the old one does, and the work stays the same.
 - Force-times-chord sums close in on the work. Make every clock step short enough, and every sum lands as close as you like, whatever readings are picked.
 - The hand values hold exactly: 30 J straight, 10 J on the curve, 30 J at a slow start, and −30 J from B to A.
 - The table's legs hold too: −30 J north, 120 J east along the top, then 90 J and −30 J for the L-shaped routes.
 - The loop gets 90 + 30 = 120 J, which is 0.1 N per metre times 40 m × 30 m.
 - On the curve, 4 pieces give 9.375 J, short by 0.625 J.
 
-The 1,024-chord sums, the 16-, 32- and 64-piece sums, the four mistakes and the figure are left to the Python and Rust checks.
+Routes with corners, fields with jumps, the 1,024-chord sums, the 16-, 32- and 64-piece sums, the four mistakes and the figure are left to the Python and Rust checks.
 
 ```lean
 -- Line integrals of a field: for a route with a continuous velocity and a field continuous along it, reversing the route flips the sign of the work, a forward change of clock leaves it unchanged, force-times-chord sums close in on it, and the card's wind gives 30, 10, −30 and 90 J on its four routes and 120 J round the loop.
@@ -674,7 +678,7 @@ example : (10 : ℚ) - 75 / 8 = 5 / 8 := by norm_num
 - **Heat engines.** A gas's work depends on its route through pressure and volume, so an engine cycle can deliver net work: [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md).
 
 > **Say it back**
-> A line integral of a field adds the field's part along the motion times each small step. With a clock, it is the field dotted with the velocity, added over the clock. Pace does not change it; reversal flips its sign. Across the windy field, routes from A to B get 30, 10, −30 and 90 J, and a loop gets 120 J, because the wind shears.
+> A line integral of a field adds the field's part along the motion times each small step. With a clock, it is the field dotted with the velocity, added over the clock. Forward pace does not change it; reversal flips its sign. Across the windy field, routes from A to B get 30, 10, −30 and 90 J, and a loop gets 120 J, because the wind shears.
 
 ---
 
@@ -685,10 +689,11 @@ example : (10 : ℚ) - 75 / 8 = 5 / 8 := by norm_num
 
 ## Where this goes next
 
+- [Divergence and curl](03-divergence-and-curl.md): the next card on this shelf. It measures how fast a field spreads and spins at one point.
 - [Conservative fields](04-conservative-fields-and-potentials.md): fields whose work depends only on the ends.
 - [Green's theorem](06-greens-theorem.md): work round a loop as the curl over the area inside.
 - [Contour integrals](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): the same sum in the complex plane.
-- [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): the voltage round a loop.
+- [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): the voltage driven round a wire loop by an electric field.
 - [Newton's laws](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/01-newtons-laws-work-and-energy.md): work and the energy it changes.
 - [Continuity and Bernoulli](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md): a flow added along a streamline.
 - [The thermodynamic laws](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/07-thermodynamic-laws-and-entropy.md): work and heat that depend on the route.

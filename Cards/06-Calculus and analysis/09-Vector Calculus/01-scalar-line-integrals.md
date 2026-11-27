@@ -6,19 +6,21 @@
 
 ## General Overview
 
-A wire is bent into a curve: from above it follows the parabola y = x^2/2, from x = 1 m to x = 2 m. It is drawn thicker as it goes. Its **density**, the mass of one metre of wire, rises from 3 kg/m at the near end to 6 kg/m at the far end. At a point x metres along the ground it is 3x kg/m. How heavy is the wire?
+A wire is bent into a curve: from above it follows the parabola y = x^2/2, from x = 1 m to x = 2 m. It is drawn thicker as it goes.
+
+Its **density**, the mass of one metre of wire, rises from 3 kg/m at the near end to 6 kg/m at the far end. At a point x metres along the ground it is 3x kg/m. How heavy is the wire?
 
 Density times length fails, because the density changes. Cut the wire into short pieces. Each piece weighs about its density at its middle times its length. Add the pieces. One straight piece, end to end, gives 8.112490 kg. Four pieces give 8.337034 kg. Sixteen give 8.350983 kg. The totals close in on 8.351913 kg, the wire's mass.
 
 That limit is a **line integral of a function**: a function (here density) added along a curve, each bit weighted by the length of wire it sits on.
 
-It can be computed from any clock that runs along the wire once, with no pieces at all. The answer does not depend on the clock or the end it starts from. Such a clock is a **parametrisation** of the curve; its reading t is the **parameter**, and the end it starts from is its **orientation**.
+When density changes without jumps, the mass can be computed from any smooth clock that runs along the wire once, with no pieces at all. The answer does not depend on which smooth clock is used or which end it starts from. Such a clock is a **parametrisation** of the curve; its reading t is the **parameter**, and the end it starts from is its **orientation**.
 
 <p align="center"><img src="../figures/scalar-line-integrals.svg" alt="A wire along y = x^2/2 from x = 1 to 2 m drawn to scale, with the four-chord chain under it and the density marked at both ends" width="420"></p>
 
 Drawn to scale at 100 units per metre in both directions; the bottom line is y = 0. Chord points every 0.25 m of x; a chord is a straight piece joining two points of the wire.
 
-**The mass of a wire is the limit of density times piece length as the pieces shrink, and it equals the integral of density times speed along any clock that runs the wire once, in either direction.**
+**For a continuous density, the mass of a wire is the limit of density times piece length as the pieces shrink, and it equals the integral of density times speed along any smooth clock that runs the wire once, in either direction.**
 
 **What kind of fact this is:** a definition (the limit of pieces) and a theorem: that it equals the speed formula for every such clock, proved on this card in Why it works.
 
@@ -91,7 +93,9 @@ Since ε was any positive number, S tends to I whichever points are picked. Spee
 
 ### Step 3: a new clock leaves the mass alone
 
-Run the same wire with a different clock that still runs it once: the old clock t is now some function of a new one, u. The [Chain rule](../02-Derivatives/03-chain-rule.md) says rates multiply when one quantity drives another. Here, each position's rate on the new clock is its old rate times the rate of t per unit of u. So the new speed is the old speed times the size of that rate.
+Run the same wire with a different smooth clock that still runs it once: the old clock t is now a smooth function of a new one, u.
+
+The [Chain rule](../02-Derivatives/03-chain-rule.md) says rates multiply when one quantity drives another. Each position's rate on the new clock is its old rate times the rate of t per unit of u. So the new speed is the old speed times the size of that rate.
 
 Two effects cancel: a clock twice as fast doubles the speed and halves the clock time. As integrals, this is [Substitution](../04-Integrals/03-substitution.md), the chain rule run backwards, which turns the new integral back into the old one.
 
@@ -326,14 +330,14 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the card's main claims for every wire, clock and density meeting When it holds, and it proves the card's wire exactly.
+Lean proves the card's main claims for every smooth plane wire (without corners), clock and density meeting When it holds, and it proves the card's wire exactly.
 
-- Take a wire with no jumps, a clock that runs it once, rates that change without jumps, and density without jumps. Cut the clock into pieces. Take density at any point of each piece times that piece's true length along the wire. As every piece shrinks, these totals close in on the integral of density times speed. The density may be negative.
+- Take a plane wire with no jumps or corners, a clock that runs it once (no point reached twice), rates that change without jumps, and density without jumps. Cut the clock into pieces. Take density at any point of each piece times that piece's true length along the wire. As every piece shrinks, these totals close in on the integral of density times speed. The density may be negative.
 - Take a new clock that runs the same wire once, from either end, with a rate that changes without jumps. As in Step 3, the old clock's reading is a function of the new one's. Density times speed, integrated over the new clock, equals the same integral over the old clock.
 - Take the card's wire: y = x^2/2 from x = 1 to 2 m, density 3x, clock x = t. That integral is exactly 5^1.5 − 2^1.5 kg.
 - The hand arithmetic holds exactly. That covers the end densities, the antiderivative's end values, the 4.5 kg mistake and the speeds on both new clocks.
 
-Decimal values, the chord totals, the out-and-back and signed-length mistakes, and the figure are left to the Python and Rust checks.
+Decimal values, the chord totals, the out-and-back and signed-length mistakes, and the figure are left to the Python and Rust checks; corners are split into smooth pieces by hand.
 
 ```lean
 -- Line integrals of a function: the piece totals of density times piece length along a wire close in on the integral of density times speed, that integral is the same for every clock that runs the wire once in either direction, and the card's wire y = x^2/2 with density 3x weighs exactly 5√5 − 2√2 kg.
@@ -726,7 +730,7 @@ example : (3 : ℚ) - 1 = 2 ∧ (3 : ℚ) - 2 = 1 ∧ (-1 : ℚ) ^ 2 = 1 := by n
 > - **Density 3 everywhere.** Guess first: more or less than 8.351913 kg? Set `rho` to return 3. The mass becomes 3 times the wire's length of 1.810092 m, and the asserts fail, since the antiderivative belongs to density 3x.
 > - **A clock twice as fast.** Guess first. Use x = 2w for w from 1/2 to 1, with rates 2 and 4w. Speed doubles, clock time halves, and the mass stays 8.351913 kg.
 > - **More pieces.** Guess first: 1024 pieces, how far off? About sixteen times closer than 256 pieces: under a millionth of a kilogram.
-> - **Break the rule.** Replace the speed by the signed rate of x times sqrt(1 + x^2). The reversed clock then gives −8.351913 kg and the third assert fails.
+> - **Break the rule.** Guess first. Replace the speed by the signed rate of x times sqrt(1 + x^2). The reversed clock then gives −8.351913 kg and the third assert fails.
 
 ---
 
@@ -747,7 +751,7 @@ example : (3 : ℚ) - 1 = 2 ∧ (3 : ℚ) - 2 = 1 ∧ (-1 : ℚ) ^ 2 = 1 := by n
 - **Surfaces.** The same pieces-times-size idea over a patch of surface gives [Surface integrals](05-surface-integrals-and-flux.md).
 
 > **Say it back**
-> The mass of a wire is the limit of density times piece length as the pieces shrink. With a clock along the wire, each length is speed times clock time, so the mass is the integral of density times speed. Any clock that runs the wire once gives the same answer, and running backwards cannot flip it, because speed is never negative. The bent wire with density 3x from x = 1 to 2 m weighs 8.351913 kg.
+> The mass of a wire is the limit of density times piece length as the pieces shrink. With a clock along the wire, each length is speed times clock time, so the mass is the integral of density times speed. With continuous density, any smooth clock that runs the wire once gives the same answer, and running backwards cannot flip it, because speed is never negative. The bent wire with density 3x from x = 1 to 2 m weighs 8.351913 kg.
 
 ---
 

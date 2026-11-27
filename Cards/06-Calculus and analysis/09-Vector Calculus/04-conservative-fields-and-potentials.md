@@ -16,7 +16,7 @@ On [Line integrals of a field](02-line-integrals.md) a shearing wind gave four r
 
 To scale, 0.6 units per metre; arrows 1 unit per newton. Solid: straight. Dotted: curving. Dashed: switchbacks.
 
-**A field that is the gradient of a potential does work equal to the potential's change, whatever the route; zero curl detects such fields near each point, and a hole can defeat the test.**
+**A field that is the gradient of a potential does work equal to the potential's change, whatever the route inside its region; for a field with continuous rates, zero curl detects such fields near each point, and a hole can defeat the test.**
 
 **What kind of fact this is:** a theorem, proved in Why it works, except the global step of the no-holes converse, which follows from [Green's theorem](06-greens-theorem.md).
 
@@ -30,7 +30,7 @@ Notation first, in words. A field $`F`$ puts an arrow at every point; $`P`$ is i
 W = \int_C F \cdot dr = \phi(B) - \phi(A)
 ```
 
-**Read it aloud:** the work along any route from A to B is the potential at B minus the potential at A.
+**Read it aloud:** the work along any route from A to B inside the region is the potential at B minus the potential at A.
 
 The test, for a field with continuous partial rates:
 
@@ -58,7 +58,7 @@ Physics writes $`F = -\nabla U`$, so work is the drop in potential energy. Both 
 - **An open, connected region and a continuous field.** Open: edges left out; connected: one piece. Split the region and each piece may take its own constant.
 - **Routes inside the region.** A route through the whirlpool's drain, below, meets a point with no field.
 - **A field steady in time.** A growing magnetic field drives an electric field whose loop work is not zero.
-- **For the converse, no holes.** Round a hole, zero curl gives a potential only near each point: the whirlpool gets 2π per lap.
+- **For the converse, continuous partial rates and no holes.** Round a hole, zero curl gives a potential only near each point: the whirlpool gets 2π per lap.
 
 ---
 
@@ -109,7 +109,9 @@ Far from the ground gravity weakens. Per kilogram, a planet pulls toward its cen
 
 Integrate the east part in x, holding y fixed. The constant of integration may depend on y; call it c(y), and choose it so the upward rate matches $`Q`$.
 
-For the planet, $`\int -kx\,(x^2 + y^2)^{-3/2}\,dx = k\,(x^2+y^2)^{-1/2} + c(y)`$. Its upward rate is already $`-ky/r^3 = Q`$, so c(y) is a constant: $`\phi = k/r`$. From the surface to twice the radius the work is $`k/2R - k/R = -gR/2`$, −31.2179 MJ (megajoules, millions of joules) per kg, straight out or by a quarter-circle, a climb and a quarter-circle back; the pull is across the arcs.
+For the planet, $`\int -kx\,(x^2 + y^2)^{-3/2}\,dx = k\,(x^2+y^2)^{-1/2} + c(y)`$. Its upward rate is already $`-ky/r^3 = Q`$, so c(y) is a constant: $`\phi = k/r`$.
+
+From the surface to twice the radius the work is $`k/2R - k/R = -gR/2`$, or −31.2179 MJ (megajoules, millions of joules) per kg. Going straight out or by a quarter-circle, a climb and a quarter-circle back gives the same work, because the pull is across the arcs.
 
 For the bottle's 300 m climb, $`2(k/(R + 300) - k/R)`$ = −5879.72 J against $`-mgh`$ = −5880 J: the hillside potential is the planet's, seen close up.
 
@@ -378,7 +380,7 @@ The two outputs match line for line.
 Lean proves the endpoint formula and the test in general, and that the whirlpool passes the test yet has no potential.
 
 - Let F be a continuous field on an open, connected region, with potential φ there.
-- Then any route from A to B inside the region does work φ(B) − φ(A).
+- Then any continuous route from A to B inside the region, whose velocity exists except at countably many points and can be integrated, does work φ(B) − φ(A).
 - The route may have corners, like the switchbacks. The same holds in space of any dimension, not only the plane.
 - Let P and Q have continuous partial rates on an open region, and let the field (P, Q) have a potential there.
 - Then ∂Q/∂x = ∂P/∂y at every point of the region: zero curl.
@@ -389,7 +391,7 @@ Lean proves the endpoint formula and the test in general, and that the whirlpool
 - The whirlpool's cross rate at (1, 2) is 3/25 = 0.12.
 - For the planet, k/2R − k/R = −gR/2, and g h for a climb of h = R gives twice that.
 
-The Simpson sums, the planet's routes and cross rates, the square loops and the figures are left to the Python and Rust checks.
+The converses (Step 3 and the rectangle proof), the Simpson sums, the planet's routes and cross rates, the square loops and the figures are left to the Python and Rust checks.
 
 ```lean
 -- Conservative fields: a field that is the gradient of a potential does work equal to the potential's change along every route inside its region, a potential forces the two cross rates to agree, and the whirlpool round a drain passes that test yet has no potential.
@@ -651,7 +653,7 @@ example : ∀ g R : ℚ, -(g * R) = 2 * (-(g * R / 2)) := by intro g R; ring
 - **Electric circuits.** A voltage is a potential difference, whatever path the charge takes: [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md).
 
 > **Say it back**
-> A field is conservative when its work depends only on the route's ends. That happens exactly when it is a potential's gradient, and then work is the potential's change. A potential forces equal cross rates, so zero curl is necessary. Without holes it is also enough; round a hole it is not, as the whirlpool's 2π per lap shows.
+> A field is conservative when its work depends only on the route's ends. For a continuous field on an open, connected region, that happens exactly when it is a potential's gradient, and then work is the potential's change. With continuous partial rates, a potential forces equal cross rates, so zero curl is necessary. Without holes it is also enough; round a hole it is not, as the whirlpool's 2π per lap shows.
 
 ---
 
@@ -662,9 +664,10 @@ example : ∀ g R : ℚ, -(g * R) = 2 * (-(g * R / 2)) := by intro g R; ring
 
 ## Where this goes next
 
+- [Surface integrals](05-surface-integrals-and-flux.md): the next card on this shelf. It adds a field's flow through a sheet instead of along a route.
 - [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): the electric potential, found this way.
 - [Closed and exact forms](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/04-closed-and-exact-forms-and-the-poincare-lemma.md): zero curl and having a potential in any dimension, and why they agree without holes.
-- [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): counting holes with such fields.
+- [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): counting holes in a space with curl-free fields that have no potential.
 
 A hole can hide a loop worth 2π; fields that pass the test yet have no potential end up counting holes.
 

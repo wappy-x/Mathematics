@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A breeze of about 3 m/s blows east past a weather mast, but not evenly. At spot S, 40 m east, the air speeds up and fans out: a cold gust from above spreads across the ground. At spot E, 50 m north, the air runs slower than just south of it and drifts north on its east side. Leaves dropped at E turn slowly anticlockwise.
+A breeze of about 3 m/s blows east past a weather mast, but not evenly. At spot S, 40 m east, the air speeds up and fans out: a cold gust from above spreads across the ground.
+
+At spot E, 50 m north, the air runs slower than just south of it and drifts north on its east side. Leaves dropped at E turn slowly anticlockwise.
 
 Two numbers say what the air does at a spot, its own drift set aside. How fast air spreads out, per unit of area, is the **divergence**: 0.06 per second at S, zero at E. How fast it circulates round the spot, per unit of area, is the **curl**: zero at S, 0.06 per second at E.
 
@@ -18,15 +20,17 @@ S is a source; E, an eddy. Both are built from the wind's **partial derivatives*
 
 To scale: dashed squares 20 m across at 5 units per metre; arrows from the dots at 80 units per m/s, each the wind there minus the wind at the centre. North is up.
 
-**Divergence is a field's outflow from a point per unit of area; curl is its circulation round the point per unit of area, one part per plane; both are sums and differences of partial derivatives.**
+**Divergence is a field's outflow from a point per unit of area (per unit of volume in space); curl is its circulation round the point per unit of area, one part per plane; both are sums and differences of partial derivatives.**
 
-**What kind of fact this is:** a definition; that the formulas equal those limits is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition; for a field with continuous rates in straight right-handed axes, that the formulas equal those limits is a theorem proved in Why it works.
 
 ---
 
 ## The formula
 
-Notation first, in words. A **vector field** $`F`$ puts an arrow at every point. Here $`F`$ is the wind, with east, north and upward parts $`P`$, $`Q`$, $`R`$ in m/s. The point sits $`x`$ m east, $`y`$ m north and $`z`$ m up from the mast. Its divergence is written $`\mathrm{div}\, F`$, its curl $`\mathrm{curl}\, F`$; many books write $`\nabla \cdot F`$ and $`\nabla \times F`$, "del dot F" and "del cross F".
+Notation first, in words. A **vector field** $`F`$ puts an arrow at every point. Here $`F`$ is the wind, with east, north and upward parts $`P`$, $`Q`$, $`R`$ in m/s. The point sits $`x`$ m east, $`y`$ m north and $`z`$ m up from the mast.
+
+Its divergence is written $`\mathrm{div}\, F`$, its curl $`\mathrm{curl}\, F`$; many books write $`\nabla \cdot F`$ and $`\nabla \times F`$, "del dot F" and "del cross F".
 
 ```math
 \mathrm{div}\, F = \frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
@@ -98,15 +102,19 @@ At E, 0.030 − (−0.030) = 0.06, and the edge sums give 0.06 at every side, si
 <details>
 <summary>Detailed proof: the square ratios tend to the formulas</summary>
 
-With continuous rates the wind at offset $`(u, v)`$ is the spot's wind plus $`(a u + b v,\ c u + d v)`$, with $`a, b, c, d`$ the rates $`\partial P/\partial x`$, $`\partial P/\partial y`$, $`\partial Q/\partial x`$, $`\partial Q/\partial y`$, plus a remainder: for any $`\varepsilon > 0`$ some $`\delta > 0`$ keeps it at most $`\varepsilon \cdot r`$ at offsets of length $`r < \delta`$.
+With continuous rates, let $`a, b, c, d`$ be $`\partial P/\partial x`$, $`\partial P/\partial y`$, $`\partial Q/\partial x`$, $`\partial Q/\partial y`$ at the spot. At offset $`(u, v)`$, the wind equals the spot's wind plus $`(a u + b v,\ c u + d v)`$ plus a remainder. For any $`\varepsilon > 0`$, some $`\delta > 0`$ keeps that remainder at most $`\varepsilon \cdot r`$ whenever the offset length $`r < \delta`$.
 
-Take $`\ell < \delta`$. The constant wind cancels on opposite edges. The linear part gives exactly $`(a + d)\ell^2`$ of outflow, since east minus west is $`\int_{-\ell/2}^{\ell/2} a\ell\,dv`$, and $`(c - b)\ell^2`$ of circulation. Edge points lie within $`\ell/\sqrt{2}`$ of the spot, so the remainder adds at most $`4\ell \cdot \varepsilon\ell/\sqrt{2} < 3\varepsilon\ell^2`$. So both ratios lie within $`3\varepsilon`$ of $`a + d`$ and $`c - b`$, for any $`\varepsilon > 0`$. Cubes run the same way.
+Take $`\ell < \delta`$. The constant wind cancels on opposite edges. The linear part gives exactly $`(a + d)\ell^2`$ of outflow, since east minus west is $`\int_{-\ell/2}^{\ell/2} a\ell\,dv`$, and $`(c - b)\ell^2`$ of circulation.
+
+Edge points lie within $`\ell/\sqrt{2}`$ of the spot, so the remainder adds at most $`4\ell \cdot \varepsilon\ell/\sqrt{2} < 3\varepsilon\ell^2`$. So both ratios lie within $`3\varepsilon`$ of $`a + d`$ and $`c - b`$, for any $`\varepsilon > 0`$. Cubes run the same way.
 
 </details>
 
 ### Step 3: the curl is twice the spin
 
-Lay two short straws on the air at E. The east straw's tip sits where the north wind is stronger, $`\partial Q/\partial x`$ being 0.030 per second, so it turns anticlockwise at 0.030 rad/s. The north straw's tip sits where the east wind is weaker, $`\partial P/\partial y`$ being −0.030, so it too turns anticlockwise at 0.030. Their average is the spin $`\omega`$ of a tiny patch: 0.03 rad/s, a turn in 209.4 s. The curl adds the two instead:
+Lay two short straws on the air at E. The east straw's tip sits where the north wind is stronger, $`\partial Q/\partial x`$ being 0.030 per second, so it turns anticlockwise at 0.030 rad/s. The north straw's tip sits where the east wind is weaker, $`\partial P/\partial y`$ being −0.030, so it too turns anticlockwise at 0.030.
+
+Their average is the spin $`\omega`$ of a tiny patch: 0.03 rad/s, a turn in 209.4 s. The curl adds the two instead:
 
 ```math
 \mathrm{curl}\, F = 2\omega.
@@ -116,7 +124,9 @@ Rigid turning at $`\omega`$ gives both straws $`\omega`$, hence curl $`2\omega`$
 
 ### Step 4: a spin with a level axis
 
-A breeze of 3 m/s at the ground, gaining 1 m/s per 10 m of height, has $`P = 3 + z/10`$ and nothing else. Its one rate is $`\partial P/\partial z`$, 0.1 per second, so its curl is (0, 0.1, 0), pointing north: faster air on top rolls it about a level north–south axis at 0.05 rad/s. A square walked in the east–up plane gives 0.1 per unit area.
+A breeze of 3 m/s at the ground, gaining 1 m/s per 10 m of height, has $`P = 3 + z/10`$ and nothing else. Its one rate is $`\partial P/\partial z = 0.1`$ per second, so its curl is (0, 0.1, 0), pointing north.
+
+Faster air on top rolls a patch about a level north–south axis at 0.05 rad/s. A square walked in the east–up plane gives 0.1 per unit area.
 
 A cross-check with [Line integrals of a field](02-line-integrals.md): its wind force $`(y/10, -1)`$ N has curl −0.1 N/m. The anticlockwise walk round its 40 m by 30 m field collects −120 J, curl times area. Side by side, small squares' inner edges cancel: that is [Green's theorem](06-greens-theorem.md).
 
@@ -359,8 +369,8 @@ Lean proves the square limits for any flat wind with continuous rates, and check
 - Its anticlockwise circulation per unit area tends to the curl, $`\partial Q/\partial x - \partial P/\partial y`$.
 - At S the own-direction rates are 0.036 and 0.024, and both cross rates are 0.
 - At E the own-direction rates are both 0, and the cross rates are 0.030 and −0.030.
-- For every side $`\ell`$, the outflow round S per unit area is exactly $`0.06 + \ell^2/1600000`$.
-- For every side, the circulation round E per unit area is exactly 0.06.
+- For every positive side $`\ell`$, the outflow round S per unit area is exactly $`0.06 + \ell^2/1600000`$.
+- For every positive side, the circulation round E per unit area is exactly 0.06.
 - The hand numbers hold: winds of 3.640 and 2.250 m/s, the four square ratios, and the spin of 0.03.
 - The two mistakes at E come out at 0 and −0.06, and the line-integrals walk gives −120 J.
 
@@ -664,7 +674,7 @@ example : (-(1 : ℚ) / 10) * 40 * 30 = -120 := by norm_num
 - **Electric charge.** The electric field's divergence is the charge density, up to a constant: [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md).
 
 > **Say it back**
-> Divergence adds each part's rate along its own direction: outflow per unit area round a shrinking square. Curl subtracts the cross rates: circulation per unit area, along the spin axis. S spreads at 0.06 per second without turning; E turns with curl 0.06 per second without spreading. A patch of air at E spins at half the curl.
+> Divergence adds each part's rate along its own direction: outflow per unit area round a shrinking square (or per unit volume in space). Curl subtracts the cross rates: circulation per unit area, along the spin axis. S spreads at 0.06 per second without turning; E turns with curl 0.06 per second without spreading. A patch of air at E spins at half the curl.
 
 ---
 
@@ -676,7 +686,7 @@ example : (-(1 : ℚ) / 10) * 40 * 30 = -120 := by norm_num
 ## Where this goes next
 
 - [Conservative fields](04-conservative-fields-and-potentials.md): zero curl as the test for a gradient field, and where it fails.
-- [Surface integrals](05-surface-integrals-and-flux.md): outflow across a curved surface.
+- [Surface integrals](05-surface-integrals-and-flux.md): measuring area and net outflow across a curved surface.
 - [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): divergence of the electric field as charge.
 - [Continuity and Bernoulli](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/01-continuity-and-bernoulli.md): zero divergence as conservation of fluid.
 - [Navier-Stokes](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/03-navier-stokes-and-the-reynolds-number.md): both operators in the fluid equations.

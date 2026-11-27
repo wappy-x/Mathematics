@@ -6,11 +6,13 @@
 
 ## General Overview
 
-A field is fenced at five posts, in metres east and north of the south-west one: (0, 0), (6, 0), (6, 4), (3, 6), (0, 4). It is a house shape, a 6 m by 4 m rectangle under a roof 2 m high. The shoelace formula turns the five posts into 30 square metres, with no grid laid over the grass ([Shoelace formula](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)).
+A field is fenced at five posts, in metres east and north of the south-west one: (0, 0), (6, 0), (6, 4), (3, 6), (0, 4). It is a house shape, a 6 m by 4 m rectangle under a roof 2 m high.
 
-Green's theorem explains why corners suffice. For a smooth field of arrows, such as wind, two totals agree: the work the wind does on one walk round the fence, and the wind's swirl added over every square metre inside, its **curl** ([Divergence and curl](03-divergence-and-curl.md)). For a field with curl 1 everywhere, the walk measures area; on straight fences it is the shoelace sum.
+The shoelace formula turns the five posts into 30 square metres, with no grid laid over the grass ([Shoelace formula](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)).
 
-**Once round a closed fence, ground on the left, the work a smooth field does equals its curl added over the region inside; with curl 1, the walk measures area.**
+Green's theorem explains why corners suffice. For a field of arrows, such as wind, that is smooth on the fence and everywhere inside, two totals agree: the work the wind does on one walk round the fence with the ground on the left, and the wind's swirl added over every square metre inside, its **curl** ([Divergence and curl](03-divergence-and-curl.md)). For a field with curl 1 everywhere, the walk measures area; on straight fences it is the shoelace sum.
+
+**Once round a closed fence, ground on the left, the work done by a field that is smooth on the fence and everywhere inside equals its curl added over the region inside; with curl 1, the walk measures area.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for rectangles and for regions between two graphs, which covers the house; the general curved case is cited.
 
@@ -24,7 +26,9 @@ To scale, 30 units per metre, north up. Chevrons show the anticlockwise walk; th
 
 ## The formula
 
-Notation first, in words. A field $`F`$ has east part $`P`$ and north part $`Q`$ at the point $`x`$ metres east, $`y`$ north. $`P_y`$, short for $`\partial P/\partial y`$, is how fast $`P`$ changes per metre north, a partial derivative ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $`Q_x`$ is how fast $`Q`$ changes per metre east. The region is $`R`$, its fence $`C`$. A circle on the integral sign marks a loop.
+Notation first, in words. A field $`F`$ has east part $`P`$ and north part $`Q`$ at the point $`x`$ metres east, $`y`$ north. $`P_y`$, short for $`\partial P/\partial y`$, is how fast $`P`$ changes per metre north, a partial derivative ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $`Q_x`$ is how fast $`Q`$ changes per metre east.
+
+The region is $`R`$, its fence $`C`$. A circle on the integral sign marks a loop.
 
 ```math
 \oint_C P\,dx + Q\,dy \;=\; \iint_R \left(Q_x - P_y\right) dA
@@ -63,7 +67,7 @@ Curl is newtons per metre; times square metres, it gives joules, like the work o
 
 ### When it holds
 
-- **A closed fence that never crosses itself, in finitely many smooth pieces.** Corners are fine; a crossing fence counts some ground negatively.
+- **A bounded region with a closed fence that never crosses itself, in finitely many smooth pieces.** Corners are fine; a crossing fence counts some ground negatively.
 - **Walked with the region on the left**, anticlockwise for an outer fence. Clockwise, the area is −30 square metres.
 - **Continuous partial rates everywhere in the region, fence included.** One bad point breaks it: the vortex in What breaks gives 6.283185 J with curl 0 inside.
 - **Every piece of the boundary included.** A region with a pond cut out has two fences: the outer anticlockwise, the pond's clockwise.
@@ -113,7 +117,9 @@ With the region on the left, outward is to the right. A small step $`(dx, dy)`$ 
 
 The field $`(-y/2,\ x/2)`$ has $`Q_x = 1/2`$, $`P_y = -1/2`$: curl 1, so its loop integral is the area.
 
-From post i to post i + 1, walk $`x = x_i + t\,(x_{i+1} - x_i)`$, $`y = y_i + t\,(y_{i+1} - y_i)`$ as a clock t runs from 0 to 1. In $`x\,dy - y\,dx`$ the terms carrying t cancel, leaving $`x_i\,y_{i+1} - x_{i+1}\,y_i`$: one fence, one shoelace term. Half of 0 + 24 + 24 + 12 + 0 is 30 square metres. The same integral is the outward flux of $`(x/2,\ y/2)`$, divergence 1.
+From post i to post i + 1, walk $`x = x_i + t\,(x_{i+1} - x_i)`$, $`y = y_i + t\,(y_{i+1} - y_i)`$ as a clock t runs from 0 to 1. In $`x\,dy - y\,dx`$ the terms carrying t cancel, leaving $`x_i\,y_{i+1} - x_{i+1}\,y_i`$: one fence, one shoelace term.
+
+Half of 0 + 24 + 24 + 12 + 0 is 30 square metres. The same integral is the outward flux of $`(x/2,\ y/2)`$, divergence 1.
 
 A road with no calculus counts whole squares inside the fence: 26 of side 1 m, 29.6 square metres from 10 cm squares, 29.96 from 1 cm squares, within 0.05 of 30.
 
@@ -359,7 +365,7 @@ The two outputs match line for line.
 
 Lean proves Green's theorem on every rectangle, the P part on every region between two graphs, and the shoelace term on every straight fence.
 
-- Take any rectangle and any field whose partial rates are continuous everywhere in it, fence included. Walked once anticlockwise, the work round the fence equals the curl added over the rectangle.
+- Take any rectangle of positive width and height, and any field whose partial rates are continuous everywhere in it, fence included. Walked once anticlockwise, the work round the fence equals the curl added over the rectangle.
 - Take a region between a continuous floor and a roof never below it, with P and $`P_y`$ continuous there. P added along the floor, minus along the roof, equals minus $`P_y`$ added inside.
 - Take a straight fence from one post to the next. Along it, the field $`(-y/2,\ x/2)`$ does work of exactly half the shoelace term $`x_i\,y_{i+1} - x_{i+1}\,y_i`$.
 - The hand arithmetic holds exactly: shoelace terms 0, 24, 24, 12, 0, the 30 square metres, −30 clockwise, and 60 with the half dropped.
@@ -650,7 +656,7 @@ example : (12:ℚ) + 23 / 5 = 83 / 5 ∧ (24:ℚ) / 5 + -(24 / 5) = 0 := by norm
 - **Testing for a potential.** Zero curl on a region without holes makes every loop integral zero, as on [Conservative fields](04-conservative-fields-and-potentials.md); the vortex shows why holes matter.
 
 > **Say it back**
-> Walk once round a closed fence, ground on the left, adding the field's push along each step. The total equals the curl added inside. On a rectangle this is the fundamental theorem twice; other shapes glue from pieces whose shared fences cancel. Turned a quarter, outflow equals divergence inside. With curl 1 the walk measures area: the shoelace formula.
+> For a field smooth everywhere inside and on a closed fence, walk once round it, ground on the left, adding the field's push along each step. The total equals the curl added over the bounded region inside. On a rectangle this is the fundamental theorem twice; other shapes glue from pieces whose shared fences cancel. Turned a quarter, outflow equals divergence inside. With curl 1 the walk measures area: the shoelace formula.
 
 ---
 
@@ -668,7 +674,7 @@ example : (12:ℚ) + 23 / 5 = 83 / 5 ∧ (24:ℚ) / 5 + -(24 / 5) = 0 := by norm
 - [Divergence theorem](07-divergence-theorem.md): the flux form in three dimensions, flow out of a closed surface against divergence inside.
 - [Green, divergence and curl theorems](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/07-classical-vector-calculus-as-stokes.md): Green, Stokes and divergence as one theorem about boundaries.
 
-Left open: this fence lies flat on the ground; what does the theorem say when the loop is the rim of a curved sheet, such as a bowl?
+Left open: this fence lies flat on the ground. What does the outflow version say for the closed skin of a solid? That is the Divergence theorem, the next card. And what does the theorem say when the loop is the rim of a curved sheet, such as a bowl? That is Stokes' theorem.
 
 ---
 

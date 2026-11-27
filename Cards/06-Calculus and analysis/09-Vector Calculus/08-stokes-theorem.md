@@ -10,9 +10,11 @@ A bowl sits in a garden: the lower half of a sphere 2 m in radius, open side up,
 
 Walk once round the rim and add up the wind's push along the path. That total is the **circulation** ([Line integrals of a field](02-line-integrals.md)): 1 m/s times the rim's 4π m, about 12.566 m^2/s.
 
-Now forget the rim. At each point of the bowl, measure how hard the wind spins, its **curl** ([Divergence and curl](03-divergence-and-curl.md)), and keep the part aimed straight through the surface. Added over the bowl, that is a **flux** ([Surface integrals](05-surface-integrals-and-flux.md)). It also comes to 12.566 m^2/s. So does a flat lid across the rim, and so does the bowl when the wind below the rim changes but the wind on it does not.
+Now forget the rim. At each point of the bowl, measure how hard the wind spins, its **curl** ([Divergence and curl](03-divergence-and-curl.md)), and keep the part aimed straight through the surface. Added over the bowl, that is a **flux** ([Surface integrals](05-surface-integrals-and-flux.md)). It also comes to 12.566 m^2/s.
 
-**A smooth field's circulation round a rim, walked the matching way round, equals the flux of its curl through any surface on that rim.**
+So does a flat lid across the rim, and so does the bowl when the wind below the rim changes but the wind on it does not.
+
+**A field's circulation round a closed rim, walked the matching way round, equals the flux of its curl through any bounded, two-sided surface on that rim where the field is smooth.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for surfaces with one smooth chart (one grid of numbers covering the whole surface), and pieced together for the rest.
 
@@ -26,7 +28,9 @@ To scale: 60 px per metre, 50 px of arrow per unit of curl. Arrows show the curl
 
 ## The formula
 
-Notation first, in words. A surface is named $`S`$; its rim is written $`\partial S`$, read "the boundary of S". On the surface, $`\mathbf n`$ is an arrow of length one standing straight off it; choosing its side is choosing an **orientation**. The wind $`\mathbf F`$ has components $`F_1`$, $`F_2`$, $`F_3`$, its speeds east, north and up. A circle on the integral sign, $`\oint`$, means "add once round a closed loop"; $`d\mathbf r`$ is a short step along it.
+Notation first, in words. A surface is named $`S`$; its rim is written $`\partial S`$, read "the boundary of S". On the surface, $`\mathbf n`$ is an arrow of length one standing straight off it; choosing its side is choosing an **orientation**.
+
+The wind $`\mathbf F`$ has components $`F_1`$, $`F_2`$, $`F_3`$, its speeds east, north and up. A circle on the integral sign, $`\oint`$, means "add once round a closed loop"; $`d\mathbf r`$ is a short step along it.
 
 ```math
 \oint_{\partial S} \mathbf F\cdot d\mathbf r \;=\; \iint_S (\mathrm{curl}\,\mathbf F)\cdot\mathbf n\,dS
@@ -59,10 +63,10 @@ Units: curl is m/s per m, so per second; curl times m^2, or wind times m, gives 
 
 ### When it holds
 
-- **A two-sided surface.** A Möbius band cannot be oriented, so there is nothing to match.
+- **A bounded, two-sided surface in finitely many smooth pieces.** A Möbius band cannot be oriented, so there is nothing to match.
 - **The matching way round.** Point $`\mathbf n`$ out of the underside and the bowl reads −12.566 against the rim's 12.566.
 - **The whole rim.** A bowl with a drain hole has two rims; the inner one is walked the other way round.
-- **Continuous partial derivatives at every point of the surface.** A wind spinning round a core on the axis (a drain) has zero curl wherever it is defined, yet circulation 12.566 m^2/s. The bowl meets the axis, where that wind is undefined.
+- **Continuous partial derivatives at every point of the surface and just around it.** A wind spinning round a core on the axis (a drain) has zero curl wherever it is defined, yet circulation 12.566 m^2/s. The bowl meets the axis, where that wind is undefined.
 
 ---
 
@@ -70,7 +74,9 @@ Units: curl is m/s per m, so per second; curl times m^2, or wind times m, gives 
 
 ### Step 0: shared edges cancel
 
-Cut the bowl into small patches and walk each edge the matching way round. An edge shared by two patches is walked once each way, so its push cancels; only the rim survives. Round one small patch, the circulation is about the curl's crossing part times the area: that is what curl measures. So the rim's circulation is the sum of curl times area, the flux.
+Cut the bowl into small patches and walk each edge the matching way round. An edge shared by two patches is walked once each way, so its push cancels; only the rim survives.
+
+Round one small patch, the circulation is about the curl's crossing part times the area: that is what curl measures. So the rim's circulation is the sum of curl times area, the flux.
 
 ### Step 1: the flat case is Green's theorem
 
@@ -85,11 +91,15 @@ Name each point of the bowl by grid numbers $`u`$ and $`v`$. The rim is then the
 <details>
 <summary>Detailed proof: one smooth chart</summary>
 
-Let the surface be $`r(u, v)`$ over a flat region D where Green's theorem holds, r with continuous second partial derivatives, oriented by r_u × r_v (r_u: the rate of r in u, v held still). The anticlockwise edge of D maps to the matching walk round the rim. By the chain rule, F · dr = a du + b dv with a = F(r) · r_u and b = F(r) · r_v. Green on D gives
+Let the surface be $`r(u, v)`$ over a flat region D where Green's theorem holds, with r having continuous second partial derivatives. Orient it by r_u × r_v, where r_u is the rate of r in u with v held still.
+
+The anticlockwise edge of D maps to the matching walk round the rim. By the chain rule, F · dr = a du + b dv with a = F(r) · r_u and b = F(r) · r_v. Green on D gives
 
 $`\displaystyle \oint_{\partial D} a\,du + b\,dv = \iint_D \left(\frac{\partial b}{\partial u} - \frac{\partial a}{\partial v}\right) du\,dv.`$
 
-Differentiating, the terms F(r) · r_vu and F(r) · r_uv cancel, as mixed partials agree. What remains is (J r_u) · r_v − (J r_v) · r_u, J the matrix of F's partial derivatives. With A = r_u, B = r_v, the (y, z) terms give (∂F_3/∂y − ∂F_2/∂z)(A_y B_z − A_z B_y), and the other two pairs match: the sum is curl F · (A × B). So the right side is the curl's flux.
+Differentiating, the terms F(r) · r_vu and F(r) · r_uv cancel, as mixed partials agree. What remains is (J r_u) · r_v − (J r_v) · r_u, where J is the matrix of F's partial derivatives.
+
+With A = r_u and B = r_v, the (y, z) terms give (∂F_3/∂y − ∂F_2/∂z)(A_y B_z − A_z B_y). The other two pairs match, so the sum is curl F · (A × B), and the right side is the curl's flux.
 
 Several charts meeting along edges: add their results; shared edges cancel as in Step 0. The sphere's grid pinches at the pole: cut out a cap of angle ε, whose flux is at most the curl's size times the cap's area, and let ε go to 0.
 
@@ -101,11 +111,13 @@ At height z the bowl's $`\mathbf n`$ has upward part −z/R. A band of sphere be
 
 For the swirl, curl · n = −z/2, averaging 0.5 over the 2 m of depth: 0.5 × 2 × 4π = 4π.
 
-A second wind: the swirl times 1 + z/R, fading to nothing at the bottom, unchanged on the rim. Its curl varies: (−0.500, 0, 1.000) at the east rim, (−0.354, 0, 0.293) halfway down, 0 at the bottom. Its crossing part at height z is (2 − 2z − 1.5z^2)/4 per second; times 4π m^2 per metre over the 2 m of depth, the terms give π × (4 + 4 − 4) = 4π. Same rim wind, same flux.
+A second wind: the swirl times 1 + z/R, fading to nothing at the bottom, unchanged on the rim. Its curl varies: (−0.500, 0, 1.000) at the east rim, (−0.354, 0, 0.293) halfway down, 0 at the bottom.
+
+Its crossing part at height z is (2 − 2z − 1.5z^2)/4 per second. Times 4π m^2 per metre over the 2 m of depth, the terms give π × (4 + 4 − 4) = 4π. Same rim wind, same flux.
 
 ### Step 4: swap the surface when it helps
 
-Two surfaces on the same rim give the same flux, both equal to the circulation, so the easier one may be used where the field is smooth on it. The closed-skin cousin is the [Divergence theorem](07-divergence-theorem.md). Zero curl on a region with no holes means zero circulation round every loop: [Conservative fields](04-conservative-fields-and-potentials.md).
+Two bounded, two-sided surfaces on the same rim, with matching orientations, give the same curl flux where the field is smooth on both, so the easier one may be used. The closed-skin cousin is the [Divergence theorem](07-divergence-theorem.md). Zero curl on a region with no holes means zero circulation round every loop: [Conservative fields](04-conservative-fields-and-potentials.md).
 
 ---
 
@@ -121,7 +133,7 @@ Two surfaces on the same rim give the same flux, both equal to the circulation, 
 | bowl, swirl | average 0.5 × 2 m of depth × 4π | 4π |
 | bowl, fading wind | (4 + 4 − 4) × π | **4π** |
 
-One walk round the rim fixes the spin through any sheet on it: 12.566 m^2/s.
+One walk round the rim fixes the spin through any bounded, two-sided sheet on it where the wind is smooth: 12.566 m^2/s.
 
 ### What breaks if you drop a piece
 
@@ -140,7 +152,9 @@ The code prints all four.
 
 The checks build π by a Simpson sum and take two roads. Simpson's rule estimates a total by adding evenly spaced samples, weighted 1, 4, 2, 4, …, 4, 1, times a third of the spacing.
 
-Road one walks the rim: wind dotted with the rim's velocity, added by Simpson's rule. Road two never touches the rim: curl and area arrow come from difference quotients (the change over a tiny step, divided by the step), and a double Simpson sum adds their dot product over bowl and lid. The hand value 2πwR^2 is a third check; the bowl sum at 2 to 16 strips shows the error closing.
+Road one walks the rim: wind dotted with the rim's velocity, added by Simpson's rule.
+
+Road two never touches the rim. Curl and area arrow come from difference quotients (the change over a tiny step, divided by the step), and a double Simpson sum adds their dot product over bowl and lid. The hand value 2πwR^2 is a third check; the bowl sum at 2 to 16 strips shows the error closing.
 
 ### Python
 
@@ -341,7 +355,7 @@ The two outputs match line for line.
 
 Lean proves Stokes' theorem for every surface with one smooth chart over a rectangle of grid numbers, plus the drain wind and the worked numbers.
 
-- Let the surface be r(u, v) over a rectangle of grid numbers, with continuous second partial derivatives. Let the wind have continuous partial derivatives at every point of the surface. Then its circulation once round the rim equals the flux of its curl, oriented by r_u × r_v.
+- Let the surface be r(u, v) over a rectangle of grid numbers, with continuous second partial derivatives on an open set holding the rectangle. Let the wind have continuous partial derivatives on an open set holding every point of the surface. Then its circulation once round the rim equals the flux of its curl, oriented by r_u × r_v.
 - For J the matrix of F's partial derivatives and any arrows A and B, (J A) · B − (J B) · A equals curl F · (A × B).
 - The drain wind has zero curl at every point off the axis.
 - Yet the drain wind's circulation once round the bowl's rim is 4π m^2/s, not 0.
@@ -349,7 +363,7 @@ Lean proves Stokes' theorem for every surface with one smooth chart over a recta
 - The lid's 4π, the bowl's 4π, and the fading wind's (4 + 4 − 4)π = 4π.
 - Break 2's curl size times bowl area is 8π, double the true 4π.
 
-The bowl and lid integrals, the Simpson sums, the decimals, breaks 1 and 3, and the figure are left to the Python and Rust checks.
+Piecing charts together, the pinched-pole limit, the bowl and lid integrals, the Simpson sums, the decimals, breaks 1 and 3, and the figure are left to the Python and Rust checks.
 
 ```lean
 -- Stokes' theorem: for a wind with continuous rates on a surface given by one twice-smooth grid over a rectangle, the circulation once round the rim equals the flux of the curl through the surface, and the card's drain wind shows why the wind must be smooth on the whole surface.
@@ -639,7 +653,7 @@ example : (1 : ℚ) * (2 * 2 ^ 2) = 8 ∧ (8 : ℚ) = 2 * 4 := by norm_num
 - **History.** William Thomson stated it in an 1850 letter to George Stokes, who set it on Cambridge's 1854 Smith's Prize examination.
 
 > **Say it back**
-> Circulation adds a field's push round a rim; curl flux adds the curl's crossing part over a surface. Walked so the surface stays on the left of a head along the normal, the two are equal. On the bowl both are 4π, and so is the flat lid, which is Green's theorem. The field must be smooth on the whole surface, or a drain wind breaks it.
+> Circulation adds a field's push round the whole closed rim of a bounded, two-sided surface; curl flux adds the curl's crossing part over the surface. Walked so the surface stays on the left of a head along the normal, the two are equal. On the bowl both are 4π, and so is the flat lid, which is Green's theorem. The field must be smooth on the whole surface, or a drain wind breaks it.
 
 ---
 
@@ -653,7 +667,7 @@ example : (1 : ℚ) * (2 * 2 ^ 2) = 8 ∧ (8 : ℚ) = 2 * 4 := by norm_num
 - [Magnetic fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/05-magnetism-and-faradays-law.md): a changing flux through a loop, felt as a push round it.
 - [Maxwell's equations](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/07-maxwells-equations.md): loop laws turned into curl laws at each point.
 - [Cohomology and the cup product in outline](../../17-Topology/05-Homology/08-cohomology-and-cup-product-in-outline.md): counting holes by the loops that bound nothing.
-- [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): curl-free fields modulo gradients, as a measure of shape.
+- [De Rham cohomology](../../22-Algebraic%20geometry/05-Cohomology%20and%20the%20Hodge%20Conjecture/02-de-rham-cohomology-of-varieties.md): curl-free fields that are not gradients, as a measure of shape.
 - [Stokes on manifolds](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/06-stokes-theorem-on-manifolds.md): Green, Stokes, divergence and the fundamental theorem of calculus as one statement.
 
 The drain wind leaves a question open: when a field with zero curl wherever it is defined still circulates, what does that say about the holes in its space?

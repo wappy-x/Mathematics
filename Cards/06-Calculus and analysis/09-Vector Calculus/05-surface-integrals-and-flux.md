@@ -12,9 +12,9 @@ The fabric is 3.75 m of slope times 4 m: 15 m^2. Yet the catch is not rain on 15
 
 So a sheet carries two measures. **Surface area** counts how much sheet there is. **Flux**, the word used from here on, counts how much of a flow crosses it, signed by the side it crosses from. The cross product of the sheet's two tangent arrows gives both.
 
-**Lift a ground grid onto the sheet: each cell becomes a parallelogram whose area is the length of a cross product and whose flux is the flow dotted with it; adding the cells gives area and flux.**
+**Lift a smooth ground grid onto the sheet, covering it once: each small cell is nearly a parallelogram whose area is the length of a cross product and whose flux is the flow dotted with it; adding the cells gives area and, once a side is chosen, flux.**
 
-**What kind of fact this is:** a definition; that the answers do not depend on which grid is lifted is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition; that the answers do not depend on which grid is lifted (up to the chosen side for flux) is a theorem, proved on this card in Why it works.
 
 ### The picture: the tarp from the east, rain blown north
 
@@ -80,7 +80,9 @@ The parallelogram on two arrows has area equal to the length of their cross prod
 
 For the tarp, $`(1, 0, 0) \times (0, 1, 0.75) = (0, -0.75, 1)`$, of length $`\sqrt{0.75^2 + 1} = 1.25`$. So 12 m^2 of ground lifts to 15 m^2 of tarp. Pythagoras agrees: the slope is $`\sqrt{3^2 + 2.25^2} = 3.75`$ m, times 4 m.
 
-On a curved sheet the parallelogram is only nearly right, and the error fades as the cells shrink. Test it: let the middle sag 0.45 m, edges fixed, $`z = 0.75y - 0.05\,x(4 - x)\,y(3 - y)`$. The cross-product sum gives 15.370631 m^2. A second road: pin flat triangles to the sheet and measure each from its three sides (Heron's formula). With 10, 40 and 160 cells per side the mesh gives 15.366882, 15.370407, 15.370626 m^2, closing on the first road.
+On a curved sheet the parallelogram is only nearly right, and the error fades as the cells shrink. Test it: let the middle sag 0.45 m, edges fixed, $`z = 0.75y - 0.05\,x(4 - x)\,y(3 - y)`$. The cross-product sum gives 15.370631 m^2.
+
+A second road: pin flat triangles to the sheet and measure each from its three sides (Heron's formula). With 10, 40 and 160 cells per side the mesh gives 15.366882, 15.370407, 15.370626 m^2, closing on the first road.
 
 ### Step 2: flow through a flat piece fills a slanted box
 
@@ -92,13 +94,17 @@ For the tarp in still air, $`F \cdot N`$ is −10 mm an hour, so −120 litres a
 
 ### Step 3: the shadow gives the same answer
 
-Every drop crossing the tarp lands in its shadow, cast along the rain onto the ground, and every drop landing there crossed the tarp. So the catch is 10 mm an hour times the shadow's area. Blown north, a drop drifts 0.5 m per metre fallen, so the top edge's shadow lands 4.125 m from the south peg: 16.5 m^2, 165 L/h. Blown south, 7.5 m^2 and 75 L/h. No normal, no cross product, same answers.
+Every drop crossing the tarp lands in its shadow, cast along the rain onto the ground, and every drop landing there crossed the tarp. So the catch is 10 mm an hour times the shadow's area.
+
+Blown north, a drop drifts 0.5 m per metre fallen, so the top edge's shadow lands 4.125 m from the south peg: 16.5 m^2, 165 L/h. Blown south, 7.5 m^2 and 75 L/h. No normal, no cross product, same answers.
 
 The sagging tarp has the same edges, so the same shadow and the same flux in every wind. The sag added fabric, not catch.
 
 ### Step 4: a different grid gives the same answers
 
-Grid the tarp by metres of slope: $`r(u, s) = (u, 0.8s, 0.6s)`$ with s from 0 to 3.75. Now $`N = (0, -0.6, 0.8)`$, of length 1, on a 4 by 3.75 rectangle: still 15 m^2, still −120 L/h. In general a grid change stretches the cells by its Jacobian and $`N`$ by the same factor, and the two cancel. The Jacobian is the local area stretch of a grid change ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)).
+Grid the tarp by metres of slope: $`r(u, s) = (u, 0.8s, 0.6s)`$ with s from 0 to 3.75. Now $`N = (0, -0.6, 0.8)`$, of length 1, on a 4 by 3.75 rectangle: still 15 m^2, still −120 L/h.
+
+In general a grid change stretches the cells by its Jacobian and $`N`$ by the same factor, and the two cancel. If the new grid flips the normal to the other side, the flux flips sign. The Jacobian is the local area stretch of a grid change ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)).
 
 <details>
 <summary>Detailed proof: area and flux do not depend on the grid</summary>
@@ -338,7 +344,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves that area and flux do not depend on the grid, for any smooth sheet, and checks the taut tarp's numbers.
+Lean proves that area and flux (up to the chosen side) do not depend on the grid, for any smooth sheet, and checks the taut tarp's numbers.
 
 - Take a sheet, smooth throughout, whose area vector is never zero and which counts each point once.
 - Take a second grid: a smooth one-to-one map onto the first grid's region. Both regions leave out their edges.
@@ -570,7 +576,7 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 > [!TIP]
 > **Try changing**
 > - **Deepen the sag, 0.05 → 0.1.** Guess first: the area grows; every flux stays put, since the edges cast the shadow.
-> - **Blow rain south until it falls parallel to the tarp.** Guess first: the shadow flattens and the catch is nothing.
+> - **Blow rain south until it falls parallel to the tarp (set -0.005 to -0.01 / 0.75 in WINDS).** Guess first: the shadow flattens and the catch is nothing.
 > - **Swap the arguments of `cross` in road one.** Guess first: every flux flips sign and the shadow assert fails.
 
 ---
@@ -594,7 +600,7 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 - **Heat and fabric.** Heat through a curved wall is a flux; sailcloth is ordered by area.
 
 > **Say it back**
-> Grid the sheet and lift each cell. The cross product of the tangent arrows carries each cell's area as length and its facing as direction. Area adds the lengths; flux adds the flow dotted with the cross product, signed by the chosen side. The taut tarp is 15 m^2 of fabric but catches 120 litres an hour in still air. Any regular grid gives the same answers.
+> Grid the sheet and lift each cell. The cross product of the tangent arrows carries each cell's area as length and its facing as direction. Area adds the lengths; flux adds the flow dotted with the cross product, signed by the chosen side. The taut tarp is 15 m^2 of fabric but catches 120 litres an hour in still air. Any smooth grid covering the sheet once gives the same area, and the same flux if it keeps the chosen side.
 
 ---
 
@@ -606,9 +612,10 @@ example : (![0, 0, -1/100] : Fin 3 → ℚ) ⬝ᵥ ![0, 3/4, -1] * 12 * 1000 = 1
 
 ## Where this goes next
 
+- [Green's theorem](06-greens-theorem.md): the next card on this shelf. The work round a flat closed fence equals the curl added inside.
 - [Divergence theorem](07-divergence-theorem.md): flux out of a closed surface from the divergence inside.
 - [Stokes' theorem](08-stokes-theorem.md): curl flux through a sheet from circulation round its edge.
-- [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): electric flux and enclosed charge.
+- [Electric fields](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/04-electrostatics-gauss-and-potential.md): electric flux through a closed surface and the charge it encloses.
 - [Integration on an oriented manifold](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/05-integration-on-manifolds.md): the area vector as a form, in any dimension.
 - [The area and coarea formulas](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/08-area-and-coarea-formulas.md): Jacobians turn the Hausdorff measure of images and of level sets into ordinary integrals.
 
