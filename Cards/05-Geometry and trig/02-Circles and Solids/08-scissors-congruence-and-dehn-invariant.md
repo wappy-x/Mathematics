@@ -1,4 +1,4 @@
-# Scissors congruence: equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot
+# Scissors congruence: equal-area polygons can always be cut into each other, but a cube and a regular tetrahedron of equal volume cannot
 
 [Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Scissors congruence
 

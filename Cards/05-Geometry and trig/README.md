@@ -46,9 +46,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Angles at a circle: the inscribed-angle rule and the tangent that meets the radius square on](02-Circles%20and%20Solids/03-angles-in-a-circle.md)
 4. [Prisms and cylinders: volume is cross-section times height](02-Circles%20and%20Solids/04-prisms-and-cylinders.md)
 5. [Pyramids, cones and spheres: the one-third rule and the sphere's four pi r squared](02-Circles%20and%20Solids/05-pyramids-cones-and-spheres.md)
-6. [Polyhedra: vertices minus edges plus faces is two, and what that forbids](02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)
+6. [Polyhedra: vertices minus edges plus faces is two for convex solids, and what that forbids](02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)
 7. [Power of a point: every chord, secant and tangent through one point gives the same product](02-Circles%20and%20Solids/07-power-of-a-point.md)
-8. [Scissors congruence: equal-area polygons can always be cut into each other, but a cube and a tetrahedron of equal volume cannot](02-Circles%20and%20Solids/08-scissors-congruence-and-dehn-invariant.md)
+8. [Scissors congruence: equal-area polygons can always be cut into each other, but a cube and a regular tetrahedron of equal volume cannot](02-Circles%20and%20Solids/08-scissors-congruence-and-dehn-invariant.md)
 
 [↑ Back to the shelves](#top)
 

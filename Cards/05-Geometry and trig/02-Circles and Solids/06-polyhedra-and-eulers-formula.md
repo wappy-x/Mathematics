@@ -1,4 +1,4 @@
-# Polyhedra: vertices minus edges plus faces is two, and what that forbids
+# Polyhedra: vertices minus edges plus faces is two for convex solids, and what that forbids
 
 [Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Circles and Solids](../README.md#s02) → Polyhedra
 
