@@ -1,4 +1,4 @@
-# Roots and factors: a root r means a factor x - r, so a degree-n polynomial has at most n roots
+# Roots and factors: a root r means a factor x - r, so a non-zero degree-n polynomial has at most n roots
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Roots and factors
 
@@ -109,7 +109,7 @@ The tank, twice through: the cubic at 1 is 1 - 6 + 11 - 6 = 0, so x - 1 is a fac
 
 This is a direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), and it is peeling.
 
-Take a polynomial $`p`$ of degree $`n`$. If it has no root at all, 0 is under the ceiling and there is nothing to argue. If it has a root r, peel: $`p(x) = (x - r)q(x)`$, and $`q`$ has degree n - 1, because degrees add when brackets are multiplied.
+Take a non-zero polynomial $`p`$ of degree $`n`$. If it has no root at all, 0 is under the ceiling and there is nothing to argue. If it has a root r, peel: $`p(x) = (x - r)q(x)`$, and $`q`$ has degree n - 1, because degrees add when brackets are multiplied.
 
 Now take any other root s, a different number from r. Then $`0 = p(s) = (s - r)\,q(s)`$. The first bracket is not zero, because s and r differ. A product is zero only when one factor is zero ([Factoring](02-factoring-quadratics.md)), so $`q(s) = 0`$. Every remaining root of $`p`$ is a root of the shorter $`q`$.
 

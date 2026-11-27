@@ -47,8 +47,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 1. [Polynomials: sums of powers of one letter, their degree, and where they cross zero](02-Polynomials/01-polynomials.md)
 2. [Factoring: un-multiplying a polynomial, because a product is zero only when one factor is](02-Polynomials/02-factoring-quadratics.md)
 3. [The quadratic formula: complete the square once and every quadratic is solved, and the discriminant says how many answers](02-Polynomials/03-quadratic-formula.md)
-4. [Polynomial long division: divide with a remainder exactly as with whole numbers, and the remainder is the value at the root](02-Polynomials/04-polynomial-division.md)
-5. [Roots and factors: a root r means a factor x - r, so a degree-n polynomial has at most n roots](02-Polynomials/05-roots-and-the-factor-theorem.md)
+4. [Polynomial long division: divide with a remainder as with whole numbers, and for x - r the remainder is the value at r](02-Polynomials/04-polynomial-division.md)
+5. [Roots and factors: a root r means a factor x - r, so a non-zero degree-n polynomial has at most n roots](02-Polynomials/05-roots-and-the-factor-theorem.md)
 
 [↑ Back to the shelves](#top)
 

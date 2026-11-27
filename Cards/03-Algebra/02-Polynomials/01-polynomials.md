@@ -12,7 +12,7 @@ Put whole seconds in and the flight appears. One second: 15 metres. Two: 20. Thr
 
 That height rule is a **polynomial**: whole-number powers of one letter, each multiplied by a plain number, added up. The numbers out front, 20 and −5, are its **coefficients**. The biggest power, the 2, is its **degree**. And 4 is a **root**: putting 4 in makes it come out zero.
 
-**A polynomial is powers of one letter, each times a plain number, added together; its degree is the biggest power, and a root is an input that makes it zero.**
+**A polynomial is whole-number powers of one letter, each times a plain number, added together; its degree is the biggest power with a non-zero coefficient, and a root is an input that makes it zero.**
 
 **What kind of fact this is:** a definition: polynomial, coefficient, degree and root are names. The two products and the rule that degrees add are theorems, proved in Why it works.
 

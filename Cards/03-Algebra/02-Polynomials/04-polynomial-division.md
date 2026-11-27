@@ -1,4 +1,4 @@
-# Polynomial long division: divide with a remainder exactly as with whole numbers, and the remainder is the value at the root
+# Polynomial long division: divide with a remainder as with whole numbers, and for x - r the remainder is the value at r
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Polynomials](../README.md#s02) → Polynomial long division
 
@@ -18,7 +18,7 @@ Do it and the quotient is 4x^2 − 80x + 200, with nothing left over. [The quadr
 
 Dividing 17 by 5 gives 3 with 2 left over, and the 2 stays put because it is smaller than 5 ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Polynomials do the same with one word swapped: the leftover has to be a *lower power* than the divisor, not a smaller number.
 
-**Divide one polynomial by another the way you divide whole numbers. Stop when what is left has a lower highest power than the thing you divided by. And if you divided by x minus a number, what is left is that polynomial worked out at that number.**
+**Divide a polynomial by a non-zero one as with whole numbers. Stop when what is left is zero or lower degree than the divisor. Dividing by x minus a number leaves the polynomial's value at that number.**
 
 **What kind of fact this is:** a theorem. Why it works proves that the division stops, and that dividing by x − r leaves p(r), the polynomial's value at the divisor's root r. That only one pair fits is proved in [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
 
@@ -516,7 +516,7 @@ example : (4 * 20 ^ 3 - 100 * 20 ^ 2 + 600 * 20 - 1000 : ℤ) = 3000 ∧ (3000 :
 - **Check digits on a disc or a network packet.** They are the remainder of a polynomial division, and the receiver divides again. A remainder of zero means the check passed.
 
 > **Say it back**
-> Polynomials divide like whole numbers. Take away multiples of the divisor, biggest power first, and stop when what is left has a lower highest power than the divisor. Divisor times quotient plus remainder is what you started with, and that pair is the only one that fits. The tray's 4x^3 − 100x^2 + 600x − 1000, divided by x − 5, leaves 4x^2 − 80x + 200 with nothing over. The 5 cm cut is one answer, and the quadratic gives the other, 2.93 cm. Divide by x minus a number and the remainder is the polynomial worked out at that number, so a remainder of zero means a factor.
+> Polynomials divide like whole numbers. Take away multiples of the divisor, biggest power first, and stop when what is left is zero or has a lower highest power than the non-zero divisor. Divisor times quotient plus remainder is what you started with, and that pair is the only one that fits. The tray's 4x^3 − 100x^2 + 600x − 1000, divided by x − 5, leaves 4x^2 − 80x + 200 with nothing over. The 5 cm cut is one answer, and the quadratic gives the other, 2.93 cm. Divide by x minus a number and the remainder is the polynomial worked out at that number, so a remainder of zero means a factor.
 
 ---
 
@@ -528,8 +528,8 @@ example : (4 * 20 ^ 3 - 100 * 20 ^ 2 + 600 * 20 - 1000 : ℤ) = 3000 ∧ (3000 :
 
 ## Where this goes next
 
-- [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x − r is a factor, which caps a degree-n polynomial at n roots.
-- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): greatest common divisors, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
+- [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x − r is a factor, which caps a non-zero degree-n polynomial at n roots.
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): greatest common divisors, repeated remainder division (the Euclidean algorithm), and factoring, carried over from whole numbers.
 
 Left open: a remainder of zero finds one factor at a time. How many factors, and so how many roots, can a polynomial have?
 
