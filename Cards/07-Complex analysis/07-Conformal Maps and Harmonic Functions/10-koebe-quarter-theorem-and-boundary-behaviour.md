@@ -14,7 +14,7 @@ Its power series is $`z + 2z^2 + 3z^3 + \cdots`$. This card proves that its 2 an
 
 At the rim, a Riemann map onto a region bounded by a closed curve that never meets itself matches each rim point to one boundary point. The Koebe cut fails that test: each cut point but the tip is reached twice.
 
-**A one-to-one map of the unit disc with f(0) = 0 and f'(0) = 1 has $`\lvert a_2\rvert \le 2`$ and covers every point within 1/4 of 0, and the Koebe function, which misses −1/4, shows that neither number can be improved.**
+**A one-to-one holomorphic map of the unit disc with f(0) = 0 and f'(0) = 1 has $`\lvert a_2\rvert \le 2`$ and covers every point closer than 1/4 to 0, and the Koebe function, which misses −1/4, shows that neither number can be improved.**
 
 **What kind of fact this is:** theorems. The area theorem, Bieberbach's bound and the quarter theorem are proved in Why it works; Carathéodory's theorem is stated from Pommerenke (chapter 2), its proof sketched.
 
@@ -150,7 +150,7 @@ The proof's shape: a length-area estimate finds short arcs across the region nea
 On the Koebe rim the formula is exact. From $`(1 - e^{i\theta})^2 = -4\sin^2(\theta/2)\,e^{i\theta}`$:
 
 ```math
-k(e^{i\theta}) = -\frac{1}{4\sin^2(\theta/2)}
+k(e^{i\theta}) = -\frac{1}{4\sin^2(\theta/2)}, \qquad e^{i\theta} \neq 1
 ```
 
 θ and −θ give the same point, so each cut point but the tip is reached twice, once from each side: k(0.99i) = −0.499949 + 0.005025i lies just above the cut, k(−0.99i) just below.
@@ -1673,7 +1673,7 @@ example : (12 : ℚ) * (1 - (1 / 2) ^ 2) / 4 = 9 / 4 := by norm_num
 - **Heat in a plate.** [Solving by mapping](07-solving-boundary-problems-by-mapping.md) carries a plate's edge temperatures to the disc and back; Carathéodory matches each edge point to one rim point.
 
 > **Say it back**
-> S holds the one-to-one maps of the unit disc that start like z. Turned inside out, such a map misses an area that cannot be negative. A square root turns that into $`\lvert a_2\rvert \le 2`$, and a Möbius step into a covered disc of radius 1/4. The Koebe function, with $`a_2 = 2`$, misses −1/4: both are best. For a region bounded by a Jordan curve the Riemann map extends one-to-one to the rim; the Koebe slit is reached twice.
+> S holds the one-to-one holomorphic maps of the unit disc that start like z. Turned inside out, such a map misses an area that cannot be negative. A square root turns that into $`\lvert a_2\rvert \le 2`$, and a Möbius step into a covered disc of radius 1/4. The Koebe function, with $`a_2 = 2`$, misses −1/4: both are best. For a region bounded by a Jordan curve the Riemann map extends one-to-one to the rim; the Koebe slit is reached twice.
 
 ---
 
@@ -1685,9 +1685,10 @@ example : (12 : ℚ) * (1 - (1 / 2) ^ 2) / 4 = 9 / 4 := by norm_num
 
 ## Where this goes next
 
+- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): the next shelf starts here: a repeating signal written as a sum of spinning arrows e^(inx), each coefficient an average.
 - [Jordan curve theorem](../../17-Topology/03-Surfaces%20and%20Manifolds/05-jordan-curve-theorem.md): why a closed curve that never meets itself has one inside and one outside, the fact Carathéodory's theorem leans on.
 
-Left open: how the boundary map behaves when the boundary is wilder than a Jordan curve, which leads to prime ends.
+Left open: how the boundary map behaves when the boundary is wilder than a Jordan curve, which leads to prime ends; the next shelf turns from boundary maps to breaking repeating signals into spinning arrows in [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md).
 
 ---
 

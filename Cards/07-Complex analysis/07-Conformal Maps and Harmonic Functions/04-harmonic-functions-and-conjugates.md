@@ -1,4 +1,4 @@
-# Harmonic functions: the real and imaginary parts of a holomorphic function both solve Laplace's equation, and their level curves cross at right angles
+# Harmonic functions: the real and imaginary parts of a holomorphic function both solve Laplace's equation, and their level curves cross at right angles where f' is not zero
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Harmonic functions
 
@@ -8,7 +8,7 @@
 
 A thin steel plate is heated along its east and west edges and cooled along its north and south edges until nothing changes. Measure position in decimetres from the centre and temperature in degrees above the centre's. The steady temperature at x across and y up is x^2 − y^2. At P = (1, 2) it reads −3.
 
-Curves of equal temperature are **isotherms**. Heat runs from hot to cold along a second family, the **flow lines**: here the curves where 2xy is constant. A curve on which a function stays constant is a level curve of that function. Every flow line crosses every isotherm at a right angle.
+Curves of equal temperature are **isotherms**. Heat runs from hot to cold along a second family, the **flow lines**: here the curves where 2xy is constant. A curve on which a function stays constant is a level curve of that function. Away from the centre, every flow line crosses every isotherm at a right angle.
 
 With z = x + iy, the square z^2 is (x^2 − y^2) + i(2xy): temperature is its real part, flow its imaginary part. The square is holomorphic: it has a complex derivative, 2z, at every point. A settled temperature obeys one balance rule, Laplace's equation, and every holomorphic function hands over two solutions of it.
 
@@ -42,7 +42,7 @@ v_x = -u_y, \qquad v_y = u_x
 
 **Read it aloud:** the partner's slopes are u's, swapped, one sign flipped.
 
-Those slopes fix $`v`$ up to a constant. From an anchor $`(a, 0)`$ where $`v`$ is 0, walk east, then north:
+Those slopes fix $`v`$ up to a constant. On a rectangle inside the region, from an anchor $`(a, 0)`$ where $`v`$ is 0, walk east, then north:
 
 ```math
 v(x, y) = \int_a^x -u_y(s, 0)\,ds + \int_0^y u_x(x, s)\,ds
@@ -119,7 +119,7 @@ So u + iv satisfies Cauchy-Riemann with continuous partials: holomorphic on the 
 
 ### Step 3: level curves cross at right angles
 
-A level curve of u runs perpendicular to $`\nabla u`$, since u does not change along it. At P, $`\nabla u = (2, -4)`$ and $`\nabla v = (4, 2)`$, dot product 8 − 8 = 0. At (−1.5, 0.5) they are (−3, −1) and (1, −3), again 0. Perpendicular gradients mean perpendicular level curves.
+A level curve of u runs perpendicular to $`\nabla u`$, since u does not change along it. At P, $`\nabla u = (2, -4)`$ and $`\nabla v = (4, 2)`$, dot product 8 − 8 = 0. At (−1.5, 0.5) they are (−3, −1) and (1, −3), again 0. Nonzero perpendicular gradients mean perpendicular level curves.
 
 Heat moves along $`-\nabla u`$, which is perpendicular to $`\nabla v`$: heat moves along level curves of v. Isotherms are level curves of u, flow lines level curves of v.
 
@@ -363,7 +363,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three facts for every holomorphic function on any open region, and checks the plate's numbers.
+Lean proves the card's three facts for every holomorphic function on any open region and every harmonic function on a region without holes, and checks the plate's numbers.
 
 - If f is holomorphic on an open region, its real part u and imaginary part v are both harmonic there.
 - On an open region without holes, every harmonic u is the real part of a holomorphic function, so u has a harmonic conjugate there.
@@ -715,7 +715,7 @@ example : (0 : ℤ) + 2 * 2 = 4 := by norm_num
 - **Signal processing.** The partner of a signal's real part on the boundary is its Hilbert transform: The Hilbert transform.
 
 > **Say it back**
-> A harmonic function's two second rates cancel: u_xx + u_yy = 0. Both parts of a holomorphic function are harmonic, because Cauchy-Riemann differentiated again cancels. From a harmonic u, the partner v is built by adding the prescribed slopes, and without holes every walk agrees. The gradients are perpendicular, so isotherms and flow lines cross at right angles. Round a hot wire, log|z| has no single partner: the angle gains 2π per lap.
+> A harmonic function's two second rates cancel: u_xx + u_yy = 0. Both parts of a holomorphic function are harmonic, because Cauchy-Riemann differentiated again cancels. From a harmonic u, the partner v is built by adding the prescribed slopes, and without holes every walk agrees. Where the derivative is not zero, the gradients are nonzero and perpendicular, so isotherms and flow lines cross at right angles. Round a hot wire, log|z| has no single partner: the angle gains 2π per lap.
 
 ---
 

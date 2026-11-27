@@ -31,13 +31,13 @@ To scale: 30 units per 1 on the left, 16 on the right, 0 where each panel's axes
 A map sends each point $`z`$ of a starting region to a point $`w`$ of a target region; "C after squaring" means square first, then apply C. Reminder: $`e^{i\theta}`$ is the point at distance 1 and angle θ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); Arg is the principal argument, the angle in (−π, π]. The modulus |w| is the distance from w to 0.
 
 ```math
-z = r e^{i\theta} \;\mapsto\; z^{a} = r^{a} e^{ia\theta}, \qquad a = \frac{\pi}{\alpha}
+z = r e^{i\theta} \;\mapsto\; z^{a} = r^{a} e^{ia\theta}, \qquad a = \frac{\pi}{\alpha}, \qquad r > 0, \quad 0 < \alpha \le \pi
 ```
 
 **Read it aloud:** a power raises the distance to the a-th power and multiplies the angle by a, so a = π over the wedge's angle opens the wedge flat.
 
 ```math
-e^{x+iy} = e^{x} e^{iy}, \qquad \mathrm{Log}\, w = \ln|w| + i \mathrm{Arg}\, w
+e^{x+iy} = e^{x} e^{iy}, \qquad \mathrm{Log}\, w = \ln|w| + i \mathrm{Arg}\, w \quad (w \neq 0)
 ```
 
 **Read it aloud:** the exponential turns the real part into a distance and the height into an angle; the principal logarithm turns them back.
@@ -60,7 +60,7 @@ C(w) = \frac{w - i}{w + i}
 
 ### When it holds
 
-- **One-to-one needs room.** A power a is one-to-one on a wedge only while a times α stays at most 2π; the exponential only on bands no taller than 2π. Overshoot and points collide.
+- **One-to-one needs room.** A positive power a is one-to-one on a wedge only while a times α stays at most 2π; the exponential only on bands no taller than 2π. Overshoot and points collide.
 - **Corners open only at 0.** There the power's derivative is 0 (or, for a < 1, undefined) and angles are multiplied by a; elsewhere it is **conformal** (keeps angles: [Conformal maps](01-conformal-maps.md)).
 - **Fractional powers and the log need a branch.** Here they are the principal branches, holomorphic (differentiable in the complex sense) off the negative real axis ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)), a cut every region here avoids.
 - **The Cayley map needs the upper half.** Points below the axis land outside the disc.
@@ -608,10 +608,11 @@ example : (2 * exp (↑(Real.pi / 8) * I)) ^ 4 = 16 * I := by
 
 ## Where this goes next
 
+- [Harmonic functions](04-harmonic-functions-and-conjugates.md): the real and imaginary parts of a holomorphic function solve Laplace's equation, which these maps preserve.
 - [Solving by mapping](07-solving-boundary-problems-by-mapping.md): these chains carry a temperature or potential problem to the disc and back.
 - [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md): which regions reach the disc at all, and the map for a polygon.
 
-These maps reach only shapes built from wedges, bands and half planes; whether a region with any other boundary reaches the disc is the question [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md) answers.
+These maps reach only shapes built from wedges, bands and half planes; before carrying steady-temperature problems through them ([Harmonic functions](04-harmonic-functions-and-conjugates.md)), whether a region with any other boundary reaches the disc is the question [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md) answers.
 
 ---
 

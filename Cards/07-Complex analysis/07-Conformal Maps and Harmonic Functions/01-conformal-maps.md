@@ -44,7 +44,7 @@ f'(a) = \rho\, e^{i\theta}, \qquad \rho = |f'(a)|, \qquad \theta = \arg f'(a)
 g'(w) = \frac{1}{f'(g(w))}
 ```
 
-A globe point at latitude φ, longitude λ projects to z = r e^(iλ), r = tan(π/4 − φ/2). Mercator's chart is
+A globe point at latitude φ strictly between the poles (−π/2 < φ < π/2) and longitude λ in (−π, π] projects to z = r e^(iλ), r = tan(π/4 − φ/2). Mercator's chart is
 
 ```math
 w = -i\,\mathrm{Log}\, z = \lambda + i\,\ln \tan\!\left(\frac{\pi}{4} + \frac{\varphi}{2}\right), \qquad \text{stretch} = \frac{1}{\cos\varphi}
@@ -107,13 +107,13 @@ Let γ pass through a at time 0 with velocity v ≠ 0. Put k = γ(t) − a, set 
 
 (f(γ(t)) − f(a))/t = f'(a)·(γ(t) − a)/t + ε(γ(t) − a)·(γ(t) − a)/t.
 
-As t → 0, (γ(t) − a)/t → v and γ(t) − a → 0. For every η > 0 there is a δ0 > 0 with |ε(k)| < η whenever |k| < δ0, so the last term tends to 0. The image curve's velocity is f'(a)v, nonzero because f'(a) is not zero. For a second curve with velocity u, the angle between image velocities is arg((f'(a)u)/(f'(a)v)) = arg(u/v), up to a whole turn.
+As t → 0, (γ(t) − a)/t → v and γ(t) − a → 0. For every η > 0 there is a δ0 > 0 with |ε(k)| < η whenever |k| < δ0, so the last term tends to 0. The image curve's velocity is f'(a)v, nonzero because f'(a) is not zero. For a second curve with velocity u ≠ 0, the angle between image velocities is arg((f'(a)u)/(f'(a)v)) = arg(u/v), up to a whole turn.
 
 </details>
 
 ### Step 3: where f' is zero, angles multiply
 
-At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero and m a whole number, angles at a multiply by m. Each point near f(a), other than f(a), has m preimages (points sent to it) near a, counted by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
+At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero and m a positive whole number, angles at a multiply by m. Each point near f(a), other than f(a), has m preimages (points sent to it) near a, counted by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
 
 ### Step 4: a nonzero derivative gives a holomorphic local inverse
 
@@ -347,7 +347,7 @@ Lean proves the main theorem for every holomorphic f wherever f'(a) is not zero,
 
 - Let f be holomorphic near a, with f'(a) not zero. Then f(a + h) = f(a) + f'(a)h + ε(h)h, where ε(h) → 0.
 - As a map of the plane, f multiplies every arrow at a by f'(a).
-- So the angle from one arrow to another, direction included, is the same after the map: f is conformal at a.
+- So the angle from one nonzero arrow to another, direction included, is the same after the map: f is conformal at a.
 - Near a, f has a holomorphic local inverse g: g undoes f near a, f undoes g near f(a), and g'(w) = 1/f'(g(w)).
 - z^2 has the nonzero derivative 2z at every z other than 0, yet it is not one-to-one there, so it is not univalent.
 - For latitude φ strictly between −π/2 and π/2, and longitude λ in (−π, π], r = tan(π/4 − φ/2) is positive.

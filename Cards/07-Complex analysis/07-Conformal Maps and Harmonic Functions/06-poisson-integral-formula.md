@@ -12,7 +12,7 @@ The skin settles into a **harmonic** shape: its two second slopes cancel, so no 
 
 One fixed weighting does it, the **Poisson kernel**. Halfway out towards the high side it gives the nearest rim point weight 3, the farthest 0.33, and the height 22.5 millimetres; a numerical integral round the rim returns 22.500000.
 
-**Inside a unit disc, the height of a harmonic function at distance r from the centre and angle t is a weighted average of its rim values, the rim point at angle s weighing (1 − r^2)/(1 − 2r cos(t − s) + r^2); the same weighting builds the harmonic function from any continuous rim.**
+**Inside a unit disc, the height of a harmonic function that is continuous up to the rim, at distance r from the centre and angle t, is a weighted average of its rim values, the rim point at angle s weighing (1 − r^2)/(1 − 2r cos(t − s) + r^2); the same weighting builds the harmonic function from any continuous rim.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; building u from any continuous rim is in the folded Detailed proof.
 
@@ -26,7 +26,7 @@ To scale: 80 units per 1, centre (150, 120), rim radius 80; a = 1/2 at (190, 120
 
 ## The formula
 
-Notation first. An inside point is r e^(it): distance r from the centre, angle t. A rim point is e^(is), with height h(s).
+Notation first. An inside point is r e^(it): distance r < 1 from the centre, angle t. A rim point is e^(is), with height h(s).
 
 ```math
 u(re^{it}) = \frac{1}{2\pi}\int_0^{2\pi} P_r(t-s)\,h(s)\,ds, \qquad P_r(\theta) = \frac{1-r^2}{1-2r\cos\theta+r^2}
@@ -36,7 +36,7 @@ u(re^{it}) = \frac{1}{2\pi}\int_0^{2\pi} P_r(t-s)\,h(s)\,ds, \qquad P_r(\theta) 
 
 The denominator is |e^(is) − r e^(it)|^2, the squared distance to the rim point, so near points weigh more.
 
-For the upper half-plane, the region above the real line:
+For the upper half-plane, the points x + iy with y > 0, and bounded u:
 
 ```math
 u(x+iy) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{y}{(x-q)^2+y^2}\,h(q)\,dq
@@ -130,7 +130,7 @@ Recovery: by total weight 1, $`u(re^{it}) - h(t) = \frac{1}{2\pi}\int_{-\pi}^{\p
 
 ### Step 8: the half-plane, through the Cayley map
 
-The Cayley map w = (p − i)/(p + i) is a Möbius map ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)) sending the upper half-plane onto the disc and the real line onto the rim. Harmonic functions stay harmonic under it, and changing variable turns the disc kernel into y/((x − q)^2 + y^2) with 1/π in front. On the drum, 3i maps to 1/2, and the half-plane integral at 3i returns 22.500000.
+The Cayley map w = (p − i)/(p + i) is a Möbius map ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)) sending the upper half-plane onto the disc and the real line onto the rim (with infinity sent to 1). Harmonic functions stay harmonic under it, and changing variable turns the disc kernel into y/((x − q)^2 + y^2) with 1/π in front. On the drum, 3i maps to 1/2, and the half-plane integral at 3i returns 22.500000.
 
 <details>
 <summary>The change of variable</summary>
@@ -364,11 +364,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the Poisson formula for every harmonic u on the unit disc, the weights' total of 1, and building u from any continuous rim.
+Lean proves the Poisson formula for every harmonic u on the unit disc that is continuous up to the rim, the weights' total of 1, and building u from any continuous rim.
 
 - Let u be harmonic inside the unit disc and continuous up to the rim. Then for 0 ≤ r < 1 and any angle t, u(r e^(it)) is the Poisson-kernel weighted average of the rim heights u(e^(is)).
 - For 0 ≤ r < 1, every weight (1 − r^2)/(1 − 2r cos(t − s) + r^2) is positive, and the weights average to 1 round the rim.
-- For any continuous rim h, the kernel-weighted average of h is harmonic inside the disc.
+- For any continuous rim h (repeating every 2π), the kernel-weighted average of h is harmonic inside the disc.
 - As the inside point moves out to the rim point at angle t, that average tends to h(t).
 - Halfway out, at r = 1/2 and t = 0, the weights are 3 at s = 0, 3/5 at s = π/2, and 1/3 at s = π.
 - The drum's height 20 + 5r cos t is 22.5 at r = 1/2, t = 0, and 18 at r = 0.8, t = 2π/3.
@@ -723,7 +723,7 @@ example : (3 * I - I) / (3 * I + I) = (1 / 2 : ℂ) := by
 - **Signal smoothing.** Averaging a repeating signal against the kernel at radius r shrinks its n-th frequency by r^n, damping fast wiggles more than slow ones (The Gaussian and Poisson kernels).
 
 > **Say it back**
-> A harmonic function on a disc is fixed by its rim. Cauchy's formula plus a zero integral from the reflected point becomes a real weighted average. Each weight is 1 − r^2 over a squared distance, and they total 1. Rim 20 + 5 cos s gives 22.5 halfway out. The Cayley map carries this to the half-plane.
+> A harmonic function on a disc, continuous up to the rim, is fixed by its rim. Cauchy's formula plus a zero integral from the reflected point becomes a real weighted average. Each weight is 1 − r^2 over a squared distance, and they total 1. Rim 20 + 5 cos s gives 22.5 halfway out. The Cayley map carries this to the half-plane.
 
 ---
 
@@ -734,12 +734,12 @@ example : (3 * I - I) / (3 * I + I) = (1 / 2 : ℂ) := by
 
 ## Where this goes next
 
-- [Solving by mapping](07-solving-boundary-problems-by-mapping.md): other shapes, mapped to the disc first.
+- [Solving by mapping](07-solving-boundary-problems-by-mapping.md): other shapes, mapped to the disc or half-plane first.
 - [Method of images](../../19-Partial%20differential%20equations/04-Laplace%2C%20Poisson%20and%20Potentials/05-method-of-images.md): Step 2's reflected point as a mirror charge.
 - [The Gaussian and Poisson kernels](../../20-Harmonic%20analysis/03-Convolution%20and%20Approximate%20Identities/04-gaussian-and-poisson-kernels.md): the kernel among positive weights that pile up at a point.
 - [The Dirichlet problem by Brownian motion](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/09-brownian-motion-and-the-dirichlet-problem.md): boundary values averaged over where the path exits.
 
-The formula needs a skin that nothing presses on; how high a skin stands when a load presses inside, like the pressed drum above, is left open.
+Left open: this formula solves only a round disc or half-plane; how to fill a corridor or a corner from its edges is the job of [Solving by mapping](07-solving-boundary-problems-by-mapping.md) (while a pressed drum with an inside load belongs to Poisson's equation).
 
 ---
 

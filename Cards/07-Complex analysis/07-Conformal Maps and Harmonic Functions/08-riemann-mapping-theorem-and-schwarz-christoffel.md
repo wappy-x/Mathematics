@@ -14,7 +14,7 @@ The function sin z sends it onto the upper half plane, the points with positive 
 
 Riemann's theorem says such a map exists and counts them. The Schwarz-Christoffel formula writes it out for polygons, rebuilding sin z from the lane's two corners.
 
-**Every region without holes, other than the whole plane, has a conformal map onto the unit disc, unique once one chosen point goes to the centre with a real, positive derivative there.**
+**Every open region in one piece without holes, other than the whole plane, has a one-to-one conformal map onto the unit disc, unique once one chosen point goes to the centre with a real, positive derivative there.**
 
 **What kind of fact this is:** a theorem; uniqueness and the disc's self-maps are proved in Why it works, existence is stated from Stein and Shakarchi (chapter 8) with the proof's shape in words.
 
@@ -38,7 +38,7 @@ F(z_0) = 0, \qquad F'(z_0) \text{ real and positive.}
 
 **Read it aloud:** one conformal map sends the region onto the disc, the chosen point to the centre, its direction unturned.
 
-Every conformal map of the disc onto itself is a **Blaschke factor** times a turn:
+Every one-to-one conformal map of the disc onto itself is a **Blaschke factor** times a turn:
 
 ```math
 \varphi(u) = e^{i\theta}\,\frac{u - a}{1 - \bar a\,u}, \qquad \lvert a\rvert < 1.
@@ -48,7 +48,7 @@ Every conformal map of the disc onto itself is a **Blaschke factor** times a tur
 
 So the disc's self-maps have three real parameters: two for a, one for $`\theta`$. $`F(z_0) = 0`$ fixes a; a positive $`F'(z_0)`$ fixes $`\theta`$.
 
-**The Schwarz-Christoffel formula.** Take a polygon with interior angles $`\alpha_1\pi, \dots, \alpha_n\pi`$, its corners the images of real points $`x_1 < \dots < x_n`$. With complex constants $`A`$ (scale and turn) and $`B`$ (shift), a map of the upper half plane $`H`$ onto its inside is
+**The Schwarz-Christoffel formula.** Take a polygon with interior angles $`\alpha_1\pi, \dots, \alpha_n\pi`$, its corners the images of real points $`x_1 < \dots < x_n`$. With nonzero complex constant $`A`$ (scale and turn) and complex constant $`B`$ (shift), a map of the upper half plane $`H`$ onto its inside is
 
 ```math
 f(w) = A \int_0^{w} (t - x_1)^{\alpha_1 - 1} \cdots (t - x_n)^{\alpha_n - 1}\, dt + B.
@@ -94,7 +94,7 @@ On the rim $`\lvert u\rvert = 1`$, so $`\lvert 1 - \bar a u\rvert = \lvert \bar 
 
 ### Step 2: every self-map of the disc is a Blaschke factor times a turn
 
-Undo a self-map's choice of centre with a Blaschke factor; what is left fixes 0, and the Schwarz lemma (a disc self-map fixing 0 never moves a point farther from 0) forces a pure turn.
+Undo a self-map's choice of centre with a Blaschke factor; what is left fixes 0, and the Schwarz lemma (a holomorphic map of the disc into itself fixing 0 never moves a point farther from 0) forces a pure turn.
 
 <details>
 <summary>Detailed proof: the disc's self-maps</summary>
@@ -114,7 +114,7 @@ With a moved centre, $`G = (\sin z - w_1)/(\sin z - \bar w_1)`$, $`w_1 = 1 + 2i`
 ### Step 4: existence, the shape of the proof
 
 1. **Squeeze D into the disc.** D misses a point p; with no holes, $`\sqrt{z - p}`$ is holomorphic on D. It never takes both q and −q, so its image misses a small disc, and a Möbius map moves it inside $`\mathbb{D}`$.
-2. **Take the most stretching map.** Among one-to-one maps into $`\mathbb{D}`$ sending $`z_0`$ to 0, [Montel's theorem](../04-Taylor%20Series,%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md) (bounded holomorphic families have convergent subsequences) gives one with largest $`\lvert F'(z_0)\rvert`$, still one-to-one.
+2. **Take the most stretching map.** Among one-to-one maps into $`\mathbb{D}`$ sending $`z_0`$ to 0, Montel's theorem ([Normal families](../04-Taylor%20Series,%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md): bounded holomorphic families have convergent subsequences) gives one with largest $`\lvert F'(z_0)\rvert`$, still one-to-one.
 3. **It fills the disc.** If it missed a point, two Blaschke factors round a square root would stretch more at $`z_0`$.
 
 ### Step 5: why sin z maps the half strip onto the half plane
@@ -1949,7 +1949,7 @@ example : I * (-I / 2) * (Real.sqrt 2 : ℂ) = (Real.sqrt 2 : ℂ) / 2 := by
 - **Channels and polygons.** Flow past a step in a channel uses a numerical Schwarz-Christoffel map.
 
 > **Say it back**
-> Any region without holes, other than the whole plane, maps conformally onto the unit disc. The map is unique once one point goes to the centre with a positive derivative, because the disc's self-maps, Blaschke factors times turns, have three parameters. sin z sends the half strip of width π onto the upper half plane, corners to ±1. The Schwarz-Christoffel integral rebuilds that map from the two right angles.
+> Any open region in one piece without holes, other than the whole plane, maps one-to-one and conformally onto the unit disc. The map is unique once one point goes to the centre with a real, positive derivative, because the disc's self-maps, Blaschke factors times turns, have three parameters. sin z sends the half strip of width π onto the upper half plane, corners to ±1. The Schwarz-Christoffel integral rebuilds that map from the two right angles.
 
 ---
 
@@ -1959,10 +1959,11 @@ example : I * (-I / 2) * (Real.sqrt 2 : ℂ) = (Real.sqrt 2 : ℂ) / 2 := by
 
 ## Where this goes next
 
-- [The Poisson formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region.
+- [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md): every holomorphic map of the disc into itself never stretches hyperbolic distance, and Blaschke maps keep it exactly.
+- [The Poisson formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region whose boundary the map reaches continuously.
 - [Univalent maps](10-koebe-quarter-theorem-and-boundary-behaviour.md): Koebe's quarter theorem, and when a Riemann map reaches the boundary.
 
-Left open: placing the $`x_k`$ for four or more corners, a numerical problem (Driscoll and Trefethen).
+Left open: placing the $`x_k`$ for four or more corners, a numerical problem (Driscoll and Trefethen); and, on the disc itself, what the Blaschke self-maps preserve, which [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md) answers.
 
 ---
 

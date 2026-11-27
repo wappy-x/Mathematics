@@ -12,7 +12,7 @@ Steady temperature is **harmonic**: at every inside point it equals the average 
 
 Most regions allow no guess. A conformal map is holomorphic (complex-differentiable) with nonzero derivative, so it keeps angles. Such a map bends the corridor onto the upper half plane, where the answer takes one line. The answer is then carried back point by point. The corridor tests the method against the guess; a quarter plane, with a corner, is the second case.
 
-**A harmonic function evaluated at the output of a conformal map is again harmonic, and a one-to-one map carries walls to walls, so a steady-temperature problem on a hard region is solved on the half plane or disc and carried back.**
+**A harmonic function evaluated at the output of a conformal map is again harmonic, and when a one-to-one map onto the half plane or disc carries walls continuously to walls, a bounded steady-temperature problem on a hard region is solved there and carried back.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, plus the method it licenses.
 
@@ -26,7 +26,7 @@ To scale, 30 units per unit length. The dashed line y = 1 lands on the ray at an
 
 ## The formula
 
-Let f be a holomorphic map and U a real function with continuous second partial derivatives. The **Laplacian** of U, written $`\Delta U`$, adds its two second partial derivatives, in x and in y; U is harmonic exactly when $`\Delta U = 0`$. $`U \circ f`$, read "U after f", has value U(f(z)) at z.
+Let f be a holomorphic map and U a real function with continuous second partial derivatives near f(z). The **Laplacian** of U, written $`\Delta U`$, adds its two second partial derivatives, in x and in y; U is harmonic exactly when $`\Delta U = 0`$. $`U \circ f`$, read "U after f", has value U(f(z)) at z.
 
 ```math
 \Delta(U \circ f)(z) = \lvert f'(z)\rvert^2 \,(\Delta U)(f(z))
@@ -42,7 +42,7 @@ U(w) = \frac{100}{\pi}\arg w,
 
 **Read it aloud:** the temperature is the angle of w, measured from the positive real axis, scaled so that the angle π reads 100.
 
-Here arg w lies in (0, π). Let g(t) be the temperature at each wall point t of the real axis. The half plane's Poisson integral gives the answer at w = a + ib. It is the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map, a ratio of two first-degree polynomials ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)):
+Here arg w lies in (0, π). Let g(t) be the bounded temperature at each wall point t of the real axis. For b > 0, the half plane's Poisson integral gives the answer at w = a + ib. It is the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map, a ratio of two first-degree polynomials ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)):
 
 ```math
 U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^2}\,dt
@@ -612,12 +612,12 @@ example : (2 : ℂ) ^ 2 = 4 ∧ (-2 : ℂ) ^ 2 = 4 := by
 
 ## What this builds on
 
-- [The Poisson formula](06-poisson-integral-formula.md): the answer on the disc for any wall temperatures, and so on the half plane.
+- [The Poisson formula](06-poisson-integral-formula.md): the answer on the disc for any continuous wall temperatures, and so on the half plane.
 - [The standard maps](03-standard-maps-and-composing-them.md): e^z opening a strip, powers opening a wedge.
 
 ## Where this goes next
 
-- [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md): every simply connected region (one with no holes) except the whole plane maps onto the disc, and polygons have a formula for the map.
+- [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md): every open simply connected region (in one piece, with no holes) except the whole plane maps onto the disc, and polygons have a formula for the map.
 
 Left open: which regions have a one-to-one conformal map onto the half plane at all, and how to find it when no standard map fits.
 

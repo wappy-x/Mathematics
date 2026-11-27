@@ -1,4 +1,4 @@
-# Mobius transformations: (az + b)/(cz + d) sends circles and lines to circles and lines, once infinity counts as a point
+# Mobius transformations: (az + b)/(cz + d) with ad - bc not zero sends circles and lines to circles and lines, once infinity counts as a point
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Mobius transformations
 
@@ -29,7 +29,7 @@ To scale: on the left 40 units per 1, origin at (90, 170); on the right 70 units
 Reminder: z̄ (read "z-bar") is z mirrored in the real axis, |z| its distance from 0, Re z and Im z its real and imaginary parts ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). New: $`\infty`$ names one extra point, reached by going far out in any direction.
 
 ```math
-T(z) = \frac{az + b}{cz + d}, \qquad ad - bc \neq 0, \qquad T\!\left(-\tfrac{d}{c}\right) = \infty, \quad T(\infty) = \frac{a}{c}
+T(z) = \frac{az + b}{cz + d}, \qquad ad - bc \neq 0, \qquad T\!\left(-\tfrac{d}{c}\right) = \infty, \quad T(\infty) = \frac{a}{c} \quad (c \neq 0)
 ```
 
 **Read it aloud:** a first-degree expression over another, not proportional; the point zeroing the bottom, called the pole, goes to infinity, and infinity to a/c. When c = 0, infinity stays put.
@@ -93,7 +93,7 @@ Shift, take 1/z, turn-and-stretch, shift. Only 1/z can bend a line, so only 1/z 
 Every circle and every line is one equation:
 
 ```math
-\alpha\,|z|^2 + \beta z + \bar\beta\,\bar z + \gamma = 0, \qquad \alpha, \gamma \text{ real}
+\alpha\,|z|^2 + \beta z + \bar\beta\,\bar z + \gamma = 0, \qquad \alpha, \gamma \text{ real}, \quad |\beta|^2 - \alpha\gamma > 0
 ```
 
 A circle |z − p|^2 = r^2, centre p and radius r, expands to α = 1, β = −p̄, γ = |p|^2 − r^2; a line has α = 0. Put z = 1/w and multiply through by |w|^2:
@@ -102,7 +102,7 @@ A circle |z − p|^2 = r^2, centre p and radius r, expands to α = 1, β = −p�
 \gamma\,|w|^2 + \bar\beta\,w + \beta\,\bar w + \alpha = 0
 ```
 
-The same kind of equation, α and γ swapped: 1/z keeps the family, so by Step 3 every Mobius map does. A circle through 0 has γ = 0 and becomes a line.
+The same kind of equation, α and γ swapped (so |β|^2 − αγ > 0 survives): 1/z keeps the family, so by Step 3 every Mobius map does. A circle through 0 has γ = 0 and becomes a line.
 
 <details>
 <summary>Detailed proof: the image is all of a circle or line</summary>
@@ -113,7 +113,7 @@ Let E solve the first equation, with |β|^2 − αγ > 0 (a real circle or line)
 
 ### Step 5: three points fix the map
 
-One map, built from the **cross-ratio** (a four-point quantity Mobius maps keep), sends any three distinct points to 0, 1 and ∞. One such map then another's undo sends any three to any three. The map is unique: one fixing 0, 1 and ∞ has b = c = 0 and a = d, the identity.
+One map, built from the **cross-ratio** (a four-point quantity Mobius maps keep), sends any three distinct points to 0, 1 and ∞. One such map then another's undo sends any three distinct points to any three distinct points. The map is unique: one fixing 0, 1 and ∞ has b = c = 0 and a = d, the identity.
 
 Hence the cube: C sends ∞ to 1, 1 to −i, −i to ∞, so C three times fixes all three.
 
@@ -141,7 +141,7 @@ Positive y gives |C(z)| < 1; at 1 + i both sides are 0.8. The undo has imaginary
 <details>
 <summary>Every map of the disc onto itself</summary>
 
-For p inside the unit disc, the Blaschke factor (z − p)/(1 − p̄ z) sends p to 0 and keeps the disc. Every conformal map of the disc onto itself is one of these then a turn (Stein and Shakarchi, Chapter 8).
+For p inside the unit disc, the Blaschke factor (z − p)/(1 − p̄ z) sends p to 0 and keeps the disc. Every one-to-one conformal map of the disc onto itself is one of these then a turn (Stein and Shakarchi, Chapter 8).
 
 </details>
 
@@ -386,7 +386,7 @@ Lean proves the three main facts for every a, b, c, d with ad − bc not zero, a
 
 - Let T(z) = (az + b)/(cz + d) with ad − bc not zero, on the plane plus ∞. Then T sends every circle, and every line with ∞ added, onto a circle or a line.
 - The map (dw − b)/(−cw + a) undoes T on both sides, so T is a perfect pairing of the plane plus ∞.
-- One Mobius map then another is the Mobius map of their matrices' product, at every point, ∞ included.
+- One Mobius map then another, each with ad − bc not zero, is the Mobius map of their matrices' product, at every point, ∞ included.
 - For the Cayley map, ad − bc = 2i. C sends i to 0, 0 to −1, ∞ to 1, and the pole −i to ∞.
 - C(1) = −i, C(−1) = i, C(2i) = 1/3, and C(1 + i) = (1 − 2i)/5, that is 0.2 − 0.4i.
 - C twice at 2i gives (−4 − 3i)/5, that is −0.8 − 0.6i. The matrix cubed is (2 − 2i) times the identity.
@@ -881,20 +881,20 @@ end
 
 ## What this builds on
 
-- [Conformal maps](01-conformal-maps.md): a map with non-zero derivative keeps angles; T has derivative (ad − bc)/(cz + d)^2, never zero.
+- [Conformal maps](01-conformal-maps.md): a map with non-zero derivative keeps angles; T has derivative (ad − bc)/(cz + d)^2, never zero away from the pole.
 - [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the product that composes two maps in Step 1.
 
 ## Where this goes next
 
-- [The standard maps](03-standard-maps-and-composing-them.md): chains with powers and the exponential.
-- [The Poisson formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
+- [The standard maps](03-standard-maps-and-composing-them.md): powers, the exponential and logarithm chained with Cayley to map wedges and strips.
+- [The Poisson formula](06-poisson-integral-formula.md): fill a disc from its rim, and carry the formula to the half plane by C.
 - [Modular forms](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/07-modular-forms-in-outline.md): functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
 - [Schwarz-Pick](09-schwarz-pick-and-the-hyperbolic-disc.md): a holomorphic map of the disc into itself never stretches hyperbolic distance.
 - [Impedance matching](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/12-impedance-matching-and-the-smith-chart.md): a quarter wave or a stub, read off the Smith chart.
 - [Higher homotopy groups](../../17-Topology/07-Higher%20Homotopy%20and%20Mapping%20Spaces/02-higher-homotopy-groups-and-fibrations.md): wrap a sphere around a space, and the Hopf fibration that wraps S^3 around S^2.
 - [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
 
-Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
+Mobius maps reach only regions bounded by circles and lines; reaching a wedge or a strip is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 
 ---
 

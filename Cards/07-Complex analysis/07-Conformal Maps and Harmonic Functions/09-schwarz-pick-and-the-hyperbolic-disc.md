@@ -12,7 +12,7 @@ The squaring map f(z) = z^2 keeps the disc inside itself. The point 0.5 goes to 
 
 Every holomorphic map (one with a complex derivative at each point) that sends the disc into itself does the same: it never stretches the disc's distance. The maps that keep distance exactly are the disc's Möbius maps, the fisheye lenses of [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md).
 
-**A holomorphic map of the unit disc into itself never increases the disc's hyperbolic distance between two points, and the maps that keep one distance unchanged keep them all: they are the disc's Möbius maps, its rigid motions without a mirror.**
+**A holomorphic map of the unit disc into itself never increases the disc's hyperbolic distance between two points, and the maps that keep one nonzero distance unchanged keep them all: they are the disc's Möbius maps, its rigid motions without a mirror.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the Schwarz lemma; the hyperbolic ruler and distance are definitions.
 
@@ -774,7 +774,7 @@ example : (2 : ℝ) * (4 / 5) ^ 2 = 32 / 25 ∧ (1 : ℝ) < 32 / 25 := by
 - **Escher's prints.** The rigid motions of Step 4 carry one fish of a Circle Limit print onto another.
 
 > **Say it back**
-> The Poincaré disc measures a short piece at drawn distance r from 0 as 2/(1 − r^2) times its drawn length. The disc's Möbius maps keep that ruler, so they can move any point to 0 without changing distances. Moving a and f(a) to 0 turns any holomorphic self-map into one that fixes 0, where the Schwarz lemma bounds it. So no such map stretches hyperbolic distance: z^2 shrinks the gap from 0 to 0.5, ln 3, to ln(5/3). Keeping one distance forces a Möbius map.
+> The Poincaré disc measures a short piece at drawn distance r from 0 as 2/(1 − r^2) times its drawn length. The disc's Möbius maps keep that ruler, so they can move any point to 0 without changing distances. Moving a and f(a) to 0 turns any holomorphic self-map into one that fixes 0, where the Schwarz lemma bounds it. So no such map stretches hyperbolic distance: z^2 shrinks the gap from 0 to 0.5, ln 3, to ln(5/3). Keeping one nonzero distance forces a Möbius map.
 
 ---
 
@@ -788,7 +788,8 @@ example : (2 : ℝ) * (4 / 5) ^ 2 = 32 / 25 ∧ (1 : ℝ) < 32 / 25 := by
 ## Where this goes next
 
 - [Univalent maps](10-koebe-quarter-theorem-and-boundary-behaviour.md): one-to-one maps of the disc, and how far their images must reach (the Koebe quarter theorem).
-Left open: which holomorphic maps of the disc into itself pass through given values at given points, the question Pick's criterion answers; and the distance Riemann maps carry to other regions.
+
+Left open: which holomorphic maps of the disc into itself pass through given values at given points, the question Pick's criterion answers; and, on the next card ([Univalent maps](10-koebe-quarter-theorem-and-boundary-behaviour.md)), how much of the plane a one-to-one map of the disc must cover.
 
 ---
 

@@ -1,4 +1,4 @@
-# Mean value and maximum principle: a harmonic function at a centre is the average round the circle, so its extremes sit on the boundary and the boundary fixes everything
+# Mean value and maximum principle: a harmonic function at a centre is the average round the circle, so on a bounded region its extremes sit on the boundary and the boundary fixes everything
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Conformal Maps and Harmonic Functions](../README.md#s07) → Mean value and maximum principle
 
@@ -12,7 +12,7 @@ The film settles into a saddle of height x^2 − y^2. At the centre it is 0, and
 
 Write u(x, y) for the film's height. For a gently sloped film, surface tension makes the two second slopes cancel: u_xx + u_yy = 0, Laplace's equation, where u_xx and u_yy are the second partial derivatives in x and in y. A function obeying it is **harmonic** ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). From here on the film is the harmonic function u = x^2 − y^2 on the unit disk.
 
-**A harmonic function's value at any point is its average round any circle centred there, so it can have no peak or pit inside a region; its highest and lowest values sit on the boundary, and two harmonic functions that agree on the whole boundary agree everywhere inside.**
+**A harmonic function's value at any point is its average round any circle whose closed disk fits in the region, so a non-constant harmonic function on a region in one piece has no peak or pit inside; on a bounded region, if continuous up to the boundary, its highest and lowest values sit on the boundary, and two harmonic functions that agree on the whole boundary agree everywhere inside.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; it proves that the frame allows at most one film, and the film's construction is on the Poisson card.
 
@@ -32,19 +32,19 @@ Notation first, in words. A point on the circle of radius r round a is $`a + re^
 u(a) = \frac{1}{2\pi}\int_0^{2\pi} u(a + re^{i\theta})\,d\theta
 ```
 
-**Read it aloud:** the value at the centre is the average of the values round the circle.
+**Read it aloud:** the value at the centre is the average of the values round the circle, provided the whole closed disk fits in the region.
 
 ```math
 \min_{\partial D} u \;\le\; u(z) \;\le\; \max_{\partial D} u \quad\text{for every } z \text{ in } D
 ```
 
-**Read it aloud:** inside the region the function stays between its lowest and highest boundary values.
+**Read it aloud:** on a bounded region, when continuous up to the edge, the function stays between its lowest and highest boundary values.
 
 ```math
 u_1 = u_2 \text{ on } \partial D \;\Longrightarrow\; u_1 = u_2 \text{ on all of } D
 ```
 
-**Read it aloud:** harmonic functions that agree on the whole boundary agree inside. Finding the harmonic function with given boundary values is the **Dirichlet problem**: it has at most one answer.
+**Read it aloud:** on a bounded region, harmonic functions continuous up to the edge that agree on the whole boundary agree inside. Finding the harmonic function with given boundary values is the **Dirichlet problem**: on a bounded region it has at most one answer continuous up to the edge.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -89,7 +89,7 @@ By hand at the centre: on the circle of radius r round 0, u = r^2(cos^2 θ − s
 
 Suppose u reaches its largest value M at an inside point a. Values on a small circle round a are at most M and average to M, so every one is M: u = M on a whole disk round a.
 
-That spreads. Every point where u = M has a small disk round it where u = M; a set with that property is called **open**. Where u < M is open too, by continuity. A region in one piece, called **connected**, cannot split into two open parts, so u = M throughout. A harmonic function with an inside maximum is constant; applied to −u, likewise a minimum. This is the **strong maximum principle**.
+That spreads. Every point where u = M has a small disk round it where u = M; a set with that property is called **open**. Where u < M is open too, by continuity. A region in one piece, called **connected**, cannot split into two open parts, so u = M throughout. On a connected region, a harmonic function with an inside maximum is constant; applied to −u, likewise a minimum. This is the **strong maximum principle**.
 
 <details>
 <summary>Detailed proof: the average forces equality, and equality spreads</summary>
@@ -102,7 +102,7 @@ Let S be the set where u = M. It contains a, and it is open, by the paragraph ab
 
 ### Step 3: the extremes sit on the frame
 
-Let D be bounded and u continuous up to its edge. A continuous function on a closed bounded set reaches a largest value. If that point is inside, Step 2 makes u constant, so the frame reaches it too. Either way the frame holds the largest value, and likewise the smallest: the second formula, the **weak maximum principle**. On the film, the circle of radius r carries u = r^2 cos 2θ, ranging from −r^2 to r^2.
+Let D be bounded and u continuous up to its edge. A continuous function on a closed bounded set reaches a largest value. If that point is inside, Step 2 makes u constant on that piece of D, so the frame reaches it too. Either way the frame holds the largest value, and likewise the smallest: the second formula, the **weak maximum principle**. On the film, the circle of radius r carries u = r^2 cos 2θ, ranging from −r^2 to r^2.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -352,13 +352,13 @@ The two outputs match line for line.
 
 Lean proves all three results for every harmonic function on every region they cover, and checks the hand arithmetic.
 
-- Let u be harmonic in an open region holding the whole closed disk of radius r round a. Then u(a) is u's average round that circle.
+- Let u be harmonic in an open region holding the whole closed disk of radius r ≥ 0 round a. Then u(a) is u's average round that circle.
 - Let the region be bounded and u continuous up to its edge. Each inside value lies between two boundary values, one below and one above.
 - Two harmonic functions on a bounded region, continuous up to the edge and equal on the whole boundary, agree everywhere inside.
-- A helper step: such a function reaches its largest value, over the region and its edge, at a boundary point.
+- A helper step: on a nonempty bounded open region, such a function reaches its largest value, over the region and its edge, at a boundary point.
 - The hand arithmetic holds exactly: centre height 0, frame top 1, and grid node (5, 0) as its neighbours' average. Node (9, 0) sits inside at 0.81; the pushed sheet has Δu = −6.
 
-The circle averages, Cauchy's loop sum, the grid films and the three mistakes are left to the Python and Rust checks.
+The strong maximum principle, the circle averages, Cauchy's loop sum, the grid films and the three mistakes are left to the prose and the Python and Rust checks.
 
 ```lean
 -- Mean value and maximum principle: a harmonic function on a plane region equals its average round any circle whose closed disk fits in the region, and on a bounded region with continuous boundary values it stays between its lowest and highest boundary values, so the boundary values fix it.
@@ -521,7 +521,7 @@ example : ((2 : ℤ) - 3) + (-2 - 3) = -6 := by norm_num
 - **Solving by mapping.** Uniqueness is what lets a film found on the disk be carried to another region and trusted ([Solving by mapping](07-solving-boundary-problems-by-mapping.md)).
 
 > **Say it back**
-> On a disk a harmonic function is the real part of a holomorphic one, so it equals its average round any circle. An inside peak would exceed its own average unless constant. So the extremes sit on the boundary. Two harmonic functions with the same boundary values differ by one that is 0 there, hence 0 everywhere.
+> On a disk a harmonic function is the real part of a holomorphic one, so it equals its average round any circle whose closed disk fits inside. On a region in one piece, an inside peak would exceed its own average unless the function is constant. So on a bounded region, when continuous up to the edge, the extremes sit on the boundary. Two such harmonic functions with the same boundary values differ by one that is 0 there, hence 0 everywhere.
 
 ---
 
