@@ -1,4 +1,4 @@
-# Irrational numbers: decimals that never repeat, and why root 2 is not a fraction
+# Irrational numbers: decimals that never stop and never repeat, and why root 2 is not a fraction
 
 [Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [The Number Line](../README.md#s02) → Irrational numbers
 
@@ -10,7 +10,7 @@ A square floor tile, one metre on a side. Lay a tape across it corner to corner.
 
 Not the tape's fault. Cut the tile corner to corner: two triangles, each half a tile. Four of those halves, long edges out, right angles meeting in the middle, fill the square built on that diagonal. Four halves, two whole tiles — that square covers exactly 2 square metres.
 
-So the diagonal is the number that gives 2 when multiplied by itself: **root 2**. It is not a fraction — not an awkward one, not one with a monstrous bottom number. A number like that is **irrational**: not a ratio of two whole numbers.
+So the diagonal is the positive number that gives 2 when multiplied by itself: **root 2**. It is not a fraction — not an awkward one, not one with a monstrous bottom number. A number like that is **irrational**: not a ratio of two integers (whole numbers of either sign, bottom not zero).
 
 Decimals give them away. **A fraction's decimal always stops or falls into a repeating block, so a decimal that does neither belongs to no fraction.**
 
@@ -34,7 +34,7 @@ Saw-tooth: five elevenths, 0.45454545…, two digits over and over. Ragged: root
 
 ## The formula
 
-**The test.** 5 divided by 11 is 0.45454545…, the block 45 forever, so it is a fraction. Root 2 is 1.41421356…, no block ever comes (proved below), so it is not.
+**The test.** 5 divided by 11 is 0.45454545…, the block 45 forever, so it is a fraction. Root 2 is 1.41421356…, it never stops and no block ever comes (proved below), so it is not.
 
 **The way back.** Shift 0.45454545… two places and it reads 45.45454545… — 100 copies of the original. Subtract one copy: the tails cancel, 99 copies left, equal to 45. So it is 45/99, which cuts down to 5/11.
 
@@ -42,15 +42,15 @@ Saw-tooth: five elevenths, 0.45454545…, two digits over and over. Ragged: root
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
-| a fraction | one whole number over another | 5/11 |
+| a fraction | one integer over another, bottom not zero | 5/11 |
 | the repeating block | digits that come back forever | 45 |
 | the shift | move along as many places as the block is long | two places |
-| irrational | no fraction gives it; the decimal never repeats | root 2 |
-| root 2 | gives 2 when multiplied by itself | 1.41421356… |
+| irrational | no fraction gives it; the decimal never stops and never repeats | root 2 |
+| root 2 | the positive number that gives 2 when multiplied by itself | 1.41421356… |
 
 ### When it holds
 
-- **Whole numbers, top and bottom.** "Irrational" means no ratio of two whole numbers. Allow any number on top and root 2 over 1 counts as a "fraction", so the word means nothing.
+- **Integers, top and bottom, bottom not zero.** "Irrational" means no ratio of two integers (whole numbers of either sign, bottom not zero). Allow any number on top and root 2 over 1 counts as a "fraction", so the word means nothing.
 - **The whole decimal, not a few places.** The eight places 1.41421356 stop, so on their own they are a fraction. Only the proof below rules out a block.
 - **Lowest terms, in the proof.** The contradiction is "both even, yet nothing shared is left". Skip the cutting down and "both even" contradicts nothing.
 
@@ -70,13 +70,13 @@ The block is two digits long, so shifting two places moves it by exactly one blo
 
 ### Why root 2 is not a fraction
 
-Suppose it were: some whole number over another, in **lowest terms** — nothing left that divides both. Multiplied by itself it gives 2, so the top times the top equals 2 times the bottom times the bottom.
+Suppose it were: some whole number over a positive whole number, in **lowest terms** — no whole number bigger than 1 divides both. Multiplied by itself it gives 2, so the top times the top equals 2 times the bottom times the bottom.
 
 Two times anything is even, so the top times the top is even. An odd number times itself is odd, so the top is even. Even means the top is twice something.
 
 Then the top times the top is four times that something times itself, and that equals 2 times the bottom times the bottom. Halve each side: the bottom times the bottom is 2 times that something times itself. Even again, so the bottom is even too.
 
-Both even — but everything shared was cancelled. The assumption breaks itself: no such fraction exists. Walking an assumption into a wall is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md).
+Both even — but every shared factor bigger than 1 was cancelled. The assumption breaks itself: no such fraction exists. Walking an assumption into a wall is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md).
 
 The near misses agree. 7/5: 7 × 7 is 49, 2 × 5 × 5 is 50, off by one. 99/70: 9801 against 9800, off by one again, and the gap never closes.
 
@@ -362,12 +362,12 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 
 ## Where you meet it in real life
 
-- **Marking a diagonal.** Squaring a frame or a deck: the diagonal of a one-metre square is 1414 millimetres and a bit that never runs out.
+- **Marking a diagonal.** Setting a frame or a deck at right angles: the diagonal of a one-metre square is 1414 millimetres and a bit that never runs out.
 - **A4 paper.** 210 by 297 mm is 99/70, the near miss above: fold it in half and the shape comes back almost, not exactly, the same. Only root 2 gives back exactly the same shape, and no whole-millimetre pair reaches it.
 - **Calculators.** Any root 2 on a screen is a fraction standing in for it: the display has to stop, so it misses 2.
 
 > **Say it back**
-> The square on a one-metre tile's diagonal covers 2 square metres, so the diagonal is root 2: the number that gives 2 when multiplied by itself. No fraction does that. Fractions give themselves away in their decimals: long division has only so many remainders, so it stops or repeats. Root 2's does neither. Any repeating decimal turns back: shift by one block, subtract, the tail cancels.
+> The square on a one-metre tile's diagonal covers 2 square metres, so the diagonal is root 2: the positive number that gives 2 when multiplied by itself. No fraction does that. Fractions give themselves away in their decimals: long division has only so many remainders, so it stops or repeats. Root 2's does neither. Any repeating decimal turns back: shift by one block, subtract, the tail cancels.
 
 ---
 
@@ -378,12 +378,12 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 
 ## Where this goes next
 
-- [The real numbers have no gaps](04-real-numbers-no-gaps.md): fractions and irrationals together, no holes.
-- [Roots](../03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): root 2 as one of a family.
-- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): the move used here, properly.
-- [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): irrationals outnumber fractions.
+- [The real numbers have no gaps](04-real-numbers-no-gaps.md): how fractions and irrationals together fill the line with no holes left.
+- [Roots](../03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): root 2 as one of a whole family of roots written as fractional powers.
+- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assuming the opposite and reaching a clash to prove a claim.
+- [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): why the real numbers cannot be listed, so irrationals outnumber fractions.
 - [Dedekind cuts](07-dedekind-cuts.md): build the real numbers from fractions, and the no-gaps rule becomes a theorem.
-- [Periodic continued fractions](../../02-Number%20theory/08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a pattern that repeats forever is exactly the mark of a quadratic irrational.
+- [Periodic continued fractions](../../02-Number%20theory/08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): nested fractions whose pattern repeats forever, which marks square-root irrationals like root 2 (quadratic irrationals).
 
 This card leaves one question open: if root 2 falls between the fractions, what exactly fills the tape?
 

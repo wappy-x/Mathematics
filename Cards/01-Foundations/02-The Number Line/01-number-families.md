@@ -10,7 +10,7 @@ A carpenter has three planks on the bench. Each was ordered at 240 cm; one came 
 
 Four numbers, four **kinds**. Counting the planks needs only 1, 2, 3. The shortfall needs a number below zero. The pieces need a number between whole numbers. The diagonal needs a number no tape mark ever lands on.
 
-**The number families are a ladder: each rung was added so one more operation would always have an answer.**
+**The number families are a ladder: each rung was added so one more operation would have an answer.**
 
 **What kind of fact this is:** definitions. Each family is named and built here, not proved. The one theorem it leans on, that no fraction lands on the diagonal, is proved in [Irrational numbers](03-irrational-numbers.md).
 
@@ -52,7 +52,7 @@ The dots mean the digits go on without end. They also never repeat, which is wha
 
 - **Exact numbers, not tape readings.** The families sort exact values. Take the reading 42.43 as the diagonal and, times itself, it gives 1800.3049, not 1800.
 - **A fraction's bottom is never zero.** Division by zero has no answer in any family, so the fractions leave it out.
-- **A square corner on the tile.** Pythagoras' rule (Step 3: 30 × 30 + 30 × 30 = 900 + 900 = 1800) needs a right angle. Skew the tile and the diagonal changes.
+- **A right-angled corner on the tile.** Pythagoras' rule (Step 3: 30 × 30 + 30 × 30 = 900 + 900 = 1800) needs a right angle. Skew the tile and the diagonal changes.
 - **Where N starts.** This card counts from zero, the empty bench. Some books leave zero out of N; then zero first appears in the integers.
 
 ---
@@ -81,7 +81,7 @@ The tile is 30 cm a side. The square on its diagonal holds four half-tiles — t
 
 Reach for the diagonal with the tape and multiply each reading by itself: 42.42 × 42.42 = 1799.4564, under; 42.43 × 42.43 = 1800.3049, over. The diagonal sits between the 42.4 cm and 42.5 cm marks, a millimetre apart; zoom in and it sits between 42.42 and 42.43; finer marks repeat the miss forever.
 
-No fraction lands on it either — that proof is [Irrational numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the number that gives 2 when multiplied by itself.
+No fraction lands on it either — that proof is [Irrational numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the positive number that gives 2 when multiplied by itself.
 
 Fractions plus every spot they miss are the **reals**.
 
@@ -243,7 +243,7 @@ Lean proves the ladder and the nesting for every number, and the diagonal for an
 - Integers cannot always share out evenly; fractions always can, except by zero.
 - Some number at or above zero is no fraction times itself. Every real at or above zero is some real times itself.
 - Each family sits inside the next. Going up keeps different numbers different, and 3 is the same 3 by any route.
-- A diagonal that times itself gives 900 + 900 is 30 × root 2, and no fraction lands on it.
+- A non-negative diagonal that times itself gives 900 + 900 is 30 × root 2, and no fraction lands on it.
 - The card's worked sums come out exactly: the short plank, the off-cut in three, 1800, and the two tape marks.
 
 The diagonal's decimal digits, found by both roads, are left to the Python and Rust checks.
@@ -360,7 +360,7 @@ example : (((3 : ℕ) : ℤ) : ℚ) = (3 : ℚ) / 1 := by norm_num
 > **Thinking each new family replaces the one before it.** They nest. Read "3 is a real number" as a correction rather than an addition and you end up with four bins and every number sorted into one.
 >
 > - Believing 3 is not a fraction. It is: 3 over 1. Every whole number is a fraction with 1 underneath.
-> - Believing a decimal that runs on forever must be outside the fractions. 1/3 is 0.3333… forever and is a fraction. What puts a number outside is never repeating: [Irrational numbers](03-irrational-numbers.md).
+> - Believing a decimal that runs on forever must be outside the fractions. 1/3 is 0.3333… forever and is a fraction. What puts a number outside is never stopping and never repeating: [Irrational numbers](03-irrational-numbers.md).
 > - Reading N, Z, Q and R as ranks. They are names, not grades.
 
 ---

@@ -12,9 +12,9 @@ Buy a finer tape, marked every tenth of a millimetre. Same hole, still between m
 
 So is the landing place a number?
 
-Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two sits another, halfway.
+Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two different ones sits another, halfway.
 
-They still miss things. [Irrational numbers](03-irrational-numbers.md) showed one: root 2, the number that gives 2 when multiplied by itself. It is about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can, so say this one did.
+They still miss things. [Irrational numbers](03-irrational-numbers.md) showed one: root 2, the positive number that gives 2 when multiplied by itself. It is about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can, so say this one did.
 
 The **real numbers** are the fractions plus every landing place they miss.
 
@@ -42,7 +42,7 @@ Rising line: the nearest mark below the dart. Falling line: the nearest above. T
 
 One promise carries the card:
 
-**Take a collection of numbers with a member, and some one number above everything in it. Then there is a lowest such number, and it is a real number too.**
+**Take a collection of real numbers with a member, and some real number at or above everything in it. Then there is a lowest such number, and it is a real number too.**
 
 **Read it aloud:** a collection with a member and a ceiling has a lowest ceiling, and it is a real number.
 
@@ -72,7 +72,7 @@ On the dart, in metres:
 
 ### Step 0: packed tight is not gapless
 
-Between any two fractions sits another. Do that forever and they look like a solid line. They are not: root 2 is missing, and so is every decimal that never settles into a repeating block.
+Between any two different fractions sits another. Do that forever and they look like a solid line. They are not: root 2 is missing, and so is every decimal that neither stops nor settles into a repeating block.
 
 ### Step 1: squeeze the dart between two marks
 
@@ -82,7 +82,7 @@ Every one of those marks is a fraction, and the gap shrinks toward nothing.
 
 ### Step 2: the fractions cannot name the lowest ceiling
 
-Name any fraction that is a ceiling. Say 1.415: its square, 2.002225, is over 2, so nothing in the collection passes it. But 1.4143 is smaller and still a ceiling — its square is 2.00024449, still over 2. Any fraction whose square is over 2 can be trimmed a hair and stay over 2, so it was never the lowest.
+Name any fraction that is a ceiling. Say 1.415: its square, 2.002225, is over 2, so nothing in the collection passes it. But 1.4143 is smaller and still a ceiling — its square is 2.00024449, still over 2. Any positive fraction whose square is over 2 can be trimmed a hair and stay over 2, so it was never the lowest.
 
 Stopping would need a fraction whose square is exactly 2, and there is none. Bounded, yet no lowest ceiling among the fractions: the promise breaks.
 
@@ -92,7 +92,7 @@ The reals close that hole: wherever a squeeze like this happens, a number sits a
 
 That is **completeness**: what makes the reals the reals instead of the fractions, which obey every other rule of arithmetic and fail this one.
 
-Richard Dedekind, in 1872, took another route. Split all the fractions into a left pile and a right pile, so the left pile has no largest member. Call the split itself (a cut) a number. [Dedekind cuts](07-dedekind-cuts.md) builds the whole line this way.
+Richard Dedekind, in 1872, took another route. Split all the fractions into nonempty left and right piles, every left fraction smaller than every right one, with no largest member on the left. Call the split itself (a cut) a number. [Dedekind cuts](07-dedekind-cuts.md) builds the whole line this way.
 
 ---
 
@@ -402,7 +402,7 @@ example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
 - **A graph crossing a line.** A cost curve meets a revenue line at a point: the line has no gap to jump.
 
 > **Say it back**
-> A dart on a tape lands between marks, however fine the marks get. Every mark is a fraction, and fractions miss places — root 2 is one. The reals are the fractions plus all those places. That is completeness: any collection with a member and a ceiling has a lowest ceiling, and it is a real number. Here, 1.41421356..., which no fraction supplies. That is why the reals are the line.
+> A dart on a tape lands between marks, however fine the marks get. Every mark is a fraction, and fractions miss places — root 2 is one. The reals are the fractions plus all those places. That is completeness: any collection of real numbers with a member and a ceiling has a lowest ceiling, and it is a real number. Here, 1.41421356..., which no fraction supplies. That is why the reals are the line.
 
 ---
 

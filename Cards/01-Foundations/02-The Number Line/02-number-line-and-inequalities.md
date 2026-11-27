@@ -14,7 +14,7 @@ That tape is the **number line**. The rest of this card reads it: which spot is 
 
 **One number is less than another exactly when it sits further left on the number line.**
 
-**What kind of fact this is:** a definition: "less than" is read off the line. The flip under -1, and a fraction between any two fractions, are theorems, proved on this card in Why it works.
+**What kind of fact this is:** a definition: "less than" is read off the line. The flip under -1, and a fraction between any two different fractions, are theorems, proved on this card in Why it works.
 
 ### The picture: the night against the band
 
@@ -66,7 +66,7 @@ And the move in the title:
 
 - **Numbers that sit on one line.** Each reading is one spot, so any two compare. Things measured by two numbers at once have no single left-to-right order: that is [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md).
 - **The same change on both sides.** Doubling both keeps 17 < 18 as 34 < 36. Double only the left and it becomes 34 > 18.
-- **The sign of the multiplier.** A positive one keeps the mark; a negative one flips it once: 17 < 19 becomes -17 > -19.
+- **The sign of the multiplier.** A positive one keeps the mark; a negative one flips it once: 17 < 19 becomes -17 > -19. Multiplying by 0 makes both sides 0, so `<` and `>` fail.
 - **Fractions allowed.** Between 18 and 19 sits 37/2. With whole numbers only, nothing sits between them.
 
 ---
@@ -106,7 +106,7 @@ Add two different numbers and halve. The answer sits strictly between them: the 
 
 Halfway between 18 and 22 is 20. Between 18 and 20, 19. Between 18 and 19, 37/2, or 18.50. Between 18 and 37/2, 73/4, or 18.25. This never stops.
 
-It never leaves the fractions either. Adding two fractions gives a fraction; halving one doubles its bottom number. So between any two fractions, however close, sits another fraction.
+It never leaves the fractions either. Adding two fractions gives a fraction; halving one doubles its bottom number. So between any two different fractions, however close, sits another fraction.
 
 Crowding every gap is still not filling the line: no fraction lands on the number whose square is 2, written root 2. That is [Irrational numbers](03-irrational-numbers.md).
 
@@ -256,8 +256,8 @@ The two outputs match line for line.
 
 Lean proves the three rules for every pair of numbers, not just the night's readings.
 
-- Multiplying both numbers by a negative flips the mark: 17 < 19 becomes -17 > -19.
-- Adding the same number to both keeps the mark, and so does multiplying both by a positive number.
+- Multiplying both numbers by the same negative flips the mark: 17 < 19 becomes -17 > -19.
+- Adding the same number to both keeps the mark, and so does multiplying both by the same positive number.
 - Between any two different fractions, their midpoint is a fraction strictly between them.
 
 It also checks the card's whole-number and fraction sums exactly: the night in order, the band counts, the flips, the shortfalls and the halfway points. Sorting the list and printing the decimals are left to the Python and Rust checks.
@@ -357,7 +357,7 @@ example : Finset.Ioo (18 : ℤ) 19 = ∅ := by decide
 >
 > - Ranking negatives by size, ignoring the sign. -2 is coldest because it sits furthest left.
 > - Using `<` where the rule says `<=`. The band loses both ends: the count drops from 5 to 3.
-> - Believing two numbers can be next door. 18 and 19 have 37/2 between them.
+> - Believing two fractions or real numbers can be next door. 18 and 19 have 37/2 between them.
 
 ---
 
@@ -368,7 +368,7 @@ example : Finset.Ioo (18 : ℤ) 19 = ∅ := by decide
 - **Sorting.** A spreadsheet column, a leaderboard, a queue by time: things laid on the line, read left to right.
 
 > **Say it back**
-> Every number sits at one spot on one line, and less than means further left. `<=` allows the same spot, so a band keeps its ends. Sliding and stretching leave the order alone; multiplying by a negative turns the line around, so the mark flips once. No two numbers are ever next door.
+> Every number sits at one spot on one line, and less than means further left. `<=` allows the same spot, so a band keeps its ends. Sliding and stretching leave the order alone; multiplying by a negative turns the line around, so the mark flips once. No two fractions or real numbers are ever next door.
 
 ---
 

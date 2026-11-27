@@ -59,7 +59,7 @@ Start at the stop. Name two walks a and b: plus heads the bakery's way, minus th
 
 - **The bars go on the whole difference.** Subtract first, then drop the sign. Stop after the subtraction and 40 − 65 leaves −25, a negative distance.
 - **One stop, one zero.** Every house number counts from the same 0, and a minus means the far side. Read the laundrette's minus as decoration and bakery to laundrette shrinks from 70 to 10.
-- **"At most", not "equals".** The triangle rule is equal only when both walks go the same way. Out 40 and back 70 walks 110 but ends 30 out.
+- **"At most", not "equals".** The triangle rule is equal only when both walks go the same way or at least one is zero. Out 40 and back 70 walks 110 but ends 30 out.
 - **Numbers on one line.** |x − y| measures along a line only. Two points on a grid sit apart in two directions at once; [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md) combines them.
 
 ---
@@ -84,7 +84,7 @@ Start at the stop. Walk 40 to the bakery, then 25 on to the chemist. Walked 65, 
 
 Now walk 40, then 70 back to the laundrette. Walked 110, ended 30 out: the second walk undid part of the first.
 
-Only two cases. Same direction, equal; opposite, some cancels and the ending is smaller. Never the other way: walking cannot put you further out than the ground covered. The name comes from off the line, where three points make a triangle and any one side is at most the other two added together.
+Only two cases. Same direction (or a zero walk), equal; opposite directions, some cancels and the ending is smaller. Never the other way: walking cannot put you further out than the ground covered. The name comes from off the line, where three points make a triangle and any one side is at most the other two added together.
 
 ---
 
@@ -237,7 +237,7 @@ Lean proves all three claims for every number on the line, not just the street's
 - The bars leave a number 0 or more as it is, flip the minus on one below 0, and never give a negative.
 - The distance |x − y| is the same whichever number you subtract first.
 - The triangle rule: for any two walks, |a + b| is at most |a| + |b|.
-- It is equal exactly when both walks go the same way: a times b is 0 or more.
+- It is equal exactly when neither walk points against the other (both go the same way, or one is zero): a times b is 0 or more.
 
 The street's sums are checked in Lean too; counting each gap house by house is left to the Python and Rust checks.
 
@@ -364,7 +364,7 @@ example : (40 : ℤ) + 65 = 105 := by decide
 - **Detours.** Going via somewhere else covers at least as much ground as going straight: the triangle rule again, and why no detour beats the straight road.
 
 > **Say it back**
-> Two bars mean size: how far from zero, sign thrown away, so |−30| is 30. The distance between two numbers is the size of their difference, |x − y| — the same whichever you subtract first, so |40 − 65| is 25 either way. Walk a then b, and |a + b|, where you end up, is never more than |a| + |b|, the ground covered. Equal going one way, less when you double back: the triangle rule.
+> Two bars mean size: how far from zero, sign thrown away, so |−30| is 30. The distance between two numbers is the size of their difference, |x − y| — the same whichever you subtract first, so |40 − 65| is 25 either way. Walk a then b, and |a + b|, where you end up, is never more than |a| + |b|, the ground covered. Equal going one way (or with a zero walk), less when you double back: the triangle rule.
 
 ---
 

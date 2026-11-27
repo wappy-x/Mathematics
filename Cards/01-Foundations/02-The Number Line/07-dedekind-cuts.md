@@ -12,7 +12,7 @@ Sort every fraction into two piles: short of the diagonal, or past it. 1.4 goes 
 
 Dedekind's idea, from 1872: the split itself is the number. The left pile is a **cut**. Every fraction has one (all fractions below it), and so does root 2, though no fraction stands at its edge.
 
-**A real number is a left pile of fractions with no largest member. If a collection of piles all fit inside one pile, their union is the smallest pile that holds them all: their least upper bound. So the no-gaps rule is a theorem.**
+**A real number is a left pile of some, but not all, fractions with no largest member. If a nonempty collection of piles all fit inside one pile, their union is the smallest pile that holds them all: their least upper bound. So the no-gaps rule is a theorem.**
 
 **What kind of fact this is:** a definition (a real number is a cut) and a theorem, proved below. [The real numbers have no gaps](04-real-numbers-no-gaps.md) had to assume it.
 
@@ -54,7 +54,7 @@ A cut M is at most a cut N when M sits inside N, and M + N is every sum of one m
 
 - **Closed downward.** Drop "below 0" from L and −5 falls out while 1.4 stays: a pile with a hole is not a cut.
 - **No largest member.** Allow one and 1.4 gets two piles, with and without itself.
-- **Bounded.** The cuts at 1, 2, 3, … have every fraction as their union: not a cut.
+- **Nonempty and bounded.** An empty collection has an empty union (not a cut), and the cuts at 1, 2, 3, … have every fraction as their union (also not a cut).
 
 ---
 
@@ -470,7 +470,7 @@ end DedekindCuts
 - **Bisection.** Halving a bracket around an answer tracks fractions either side of one cut.
 
 > **Say it back**
-> A cut is a left pile of fractions with no largest member. Root 2 is the pile below 0 or squaring under 2. Cuts are ordered by sitting inside each other and added member by member. A bounded collection of cuts has its union as least upper bound. So no-gaps is proved, not assumed.
+> A cut is a left pile of some, but not all, fractions with no largest member. Root 2 is the pile below 0 or squaring under 2. Cuts are ordered by sitting inside each other and added member by member. A nonempty bounded collection of cuts has its union as least upper bound. So no-gaps is proved, not assumed.
 
 ---
 

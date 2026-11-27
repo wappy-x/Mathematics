@@ -12,11 +12,11 @@ Counting numbers (0, 1, 2, 3, …) cannot write "$2 short": 3 take away 5 has no
 
 Write each tab as (paid in, owed): (3, 5) and (0, 2). They are the same integer, −2, because 3 + 2 = 0 + 5. That is 3 − 5 = 0 − 2 with 5 + 2 added to both sides. The test uses addition only.
 
-Fractions repeat the move. A pair of integers (top, bottom) names a fraction. (1, 2), (2, 4) and (3, 6) are all one half, because 1 × 4 = 2 × 2 and 2 × 6 = 4 × 3. The test uses multiplication only.
+Fractions repeat the move. A pair of integers (top, bottom), with bottom not zero, names a fraction. (1, 2), (2, 4) and (3, 6) are all one half, because 1 × 4 = 2 × 2 and 2 × 6 = 4 × 3. The test uses multiplication only.
 
 The key check: (1, 2) + (1, 3) gives (5, 6). (2, 4) + (2, 6) gives (20, 24), the same fraction, since 20 × 6 = 120 = 24 × 5.
 
-**An integer is a family of pairs of counting numbers, and a fraction is a family of pairs of integers. The arithmetic works because each rule gives the same answer whichever pair is picked.**
+**An integer is a family of pairs of counting numbers, and a fraction is a family of pairs of integers with nonzero bottom. The arithmetic works because each rule gives the same answer whichever pair is picked.**
 
 **What kind of fact this is:** definitions (the pairs and the rules) and a theorem (the rules do not depend on the pick), proved in Why it works.
 
@@ -62,7 +62,7 @@ A rule is **well defined** when its answer does not depend on which pair is pick
 
 ### When it holds
 
-- **The test is a sameness rule**: every pair matches itself, a match works both ways, and two matches in a chain give a third (transitive). Otherwise families overlap.
+- **The test is a sameness rule**: every pair matches itself, a match works both ways, and two matches in a chain give a third (transitive). Otherwise the pairs do not split cleanly into non-overlapping families.
 - **Every rule is well defined.** Adding tops to tops and bottoms to bottoms fails this: one sum gets two answers.
 - **No bottom is 0.** (0, 0) passes the test with every pair.
 
@@ -263,7 +263,7 @@ ALL CHECKS PASS
 Lean proves the card's three steps for every pair, not just the worked numbers, and checks the worked numbers exactly.
 
 - Each test is a sameness rule: every pair matches itself, a match works both ways, and two matches chain. For fractions, this needs no bottom 0.
-- Every rule is well defined. Swap either pair for a same pair, and the new answer passes the test with the old one.
+- Every rule is well defined (for fractions, with no bottom 0). Swap either pair for a same pair, and the new answer passes the test with the old one.
 - Take two fraction pairs with no bottom 0. Then their sum and their product have no bottom 0 either.
 - Read an integer pair (a, b) as a − b. Then two pairs pass the test exactly when their worths are equal.
 - The integer sum and product rules give the sum and product of the worths. Every integer is some pair's worth.
@@ -472,7 +472,7 @@ end ConstructingIntegersAndFractions
 - **Exact fractions in software.** A program stores a fraction as two whole numbers and tests equality by cross-multiplying, so no rounding enters.
 
 > **Say it back**
-> An integer is a pair (paid in, owed): (3, 5) equals (0, 2) because 3 + 2 = 0 + 5. A fraction is a pair (top, bottom): (1, 2) equals (2, 4) because 1 × 4 = 2 × 2. Each number is a family of same pairs. Adding and multiplying give one answer whichever pair is picked. A rule that fails this defines nothing.
+> An integer is a pair (paid in, owed): (3, 5) equals (0, 2) because 3 + 2 = 0 + 5. A fraction is a pair (top, bottom) with nonzero bottom: (1, 2) equals (2, 4) because 1 × 4 = 2 × 2. Each number is a family of same pairs. Adding and multiplying give one answer whichever pair is picked. A rule that fails this defines nothing.
 
 ---
 

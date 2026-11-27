@@ -49,7 +49,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 1. [The number families: counting numbers, integers, fractions, reals, and what forced each one](02-The%20Number%20Line/01-number-families.md)
 2. [The number line and inequalities: left is smaller, and what flips when you multiply by a negative](02-The%20Number%20Line/02-number-line-and-inequalities.md)
-3. [Irrational numbers: decimals that never repeat, and why root 2 is not a fraction](02-The%20Number%20Line/03-irrational-numbers.md)
+3. [Irrational numbers: decimals that never stop and never repeat, and why root 2 is not a fraction](02-The%20Number%20Line/03-irrational-numbers.md)
 4. [The real numbers have no gaps: every point on the tape is a number](02-The%20Number%20Line/04-real-numbers-no-gaps.md)
 5. [Absolute value: distance from zero, and the triangle rule](02-The%20Number%20Line/05-absolute-value-and-distance.md)
 6. [Building the integers and fractions: a debt as a pair of counts, a fraction as a pair with a sameness rule](02-The%20Number%20Line/06-constructing-integers-and-fractions.md)
