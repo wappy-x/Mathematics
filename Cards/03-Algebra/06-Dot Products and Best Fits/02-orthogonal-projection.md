@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A horse on a canal towpath pulls a barge by a rope: 600 newtons east and 200 north, measured against two fixed map directions. Counting in hundreds of newtons, that is the pair (6, 2).
+A horse on a canal towpath pulls a barge by a rope: 600 newtons east and 200 north (a newton is the unit of force), measured against two fixed map directions. Counting in hundreds of newtons, that is the pair (6, 2).
 
 The barge can only move along the canal, so the canal's direction is its heading: northeast, say, along (1, 1) — a pair naming a direction, not a distance.
 
@@ -167,7 +167,7 @@ $`\displaystyle P = A\,(A^{T} A)^{-1} A^{T}.`$
 
 Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others.
 
-For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [Least squares](04-least-squares.md) solves for.
+For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. [Least squares](04-least-squares.md) uses this P to find the closest point.
 
 </details>
 
@@ -637,7 +637,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): how much a few waves capture, and the miss left.
 - [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): random directions that shrink data, keeping distances.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
-- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): uses averaging projections to split a finite group of matrices into pieces that cannot split further.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): uses averaging projections to split the space a finite group of matrices acts on into pieces that cannot split further.
 - [Analysis of variance](../../09-Probability%20and%20statistics/09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
 
 Projecting onto several directions at once works as a plain sum only while those directions stay perpendicular, as Step 4 showed. How to make skewed directions perpendicular is the question [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) answers next.
