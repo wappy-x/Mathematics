@@ -502,7 +502,7 @@ example : (List.range 5).map (fun k =>
 - [Alternating sums](06-alternating-sums-and-binomial-inversion.md): the same row weighted by a switching sign, not by size.
 - [The middle of the row](07-central-binomial-and-bounds.md): how large a single term gets, once the row's total is known.
 
-Weighting each term by its size gave a clean total; weighting by a sign that flips at every step cancels the row to nothing instead, which is [Alternating sums](06-alternating-sums-and-binomial-inversion.md).
+Weighting each term by its size gave a clean total; weighting by a sign that flips at every step cancels every row after the top one to nothing instead, which is [Alternating sums](06-alternating-sums-and-binomial-inversion.md).
 
 ---
 

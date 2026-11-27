@@ -1,4 +1,4 @@
-# Alternating sums: a row added with alternating signs cancels to zero, which lets you undo a binomial sum
+# Alternating sums: every row after the top one added with alternating signs cancels to zero, which lets you undo a binomial sum
 
 [Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Binomial Coefficients and Identities](../README.md#s03) → Alternating sums
 

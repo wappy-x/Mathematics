@@ -70,7 +70,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Vandermonde's identity: choosing from two merged groups splits by how many come from each](03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md)
 4. [The hockey stick: adding down a diagonal of the triangle lands one step below and right](03-Binomial%20Coefficients%20and%20Identities/04-hockey-stick-identity.md)
 5. [Committee and chair: k C(n,k) = n C(n-1,k-1), so the weighted row sum is n 2^(n-1)](03-Binomial%20Coefficients%20and%20Identities/05-committee-chair-identity.md)
-6. [Alternating sums: a row added with alternating signs cancels to zero, which lets you undo a binomial sum](03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)
+6. [Alternating sums: every row after the top one added with alternating signs cancels to zero, which lets you undo a binomial sum](03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)
 7. [The middle of the row: C(2n,n) is the biggest entry, and cheap bounds size any choice count without computing it](03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)
 
 [↑ Back to the shelves](#top)
