@@ -8,13 +8,13 @@
 
 A surveyor pegs two lines from the corner of a building site: 3 metres east and 1 north, the vector (3, 1); and 2 east and 2 north, (2, 2). Every point on the site is so much along each, which makes the pair a **basis** ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)).
 
-A bad basis, though: not square to each other, neither a tidy length, so "how much along each" means two equations solved at once, once per peg.
+A bad basis, though: not at right angles to each other, neither a tidy length, so "how much along each" means two equations solved at once, once per peg.
 
 Gram-Schmidt fixes the directions rather than the points. Keep the first line, shrunk to length 1. From the second, subtract the part already running along the first — its **projection** on that direction, the shadow of [Projection](02-orthogonal-projection.md). What is left sticks out at a right angle. Shrink it too.
 
 Out come (3, 1) and (-1, 3), each over the square root of 10, about 3.162278: exactly perpendicular, exactly one unit long. Every decimal here is rounded. Such a set is **orthonormal** — *ortho* for right angles, *normal* for unit lengths.
 
-**Peel off the shadow, keep the leftover, scale it to length one; down the list, locating a point becomes one dot product per direction instead of a solved system.**
+**Peel off the shadow, keep the leftover, scale it to length one; down an independent list, locating a point it reaches becomes one dot product per direction instead of a solved system.**
 
 **What kind of fact this is:** a method; its two facts, perpendicular leftovers and dot-product coordinates, are proved in Why it works.
 
@@ -130,7 +130,7 @@ A square matrix with that property is **orthogonal** — a poor name, since the 
 
 So it cannot stretch or squash; it turns the plane or flips it.
 
-The determinant is the number that says how much a matrix stretches area, with a minus sign when it flips the plane ([Determinants](../05-Solving%20Systems/04-determinants.md)).
+The determinant is the number that says how much a square matrix stretches area, with a minus sign when it flips the plane ([Determinants](../05-Solving%20Systems/04-determinants.md)).
 
 Ours has determinant 1.000000, a turn, like the quarter turn with columns (0, 1) and (-1, 0). The flip with columns (1, 0) and (0, -1) has determinant -1.000000, the mirror. Determinant 1 alone is not enough: doubling one axis and halving the other gives it.
 
@@ -587,9 +587,9 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 
 ## Where you meet it in real life
 
-- **Surveying and construction.** Rough site lines turned into a square, unit grid, each peg located one direction at a time.
+- **Surveying and construction.** Rough site lines turned into a perpendicular, unit grid, each peg located one direction at a time.
 - **Best-fit lines.** Least squares projects data onto the space spanned by a matrix's columns, every point those columns reach, and orthonormal columns keep that arithmetic honest ([Least squares](04-least-squares.md)).
-- **Computer graphics.** A camera or a robot arm carries three axes that must stay square and unit length; rounding drifts them, and Gram-Schmidt straightens the frame.
+- **Computer graphics.** A camera or a robot arm carries three axes that must stay perpendicular and unit length; rounding drifts them, and Gram-Schmidt straightens the frame.
 - **Symmetric matrices.** The spectral theorem hands a symmetric matrix its own perpendicular directions, and needs an orthonormal basis to say so ([The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
 
 > **Say it back**
@@ -613,9 +613,9 @@ example : (1 : ℚ) - 4 / 10 * 3 - 2 / 10 * (-1) = 0 ∧ (1 : ℚ) - 4 / 10 * 1 
 - [Orthonormal bases](../../18-Functional%20analysis/02-Hilbert%20Spaces/03-orthonormal-bases-and-parseval.md): endlessly many such directions, squared length still a sum of squares.
 - [Orthogonal polynomials](../../18-Functional%20analysis/02-Hilbert%20Spaces/05-orthogonal-polynomials-from-gram-schmidt.md): this loop on 1, x, x^2, with an integral as the dot product.
 - [The Haar wavelet](../../20-Harmonic%20analysis/05-Wavelets%20and%20Time-Frequency/03-haar-wavelet-and-multiresolution.md): the plainest one, built by halving an interval.
-- [Schur's triangle](../07-Eigenvalues%20and%20Symmetric%20Matrices/07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
+- [Schur's triangle](../07-Eigenvalues%20and%20Symmetric%20Matrices/07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular complex basis, with its eigenvalues on the diagonal.
 - [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): square tables of plus and minus ones with perpendicular rows, possible only in sizes 1, 2 and multiples of 4, and the largest determinant such a table can have.
-- [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
+- [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): uses later readings too and stores a matrix factor so rounding stays accurate.
 
 Gram-Schmidt straightens any independent list of directions, and projection splits a point along them. How to fit a line to data that no line hits exactly is the question [Least squares](04-least-squares.md) answers next, by projecting onto a matrix's columns.
 

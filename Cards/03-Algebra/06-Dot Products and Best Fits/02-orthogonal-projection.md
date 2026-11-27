@@ -14,7 +14,7 @@ So the pull splits: (4, 4) runs along the heading and drives the barge, (2, -2) 
 
 Those parts sit at right angles. Multiply matching entries and add: 4 times 2 is 8, 4 times -2 is -8, total 0. A zero dot product means perpendicular ([The dot product](01-dot-product.md)).
 
-**A vector splits, one way only, into a piece along a chosen direction and a leftover at right angles to it — and that piece is the closest the direction can get.**
+**A vector splits, one way only, into a piece along a chosen nonzero direction and a leftover at right angles to it — and that piece is the closest the direction can get.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; projection and residual are definitions.
 
@@ -616,7 +616,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - **Coordinates in new axes.** Against perpendicular directions one unit long, a vector's coordinates are its dot products with them, each one a projection: [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md).
 
 > **Say it back**
-> A vector splits into a piece along a chosen direction and a perpendicular leftover: projection and residual. Dot the vector with the direction, divide by that direction's dot product with itself, lay down that many copies. The towrope's (6, 2) on a heading of (1, 1) gives (4, 4) useful and (2, -2) wasted, dotting to 0. Perpendicular and closest are one point, which is why projection is what "best fit" means.
+> A vector splits into a piece along a chosen nonzero direction and a perpendicular leftover: projection and residual. Dot the vector with the direction, divide by that direction's dot product with itself, lay down that many copies. The towrope's (6, 2) on a heading of (1, 1) gives (4, 4) useful and (2, -2) wasted, dotting to 0. Perpendicular and closest are one point, which is why projection is what "best fit" means.
 
 ---
 
@@ -637,7 +637,7 @@ example : (![6, 2, 3] : Fin 3 → ℝ) - ![6, 2, 0] = ![0, 0, 3] ∧
 - [Partial sums are the best fit](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/02-best-approximation-and-bessels-inequality.md): how much a few waves capture, and the miss left.
 - [Random projection](../../24-Computability%20and%20complexity/06-Data%2C%20Learning%20and%20Fine-Grained%20Complexity/02-dimension-reduction-and-random-projection.md): random directions that shrink data, keeping distances.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
-- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): uses averaging projections to split a finite group of matrices into pieces that cannot split further.
 - [Analysis of variance](../../09-Probability%20and%20statistics/09-Regression/09-analysis-of-variance-and-the-f-test.md): comparing several means by splitting the spread.
 
 Projecting onto several directions at once works as a plain sum only while those directions stay perpendicular, as Step 4 showed. How to make skewed directions perpendicular is the question [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) answers next.

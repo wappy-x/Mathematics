@@ -24,7 +24,7 @@ Run the same arithmetic on two arrows drawn on a map and it becomes geometry: le
 flowchart LR
   A["two lists of the same length<br>(2, 3, 1) and (3, 2, 4)"] --> B["multiply matching entries<br>and add: one number, 16"]
   B --> C["a list dotted with itself,<br>square-rooted: its length"]
-  B --> D["a zero: the two meet<br>at a right angle"]
+  B --> D["a zero, for nonzero lists:<br>the two meet at a right angle"]
   B --> E["divided by both lengths:<br>an alignment score, -1 to 1"]
 ```
 
@@ -67,7 +67,7 @@ The score reads 1 the same way, 0 at a right angle, −1 dead opposite. (It is t
 
 - **Two lists of the same length.** A fourth entry would have nothing to pair with.
 - **Any real numbers, in any units.** The bill pairs loaves with dollars.
-- **Square axes and one unit of length, for the geometry.** Lengths and right angles need perpendicular directions measured alike: kilometres east, kilometres north. The shop's own square root measures nothing.
+- **Perpendicular axes and one unit of length, for the geometry.** Lengths and right angles need perpendicular directions measured alike: kilometres east, kilometres north. The shop's own square root measures nothing.
 - **Two arrows that go somewhere, for an angle.** The score divides by both lengths, and zeros have length 0.
 
 ---
@@ -160,7 +160,7 @@ A second road never multiplies a quantity by a price: add the two vectors, squar
 | (3, 4) · (6, 8) | 18 + 32 | 50 |
 | their alignment score | 50 / (5 × 10) | **1** |
 
-The shop costs $16, the cyclist finishes 5 km out, (3, 4) and (4, −3) cross square, (3, 4) and (6, 8) score a flat 1.
+The shop costs $16, the cyclist finishes 5 km out, (3, 4) and (4, −3) meet at a right angle, (3, 4) and (6, 8) score a flat 1.
 
 ### What breaks if you drop a piece
 
@@ -381,7 +381,7 @@ The two outputs match line for line.
 
 Lean proves the three readings for lists of real numbers of any length, and checks the card's numbers exactly.
 
-- A list dotted with itself, square-rooted, is its straight-line length on square axes.
+- A list dotted with itself, square-rooted, is its straight-line length on perpendicular axes.
 - Two arrows that go somewhere meet at a right angle exactly when their dot product is 0.
 - For two arrows that go somewhere, the alignment score never leaves −1 to 1. It reaches 1 or −1 exactly when the arrows lie on one line.
 
@@ -547,29 +547,29 @@ example : ∀ d ∈ [(![5, 0] : Fin 2 → ℤ), ![4, 3], ![3, 4], ![0, 5], ![-3,
 
 ## Where this goes next
 
-- [Projection](02-orthogonal-projection.md): shadow and leftover.
-- [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md): perpendicular unit directions, and coordinates as dot products.
-- [Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): planes from perpendiculars.
-- [Tangent planes](../../06-Calculus%20and%20analysis/07-Several%20Variables/02-differentiability-and-tangent-planes.md): flat up close.
-- [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): steepest uphill.
-- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): one slot flipped.
-- [Parseval's identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md): energy across waves.
-- [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): the bound widened.
-- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): alignment as probability.
-- [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): grouping by distance.
-- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): dot products left implicit.
-- [Separating hyperplanes](../../15-Optimization/01-Convexity/06-separating-hyperplanes.md): one sign decides.
-- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): perpendicular directions, safely.
-- [The distance menu](../../17-Topology/01-Metric%20Spaces/02-distances-on-vectors-and-functions.md): distance without dot products.
-- [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): the same rules, endlessly.
-- [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): every linear reading is a dot product.
-- [First fundamental form](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/02-first-fundamental-form.md): lengths on curved surfaces.
-- [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): the second list as a machine.
+- [Projection](02-orthogonal-projection.md): splits a vector into a shadow along a direction and a perpendicular leftover.
+- [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md): straightens skewed directions into perpendicular unit ones so coordinates become dot products.
+- [Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): describes a flat plane in space using one vector perpendicular to it.
+- [Tangent planes](../../06-Calculus%20and%20analysis/07-Several%20Variables/02-differentiability-and-tangent-planes.md): uses dot products to write the flat plane touching a curved surface.
+- [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): finds a surface's steepest uphill direction, where the alignment score hits 1.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): adapts the dot product to complex numbers by flipping one entry's imaginary sign.
+- [Parseval's identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md): adds a wave's squared weights to recover a signal's total squared size.
+- [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): widens the Cauchy-Schwarz bound from squares to other paired powers.
+- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): reads the squared dot product of two quantum states as a measurement probability.
+- [k-means](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/06-k-means-and-clustering.md): groups data points into clusters by their straight-line distance from each centre.
+- [Support vector machines](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/09-kernels-and-support-vector-machines.md): separates data with dot products computed indirectly in a higher-dimensional space.
+- [Separating hyperplanes](../../15-Optimization/01-Convexity/06-separating-hyperplanes.md): uses one dot product's sign to tell which side of a wall a point lies on.
+- [QR](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/05-qr-householder-and-gram-schmidt.md): builds perpendicular unit directions using reflections that stay accurate under rounding.
+- [The distance menu](../../17-Topology/01-Metric%20Spaces/02-distances-on-vectors-and-functions.md): measures distance on vectors and functions when no dot product is available.
+- [Inner products](../../18-Functional%20analysis/02-Hilbert%20Spaces/01-inner-products-and-hilbert-spaces.md): extends length, right angles and Cauchy-Schwarz to infinite-dimensional spaces of functions.
+- [Riesz representation](../../18-Functional%20analysis/02-Hilbert%20Spaces/06-riesz-representation-theorem.md): shows that every continuous linear reading of vectors is a dot product.
+- [First fundamental form](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/02-first-fundamental-form.md): uses a dot product on tangent arrows to measure lengths and angles on curved surfaces.
+- [Covectors and tensor fields](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/05-covectors-and-tensor-fields.md): treats the second list as a linear rule that takes vectors and returns numbers.
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): every matrix splits its inputs into row space and null space, its outputs into column space and left null space, at right angles.
 - [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear readings of a space form a space of their own, a basis gives a dual basis, and the transpose is the dual map.
 - [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): every word looks at every other word, scored by a dot product, with the scores turned into weights that add to 1.
 
-Nothing here splits a vector into a part along another and a part square to it; that split, and the shadow it names, comes next.
+Nothing here splits a vector into a part along another and a part at right angles to it; that split, and the shadow it names, comes next.
 
 ---
 

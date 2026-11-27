@@ -699,7 +699,7 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 ## Where this goes next
 
 - [The four fundamental subspaces](05-four-fundamental-subspaces.md): where the shadow and the leftover live, the column space and the left null space, meeting at right angles.
-- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line from covariance and variance, with R squared for how much of the spread it explains.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line from spread and co-movement, with R squared scoring how much spread the line explains.
 - [Regression error bars](../../09-Probability%20and%20statistics/09-Regression/02-regression-inference.md): how far to trust a fitted slope such as −3.4.
 - [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): many columns, and why no unbiased rival beats this fit.
 - [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the same geometry with functions as the arrows.
@@ -707,9 +707,9 @@ example : Matrix.det !![(16 : ℚ), 8; 8, 4] = 0 := by norm_num [Matrix.det_fin_
 - [The SVI smile](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
 - [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed and long-run level fitted to a strip of futures prices.
 - [Wiener and LMS](../../13-Engineering%20mathematics/05-Signals/07-adaptive-and-optimal-filters.md): these equations re-solved as each reading arrives.
-- [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): why software never forms $`A^T A`$.
+- [Least squares two ways](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/06-least-squares-normal-equations-versus-qr.md): explains why software avoids forming $`A^T A`$ directly, which loses rounding accuracy.
 - [Fitting instead of passing through](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/07-least-squares-and-orthogonal-polynomials.md): perpendicular columns, so curves fit without the small matrix.
-- [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fit a difference equation to logged data by least squares.
+- [ARX identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/01-arx-models-and-least-squares-identification.md): fits a step-by-step update rule to logged data by least squares.
 
 Here the prices split into a shadow among the columns and a leftover that $`A^T`$ sends to zero. Which outputs a matrix can reach at all, and which checks rule the rest out, is the question [The four fundamental subspaces](05-four-fundamental-subspaces.md) answers next.
 
