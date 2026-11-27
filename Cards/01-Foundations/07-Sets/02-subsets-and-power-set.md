@@ -1,4 +1,4 @@
-# Subsets and the power set: everything inside a set, and the 2^n ways to pick some of it
+# Subsets and the power set: everything inside a set, and the 2^n ways to pick from a finite one
 
 [Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Sets](../README.md#s07) → Subsets and the power set
 
@@ -14,7 +14,7 @@ Each pizza is a **subset** of the topping list: a set whose members all come fro
 
 Eight is not luck: each topping is a yes-or-no, and the menu doubles at every one.
 
-**A subset is any part of a set, empty and whole included; the power set collects every subset; and a set of n members has 2^n subsets, one on-or-off choice per member.**
+**A subset is any part of a set, empty and whole included; the power set collects every subset; and a finite set of n members has 2^n subsets, one on-or-off choice per member.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; subset and power set are definitions.
 
@@ -39,9 +39,9 @@ The count is the choices, multiplied:
 
 **Toppings on offer: 3. Pizzas possible: 2 × 2 × 2 = 8.**
 
-One 2 per topping, on or off, and the 2s multiply because the choices do not interfere. Three 2s multiplied is written **2^3**, said "two to the power of three", so n members give **2^n** subsets.
+One 2 per topping, on or off, and the 2s multiply because the choices do not interfere. Three 2s multiplied is written **2^3**, said "two to the power of three", so a finite set of n members gives **2^n** subsets.
 
-**Read it aloud:** a set with n members has two to the power n subsets, so three toppings give 2 × 2 × 2 = 8 pizzas.
+**Read it aloud:** a finite set with n members has two to the power n subsets, so three toppings give 2 × 2 × 2 = 8 pizzas.
 
 | Piece | Plain meaning | In the pizza shop |
 | --- | --- | --- |
@@ -49,7 +49,7 @@ One 2 per topping, on or off, and the 2s multiply because the choices do not int
 | a subset, A ⊆ B | every member of A is in B | mushroom and olive: one pizza |
 | the empty set | the set with no members | the plain pizza |
 | the power set, P(A) | the set of all subsets of A | the eight pizzas, gathered |
-| n | how many members the set has | 3 |
+| n | how many members a finite set has | 3 |
 | 2^n | n twos multiplied | 2 × 2 × 2 = 8 |
 
 ### When it holds
@@ -232,7 +232,7 @@ The two outputs match line for line: whole counts, no rounding.
 
 Lean proves these facts for every finite set, and checks the three-topping shop exactly.
 
-- A set with n members has exactly 2^n subsets.
+- A finite set with n members has exactly 2^n subsets.
 - Putting up a new member, one not already in the set, doubles the number of subsets.
 - The subsets that leave out one member are exactly the subsets of what remains.
 - The menu grows 1, 2, 4, 8, 16 as toppings go up.
@@ -363,7 +363,7 @@ example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
 - **Testing software.** Each on-or-off setting doubles the states the thing can be in, so trying every one becomes impossible.
 
 > **Say it back**
-> A subset is a set whose members all come from another set; taking none counts, taking all counts. Collect every subset and that is the power set. Each member is one on-or-off choice, and free choices multiply, so n members give 2^n subsets — three toppings, eight pizzas. To prove two sets equal, show each sits inside the other.
+> A subset is a set whose members all come from another set; taking none counts, taking all counts. Collect every subset and that is the power set. Each member is one on-or-off choice, and free choices multiply, so a finite set of n members gives 2^n subsets — three toppings, eight pizzas. To prove two sets equal, show each sits inside the other.
 
 ---
 
@@ -378,7 +378,7 @@ example : 2 + 2 + 2 = (6 : ℕ) ∧ 2 + 2 + 2 ≠ (8 : ℕ) := by decide
 - [Set operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
 - [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
 - [The ZFC axioms](08-zfc-axioms.md): the rules that say which collections are sets, and how they stop Russell.
-- [Knaster-Tarski](../08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md): the power set, ordered by ⊆, is a complete lattice, so any rule that keeps that order has a fixed point.
+- [Knaster-Tarski](../08-Relations%20and%20Functions/09-complete-lattices-and-knaster-tarski.md): ordered by ⊆, every order-keeping rule on a power set leaves at least one subset unchanged (a fixed point).
 - [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): how many of the 8 pizzas carry exactly two toppings, counted without listing them.
 
 Left open: given two pizzas off the same board, how do you combine them — toppings on either, toppings on both, or toppings on one but not the other?

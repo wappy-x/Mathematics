@@ -16,7 +16,7 @@ Its name is **inclusion-exclusion**: include every group, exclude the double cou
 
 Ten of the class also sing in the choir. Three groups means three pairs to fix, and a knot of students on all three at once.
 
-**Add the group sizes, take off every shared count, and put back what you took off too often, so every person ends up counted exactly once.**
+**For finite groups, add the group sizes, take off every shared count, and put back what you took off too often, so every person in at least one group ends up counted exactly once.**
 
 **What kind of fact this is:** a theorem, proved in Why it works by following one student through the count.
 
@@ -70,7 +70,7 @@ Add the three sizes. Take off the shared-by-two counts: 7 in both games, 4 in fo
 | the pairs | shared-by-two counts, taken off | 7, 4 and 3 |
 | the triple | shared by all three, put back | 2 |
 
-In symbols, two groups:
+In symbols, for finite sets — two groups:
 
 ```math
 |F \cup C| = |F| + |C| - |F \cap C|
@@ -409,7 +409,7 @@ example : (18 : ℤ) + 12 + 10 - 7 - 4 - 3 - 2 = 24 := by norm_num
 
 ## Where this goes next
 
-- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where every member of one set is paired with every member of another, and the sizes multiply instead of adding.
+- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where every member of one set is paired with every member of another, and for finite sets the sizes multiply instead of adding.
 - [Inclusion-exclusion for any number of sets](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): four groups and more, alternating the same way.
 
 Left open: pair every member of one set with every member of another — how many pairs come out, and why does the order of the two slots matter?

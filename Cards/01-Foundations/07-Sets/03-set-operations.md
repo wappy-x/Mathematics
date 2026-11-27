@@ -249,11 +249,11 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves three laws for any universe and any two sets in it, then checks the 12-film watchlist.
+Lean proves De Morgan for any universe and any two sets in it, and two counting laws for any finite ones, then checks the 12-film watchlist.
 
 - De Morgan: not on either is not on A and not on B. Not on both is not on A or not on B.
-- The union counts the overlap once: its size is the two sizes added, minus the shared part.
-- When A and B sit inside the universe, the four piles add back to the whole universe.
+- For any two finite sets, the union counts the overlap once: its size is the two sizes added, minus the shared part.
+- When A and B sit inside a finite universe, the four piles add back to the whole universe.
 - For the watchlist, every pile and every count in the two tables above comes out as the card says.
 
 The film-by-film walk and the Try changing edits are left to the Python and Rust checks.
@@ -398,7 +398,7 @@ example : watchlist.card - (serviceA ∩ serviceB).card = 10 := by decide
 
 ## Where this goes next
 
-- [Inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for two sets and three.
+- [Inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for two finite sets and three.
 - [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): every member of one set paired with every member of the other.
 - [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into piles that do not overlap and leave nothing out.
 - [Indexed families](07-indexed-families-of-sets.md): unions, intersections and products over any number of sets, and De Morgan for infinitely many.

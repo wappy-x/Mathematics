@@ -37,10 +37,10 @@ The family is a **function**: each label gets exactly one set.
 
 ## The formula
 
-Write $`A_r`$ for the set with label $`r`$, read "A sub r", and $`R`$ for the index set:
+Write $`A_r`$ for the set with label $`r`$, read "A sub r", and $`R`$ for the index set (with every $`A_r`$ inside a universe $`U`$):
 
 ```math
-\bigcup_{r \in R} A_r = \{\, x : x \in A_r \text{ for at least one } r \,\} \qquad \bigcap_{r \in R} A_r = \{\, x : x \in A_r \text{ for every } r \,\}
+\bigcup_{r \in R} A_r = \{\, x : x \in A_r \text{ for at least one } r \in R \,\} \qquad \bigcap_{r \in R} A_r = \{\, x \in U : x \in A_r \text{ for every } r \in R \,\}
 ```
 
 The product over the suits $`S`$, with $`B_s`$ the cards of suit $`s`$, collects every pick $`f`$:
@@ -63,13 +63,13 @@ U - \bigcup_{n} A_n = \bigcap_{n} (U - A_n) \qquad U - \bigcap_{n} A_n = \bigcup
 | $`A_r`$, $`B_s`$, $`A_n`$ | the set with that label | 4 cards of rank r; 13 of suit s | bigger sets: all three grow or stay |
 | $`\bigcup`$, $`\bigcap`$ | union: in at least one set; intersection: in every set | 52 cards; no card | — |
 | $`n`$, $`x`$ | a counting label 1, 2, 3, …; a member being tested | n = 1000; x = 0.001 | bigger n: set n shrinks |
-| $`\prod`$, $`f`$ | product: every pick f, card f(s) from suit s | 28,561 picks | a new set multiplies the count by its size |
+| $`\prod`$, $`f`$ | product: every pick f, card f(s) from suit s | 28,561 picks | for finite sets, a new set multiplies the count by its size |
 | $`U -`$ | complement: what the universe U holds outside | U is 0 to 1, both ends in; $`U - [1/n, 1] = [0, 1/n)`$ | — |
 
 ### When it holds
 
 - **The index set is fixed first.** Drop the label "ace" and the union loses 4 cards.
-- **A universe comes first.** Without U, "outside the union" has no answer.
+- **A universe comes first.** Without U, "outside the union" has no answer — and an intersection over an empty index set has no set either, because every x anywhere passes by default (inside U, that empty intersection is U, while the empty union is ∅).
 - **Every set in a product has a member.** One empty set, and no pick exists.
 
 ---
@@ -96,6 +96,7 @@ A pair has two slots ([Ordered pairs and the Cartesian product](05-ordered-pairs
 
 Write $`[0, 1/n)`$ for set n: a square bracket keeps its end, a round one drops it.
 
+- **Any x below 0 is never in:** every set starts at 0.
 - **0 stays:** 0 is below every 1/n.
 - **Any x above 0 leaves:** at n of at least 1/x, 1/n is at most x.
 

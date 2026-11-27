@@ -12,7 +12,7 @@ Four suits, thirteen ranks, every suit meeting every rank once. So the deck is 4
 
 Name a card and you name both facts in a settled order: **(hearts, king)**, suit first, rank second. Two things in fixed slots is an **ordered pair**; the set of all of them is the **Cartesian product** of the suits and the ranks.
 
-**Pair every member of one set with every member of another, slots in order, and the result has as many members as the two sizes multiplied.**
+**Pair every member of one set with every member of another, slots in order; when both sets are finite, the result has as many members as the two sizes multiplied.**
 
 **What kind of fact this is:** a definition (the ordered pair and the product), plus a counting rule proved in Why it works: the sizes multiply.
 
@@ -48,7 +48,7 @@ No listing needed:
 | the first slot | what the pair says first, taken from A | hearts, a suit |
 | the second slot | what it says second, taken from B | king, a rank |
 | A × B, the Cartesian product | the set of all such pairs | all 52 cards |
-| the size of A × B | the size of A times the size of B | 4 × 13 = 52 |
+| the size of A × B | for finite sets, the size of A times the size of B | 4 × 13 = 52 |
 
 ### When it holds
 
@@ -337,7 +337,7 @@ example : 4 + 13 = 17 ∧ 4 * 12 = 48 := by norm_num
 - **Coordinates.** A point on a screen or a map is (across, up): the pair is the address, the order the convention.
 
 > **Say it back**
-> An ordered pair is two things in two fixed slots: first, then second. (hearts, king) is a card; (king, hearts) is not, because the slots mean different jobs. Braces cannot do that: {hearts, king} and {king, hearts} are one set. The Cartesian product A × B is every pair with first from A and second from B, so the deck is 4 × 13 = 52 cards. Sizes multiply, never add, and an empty side empties the product.
+> An ordered pair is two things in two fixed slots: first, then second. (hearts, king) is a card; (king, hearts) is not, because the slots mean different jobs. Braces cannot do that: {hearts, king} and {king, hearts} are one set. The Cartesian product A × B is every pair with first from A and second from B, so the deck is 4 × 13 = 52 cards. For finite sets, sizes multiply rather than add, and an empty side empties the product.
 
 ---
 

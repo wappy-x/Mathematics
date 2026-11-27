@@ -127,7 +127,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Sets and membership, subsets and power set, union/intersection/difference/complement, inclusion-exclusion, ordered pairs and products, Russell's paradox, indexed families, the ZFC axioms.*
 
 1. [Sets: a collection defined only by what belongs, with the empty set and set-builder shorthand](07-Sets/01-sets-and-membership.md)
-2. [Subsets and the power set: everything inside a set, and the 2^n ways to pick some of it](07-Sets/02-subsets-and-power-set.md)
+2. [Subsets and the power set: everything inside a set, and the 2^n ways to pick from a finite one](07-Sets/02-subsets-and-power-set.md)
 3. [Set operations: union, intersection, difference and complement, four piles from two lists](07-Sets/03-set-operations.md)
 4. [Inclusion-exclusion: count the overlap once, not twice](07-Sets/04-inclusion-exclusion.md)
 5. [Ordered pairs and the Cartesian product: the deck is suits times ranks](07-Sets/05-ordered-pairs-and-cartesian-product.md)

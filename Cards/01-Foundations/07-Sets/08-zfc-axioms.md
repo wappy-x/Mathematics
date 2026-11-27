@@ -71,7 +71,7 @@ Separation and replacement are one axiom per precise sentence: the full list is 
 | Replacement | A rule applied to each member of a set gives a set | 0 wrapped n times |
 | Infinity | Some set holds 0 and, with each n, n + 1 | all counting numbers |
 | Foundation | A nonempty set has a member sharing no member with it | no set is in itself |
-| Choice | One pick from each nonempty set of a family forms a set | [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md) |
+| Choice | From any family of nonempty sets, a function can pick one member from each | [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md) |
 
 ### When it holds
 
@@ -491,14 +491,14 @@ example : ((Finset.univ : Finset (Fin 4 × Fin 13)).filter (fun c => c.1 = 2)).c
 ## What this builds on
 
 - [Russell's paradox](06-russells-paradox.md): the broken rule this list repairs.
-- [Subsets and the power set](02-subsets-and-power-set.md): the parts of a set, 2 to the n of them for n members.
+- [Subsets and the power set](02-subsets-and-power-set.md): the parts of a set, 2 to the n of them for a finite set of n members.
 - [Indexed families](07-indexed-families-of-sets.md): unions over a family, which union and replacement make into sets.
 
 ## Where this goes next
 
 - [Relations](../08-Relations%20and%20Functions/01-relations.md): the first card on the next shelf. With sets and ordered pairs on firm ground, a relation is a set of pairs: which things go with which.
 - [The axiom of choice](../09-Sizes%20of%20Infinity/05-axiom-of-choice.md): the tenth rule, what it buys and why it is debated.
-- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): a question ZFC cannot settle.
+- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): a question about sizes of infinity that ZFC cannot settle, provided ZFC has no contradiction.
 
 Left open: with sets and pairs on firm ground, how do you record which things go with which? The next shelf answers that, starting at [Relations](../08-Relations%20and%20Functions/01-relations.md).
 
