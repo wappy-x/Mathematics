@@ -304,7 +304,7 @@ example : 8 * 4 = (32 : ℕ) ∧ 4 * 4 = (16 : ℕ) ∧ 32 + 32 = (64 : ℕ) := 
 > **Try changing**
 > Guess first, then run it.
 > - **Make a tray odd.** Set the second tray to 15. The total is 27, pairs taken off leave 1 over, and the first assert fires.
-> - **Drop a case.** Multiply by 4 rows, not 8: 16 black, not 32, and the assert tying cases to the 64 squares fires.
+> - **Drop a case.** In both lines that hold `8 * black_row.count(True)`, change the 8 to a 4: 16 black, not 32, and the assert tying cases to the 64 squares fires.
 
 ---
 

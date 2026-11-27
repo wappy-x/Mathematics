@@ -44,7 +44,7 @@ flowchart TD
 
 The sheet is the formula, one line each.
 
-**For every → induction. Several earlier cases → strong induction. There is → produce one. Exactly one → produce one, then assume two and show they are equal. Not → assume the opposite. If-then → forwards, or flipped and swapped.**
+**For every whole number → induction. Several earlier cases → strong induction. There is → produce one. Exactly one → produce one, then assume two and show they are equal. Not → assume the opposite. If-then → forwards, or flipped and swapped.**
 
 **Read it aloud:** a claim's opening words name the move.
 
