@@ -1,4 +1,4 @@
-# The Gaussian integral: the integral of e to the minus x squared is root pi
+# The Gaussian integral: the integral of e to the minus x squared over the whole line is root pi
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Multiple Integrals](../README.md#s08) → The Gaussian integral
 
@@ -67,7 +67,7 @@ Dividing by that total gives the bell of the chart:
 ### When it holds
 
 - **A positive squeeze factor.** With $`a = 0`$ the curve is flat at 1 and the strip from −10 to 10 already holds 20.000000; no finite total exists.
-- **Both tails converge on their own.** The whole-line area is the left tail plus the right tail, each a limit; here the tail beyond a cutoff R on either side is below e^(−R^2)/(2R).
+- **The whole line, with both tails converging on their own.** The value $`\sqrt{\pi}`$ is for the whole line; the half-line from 0 gives $`\sqrt{\pi}/2`$. The whole-line area is the left tail plus the right tail, each a limit; here the tail beyond a cutoff $`R > 0`$ on either side is below $`e^{-R^2}/(2R)`$.
 - **Angles in radians.** The polar patch r dr dθ is exact only in radians; in degrees the π would not appear.
 - **The positive root.** I^2 = π has two roots; a positive curve takes the positive one.
 
@@ -81,7 +81,7 @@ Multiply e^(−x^2) by e^(−y^2) and the exponents add: e^(−(x^2 + y^2)). Tha
 
 ### Step 1: the whole-line area exists
 
-Past a cutoff R, x/R is at least 1, so slipping it in can only raise the area:
+Past a positive cutoff $`R > 0`$, x/R is at least 1, so slipping it in can only raise the area:
 
 ```math
 \int_R^{\infty} e^{-x^2}\,dx \;\le\; \frac{1}{R}\int_R^{\infty} x\,e^{-x^2}\,dx \;=\; \frac{e^{-R^2}}{2R}.
@@ -101,7 +101,7 @@ Nothing infinite has happened yet. At R = 1, I_R is 1.493648 and its square 2.23
 
 ### Step 3: the same integrand over a disk, in polar coordinates
 
-Over a disk of radius s centred at the origin, write x^2 + y^2 = r^2 and a patch as r dr dθ:
+Over a disk of radius $`s > 0`$ centred at the origin, write x^2 + y^2 = r^2 and a patch as r dr dθ:
 
 ```math
 \int_0^{2\pi}\!\!\int_0^{s} e^{-r^2}\, r\,dr\,d\theta \;=\; 2\pi\Big[-\tfrac12 e^{-r^2}\Big]_0^{s} \;=\; \pi\big(1 - e^{-s^2}\big).
@@ -142,7 +142,7 @@ Squeeze. $`B_R \subset Q_R \subset B_{R\sqrt2}`$ and the integrand is positive, 
 
 ### Step 6: from √π to the bell's area of 1
 
-Substitute x = √2 u, so dx = √2 du, on each cutoff and let R head for infinity: the area under e^(−x^2/2) is √2 times √π, which is √(2π) = 2.506628. In general x = u/√a gives √(π/a). Divide the curve by √(2π) and its area is 1: the bell, peak height 0.398942.
+Substitute x = √2 u, so dx = √2 du, on each cutoff and let R head for infinity: the area under e^(−x^2/2) is √2 times √π, which is √(2π) = 2.506628. In general, for any $`a > 0`$, x = u/√a gives √(π/a). Divide the curve by √(2π) and its area is 1: the bell, peak height 0.398942.
 
 A second road avoids the plane: attach a parameter to the integrand and differentiate under the integral sign ([Differentiating under the integral](05-differentiating-under-the-integral.md)).
 
@@ -456,7 +456,7 @@ theorem integral_bell_curve_eq_one :
 - **Option prices.** The Black-Scholes formula is a Gaussian integral over future prices, in [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md).
 
 > **Say it back**
-> No antiderivative finds the area under e to the minus x squared. Its square is a total over the plane that depends only on distance from the centre. Over a disk, polar coordinates bring a factor r and the total π(1 − e^(−s^2)). A square is trapped between two disks, so its total is squeezed to π, and the area is √π. Stretching by √2 gives √(2π); dividing by it gives the bell area 1.
+> No formula built from the usual functions is an antiderivative of e to the minus x squared. The square of its whole-line area is a total over the whole plane, of a height that depends only on distance from the centre. Over a disk, polar coordinates bring a factor r and the total π(1 − e^(−s^2)). A square is trapped between two disks, so its total is squeezed to π, and the area is √π. Stretching by √2 gives √(2π); dividing by it gives the bell area 1.
 
 ---
 
@@ -467,6 +467,7 @@ theorem integral_bell_curve_eq_one :
 
 ## Where this goes next
 
+- [Differentiating under the integral](05-differentiating-under-the-integral.md): the next card on this shelf. It attaches a parameter to an integrand and differentiates inside the integral, the method behind the second road to root pi.
 - [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): a Gaussian that widens with time and keeps its area.
 - [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell read as probabilities, with a centre and a width.
 - [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): an option price as a Gaussian integral.
@@ -475,7 +476,7 @@ theorem integral_bell_curve_eq_one :
 - [Two pairs worth memorising](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/03-gaussian-and-sinc-transform-pairs.md): the Gaussian as its own frequency picture.
 - [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
 
-The question this card leaves open: the area up to a given point, not the whole line, has no formula of this kind, so how is it found?
+The question this card leaves open: the area up to a given point, not the whole line, has no formula of this kind, so how is it found? Similarity solutions, above, takes that up. The next card on this shelf, Differentiating under the integral, teaches the parameter method instead.
 
 ---
 

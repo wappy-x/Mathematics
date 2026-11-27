@@ -12,9 +12,9 @@ On an east-north grid the ridge is a curve. In distance-and-angle coordinates th
 
 The price: equal address steps do not cover equal ground. A patch 0.5 km deep and 10 degrees wide covers 0.065450 square kilometres near the outlet and 0.196350 out by the ridge. The correcting factor is the **Jacobian**, the local area stretch of the coordinate change. With it the storm left 188,496 cubic metres; without it, far less.
 
-**To integrate in new coordinates, rewrite the integrand in them and multiply by the size of the Jacobian determinant, the area or volume one small address patch covers per unit of address.**
+**To integrate in new coordinates that are smooth and cover each place once (apart from edges of zero area), rewrite the integrand in them and multiply by the size of the Jacobian determinant, the area or volume one small address patch covers per unit of address.**
 
-**What kind of fact this is:** a theorem, proved in Why it works, in full in the folded Detailed proof.
+**What kind of fact this is:** a theorem, argued in Why it works, with the two-dimensional proof sketched in the folded Detailed proof.
 
 ---
 
@@ -35,6 +35,8 @@ $`T`$ sends an address $`(u, v)`$ to a place $`(x, y)`$. $`S`$ is the region of 
 | polar | x = r cos θ, y = r sin θ | dA = r dr dθ |
 | cylindrical | polar, with height z unchanged | dV = r dr dθ dz |
 | spherical | x = ρ sin φ cos θ, y = ρ sin φ sin θ, z = ρ cos φ | dV = ρ^2 sin φ dρ dφ dθ |
+
+These factors are never negative on the usual ranges, which cover each place once: $`r \ge 0`$ with $`\theta`$ across at most $`2\pi`$; in spherical, $`\rho \ge 0`$ and $`0 \le \phi \le \pi`$, so $`\sin\phi \ge 0`$.
 
 On the valley, depth f = 20 + 10r mm, r in km:
 
@@ -112,7 +114,9 @@ Cylindrical coordinates add height z to polar. The Jacobian gains a row and colu
 
 ### Step 5: spherical coordinates, and where ρ^2 sin φ comes from
 
-Spherical coordinates give distance ρ from a centre, angle φ down from the vertical, and compass angle θ. Nudges move a place dρ, then ρ dφ round a circle of radius ρ, then ρ sin φ dθ round a latitude circle of radius ρ sin φ. They are at right angles: the box is ρ^2 sin φ dρ dφ dθ. At ρ = 2, φ = 60 degrees, the difference-quotient Jacobian prints 3.464102, as does ρ^2 sin φ.
+Spherical coordinates give distance ρ from a centre, angle φ down from the vertical, and compass angle θ. Nudges move a place dρ, then ρ dφ round a circle of radius ρ, then ρ sin φ dθ round a latitude circle of radius ρ sin φ.
+
+They are at right angles, so the box has volume ρ^2 sin φ dρ dφ dθ (for $`\rho \ge 0`$ and $`0 \le \phi \le \pi`$). At ρ = 2, φ = 60 degrees, the difference-quotient Jacobian prints 3.464102, as does ρ^2 sin φ.
 
 A raindrop of radius 2 mm: 2π for θ, times 2 from sin φ over 0 to π, times 8/3 from ρ^2 over 0 to 2, gives 32π/3 = 33.510322 cubic millimetres. Without sin φ it is 52.637890: latitude circles near the poles are small.
 
@@ -346,8 +350,8 @@ The outputs match line for line. The grid error stalls, −0.000832 at 400 a sid
 
 Lean proves the theorem in any number of dimensions, the three factors in the table at every address, and the valley's exact total.
 
-- In any number of dimensions, the total over places equals the total over addresses, each weighted by the size of the Jacobian determinant. It assumes the conditions in When it holds.
-- At every address, the polar and cylindrical determinants are r, and the spherical one is ρ^2 sin φ.
+- In any number of dimensions, the total over places equals the total over addresses, each weighted by the size of the Jacobian determinant. It assumes the conditions in When it holds, with S measurable and T continuously differentiable everywhere.
+- At every address, the polar and cylindrical determinants are r, and the spherical one (with inputs in the order $`\rho, \phi, \theta`$) is $`\rho^2 \sin \phi`$.
 - Taken over the east-north ground, with no polar coordinates in the statement, the valley's rain totals exactly 60π mm km^2.
 - The hand arithmetic holds exactly: 90 and 90, 60π, the 40 mm mean depth, 10800 in degrees, the raindrop's 32π/3 and the tank's 10000π.
 
@@ -655,10 +659,10 @@ example : 2 * π * (100 ^ 2 / 2) = 10000 * π := by norm_num; ring
 
 - **Weather radar.** Radar measures rain by range and bearing, so its cells grow with distance; catchment totals carry the factor r.
 - **Planets and radiation.** Spherical shells give an atmosphere's mass and the energy radiated in every direction ([Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md)).
-- **Random numbers and scans.** Bell-shaped random numbers from uniform ones rest on the polar factor ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)); CT scanners sample by angle and offset (Transforms in two and three dimensions).
+- **Random numbers and scans.** Bell-shaped random numbers from uniform ones rest on the polar factor ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)); CT scanners sample by angle and offset ([Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md)).
 
 > **Say it back**
-> New coordinates relabel the ground without resizing it. A small address patch covers the Jacobian determinant's size times its own area: r in polar and cylindrical, ρ^2 sin φ in spherical. Rewrite the integrand, multiply by the factor, integrate over the addresses, covering each place once. The valley took 188,496 cubic metres, a mean of 40 mm.
+> New coordinates relabel the ground without resizing it. For a smooth map covering each place once (apart from zero-area edges), a small address patch covers the Jacobian determinant's size times its own area: r in polar and cylindrical ($`r \ge 0`$), $`\rho^2 \sin\phi`$ in spherical ($`\rho \ge 0`$, $`0 \le \phi \le \pi`$). Rewrite the integrand, multiply by the factor, and integrate over the addresses. The valley took 188,496 cubic metres, a mean of 40 mm.
 
 ---
 
@@ -672,7 +676,7 @@ example : 2 * π * (100 ^ 2 / 2) = 10000 * π := by norm_num; ring
 - [The Gaussian integral](04-gaussian-integral.md): the polar factor on the whole plane.
 - [Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md): a stretch factor for a curved surface.
 - [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md): the same factor keeps total probability at 1.
-- [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md): polar coordinates in frequency.
+- [Transforms in two and three dimensions](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/10-multidimensional-transform-and-tomography.md): applying polar coordinates in two-dimensional frequency space for tomography.
 - [Pullback](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/02-pullback-and-change-of-variables.md): the theorem again, with the sign of the determinant kept.
 - [Change of variables in n dimensions, proved](08-change-of-variables-proved.md): break the map into moves that change one coordinate at a time.
 

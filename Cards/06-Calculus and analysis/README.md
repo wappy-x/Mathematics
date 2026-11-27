@@ -162,7 +162,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 1. [Double integrals: volume under a surface by slicing twice](08-Multiple%20Integrals/01-double-integrals.md)
 2. [Triple integrals: mass, moments and centres in three dimensions](08-Multiple%20Integrals/02-triple-integrals.md)
 3. [Change of variables: polar, cylindrical and spherical, and the Jacobian that fixes the area](08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)
-4. [The Gaussian integral: the integral of e to the minus x squared is root pi](08-Multiple%20Integrals/04-gaussian-integral.md)
+4. [The Gaussian integral: the integral of e to the minus x squared over the whole line is root pi](08-Multiple%20Integrals/04-gaussian-integral.md)
 5. [Differentiating under the integral: when the derivative can go inside](08-Multiple%20Integrals/05-differentiating-under-the-integral.md)
 6. [Stieltjes integrals: integrating against a weight that can jump](08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)
 7. [Jordan content: which regions have an area, and Fubini on them in any dimension](08-Multiple%20Integrals/07-jordan-content-and-fubini-in-n-dimensions.md)

@@ -8,13 +8,13 @@
 
 Take the curve x^3 e^(-x) for x from 0 outwards. It starts at 0, climbs to 1.34 at x = 3, then dies away as the exponential beats the cube. The whole area under it, out to infinity, is exactly 6. With a fourth power it is 24. The areas are factorials: 3! = 6, 4! = 24.
 
-Integration by parts reaches 6 in three rounds. A shorter road: put a dial t in the exponent, e^(-tx). The area under that is 1/t.
+Integration by parts reaches 6 in three rounds. A shorter road: put a positive dial t in the exponent, e^(-tx). For $`t > 0`$, the area under that is 1/t.
 
-Turn the dial and each height changes at its own rate; the total changes at the sum of those rates. Differentiate 1/t three times, flip the sign, and out comes the area under x^3 e^(-tx) for every t at once. Richard Feynman used the trick again and again.
+Turn the dial and each height changes at its own rate; the total changes at the sum of those rates. Differentiate 1/t three times, flip the sign, and out comes the area under x^3 e^(-tx) for every positive t at once. Richard Feynman used the trick again and again.
 
 The trick swaps derivative and integral. Swaps can fail; below is a proof of when this one is safe, plus the terms for moving ends.
 
-**If a function and its rate in the parameter are continuous on a closed rectangle, the derivative of its integral over a fixed interval is the integral of that rate; if the ends move, the right end adds its height times its speed and the left end subtracts it.**
+**If a function and its rate in the parameter are continuous on a closed rectangle, then at each parameter value strictly inside, the derivative of its integral over a fixed interval is the integral of that rate; if the ends move with speeds of their own and stay inside the rectangle, the right end adds its height times its speed and the left end subtracts it.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with the tolerance details in a folded Detailed proof.
 
@@ -57,7 +57,7 @@ F(t)=\int_a^b f(t,x)\,dx \quad\Longrightarrow\quad F'(t)=\int_a^b \frac{\partial
 
 **Read it aloud:** the heights inside change, the right end sweeps in area at its height times its speed, and the left end sweeps area out the same way.
 
-The second is the **Leibniz integral rule**. On the example, the total of x^n e^(-tx) from 0 to infinity is n!/t^(n+1).
+The second is the **Leibniz integral rule**. On the example, for every whole number $`n \ge 0`$ and every $`t > 0`$, the total of x^n e^(-tx) from 0 to infinity is n!/t^(n+1).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -74,9 +74,9 @@ F'(t) is in the total's units per unit of t; here both are bare numbers.
 
 ### When it holds
 
-- **Continuity on a closed rectangle.** f and its t-rate continuous for t in a closed interval (here 1/2 to 2) and x from a to b. Drop it and the swap can fail: x t^3/(x^2 + t^2)^2 on 0 to 1 has a total with slope 1/2 at t = 0, while every x-slope there is 0.
+- **Continuity on a closed rectangle.** f and its t-rate continuous for t in a closed interval (here 1/2 to 2) and x from a to b, giving the derivative at every t strictly inside that interval. Drop it and the swap can fail: x t^3/(x^2 + t^2)^2 on 0 to 1 has a total with slope 1/2 at t = 0, while every x-slope there is 0.
 - **A bounded x-range.** An infinite range needs a tail shrinking for every t at once. At t = 0 the area under e^(-tx) is infinite, and 1/t blows up.
-- **Ends with speeds.** a(t) and b(t) need derivatives, and f must be continuous where the ends sit.
+- **Ends with speeds.** a(t) and b(t) need derivatives and must stay inside a closed rectangle where f and its t-rate are continuous.
 
 ---
 
@@ -145,7 +145,7 @@ Let b run through 1, 2, 3, …. The left totals head for 1/t. The right side's t
 \int_0^\infty x^n e^{-tx}\,dx=(-1)^n\frac{d^n}{dt^n}\,\frac1t=\frac{n!}{t^{n+1}}
 ```
 
-The last step is the power rule n times, each step bringing down the next whole number. At t = 1 the area is n!.
+The last step is the power rule n times, each step bringing down the next whole number; using any closed range above 0, this holds for every $`t > 0`$. At t = 1 the area is n!.
 
 **A second road, with no parameter.** The function 6(1 - e^(-b)(1 + b + b^2/2 + b^3/6)) is 0 at b = 0, and its slope in b is b^3 e^(-b): the product rule cancels all but the last term. By the fundamental theorem of calculus it is the area under x^3 e^(-x) from 0 to b: 5.937984 at b = 10. The tail, 0.062016, shrinks to 0 because e^(-b) beats every power of b.
 
@@ -358,7 +358,7 @@ The two outputs match line for line.
 Lean proves the fixed-end and moving-end rules for every f meeting the conditions above, and the hard integral for every n and t above 0.
 
 - Fixed ends: let f and its t-rate be continuous for t from p to q and x from a to b. At every t strictly between p and q, the rate of the total is the total of the rates.
-- Moving ends: a(t) and b(t) have speeds a' and b', and stay inside a closed rectangle where f and its t-rate are continuous. The total's rate is the integral of the t-rate, plus f(t, b(t)) times b', minus f(t, a(t)) times a'.
+- Moving ends: a(t) and b(t) have speeds a' and b' at a parameter value t strictly between p and q, and stay inside a closed rectangle where f and its t-rate are continuous. The total's rate at t is the integral of the t-rate, plus f(t, b(t)) times b', minus f(t, a(t)) times a'.
 - The area under x^n e^(-tx) from 0 to infinity is n!/t^(n+1), for every whole number n and every decay rate t above 0.
 - The hand arithmetic holds exactly. It covers the factorials 1, 1, 2, 6 and 24, the -6 from three derivatives of 1/t, 6/16 = 3/8 at t = 2, and the sixteenfold drop.
 
@@ -584,7 +584,7 @@ example : ((Nat.factorial 3 : ℚ) / 1 ^ 4) / ((Nat.factorial 3 : ℚ) / 2 ^ 4) 
 - **Moving boundaries.** A region whose edge moves gains material at edge speed times density: the moving-end terms in three dimensions.
 
 > **Say it back**
-> When the integrand and its rate are continuous on a closed rectangle, one step size controls every difference quotient, so the rate of the total is the total of the rates. Moving ends add height times speed at the right and subtract it at the left. Differentiating 1/t n times gives n!/t^(n+1), with a tail bound for the infinite range.
+> When the integrand and its rate are continuous on a closed rectangle, one step size controls every difference quotient, so at every interior parameter value the rate of the total is the total of the rates. Moving ends that have speeds and stay inside the rectangle add height times speed at the right and subtract it at the left. Differentiating 1/t n times gives n!/t^(n+1) for $`t > 0`$, with a tail bound for the infinite range.
 
 ---
 
@@ -595,10 +595,11 @@ example : ((Nat.factorial 3 : ℚ) / 1 ^ 4) / ((Nat.factorial 3 : ℚ) / 2 ^ 4) 
 
 ## Where this goes next
 
+- [Stieltjes integrals](06-riemann-stieltjes-integral.md): integrating against a nondecreasing weight function that can climb smoothly and jump at discrete points.
 - [The transform rulebook](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/02-shift-scale-and-derivative-rules.md): differentiating a transform in its frequency brings down a factor of x inside the integral, the same move on an infinite range.
 - [Improper integrals with a dial](09-uniform-convergence-of-improper-integrals.md): the Weierstrass test that lets limits and derivatives pass inside.
 
-Left open: on an infinite range with no tail bound that holds for every t at once, when can the derivative still go inside?
+Left open: on an infinite range, when does a tail bound that holds for every t at once let limits and derivatives go inside? Improper integrals with a dial, above, answers that. The next card, Stieltjes integrals, widens the integral itself to weights that can jump.
 
 ---
 

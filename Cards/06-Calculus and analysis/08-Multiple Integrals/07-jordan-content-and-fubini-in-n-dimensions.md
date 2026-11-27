@@ -14,7 +14,7 @@ That closing-in is what having an area means. Some sets never close in, such as 
 
 On a region with an area, rain can be added by squares, by strips in either order, or by horizontal layers of the water. Every road gives 76 mm·km², or 76,000 m³.
 
-**A region has an area, its Jordan content, when the grid squares on its edge can be made to total as little as wanted; on such a region a bounded depth with no jumps off its edge has an integral, and Fubini's theorem computes it one variable at a time, in any order and any dimension.**
+**A bounded region has an area, its Jordan content, when the grid squares on its edge can be made to total as little as wanted; on such a region a bounded depth with no jumps off its edge has an integral, and Fubini's theorem computes it one variable at a time, in any order and any dimension.**
 
 **What kind of fact this is:** content zero and Jordan regions are definitions; the integrability test and Fubini's theorem are theorems, proved on this card in Why it works.
 
@@ -38,7 +38,7 @@ c(D) = \lim_{N\to\infty} \frac{\text{cubes inside } D}{N^n} = \lim_{N\to\infty} 
 
 **Read it aloud:** the content of D is the volume of the grid cubes inside it, and also of the cubes touching it, as the cubes shrink.
 
-To integrate a depth $`f`$ over $`D`$, put $`D`$ in a box $`B`$, set $`F`$ to $`f`$ inside $`D`$ and 0 outside, and take the lower-and-upper-sum integral of $`F`$ ([The integral](../04-Integrals/01-riemann-integral.md)) with boxes as cells. Split the coordinates into $`x`$ and the rest $`y`$, so $`B = A \times C`$, with $`D_x`$ the slice of $`D`$ at a fixed $`x`$. Fubini's theorem:
+To integrate a depth $`f`$ over $`D`$, put $`D`$ in a box $`B`$, set $`F`$ to $`f`$ inside $`D`$ and 0 outside, and take the lower-and-upper-sum integral of $`F`$ ([The integral](../04-Integrals/01-riemann-integral.md)) with boxes as cells. Split the coordinates into $`x`$ and the rest $`y`$, so $`B = A \times C`$, with $`D_x`$ the slice of $`D`$ at a fixed $`x`$. When $`f`$ is bounded on a Jordan region $`D`$ and jumps only on content zero (reading any non-integrable slice by its lower or upper integral), Fubini's theorem:
 
 ```math
 \int_D f = \int_A \left( \int_{D_x} f(x, y)\,dy \right) dx
@@ -932,11 +932,11 @@ example : (6 : ℚ) * 10 + 3 / 4 * (64 / 3) = 76 := by norm_num
 
 ## Where this goes next
 
+- [Change of variables in n dimensions, proved](08-change-of-variables-proved.md): the n-dimensional change-of-variables theorem proved on Jordan regions using Fubini and zero-content edges.
 - [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): measure zero replaces content zero; the fraction points count for nothing.
-- [Tonelli and Fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md): Fubini for the Lebesgue integral.
-- [Change of variables in n dimensions, proved](08-change-of-variables-proved.md): proved on Jordan regions.
+- [Tonelli and Fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md): Fubini and Tonelli for the Lebesgue integral, where slices are handled cleanly.
 
-The open question: can a better notion of size give the fraction points, countable yet everywhere, size 0?
+The open question: can a better notion of size give the fraction points, countable yet everywhere, size 0? That leads to Riemann meets Lebesgue in wing 10, while the next card on this shelf uses Jordan content and Fubini to prove change of variables in n dimensions.
 
 ---
 

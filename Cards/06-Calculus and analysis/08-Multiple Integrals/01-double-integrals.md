@@ -10,11 +10,11 @@ A storm crosses a triangular catchment: the land whose rain drains to one river 
 
 How much water fell? At one depth everywhere it would be depth times area, and 1 mm over 1 km^2 is 1,000 m^3. Here the depth varies. So cut the land into small patches, take depth times area on each, and add. Finer patches close in on 40,000 m^3, or 40 million litres.
 
-Picture the rain as a sheet of water, thick under the hills: its volume is the volume under a surface whose height is the depth. From here on the patch-and-add total is the **double integral** of the depth. The working trick is to slice twice: add the rain along strips running north, then add the strips. Strips running east give the same total.
+Picture the rain as a sheet of water, thick under the hills: its volume is the volume under a surface whose height is the depth. Rain depth is nonnegative, so that total is plain volume; when a function goes negative, patches below zero subtract and the integral gives **signed volume**. From here on the patch-and-add total is the **double integral** of the depth. The working trick is to slice twice: add the rain along strips running north, then add the strips. Strips running east give the same total.
 
-**A double integral adds depth times area over a region; for a continuous depth it can be computed as strips of strips, in either order, as long as each order's limits describe the same region.**
+**A double integral adds depth times area over a region; for a continuous depth on a closed, bounded region described by strips it can be computed as strips of strips, in either order, as long as each order's limits describe the same region.**
 
-**What kind of fact this is:** the double integral is a definition; that either slicing order gives it is a theorem (Fubini's), proved on this card in Why it works.
+**What kind of fact this is:** the double integral is a definition; that either slicing order gives it for a continuous depth on a closed, bounded region described by strips is a theorem (Fubini's), proved on this card in Why it works.
 
 ### The picture: the catchment and two ways to slice it
 
@@ -36,7 +36,7 @@ Write $`x`$ for km east of the outlet, $`y`$ for km north, and $`f(x, y) = 6 + 3
 
 **Read it aloud:** the double integral of f over D is what depth-times-area sums settle on as every patch shrinks.
 
-Fubini's theorem turns that into two ordinary integrals. Describe $`D`$ by north strips: $`x`$ from $`a`$ to $`b`$, each strip from $`y = g_1(x)`$ to $`y = g_2(x)`$. Or by east strips: $`y`$ from $`c`$ to $`d`$, each strip from $`x = h_1(y)`$ to $`x = h_2(y)`$. Then
+Fubini's theorem turns that into two ordinary integrals. Describe $`D`$ by north strips: $`x`$ from $`a`$ to $`b`$ ($`a \le b`$), each strip from $`y = g_1(x)`$ to $`y = g_2(x)`$ with continuous $`g_1 \le g_2`$. Or by east strips: $`y`$ from $`c`$ to $`d`$ ($`c \le d`$), each strip from $`x = h_1(y)`$ to $`x = h_2(y)`$ with continuous $`h_1 \le h_2`$. For continuous $`f`$ on this closed, bounded region,
 
 ```math
 \iint_D f\,dA = \int_a^b\!\left[\int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\right]dx = \int_c^d\!\left[\int_{h_1(y)}^{h_2(y)} f(x,y)\,dx\right]dy
@@ -48,18 +48,18 @@ Fubini's theorem turns that into two ordinary integrals. Describe $`D`$ by north
 | --- | --- | --- | --- |
 | $`f`$ | rain depth at a point, mm | 6 + 3y + xy | more water |
 | $`x`$, $`y`$ | km east and km north of the outlet | the triangle 0 ≤ y ≤ x/2, 0 ≤ x ≤ 4 | — |
-| $`D`$ | the region added over | the catchment, 4 km^2 | a bigger region collects more |
+| $`D`$ | the region added over | the catchment, 4 km^2 | a bigger region collects more rain (when $`f \ge 0`$) |
 | $`\Delta A_k`$, $`dA`$ | a patch's area, and the patch in the limit | cells 4/n km by 2/n km | — |
 | $`n`$ | pieces per side of the grid or strip | 4, 16, 64 | the sums close in on 40 |
-| $`a`$, $`b`$, $`g_1`$, $`g_2`$ | outer range of x; bottom and top of a north strip | 0, 4; y = 0 and y = x/2 | a higher top edge takes in more land |
+| $`a`$, $`b`$, $`g_1`$, $`g_2`$ | outer range of x; bottom and top of a north strip | 0, 4; y = 0 and y = x/2 | a higher top edge takes in more land and rain |
 | $`c`$, $`d`$, $`h_1`$, $`h_2`$ | outer range of y; west and east ends of an east strip | 0, 2; x = 2y and x = 4 | — |
 | $`\iint_D f\,dA`$ | the total, in mm·km^2 | 40 mm·km^2 = 40,000 m^3 | — |
 
 ### When it holds
 
-- **Bounded depth.** A depth that runs off to infinity can make the orders disagree: the spike in What breaks gives +0.785398 one way, −0.785398 the other.
+- **Bounded depth.** A continuous depth on a closed, bounded region is bounded, and then both orders agree. A depth that runs off to infinity can make the orders disagree: the spike in What breaks gives +0.785398 one way, −0.785398 the other.
 - **Continuous depth, or jumps only along curves.** A curve has no area, so jumps along finitely many curves do no harm.
-- **A region described by strips.** Each strip is one piece whose ends move continuously with the outer variable; an L-shaped region is cut into such pieces first.
+- **A closed, bounded region described by strips.** Each strip is one piece whose ends move continuously with the outer variable, the bottom end never above the top end; an L-shaped region is cut into such pieces first.
 - **The same region both ways.** Keeping the old limits after a swap counts different land.
 
 ---
@@ -353,7 +353,7 @@ ALL CHECKS PASS
 
 Lean proves Fubini's theorem for every continuous depth on a region described by strips both ways, plus the catchment and the spike.
 
-- Take a region described by north strips, x from a to b, and also by east strips, y from c to d.
+- Take a region described by north strips, x from a to b (with $`a \le b`$), and also by east strips, y from c to d (with $`c \le d`$).
 - Each strip's ends move continuously, and its start never passes its end.
 - If the depth is continuous on that region, its double integral equals the north strips of strips, and also the east strips of strips.
 - On the catchment, the double integral of the depth 6 + 3y + xy is exactly 40 mm·km^2.
@@ -690,7 +690,7 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 - **Computation.** Weather and engineering codes add patches as the grid road does: [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md).
 
 > **Say it back**
-> A double integral adds depth times area over a region, as the limit of patch sums. For a bounded, continuous depth it equals strips of strips: integrate along each strip with the other variable fixed, then integrate the strips. Each order needs its own limits, read off a picture of the same region. On the catchment both give 40 mm·km^2, or 40,000 m^3. Drop boundedness and the orders can disagree.
+> A double integral adds depth times area over a region, as the limit of patch sums; where the depth is negative, it subtracts. For a continuous depth on a closed, bounded region described by strips it equals strips of strips: integrate along each strip with the other variable fixed, then integrate the strips. Each order needs its own limits, read off a picture of the same region. On the catchment both give 40 mm·km^2, or 40,000 m^3. Drop boundedness and the orders can disagree.
 
 ---
 
@@ -700,12 +700,12 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 
 ## Where this goes next
 
-- [Triple integrals](02-triple-integrals.md): a third variable, for solids.
+- [Triple integrals](02-triple-integrals.md): adding a third variable to integrate density and volume over three-dimensional solids.
 - [Green's theorem](../09-Vector%20Calculus/06-greens-theorem.md): a region's integral traded for a walk round its edge.
-- [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): an order swap proves it.
+- [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): swapping the order of integration proves the convolution theorem.
 - [The beta function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md): two integrals multiplied into one double integral.
 - [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the swap over a triangle like this one.
-- [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): averages over discs.
+- [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): computing averages of harmonic functions over circular discs.
 - [Joint densities](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the inner integral integrates a variable out.
 - [Product measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/02-product-measure.md): Fubini in full, and the hypothesis the spike breaks.
 - [Many dimensions](../../16-Numerical%20analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature.md): grids and random points in many dimensions.
@@ -713,7 +713,7 @@ example : (1 : ℚ) / (1 + (1 / 2) ^ 2) = 4 / 5 := by norm_num
 - [Surface area](../05-Curves%20and%20Solids/04-surface-area-of-revolution.md): patch area on a curved surface.
 - [Jordan content](07-jordan-content-and-fubini-in-n-dimensions.md): which regions have an area, and Fubini on them in any dimension.
 
-Rain soaking into the ground fills a solid, and adding over a volume is [Triple integrals](02-triple-integrals.md).
+Rain soaking into the ground fills a solid: how do we add density over a three-dimensional volume? That is [Triple integrals](02-triple-integrals.md).
 
 ---
 

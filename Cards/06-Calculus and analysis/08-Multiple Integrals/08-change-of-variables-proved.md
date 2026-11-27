@@ -16,7 +16,7 @@ The matrix L with rows (2, 1) and (0, 3) is "stretch x by 2 and y by 3, then add
 
 A curved map, near each point, also splits into moves that each change one coordinate.
 
-**Near each point, a one-to-one smooth map with nonzero Jacobian determinant is a chain of moves that each change one coordinate; each move obeys the one-variable substitution rule, their factors multiply to the determinant, and small pieces carry the rule to the whole region.**
+**Near each point, a one-to-one smooth map with nonzero Jacobian determinant is a chain of moves that each change one coordinate; each move obeys the one-variable substitution rule, their factors multiply to the determinant's size, and small pieces carry the rule to the whole region.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, using Fubini's theorem and the inverse function theorem from earlier cards.
 
@@ -65,7 +65,7 @@ On the shaft, $`T`$ is polar coordinates, $`f = x^2 + y^2 = r^2`$ and $`\det J_T
 - **T is one-to-one on A.** Run θ twice round and every place counts twice: 50.265482 cm⁴, not 25.132741.
 - **T has continuous partial derivatives (it is C¹) on an open set holding A and its edge.** Steps 3 and 4 need it.
 - **det J_T is nonzero there.** Where it is zero the map can fold or crush. Polar coordinates fail at r = 0 and repeat along θ = 2π. Cut thin strips off those edges, apply the theorem, then let the strips shrink.
-- **A is a Jordan region and f is continuous.** Otherwise the Riemann integrals may not exist; wing 10 handles wilder sets.
+- **A is a Jordan region and f is continuous on T(A) and its edge.** Otherwise the Riemann integrals may not exist; wing 10 handles wilder sets.
 
 ---
 
@@ -101,7 +101,7 @@ At a point where $`\det J_T \ne 0`$, peel off one coordinate at a time:
 
 After n rounds T is, near the point, a chain of swaps and one-coordinate moves, so Steps 0 to 2 apply.
 
-In polar coordinates: move 1 sends (r, θ) to (x, θ) with x = r cos θ: factor cos θ. Move 2 sends (x, θ) to (x, y) with y = x tan θ: factor x / cos²θ. The product is $`\cos\theta \cdot r\cos\theta/\cos^2\theta = r`$.
+In polar coordinates (where $`r > 0`$ and $`\cos\theta > 0`$): move 1 sends (r, θ) to (x, θ) with x = r cos θ: factor cos θ. Move 2 sends (x, θ) to (x, y) with y = x tan θ: factor x / cos²θ. The product is $`\cos\theta \cdot r\cos\theta/\cos^2\theta = r`$.
 
 At r = 1.5 and θ = 0.6, difference quotients give 0.825336 × 1.817442 = 1.500000. Near θ = π/2, where cos θ = 0, the proof peels y first.
 
@@ -551,10 +551,11 @@ example : ((2 : ℚ) ^ 4 / 4) = 4 := by norm_num
 
 ## Where this goes next
 
+- [Improper integrals with a dial](09-uniform-convergence-of-improper-integrals.md): integrals over an infinite range that carry a dial, and the test that lets limits and derivatives pass inside.
 - [Pullback](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/02-pullback-and-change-of-variables.md): the same theorem with the sign of the determinant kept, written in differential forms.
 - [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.
 
-This card needs a Jordan region and the Riemann integral; how far the formula reaches on wilder or unbounded regions is a question for the Lebesgue integral.
+This card needs a Jordan region and the Riemann integral; how far the formula reaches on wilder or unbounded regions is a question for the Lebesgue integral above, while the next card on this shelf handles unbounded intervals with a parameter in the Riemann setting.
 
 ---
 

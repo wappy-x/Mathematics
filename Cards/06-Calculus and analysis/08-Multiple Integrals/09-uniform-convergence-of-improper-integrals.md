@@ -14,7 +14,7 @@ The fix is a **cap**: one curve, free of the dial, above the integrand (the curv
 
 Without a cap, cancellation can work. The integral of e^(-tx) sin x / x is π/2 − arctan t. A tail bound with no t in it carries this to t = 0, the area π/2 = 1.570796 under sin x / x.
 
-**An improper integral with a dial converges uniformly when its tail beyond a cut-off shrinks for every dial setting at once; a cap with finite area forces this (the Weierstrass M-test), and then continuity and derivatives pass inside the infinite range.**
+**An improper integral with a dial converges uniformly when its tail beyond a cut-off shrinks for every dial setting at once; a cap with finite area forces this (the Weierstrass M-test), and then continuity passes inside the infinite range; derivatives pass inside when the integral of the rates converges uniformly too.**
 
 **What kind of fact this is:** a definition and three theorems (the M-test, continuity, differentiating inside), proved on this card in Why it works.
 
@@ -48,7 +48,7 @@ R_B = \sup_{t \in T} \left\lvert \int_B^\infty f(t,x)\,dx \right\rvert \longrigh
 
 Here sup is the least upper bound ([Uniform convergence](../06-Series/07-uniform-convergence.md)).
 
-**The Weierstrass M-test for integrals.** Suppose a cap $`M(x)`$, with no t in it, satisfies
+**The Weierstrass M-test for integrals.** Suppose $`f(t, \cdot)`$ is continuous for $`x \ge a`$ at each $`t \in T`$ and a cap $`M(x)`$, with no t in it, satisfies
 
 ```math
 \lvert f(t,x)\rvert \le M(x) \ \text{ for every } t \in T,\ x \ge a, \qquad \int_a^\infty M(x)\,dx \ \text{finite}.
@@ -58,10 +58,10 @@ Then the integral converges uniformly on $`T`$, and $`R_B \le \int_B^\infty M(x)
 
 **Read it aloud:** one curve with finite area above every member bounds every member's tail.
 
-**The payoff.** Let $`f`$ and its t-rate $`\partial f / \partial t`$ be continuous, with $`T`$ an interval.
+**The payoff.** Let $`f`$ and its t-rate $`\partial f / \partial t`$ be continuous on $`T \times [a, \infty)`$, with $`T`$ an interval.
 
 - If the integral of $`f`$ converges uniformly, $`F`$ is continuous on $`T`$.
-- If the integral of $`\partial f / \partial t`$ converges uniformly, and $`F`$ exists at one point, then
+- If the integral of $`\partial f / \partial t`$ converges uniformly, and $`F`$ exists at one point of $`T`$, then (one-sided at an endpoint of $`T`$)
 
 ```math
 F'(t) = \int_a^\infty \frac{\partial f}{\partial t}(t,x)\,dx .
@@ -127,7 +127,7 @@ A second road: at t = 1.5 the difference quotient of the x^2 area is −1.185185
 
 ### Step 4: Dirichlet's integral, for t above 0
 
-Let $`I(t)`$ be the integral of e^(-tx) sin x / x from 0 to infinity, with t at least some c above 0. The t-rate is −e^(-tx) sin x, capped by e^(-cx), area 1/c. So by Step 3:
+Let $`I(t)`$ be the integral of e^(-tx) sin x / x (with value 1 at x = 0) from 0 to infinity, with t at least some c above 0. The t-rate is −e^(-tx) sin x, capped by e^(-cx), area 1/c. So by Step 3:
 
 ```math
 I'(t) = -\int_0^\infty e^{-tx}\sin x\,dx = -\frac{1}{1+t^2} .
@@ -399,9 +399,9 @@ ALL CHECKS PASS
 
 Lean proves the card's three theorems, the M-test, continuity and differentiating inside, for every integrand that meets their conditions.
 
-- Suppose a cap with finite area lies above $`\lvert f(t,x)\rvert`$ for every allowed t and every x from a on. Then every integral converges, each tail is at most the cap's tail, and the convergence is uniform.
-- Suppose f is continuous and the totals $`F_B`$ close in on $`F`$ uniformly. Then $`F`$ is continuous on $`T`$.
-- Suppose $`T`$ is an interval, f and its t-rate are continuous, the rate's integral converges uniformly, and $`F`$ exists at one point $`t_0`$. Then $`F`$ exists throughout $`T`$, and $`F'(t)`$ is the integral of the t-rate.
+- Suppose $`f(t, \cdot)`$ is continuous from a on for each allowed t, and a cap with finite area lies above $`\lvert f(t,x)\rvert`$ for every allowed t and every x from a on. Then every integral converges, each tail is at most the cap's tail, and the convergence is uniform.
+- Suppose f is continuous on $`T \times [a, \infty)`$ and the totals $`F_B`$ close in on $`F`$ uniformly. Then $`F`$ is continuous on $`T`$.
+- Suppose $`T`$ is an interval, f and its t-rate are continuous on $`T \times [a, \infty)`$, the rate's integral converges uniformly, and $`F`$ exists at one point $`t_0`$ of $`T`$. Then $`F`$ exists throughout $`T`$, and $`F'(t)`$ (one-sided at an endpoint of $`T`$) is the integral of the t-rate.
 - The exact arithmetic in Worked numbers checks too, such as 3! = 6 and 6/16 = 3/8.
 
 The Simpson sums, the cap's tail beyond 20, Dirichlet's integral and the gamma slope are left to the Python and Rust checks.
@@ -694,11 +694,12 @@ example : ((2 : ℚ) / 10, (2 : ℚ) / 100, (2 : ℚ) / 1000) = (1 / 5, 1 / 50, 
 
 ## Where this goes next
 
+- [Line integrals of a function](../09-Vector%20Calculus/01-scalar-line-integrals.md): the first card of Vector Calculus, integrating density along a curve in space instead of a straight axis.
 - [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): an integral with a spike and a tail, differentiated by these rules.
 - [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): integrals with a dial s, where caps exist to the right of a line.
 - [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): the cap idea for the Lebesgue integral, with no continuity required.
 
-Left open: the cap here needs continuous integrands; can one integrable roof justify the swap for wilder functions too?
+Left open: the cap here needs continuous integrands; can one integrable roof justify the swap for wilder functions too? That leads to Dominated convergence in wing 10, while the next shelf, starting with Line integrals of a function, moves integration onto curved wires and surfaces in space.
 
 ---
 

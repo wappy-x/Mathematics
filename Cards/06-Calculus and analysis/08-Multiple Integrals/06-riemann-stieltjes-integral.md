@@ -14,9 +14,9 @@ Thomas Stieltjes's fix, from 1894, keeps the thin slices but measures each by ho
 
 The running total climbs across the spread, jumps at a lump and never falls: it is nondecreasing. From here on the running total is the **integrator**, and the share a slice holds is its **weight**.
 
-**A Stieltjes integral adds value times weight, where a slice's weight is how far a nondecreasing running total rises across it; a steady rise gives an ordinary integral and a jump gives a single term.**
+**A Stieltjes integral adds value times weight over a closed interval, where a slice's weight is how far a nondecreasing running total rises across it; for a continuous value, a steady rise gives an ordinary integral and a jump after the start gives a single term.**
 
-**What kind of fact this is:** a definition; that it exists for every continuous value against every nondecreasing integrator is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a definition; that it exists for every continuous value against every nondecreasing integrator on a closed, bounded interval is a theorem, proved on this card in Why it works.
 
 ### The picture: the running share of the book
 
@@ -51,7 +51,7 @@ Pick any point $`\xi_k`$ in slice k, its **tag**. A **Stieltjes sum** $`S`$ adds
 
 **Read it aloud:** weigh each thin slice by how much the integrator climbs across it, multiply by the value there, add, and see where the total settles.
 
-When G is a steady rise plus a few jumps, this becomes a working formula. $`G'`$ is the rate of G (its derivative) where it climbs smoothly; a jump of size $`w_j`$ sits at $`c_j`$:
+When G is a steady rise plus finitely many jumps, this becomes a working formula for a continuous $`f`$. $`G'`$ is the rate of G (its derivative) where it climbs smoothly, and it is continuous; a jump of size $`w_j`$ sits at $`c_j`$ with $`a < c_j \le b`$, and G takes its upper value there:
 
 ```math
 \int_a^b f\,dG = \int_a^b f(x)\,G'(x)\,dx + \sum_j w_j\,f(c_j)
@@ -76,7 +76,7 @@ Units: dollars per contract. The total weight G(b) − G(a) is 1.00, the whole b
 
 - **A continuous value.** Continuity of f suffices. Drop it where G jumps and the sums split: a $1 fee on each contract that pays something jumps at $0, as G does. With 125 slices, left tags give 0.5992 and right tags 1.0000, and finer grids keep the split.
 - **An integrator that never falls.** The bracket in Why it works needs weights of zero or more. Integrators that also fall need bounded variation, a finite total of rises and falls: [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md).
-- **A jump counts only inside the interval.** G(0) already includes the zero-payers, so starting at a = 0 would hide that jump; hence the start at −20.
+- **A jump counts only after the start ($`a < c_j \le b`$).** G(0) already includes the zero-payers, so starting at a = 0 would hide that jump; hence the start at −20.
 - **The working formula needs a rate.** G must climb at a continuous rate between finitely many jumps.
 
 ---
@@ -337,7 +337,7 @@ ALL CHECKS PASS
 Lean proves the existence theorem and the working formula in general, and the card's $35 average for the 1,000 contracts.
 
 - Take a value that is continuous on the interval and an integrator that never falls there. The Stieltjes sums settle on one number as the widest slice shrinks, whatever the tags.
-- Let an integrator that never falls be a steady rise at a continuous rate G' plus finitely many jumps inside the interval. For a continuous value, the integral is the ordinary integral of f times G', plus each jump's size times the value there.
+- Let an integrator that never falls be a steady rise at a continuous rate G' plus finitely many jumps at points strictly after a and up to b. For a continuous value, the integral is the ordinary integral of f times G', plus each jump's size times the value there.
 - The average payout, the integral of the payout x against the share G from −20 to 100, is exactly $35 per contract.
 - The hand arithmetic holds exactly: the counting, the chart, the worked numbers, the 12-slice sums 27.50 and 37.50, and the mistakes.
 
@@ -876,6 +876,7 @@ Weight spread over a region instead of a line is [Double integrals](01-double-in
 
 ## Where this goes next
 
+- [Jordan content](07-jordan-content-and-fubini-in-n-dimensions.md): returning to higher dimensions to define which bounded regions have an area and prove Fubini in any dimension.
 - [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the running share as a distribution, this integral as its average.
 - [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): the same weights, with values that need not be continuous.
 - [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integrator so rough that the tag choice changes the answer for good.

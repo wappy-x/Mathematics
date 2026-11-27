@@ -12,9 +12,9 @@ How heavy is the wedge, and where does it balance? Volume times density fails: t
 
 Weight each cube's mass by its position, divide by the total, and the result is the **centre of mass**. The wedge weighs 2792.53 g; its centre of mass lies on its middle line, 13.1303 cm from the tip. A uniform wedge's (one with the same density throughout) lies at 12.7324 cm.
 
-**A triple integral adds density times volume over every tiny piece of a solid; weight each piece by its position, divide by the total, and the result is the point where the solid balances.**
+**A triple integral adds density times volume over every tiny piece of a bounded solid; when the density is never negative and the total mass is positive, weight each piece by its position, divide by the total, and the result is the point where the solid balances.**
 
-**What kind of fact this is:** a method, resting on a definition (the limit of cube sums) and a theorem (adding one direction at a time gives the same limit), proved in Why it works.
+**What kind of fact this is:** a method, resting on a definition (the limit of cube sums) and a theorem (adding one direction at a time gives the same limit for a continuous density on a closed box), proved in Why it works.
 
 ### The picture: the wedge seen from above
 
@@ -32,9 +32,9 @@ Notation first, in words. Two integral signs add over a flat region ([Double int
 M = \iiint_E \rho\,dV \qquad Q_x = \iiint_E x\,\rho\,dV \qquad \bar{x} = \frac{Q_x}{M}
 ```
 
-**Read it aloud:** mass $`M`$ is density times volume added over the solid; the moment $`Q_x`$ is the same sum with each piece also times its $`x`$, its distance from the tip along the wedge's middle line; the balance point $`\bar{x}`$ (x bar) is moment over mass. With $`\rho = 1`$ the first sum is plain volume.
+**Read it aloud:** mass $`M`$ is density times volume added over the solid; the moment $`Q_x`$ is the same sum with each piece also times its $`x`$, its distance from the tip along the wedge's middle line; the balance point $`\bar{x}`$ (x bar) is moment over mass. With $`\rho = 1`$ the first sum is plain volume. Physical mass needs nonnegative density ($`\rho \ge 0`$), and the balance point needs positive total mass ($`M > 0`$).
 
-In cylindrical coordinates ([Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $`r`$ is distance from the wheel's axis, $`\theta`$ (theta) the angle from the middle line in radians, and $`z`$ the height. The wedge, of radius $`R`$, height $`H`$ and angle $`\alpha`$ (alpha), is every point with $`r`$ from 0 to $`R`$, $`\theta`$ from $`-\alpha/2`$ to $`\alpha/2`$, and $`z`$ from 0 to $`H`$. Density is $`1 + r/40`$ g/cm^3. A tiny piece has volume $`dV = r\,dr\,d\theta\,dz`$, so
+In cylindrical coordinates ([Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $`r`$ is distance from the wheel's axis, $`\theta`$ (theta) the angle from the middle line in radians, and $`z`$ the height. The wedge, of radius $`R`$, height $`H`$ and angle $`\alpha`$ (alpha, at most a full turn, so the ranges cover the wedge once), is every point with $`r`$ from 0 to $`R`$, $`\theta`$ from $`-\alpha/2`$ to $`\alpha/2`$, and $`z`$ from 0 to $`H`$. Density is $`1 + r/40`$ g/cm^3. A tiny piece has volume $`dV = r\,dr\,d\theta\,dz`$, so
 
 ```math
 M = \int_{-\alpha/2}^{\alpha/2} \int_0^R \int_0^H \left(1 + \frac{r}{40}\right) r \, dz\, dr\, d\theta
@@ -56,9 +56,9 @@ M = \int_{-\alpha/2}^{\alpha/2} \int_0^R \int_0^H \left(1 + \frac{r}{40}\right) 
 ### When it holds
 
 - **A bounded solid whose surface has no volume.** Cubes the surface cuts are neither in nor out, but their volume shrinks with the cubes: the cube sum falls short of the exact mass by 45.99 g with 1 cm cubes and by 2.42 g with 0.25 cm cubes.
-- **Finite density.** Density growing like 1/r^2 toward the axis gives infinite mass: r times 1/r^2 has no finite integral down to 0.
-- **Continuous density.** Then all six orders of adding x, y and z agree; an integrand that changes sign and blows up at a corner can give two answers.
-- **Positive total mass.** The centre divides by M; with negative "density", such as charge, it can be undefined or outside the solid.
+- **Bounded density, never negative.** A mass density is never negative ($`\rho \ge 0`$). Density growing like 1/r^2 toward the axis gives infinite mass: r times 1/r^2 has no finite integral down to 0.
+- **Continuous density on a bounded solid.** On a closed box (or with each order's limits describing the same solid), all six orders of adding x, y and z agree; an integrand that changes sign and blows up at a corner can give two answers.
+- **Positive total mass, and ranges that cover the solid once.** The centre divides by M; with negative "density", such as charge, it can be undefined or outside the solid. In cylindrical coordinates the angle range must cover the solid once (here $`0 \le \alpha \le 2\pi`$).
 
 ---
 
@@ -107,7 +107,7 @@ M = \alpha H \left(\frac{R^2}{2} + \frac{R^3}{120}\right) = 10.4720 \times 266.6
 
 For the moment, $`x = r\cos\theta`$. Integrating $`\cos\theta`$ across the angle gives $`2\sin(\alpha/2)`$, which is 1 here. The radius integral gains an $`r`$: $`R^3/3 + R^4/160`$. So $`Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)`$, and dividing by $`M`$ gives $`\bar{x}`$.
 
-With density 1, the same steps give the uniform centroid (the shape's own balance point), $`4R\sin(\alpha/2)/(3\alpha)`$. The denser rind pulls the balance point outward, from 12.7324 to 13.1303 cm.
+With density 1 (and a wedge of positive size), the same steps give the uniform centroid (the shape's own balance point), $`4R\sin(\alpha/2)/(3\alpha)`$. The denser rind pulls the balance point outward, from 12.7324 to 13.1303 cm.
 
 ---
 
@@ -132,7 +132,7 @@ The wedge weighs 2792.53 g and balances on its middle line at mid-height, 13.130
 | --- | --- | --- |
 | Drop the r in r dr dθ dz | 261.80, in g/cm, not g | Every cell counted as if it sat 1 cm from the axis |
 | Ignore density in the centre | 12.7324 cm, not 13.1303 | The shape's balance point, not the cheese's |
-| Divide the moment by volume | 17.5070 cm | g cm over cm^3 is not a length |
+| Divide the moment by volume | 17.5070, in g/cm^2, not cm | g cm over cm^3 is not a length |
 
 The code prints all three.
 
@@ -340,9 +340,9 @@ ALL CHECKS PASS
 
 Lean proves two general facts for every density meeting the card's conditions, and the wedge's mass and moment for every radius, height and angle.
 
-- On a box with continuous density, adding one direction at a time gives the triple integral, in all six orders of x, y and z.
-- Take a bounded solid with continuous density and positive total mass M. Masses times offsets from a point add to zero exactly when that point is the moments over M.
-- The wedge of radius R, height H and angle α up to a full turn, with density 1 + r/40, has mass $`M = \alpha H (R^2/2 + R^3/120)`$.
+- On a closed box with continuous density, adding one direction at a time gives the triple integral, in all six orders of x, y and z.
+- Take a bounded measurable solid with density continuous everywhere and positive total mass M. Masses times offsets from a point add to zero exactly when that point is the moments over M.
+- The wedge of nonnegative radius R, height H and angle α up to a full turn ($`0 \le \alpha \le 2\pi`$), with density 1 + r/40, has mass $`M = \alpha H (R^2/2 + R^3/120)`$.
 - Its moment along the middle line is $`Q_x = 2\sin(\alpha/2)\,H\,(R^3/3 + R^4/160)`$.
 - For the card's wedge, density is 1, 1.25 and 1.5 at 0, 10 and 20 cm out, and 2 sin(α/2) is 1.
 - The radius integrals are 800/3 for the mass and 11000/3 for the moment.
@@ -761,7 +761,7 @@ example : (110000 / 3) / (2000 * π / 3) = 55 / π := by
 
 > [!TIP]
 > **Try changing**
-> - **Density 1 everywhere.** Guess first: the centre moves toward the tip, to the uniform centroid, 12.7324 cm.
+> - **Density 1 everywhere.** Guess first: the centre moves toward the tip, to the uniform centroid, 12.7324 cm (and the first assert fails because M still uses the varying density).
 > - **A taller wheel, H = 20.** Guess first: mass doubles, the balance point along x stays put, and the centre's height doubles.
 > - **Delete the inside test in the cube loop.** Guess first: the sum weighs the whole bounding box and the first assert fails.
 
@@ -786,7 +786,7 @@ example : (110000 / 3) / (2000 * π / 3) = 55 / π := by
 - **Spinning things.** Weight each piece by squared distance from an axis and the same integral says how hard a body is to spin up: [Rotation](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md).
 
 > **Say it back**
-> A triple integral cuts a solid into tiny pieces, multiplies each volume by the density there, and adds, in the limit. It is computed one direction at a time, once the solid is described as ranges of coordinates. In cylindrical coordinates a piece's volume is r dr dθ dz, since an angle step is longer far out. Weighting by position and dividing by mass gives the centre of mass. The wedge weighs 2792.53 g and balances 13.1303 cm from its tip, beyond a uniform wedge's 12.7324 cm.
+> A triple integral cuts a bounded solid into tiny pieces, multiplies each volume by the density there, and adds, in the limit. For a continuous density it is computed one direction at a time, once the solid is described as coordinate ranges covering it once. In cylindrical coordinates a piece's volume is r dr dθ dz, since an angle step is longer far out. For nonnegative density with positive total mass, weighting by position and dividing by mass gives the centre of mass. The wedge weighs 2792.53 g and balances 13.1303 cm from its tip, beyond a uniform wedge's 12.7324 cm.
 
 ---
 
