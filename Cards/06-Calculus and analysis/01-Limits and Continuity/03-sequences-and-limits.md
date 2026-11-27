@@ -12,7 +12,7 @@ From which baker on is every share below 0.1 kg? Not the tenth: that share is ex
 
 An endless numbered list is a **sequence**. Its limit is a promise about everything past a cutoff, never about one term. The monotone convergence theorem says when a limit must exist before anyone knows its value.
 
-**A sequence heads for L when every tolerance has a cutoff past which every term is closer to L than that tolerance; a list that only climbs, under a ceiling, always has such a limit.**
+**A sequence heads for L when every positive tolerance has a cutoff past which every term is closer to L than that tolerance. A real sequence that never steps down, under a ceiling, always has a limit.**
 
 **What kind of fact this is:** a definition (the limit of a sequence) and a theorem (monotone convergence), proved on this card in Why it works.
 
@@ -79,7 +79,7 @@ The mirror image holds for a list that never steps up and never drops below a fl
 
 With tolerance 0.1, the share 1/n is below 0.1 exactly when n is above 10, so 10 is the smallest cutoff.
 
-For any tolerance t, a whole number at least 1/t is a cutoff. One always exists, because the whole numbers have no ceiling (the Archimedean property, proved in [No gaps](02-supremum-and-completeness.md)). No share ever equals 0: a limit need not be reached.
+For any positive tolerance t, a whole number at least 1/t is a cutoff. One always exists, because the whole numbers have no ceiling (the Archimedean property, proved in [No gaps](02-supremum-and-completeness.md)). No share ever equals 0: a limit need not be reached.
 
 Sequences also test function limits ([Limits](01-limits.md)). Feed the shelf's fraction (x squared minus 1) over (x minus 1) the inputs x = 1 + 1/n. At n = 11 it gives 2.090909, off 2 by 0.090909, which is 1/11: the outputs reach 2 on the shares' schedule.
 
@@ -119,7 +119,7 @@ Prove the limit exists before solving for it: doubling from 1 "solves" L = 2L to
 
 ### Step 5: crowding, without naming the limit
 
-A list is **Cauchy** when every tolerance has a cutoff past which any two terms lie within that tolerance of each other. No limit is named.
+A list is **Cauchy** when every positive tolerance has a cutoff past which any two terms lie within that tolerance of each other. No limit is named.
 
 The shares pass: past place 10, every share lies between 0 and 1/11, so any two differ by less than 0.1.
 
@@ -138,7 +138,9 @@ Write ε (epsilon, the traditional letter) for the tolerance t. A sequence a_n c
 
 **Monotone convergence.** Let a_n ≤ a_(n+1) ≤ B for all n. By completeness the terms have a least upper bound L. Given ε > 0, L − ε is not an upper bound, so a_K > L − ε for some K. For n > K, L − ε < a_K ≤ a_n ≤ L, so |a_n − L| < ε. The decreasing case applies this to −a_n.
 
-**Cauchy implies convergent.** A Cauchy list is bounded: past its cutoff for ε = 1, every term lies within 1 of a_(N+1). Let u_N be the least upper bound of the tail {a_n : n > N}. The u_N never step up and stay above a floor, so they converge to some L. Given ε > 0, take N with |a_m − a_n| < ε for all m, n > N, and fix n > N. For M ≥ N every term past M lies within ε of a_n, so a_n − ε ≤ u_M ≤ a_n + ε. Letting M grow gives |a_n − L| ≤ ε for every n > N; ε is arbitrary. The converse is the triangle inequality with ε/2.
+**Cauchy implies convergent.** A Cauchy list is bounded: past its cutoff for ε = 1, every term lies within 1 of a_(N+1). Let u_N be the least upper bound of the tail {a_n : n > N}. The u_N never step up and stay above a floor, so they converge to some L.
+
+Given ε > 0, take N with |a_m − a_n| < ε for all m, n > N, and fix n > N. For M ≥ N every term past M lies within ε of a_n, so a_n − ε ≤ u_M ≤ a_n + ε. Letting M grow gives |a_n − L| ≤ ε for every n > N; ε is arbitrary. The converse is the triangle inequality with ε/2.
 
 **The climb's rate.** Since c_(n+1) squared is 2 + c_n, 2 − c_(n+1) = (2 − c_n)/(2 + c_(n+1)), at most half of 2 − c_n: a second proof that the limit is 2.
 
@@ -209,7 +211,7 @@ print(f"mistake, bounded is not convergent: (-1)^n at n = 101, 102 gives {alt[0]
       f"gap {alt[1] - alt[0]} > 2 x 0.1")
 x = 1 + 1 / 11
 f = (x * x - 1) / (x - 1)                                      # the uncancelled fraction
-print(f"house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {f:.6f}, off 2 by {f - 2:.6f}")
+print(f"limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {f:.6f}, off 2 by {f - 2:.6f}")
 assert abs((f - 2) - 1 / 11) < 1e-12                           # fraction road vs 1/n road
 c, climb = 0.0, []
 for n in range(1, 21):                                         # c_1 = 0, c_(n+1) = sqrt(2 + c_n)
@@ -235,7 +237,7 @@ assert h >= 1 + 10 / 2                                         # road 2: blocks 
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-27 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 sequence a_n = 1/n, heading for L = 0
@@ -246,7 +248,7 @@ tolerance 3/1000: N by formula 333, N by scan 333
 term 10 misses by 0.100000, term 11 is inside at 0.090909
 mistake, cutoff 9 for tolerance 1/10: term 10 sits at 0.100000, not below 0.1
 mistake, bounded is not convergent: (-1)^n at n = 101, 102 gives -1, 1; gap 2 > 2 x 0.1
-house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: 2.090909, off 2 by 0.090909
+limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: 2.090909, off 2 by 0.090909
 climb c_n, n = 1..6: 0.000000 1.414214 1.847759 1.961571 1.990369 1.997591
 gap 2 - c_n, n = 1..6: 2.000000 0.585786 0.152241 0.038429 0.009631 0.002409
 chart, c_n for n = 1..5: 0.00 1.41 1.85 1.96 1.99
@@ -301,7 +303,7 @@ fn main() {
              alt[0], alt[1], alt[1] - alt[0]);
     let x: f64 = 1.0 + 1.0 / 11.0;
     let f = (x * x - 1.0) / (x - 1.0);                                    // the uncancelled fraction
-    println!("house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {:.6}, off 2 by {:.6}", f, f - 2.0);
+    println!("limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {:.6}, off 2 by {:.6}", f, f - 2.0);
     assert!(((f - 2.0) - 1.0 / 11.0).abs() < 1e-12);                     // fraction road vs 1/n road
     let (mut c, mut climb) = (0.0f64, Vec::new());
     for _ in 1..21 {                                                      // c_1 = 0, c_(n+1) = sqrt(2 + c_n)
@@ -331,7 +333,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 sequence a_n = 1/n, heading for L = 0
@@ -342,7 +344,7 @@ tolerance 3/1000: N by formula 333, N by scan 333
 term 10 misses by 0.100000, term 11 is inside at 0.090909
 mistake, cutoff 9 for tolerance 1/10: term 10 sits at 0.100000, not below 0.1
 mistake, bounded is not convergent: (-1)^n at n = 101, 102 gives -1, 1; gap 2 > 2 x 0.1
-house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: 2.090909, off 2 by 0.090909
+limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: 2.090909, off 2 by 0.090909
 climb c_n, n = 1..6: 0.000000 1.414214 1.847759 1.961571 1.990369 1.997591
 gap 2 - c_n, n = 1..6: 2.000000 0.585786 0.152241 0.038429 0.009631 0.002409
 chart, c_n for n = 1..5: 0.00 1.41 1.85 1.96 1.99
@@ -364,7 +366,7 @@ Lean proves monotone convergence in general, and the card's claims about the sha
 - The shares head for 0: for every tolerance t above 0, any whole number at least 1/t is a cutoff.
 - The climb steps up at every place, stays below 2 at every place, and heads for 2.
 
-Lean also checks the hand-worked numbers exactly; the cutoff scans, the running total and the twenty climb terms are left to the Python and Rust checks.
+Lean also checks the hand-worked numbers exactly; boundedness, Cauchy convergence, the cutoff scans, the running total and the twenty climb terms are left to the prose and the Python and Rust checks.
 
 ```lean
 -- Sequences: a real sequence that never steps down and stays under a ceiling heads for its least upper bound, the shares 1/n head for 0 with any whole number at least 1/t as the cutoff for tolerance t, and the climb c(n+1) = sqrt(2 + c(n)) from 0 rises, stays below 2 and heads for 2.
@@ -510,7 +512,7 @@ example : (1 : ℚ) + 10 / 2 = 6 := by norm_num
 - **Infinite sums.** A never-ending sum is the limit of its running totals, in [Infinite series](../06-Series/01-series-convergence.md).
 
 > **Say it back**
-> A sequence heads for L when every tolerance has a cutoff past which every term is within that tolerance of L; for 1/n and 0.1 the cutoff is 10. Settling implies bounded, not the reverse. A list that never steps down, under a ceiling, heads for its least upper bound; on the real line, a crowding list settles.
+> A sequence heads for L when every positive tolerance has a cutoff past which every term is within that tolerance of L; for 1/n and 0.1 the cutoff is 10. Settling implies bounded, not the reverse. A real list that never steps down, under a ceiling, heads for its least upper bound; on the real line, a crowding list settles.
 
 ---
 

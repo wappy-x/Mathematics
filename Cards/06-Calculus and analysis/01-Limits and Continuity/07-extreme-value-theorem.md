@@ -1,4 +1,4 @@
-# Extreme value theorem: a continuous function on a closed interval hits a highest and a lowest value
+# Extreme value theorem: a continuous function on a closed, bounded interval hits a highest and a lowest value
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Extreme value theorem
 
@@ -108,7 +108,7 @@ Let $`f`$ be continuous on $`[a,b]`$, with $`a < b`$ finite; if $`a = b`$ the on
 
 **Bolzano–Weierstrass.** For $`x_n`$ in $`[a,b]`$, keep closed halves as in Step 1; the k-th has width $`(b-a)/2^k`$. Let $`c`$ be the supremum of their left ends, which lies in every kept half. With $`n_1 < n_2 < \cdots`$ and $`x_{n_k}`$ in the k-th half, $`\lvert x_{n_k} - c\rvert \le (b-a)/2^k`$, which heads for 0.
 
-**Continuity.** Given $`\varepsilon > 0`$, continuity at c gives $`\delta > 0`$ with $`\lvert f(x) - f(c)\rvert < \varepsilon`$ when $`\lvert x - c\rvert < \delta`$. Eventually $`\lvert x_{n_k} - c\rvert < \delta`$, so $`f(x_{n_k})`$ converges to $`f(c)`$.
+**Continuity.** Given $`\varepsilon > 0`$, continuity at c gives $`\delta > 0`$ with $`\lvert f(x) - f(c)\rvert < \varepsilon`$ for every $`x`$ in $`[a,b]`$ with $`\lvert x - c\rvert < \delta`$. Eventually $`\lvert x_{n_k} - c\rvert < \delta`$, so $`f(x_{n_k})`$ converges to $`f(c)`$.
 
 **Bounded.** If not, pick $`x_n`$ with $`f(x_n) > n`$. A subsequence converges to c in $`[a,b]`$, so $`f(x_{n_k})`$ converges to $`f(c)`$; yet $`f(x_{n_k}) > n_k \ge k`$, and a convergent sequence is bounded.
 
@@ -120,7 +120,7 @@ Let $`f`$ be continuous on $`[a,b]`$, with $`a < b`$ finite; if $`a = b`$ the on
 
 The theorem says a top exists, not where. For the bed, algebra finds it: $`x(1-x) = \tfrac14 - (x - \tfrac12)^2`$, and a square is never negative, so the area is at most 0.25, reached only at x = 0.5. Both factors are at least 0, so the bottom is 0, at the ends.
 
-The same proof works on any **compact** set, one where every list has a subsequence settling inside it; continuous images of compact sets are compact (What compactness and connectedness buy).
+The same proof works on any non-empty **compact** set, one where every list has a subsequence settling inside it; continuous images of compact sets are compact (What compactness and connectedness buy).
 
 ---
 
@@ -306,9 +306,9 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the theorem for every function continuous on a closed interval of real numbers, and checks the bed exactly.
+Lean proves the theorem for every function continuous on a non-empty closed, bounded real interval, and checks the bed exactly.
 
-- The theorem itself: if $`f`$ is continuous on $`[a,b]`$ with $`a \le b`$, some $`c`$ and $`d`$ in $`[a,b]`$ give the top and the bottom.
+- The theorem itself: if $`f`$ is continuous on $`[a,b]`$ with finite real $`a \le b`$, some $`c`$ and $`d`$ in $`[a,b]`$ give the top and the bottom.
 - The bed: x(1 − x) = 1/4 − (x − 1/2)^2, and on [0, 1] the area stays between 0 and 0.25.
 - The top 0.25 is reached at x = 0.5 and nowhere else; the bottom 0 at x = 0 and at x = 1.
 - Dropping the ends: $`g(x) = x`$ on (0, 1) has no largest value.
@@ -435,10 +435,10 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 
 - **Numerical optimisation.** A refining search closes in only on a top that exists; on the bed, grids climb from 0.222222 to 0.249996.
 - **Later calculus.** The mean value theorem starts from a guaranteed highest point ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
-- **Design limits.** A cost that varies continuously over a closed range of settings has a cheapest setting, so a search for it is not chasing something absent.
+- **Design bounds.** A cost that varies continuously over a non-empty closed, bounded range of settings has a cheapest setting, so a search for it is not chasing something absent.
 
 > **Say it back**
-> A continuous function on a closed, bounded interval has a largest and a smallest value, taken at inputs in the interval. Any list of inputs there has a subsequence settling inside it, and continuity carries the outputs along. That bounds the outputs, then makes their least upper bound an output. Drop an end or continuity and the top can be approached forever. Finding the top is a separate job.
+> A continuous function on a non-empty closed, bounded real interval has a largest and a smallest value, taken at inputs in the interval. Any list of inputs there has a subsequence settling inside it, and continuity carries the outputs along. That bounds the outputs, then makes their least upper bound an output. Drop an end or continuity and the top can be approached forever. Finding the top is a separate job.
 
 ---
 
@@ -448,9 +448,9 @@ example : (10 : ℤ) * (1 - 10) = -90 ∧ (100 : ℤ) * (1 - 100) = -9900 := by 
 
 ## Where this goes next
 
-- [Uniform continuity](08-uniform-continuity-and-lipschitz.md): uses the same subsequence argument.
+- [Uniform continuity](08-uniform-continuity-and-lipschitz.md): continuous on a closed, bounded interval gives one tolerance window for all points, via the same subsequence argument.
 - [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a guaranteed top, combined with slopes.
-- [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem for compact sets.
+- [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): extending the extreme value theorem to any non-empty compact set.
 - [Equivalent norms](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/04-equivalence-of-norms-in-finite-dimensions.md): a minimum on a sphere that must exist.
 - [Hopf-Rinow](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/10-hopf-rinow-and-completeness.md): shortest paths that must exist.
 - [Compactness of [a, b]](09-compactness-of-closed-intervals.md): every bounded sequence has a settling subsequence, and every open cover has a finite one inside it.

@@ -29,7 +29,7 @@ print(f"mistake, bounded is not convergent: (-1)^n at n = 101, 102 gives {alt[0]
       f"gap {alt[1] - alt[0]} > 2 x 0.1")
 x = 1 + 1 / 11
 f = (x * x - 1) / (x - 1)                                      # the uncancelled fraction
-print(f"house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {f:.6f}, off 2 by {f - 2:.6f}")
+print(f"limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {f:.6f}, off 2 by {f - 2:.6f}")
 assert abs((f - 2) - 1 / 11) < 1e-12                           # fraction road vs 1/n road
 c, climb = 0.0, []
 for n in range(1, 21):                                         # c_1 = 0, c_(n+1) = sqrt(2 + c_n)

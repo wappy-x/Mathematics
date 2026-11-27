@@ -19,7 +19,7 @@ def point_ok(c):                           # every sample within d of the side c
     return lambda d: max(abs((c + d * k / 100) ** 2 - c * c) for k in range(-100, 101)) <= EPS
 
 K = 2 * B                                  # factoring: x*x - y*y = (x - y)(x + y), x + y <= 4
-g = [i / 1000 for i in range(2001)]
+g = [i / 1000 for i in range(int(1000 * B) + 1)]
 steep = max((y * y - x * x) / (y - x) for i, x in enumerate(g) for y in g[i + 1:])
 lip = EPS / K
 exact, bis = B - sqrt(B * B - EPS), bisect(uniform_ok)

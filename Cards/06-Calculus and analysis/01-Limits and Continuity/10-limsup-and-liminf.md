@@ -12,7 +12,7 @@ The reading never settles, but its swing does. Past tick 100 no reading tops 1.0
 
 Those two numbers are the **limit superior** (limsup) and **limit inferior** (liminf). Every bounded sequence has them. A sequence settles exactly when they meet. A power series, an endless sum of powers of x, gets its radius, the edge where the sum starts to fail, from a limsup too: the Cauchy–Hadamard formula.
 
-**The limsup is where the highest values of the tail end up, the liminf is where the lowest end up; they are the largest and smallest values any part of the sequence can head for, and the sequence has a limit exactly when the two are equal.**
+**For a bounded sequence, the limsup is where the highest values of the tail end up, the liminf is where the lowest end up; they are the largest and smallest values any part of the sequence can head for, and the sequence has a limit exactly when the two are equal.**
 
 **What kind of fact this is:** two definitions (limsup and liminf) and three theorems, all proved on this card in Why it works.
 
@@ -43,7 +43,7 @@ Notation first. A **tail** is the sequence with its first N − 1 terms thrown a
 
 **Read it aloud:** the limsup is where the tail ceilings end up as the start moves out, and the liminf is where the tail floors end up.
 
-A **subsequence** keeps infinitely many terms, in order, and drops the rest, such as the even ticks. A **subsequential limit** is a limit of some subsequence. Three theorems follow.
+A **subsequence** keeps infinitely many terms, in order, and drops the rest, such as the even ticks. A **subsequential limit** is a limit of some subsequence. For a bounded real sequence (and any real power series in the third), three theorems follow.
 
 ```math
 \limsup_{n\to\infty} a_n = \text{largest subsequential limit}, \qquad \liminf_{n\to\infty} a_n = \text{smallest subsequential limit}
@@ -55,7 +55,7 @@ A **subsequence** keeps infinitely many terms, in order, and drops the rest, suc
 \lim_{n\to\infty} a_n = L \iff \limsup_{n\to\infty} a_n = \liminf_{n\to\infty} a_n = L
 ```
 
-**Read it aloud:** a sequence settles at L exactly when its eventual ceiling and eventual floor are both L.
+**Read it aloud:** a bounded real sequence settles at L exactly when its eventual ceiling and eventual floor are both L.
 
 ```math
 \frac{1}{R} = \limsup_{n\to\infty} |c_n|^{1/n}
@@ -101,9 +101,13 @@ The odd terms −1 + 1/n stay above −1 but come within any tolerance of it. So
 
 ### Step 2: the limsup is the largest subsequential limit
 
-Fix a tolerance t. The tail sups fall to the limsup, so one of them is below limsup + t: only finitely many terms lie above limsup + t. Each tail sup is at least the limsup and is a least upper bound, so every tail has a term above limsup − t: infinitely many terms lie there. For t = 0.01, only 49 terms exceed 1.01, the even ticks 2 to 98, while every even tick is above 0.99.
+Fix a positive tolerance t. The tail sups fall to the limsup, so one of them is below limsup + t: only finitely many terms lie above limsup + t.
 
-So no subsequence can head above the limsup: it would need infinitely many terms above limsup + t. And some subsequence heads exactly to it: take one term above limsup − 1/k for k = 1, 2, 3, …, each later than the last. Being ever later, the picks eventually fall below limsup + t, for every t, since only finitely many terms lie above it. Squeezed from both sides ([Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md)), they head for the limsup. Here the even ticks head for 1, the odd ticks for −1. The liminf is the same argument upside down.
+Each tail sup is at least the limsup and is a least upper bound, so every tail has a term above limsup − t: infinitely many terms lie there. For t = 0.01, only 49 terms exceed 1.01, the even ticks 2 to 98, while every even tick is above 0.99.
+
+So no subsequence can head above the limsup: it would need infinitely many terms above limsup + t. And some subsequence heads exactly to it: take one term above limsup − 1/k for k = 1, 2, 3, …, each later than the last.
+
+Being ever later, the picks eventually fall below limsup + t, for every positive t, since only finitely many terms lie above it. Squeezed from both sides ([Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md)), they head for the limsup. Here the even ticks head for 1, the odd ticks for −1. The liminf is the same argument upside down.
 
 So the limsup names a limit that Bolzano–Weierstrass only promises ([Compactness of [a, b]](09-compactness-of-closed-intervals.md)).
 
@@ -111,15 +115,15 @@ So the limsup names a limit that Bolzano–Weierstrass only promises ([Compactne
 
 Past place N, every term lies between the tail floor and the tail ceiling: $`i_N \le a_n \le s_N`$. If both head for L, the terms are squeezed to L.
 
-Conversely, if $`a_n`$ heads for L, then for any tolerance t some tail lies within t of L, and so do its ceiling and floor. So both limits are L.
+Conversely, if $`a_n`$ heads for L, then for any positive tolerance t some tail lies within t of L, and so do its ceiling and floor. So both limits are L.
 
 The reading's tail ceiling and floor never come closer than 2, so it has no limit. For $`(-1)^n/n`$ the gap from place 1001 is already 0.001997, and it shrinks to 0: that sequence heads for 0.
 
 ### Step 4: the radius of a power series is one over a limsup
 
-Write ρ (rho) for the limsup of the roots $`r_n = |c_n|^{1/n}`$. The proof uses one fact about sums, the comparison test: for 0 ≤ q < 1 the geometric series 1 + q + q² + ⋯ adds up to 1/(1 − q), and a series whose terms are eventually smaller in size than $`q^n`$ adds up too (Lebl, §2.5, in Sources).
+Write ρ (rho) for the limsup of the roots $`r_n = |c_n|^{1/n}`$. The proof uses one fact about sums, the comparison test: for 0 ≤ q < 1 the geometric series 1 + q + q² + ⋯ adds up to 1/(1 − q). Any series whose terms are eventually smaller in size than $`q^n`$ adds up too (Lebl, §2.5, in Sources).
 
-- **Inside, |x| < 1/ρ.** Pick q between $`\rho\lvert x\rvert`$ and 1. The tail sups of the roots fall to ρ, below $`q/\lvert x\rvert`$, so eventually every root is below $`q/\lvert x\rvert`$. Then $`|c_n x^n| = (r_n \lvert x\rvert)^n < q^n`$, and the series converges by comparison.
+- **Inside, |x| < 1/ρ.** At x = 0 the sum is just c_0. For x ≠ 0, pick q between $`\rho\lvert x\rvert`$ and 1. The tail sups of the roots fall to ρ, below $`q/\lvert x\rvert`$, so eventually every root is below $`q/\lvert x\rvert`$. Then $`|c_n x^n| = (r_n \lvert x\rvert)^n < q^n`$, and the series converges by comparison.
 - **Outside, |x| > 1/ρ.** By Step 2, infinitely many roots exceed $`1/\lvert x\rvert`$, so infinitely many terms exceed 1 in size. Neighbouring running totals differ by one term, so they keep jumping by more than 1 and never settle.
 
 So the radius is 1/ρ, reading 1/0 as no edge and 1/∞ as radius 0. For $`c_n = (2 + (-1)^n)^n`$ the roots run 3, 1, 3, 1. The limsup is 3, so **R = 1/3**.
@@ -359,7 +363,7 @@ Lean proves the three theorems for every bounded sequence and every real power s
 - The limsup is the largest subsequential limit: some subsequence heads for it, and none heads higher.
 - The liminf is the smallest subsequential limit: some subsequence heads for it, and none heads lower.
 - A bounded sequence heads for L exactly when its limsup and its liminf both equal L.
-- Take ρ, the limsup of the roots $`\lvert c_n\rvert^{1/n}`$, and R = 1/ρ, reading 1/0 as no edge. Then the series converges for |x| < R and fails for |x| > R.
+- Take ρ, the limsup of the roots $`\lvert c_n\rvert^{1/n}`$, and R = 1/ρ, reading 1/0 as no edge and 1/∞ as radius 0. Then the series converges for |x| < R and fails for |x| > R.
 - The hand numbers are exact: 49 exceptions above 1.01, the ratios 1/59049 and 531441, and the sum 9670/1729 at x = 0.3.
 
 The tail-sup scans, the grid search for the edge and the 400-term sums are left to the Python and Rust checks.
@@ -584,7 +588,7 @@ example : (1 : ℚ) / (1 - 81 / 100) + (3 / 10) / (1 - 9 / 100) = 9670 / 1729 :=
 - **Integration.** [Fatou's lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) bounds the integral of a liminf, which exists even when the functions never settle.
 
 > **Say it back**
-> The tail sup, the lowest ceiling from place N on, only falls; its limit is the limsup, and the rising tail floors give the liminf. They are the largest and smallest values any subsequence can head for. A sequence has a limit exactly when they are equal. A power series has radius one over the limsup of the n-th roots of its coefficients, even when the ratio test fails.
+> For a bounded sequence, the tail sup, the lowest ceiling from place N on, only falls; its limit is the limsup, and the rising tail floors give the liminf. They are the largest and smallest values any subsequence can head for. The sequence has a limit exactly when they are equal. A power series has radius one over the limsup of the n-th roots of its coefficients, even when the ratio test fails.
 
 ---
 
@@ -596,12 +600,13 @@ example : (1 : ℚ) / (1 - 81 / 100) + (3 / 10) / (1 - 9 / 100) = 9670 / 1729 :=
 
 ## Where this goes next
 
+- [Monotone functions](11-monotone-functions-and-jump-discontinuities.md): one-sided limits of a monotone function, why every break is a jump, and why only countably many fit.
 - [Power series](../06-Series/04-power-series.md): the full theory, where settled coefficient ratios give the radius.
 - [Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): Cauchy–Hadamard for complex inputs, with a disc in place of an interval.
 - [Fatou's lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md): the liminf of functions under an integral.
 - [The Borel-Cantelli lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): the limsup of events, "infinitely often".
 
-The question this card leaves open: what do the eventual ceiling and floor of a function, rather than a list, say about where it is continuous?
+Left open: monotone convergence made the tail ceilings settle; what does monotonicity buy for a function on an interval, and what kinds of breaks can it have?
 
 ---
 

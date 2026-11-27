@@ -56,7 +56,7 @@ Heine–Borel, for any open cover of $`[a,b]`$:
 
 **Read it aloud:** if open sets cover the interval, then finitely many of them already cover it.
 
-On the real line a set $`K`$ passes the cover test exactly when it passes the subsequence test, exactly when it is **closed** (it keeps the limits of its own lists) and **bounded** (it fits inside some interval). Such a set is **compact**.
+On the real line a set $`K`$ passes the cover test exactly when it passes the subsequence test, exactly when it is **closed** (it keeps the limits of its own lists) and **bounded** (it fits inside some finite interval $`[a, b]`$). Such a set is **compact**.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -106,7 +106,7 @@ On the example, the walk takes (−0.1, 0.1) to 0.1, then (1/11, 2), which holds
 <details>
 <summary>Detailed proof: Heine–Borel on [a, b]</summary>
 
-Let $`\{U_i\}`$ be open sets covering $`[a,b]`$. Define
+Assume $`a \le b`$, and let $`\{U_i\}`$ be open sets covering $`[a,b]`$. Define
 
 $`\displaystyle S = \{\, x \in [a,b] : [a,x] \text{ is covered by finitely many } U_i \,\}.`$
 
@@ -130,7 +130,7 @@ Both tests match "closed and bounded":
 
 1. **Closed and bounded gives the subsequence test.** Bolzano–Weierstrass finds a settling subsequence; closed means its limit stays in the set.
 2. **Closed and bounded gives the cover test.** Put the set $`K`$ inside some $`[a,b]`$. The points outside $`K`$ form an open set: if an outside point p had no room, each stretch from p − 1/n to p + 1/n would hold a point of $`K`$, those points would form a list in $`K`$ heading for p, and closed would put p in $`K`$. Add that open set to the cover, apply Heine–Borel to $`[a,b]`$, then drop it.
-3. **Either test gives bounded.** Otherwise $`K`$ holds points ever further out, past 1, past 2, and so on. That list runs off, and the sets (−n, n) have no finite subcover, as in Step 3.
+3. **Either test gives bounded.** Otherwise $`K`$ holds points ever further from 0, past distance 1, 2, and so on. That list runs off, and the sets (−n, n) have no finite subcover, as in Step 3.
 4. **Either test gives closed.** Otherwise some list in $`K`$ heads for a point p outside it, as 1/n heads for 0. No subsequence settles in $`K`$, and the sets of points more than 1/n from p cover $`K`$ with no finite subcover.
 
 ---
@@ -562,7 +562,7 @@ example : Icc (0 : ℝ) 1 ⊆ Ioo (-1 / 10) (1 / 10) ∪ Ioo (1 / 11) 2 := by
 - [Limit superior and inferior](10-limsup-and-liminf.md): the largest and smallest settling points of a bounded list, +1 and −1 here.
 - [Compactness three ways](../../17-Topology/01-Metric%20Spaces/06-compactness-in-metric-spaces.md): the same tests for any distance, where "closed and bounded" can fail.
 
-Which other spaces are compact, and what replaces "closed and bounded" there, is the question left open.
+Left open: Bolzano–Weierstrass promises a bounded sequence has at least one settling point, so how do you name its largest and smallest settling points directly?
 
 ---
 

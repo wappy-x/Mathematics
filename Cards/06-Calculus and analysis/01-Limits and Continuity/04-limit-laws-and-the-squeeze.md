@@ -12,7 +12,7 @@ The sine part never settles: as x shrinks, it swings between 1 and −1 ever fas
 
 That trap is the **squeeze**. Beside it sit the **limit laws**: if two functions head for known numbers, their sum heads for the sum, their product for the product, their quotient for the quotient, provided the bottom number is not 0. The squeeze handles pieces the laws cannot touch.
 
-**Limits pass through adding, multiplying and dividing, and a function trapped between two others that head for the same number heads there too, even when one of its own factors never settles.**
+**When each part has a finite limit, limits pass through adding, multiplying and dividing (with a nonzero bottom limit). A function trapped near the point between two others heading for the same finite number heads there too, even if one factor never settles.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -43,7 +43,7 @@ If $`\lim_{x\to a} f(x) = L`$ and $`\lim_{x\to a} g(x) = M`$, both finite, then:
 \lim_{x\to a}\big(f(x)+g(x)\big)=L+M,\qquad \lim_{x\to a} c\,f(x)=c\,L,\qquad \lim_{x\to a} f(x)\,g(x)=L\,M,\qquad \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M}\ \text{ if } M\neq 0.
 ```
 
-**Read it aloud:** the limit of a sum, multiple, product or quotient is the sum, multiple, product or quotient of the limits, as long as the bottom limit is not zero.
+**Read it aloud:** when each part has a finite limit, the limit of a sum, multiple, product or quotient is the sum, multiple, product or quotient of those limits, provided the bottom limit is not zero.
 
 Subtraction follows: take c = −1 and add. The squeeze theorem: if, for every x in some window around a (a itself aside),
 
@@ -53,7 +53,7 @@ f(x)\le h(x)\le g(x)\qquad\text{and}\qquad \lim_{x\to a} f(x)=\lim_{x\to a} g(x)
 
 then $`\lim_{x\to a} h(x) = L`$.
 
-**Read it aloud:** a function caught between a floor and a ceiling that both head for L heads for L as well.
+**Read it aloud:** a function caught near the point (the point itself aside) between a floor and a ceiling that both head for L heads for L as well.
 
 Here $`h(x) = x^2 \sin(1/x)`$, floor $`-x^2`$, ceiling $`x^2`$, a = 0, L = 0.
 
@@ -127,9 +127,9 @@ At x = 1/(π/2 + 2πn), for whole numbers n, the sine factor reads 1; at x = 1/(
 
 ### Step 6: infinity, two different ways
 
-An **infinite limit** is about the output. $`\lim_{x\to 0} 1/x^2 = \infty`$, read "1 over x squared heads for infinity", means: name any height B, and a window around 0 exists where the output beats it. For B = 1000000 the window is 0.001. No number is approached. Sides can differ: 1 over x is 1000 at x = 0.001 and −1000 at x = −0.001.
+An **infinite limit** is about the output. $`\lim_{x\to 0} 1/x^2 = \infty`$, read "1 over x squared heads for infinity", means: name any height B, and a window around 0 (0 itself aside) exists where the output beats it. For B = 1000000 the window is 0.001. No number is approached. Sides can differ: 1 over x is 1000 at x = 0.001 and −1000 at x = −0.001.
 
-A **limit at infinity** is about the input. $`\lim_{x\to\infty} 1/x = 0`$ means: name a tolerance, and a cutoff exists beyond which the output stays within it. For 0.001 the cutoff is 1000, where the output is 0.001000. The laws and the squeeze carry over unchanged.
+A **limit at infinity** is about the input. $`\lim_{x\to\infty} 1/x = 0`$ means: name a positive tolerance, and a cutoff exists beyond which the output stays within it. For 0.001 the cutoff is 1000, where the output is 0.001000. The laws and the squeeze carry over unchanged.
 
 The two meet here: with t = 1/x, the sine of 1 over x near 0 is sin t far out, and it has no limit there either.
 
@@ -497,7 +497,7 @@ example : Real.sqrt (1 / 1000) ^ 2 = 1 / 1000 := by
 - **Polynomials.** The laws are how [Continuity](05-continuity.md) covers every polynomial at once.
 
 > **Say it back**
-> Limits pass through sums, multiples, products and quotients, when every part has a finite limit and no bottom limit is 0. Each law splits the tolerance between the parts. When a part has no limit, the squeeze traps the function between a floor and a ceiling heading for one number. The sine of 1 over x never settles, but times x squared it is trapped between minus and plus x squared, so it heads for 0. An infinite limit is an output beyond every height; a limit at infinity is an input going far out.
+> Limits pass through sums, multiples, products and quotients, when every part has a finite limit and no bottom limit is 0. Each law splits the tolerance between the parts. When a part has no limit, the squeeze traps the function near the point between a floor and a ceiling heading for the same finite number. The sine of 1 over x never settles, but times x squared it is trapped between minus and plus x squared, so it heads for 0. An infinite limit is an output beyond every height; a limit at infinity is an input going far out.
 
 ---
 

@@ -28,7 +28,7 @@ fn step(x: f64) -> i32 { if x >= 1.0 { 1 } else { 0 } } // a switch that jumps a
 
 fn main() {
     let k = 2.0 * B; // factoring: x*x - y*y = (x - y)(x + y), x + y <= 4
-    let g: Vec<f64> = (0..=2000).map(|i| i as f64 / 1000.0).collect();
+    let g: Vec<f64> = (0..=(1000.0 * B) as usize).map(|i| i as f64 / 1000.0).collect();
     let mut steep = f64::MIN;
     for i in 0..g.len() {
         for j in i + 1..g.len() {

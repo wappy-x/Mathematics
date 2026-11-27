@@ -10,11 +10,11 @@ A workshop cuts square tiles with sides up to 2 m, and charges by area, side tim
 
 It depends on the tile. Side 0.5 m forgives a side error of 9.90 mm. Side 2 m forgives only 2.50 mm, because there each millimetre of side adds about four times as much area. One saw setting good for every tile exists: 2.50 mm.
 
-A function whose output tolerance can be met by one input tolerance across the whole interval is **uniformly continuous**. Plain continuity ([Continuity](05-continuity.md)) promises a tolerance at each input separately. Uniform continuity fixes the tolerance first, then tests every point.
+A function is **uniformly continuous** on an interval when every positive output tolerance can be met by one positive input tolerance across the whole interval. Plain continuity ([Continuity](05-continuity.md)) promises a tolerance at each input separately. Uniform continuity fixes the tolerance first, then tests every point.
 
 With no size limit, no setting works: side 100 m forgives 0.00005 m, and bigger sides forgive less.
 
-**Continuity on a closed, bounded interval can always be met with one input tolerance for the whole interval; a fixed cap on steepness, the Lipschitz constant, turns that tolerance into a one-line division.**
+**Continuity on a closed, bounded interval can always be met with one input tolerance for the whole interval; a fixed positive cap on steepness, the Lipschitz constant K > 0, turns that tolerance into a one-line division.**
 
 **What kind of fact this is:** a theorem (Heine–Cantor), proved on this card in Why it works; uniform continuity and the Lipschitz constant are definitions.
 
@@ -43,7 +43,7 @@ Bars around a difference, as in $`\lvert x - y\rvert`$, give the distance betwee
 
 **Read it aloud:** the gap between two outputs is at most K times the gap between the inputs, wherever the two inputs sit.
 
-Divided by the input gap, the left side is the slope of a **chord**, the straight line joining two points of the graph. So K caps the steepness of every chord. For the tiles, $`f(x) = x^2`$ on sides 0 to 2 m, and $`K = 4`$ square metres per metre. The shortcut:
+Divided by the input gap, the left side is the slope of a **chord**, the straight line joining two points of the graph. So K caps the steepness of every chord. For the tiles, $`f(x) = x^2`$ on sides 0 to 2 m, and $`K = 4`$ square metres per metre. For $`K > 0`$, the shortcut (if $`K = 0`$, the function is constant and any positive input tolerance works):
 
 ```math
 \text{input tolerance} = \frac{\text{output tolerance}}{K} = \frac{0.01}{4} = 0.0025 \text{ m}.
@@ -77,7 +77,7 @@ When no K is at hand, **Heine–Cantor** still guarantees one tolerance: a funct
 
 ### Step 0: fix the steepness, and the tolerance fixes itself
 
-If no chord is steeper than K, an input gap below the output tolerance divided by K gives an output gap below the output tolerance. That sentence never says where the inputs sit, so a Lipschitz function is uniformly continuous.
+If no chord is steeper than K > 0, an input gap below the output tolerance divided by K gives an output gap below the output tolerance. That sentence never says where the inputs sit, so a Lipschitz function is uniformly continuous.
 
 ### Step 1: find K for the tiles by factoring
 
@@ -95,7 +95,7 @@ The largest single tolerance that works makes that top pair's gap exactly 0.01: 
 
 Plain continuity at one side $`c`$ tests only pairs with one member at $`c`$. Upwards is tighter, since the curve steepens, so the largest safe error solves $`(c + h)^2 - c^2 = 0.01`$: it is $`\sqrt{c^2 + 0.01} - c`$. At 0.5 m that is 0.00990195 m; at 100 m, 0.00005 m. The chart plots it.
 
-Every side has its tolerance, but on the whole line no single one survives. Propose any input tolerance $`h`$. The sides $`1/h`$ and $`1/h + h/2`$ are closer than $`h`$, yet
+Every side has its tolerance, but on the whole line no single one survives. Propose any positive input tolerance $`h`$. The sides $`1/h`$ and $`1/h + h/2`$ are closer than $`h`$, yet
 
 ```math
 \left(\tfrac{1}{h} + \tfrac{h}{2}\right)^2 - \left(\tfrac{1}{h}\right)^2 = 1 + \tfrac{h^2}{4} > 1,
@@ -122,7 +122,7 @@ The first members lie in a bounded interval, so a subsequence of them, $`x_{n_j}
 
 By the triangle inequality, $`\lvert y_{n_j} - p\rvert \le \lvert y_{n_j} - x_{n_j}\rvert + \lvert x_{n_j} - p\rvert < 1/n_j + \lvert x_{n_j} - p\rvert`$, and both terms go to 0. So $`y_{n_j}`$ converges to p too.
 
-By continuity at p, eventually both $`f(x_{n_j})`$ and $`f(y_{n_j})`$ lie within ε/3 of $`f(p)`$, so their gap is below 2ε/3, contradicting its being at least ε. The proof shows a δ exists without computing one; a K gives δ = ε/K.
+By continuity at p, eventually both $`f(x_{n_j})`$ and $`f(y_{n_j})`$ lie within ε/3 of $`f(p)`$, so their gap is below 2ε/3, contradicting its being at least ε. The proof shows a δ exists without computing one; a positive K gives δ = ε/K.
 
 </details>
 
@@ -130,11 +130,11 @@ By continuity at p, eventually both $`f(x_{n_j})`$ and $`f(y_{n_j})`$ lie within
 
 The square root on 0 to 1 is continuous on a closed, bounded interval, so Heine–Cantor applies. For inputs $`0 \le x \le y`$, $`(\sqrt{y} - \sqrt{x})^2 \le (\sqrt{y} - \sqrt{x})(\sqrt{y} + \sqrt{x}) = y - x`$: the output gap never exceeds the square root of the input gap. So inputs 0.01 apart have outputs at most 0.1 apart; the code finds that largest gap at 0.
 
-No K fits. Propose K = 4: inputs 0 and 0.04 give a chord of steepness 5. Inputs 0 and $`1/(K+1)^2`$ beat any proposed K with steepness $`K + 1`$. The graph stands vertical at 0.
+No K fits. Propose K = 4: inputs 0 and 0.04 give a chord of steepness 5. Inputs 0 and $`1/(K+1)^2`$ beat any proposed $`K \ge 0`$ with steepness $`K + 1`$. The graph stands vertical at 0.
 
 So Lipschitz gives uniform, uniform gives plain continuity, and neither arrow reverses: the square root blocks the first, squaring on the whole line the second.
 
-A second road to K uses derivatives: a rate never above 4 in size allows no chord steeper than 4. [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) takes it.
+A second road to K uses derivatives: on an interval, a rate never above 4 in size allows no chord steeper than 4. [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) takes it.
 
 ---
 
@@ -194,7 +194,7 @@ def point_ok(c):                           # every sample within d of the side c
     return lambda d: max(abs((c + d * k / 100) ** 2 - c * c) for k in range(-100, 101)) <= EPS
 
 K = 2 * B                                  # factoring: x*x - y*y = (x - y)(x + y), x + y <= 4
-g = [i / 1000 for i in range(2001)]
+g = [i / 1000 for i in range(int(1000 * B) + 1)]
 steep = max((y * y - x * x) / (y - x) for i, x in enumerate(g) for y in g[i + 1:])
 lip = EPS / K
 exact, bis = B - sqrt(B * B - EPS), bisect(uniform_ok)
@@ -228,7 +228,7 @@ print("all four checks passed")
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-11 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 K by factoring on [0,2]: 4.000000; steepest sampled chord: 3.999000
@@ -285,7 +285,7 @@ fn step(x: f64) -> i32 { if x >= 1.0 { 1 } else { 0 } } // a switch that jumps a
 
 fn main() {
     let k = 2.0 * B; // factoring: x*x - y*y = (x - y)(x + y), x + y <= 4
-    let g: Vec<f64> = (0..=2000).map(|i| i as f64 / 1000.0).collect();
+    let g: Vec<f64> = (0..=(1000.0 * B) as usize).map(|i| i as f64 / 1000.0).collect();
     let mut steep = f64::MIN;
     for i in 0..g.len() {
         for j in i + 1..g.len() {
@@ -331,7 +331,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-11 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 K by factoring on [0,2]: 4.000000; steepest sampled chord: 3.999000
@@ -363,7 +363,7 @@ Lean proves three theorems, for every function on the real numbers that meets th
 
 - Heine–Cantor: a function continuous on a closed, bounded interval $`[a, b]`$ is uniformly continuous on it.
 - A Lipschitz function is uniformly continuous on its interval.
-- With Lipschitz constant K, inputs closer than the output tolerance divided by K have outputs closer than that tolerance.
+- With a positive Lipschitz constant K, inputs closer than the output tolerance divided by K have outputs closer than that tolerance.
 - The square root on 0 to 1 is uniformly continuous, yet no K fits it.
 - Squaring on the whole line is continuous, but not uniformly continuous.
 
@@ -507,7 +507,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 > **Try changing**
 > - **Guess first:** sides up to 3 m (`B = 3.0`). K becomes 6, the tolerance 0.00166667 m; the `try` line prints both.
 > - **Guess first:** a contract of 0.001 m^2. The tolerance falls tenfold too, to 0.00025 m.
-> - **Guess first:** square roots in place of squares in the chord scan. The steepest chord never settles; it grows as the grid refines, since no K exists.
+> - **Guess first:** square roots in place of squares in the chord scan. The steepest chord beats K = 4 (stopping the chord assert) and keeps growing as the grid refines, since no K exists.
 
 ---
 
@@ -529,7 +529,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 - **Solving equations by repetition.** A map with K below 1 pulls points together, so repeating it homes in on one answer: Fixed points.
 
 > **Say it back**
-> Continuity gives each input its own tolerance. Uniform continuity asks for one tolerance for the whole interval. Heine–Cantor: continuous on a closed, bounded interval guarantees one. A Lipschitz constant K caps every chord's steepness, so the tolerance is the output tolerance divided by K, 0.0025 m for the tiles. The square root is uniform with no K.
+> Continuity gives each input its own tolerance. Uniform continuity asks for one tolerance for the whole interval. Heine–Cantor: continuous on a closed, bounded interval guarantees one. A positive Lipschitz constant K caps every chord's steepness, so the tolerance is the output tolerance divided by K, 0.0025 m for the tiles. The square root is uniform with no K.
 
 ---
 
@@ -540,6 +540,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 
 ## Where this goes next
 
+- [Compactness of [a, b]](09-compactness-of-closed-intervals.md): why closed, bounded real intervals keep every sequence and every open cover from escaping.
 - [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): K from a bounded derivative; K below 1 forces one fixed point, with iteration error bounded by powers of K.
 - [Uniform convergence](../06-Series/07-uniform-convergence.md): "one tolerance first" for a sequence of functions.
 - Uniform continuity, the Topology wing's card: Heine–Cantor for any distance, compactness replacing closed and bounded.
@@ -549,7 +550,7 @@ example : (2 : ℚ) * 3 = 6 ∧ (1 / 1000 : ℚ) / 4 = 1 / 4000 := by norm_num
 - [Rademacher's theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/07-rademachers-theorem.md): a Lipschitz function on R^n has a derivative almost everywhere.
 - [Universal approximation](../../14-Applied%20and%20computational/09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
 
-The question this card leaves open: what takes the place of "closed and bounded" when the inputs are not numbers on a line?
+The question this card leaves open: why do closed, bounded intervals keep sequences from escaping, and how does the open-cover view capture that same property?
 
 ---
 

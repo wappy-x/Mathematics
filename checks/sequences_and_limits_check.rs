@@ -36,7 +36,7 @@ fn main() {
              alt[0], alt[1], alt[1] - alt[0]);
     let x: f64 = 1.0 + 1.0 / 11.0;
     let f = (x * x - 1.0) / (x - 1.0);                                    // the uncancelled fraction
-    println!("house example, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {:.6}, off 2 by {:.6}", f, f - 2.0);
+    println!("limits fraction, (x^2 - 1)/(x - 1) at x = 1 + 1/11: {:.6}, off 2 by {:.6}", f, f - 2.0);
     assert!(((f - 2.0) - 1.0 / 11.0).abs() < 1e-12);                     // fraction road vs 1/n road
     let (mut c, mut climb) = (0.0f64, Vec::new());
     for _ in 1..21 {                                                      // c_1 = 0, c_(n+1) = sqrt(2 + c_n)

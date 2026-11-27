@@ -55,7 +55,7 @@ S \text{ non-empty, bounded above} \;\Longrightarrow\; \sup S \text{ exists, a r
 | $`\iff`$, $`\Longrightarrow`$ | "exactly when"; "guarantees" | read the two lines aloud | — |
 | $`\inf S`$ | the greatest lower bound, the **infimum** | 0 | — |
 
-The infimum works upside down: negate every member, take the supremum, negate it back.
+For a collection with a member and a floor, the infimum works upside down: negate every member, take the supremum, negate it back.
 
 ### When it holds
 
@@ -352,7 +352,7 @@ Lean proves completeness for every collection of reals, and the card's claims ab
 - The fractions whose square is under 2 have a member and a fraction ceiling, but no lowest fraction ceiling.
 - The worked numbers are exact: 0.9 is beaten by 0.95, and 3/2, 10/7, 17/12, 58/41, 99/70 are falling ceilings.
 
-The decimal printouts, the grid scans and the halving runs are left to the Python and Rust checks.
+The Archimedean property, decimal printouts, grid scans and halving runs are left to the prose and the Python and Rust checks.
 
 ```lean
 -- No gaps: every non-empty collection of real numbers with a ceiling has a lowest ceiling, the interval (0, 1) has lowest ceiling 1 and no largest member, and the fractions whose square is under 2 have no lowest fraction ceiling.
@@ -492,7 +492,7 @@ example : 40 + 250 * (0 : ℚ) = 40 ∧ 40 + 250 * ((1 : ℚ) / 2) = 165 ∧ 40 
 
 ## Where you meet it in real life
 
-- **Strict limits.** A rule such as "under 1 tonne" allows loads as close to it as anyone likes, with no heaviest allowed load. The limit is the supremum.
+- **Strict caps.** A rule such as "under 1 tonne" allows loads as close to it as anyone likes, with no heaviest allowed load. The cap is the supremum.
 - **Root finding.** Halving a bracket, as Step 3 does for root 2, relies on a number where the brackets close in; [Intermediate value theorem](06-intermediate-value-theorem.md) proves it is a root.
 - **Best-possible bounds.** "The error never exceeds this" names a supremum of errors that may never be reached; [Extreme value theorem](07-extreme-value-theorem.md) says when it is.
 

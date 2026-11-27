@@ -1,4 +1,4 @@
-# Intermediate value theorem: a continuous function cannot skip a value
+# Intermediate value theorem: a continuous function on a closed interval cannot skip a value
 
 [Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../README.md) → [Limits and Continuity](../README.md#s01) → Intermediate value theorem
 
@@ -14,7 +14,7 @@ The **intermediate value theorem** turns this into a proof. It says a continuous
 
 A sign change at the ends proves a root exists. Halving the interval over and over, called **bisection**, is both the proof and a way to close in on the root. How many roots there are, the theorem never says.
 
-**A function that is continuous on a closed interval, below a target at one end and above it at the other, equals the target somewhere in between: at least once, possibly more.**
+**A function that is continuous on a closed real interval, below a target at one end and above it at the other, equals the target somewhere in between: at least once, possibly more.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the full tolerance proof is folded there.
 
@@ -37,7 +37,7 @@ The rising line is the miss x^2 − 2 at sides 0.1 m apart; the flat line is zer
 ## The formula
 
 ```math
-f \text{ continuous on } [a, b], \quad y \text{ between } f(a) \text{ and } f(b) \;\Longrightarrow\; f(c) = y \text{ for some } c \text{ in } [a, b]
+f \text{ continuous on } [a, b] \text{ with } a \le b, \quad y \text{ between } f(a) \text{ and } f(b) \;\Longrightarrow\; f(c) = y \text{ for some } c \text{ in } [a, b]
 ```
 
 **Read it aloud:** if f has no jumps on the closed interval from a to b, then every value between f(a) and f(b) is hit by some input c in that interval.
@@ -56,7 +56,7 @@ f \text{ continuous on } [a, b], \quad y \text{ between } f(a) \text{ and } f(b)
 The working form, target 0, is often named after Bernard Bolzano:
 
 ```math
-f(a) < 0 < f(b) \;\Longrightarrow\; f(c) = 0 \text{ for some } c \text{ in } [a, b]
+f \text{ continuous on } [a, b] \text{ with } a < b, \quad f(a) < 0 < f(b) \;\Longrightarrow\; f(c) = 0 \text{ for some } c \text{ in } [a, b]
 ```
 
 Any target reduces to it: f hits y exactly where f − y hits zero. The bracket after n halvings has width
@@ -97,7 +97,7 @@ Continuity at c means f(x) heads for f(c) as x heads for c, written
 \lim_{x \to c} f(x) = f(c).
 ```
 
-That limit is a tolerance game: name an output tolerance, and some input window keeps f that close to f(c).
+That limit is a tolerance game: name a positive output tolerance, and some input window keeps f that close to f(c).
 
 For this f the tolerance game is plain arithmetic. On [1, 2], f(x) − f(c) = (x − c)(x + c), and x + c is at most 4. To land within 0.001 of f(c), stay within 0.00025 of c. The checks measure the worst case in that window: 0.000707.
 
@@ -124,7 +124,7 @@ The cubic h(x) = x^3 − x is −6 at x = −2 and 6 at x = 2. It factors as x(x
 
 For the tile, one more fact gives uniqueness: if 1 ≤ x < z ≤ 2 then z^2 − x^2 = (z − x)(z + x) > 0, so f rises the whole way and crosses zero once. That is a property of this f, not of continuity.
 
-Another road skips the halving: take c = sup of the inputs where f is below zero, and continuity again forbids f(c) above or below zero. The version that treats an interval as one unbroken, connected piece is Connected and path-connected.
+Another road skips the halving: take c = sup of the inputs in [a, b] where f is below zero, and continuity again forbids f(c) above or below zero. The version that treats an interval as one unbroken, connected piece is Connected and path-connected.
 
 ---
 
@@ -334,8 +334,8 @@ ALL CHECKS PASS
 
 Lean proves three things.
 
-- The theorem itself, for every function continuous on a closed interval of real numbers.
-- The target-0 form.
+- The theorem itself, for every function continuous on a closed real interval [a, b] with a ≤ b.
+- The target-0 form, for f continuous on [a, b] with a ≤ b, f(a) < 0 and f(b) > 0.
 - No fraction in [1, 2] squares to 2. So the theorem needs the number line to have no gaps.
 
 It also checks the halving fractions and the cubic's values exactly. The decimals, the jump j and the bisection runs are left to the Python and Rust checks.
@@ -443,7 +443,7 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 - **Desk inverses.** A strike from a quoted delta, a barrier from a target premium: each runs a continuous price backwards, and a sign change proves the answer exists before the search ([Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)).
 
 > **Say it back**
-> A continuous function on a closed interval takes every value between its end values. The tile's miss x^2 − 2 is −1 at side 1 and 2 at side 2, so it is zero somewhere between. Halving keeps a bracket, the gap-free real line supplies one point inside all brackets, and continuity forces zero there. A jump or a missing number breaks the argument. The promise is at least one root, not exactly one.
+> A continuous function on a closed real interval [a, b] (with a ≤ b) takes every value between its end values. The tile's miss x^2 − 2 is −1 at side 1 and 2 at side 2, so it is zero somewhere between. Halving keeps a bracket, the gap-free real line supplies one point inside all brackets, and continuity forces zero there. A jump or a missing number breaks the argument. The promise is at least one root, not exactly one.
 
 ---
 
@@ -460,13 +460,13 @@ example : (-1 : ℤ) ^ 3 - (-1) = 0 ∧ (0 : ℤ) ^ 3 - 0 = 0 ∧ (1 : ℤ) ^ 3 
 - [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): roads 1 and 3, on an option price.
 - [Barrier inverses](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): a barrier level or volatility, solved for.
 - [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike that gives a quoted delta.
-- [The broker butterfly](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/02-market-strangle-and-smile-strangle.md): matching a quoted strangle.
+- [The broker butterfly](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/02-market-strangle-and-smile-strangle.md): finding the volatility input that matches a quoted market strangle.
 - [Solving for the barrier](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/08-barrier-level-from-a-target-premium.md): the barrier that hits a premium.
-- [Correlation from a quanto price](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): correlation from a quanto price.
-- [Correlation from a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): correlation from a spread option.
+- [Correlation from a quanto price](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): solving a continuous quanto price backwards for its implied correlation.
+- [Correlation from a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): solving a continuous spread-option price backwards for its implied correlation.
 - [Bisection](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/01-bisection-and-bracketing.md): halving as an algorithm, with stopping rules.
 - [Connected and path-connected](../../17-Topology/02-Topological%20Spaces/07-connectedness-and-path-connectedness.md): the property of an interval the proof uses.
-- [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): the theorem in general form.
+- [What compactness and connectedness buy](../../17-Topology/02-Topological%20Spaces/08-images-of-compact-and-connected-sets.md): extending this theorem from real intervals to any connected space.
 - [Darboux's theorem](../03-What%20Derivatives%20Tell%20You/09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
 - [Exp, log, sine, cosine and pi from series alone](../06-Series/14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.
 

@@ -12,9 +12,9 @@ At x = 1 the fraction breaks: top and bottom are both 0, and 0 divided by 0 has 
 
 A **limit** names the value the outputs head for, without asking what happens at the point. "Heading for" is a metaphor; the card replaces it with a promise that can be checked.
 
-Name a tolerance on the output, say 0.001. Then find a distance on the input, here also 0.001, that keeps every x that close to 1, other than 1 itself, within 0.001 of 2. A limit is that promise kept for every tolerance, however small.
+Name a tolerance on the output, say 0.001. Then find a distance on the input, here also 0.001, that keeps every x that close to 1, other than 1 itself, within 0.001 of 2. A limit is that promise kept for every positive tolerance, however small.
 
-**A function has limit L at a point when, for every output tolerance, some input distance keeps all nearby inputs (the point itself excluded) within that tolerance of L.**
+**A function has limit L at a point (with allowed inputs arbitrarily close to it) when, for every positive output tolerance, some positive input distance keeps all nearby allowed inputs (the point itself excluded) within that tolerance of L.**
 
 **What kind of fact this is:** a definition; the claim that this fraction heads for 2 is then proved from it in Why it works.
 
@@ -101,7 +101,7 @@ The same move answers every tolerance, named or not: that makes it a proof, and 
 
 The line 3x − 1 also passes through (1, 2) and heads for 2 at 1. Its miss is |3x − 1 − 2| = 3|x − 1|, three times the input distance. To land within 0.001 of 2, stay within 0.001 ÷ 3 ≈ 0.000333 of 1. Reusing the distance 0.001 fails: x = 1.0009 lands 0.0027 from 2.
 
-For any straight line with slope $`m`$ (not zero), the answer to a tolerance is tolerance ÷ |m|: the promise for the linear case.
+For any straight line with slope $`m`$ (not zero), the answer to a positive tolerance is tolerance ÷ |m|: the promise for the linear case.
 
 ### Step 5: a patched value and a jump
 
@@ -326,7 +326,7 @@ The two outputs agree line for line.
 Lean proves the fraction's limit, the window for every straight line, and that the jump has no limit.
 
 - As x heads for 1, with 1 itself left out, the fraction (x^2 − 1) ÷ (x − 1) heads for 2.
-- For any line mx + c with slope m not zero, at any point a, the distance tolerance ÷ |m| answers every tolerance.
+- For any line mx + c with slope m not zero, at any point a, the distance tolerance ÷ |m| answers every positive tolerance.
 - The rule giving 0 below 1 and 1 from 1 upwards has no limit at 1: no L works.
 - The worked numbers: 1.999 just below 1, 2.001 just above, and 0 ÷ 0 at 1.
 - The cancelling x^2 − 1 = (x − 1)(x + 1), checked at x = 5 and x = −3.
@@ -455,7 +455,7 @@ example : |(0 : ℚ) - 1 / 2| = 1 / 2 ∧ |(1 : ℚ) - 1 / 2| = 1 / 2 ∧ (1 / 4
 - **Signals settling.** A circuit's steady output is a limit as time runs on; [Final value and bandwidth](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md) computes it.
 
 > **Say it back**
-> A limit is the value a rule's outputs head for as its input heads for a point, with the point itself left out. The promise: for every output tolerance there is an input distance that keeps every nearby output within it. The fraction is the line x + 1 with a hole at 1, so its miss from 2 equals the input's distance from 1. A line of slope 3 needs a distance a third as wide. A patched value does not move a limit; a jump destroys it.
+> A limit is the value a rule's outputs head for as its input heads for a point, with the point itself left out. The promise (when inputs exist arbitrarily close to the point): for every positive output tolerance there is a positive input distance that keeps every nearby output within it. The fraction is the line x + 1 with a hole at 1, so its miss from 2 equals the input's distance from 1. A line of slope 3 needs a distance a third as wide. A patched value does not move a limit; a jump destroys it.
 
 ---
 
@@ -468,7 +468,7 @@ example : |(0 : ℚ) - 1 / 2| = 1 / 2 ∧ |(1 : ℚ) - 1 / 2| = 1 / 2 ∧ (1 / 4
 
 - [No gaps](02-supremum-and-completeness.md): the real numbers have no gaps for a limit to fall into.
 - [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md): limits of sums and products, and trapping.
-- [Continuity](05-continuity.md): limit and value agree.
+- [Continuity](05-continuity.md): when a function's limit at a point equals its value there.
 - [The derivative](../02-Derivatives/01-the-derivative.md): the limit of a rate of change.
 - [Final value and bandwidth](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): a system's limit as time runs on.
 - [Limits and continuity with distances](../../17-Topology/01-Metric%20Spaces/04-convergence-and-continuity-in-metric-spaces.md): the same promise with other distances.

@@ -10,13 +10,13 @@ A taxi charges 2.50 dollars at the kerb, then 1.20 dollars for every kilometre s
 
 The fare never goes down. A function that never goes down is **increasing** (or never goes up: **decreasing**); either kind is **monotone**. That one property controls every break in the graph:
 
-- At every point the fare heads for one value from the left and one from the right: 4.90 and 6.10 at 2 km.
+- At every interior point the fare heads for one value from the left and one from the right: 4.90 and 6.10 at 2 km.
 - A break can only be a **jump**, where the two sides disagree: no holes, no blow-ups, no endless swinging.
 - The jumps are few. The fare rises 6.00 dollars over 5 km, so at most 6.00 / 1.20 = 5 jumps can be 1.20 or bigger. There are exactly 5, at 0, 1, 2, 3 and 4 km.
 
 Counting by size this way shows that a monotone function has only **countably many** jumps: they can be listed first, second, third, and so on, even when the list never ends.
 
-**A monotone function has a left and a right limit at every point, its only breaks are jumps, and the total rise caps how many jumps of each size fit, so its jumps can be listed one by one.**
+**On an interval, a monotone function has a left and a right limit at every interior point (one-sided at the ends), and its only breaks are jumps. On a closed, bounded interval the total rise or fall caps how many jumps of each size fit, so its jumps can be listed one by one.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works. The countability part is known as Froda's theorem.
 
@@ -32,13 +32,13 @@ Drawn to scale. A filled dot is the fare charged at that distance; an open dot i
 
 Notation first. The fare is $`f(x) = 2.50 + 1.20 \lceil x \rceil`$, where x is the distance in km and $`\lceil x \rceil`$ is x rounded up, the kilometres started. The function f is increasing on the interval from a to b: if x < y, then f(x) ≤ f(y).
 
-From [Continuity](05-continuity.md): $`f(c^-)`$ is the **left limit**, the value f heads for as x approaches c from below. $`f(c^+)`$ is the **right limit**, from above. From [No gaps](02-supremum-and-completeness.md): sup is the least upper bound, the lowest number no member passes; inf is the greatest lower bound.
+From [Continuity](05-continuity.md): $`f(c^-)`$ is the **left limit**, the value f heads for as x approaches c from below. $`f(c^+)`$ is the **right limit**, from above. From [No gaps](02-supremum-and-completeness.md): sup is the least upper bound, the lowest number no member passes; inf is the greatest lower bound. For an interior point c (a < c < b), with x in [a, b]:
 
 ```math
 f(c^-) = \sup_{x < c} f(x) \;\le\; f(c) \;\le\; \inf_{x > c} f(x) = f(c^+), \qquad J(c) = f(c^+) - f(c^-)
 ```
 
-**Read it aloud:** the left limit is the lowest ceiling of the values before c, the right limit is the highest floor of the values after c, the value at c sits between them, and the jump at c is the gap between the two limits.
+**Read it aloud:** the left limit is the lowest ceiling of the values before c, and the right limit is the highest floor of those after c. The value at c sits between them, and the jump at c is the gap between the two limits.
 
 At an end of the interval only one side exists: the jump at a is $`f(a^+) - f(a)`$, and at b it is $`f(b) - f(b^-)`$.
 
@@ -46,7 +46,7 @@ At an end of the interval only one side exists: the jump at a is $`f(a^+) - f(a)
 \sum_{\text{jump points}} J(c) \;\le\; f(b) - f(a), \qquad N_h \;\le\; \frac{f(b) - f(a)}{h}, \qquad \{c : J(c) > 0\} = \bigcup_{k=1}^{\infty} \{c : J(c) \ge 1/k\}
 ```
 
-**Read it aloud:** the jumps add up to at most the total rise, so the number of jumps of size h or more is at most the rise divided by h, and every jump is at least 1/k for some whole number k.
+**Read it aloud:** for an increasing function on [a, b] with a ≤ b, the jumps add up to at most the total rise. For any positive size h, at most the rise divided by h jumps are h or more, and every jump is at least 1/k for some whole number k.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -78,7 +78,9 @@ Left of c, the values of f stay at or below f(c), so by completeness they have a
 
 Fix c = 2 km. Every value before 2 km is at most f(2) = 4.90, so the values before c have a lowest ceiling L. Here L = 4.90.
 
-Name any tolerance, say one cent. L minus one cent is not a ceiling, so some point $`x_0`$ before c has a value above it. Here any $`x_0`$ past 1 km works, for example 1.9 km, where f = 4.90. For every x between $`x_0`$ and c, f only rises, so $`f(x_0) \le f(x) \le L`$. Every such f(x) is within a cent of L. The same works for any tolerance, so f(x) heads for L from the left.
+Name any positive tolerance, say one cent. L minus one cent is not a ceiling, so some point $`x_0`$ before c has a value above it.
+
+Here any $`x_0`$ past 1 km works, for example 1.9 km, where f = 4.90. For every x between $`x_0`$ and c, f only rises, so $`f(x_0) \le f(x) \le L`$. Every such f(x) is within a cent of L. The same works for any positive tolerance, so f(x) heads for L from the left.
 
 The right limit is the mirror image: the values after c have a floor f(c), so they have a greatest lower bound. Here it is 6.10.
 
@@ -99,9 +101,9 @@ All the slices sit between f(a) and f(b) and do not overlap. So the jumps add up
 
 ### Step 4: count by size, then list
 
-If $`N_h`$ jumps are each at least h, they add up to at least $`N_h \times h`$. That is at most the rise, so $`N_h \le (f(b) - f(a))/h`$.
+If $`N_h`$ jumps are each at least h > 0, they add up to at least $`N_h \times h`$. That is at most the rise, so $`N_h \le (f(b) - f(a))/h`$.
 
-Now list the jumps: first every jump of size 1 or more (finitely many), then every jump between 1/2 and 1, then between 1/3 and 1/2, and so on. Each batch is finite, and every jump lands in some batch. So the whole collection can be listed: it is countable.
+Now list the jumps: first every jump of size at least 1 (finitely many), then every jump at least 1/2 and below 1, then at least 1/3 and below 1/2, and so on. Each batch is finite, and every jump lands in some batch. So the whole collection can be listed: it is countable.
 
 The test staircase g on [0, 1] adds $`2^{-n}`$ at x = 1/n for n = 1, 2, 3, …. It rises by 1 in total and has a jump at every 1/n: infinitely many. Jumps of at least 0.1: 3, within the bound 10. Of at least 0.000001: 19, within the bound 1000000.
 
@@ -311,7 +313,7 @@ Lean proves the general facts for any monotone function on an interval [a, b], a
 - With the same f and c, the right limit exists and is the inf of the values after c.
 - Suppose f and c are as above. Then $`f(c^-) \le f(c) \le f(c^+)`$.
 - Suppose f and c are as above. Then f breaks at c exactly when $`f(c^-) < f(c^+)`$, so every break is a jump.
-- Take f increasing on [a, b] and any finitely many points of [a, b], with end jumps measured as on the card. Then their jumps add up to at most $`f(b) - f(a)`$.
+- Take f increasing on [a, b] with a ≤ b and any finitely many points of [a, b], with end jumps measured as on the card. Then their jumps add up to at most $`f(b) - f(a)`$.
 - Suppose $`N_h`$ of those points each have a jump of at least h, with h > 0. Then $`N_h \times h \le f(b) - f(a)`$.
 - Suppose f is increasing or decreasing on [a, b]. Then the points of [a, b] where f breaks are countable.
 - The fare never goes down. It reads 4.90 from just past 1 km to 2 km, and 6.10 from just past 2 km to 3 km.
@@ -547,10 +549,10 @@ example : ((Finset.Icc 1 40).filter (fun n => 2 ^ n ≤ 1000000)).card = 19 := b
 
 - **Probability.** A cumulative distribution function, the chance that a quantity is at most x, never goes down. Its jumps are the values the quantity takes with positive probability, so there are only countably many of them.
 - **Tariffs and running totals.** Fares, postage by weight band, a day's cumulative trading volume: each only rises, and each break is a jump you can measure as right limit minus left limit.
-- **Integration.** An increasing rate can be integrated as a limit of thin rectangles, jumps and all ([The integral](../04-Integrals/01-riemann-integral.md)).
+- **Integration.** An increasing rate on a closed, bounded interval can be integrated as a limit of thin rectangles, jumps and all ([The integral](../04-Integrals/01-riemann-integral.md)).
 
 > **Say it back**
-> A function that never goes down has, at every point, a left and a right limit: the lowest ceiling of the values before and the highest floor of those after. If they agree, it is continuous there; if not, it jumps. Jumps take separate slices of the total rise, so only finitely many exceed any size, and listing them by size band shows they are countable. The 5 km taxi ride: a rise of 6.00, five jumps of 1.20.
+> An increasing function on [a, b] has, at every interior point, a left and a right limit: the lowest ceiling of the values before and the highest floor of those after. If they agree, it is continuous there; if not, it jumps. Jumps take separate slices of the rise, so only finitely many exceed any positive size, and listing them by size band shows they are countable. The 5 km taxi ride: a rise of 6.00, five jumps of 1.20.
 
 ---
 
@@ -562,9 +564,10 @@ example : ((Finset.Icc 1 40).filter (fun n => 2 ^ n ≤ 1000000)).card = 19 := b
 
 ## Where this goes next
 
+- [The derivative](../02-Derivatives/01-the-derivative.md): instantaneous rate of change as a limit of average rates, opening the next shelf.
 - [Lebesgue's theorem on monotone functions](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md): an increasing function has a slope outside a set of total length zero, a set that holds this card's countable jumps.
 
-Left open: a jump has no slope, but away from the countably many jumps, must an increasing function have a slope at almost every point? That is Lebesgue's theorem.
+Left open: limits and continuity tell you where a function heads and when it stays unbroken, so how do you turn a limit into the exact instantaneous rate of change at a point?
 
 ---
 

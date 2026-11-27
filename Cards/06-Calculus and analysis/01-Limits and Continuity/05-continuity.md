@@ -12,7 +12,7 @@ A second taxi charges the same $2 a kilometre, measured continuously. At 2 km it
 
 That second property is **continuity**. Picture a pen drawing the graph without lifting; a drawing can hide a gap, so the real definition uses limits: the value at a point is exactly what nearby values head for. The stepped fare fails at every whole kilometre; the metered fare passes everywhere.
 
-**A function is continuous at a point when it has a value there and its nearby values head for exactly that value; sums, products and chains of continuous functions stay continuous.**
+**A function is continuous at a point when it has a value there and its nearby values head for that value; sums, products and chains of continuous functions stay continuous (for a chain, the outer function must be continuous where the inner one lands).**
 
 **What kind of fact this is:** a definition (continuity), with a theorem (sums, products and compositions stay continuous) proved on this card in Why it works.
 
@@ -84,7 +84,7 @@ Continuity is a definition. The theorem needs:
 
 ### Step 0: continuity is a promise about tolerances
 
-"Heads for" is a game: name an output tolerance, and the function wins if some input window keeps every output that close to the value at the point. Continuity is winning for every tolerance. Each rule builds a window for the combination from windows for its parts.
+"Heads for" is a game: name an output tolerance, and the function wins if some input window keeps every output that close to the value at the point. Continuity is winning for every positive tolerance. Each rule builds a window for the combination from windows for its parts.
 
 ### Step 1: the metered fare wins, the stepped fare loses
 
@@ -119,7 +119,7 @@ A constant wins the game with any window; the function returning its own input w
 <details>
 <summary>Detailed proof</summary>
 
-Write ε (epsilon) for the output tolerance and δ (delta) for the input window, both positive. f is continuous at a when for every ε there is a δ with $`|f(x) - f(a)| < \varepsilon`$ whenever $`|x - a| < \delta`$. This is the limit definition with x = a also allowed, which costs nothing: f(a) is within any tolerance of itself.
+Write ε (epsilon) for the output tolerance and δ (delta) for the input window, both positive. f is continuous at a when for every ε there is a δ with $`|f(x) - f(a)| < \varepsilon`$ for every allowed input x with $`|x - a| < \delta`$. This is the limit definition with x = a also allowed, which costs nothing: f(a) is within any tolerance of itself.
 
 **Sums.** Pick δ1 for f and δ2 for g, each with tolerance ε/2. Within the smaller, $`|(f+g)(x) - (f+g)(a)| \le |f(x) - f(a)| + |g(x) - g(a)| < \varepsilon`$.
 
@@ -129,7 +129,7 @@ Write ε (epsilon) for the output tolerance and δ (delta) for the input window,
 
 </details>
 
-A second road: f is continuous at a exactly when it sends every sequence heading for a to one heading for f(a), so the rules follow from those for sequences ([Sequences](03-sequences-and-limits.md)).
+A second road: f is continuous at a exactly when it sends every sequence of allowed inputs heading for a to one heading for f(a), so the rules follow from those for sequences ([Sequences](03-sequences-and-limits.md)).
 
 ---
 
@@ -493,10 +493,10 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 
 - **Tariffs.** Postage by weight band and parking by the started hour are step functions like the fare: continuous inside each band, jumping at each edge.
 - **Root-finding.** A continuous function below zero at one end and above at the other crosses zero between ([Intermediate value theorem](06-intermediate-value-theorem.md)). The stepped fare goes from $5 to $7 and never shows $6.
-- **Best and worst cases.** On a closed interval a continuous function reaches a largest and smallest value ([Extreme value theorem](07-extreme-value-theorem.md)).
+- **Best and worst cases.** On a closed, bounded, non-empty interval a continuous function reaches a largest and smallest value ([Extreme value theorem](07-extreme-value-theorem.md)).
 
 > **Say it back**
-> A function is continuous at a point when nearby values head for exactly its value there. It fails as a hole, a jump, a blow-up or an endless swing. Windows for the parts build a window for a sum, product or chain, so every polynomial is continuous.
+> A function is continuous at a point when nearby values head for exactly its value there. It fails as a hole, a jump, a blow-up or an endless swing. Windows for the parts build a window for a sum, product or chain (with the outer function continuous where the inner one lands), so every polynomial is continuous.
 
 ---
 
@@ -507,7 +507,7 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 
 ## Where this goes next
 
-- [Intermediate value theorem](06-intermediate-value-theorem.md): a continuous function takes every value between its end values.
+- [Intermediate value theorem](06-intermediate-value-theorem.md): a continuous function on a closed interval takes every value between its end values.
 - [The derivative](../02-Derivatives/01-the-derivative.md): a rate of change, existing only where the function is continuous.
 - [Measurable functions](../../10-Measure%20and%20integration/03-Measurable%20Functions/01-measurable-functions.md): a looser class that holds the stepped fare.
 - [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): finite total up-and-down movement, jumps included.
@@ -516,7 +516,7 @@ example : 3 + 2 * ⌈(1 / 2 * 4 : ℚ)⌉ = 7 ∧ 3 + 2 * ⌈(1 / 2 * (4000001 /
 - [Homotopy](../../17-Topology/04-Homotopy/01-homotopy-and-homotopy-equivalence.md): continuous deformations of one map into another.
 - [Monotone functions](11-monotone-functions-and-jump-discontinuities.md): one-sided limits always exist, every break is a jump, and there are only countably many.
 
-Left open: the stepped fare jumps from $5 to $7 and skips every fare between; must a function with no jumps on an interval show every value between its end values? That is the [Intermediate value theorem](06-intermediate-value-theorem.md).
+Left open: the stepped fare jumps from $5 to $7 and skips every fare between; must a continuous function on a closed interval show every value between its end values? That is the [Intermediate value theorem](06-intermediate-value-theorem.md).
 
 ---
 
