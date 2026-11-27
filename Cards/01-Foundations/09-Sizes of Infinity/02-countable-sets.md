@@ -350,7 +350,7 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so one will fire.
+> Guess first, then run it. The asserts are pinned to the card's numbers, so one will fire.
 > - **Keep the repeats.** Turn the skip off: 2/2 walks into room 6, but 2/2 is 1/1, who already has room 2 — one guest, two rooms — and the second assert fires.
 > - **Drop the 0.** Start at 1/1 and every fraction shifts down one: 1/2 lands in room 2.
 
