@@ -6,7 +6,7 @@
 
 ## General Overview
 
-The shelf's house series is 1 + 1/2 + 1/4 + …, and it adds up to 2 ([Infinite series](01-series-convergence.md)). Multiply it by itself. The answer should be 2 × 2 = 4.
+The geometric series 1 + 1/2 + 1/4 + …, the halving series, adds up to 2 ([Infinite series](01-series-convergence.md)). Multiply it by itself. The answer should be 2 × 2 = 4.
 
 But each factor never ends, so multiplying out the brackets makes an endless grid: every term of one factor times every term of the other. Adding an endless grid needs an order. The standard order walks its diagonals. Diagonal n holds the products whose two positions add to n, and its total is term n of a new series.
 
@@ -53,7 +53,7 @@ A series **converges absolutely** when its sizes $`\lvert a_n\rvert`$, the terms
 
 **Read it aloud:** if the first factor converges absolutely and the second converges at all, the Cauchy product converges, to the product of the sums.
 
-On the house series, $`c_n = (n+1)/2^n`$, and
+On the halving series, $`c_n = (n+1)/2^n`$, and
 
 ```math
 \Bigl(\sum_{n=0}^{\infty} \frac{1}{2^n}\Bigr)^{2} = \sum_{n=0}^{\infty} \frac{n+1}{2^n} = 2 \times 2 = 4 .
@@ -67,12 +67,12 @@ On the house series, $`c_n = (n+1)/2^n`$, and
 | $`A`$, $`B`$ | the sums of the two factors | 2 and 2 | product sum AB grows |
 | $`N`$; $`A_N`$, $`B_N`$, $`C_N`$ | the last position kept; partial sums, totals through position N | N = 10: $`C_{10}`$ = 3.987305 | smaller miss |
 | $`\beta_m`$, $`R_N`$ | in the proof: $`B_m - B`$, the second factor's miss; and the leftover it builds | both head for 0 | — |
-| $`\varepsilon`$, $`H`$, $`K`$, $`T`$, $`x`$ | in the folds: a tolerance, a ceiling on every miss, a cut-off position, the sizes' total, a power-series input | T = 2 for the house series | — |
+| $`\varepsilon`$, $`H`$, $`K`$, $`T`$, $`x`$ | in the folds: a tolerance, a ceiling on every miss, a cut-off position, the sizes' total, a power-series input | T = 2 for the halving series | — |
 | $`S`$ | the sum of 1 − 1/√2 + 1/√3 − … | 0.604899; squared 0.365902 | — |
 
 ### When it holds
 
-- **At least one factor converges absolutely.** Drop this and the square of 1 − 1/√2 + 1/√3 − … has product terms of size 1 or more: no sum.
+- **Both factors converge, and at least one converges absolutely.** Drop absolute convergence and the square of 1 − 1/√2 + 1/√3 − … has product terms of size 1 or more: no sum.
 - **The answer may converge only conditionally.** For (1 + 1/2 + 1/4 + …)(1 − 1/2 + 1/3 − …), the product's sizes add to 3.467045 by position 100 and 4.991202 by 1000, still growing.
 - **The diagonal order is part of the definition.** When both factors converge absolutely, every order of the grid gives AB; otherwise another order can give another answer.
 
@@ -133,7 +133,7 @@ Terms that never shrink to 0 cannot have a sum ([Infinite series](01-series-conv
 
 ### Step 4: one absolute factor, worked
 
-Multiply the house series by 1 − 1/2 + 1/3 − …, which converges only conditionally, to ln 2 = 0.693147181. Mertens promises 2 × ln 2 = 1.386294361. The partial sums give 1.413832 at N = 10, 1.389568 at 100, 1.386627 at 1000 and 1.386461 at 2000.
+Multiply the halving series by 1 − 1/2 + 1/3 − …, which converges only conditionally, to ln 2 = 0.693147181. Mertens promises 2 × ln 2 = 1.386294361. The partial sums give 1.413832 at N = 10, 1.389568 at 100, 1.386627 at 1000 and 1.386461 at 2000.
 
 The product's terms shrink like 2/3 divided by n + 1: (n + 1) times the size of $`c_{1000}`$ is 0.666445. Those sizes add like the harmonic series, so the product converges only conditionally.
 
@@ -148,12 +148,14 @@ xychart-beta
     line [1.00, -0.41, 1.24, -0.58, 1.36, -0.67, 1.43, -0.73, 1.48, -0.77, 1.52, -0.81, 1.55]
 ```
 
-Orange: the house series squared, closing on 4. Teal: the house series times 1 − 1/2 + 1/3 − …, zigzagging in on 1.386294361. Dark blue: 1 − 1/√2 + 1/√3 − … squared, whose swings widen instead.
+Orange: the halving series squared, closing on 4. Teal: the halving series times 1 − 1/2 + 1/3 − …, zigzagging in on 1.386294361. Dark blue: 1 − 1/√2 + 1/√3 − … squared, whose swings widen instead.
 
 <details>
 <summary>Abel's rescue: when all three series converge</summary>
 
-If the two factors and their Cauchy product all converge, the product's sum is AB, even with no absolute convergence. Put $`x^n`$ on every term. For x between 0 and 1 the power series converge absolutely: a convergent series has bounded terms, so its sizes times $`x^n`$ are capped by a geometric series. So Mertens applies. Let x rise to 1: [Abel's limit theorem](12-abels-limit-theorem.md) carries each sum to its value at 1.
+If the two factors and their Cauchy product all converge, the product's sum is AB, even with no absolute convergence. Put $`x^n`$ on every term.
+
+For x between 0 and 1 the power series converge absolutely: a convergent series has bounded terms, so its sizes times $`x^n`$ are capped by a geometric series. So Mertens applies, and letting x rise to 1 via [Abel's limit theorem](12-abels-limit-theorem.md) carries each sum to its value at 1.
 
 </details>
 
@@ -219,9 +221,9 @@ def simpson(f, a, b, panels):            # parabolas through each pair of strips
 geo = [0.5 ** n for n in range(2001)]                 # 1 + 1/2 + 1/4 + ..., sum 2
 c = cauchy(geo[:60], geo[:60])
 C, A = running(c), running(geo[:60])
-print("house: c_n for n=0..5: " + " ".join(f"{x:.4f}" for x in c[:6]))
-print(f"house: C_10={C[10]:.6f}  4-13/1024={4 - 13 / 1024:.6f}  A_10*B_10={A[10] ** 2:.6f}")
-print(f"house: C_59={C[59]:.6f}  A*B={A[59] * A[59]:.6f}")
+print("halving: c_n for n=0..5: " + " ".join(f"{x:.4f}" for x in c[:6]))
+print(f"halving: C_10={C[10]:.6f}  4-13/1024={4 - 13 / 1024:.6f}  A_10*B_10={A[10] ** 2:.6f}")
+print(f"halving: C_59={C[59]:.6f}  A*B={A[59] * A[59]:.6f}")
 assert all(abs(c[n] - (n + 1) / 2 ** n) < 1e-15 for n in range(60))   # count the diagonal
 assert all(abs(C[N] - (4 - (N + 3) / 2 ** N)) < 1e-12 for N in range(60))
 same = running([x * x for x in geo[:60]])[59]
@@ -242,7 +244,7 @@ print(f"conditional: S={S:.6f}  S^2={S * S:.6f}")
 print("conditional: |c_n| for n=0..5: " + " ".join(f"{abs(x):.4f}" for x in d[:6]))
 assert all(abs(d[n]) >= 2 * (n + 1) / (n + 2) for n in range(200))   # never below 1
 print(f"conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98={D[98]:.6f}  C_99={D[99]:.6f}")
-for name, line in (("house", C), ("mertens", M), ("conditional", D)):
+for name, line in (("halving", C), ("mertens", M), ("conditional", D)):
     print(f"chart {name} C_N, N=0..12: " + " ".join(f"{x:.2f}" for x in line[:13]))
 v = 1 / 1.05                                          # one year's discount at 5%
 due = [v ** n for n in range(1500)]                   # 1 now and every year after
@@ -253,12 +255,12 @@ assert abs(running(rising)[-1] - 21 * 20) < 1e-6 and abs(rising[7] - 7 * v ** 7)
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-house: c_n for n=0..5: 1.0000 1.0000 0.7500 0.5000 0.3125 0.1875
-house: C_10=3.987305  4-13/1024=3.987305  A_10*B_10=3.996095
-house: C_59=4.000000  A*B=4.000000
+halving: c_n for n=0..5: 1.0000 1.0000 0.7500 0.5000 0.3125 0.1875
+halving: C_10=3.987305  4-13/1024=3.987305  A_10*B_10=3.996095
+halving: C_59=4.000000  A*B=4.000000
 mistake, positions matched a_n*b_n: 1.333333, not 4
 ln 2 by Simpson=0.693147181  2 ln 2=1.386294361
 mertens: C_N at N=10, 100, 1000, 2000: 1.413832 1.389568 1.386627 1.386461
@@ -266,7 +268,7 @@ mertens: (n+1)|c_n| at n=1000: 0.666445; sum |c_n| to 100, 1000: 3.467045 4.9912
 conditional: S=0.604899  S^2=0.365902
 conditional: |c_n| for n=0..5: 1.0000 1.4142 1.6547 1.8165 1.9349 2.0263
 conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98=1.790925  C_99=-1.059841
-chart house C_N, N=0..12: 1.00 2.00 2.75 3.25 3.56 3.75 3.86 3.92 3.96 3.98 3.99 3.99 4.00
+chart halving C_N, N=0..12: 1.00 2.00 2.75 3.25 3.56 3.75 3.86 3.92 3.96 3.98 3.99 3.99 4.00
 chart mertens C_N, N=0..12: 1.00 1.00 1.33 1.25 1.41 1.32 1.42 1.34 1.42 1.35 1.41 1.36 1.41
 chart conditional C_N, N=0..12: 1.00 -0.41 1.24 -0.58 1.36 -0.67 1.43 -0.73 1.48 -0.77 1.52 -0.81 1.55
 bond at 5%: due=21.000000  level=20.000000  rising=420.000000
@@ -309,9 +311,9 @@ fn main() {
     let geo: Vec<f64> = (0..2001).map(|n| 0.5f64.powi(n)).collect();   // 1 + 1/2 + 1/4 + ..., sum 2
     let c = cauchy(&geo[..60], &geo[..60]);
     let (cc, a) = (running(&c), running(&geo[..60]));
-    println!("house: c_n for n=0..5: {}", row(&c[..6], 4));
-    println!("house: C_10={:.6}  4-13/1024={:.6}  A_10*B_10={:.6}", cc[10], 4.0 - 13.0 / 1024.0, a[10] * a[10]);
-    println!("house: C_59={:.6}  A*B={:.6}", cc[59], a[59] * a[59]);
+    println!("halving: c_n for n=0..5: {}", row(&c[..6], 4));
+    println!("halving: C_10={:.6}  4-13/1024={:.6}  A_10*B_10={:.6}", cc[10], 4.0 - 13.0 / 1024.0, a[10] * a[10]);
+    println!("halving: C_59={:.6}  A*B={:.6}", cc[59], a[59] * a[59]);
     assert!((0..60).all(|n| (c[n] - (n + 1) as f64 / 2f64.powi(n as i32)).abs() < 1e-15)); // count the diagonal
     assert!((0..60).all(|n| (cc[n] - (4.0 - (n + 3) as f64 / 2f64.powi(n as i32))).abs() < 1e-12));
     let same = running(&geo[..60].iter().map(|x| x * x).collect::<Vec<_>>())[59];
@@ -334,7 +336,7 @@ fn main() {
     println!("conditional: |c_n| for n=0..5: {}", row(&d[..6].iter().map(|x| x.abs()).collect::<Vec<_>>(), 4));
     assert!((0..200).all(|n| d[n].abs() >= 2.0 * (n + 1) as f64 / (n + 2) as f64)); // never below 1
     println!("conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98={:.6}  C_99={:.6}", dd[98], dd[99]);
-    for (name, line) in [("house", &cc), ("mertens", &mm), ("conditional", &dd)] {
+    for (name, line) in [("halving", &cc), ("mertens", &mm), ("conditional", &dd)] {
         println!("chart {} C_N, N=0..12: {}", name, row(&line[..13], 2));
     }
     let v: f64 = 1.0 / 1.05;                      // one year's discount at 5%
@@ -349,12 +351,12 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-house: c_n for n=0..5: 1.0000 1.0000 0.7500 0.5000 0.3125 0.1875
-house: C_10=3.987305  4-13/1024=3.987305  A_10*B_10=3.996095
-house: C_59=4.000000  A*B=4.000000
+halving: c_n for n=0..5: 1.0000 1.0000 0.7500 0.5000 0.3125 0.1875
+halving: C_10=3.987305  4-13/1024=3.987305  A_10*B_10=3.996095
+halving: C_59=4.000000  A*B=4.000000
 mistake, positions matched a_n*b_n: 1.333333, not 4
 ln 2 by Simpson=0.693147181  2 ln 2=1.386294361
 mertens: C_N at N=10, 100, 1000, 2000: 1.413832 1.389568 1.386627 1.386461
@@ -362,7 +364,7 @@ mertens: (n+1)|c_n| at n=1000: 0.666445; sum |c_n| to 100, 1000: 3.467045 4.9912
 conditional: S=0.604899  S^2=0.365902
 conditional: |c_n| for n=0..5: 1.0000 1.4142 1.6547 1.8165 1.9349 2.0263
 conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98=1.790925  C_99=-1.059841
-chart house C_N, N=0..12: 1.00 2.00 2.75 3.25 3.56 3.75 3.86 3.92 3.96 3.98 3.99 3.99 4.00
+chart halving C_N, N=0..12: 1.00 2.00 2.75 3.25 3.56 3.75 3.86 3.92 3.96 3.98 3.99 3.99 4.00
 chart mertens C_N, N=0..12: 1.00 1.00 1.33 1.25 1.41 1.32 1.42 1.34 1.42 1.35 1.41 1.36 1.41
 chart conditional C_N, N=0..12: 1.00 -0.41 1.24 -0.58 1.36 -0.67 1.43 -0.73 1.48 -0.77 1.52 -0.81 1.55
 bond at 5%: due=21.000000  level=20.000000  rising=420.000000
@@ -377,9 +379,9 @@ Lean proves Mertens' theorem for any two real series, and checks the card's two 
 - Suppose the first factor converges absolutely to A, and the second converges, perhaps only conditionally, to B. Then the Cauchy product converges to AB.
 - The series 1 − 1/√2 + 1/√3 − … converges.
 - Every term of its Cauchy product with itself has size at least 1, so that product has no sum.
-- Take the house series times itself. Then term n of the Cauchy product is (n + 1)/2^n, and the terms add up to 4.
-- The house diagonal totals for n = 0 to 5 are 1, 1, 3/4, 1/2, 5/16 and 3/16.
-- Through diagonal 10 the house total is 4 − 13/1024.
+- Take the halving series times itself. Then term n of the Cauchy product is (n + 1)/2^n, and the terms add up to 4.
+- The halving diagonal totals for n = 0 to 5 are 1, 1, 3/4, 1/2, 5/16 and 3/16.
+- Through diagonal 10 the halving total is 4 − 13/1024.
 - The rising bond's last step is 21 × 20 = 420.
 
 The decimals, the ln 2 product, the chart and the bond's discounting are left to the Python and Rust checks.
@@ -520,7 +522,7 @@ theorem cauchy_square_alternating_inv_sqrt_diverges :
     have := ge_of_tendsto' hc.abs h2
     norm_num at this
 
-/-- The house series squared: the Cauchy product of 1 + 1/2 + 1/4 + ... with itself has terms
+/-- The halving series squared: the Cauchy product of 1 + 1/2 + 1/4 + ... with itself has terms
 (n + 1)/2^n, and they add up to 2 × 2 = 4. -/
 theorem cauchy_square_geometric_half :
     (∀ n : ℕ, ∑ k ∈ range (n + 1), (1 / 2 : ℝ) ^ k * (1 / 2) ^ (n - k) = (n + 1) / 2 ^ n) ∧
@@ -543,7 +545,7 @@ theorem cauchy_square_geometric_half :
     field_simp
   · norm_num
 
--- Worked numbers: the house series' diagonal totals 1, 1, 3/4, 1/2, 5/16, 3/16.
+-- Worked numbers: the halving series' diagonal totals 1, 1, 3/4, 1/2, 5/16, 3/16.
 example : (List.range 6).map (fun n => ∑ k ∈ range (n + 1), (1 / 2 : ℚ) ^ k * (1 / 2) ^ (n - k))
     = [1, 1, 3 / 4, 1 / 2, 5 / 16, 3 / 16] := by
   norm_num [List.range_succ, Finset.sum_range_succ]
@@ -561,7 +563,7 @@ example : (21 : ℕ) * 20 = 420 := by norm_num
 #print axioms cauchy_square_geometric_half
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-27 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'cauchy_product_partial_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -574,7 +576,7 @@ example : (21 : ℕ) * 20 = 420 := by norm_num
 > **Try changing**
 > - **Guess first:** in the square, change the power 0.5 to 0.7. The factor still converges only conditionally, but Step 3's floor now shrinks to 0 and proves nothing; $`\lvert c_1\rvert`$ = 1.2311 is under the old floor 4/3, so its assert fails.
 > - **Guess first:** swap the two factors of the bond. The diagonals hold the same cells in reverse, so the price stays 420.
-> - **Guess first:** in `cauchy`, stop k one short of n. The first house assert fails.
+> - **Guess first:** in `cauchy`, stop k one short of n. The first halving-series assert fails.
 
 ---
 
@@ -592,12 +594,12 @@ example : (21 : ℕ) * 20 = 420 := by norm_num
 ## Where you meet it in real life
 
 - **Rising perpetual bonds.** At 5% a year, 1 paid at the end of every year forever is worth 20; 1 paid now and yearly after is worth 21. A bond paying 1, 2, 3, … at the ends of years 1, 2, 3, … is a level bond started at each of years 0, 1, 2, …: in year n, n of them pay. Its price is the Cauchy product 21 × 20 = 420.
-- **Adding independent counts.** Two people toss fair coins until heads. The chance their tails total n is (n + 1)/2^(n+2): the house diagonals divided by 4.
+- **Adding independent counts.** Two people toss fair coins until heads. The chance their tails total n is (n + 1)/2^(n+2): the halving diagonals divided by 4.
 - **Multiplying power series.** Inside both radii, power series multiply by the Cauchy product. [The binomial series and the number e](06-binomial-series-and-e.md) uses it for e × 1/e = 1. [Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md) use the rule as bookkeeping, with no sum asked for.
 - **Digital filters.** A filter's output is its input convolved with its response, the same formula. A response whose sizes have a finite total makes a stable filter.
 
 > **Say it back**
-> Multiplying two series makes an endless grid of products. The Cauchy product adds it along diagonals: term n pairs positions that add to n. If one factor converges absolutely and the other converges, the product converges to the product of the sums. The house series squared gives terms (n + 1)/2^n, adding to 4. The square of 1 − 1/√2 + 1/√3 − … has terms at least 1 in size, so no sum.
+> Multiplying two series makes an endless grid of products. The Cauchy product adds it along diagonals: term n pairs positions that add to n. If one factor converges absolutely and the other converges, the product converges to the product of the sums. The halving series squared gives terms (n + 1)/2^n, adding to 4. The square of 1 − 1/√2 + 1/√3 − … has terms at least 1 in size, so no sum.
 
 ---
 
@@ -613,7 +615,7 @@ example : (21 : ℕ) * 20 = 420 := by norm_num
 - [Exp, log, sine, cosine and pi from series alone](14-exp-log-and-trig-from-power-series.md): the Cauchy product turns the exponential series into the rule that exponents add.
 - [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): the same mathematician's results on primes, a different subject.
 
-Left open: when both factors converge only conditionally, which products still converge?
+Left open: how much of calculus can be built from power series and the Cauchy product alone, with no geometry? Exp, log, sine, cosine and pi from series alone answers that next (while classifying which products of two conditionally convergent series still converge remains open here).
 
 ---
 

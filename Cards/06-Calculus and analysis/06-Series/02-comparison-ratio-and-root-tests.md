@@ -47,14 +47,14 @@ The result this card settles, the **p-series** (one over n to a fixed power p):
 
 The harmonic series is p = 1, the squares p = 2. Four tests reach it:
 
-- **Comparison.** If $`0 \le a_n \le b_n`$ and the sum of $`b_n`$ converges, so does the sum of $`a_n`$. A divergent smaller sum makes the bigger diverge.
-- **Integral.** If $`a_n = f(n)`$ for a curve $`f`$ that is positive and falling, the series and the area under $`f`$ from 1 to infinity share a verdict. The totals sit between two areas:
+- **Comparison.** If $`0 \le a_n \le b_n`$ and the sum of $`b_n`$ converges, so does the sum of $`a_n`$. If the smaller non-negative sum diverges, so does the bigger.
+- **Integral.** If $`a_n = f(n)`$ for a curve $`f`$ that is positive and falling from $`x = 1`$ on, the series and the area under $`f`$ from 1 to infinity share a verdict. For every $`N \ge 1`$, the totals sit between two areas:
 
 ```math
 \int_{1}^{N+1} f(x)\,dx \ \le \ S_N \ \le \ f(1) + \int_{1}^{N} f(x)\,dx
 ```
 
-- **Ratio.** For positive terms, let $`L = \lim (n \to \infty)\ a_{n+1}/a_n`$, each term against the one before. Below 1: converges; above 1, or infinite: diverges.
+- **Ratio.** For terms positive from some position on, let $`L = \lim (n \to \infty)\ a_{n+1}/a_n`$, each term against the one before. Below 1: converges; above 1, or infinite: diverges.
 - **Root.** Let $`L = \lim (n \to \infty)\ (a_n)^{1/n}`$, the n-th root of the n-th term. Same verdicts.
 
 **At L = 1, ratio and root say nothing.** Both our series land there.
@@ -71,7 +71,7 @@ The harmonic series is p = 1, the squares p = 2. Four tests reach it:
 
 ### When it holds
 
-- **Terms never negative, eventually.** Mixed signs: [Alternating series](03-alternating-and-conditional-convergence.md).
+- **Terms never negative, eventually** (or test the absolute values $`|a_n|`$). Mixed signs: [Alternating series](03-alternating-and-conditional-convergence.md).
 - **Comparison in the right direction.** The squares sit below the divergent harmonic series and converge.
 - **A curve falling everywhere, not only at whole numbers.** Spikes between integers can add infinite area.
 - **A limit, not merely ratios below 1.** The harmonic ratios n/(n+1) are all below 1, and it diverges.
@@ -129,7 +129,7 @@ The harmonic ratio at n = 1000 is 0.999001; the squares', 0.998003. Both head fo
 
 ### Step 4: the root test is the same comparison
 
-If the n-th root of $`a_n`$ settles below 1, fix q between L and 1: eventually $`a_n`$ is below q^n, a geometric term, and the tail is at most q^N/(1 − q). If it settles above 1, eventually $`a_n`$ exceeds 1 and the terms cannot shrink to 0. At n = 1000 the n-th root of 1/n is 0.993116, of 1/n^2 is 0.986279: both creeping to 1, no verdict.
+If the n-th root of $`a_n`$ settles below 1, fix q between L and 1: eventually $`a_n`$ is below q^n, a geometric term, and the tail is at most q^N/(1 − q). If it settles above 1 (or grows without end), eventually $`a_n`$ exceeds 1 and the terms cannot shrink to 0. At n = 1000 the n-th root of 1/n is 0.993116, of 1/n^2 is 0.986279: both creeping to 1, no verdict.
 
 <details>
 <summary>Detailed proof: ratio, root and integral tests</summary>
@@ -173,7 +173,7 @@ A second case, the ratio test deciding: the first N terms of n/2^n add to 2 − 
 
 ## Code, from first principles, and it actually runs
 
-Every series is added term by term, then checked by a second road: harmonic totals against the log bounds; the squares' box against pi^2/6, with pi from Machin's formula 16 arctan(1/5) − 4 arctan(1/239) and arctan from its own series; the telescoped ceiling and the n/2^n sum against closed forms. Changing the squares to 1/(n^2 + 1), or the harmonic to 1/n^1.01, trips an assert.
+Every series is added term by term, then checked by a second road. Harmonic totals meet the log bounds, and the squares' box holds pi^2/6 (with pi built by Machin's formula 16 arctan(1/5) − 4 arctan(1/239) from the arctan series). The telescoped ceiling and the n/2^n sum meet their closed forms. Changing the squares to 1/(n^2 + 1), or the harmonic to 1/n^1.01, trips an assert.
 
 ### Python
 

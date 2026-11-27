@@ -14,7 +14,7 @@ The pieces come from one recipe: read a function's value and every rate of chang
 
 It does not always work. The function e to the minus 1 over x squared, set to 0 at x = 0, is smooth (it has every derivative), yet every rate of change at 0 is zero, so its recipe gives 0. At x = 0.5 the function is 0.0183156389 and the series says 0.
 
-**A function equals its Taylor series exactly where the leftover from Taylor's theorem shrinks to zero: for exp, sin and cos at every x, for ln(1 + x) with x above −1 and at most 1, and for some smooth functions nowhere but the centre.**
+**A smooth function equals its Taylor series at an input x exactly where the leftover from Taylor's theorem shrinks to zero: for exp, sin and cos at every x, for ln(1 + x) with x above −1 and at most 1, and for some smooth functions nowhere but the centre.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -44,13 +44,13 @@ f(x)\stackrel{?}{=}\sum_{k=0}^{\infty}\frac{f^{(k)}(a)}{k!}\,(x-a)^k
 
 **Read it aloud:** the k-th derivative at the centre, over k factorial, times the k-th power of the distance from the centre, added over every k.
 
-The question mark is the point. The right side is a power series ([Power series](04-power-series.md)); whether it adds up to $`f(x)`$ is a separate fact. Stopping after term n gives the Taylor polynomial $`T_n`$, and Taylor's theorem gives the leftover exactly:
+The question mark is the point. The right side is a power series ([Power series](04-power-series.md)); whether it adds up to $`f(x)`$ is a separate fact. When $`f`$ has all derivatives between $`a`$ and $`x`$, stopping after term n gives the Taylor polynomial $`T_n`$, and Taylor's theorem gives the leftover:
 
 ```math
 R_n(x)=f(x)-T_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\,(x-a)^{n+1}
 ```
 
-for some point $`\xi`$ between $`a`$ and $`x`$. The series equals $`f(x)`$ exactly when this leftover heads for 0 as $`n`$ grows. With centre 0, the four series proved here:
+for some point $`\xi`$ between $`a`$ and $`x`$ (with $`R_n(a) = 0`$ at $`x = a`$). The series equals $`f(x)`$ exactly when this leftover heads for 0 as $`n`$ grows. With centre 0, the four series proved here:
 
 ```math
 e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\qquad\text{every } x
@@ -79,7 +79,7 @@ e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\qquad\text{every } x
 
 - **Every derivative exists near the centre.** The size of x, cubed, has no third derivative at 0, so its series cannot be written.
 - **The leftover shrinks to zero.** Derivatives alone are not enough: the impostor $`g`$ has all of them and still misses by 0.0183156389 at x = 0.5.
-- **The input lies inside the radius of convergence** (the distance from the centre within which the series adds up). For ln(1 + x) it is 1; at x = 1.5 the sums of 10, 20 and 40 terms run −2.4, −96.8, −164192.6.
+- **The input is not past the radius of convergence** (the distance beyond which the series diverges; endpoints must be tested separately). For ln(1 + x) it is 1; at x = 1.5 the sums of 10, 20 and 40 terms run −2.4, −96.8, −164192.6.
 
 ---
 
@@ -144,7 +144,7 @@ The proof is a race: e to the minus 1 over x squared shrinks faster than any pow
 
 </details>
 
-A function equal to its Taylor series near every point is **analytic**. Exp, sin, cos and ln are; g is smooth (every derivative exists) but not analytic at 0, as Augustin-Louis Cauchy noted in the 1820s. Why the radius sits where it does, even when no break shows on the real line, is proved in [Taylor series in the plane](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md).
+A function equal to its Taylor series near every point is **analytic**. Exp, sin, cos and (on its domain) ln are; g is smooth (every derivative exists) but not analytic at 0, as Augustin-Louis Cauchy noted in the 1820s. Why the radius sits where it does, even when no break shows on the real line, is proved in [Taylor series in the plane](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md).
 
 ---
 
@@ -726,20 +726,20 @@ example : ∑ k ∈ range 21, 2 ^ k = 2097151 := by
 ## Where this goes next
 
 - [The binomial series and the number e](06-binomial-series-and-e.md): (1 + x) to any power, and e itself.
-- [Stirling's approximation](09-stirlings-approximation.md): how big n! is.
+- [Stirling's approximation](09-stirlings-approximation.md): how fast n factorial grows for large n, proved with integrals.
 - [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): the exp series splits into cos and sin.
 - [Taylor series in the plane](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): why the radius is where it is.
-- [Stirling's formula](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md): n! by complex tools.
+- [Stirling's formula](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md): the size of n factorial for large n, proved with complex analysis.
 - [Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): integration that rebuilds the exp series.
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): the exp series for a matrix.
-- [Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md): leftovers as step errors.
-- [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): equations solved by series.
-- [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): a second-order cost expansion.
-- [Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): coefficients that are averages.
-- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): probabilities from exp's terms.
+- [Order of a method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/02-local-and-global-error-and-order.md): how Taylor leftovers measure the local and global error of numerical solvers.
+- [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): solving differential equations by finding power-series coefficients term by term.
+- [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): using a second-order Taylor expansion of value to derive the optimal control equation.
+- [Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): generating functions whose Taylor coefficients encode a random variable's moments.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): discrete event probabilities given directly by the terms of the exp series.
 - [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): answers in powers of a small parameter.
 - [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): fractions of polynomials reaching past the radius.
-- [Gaussian quadrature](../../16-Numerical%20analysis/05-Quadrature/03-gaussian-quadrature.md): rules exact for polynomials.
+- [Gaussian quadrature](../../16-Numerical%20analysis/05-Quadrature/03-gaussian-quadrature.md): numerical integration rules chosen to integrate high-degree polynomials exactly.
 - [Chasing an algebraic number with fractions](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/10-diophantine-approximation-liouville-to-roth.md): fast series building numbers no polynomial equation has as roots.
 - [Nodes and cusps](../../22-Algebraic%20geometry/03-Plane%20Curves/04-singularities-nodes-and-cusps.md): the lowest terms shape a curve at a point.
 - [Exp, log, sine, cosine and pi from series alone](14-exp-log-and-trig-from-power-series.md): the elementary functions rebuilt without pictures.

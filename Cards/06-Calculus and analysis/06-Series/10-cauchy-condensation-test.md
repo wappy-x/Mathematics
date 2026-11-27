@@ -10,7 +10,9 @@ Add one over each prime: 1/2 + 1/3 + 1/5 + 1/7 + 1/11 and on. Below a million th
 
 The n-th prime sits close to n ln n, where ln is the natural logarithm. So the question becomes one about a simpler series: the terms $`a_n = 1/(n \ln n)`$, from n = 2 on. Its terms shrink, and its running total after about a million terms is only 3.42.
 
-The **Cauchy condensation test** settles it with one move. Keep only the terms at positions 2, 4, 8, 16 and on, and weight each by how many terms its block holds. For $`1/(n \ln n)`$ the weighted term at $`2^k`$ is $`1/(k \ln 2)`$: the harmonic series 1 + 1/2 + 1/3 + … again, divided by the constant ln 2. So the sum has no ceiling. It grows only like ln ln N, and ln ln of a million is 2.63.
+The **Cauchy condensation test** settles it with one move. Keep only the terms at positions 2, 4, 8, 16 and on, and weight each by how many terms its block holds.
+
+For $`1/(n \ln n)`$ the weighted term at $`2^k`$ is $`1/(k \ln 2)`$: the harmonic series divided by ln 2. So the sum has no ceiling. It grows only like ln ln N (2.63 at a million).
 
 Put $`(\ln n)^2`$ in place of $`\ln n`$ and the weighted terms become $`1/(k^2 (\ln 2)^2)`$: the squares, which converge.
 
@@ -39,7 +41,7 @@ Orange: the condensed total, a ceiling. Green: the true running total. Dark blue
 
 Notation first, in words. From [Infinite series](01-series-convergence.md): $`a_n`$ is the term in position n, and a sum to infinity means the limit of the running totals. The **condensed term** $`c_k = 2^k a_{2^k}`$ is the term at position $`2^k`$ times $`2^k`$.
 
-For terms with $`a_n \ge a_{n+1} \ge 0`$, every whole number $`K \ge 1`$ gives:
+For terms with $`a_n \ge a_{n+1} \ge 0`$ from n = 2 up, every whole number $`K \ge 1`$ gives:
 
 ```math
 \frac{1}{2}\sum_{k=1}^{K} 2^k a_{2^k} \ \le \ \sum_{n=2}^{2^K} a_n \ \le \ \sum_{k=1}^{K} 2^k a_{2^k}
@@ -100,13 +102,17 @@ Upper side. Positions 2 to $`2^K - 1`$ fill the blocks $`[2^k, 2^{k+1})`$ for k 
 
 Lower side. The first term is $`a_2 = c_1/2`$. Positions 3 to $`2^K`$ fill the blocks $`(2^k, 2^{k+1}]`$ for k = 1 to K − 1. Each holds $`2^k`$ terms, each at least $`a_{2^{k+1}}`$, so each block is at least $`c_{k+1}/2`$. Adding: the sum is at least $`(c_1 + \dots + c_K)/2`$.
 
-Verdict. Both totals rise with K. If $`\sum c_k = C`$ is finite, every running total up to $`2^K`$ is at most C, and any running total is at most one of these. If $`\sum c_k`$ diverges, the running totals up to $`2^K`$ are at least half the condensed totals, which pass any number. Starting the series at n = 1 adds the block k = 0 the same way.
+Verdict. Both totals rise with K. If $`\sum c_k = C`$ is finite, every running total up to $`2^K`$ is at most C, and every running total sits below one of these.
+
+If $`\sum c_k`$ diverges, the running totals up to $`2^K`$ are at least half the condensed totals, which pass any number. Starting at n = 1 adds block k = 0 the same way.
 
 </details>
 
 ### Step 4: settle the two families
 
-**The p-series**, $`1/n^p`$. The condensed term is $`2^k/2^{kp} = (2^{1-p})^k`$: a geometric series with ratio $`2^{1-p}`$. For p > 0 the terms fall, so the test applies. For p ≤ 0 they never drop below 1, so the sum diverges by the term test of [Infinite series](01-series-convergence.md). The geometric series converges exactly when its ratio is below 1, which is when p > 1. At p = 2 it is 1/2 + 1/4 + 1/8 + …, the house series 1 + 1/2 + 1/4 + … without its first term, so its total is 1. So the squares from n = 2 on add to at most 1; the check gives 0.644933. At p = 1 every condensed term is 1, the doubling blocks of the harmonic series.
+**The p-series**, $`1/n^p`$. The condensed term is $`2^k/2^{kp} = (2^{1-p})^k`$, a geometric series with ratio $`2^{1-p}`$. For p > 0 the terms fall, so the test applies; for p ≤ 0 they stay at least 1, so the sum diverges by the term test ([Infinite series](01-series-convergence.md)).
+
+The geometric series converges exactly when its ratio is below 1, so when p > 1. At p = 2 it is 1/2 + 1/4 + 1/8 + …, total 1, so the squares from n = 2 on add to at most 1 (the check gives 0.644933). At p = 1 every condensed term is 1, the doubling blocks of the harmonic series.
 
 **The log family**, $`1/(n (\ln n)^p)`$. Since $`\ln 2^k = k \ln 2`$:
 
@@ -116,7 +122,9 @@ c_k = \frac{2^k}{2^k (k \ln 2)^p} = \frac{1}{(\ln 2)^p}\cdot\frac{1}{k^p}
 
 **Read it aloud:** the condensed log series is a p-series in k, times a constant.
 
-For p > 0 the terms fall, and it converges exactly when p > 1. At p = 1 it is the harmonic series divided by ln 2, and diverges. At p = 2 it is the squares divided by $`(\ln 2)^2`$, and converges. For p ≤ 0 condensation is not needed: from n = 3 on, ln n > 1, so each term is at least 1/n, and the sum diverges by comparison with the harmonic series.
+For p > 0 the terms fall from n = 2 on, and it converges exactly when p > 1. At p = 1 it is the harmonic series over ln 2, and diverges; at p = 2 it is the squares over $`(\ln 2)^2`$, and converges.
+
+For p ≤ 0 condensation is not needed: from n = 3 on, ln n > 1, so each term is at least 1/n, and the sum diverges by comparison with the harmonic series.
 
 ### Why no antiderivative is needed
 
@@ -153,7 +161,9 @@ The first sum gains only ln 2 each time the number of digits in N doubles. Since
 
 ## Code, from first principles, and it actually runs
 
-The code adds every term up to $`2^{20}`$ and checks the sandwich at each K from 1 to 20, for both series. It takes three roads to the verdict: adding terms, the condensed sums, and the integral bounds. It also confirms the condensed term equals 1/(k ln 2), boxes the $`(\ln n)^2`$ sum, and sieves the primes below a million to test the bound on the n-th prime.
+The code adds every term up to $`2^{20}`$ and checks the sandwich at each K from 1 to 20, for both series, via three roads: term-by-term sums, condensed sums, and integral bounds.
+
+It also checks $`c_k = 1/(k \ln 2)`$, boxes the $`(\ln n)^2`$ sum, and sieves the primes below a million to test the prime bound.
 
 ### Python
 
@@ -540,15 +550,15 @@ example : Nat.Prime 999983 := by norm_num
 >
 > - **Using it on terms that rise.** Set 1/n to 0 at the powers of 2: the condensed series is 0, yet the sum reaches 12.440161 by $`2^{20}`$.
 > - **Forgetting the weight $`2^k`$.** The bare terms of 1/(n ln n) at the powers of 2 add to 1.000000, which suggests a finite sum that does not exist.
-> - **Taking the condensed total as the answer.** For $`1/(n (\ln n)^2)`$ it is 3.423715; the sum is 2.109743.
+> - **Taking the condensed total as the answer.** For $`1/(n (\ln n)^2)`$ it is 3.423715 against the true sum 2.109743.
 
 ---
 
 ## Where you meet it in real life
 
 - **Primes.** The n-th prime is below $`n(\ln n + \ln\ln n)`$ from n = 6 on, a published bound the check confirms for all 78,498 primes below a million. Since ln ln n < ln n, each 1/p_n is above $`1/(2 n \ln n)`$, so the sum of one over each prime diverges. It grows like ln ln N: 2.887328 below a million.
-- **Doubling data structures.** A growable array doubles its storage when full. Costs that depend on size are then counted block by block, one block per doubling, which is the condensation step.
-- **Sorting out borderline series.** Terms with logarithms, such as $`1/(n (\ln n)^{1.5})`$, sit where ratio and root tests give no verdict. Condensation turns them into p-series.
+- **Doubling data structures.** A growable array doubles its storage when full. Costs that depend on size are counted block by block, one per doubling: the condensation step.
+- **Borderline series.** Terms with logarithms, such as $`1/(n (\ln n)^{1.5})`$, sit where ratio and root tests give no verdict. Condensation turns them into p-series.
 
 > **Say it back**
 > For terms that never go negative and never rise, the blocks between powers of 2 are each sized by one term. The block from $`2^k`$ holds $`2^k`$ terms, so the sum is between half and all of the condensed series $`\sum 2^k a_{2^k}`$. The two converge or diverge together. For 1/(n ln n) the condensed series is harmonic, so it diverges, but only like ln ln N. With $`(\ln n)^2`$ it becomes the squares, so it converges.
@@ -565,7 +575,7 @@ example : Nat.Prime 999983 := by norm_num
 
 - [Summation by parts](11-summation-by-parts-and-dirichlets-test.md): sums whose terms change sign, where blocks of one sign no longer work.
 
-Condensation leaves one question open: is there a slowest divergent series, a border between finite and infinite? Adding more logarithms, as in 1/(n ln n ln ln n), always gives a slower one.
+Condensation requires terms of one sign; how to prove convergence when the terms change sign and only cancellation saves the sum is the question Summation by parts answers.
 
 ---
 

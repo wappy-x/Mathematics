@@ -10,13 +10,15 @@ A bond desk is owed $1 in n years. Its value today is $`x^n`$ dollars, where x i
 
 The desk ignores any payment worth under 10 cents today. How far out is that? It depends on the rate. At x = 0.5 (a rate of 100.0%) it is year 4. At x = 0.9 (11.1%) it is year 22. At x = 0.99 (1.0%) it is year 230, and at x = 0.999 (0.1%) it is year 2,302.
 
-Now the desk wants one year that works for every rate it might face. If rates stay at 11.1% or above, so x runs from 0 to 0.9, year 22 works: the worst case is x = 0.9, and $`0.9^{22} = 0.098477`$. If rates may fall toward zero, so x creeps up toward 1, the years 230, 2,302, … grow without a ceiling. No single year works.
+Now the desk wants one year that works for every rate it might face. If rates stay at 11.1% or above, so x runs from 0 to 0.9, year 22 works: the worst case is x = 0.9, and $`0.9^{22} = 0.098477`$.
 
-Finding one cutoff for every input is **uniform convergence** ([Uniform convergence](07-uniform-convergence.md)). Here the worst case was easy to spot. Dini's theorem says when one cutoff must exist without spotting the worst case at all.
+If rates may fall toward zero, so x creeps up toward 1, the years 230, 2,302, … grow without a ceiling. No single year works.
 
-**If continuous functions on a closed interval move toward their limit in one direction at every input, and the limit is continuous too, then one cutoff serves every input: the convergence is uniform.**
+Finding one cutoff for every input is **uniform convergence** ([Uniform convergence](07-uniform-convergence.md)). Dini's theorem tells you when one cutoff must exist without spotting the worst case at all.
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the four examples showing each condition is needed are direct calculations, printed by the checks.
+**If continuous functions on a closed, bounded interval move toward their limit in one direction at every input, and the limit is continuous too, then one cutoff serves every input: the convergence is uniform.**
+
+**What kind of fact this is:** a theorem, proved in Why it works; the four examples showing each condition is needed are direct calculations, printed by the checks.
 
 ### The picture: the worst gap, case by case
 
@@ -45,7 +47,7 @@ Notation first. An interval $`[a, b]`$ with square brackets includes both ends; 
 f_1(x) \le f_2(x) \le f_3(x) \le \cdots \to f(x) \text{ for each } x \text{ in } [a, b] \;\Longrightarrow\; E_n = \sup_{a \le x \le b} \lvert f(x) - f_n(x)\rvert \to 0
 ```
 
-**Read it aloud:** if the stage-n values climb toward a continuous limit at every input of a closed interval, the worst gap over the whole interval shrinks to zero.
+**Read it aloud:** if the stage-n values climb toward a continuous limit at every input of a closed, bounded interval, the worst gap over the whole interval shrinks to zero.
 
 Falling sequences work the same way: if $`f_n`$ falls to $`f`$, then $`-f_n`$ rises to $`-f`$. The bond example falls: $`x^n`$ drops toward 0 as n grows. On $`[0, 0.9]`$ its worst gap is $`E_n = 0.9^n`$, which is 0.098477 at n = 22.
 
@@ -78,7 +80,7 @@ The proof works with the **gap** $`g_n(x) = f(x) - f_n(x)`$ and, for a tolerance
 
 At one input, the gap shrinks and never grows back, because the sequence moves one way. The gap is continuous, so where it is small, it is also small at nearby inputs. So each input's cutoff covers a whole stretch around it.
 
-A closed interval can be covered by finitely many such stretches. Take the largest of their cutoffs: it serves everyone.
+A closed, bounded interval can be covered by finitely many such stretches. Take the largest of their cutoffs: it serves everyone.
 
 ### Step 1: turn it into gaps that fall to zero
 
@@ -96,18 +98,24 @@ With $`\varepsilon`$ = 0.1 the sets are $`U_n = [0, 0.1^{1/n})`$. $`U_{21}`$ end
 
 ### Step 3: compactness picks one stage
 
-A closed, bounded interval is **compact**: whenever open sets cover it, finitely many of them already do ([Compactness of [a, b]](../01-Limits%20and%20Continuity/09-compactness-of-closed-intervals.md)). So some $`U_{n_1}, \ldots, U_{n_k}`$ cover $`[a, b]`$. The sets grow, so the one with the largest index, N, contains all the others. Then $`g_N(x) < \varepsilon`$ at every input, and since gaps only fall, $`g_n(x) < \varepsilon`$ for every $`n \ge N`$. That is uniform convergence.
+A closed, bounded interval is **compact**: whenever open sets cover it, finitely many already do ([Compactness of [a, b]](../01-Limits%20and%20Continuity/09-compactness-of-closed-intervals.md)). So some $`U_{n_1}, \ldots, U_{n_k}`$ cover $`[a, b]`$.
+
+Because the sets grow, the largest index N contains all the others. Then $`g_n(x) \le g_N(x) < \varepsilon`$ for every $`n \ge N`$ and every x: uniform convergence.
 
 <details>
 <summary>Detailed proof, and a second road by subsequences</summary>
 
-Let $`\varepsilon > 0`$ and $`U_n = \{x \in [a, b] : g_n(x) < \varepsilon\}`$. Each $`U_n`$ is open relative to $`[a, b]`$, since it is where a continuous function lies below $`\varepsilon`$. Since $`g_{n+1} \le g_n`$, $`U_n \subseteq U_{n+1}`$. For each x, $`g_n(x) \to 0`$, so x lies in some $`U_n`$. By compactness, $`[a, b] \subseteq U_{n_1} \cup \cdots \cup U_{n_k}`$, and with $`N = \max n_i`$ this union is $`U_N`$. For $`n \ge N`$ and every x,
+Let $`\varepsilon > 0`$ and $`U_n = \{x \in [a, b] : g_n(x) < \varepsilon\}`$. Each $`U_n`$ is open in $`[a, b]`$ by continuity of $`g_n`$. Since $`g_{n+1} \le g_n`$, $`U_n \subseteq U_{n+1}`$. For each x, $`g_n(x) \to 0`$, so x lies in some $`U_n`$.
+
+By compactness, $`[a, b] \subseteq U_{n_1} \cup \cdots \cup U_{n_k} = U_N`$ with $`N = \max n_i`$. For $`n \ge N`$ and every x,
 
 $`\displaystyle 0 \le g_n(x) \le g_N(x) < \varepsilon,`$
 
 so $`E_n \le \varepsilon`$ for all $`n \ge N`$.
 
-Second road. Suppose not: some $`\varepsilon`$ and, for infinitely many n, an input $`x_n`$ with $`g_n(x_n) \ge \varepsilon`$. The $`x_n`$ lie in $`[a, b]`$, so a subsequence settles on some c in $`[a, b]`$ (Bolzano–Weierstrass, proved in [Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)). Fix any m. For the later terms, those with $`n \ge m`$, $`g_m(x_n) \ge g_n(x_n) \ge \varepsilon`$, and continuity of $`g_m`$ gives $`g_m(c) \ge \varepsilon`$. That holds for every m, so $`g_m(c)`$ does not tend to 0, contradicting convergence at c.
+Second road. Suppose some $`\varepsilon > 0`$ and infinitely many n have $`x_n \in [a, b]`$ with $`g_n(x_n) \ge \varepsilon`$. By Bolzano–Weierstrass ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)), a subsequence converges to some $`c \in [a, b]`$.
+
+Fix m. For later terms $`n \ge m`$, $`g_m(x_n) \ge g_n(x_n) \ge \varepsilon`$, so continuity gives $`g_m(c) \ge \varepsilon`$. That holds for every m, contradicting $`g_m(c) \to 0`$.
 
 </details>
 
@@ -500,18 +508,18 @@ example : (0 : ℚ) < 1 / 44 ∧ (1 / 44 : ℚ) < 1 / 22 := by norm_num
 > [!warning]
 > **Dropping "closed" because the limit looks fine.** On $`[0, 1)`$ every stage of $`x^n`$ is continuous, every input falls, and the limit 0 is continuous. The convergence is still not uniform: the worst gap is 1 at every n, because the trouble sits at the missing end x = 1.
 >
-> - **Forgetting the limit must be continuous.** On $`[0, 1]`$ the limit of $`x^n`$ jumps, and the worst gap stays 1.
-> - **Settling without a direction.** $`x^n - x^{2n}`$ heads to 0 at every input, yet its worst gap is 0.25 at every n.
-> - **Reading a rate into Dini.** The theorem proves a cutoff exists, not its size. For the square-root polynomials below, the worst gap at k = 10 is 0.054694; the size bound 0.166667 comes from separate work.
-> - **Reading it backwards.** Uniform convergence does not need these conditions; Dini only gives one way to earn it.
+> - **Jumping limit.** On $`[0, 1]`$ the limit of $`x^n`$ jumps at 1, and the worst gap stays 1.
+> - **No single direction.** $`x^n - x^{2n} \to 0`$ everywhere, yet its worst gap stays 0.25.
+> - **Reading a rate into Dini.** Dini proves a cutoff exists, not its size (the bound 2/(k + 2) below takes separate work).
+> - **Reading it backwards.** Uniform convergence does not require Dini's conditions.
 
 ---
 
 ## Where you meet it in real life
 
 - **Truncating cash flows across a rate range.** A model that prices far payments at many rates can drop everything past one year, if the rates stay above a floor. Above 11.1%, year 22 drops at most 10 cents per dollar.
-- **Polynomials that build the square root.** Start at $`p_0 = 0`$ and set $`p_{k+1} = p_k + (t - p_k^2)/2`$. On $`[0, 1]`$ these polynomials rise toward $`\sqrt t`$, which is continuous, so Dini makes the approach uniform. On a grid packed toward t = 0, where the gap peaks, the worst gap is 0.054694 at k = 10 and 0.005559 at k = 100, inside the bound 2/(k + 2): 0.166667 and 0.019608. (The gap $`e_k = \sqrt t - p_k`$ obeys $`e_{k+1} \le e_k(1 - e_k/2)`$, so $`1/e_k`$ grows by at least 1/2 a step.) This is the key step in proofs that polynomials can approximate any continuous function.
-- **Square roots of operators.** The same polynomials, fed a matrix or operator instead of a number t, build its square root. Dini makes the approach uniform, which is what the operator version needs.
+- **Polynomials for $`\sqrt t`$.** Set $`p_0 = 0`$ and $`p_{k+1} = p_k + (t - p_k^2)/2`$. On $`[0, 1]`$ these rise to $`\sqrt t`$, which is continuous, so Dini makes convergence uniform: worst gap 0.054694 at k = 10 and 0.005559 at k = 100, inside the separate bound 2/(k + 2) (0.166667 and 0.019608). This drives proofs that polynomials approximate any continuous function.
+- **Square roots of operators.** Feeding a matrix or operator into the same polynomials builds its square root, with Dini giving the uniform convergence needed.
 
 > **Say it back**
 > Dini's theorem turns pointwise convergence into uniform convergence for free. It needs continuous stages, a continuous limit, one direction of movement at every input, and a closed, bounded interval. The proof covers the interval by the sets where the gap is already small, and compactness keeps finitely many, so the latest one serves everyone. Drop any condition and the worst gap can stay stuck: 1 for $`x^n`$ on $`[0, 1)`$ or $`[0, 1]`$, 0.25 for $`x^n - x^{2n}`$. On $`[0, 0.9]`$ it falls as $`0.9^n`$, under ten cents from year 22.
@@ -525,12 +533,13 @@ example : (0 : ℚ) < 1 / 44 ∧ (1 / 44 : ℚ) < 1 / 22 := by norm_num
 
 ## Where this goes next
 
+- [Weierstrass's monster](16-weierstrass-nowhere-differentiable-function.md): a uniform limit of continuous functions is always continuous, yet can fail to have a derivative anywhere.
 - [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): uniform convergence, once Dini earns it, lets a limit pass through an integral.
 - [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): polynomials approximating any continuous function, proved there with Bernstein polynomials; the square-root polynomials, which build $`\lvert x\rvert`$, give a second route.
 - [Compactness three ways](../../17-Topology/01-Metric%20Spaces/06-compactness-in-metric-spaces.md): the same proof on any compact set, not only an interval.
 - [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): the square-root polynomials applied to operators, with Dini making the limit uniform.
 
-Left open: Dini says one cutoff exists but not how large it is. How fast a uniform approximation can shrink is the question of best approximation.
+Left open: uniform convergence keeps continuity, so does it also keep derivatives? Weierstrass's monster answers no next (while Weierstrass and the minimax fit answers how fast a uniform approximation can shrink).
 
 ---
 

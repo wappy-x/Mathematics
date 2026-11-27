@@ -47,10 +47,10 @@ S = \sum_{n=1}^{\infty} (-1)^{n-1} b_n = b_1 - b_2 + b_3 - b_4 + \cdots
 Write $`S_N`$ for the partial sum after $`N`$ terms. If the sizes never grow and head for zero, the limit $`S`$ exists and
 
 ```math
-|S - S_N| \le b_{N+1}, \qquad S - S_N \text{ has the sign of the first term left out.}
+|S - S_N| \le b_{N+1}, \qquad S - S_N \text{ has the sign of the first term left out (or is } 0\text{).}
 ```
 
-**Read it aloud:** stop after N terms and the miss is no bigger than the next size, and points the way that term points.
+**Read it aloud:** when the sizes never grow and head for zero, stop after N terms and the miss is no bigger than the next size, and points the way that term points (or is zero).
 
 For any series with terms $`a_n`$:
 
@@ -103,7 +103,9 @@ $`S`$ lies between $`S_N`$ and the next total, which differ by $`b_{N+1}`$: that
 <details>
 <summary>Detailed proof: the alternating series test</summary>
 
-Let $`b_n \ge 0`$ fall steadily to 0. The even totals rise, bounded above by the first total, so converge to their least upper bound E; the odd totals fall, bounded below, to their greatest lower bound (largest number below them all) O ≥ E. As 0 ≤ O − E ≤ $`b_{2m+1}`$ for every m, E = O = S. Given $`\varepsilon > 0`$, both chains are within $`\varepsilon`$ of S from some position on, so every total is. S lies between $`S_N`$ and $`S_{N+1}`$, so $`|S - S_N| \le b_{N+1}`$, with the sign of $`(-1)^N b_{N+1}`$ or zero. If the sizes fall only from some later term, apply this to that tail.
+Let $`b_n \ge 0`$ fall steadily to 0. The even totals rise, bounded above by the first total, so they converge to their least upper bound E. The odd totals fall, bounded below, to their greatest lower bound (largest number below them all) O ≥ E. As 0 ≤ O − E ≤ $`b_{2m+1}`$ for every m, E = O = S.
+
+Given $`\varepsilon > 0`$, both chains are within $`\varepsilon`$ of S from some position on, so every total is. S lies between $`S_N`$ and $`S_{N+1}`$, so $`|S - S_N| \le b_{N+1}`$, with the sign of $`(-1)^N b_{N+1}`$ or zero. If the sizes fall only from some later term, apply this to that tail.
 
 </details>
 
@@ -381,7 +383,7 @@ ALL CHECKS PASS
 Lean proves the test and its bound for all sizes that never grow and head for zero, and the ln 2 results exactly.
 
 - If the sizes never grow and head for zero, the partial sums of the alternating series settle on a limit S.
-- For every N, the miss S − $`S_N`$ is no bigger than the first size left out, and points the way that term points.
+- For every N, the miss S − $`S_N`$ is no bigger than the first size left out, and points the way that term points (or is zero).
 - 1 − 1/2 + 1/3 − … settles on ln 2.
 - Its sizes 1, 1/2, 1/3, … alone do not add to a finite total, so it is conditionally convergent.
 - The two-up, one-down order 1 + 1/3 − 1/2 + 1/5 + 1/7 − 1/4 + … uses every term exactly once.
@@ -732,7 +734,7 @@ example : ∑ k ∈ range 6, (-1 : ℚ) ^ (twoUpOneDown k) / ((twoUpOneDown k : 
 - [Abel's limit theorem](12-abels-limit-theorem.md): a power series that converges at the edge of its interval is continuous there.
 - [The Cauchy product](13-cauchy-product-and-mertens-theorem.md): multiply two series term by term, and when the answer is the product of the sums.
 
-Left open: when each term depends on an input x, as in ln(1 + x), does one stopping point keep the miss small for every x at once?
+Left open: when each term carries a power of an input x, as in ln(1 + x), for which inputs x does the series converge and how do its endpoints behave? Power series answers that next.
 
 ---
 

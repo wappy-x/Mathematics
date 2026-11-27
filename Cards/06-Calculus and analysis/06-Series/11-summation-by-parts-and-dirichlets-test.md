@@ -6,7 +6,9 @@
 
 ## General Overview
 
-A synthesiser's sawtooth wave falls steadily through each cycle, then snaps back to the top. Measure the position in the cycle as an angle x in radians, 0 to 2π. The wave is a stack of pure tones: tone n is sin(nx), at loudness 1/n ([Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md)). At x = 1 radian the stack is the series sin(1)/1 + sin(2)/2 + sin(3)/3 + ….
+A synthesiser's sawtooth wave falls steadily through each cycle, then snaps back to the top. Measure the position in the cycle as an angle x in radians, 0 to 2π.
+
+The wave is a stack of pure tones: tone n is sin(nx), at loudness 1/n ([Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md)). At x = 1 radian the stack is sin(1)/1 + sin(2)/2 + sin(3)/3 + ….
 
 Does that sum settle? The loudnesses 1, 1/2, 1/3, … add to infinity, so size comparisons fail. The signs of sin(n) go + + + − − − + + +, not strictly in turn, so the alternating series test is silent too.
 
@@ -36,7 +38,7 @@ Orange: sin(1) + sin(2) + … alone, swinging inside a fixed band forever. Teal:
 
 A reminder from [Infinite series](01-series-convergence.md): a series converges when its partial sums (running totals) settle on a limit.
 
-Split each term into two factors: $`a_n`$, which carries the signs and cancels, and $`b_n`$, a weight. Write $`A_n = a_1 + a_2 + \cdots + a_n`$ for the running total of the $`a`$'s alone. **Summation by parts** is this exact identity, for every $`N`$:
+Split each term into two factors: $`a_n`$, which carries the signs and cancels, and $`b_n`$, a weight. Write $`A_n = a_1 + a_2 + \cdots + a_n`$ for the running total of the $`a`$'s alone. **Summation by parts** is this exact identity, for every whole number $`N \ge 1`$:
 
 ```math
 \sum_{n=1}^{N} a_n b_n = A_N b_N + \sum_{n=1}^{N-1} A_n\,(b_n - b_{n+1})
@@ -121,7 +123,9 @@ Let $`\lvert a_{K+1} + \cdots + a_n \rvert \le M`$ whenever $`K < n`$, and let $
 
 $`\displaystyle \sum_{n=N+1}^{m} a_n b_n = B_m b_m + \sum_{n=N+1}^{m-1} B_n (b_n - b_{n+1})`$
 
-Each $`\lvert B_n \rvert \le M`$ and each $`b_n - b_{n+1} \ge 0`$, so the size is at most $`M b_m + M(b_{N+1} - b_m) = M b_{N+1}`$. So $`\lvert S_m - S_N \rvert \le M b_{N+1}`$ for all $`m > N`$, and $`M b_{N+1}`$ heads for 0. The partial sums are Cauchy, so they converge to some S, and letting m grow gives $`\lvert S - S_N \rvert \le M b_{N+1}`$. If only the running totals are known to satisfy $`\lvert A_n \rvert \le C`$, every stretch $`A_n - A_K`$ is at most $`2C`$, so take $`M = 2C`$.
+Each $`\lvert B_n \rvert \le M`$ and each $`b_n - b_{n+1} \ge 0`$, so the size is at most $`M b_m + M(b_{N+1} - b_m) = M b_{N+1}`$. So $`\lvert S_m - S_N \rvert \le M b_{N+1}`$ for all $`m > N`$, and $`M b_{N+1}`$ heads for 0.
+
+The partial sums are Cauchy, so they converge to some S, and letting m grow gives $`\lvert S - S_N \rvert \le M b_{N+1}`$. If only $`\lvert A_n \rvert \le C`$ is known, every stretch $`A_n - A_K`$ is at most $`2C`$, so take $`M = 2C`$.
 
 </details>
 
@@ -143,7 +147,9 @@ With $`a_n = \sin(n)/n`$ and weights $`1 + 1/n`$, which fall to L = 1, the weigh
 
 ### Step 6: why no older test reaches this series
 
-The sizes $`\lvert\sin n\rvert/n`$ add to infinity. Since $`\lvert \sin n \rvert \ge \sin^2 n = \tfrac12 - \tfrac12\cos 2n`$, they outweigh half the harmonic series minus a series of cos(2n)/n. That last series converges by Dirichlet's test, with the bound 1/sin 1 from Step 2's method. So the sizes diverge: 3.5458 after 100 terms, 6.4743 after 10,000, 9.4060 after a million. The convergence is conditional, held by cancellation alone.
+The sizes $`\lvert\sin n\rvert/n`$ add to infinity. Since $`\lvert \sin n \rvert \ge \sin^2 n = \tfrac12 - \tfrac12\cos 2n`$, they outweigh half the harmonic series minus a series of cos(2n)/n.
+
+That last series converges by Dirichlet's test, with bound 1/sin 1 from Step 2's method. So the sizes diverge: 3.5458 at 100 terms, 6.4743 at 10,000, 9.4060 at a million. Convergence is conditional, held by cancellation alone.
 
 ---
 
@@ -558,24 +564,24 @@ example (a₁ a₂ a₃ b₁ b₂ b₃ : ℝ) :
 ## The usual mistake
 
 > [!warning]
-> **Judging a series by the sizes of its terms.** The sizes of sin(n)/n add to infinity: 9.4060 after a million terms and climbing. That rules out absolute convergence, not convergence. The signed series settles on 1.070796, because its running totals cancel.
+> **Judging a series by the sizes of its terms.** The sizes of sin(n)/n reach 9.4060 at a million terms and diverge. That rules out absolute convergence, not convergence: the signed series settles on 1.070796 by cancellation.
 >
-> - **Dropping the fall to zero.** Bounded totals alone prove nothing: sin(1) + sin(2) + … still swings, 0.8140 at term 1000.
-> - **Dropping the steady fall.** Weights that shrink while bouncing can wreck the sum: −6.1002 after 1000 terms.
-> - **Reading the bound as the miss.** At N = 10 the guarantee is 0.189621; the true miss is 0.053722.
-> - **Reordering.** The convergence is conditional, so reordering the terms can change the sum, as in [Alternating series](03-alternating-and-conditional-convergence.md).
+> - **Dropping the fall to zero.** Bounded totals alone prove nothing: sin(1) + sin(2) + … still swings (0.8140 at term 1000).
+> - **Dropping the steady fall.** Bouncing weights can wreck the sum (−6.1002 at 1000 terms).
+> - **Reading the bound as the miss.** At N = 10 the bound is 0.189621; the miss is 0.053722.
+> - **Reordering.** Conditional convergence means reordering can change the sum ([Alternating series](03-alternating-and-conditional-convergence.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Sound and signals.** Sawtooth and square waves have tones that fade only like 1/n. Summation by parts is how one proves their Fourier series converge away from the jumps.
-- **Primes in arithmetic progressions.** Series like 1 − 1/2 + 1/4 − 1/5 + 1/7 − …, whose signs repeat with a fixed period, converge by this test. Their values are a step in Dirichlet's proof that progressions such as 1, 4, 7, 10, … hold infinitely many primes.
-- **Stable simulation code.** Finite-difference schemes for waves and fluid flow are often built as "summation-by-parts operators", so energy estimates proved for the equation carry over to the code.
-- **Power series on their edge.** The series of $`z^n/n`$ converges at every point of the unit circle except z = 1, by Dirichlet's test with the bound $`2/\lvert 1 - z\rvert`$.
+- **Sound and signals.** Sawtooth and square waves have tones that fade like 1/n. Summation by parts proves their Fourier series converge away from jumps.
+- **Primes in arithmetic progressions.** Series like 1 − 1/2 + 1/4 − 1/5 + 1/7 − …, whose signs repeat periodically, converge by this test, a step in Dirichlet's proof of infinitely many primes in progressions like 1, 4, 7, 10, ….
+- **Stable simulation code.** Finite-difference schemes for waves and fluid flow use "summation-by-parts operators" so energy estimates carry over to the code.
+- **Power series on their edge.** The series of $`z^n/n`$ converges on the unit circle except at z = 1, by Dirichlet's test with bound $`2/\lvert 1 - z\rvert`$.
 
 > **Say it back**
-> Summation by parts rewrites a weighted sum through the running totals of the unweighted terms. If every stretch stays within M and the weights fall steadily to zero, the series converges, missing by at most M times the first weight left out. For sin(n)/n, M = 2.0858 and the sum is 1.070796, though the sizes add to infinity. The alternating series test is the case of signs + − + −. Abel's test asks for a convergent series and lets the weights settle anywhere.
+> Summation by parts rewrites a weighted sum through the unweighted running totals. If every stretch stays within M and the weights fall steadily to zero, the series converges, missing by at most M times the first omitted weight. For sin(n)/n, M = 2.0858 and the sum is 1.070796, though the sizes diverge. The alternating series test is the case of signs + − + −; Abel's test takes a convergent series and bounded monotone weights.
 
 ---
 
@@ -591,7 +597,7 @@ example (a₁ a₂ a₃ b₁ b₂ b₃ : ℝ) :
 - [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md): where Fourier series such as the sawtooth's settle, and what they settle on.
 - [Weyl differencing](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/08-weyl-differencing-and-van-der-corput.md): squaring an exponential sum to lower its degree, and van der Corput's bounds.
 
-Left open: the bound 1/sin(x/2) blows up as x nears 0, so does the series of sin(nx)/n settle at the same rate for every x at once?
+Left open: if a power series converges at the edge of its interval, do its values just inside slide smoothly onto that edge sum? Abel's limit theorem answers that next using summation by parts (while Convergence tackles the jump of sin(nx)/n near x = 0, where 1/sin(x/2) blows up).
 
 ---
 

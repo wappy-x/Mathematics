@@ -55,7 +55,7 @@ E_n = \sup_{0 \le x \le 1} \lvert f_n(x) - f(x)\rvert, \qquad \lim_{n\to\infty} 
 
 **Read it aloud:** the largest gap between stage n and the limit, over every input at once, heads for zero.
 
-**Theorem 1.** If every $`f_n`$ is continuous and $`E_n`$ heads for 0, the limit $`f`$ is continuous.
+**Theorem 1.** If every $`f_n`$ is continuous on the interval (or set of inputs) and $`E_n`$ heads for 0 there, the limit $`f`$ is continuous there.
 
 **Theorem 2, the Weierstrass M-test.** If the terms $`g_k(x)`$ of a series obey $`\lvert g_k(x)\rvert \le M_k`$ for every $`x`$, with caps $`M_k`$ that are numbers with a finite sum, the partial sums $`S_N(x) = g_1(x) + \cdots + g_N(x)`$ converge uniformly to a sum $`S(x)`$, and
 
@@ -65,7 +65,7 @@ E_n = \sup_{0 \le x \le 1} \lvert f_n(x) - f(x)\rvert, \qquad \lim_{n\to\infty} 
 
 **Read it aloud:** if number caps on the terms add up, the caps' leftover bounds the series' leftover at every x.
 
-The card's series is $`g_k(x) = (x/2)^k`$ on the interval from −1 to 1, capped by $`M_k = 1/2^k`$: the shelf's house series 1/2 + 1/4 + 1/8 + ⋯, whose sum is 1 ([Infinite series](01-series-convergence.md)).
+The card's series is $`g_k(x) = (x/2)^k`$ on the interval from −1 to 1, capped by the geometric series $`M_k = 1/2^k`$ (1/2 + 1/4 + 1/8 + ⋯), whose sum is 1 ([Infinite series](01-series-convergence.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -101,7 +101,7 @@ For fixed x below 1, $`x^n`$ is a geometric sequence with ratio below 1, so it h
 
 ### Step 2: on [0, 1] the convergence is not uniform
 
-For any stage n, take $`x = 2^{-1/n}`$, the number whose n-th power is exactly 1/2. It is below 1, so the limit there is 0 and the gap is 1/2. At n = 10 it is 0.933033; at n = 100, 0.993092; at n = 1000, 0.999307.
+For any stage $`n \ge 1`$, take $`x = 2^{-1/n}`$, the number whose n-th power is exactly 1/2. It is below 1, so the limit there is 0 and the gap is 1/2. At n = 10 it is 0.933033; at n = 100, 0.993092; at n = 1000, 0.999307.
 
 Every stage has such an input, so none wins at tolerance 0.001. In fact $`E_n = 1`$: inputs nearer 1 give gaps nearer 1, but the gap at x = 1 is 0, so the sup is never attained.
 
@@ -554,15 +554,15 @@ example : (1 : ℚ) / 2 ^ 12 < 1 / 3000 ∧ ¬ ((1 : ℚ) / 2 ^ 11 < 1 / 3000) :
 
 ## Where this goes next
 
-- [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): limits through integrals and derivatives.
+- [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): when uniform convergence lets limits pass through integrals and derivatives.
 - [Limits of holomorphic functions](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): uniform limits keeping far more than continuity.
 - [Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): uniform beside other kinds of convergence.
-- [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): polynomials approximating uniformly.
+- [Weierstrass and the minimax fit](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/08-weierstrass-and-best-approximation.md): approximating any continuous function uniformly on a closed interval by polynomials.
 - [Arzela-Ascoli](../../17-Topology/01-Metric%20Spaces/09-arzela-ascoli.md): when uniformly convergent subsequences must exist.
 - [Function spaces C and Lp](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/03-function-spaces-c-and-lp.md): the worst gap as a distance between functions.
-- [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): a far looser convergence.
-- [Convolution and mollifiers](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md): smoothing that converges uniformly.
-- [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md): both modes for Fourier series.
+- [Weak convergence](../../18-Functional%20analysis/02-Hilbert%20Spaces/09-weak-convergence-and-banach-alaoglu.md): a weaker mode of convergence tested one linear functional at a time.
+- [Convolution and mollifiers](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/03-convolution-and-mollifiers.md): smoothing a continuous function by convolution so the approximations converge uniformly.
+- [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md): where Fourier series converge pointwise and where they converge uniformly.
 - [Equidistribution](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): step functions approximated by smooth ones.
 - [Partition of unity](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/09-partitions-of-unity-and-whitney-embedding.md): uniform approximation on curved spaces.
 - [Abel's limit theorem](12-abels-limit-theorem.md): a power series that converges at the edge of its interval is continuous there.

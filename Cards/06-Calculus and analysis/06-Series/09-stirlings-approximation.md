@@ -8,13 +8,15 @@
 
 Twenty runners can finish a race in 20 × 19 × 18 × … × 2 × 1 orders. That product is 20 factorial, written 20!, and multiplied out it is 2432902008176640000, about 2.4329 × 10^18 ([Factorials](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md)).
 
-A number that size cannot be simplified inside a formula, and it hides how fast n! grows. Divide 20 by e, the base of natural logs, to get 7.357589. Raise that to the 20th power: 2.1613 × 10^17. Multiply by the square root of 2π × 20, which is 11.209982. The result, 2.4228 × 10^18, is 20! to within a ratio of 0.995842.
+A number that size cannot be simplified inside a formula, and it hides how fast n! grows. Divide 20 by e, the base of natural logs, to get 7.357589.
+
+Raise that to the 20th power: 2.1613 × 10^17. Multiply by the square root of 2π × 20, which is 11.209982. The result, 2.4228 × 10^18, is 20! to within a ratio of 0.995842.
 
 That is Stirling's approximation, proved here with areas under ln x, one Taylor series and integrals of powers of sin x.
 
 **The factorial of n is, to a ratio that tends to 1, the square root of 2πn times n over e raised to the nth power; the proof traps ln n! between two areas and fixes the constant with Wallis's integrals.**
 
-**What kind of fact this is:** an approximation, with its error proved in Why it works: the truth is the estimate times a factor between 1 and e^(1/(12n)).
+**What kind of fact this is:** an approximation, with its error proved in Why it works: for every whole number n ≥ 1, the truth is the estimate times a factor between 1 and e^(1/(12n)).
 
 ### The picture: a squeeze that pins the constant
 
@@ -50,7 +52,7 @@ The card proves a sharper statement, true at every n from 1 up:
 n! = \sqrt{2\pi n}\,\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}
 ```
 
-**Read it aloud:** the estimate is always a little low, and the factor that repairs it lies between 1 and e to the one over 12n.
+**Read it aloud:** for every n from 1 up, the estimate is a little low, and the factor that repairs it lies between 1 and e to the one over 12n.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -67,7 +69,7 @@ $`d_n`$ is the d(n) plotted above, a sequence with n as its clock.
 
 ### When it holds
 
-- **n is a positive whole number.** The bound holds from n = 1 up; fractions need the gamma function, which extends n! beyond whole numbers ([The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)).
+- **n is a positive whole number.** The bound holds from n = 1 up; at n = 0 the estimate gives 0 (against 0! = 1) and 1/(12n) divides by zero. Fractions need the gamma function, which extends n! beyond whole numbers ([The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)).
 - **Agreement is in ratio, not difference.** At n = 20 the ratio is 0.995842, yet the difference is 1.0115 × 10^16, and it grows without bound.
 - **1/(12n) is the first of a string of corrections** that never settles for a fixed n: more terms help for a while, then hurt.
 
@@ -77,7 +79,9 @@ $`d_n`$ is the d(n) plotted above, a sequence with n as its clock.
 
 ### Step 0: turn the product into a sum, and trap the sum between areas
 
-The log of a product is the sum of the logs: ln 20! = ln 2 + ln 3 + … + ln 20. Each ln k is the height of a strip of width 1 under the rising curve y = ln x. So it is trapped between the area just before it and the area just after. Areas under ln x have the exact antiderivative x ln x − x. The proof tightens that trap.
+The log of a product is the sum of the logs: ln 20! = ln 2 + ln 3 + … + ln 20. Each ln k is the height of a strip of width 1 under the rising curve y = ln x.
+
+So it is trapped between the area just before it and the area just after. Areas under ln x have the exact antiderivative x ln x − x, and the proof tightens that trap.
 
 ### Step 1: two integrals give the shape (n/e)^n
 
@@ -137,9 +141,9 @@ At n = 100 the squeeze pins C between 0.91893853 and 0.91977186. Numbers alone n
 
 ### Step 3: Wallis's integrals pin π/2 between two products of factorials
 
-Let $`W_k`$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2), starting from W_0 = π/2 and W_1 = 1.
+Let $`W_k`$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2) for k from 2 up, starting from W_0 = π/2 and W_1 = 1.
 
-Between 0 and π/2, sin x lies between 0 and 1, so a higher power is never larger: W_(2m+1) ≤ W_(2m) ≤ W_(2m−1). The rule makes the outer two differ only by the factor (2m + 1)/(2m). Writing the products as factorials, with m standing for half an even k:
+Between 0 and π/2, sin x lies between 0 and 1, so a higher power is never larger: W_(2m+1) ≤ W_(2m) ≤ W_(2m−1). The rule makes the outer two differ only by the factor (2m + 1)/(2m). Writing the products as factorials, for every whole number m from 1 up (half an even k):
 
 ```math
 P_m \le \frac{\pi}{2} \le P_m\,\frac{2m+1}{2m}, \qquad P_m = \frac{2^{4m}\,(m!)^4}{\big((2m)!\big)^2\,(2m+1)}
@@ -204,7 +208,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Three roads. Road one multiplies out 20! exactly and tests it against Step 1's integral band and the 1/(12n) band. Road two squeezes C from the leftover at n = 100. Road three evaluates Wallis's bracket at m = 1000, after Simpson's rule confirms the parts formula for W_20. π is built from Machin's series, π/4 = 4 arctan(1/5) − arctan(1/239), so roads two and three meet an independent π.
+Three roads. Road one multiplies out 20! exactly and tests it against Step 1's integral band and the 1/(12n) band. Road two squeezes C from the leftover at n = 100.
+
+Road three evaluates Wallis's bracket at m = 1000, after Simpson's rule confirms the parts formula for W_20. π is built from Machin's series, π/4 = 4 arctan(1/5) − arctan(1/239), so roads two and three meet an independent π.
 
 ### Python
 
@@ -610,7 +616,7 @@ example : (12 : ℕ) * 20 = 240 := by norm_num
 - **Software.** Scientific libraries return ln n! through a log-gamma function, because n! overflows; for large n they use Stirling's series.
 
 > **Say it back**
-> Logs turn n! into a sum of ln k, which areas under ln x trap, giving the shape (n/e)^n. A Taylor series shows the leftover falls while the leftover minus 1/(12n) rises, so both settle on one constant. Wallis's integrals pin π/2 between factorial products and force the constant to be √(2π). So n! is √(2πn)(n/e)^n times a factor between 1 and e^(1/(12n)): at n = 20, 2.4228 × 10^18 against 2.4329 × 10^18.
+> Logs turn n! into a sum of ln k, which areas under ln x trap, giving the shape (n/e)^n. A Taylor series shows the leftover falls while the leftover minus 1/(12n) rises, so both settle on one constant. Wallis's integrals pin π/2 between factorial products and force the constant to be √(2π). So for every n from 1 up, n! is √(2πn)(n/e)^n times a factor between 1 and e^(1/(12n)): at n = 20, 2.4228 × 10^18 against 2.4329 × 10^18.
 
 ---
 
@@ -622,9 +628,10 @@ example : (12 : ℕ) * 20 = 240 := by norm_num
 
 ## Where this goes next
 
+- [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking non-negative series by its terms at powers of 2, with no integral needed.
 - [Sorting and searching](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/05-sorting-and-searching.md): log2 n! comparisons, read through Stirling, as the floor on sorting.
 
-The formula sizes n!; how that size becomes a speed limit on sorting n items is the question Sorting and searching answers.
+Stirling trapped a sum of logs between two integrals; how to test a shrinking non-negative series with no integral at all is the question Cauchy condensation answers (while Sorting and searching turns Stirling's bound into a speed limit on comparison sorts).
 
 ---
 

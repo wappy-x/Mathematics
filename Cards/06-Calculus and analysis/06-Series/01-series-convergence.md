@@ -52,7 +52,7 @@ In a **geometric series** each term is the one before times a fixed **ratio** $`
 a + ar + ar^2 + \dots + ar^{n-1} \;=\; \frac{a\,(1-r^n)}{1-r} \ \text{ when } r \ne 1, \qquad a + ar + ar^2 + \dots \;=\; \frac{a}{1-r} \ \text{ when } -1<r<1
 ```
 
-**Read it aloud:** forever, the geometric series adds to its first term over one minus its ratio.
+**Read it aloud:** when the ratio sits strictly between −1 and 1, the geometric series adds to its first term over one minus its ratio.
 
 The perpetuity is geometric: $`a = 100/1.05`$ and $`r = 1/1.05`$, so the sum is $`100/0.05 = 2000`$. The part still missing after $`n`$ payments, the **tail**, is $`R_n = a r^n/(1-r) = 2000/1.05^n`$.
 
@@ -72,8 +72,8 @@ The perpetuity is geometric: $`a = 100/1.05`$ and $`r = 1/1.05`$, so the sum is 
 The definition applies to every series. The geometric formula needs more:
 
 - **A fixed ratio.** Same payment, same rate. If the rate drifts, the formula is only an estimate; the partial sums still decide.
-- **A ratio strictly between −1 and 1.** At $`r = 1`$ the totals grow without limit; at $`r = -1`$ they flip between two values forever.
-- **The right first term.** Count a payment made today as well and the answer is 2,100: a different contract.
+- **A ratio strictly between −1 and 1.** With a nonzero first term, totals grow without limit at $`r = 1`$ or $`|r| > 1`$, and flip between two values at $`r = -1`$.
+- **The right first term (starting index).** Starting at $`k = 0`$ (counting a payment today) instead of $`k = 1`$ adds 100 and gives 2,100: a different contract.
 
 ---
 
@@ -493,7 +493,7 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 - **Numerical computing.** The exponential and its relatives are computed from series ([Taylor series](05-taylor-series.md)); a tail bound says when to stop.
 
 > **Say it back**
-> An infinite sum is the limit of its running totals, if there is one. A geometric series with ratio between −1 and 1 sums to first term ÷ (1 − ratio), which prices 100 a year at 5% at 2,000. Terms that do not shrink to 0 rule a series out. Terms that shrink prove nothing alone, as the harmonic series shows.
+> An infinite sum is the limit of its running totals, if there is one. A geometric series with ratio strictly between −1 and 1 sums to first term ÷ (1 − ratio), which prices 100 a year at 5% at 2,000. Terms that do not shrink to 0 rule a series out. Terms that shrink prove nothing alone, as the harmonic series shows.
 
 ---
 
@@ -505,16 +505,16 @@ example : (1 : ℚ) / 3 + 1 / 4 ≥ 1 / 2 ∧ (1 : ℚ) / 5 + 1 / 6 + 1 / 7 + 1 
 ## Where this goes next
 
 - [Convergence tests](02-comparison-ratio-and-root-tests.md): convergence decided by comparison with a geometric series.
-- [Limits and regions in the plane](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same definition, complex terms.
-- [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): series running both ways.
+- [Limits and regions in the plane](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same partial-sum definition extended to series with complex terms.
+- [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): power series extended to run in both positive and negative powers.
 - [Measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): size that adds over infinitely many pieces.
 - [Outer measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): interval lengths summed as a series.
 - [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising totals passed inside an integral.
 - [Annuities](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the finite geometric sum pricing a loan.
-- [Sequence spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/02-sequence-spaces-lp-and-c0.md): sequences whose sizes sum.
+- [Sequence spaces](../../18-Functional%20analysis/01-Normed%20and%20Banach%20Spaces/02-sequence-spaces-lp-and-c0.md): spaces of sequences whose sizes, raised to a power, have a finite sum.
 - [Wiener's lemma](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): the geometric series inverting 1 − r for operators.
-- [Big O and twiddle](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/01-asymptotic-notation-and-error-terms.md): how fast harmonic totals grow.
-- [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): the harmonic series over primes.
+- [Big O and twiddle](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/01-asymptotic-notation-and-error-terms.md): asymptotic notation measuring how fast harmonic partial sums grow.
+- [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): the harmonic series summed over primes only, and how slowly it grows.
 - [Cauchy condensation](10-cauchy-condensation-test.md): test a shrinking series by its terms at the powers of 2.
 - [Summation by parts](11-summation-by-parts-and-dirichlets-test.md): Dirichlet's and Abel's tests for series that converge by cancellation.
 - [Two-ports](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/13-two-port-networks-and-s-parameters.md): four numbers describe any box with an input and an output.

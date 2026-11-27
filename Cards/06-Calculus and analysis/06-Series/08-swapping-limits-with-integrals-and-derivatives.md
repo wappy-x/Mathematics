@@ -12,7 +12,7 @@ Watch one point, 0.01. The tent there is 0.04 high at stage 1, 4 at stage 10, an
 
 Area first, then limit: 1. Limit first, then area: 0. Integrating a series one term at a time swaps these two orders, so the condition that makes the swap safe matters.
 
-**If the stage functions close in on their limit uniformly, with one worst gap covering every input shrinking to 0, then on a closed, bounded interval the integral of the limit equals the limit of the integrals; for derivatives the slopes themselves must close in uniformly.**
+**If integrable stage functions close in on their limit uniformly, with one worst gap covering every input shrinking to 0, then on a closed, bounded interval the integral of the limit equals the limit of the integrals; for derivatives the slopes themselves must close in uniformly, and the heights must settle at one point.**
 
 **What kind of fact this is:** two theorems, both proved on this card in Why it works.
 
@@ -37,7 +37,7 @@ Orange: stage 1, peak 2 at x = 0.5. Teal: stage 2, peak 4 at x = 0.25. Dark blue
 
 Reminders: the stage-n function is $`f_n`$, its limit $`f`$, and sup is the least upper bound ([Uniform convergence](07-uniform-convergence.md)); the integral sign with ends a and b adds up area, and dx names the variable along the base ([The integral](../04-Integrals/01-riemann-integral.md)).
 
-**The integration theorem.** If each $`f_n`$ is integrable on the closed interval from a to b and
+**The integration theorem.** If each $`f_n`$ is integrable on the closed, bounded interval from $`a`$ to $`b`$ (with $`a \le b`$) and
 
 ```math
 E_n=\sup_{a\le x\le b}\,\lvert f_n(x)-f(x)\rvert \to 0,
@@ -51,15 +51,15 @@ then $`f`$ is integrable and
 
 **Read it aloud:** the areas miss by at most width times worst gap, so when the worst gap shrinks to nothing, limit and area can be taken in either order.
 
-**The differentiation theorem.** If each $`f_n`$ has a continuous derivative $`f_n'`$ on the closed, bounded interval, the derivatives close in uniformly on a function $`g`$, and at one point $`x_0`$ of the interval the values $`f_n(x_0)`$ head for a number $`c`$, then the $`f_n`$ close in uniformly on
+**The differentiation theorem.** Suppose each $`f_n`$ has a continuous derivative $`f_n'`$ on the closed, bounded interval (one-sided at the ends). If those derivatives close in uniformly on a function $`g`$, and at one point $`x_0`$ of the interval $`f_n(x_0)`$ heads for a number $`c`$, then the $`f_n`$ close in uniformly on
 
 ```math
 f(x)=c+\int_{x_0}^{x} g(s)\,ds,\qquad\text{and}\qquad f'(x)=g(x)=\lim_{n\to\infty} f_n'(x).
 ```
 
-**Read it aloud:** if the slopes settle uniformly and one height settles, the slope of the limit is the limit of the slopes.
+**Read it aloud:** on a closed, bounded interval, if the continuous slopes settle uniformly and one height settles, the slope of the limit is the limit of the slopes.
 
-The working case is the uniform-convergence card's series: partial sums $`S_N(x)=(x/2)+(x/2)^2+\cdots+(x/2)^N`$ closing in on $`S(x)=x/(2-x)`$ from 0 to 1. At x = 1 it is the house series 1/2 + 1/4 + 1/8 + ⋯.
+The working case is the uniform-convergence card's series: partial sums $`S_N(x)=(x/2)+(x/2)^2+\cdots+(x/2)^N`$ closing in on $`S(x)=x/(2-x)`$ from 0 to 1. At x = 1 it is the geometric series 1/2 + 1/4 + 1/8 + ⋯.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -113,7 +113,7 @@ The right side heads for 0, so the left side does.
 
 The tolerance game, with numbers. The integral of $`S`$ from 0 to 1, from its antiderivative −x − 2 ln(2 − x), is 2 ln 2 − 1 = 0.386294361. Land within 0.001 of it by integrating finitely many terms, each on its own: the term $`(x/2)^k`$ has integral $`1/((k+1)2^k)`$.
 
-The worst gap of $`S_N`$ sits at x = 1 and is the house series' leftover, $`1/2^N`$. For N = 10 it is 0.000976562, under 0.001.
+The worst gap of $`S_N`$ sits at x = 1 and is the geometric series' leftover, $`1/2^N`$. For N = 10 it is 0.000976562, under 0.001.
 
 ### Step 3: where the spikes escape
 
@@ -356,9 +356,9 @@ The two outputs are identical.
 
 Lean proves both theorems on every closed, bounded interval, and checks the card's hand arithmetic exactly.
 
-- If each stage $`f_n`$ is integrable from a to b and the worst gap shrinks to 0, the limit $`f`$ is integrable. The integrals of $`f_n`$ head for the integral of $`f`$.
-- If two integrable functions never differ by more than E on the interval, their integrals differ by at most $`(b-a)E`$.
-- Let each $`f_n`$ have a continuous slope $`f_n'`$, let the slopes close in uniformly on $`g`$, and let $`f_n(x_0)`$ head for $`c`$. Then the $`f_n`$ close in uniformly on $`f(x)=c+\int_{x_0}^{x} g(s)\,ds`$, and $`f`$ has slope $`g(x)`$ at every point of the interval.
+- For $`a \le b`$, if each stage $`f_n`$ is integrable on $`[a, b]`$ and the worst gap shrinks to 0, the limit $`f`$ is integrable and the integrals of $`f_n`$ head for the integral of $`f`$.
+- For $`a \le b`$, if two integrable functions never differ by more than E on $`[a, b]`$, their integrals differ by at most $`(b-a)E`$.
+- On $`[a, b]`$ ($`a \le b`$), let each $`f_n`$ have a continuous slope $`f_n'`$ (one-sided at the ends), let the slopes close in uniformly on $`g`$, and at a point $`x_0`$ of the interval let $`f_n(x_0)`$ head for $`c`$. Then the $`f_n`$ close in uniformly on $`f(x)=c+\int_{x_0}^{x} g(s)\,ds`$, and $`f`$ has slope $`g(x)`$ at every point of the interval (one-sided at the ends).
 - The hand arithmetic holds exactly, as fractions: spike area 1, heights 1/25, 4, 100 and 0 at 0.01, and peaks 2, 4 and 8.
 - The rest hold exactly too: worst gap $`1/2^{10}`$, ten terms' integrals 274073/709632, caps $`2-62/2^{60}`$, slope 8/9, and each block's area 1.
 
@@ -606,7 +606,7 @@ example : (10 : ℚ) * (1 / 10) = 1 ∧ (1000 : ℚ) * (1 / 1000) = 1 := by
 > **Try changing**
 > Guess first, then run it.
 > - **Rectangles wider than the spike.** Change `100000` to `1000` where the spike's area is summed. At stage 1000 one rectangle covers the whole base and reads it at the peak, the area comes out 2, and the first assert stops the program.
-> - **The house series' own slope.** Set `x` to `1` in the slope check. The terms' slopes add to 2, matching the formula and the caps' total.
+> - **At the right endpoint.** Set `x` to `1` in the slope check. The terms' slopes add to 2, matching the formula and the caps' total.
 > - **Integrate the wrong terms.** Change `(k + 1)` to `k` in the term-by-term integral. The terms overshoot the true area and the theorem's assert stops the program.
 
 ---
@@ -628,7 +628,7 @@ example : (10 : ℚ) * (1 / 10) = 1 ∧ (1000 : ℚ) * (1 / 1000) = 1 := by
 - **Impulses.** A hammer blow is modelled as a spike of fixed total push over a shrinking time. Its limit as a function is 0, so an impulse is treated as a distribution instead, an object defined by its integrals.
 
 > **Say it back**
-> Limit then area, and area then limit, can disagree: tent spikes of area 1 settle point by point on 0. If the worst gap over a bounded interval shrinks to 0, the areas differ by at most width times that gap, so the orders agree. Ten terms of the series, integrated one at a time, land within 0.000075870 of 2 ln 2 − 1. Derivatives need the slopes to settle uniformly and one height to settle.
+> Limit then area, and area then limit, can disagree: tent spikes of area 1 settle point by point on 0. For integrable stages, if the worst gap over a closed, bounded interval shrinks to 0, the areas differ by at most width times that gap, so the orders agree. Ten terms of the series, integrated one at a time, land within 0.000075870 of 2 ln 2 − 1. Derivatives need the slopes to settle uniformly and one height to settle.
 
 ---
 
@@ -639,13 +639,14 @@ example : (10 : ℚ) * (1 / 10) = 1 ∧ (1000 : ℚ) * (1 / 1000) = 1 := by
 
 ## Where this goes next
 
+- [Stirling's approximation](09-stirlings-approximation.md): how big n factorial is, proved by comparing sums with integrals.
 - [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the same swap, with a difference quotient as the limit.
 - [Distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/01-test-functions-and-distributions.md): the spikes' limit made into an object, the delta.
 - [Differentiating a series term by term](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/07-term-by-term-differentiation-and-integration.md): both theorems applied to sums of waves.
 - [Fourier inversion](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/04-fourier-inversion-theorem.md): a swap over an unbounded line, beyond this card's bounded interval.
 - [Weierstrass's monster](16-weierstrass-nowhere-differentiable-function.md): a continuous function with no derivative anywhere.
 
-The spikes' limit loses their area, yet an area of 1 packed at one point is a real thing; what kind of object holds it is the question Distributions answers.
+The spikes' limit loses their area, yet an area of 1 packed at one point is a real thing; what kind of object holds it is the question Distributions answers (while next on this shelf, Stirling's approximation uses integral bounds to pin down how fast n! grows).
 
 ---
 

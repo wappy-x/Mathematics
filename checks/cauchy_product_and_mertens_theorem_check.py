@@ -26,9 +26,9 @@ def simpson(f, a, b, panels):            # parabolas through each pair of strips
 geo = [0.5 ** n for n in range(2001)]                 # 1 + 1/2 + 1/4 + ..., sum 2
 c = cauchy(geo[:60], geo[:60])
 C, A = running(c), running(geo[:60])
-print("house: c_n for n=0..5: " + " ".join(f"{x:.4f}" for x in c[:6]))
-print(f"house: C_10={C[10]:.6f}  4-13/1024={4 - 13 / 1024:.6f}  A_10*B_10={A[10] ** 2:.6f}")
-print(f"house: C_59={C[59]:.6f}  A*B={A[59] * A[59]:.6f}")
+print("halving: c_n for n=0..5: " + " ".join(f"{x:.4f}" for x in c[:6]))
+print(f"halving: C_10={C[10]:.6f}  4-13/1024={4 - 13 / 1024:.6f}  A_10*B_10={A[10] ** 2:.6f}")
+print(f"halving: C_59={C[59]:.6f}  A*B={A[59] * A[59]:.6f}")
 assert all(abs(c[n] - (n + 1) / 2 ** n) < 1e-15 for n in range(60))   # count the diagonal
 assert all(abs(C[N] - (4 - (N + 3) / 2 ** N)) < 1e-12 for N in range(60))
 same = running([x * x for x in geo[:60]])[59]
@@ -49,7 +49,7 @@ print(f"conditional: S={S:.6f}  S^2={S * S:.6f}")
 print("conditional: |c_n| for n=0..5: " + " ".join(f"{abs(x):.4f}" for x in d[:6]))
 assert all(abs(d[n]) >= 2 * (n + 1) / (n + 2) for n in range(200))   # never below 1
 print(f"conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98={D[98]:.6f}  C_99={D[99]:.6f}")
-for name, line in (("house", C), ("mertens", M), ("conditional", D)):
+for name, line in (("halving", C), ("mertens", M), ("conditional", D)):
     print(f"chart {name} C_N, N=0..12: " + " ".join(f"{x:.2f}" for x in line[:13]))
 v = 1 / 1.05                                          # one year's discount at 5%
 due = [v ** n for n in range(1500)]                   # 1 now and every year after

@@ -29,9 +29,9 @@ fn main() {
     let geo: Vec<f64> = (0..2001).map(|n| 0.5f64.powi(n)).collect();   // 1 + 1/2 + 1/4 + ..., sum 2
     let c = cauchy(&geo[..60], &geo[..60]);
     let (cc, a) = (running(&c), running(&geo[..60]));
-    println!("house: c_n for n=0..5: {}", row(&c[..6], 4));
-    println!("house: C_10={:.6}  4-13/1024={:.6}  A_10*B_10={:.6}", cc[10], 4.0 - 13.0 / 1024.0, a[10] * a[10]);
-    println!("house: C_59={:.6}  A*B={:.6}", cc[59], a[59] * a[59]);
+    println!("halving: c_n for n=0..5: {}", row(&c[..6], 4));
+    println!("halving: C_10={:.6}  4-13/1024={:.6}  A_10*B_10={:.6}", cc[10], 4.0 - 13.0 / 1024.0, a[10] * a[10]);
+    println!("halving: C_59={:.6}  A*B={:.6}", cc[59], a[59] * a[59]);
     assert!((0..60).all(|n| (c[n] - (n + 1) as f64 / 2f64.powi(n as i32)).abs() < 1e-15)); // count the diagonal
     assert!((0..60).all(|n| (cc[n] - (4.0 - (n + 3) as f64 / 2f64.powi(n as i32))).abs() < 1e-12));
     let same = running(&geo[..60].iter().map(|x| x * x).collect::<Vec<_>>())[59];
@@ -54,7 +54,7 @@ fn main() {
     println!("conditional: |c_n| for n=0..5: {}", row(&d[..6].iter().map(|x| x.abs()).collect::<Vec<_>>(), 4));
     assert!((0..200).all(|n| d[n].abs() >= 2.0 * (n + 1) as f64 / (n + 2) as f64)); // never below 1
     println!("conditional: |c_n| >= 2(n+1)/(n+2) >= 1 for every n < 200; C_98={:.6}  C_99={:.6}", dd[98], dd[99]);
-    for (name, line) in [("house", &cc), ("mertens", &mm), ("conditional", &dd)] {
+    for (name, line) in [("halving", &cc), ("mertens", &mm), ("conditional", &dd)] {
         println!("chart {} C_N, N=0..12: {}", name, row(&line[..13], 2));
     }
     let v: f64 = 1.0 / 1.05;                      // one year's discount at 5%

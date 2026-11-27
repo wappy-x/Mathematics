@@ -8,7 +8,9 @@
 
 The sum 1 − 1/2 + 1/3 − 1/4 + ⋯ settles on one number, because its signs alternate and its terms shrink ([Alternating series](03-alternating-and-conditional-convergence.md)). After 1,000 terms it reads 0.692647.
 
-Put a dial on it: multiply term n by $`x^n`$, for an input $`x`$ just below 1. The result is the power series of $`\ln(1+x)`$, the natural log of 1 + x ([Power series](04-power-series.md)). At $`x = 0.9`$ it is 0.641854; at 0.99, 0.688135; at 0.999, 0.692647. These head for $`\ln 2 = 0.693147`$. The series diverges past x = 1, the edge of its interval.
+Put a dial on it: multiply term n by $`x^n`$, for an input $`x`$ just below 1. The result is the power series of $`\ln(1+x)`$, the natural log of 1 + x ([Power series](04-power-series.md)).
+
+At $`x = 0.9`$ it is 0.641854; at 0.99, 0.688135; at 0.999, 0.692647. These head for $`\ln 2 = 0.693147`$. The series diverges past x = 1, the edge of its interval.
 
 Abel's limit theorem says the two meet: when the series at the edge converges, the values inside slide onto it. So 1 − 1/2 + 1/3 − ⋯ is $`\ln 2`$. The same argument gives 1 − 1/3 + 1/5 − ⋯ = π/4 = 0.785398. Abel, who proved it, complained in a letter that hardly any infinite series had a rigorously determined sum.
 
@@ -48,7 +50,7 @@ A power series here is $`a_0 + a_1 x + a_2 x^2 + \cdots`$ with fixed numbers $`a
 The proof rests on one inequality, **Abel's lemma**. A **run** is a stretch of consecutive terms, $`a_{N+1} + \cdots + a_m`$.
 
 ```math
-\lvert a_{N+1} + \cdots + a_m \rvert \le \varepsilon \text{ for every } m > N \quad \Longrightarrow \quad \Big\lvert \sum_{n=N+1}^{M} a_n x^n \Big\rvert \le \varepsilon\, x^{N+1} \text{ for } 0 \le x \le 1
+\lvert a_{N+1} + \cdots + a_m \rvert \le \varepsilon \text{ for every } m > N \quad \Longrightarrow \quad \Big\lvert \sum_{n=N+1}^{M} a_n x^n \Big\rvert \le \varepsilon\, x^{N+1} \text{ for } M > N,\; 0 \le x \le 1
 ```
 
 **Read it aloud:** if every run after term N stays within ε of zero, the same run weighted by powers of any x from 0 to 1 stays within ε times x to the power N + 1.
@@ -70,7 +72,7 @@ For the log series, every run after term 10 is at most 1/11 = 0.090909 in size. 
 
 - **The edge series must converge.** If it does not, the inside limit may still exist and mislead: 1/(1 + x) heads for 1/2 while 1 − 1 + 1 − ⋯ has no sum.
 - **Approach from inside.** Past the edge the terms grow: at x = 1.01 the 1,000th term of the log series is −20.96.
-- **One edge at a time.** At x = −1 the same theorem applies after replacing x with −x.
+- **One edge at a time.** At x = −1 the same theorem applies after replacing x with −x, and for any finite radius R > 0 after replacing x with x/R.
 
 ---
 
@@ -118,7 +120,7 @@ Each partial sum is a polynomial, so it is continuous: it has no jumps ([Continu
 
 ### Step 6: a second road, the average of the partial sums
 
-Summation by parts turns the power series into an average of the edge's partial sums. The weights $`(1-x)x^n`$ are positive and add to 1:
+Summation by parts turns the power series into an average of the edge's partial sums. For 0 < x < 1, the weights $`(1-x)x^n`$ are positive and add to 1:
 
 ```math
 f(x) - s = (1 - x) \sum_{n=0}^{\infty} (s_n - s)\, x^n
@@ -522,7 +524,7 @@ example : (List.range 6).map (fun N => ∑ i ∈ range (N + 1), (-1 : ℤ) ^ i *
 - [The Cauchy product](13-cauchy-product-and-mertens-theorem.md): Abel's theorem shows a convergent product of two series sums to the product of their sums.
 - [Exp, log, sine, cosine and pi from series alone](14-exp-log-and-trig-from-power-series.md): the log and π built from series alone.
 
-Left open: when does a limit from inside force the edge series to converge? Tauberian theorems answer that; the first asks that n times $`a_n`$ shrink to 0.
+Left open: when does a limit from inside force the edge series to converge? Tauberian theorems answer that (the first asks that n times $`a_n`$ shrink to 0), while The Cauchy product uses Abel's theorem next to rescue products of convergent series.
 
 ---
 

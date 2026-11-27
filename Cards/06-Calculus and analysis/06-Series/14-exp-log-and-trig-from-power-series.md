@@ -34,7 +34,7 @@ Orange: the full cosine series. It crosses zero just below 1.6, at 1.570796. Gre
 
 ## The formula
 
-A reminder of notation: $`n!`$ ("n factorial") is $`1 \times 2 \times \cdots \times n`$, with $`0! = 1`$, and $`\sum_{n=0}^{\infty}`$ means "add the terms for n = 0, 1, 2, … for ever" ([Infinite series](01-series-convergence.md)). The three definitions:
+A reminder of notation: $`n!`$ ("n factorial") is $`1 \times 2 \times \cdots \times n`$, with $`0! = 1`$, and $`\sum_{n=0}^{\infty}`$ adds the terms for n = 0, 1, 2, … for ever ([Infinite series](01-series-convergence.md)). The three definitions:
 
 ```math
 \exp x=\sum_{n=0}^{\infty}\frac{x^n}{n!},\qquad \cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!},\qquad \sin x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}
@@ -54,21 +54,21 @@ The natural log, $`\log v`$, is the one number t with $`\exp t = v`$, for any v 
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`x`$, $`y`$ | inputs: plain numbers, no degrees or units | 1 and 1; then 1.5, 1.6 | — |
-| $`n`$, $`k`$ | term counters | n = 0 to 5 shown | the terms shrink to 0 |
-| $`\exp x`$; $`\cos x`$, $`\sin x`$ | the exp series; the cosine and sine series | exp 1 = 2.718282; cos 1.5 = 0.0707 | exp outgrows any power; cos and sin swing between −1 and 1 |
-| $`c_n`$ | n-th term of the Cauchy product | 1, 2, 2, 1.333333, … | — |
-| $`\log v`$; $`t`$, $`u`$ | for v above 0, the t with exp t = v; u, another number above 0 | log 2 = 0.693147 | climbs ever more slowly |
-| $`p`$, $`\pi`$ | the first positive zero of cos; twice it | 1.570796; 3.141593 | — |
-| $`f`$, $`g`$ | in the fold: how far each addition rule misses | 0 at every x | — |
-| $`r`$, $`s`$, $`t`$, $`T`$ | real life: a yearly rate; years; a time; a wave's repeat time | — | — |
+| $`x`$, $`y`$ | plain-number inputs (radians for trig) | 1, 1; 1.5, 1.6 | — |
+| $`n`$, $`k`$ | term counters | n = 0 to 5 | terms shrink to 0 |
+| $`\exp x`$; $`\cos x`$, $`\sin x`$ | the three defining series | exp 1 = 2.718282; cos 1.5 = 0.0707 | exp outgrows any power; cos, sin stay in [−1, 1] |
+| $`c_n`$ | n-th Cauchy product term | 1, 2, 2, 1.333333, … | — |
+| $`\log v`$; $`t`$, $`u`$ | t with exp t = v (v > 0); u > 0 | log 2 = 0.693147 | climbs ever more slowly |
+| $`p`$, $`\pi`$ | first positive zero of cos; twice it | 1.570796; 3.141593 | — |
+| $`f`$, $`g`$ | in the fold: addition-rule errors | 0 everywhere | — |
+| $`r`$, $`s`$, $`t`$, $`T`$ | real life: yearly rate; years; time; period | — | — |
 
 ### When it holds
 
 - **Both series converge absolutely** (the sizes of the terms add to a finite total). That licenses multiplying them by the Cauchy product. For series that converge only thanks to sign changes, the product can fail to converge ([The Cauchy product](13-cauchy-product-and-mertens-theorem.md)).
-- **Differentiation term by term needs the input inside the radius of convergence** (the distance from 0 within which the series adds up). For these three series the radius is unlimited ([Power series](04-power-series.md)).
-- **The series measures angles in radians.** Fed 90 for a right angle, it does not give 0.
-- **Log needs v above 0.** Exp is never 0 or negative, so log 0 and log of a negative number do not exist.
+- **Inside the radius of convergence.** Term-by-term differentiation holds inside the radius, which is unlimited for all three series ([Power series](04-power-series.md)).
+- **Angles are in radians.** Fed 90 for a right angle, cos does not give 0.
+- **Log needs v > 0.** Exp is always positive, so log 0 and logs of negative numbers do not exist. Log's power series for ln(1 + x) converges only for $`\lvert x\rvert < 1`$ and at x = 1, whereas inverting exp reaches every v > 0.
 
 ---
 
@@ -76,40 +76,36 @@ The natural log, $`\log v`$, is the one number t with $`\exp t = v`$, for any v 
 
 ### Step 0: two rules replace every picture
 
-Two rules about series replace the circles, triangles and areas of school proofs.
+Two series rules replace school geometry:
 
-- **Multiplying:** the product of two absolutely convergent series is their Cauchy product ([The Cauchy product](13-cauchy-product-and-mertens-theorem.md)).
-- **Differentiating:** inside its radius, a power series can be differentiated one term at a time ([Power series](04-power-series.md)).
+- **Multiplying:** two absolutely convergent series multiply by their Cauchy product ([The Cauchy product](13-cauchy-product-and-mertens-theorem.md)).
+- **Differentiating:** inside its radius, differentiate a power series term by term ([Power series](04-power-series.md)).
 
 Add the [Intermediate value theorem](../01-Limits%20and%20Continuity/06-intermediate-value-theorem.md) (a continuous function that changes sign has a zero between), and everything follows.
 
 ### Step 1: the three series converge for every x
 
-In the exp series, each term is the one before times $`x/(n+1)`$. Once n passes twice the size of x, that factor is below one half, so the terms shrink faster than a halving geometric series ([Convergence tests](02-comparison-ratio-and-root-tests.md)). Cosine and sine take every other term of the same sizes, so they converge too, absolutely, for every x.
+Each exp term is the previous times $`x/(n+1)`$. Once $`n > 2\lvert x\rvert`$, that factor is below 1/2, so terms shrink faster than a halving geometric series ([Convergence tests](02-comparison-ratio-and-root-tests.md)). Cosine and sine take every other term of the same sizes, so all three converge absolutely for every x.
 
 ### Step 2: exponents add, by the Cauchy product
 
-Multiply the exp series at x and at y. The Cauchy product collects, as its n-th term, every pair of terms whose powers add to n:
+Multiply the exp series at x and y. The Cauchy product's n-th term collects pairs whose powers add to n:
 
 ```math
 c_n=\sum_{k=0}^{n}\frac{x^k}{k!}\cdot\frac{y^{n-k}}{(n-k)!}=\frac{1}{n!}\sum_{k=0}^{n}\frac{n!}{k!\,(n-k)!}\,x^k y^{n-k}=\frac{(x+y)^n}{n!}
 ```
 
-The middle sum is the binomial theorem's expansion of $`(x+y)^n`$, so the product is, term for term, the exp series at x + y.
-
-With x = y = 1, the Cauchy terms are 1, 2, 2, 1.333333, 0.666667, 0.266667: exactly $`2^n/n!`$. Summed, they give 7.389056. That is exp 1 × exp 1 = 2.718282 squared, and it is exp 2.
+By the binomial theorem this is the exp series at x + y. At x = y = 1, the Cauchy terms are $`2^n/n!`$: 1, 2, 2, 1.333333, 0.666667, 0.266667, summing to 7.389056 = exp 1 × exp 1 = exp 2.
 
 ### Step 3: exp is positive and climbing, so log exists
 
-Three facts come from Step 2 and term-by-term differentiation.
+Step 2 and term-by-term differentiation give three facts:
 
-1. $`\exp x \cdot \exp(-x) = \exp 0 = 1`$, so exp is never 0. And $`\exp x = (\exp(x/2))^2`$, so it is positive.
-2. Differentiating term by term gives the exp series back, so exp is its own rate ([Derivatives of exp and log](../02-Derivatives/05-derivatives-of-exp-and-log.md)). A positive rate means exp always climbs ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
-3. For x above 0, exp x is at least 1 + x, so it grows past any number. Since $`\exp(-x) = 1/\exp x`$, it also falls below any positive number.
+1. $`\exp x \cdot \exp(-x) = \exp 0 = 1`$, so exp is never 0; $`\exp x = (\exp(x/2))^2 > 0`$.
+2. Differentiating term by term returns exp, so exp is its own rate ([Derivatives of exp and log](../02-Derivatives/05-derivatives-of-exp-and-log.md)) and always climbs ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
+3. For x > 0, $`\exp x > 1 + x`$, so exp passes any number, and $`\exp(-x) = 1/\exp x`$ drops below any positive number.
 
-So for each v above 0, exp goes from below v to above v. The intermediate value theorem gives a t with exp t = v, and climbing makes it the only one. That t is $`\log v`$. Bisection on exp gives log 2 = 0.693147.
-
-Step 2 turns into the log rule, for any u and v above 0: $`\log(uv) = \log u + \log v`$. Check: log 2 + log 3 = 1.791759 = log 6.
+For any v > 0, the intermediate value theorem gives a t with exp t = v, and climbing makes it unique: that t is $`\log v`$. Bisection gives log 2 = 0.693147. Step 2 gives $`\log(uv) = \log u + \log v`$ for u, v > 0 (log 2 + log 3 = 1.791759 = log 6).
 
 ### Step 4: sine and cosine, from their derivatives
 
@@ -119,23 +115,19 @@ Differentiate the series term by term. Each term of sine becomes a term of cosin
 \frac{d}{dx}\sin x=\cos x,\qquad \frac{d}{dx}\cos x=-\sin x
 ```
 
-The earlier card [Derivatives of sine and cosine](../02-Derivatives/04-derivatives-of-trig-functions.md) got these from a crank and a small-angle squeeze. Here they come from algebra on coefficients.
-
-Two consequences follow, each from "a function whose rate is zero everywhere is constant" (the mean value theorem).
+[Derivatives of sine and cosine](../02-Derivatives/04-derivatives-of-trig-functions.md) got these geometrically; here they come from algebra on coefficients. Since a zero rate everywhere means a constant function (mean value theorem):
 
 - **The square rule.** $`\sin^2 x + \cos^2 x`$ has rate $`2\sin x\cos x - 2\cos x\sin x = 0`$ and equals 1 at x = 0. So it is 1 everywhere. At x = 1: 0.841471² + 0.540302² = 1.000000.
-- **The addition rules.** $`\cos(x+y) = \cos x\cos y - \sin x\sin y`$ and $`\sin(x+y) = \sin x\cos y + \cos x\sin y`$. The fold proves them.
+- **The addition rules.** $`\cos(x+y) = \cos x\cos y - \sin x\sin y`$ and $`\sin(x+y) = \sin x\cos y + \cos x\sin y`$ (proved in the fold).
 
 <details>
 <summary>Detailed proof: the addition rules from derivatives alone</summary>
 
-Fix y. Let f and g measure how far each rule misses:
+Fix y and set
 
 $`\displaystyle f(x)=\cos(x+y)-\cos x\cos y+\sin x\sin y,\qquad g(x)=\sin(x+y)-\sin x\cos y-\cos x\sin y`$
 
-Differentiate with Step 4's rules: $`f' = -g`$ and $`g' = f`$. Then $`f^2 + g^2`$ has rate $`2f(-g) + 2gf = 0`$, so it is constant.
-
-At x = 0, $`f = \cos y - \cos y = 0`$ and $`g = \sin y - \sin y = 0`$. So $`f^2 + g^2 = 0`$ for every x, which forces f = g = 0. Both rules hold.
+Then $`f' = -g`$ and $`g' = f`$, so $`(f^2 + g^2)' = 2f(-g) + 2gf = 0`$. At x = 0, f = g = 0, so $`f^2 + g^2 = 0`$ everywhere, forcing f = g = 0.
 
 </details>
 
@@ -143,9 +135,9 @@ At x = 0, $`f = \cos y - \cos y = 0`$ and $`g = \sin y - \sin y = 0`$. So $`f^2 
 
 **Cosine starts positive and turns negative.** At 0 it is 1. At 2 its terms are $`1,\ -2^2/2!,\ 2^4/4!,\ \dots`$, and from the second term on they shrink in size, so the sum sits below $`1 - 2 + 2/3`$ ([Alternating series](03-alternating-and-conditional-convergence.md)). The code gives cos 2 = −0.4161.
 
-**Sine is positive between 0 and 2.** Group its terms in pairs: $`x(1 - x^2/6)`$, then $`\tfrac{x^5}{120}(1 - x^2/42)`$, and so on. For x between 0 and 2, x² is below 4, so every bracket is positive.
+**Sine is positive on (0, 2).** Pair its terms: $`x(1 - x^2/6) + \tfrac{x^5}{120}(1 - x^2/42) + \cdots`$. For 0 < x < 2, $`x^2 < 4`$, so every bracket is positive.
 
-**So cosine falls the whole way.** Its rate is minus sine, negative on (0, 2). A falling function crosses zero at most once. The intermediate value theorem says it does cross: once, at a point p. Define
+**So cosine falls on (0, 2).** Its rate is −sin x < 0, so it crosses zero at most once. By the intermediate value theorem it crosses once, at p. Define
 
 ```math
 \pi = 2p
@@ -155,15 +147,17 @@ Bisection gives p = 1.570796, so pi = 3.141593.
 
 ### Step 6: the period is 2 pi
 
-At p, cosine is 0, so the square rule makes sin p = 1 (it is positive by Step 5). Put y = p in the addition rules:
+At p, cos p = 0 and sin p > 0, so the square rule gives sin p = 1. Putting y = p in the addition rules gives
 
 ```math
 \cos(x+p)=-\sin x,\qquad \sin(x+p)=\cos x
 ```
 
-Each quarter-step of p turns cosine into minus sine. Four quarter-steps cycle cos → −sin → −cos → sin → cos. Four times p is 2 pi, so cos(x + 2π) = cos x, and likewise for sine. The code: cos 1 = 0.540302 = cos(1 + 2π); cos π = −1, cos 2π = 1.
+Four quarter-steps cycle cos → −sin → −cos → sin → cos, so cos(x + 2π) = cos x and sin(x + 2π) = sin x (cos 1 = 0.540302 = cos(1 + 2π); cos π = −1, cos 2π = 1).
 
-No smaller positive shift works. Cosine's series has only even powers, so cos(−x) = cos x, and cosine is positive on (−p, p). On [0, π], cosine falls strictly from 1 to −1, since sin x = cos(x − p) is positive there. On [π, 2π] it climbs back as a mirror image, because cos(2π − x) = cos(−x) = cos x. So cosine equals 1 only at 0 in [0, 2π).
+No smaller positive shift works. Even powers make cos(−x) = cos x, positive on (−p, p). On [0, π], cosine falls strictly from 1 to −1, since sin x = cos(x − p) is positive on (0, π).
+
+On [π, 2π] it climbs back as a mirror image, because cos(2π − x) = cos(−x) = cos x. So cosine equals 1 only at 0 in [0, 2π).
 
 **Is it the circle's pi?** The point (cos t, sin t) lies on the unit circle by the square rule and moves at speed 1 by Step 4. So one full period traces the circle once, and its length is 2π. The code checks this with no series: a 24576-sided polygon inside the unit circle has half-perimeter 3.141593.
 
@@ -198,7 +192,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Road one builds exp, cos and sin from their series, multiplies by the Cauchy product, and finds pi and log 2 by bisection. Road two shares no series: a step-by-step solver for "the rate equals the value" from 0 to 2 (the classic fourth-order Runge–Kutta method), a polygon doubled from a hexagon inside the unit circle using square roots only, and Simpson's rule for the area under 1/t (an area estimate built from thin strips topped by parabolas).
+Road one builds exp, cos and sin from their series, multiplies by the Cauchy product, and finds pi and log 2 by bisection.
+
+Road two shares no series: a step-by-step solver for "the rate equals the value" from 0 to 2 (the classic fourth-order Runge–Kutta method), a polygon doubled from a hexagon inside the unit circle using square roots only, and Simpson's rule for the area under 1/t (an area estimate built from thin strips topped by parabolas).
 
 ### Python
 
@@ -539,10 +535,10 @@ example : (∑ k ∈ Finset.range 6, (1 : ℚ) / ((k ! : ℚ) * ((5 - k)! : ℚ)
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Fewer cosine terms.** In `trig`, set `n=40` to `n=2`: cosine becomes 1 − x²/2. Guess first where pi lands. The zero leaves (1.5, 1.6), bisection stalls at an end, and the polygon assert stops it.
+> - **Fewer cosine terms.** In `trig`, set `n=40` to `n=2`: cosine becomes 1 − x²/2. Guess first where pi lands. The zero leaves (1.5, 1.6), bisection stalls, and the polygon assert stops it.
 > - **Flip the sign.** In `trig`, change `-t` to `t`. Guess first whether a zero survives. None does: every term is positive, and the polygon assert stops it.
 > - **A cruder polygon.** Change `range(12)` to `range(4)`: 96 sides, as in Archimedes' bound. Guess first how many digits of pi survive. Only the first three do, and the polygon assert stops it.
-> - **A careless Cauchy product.** Change `fact(n - k)` to `fact(n - k + 1)`. Guess first which assert notices. The first one: the terms no longer equal 2 to the n over n factorial.
+> - **A careless Cauchy product.** Change `fact(n - k)` to `fact(n - k + 1)`. Guess first which assert notices. The first one: the terms no longer equal $`2^n/n!`$.
 
 ---
 
@@ -551,17 +547,17 @@ example : (∑ k ∈ Finset.range 6, (1 : ℚ) / ((k ! : ℚ) * ((5 - k)! : ℚ)
 > [!warning]
 > **Multiplying two series term by term.** Pairing the n-th term with the n-th term keeps only the squares and drops every cross term, so exp 1 × exp 1 comes out at 2.279585 instead of 7.389056. The Cauchy product collects every pair whose powers add to n.
 >
-> - **Trusting a short polynomial.** Cosine cut to 1 − x²/2 crosses zero at 1.414214, so "pi" would be 2.828427.
-> - **Forgetting to double.** The first zero of cosine is pi over 2. Taking 1.570796 as pi is off by a factor of 2.
+> - **Trusting a short polynomial.** Cosine cut to 1 − x²/2 crosses zero at 1.414214 ("pi" = 2.828427).
+> - **Forgetting to double.** Cosine's first zero is π/2 = 1.570796, half of pi.
 > - **Adding where exp multiplies.** exp 1 + exp 1 = 5.436564, not exp 2 = 7.389056.
 
 ---
 
 ## Where you meet it in real life
 
-- **Calculator and computer maths libraries.** To find cos of a large number, a library first subtracts whole multiples of pi over 2 and applies Step 6's quarter-step rule, then evaluates a short polynomial (Step 1). The addition rules split an input into a table value plus a small leftover.
-- **Continuous compounding and discounting.** A discount factor over s years then t more years is exp(−rs) times exp(−rt), where r is the yearly rate. That is Step 2: exponents add while the factors multiply.
-- **Alternating current and waves.** A signal written cos(2πt/T), with t the time, repeats every T because cosine's period is exactly 2π (Step 6).
+- **Maths libraries.** To evaluate cos at a large input, libraries subtract multiples of π/2 using Step 6's quarter-step rule, then run a short polynomial (Step 1).
+- **Continuous compounding.** Discounting over s years then t years gives exp(−rs) exp(−rt) = exp(−r(s+t)) (Step 2).
+- **Alternating current and waves.** A signal cos(2πt/T) repeats every period T because cosine's period is 2π (Step 6).
 
 > **Say it back**
 > Exp, sine and cosine are defined as power series that converge for every input. The Cauchy product and the binomial theorem make exp of a sum the product of the exps; exp then climbs through every positive value, so log exists as its inverse. Term-by-term derivatives give sine's rate as cosine and cosine's rate as minus sine, which yield the square rule and the addition rules. Cosine falls from 1 to below 0 between 0 and 2, and pi is twice that first zero: 3.141593. A quarter-step by pi over 2 turns cosine into minus sine, so four of them, 2 pi, bring every value back.
@@ -578,9 +574,10 @@ example : (∑ k ∈ Finset.range 6, (1 : ℚ) / ((k ! : ℚ) * ((5 - k)! : ℚ)
 
 ## Where this goes next
 
+- [Dini's theorem](15-dinis-theorem.md): when monotone continuous functions on a closed, bounded interval with a continuous limit must converge uniformly.
 - [The elementary functions](../../07-Complex%20analysis/02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the same three series with complex inputs, where exp(ix) = cos x + i sin x ties all three into one.
 
-Series fixed pi as a number; whether it is the root of any polynomial with whole-number coefficients is a question they leave open here.
+Left open: power series converge uniformly inside their radius; when must a sequence of continuous functions converge uniformly without a power-series bound? Dini's theorem answers that next (while The elementary functions extends these three series to complex inputs).
 
 ---
 

@@ -133,7 +133,7 @@ theorem cauchy_square_alternating_inv_sqrt_diverges :
     have := ge_of_tendsto' hc.abs h2
     norm_num at this
 
-/-- The house series squared: the Cauchy product of 1 + 1/2 + 1/4 + ... with itself has terms
+/-- The halving series squared: the Cauchy product of 1 + 1/2 + 1/4 + ... with itself has terms
 (n + 1)/2^n, and they add up to 2 × 2 = 4. -/
 theorem cauchy_square_geometric_half :
     (∀ n : ℕ, ∑ k ∈ range (n + 1), (1 / 2 : ℝ) ^ k * (1 / 2) ^ (n - k) = (n + 1) / 2 ^ n) ∧
@@ -156,7 +156,7 @@ theorem cauchy_square_geometric_half :
     field_simp
   · norm_num
 
--- Worked numbers: the house series' diagonal totals 1, 1, 3/4, 1/2, 5/16, 3/16.
+-- Worked numbers: the halving series' diagonal totals 1, 1, 3/4, 1/2, 5/16, 3/16.
 example : (List.range 6).map (fun n => ∑ k ∈ range (n + 1), (1 / 2 : ℚ) ^ k * (1 / 2) ^ (n - k))
     = [1, 1, 3 / 4, 1 / 2, 5 / 16, 3 / 16] := by
   norm_num [List.range_succ, Finset.sum_range_succ]

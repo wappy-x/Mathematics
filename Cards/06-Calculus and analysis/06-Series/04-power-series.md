@@ -12,7 +12,7 @@ The recipe is a polynomial that never stops. At 0.5 its terms shrink fast; at 1.
 
 Two recipes run through this card: 1 + x + x^2 + …, which adds up to 1/(1 − x), and x − x^2/2 + x^3/3 − …, which adds up to ln(1 + x) and comes from the first by integrating term by term. From here on a recipe is a **power series**, the fence's half-width its **radius of convergence**, and the two posts its **endpoints**.
 
-**A power series converges at every input nearer its centre than a distance R, fails farther away, must be tested separately at the two inputs exactly R away, and inside can be differentiated and integrated term by term.**
+**A power series converges at every input nearer its centre than a distance R (which may be 0 or infinite), fails farther away, must be tested separately at the two inputs exactly R away, and inside can be differentiated and integrated term by term.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the power series itself is a definition.
 
@@ -47,7 +47,7 @@ f(x) = \sum_{n=0}^{\infty} a_n (x-c)^n = a_0 + a_1 (x-c) + a_2 (x-c)^2 + \cdots
 R = \frac{1}{L}, \qquad L = \lim_{n\to\infty} \left| \frac{a_{n+1}}{a_n} \right|
 ```
 
-**Read it aloud:** the radius is one over the limit of neighbouring coefficient ratios; L = 0 means no fence, and L infinite means only the centre works.
+**Read it aloud:** when the coefficients are nonzero (at least eventually) and their neighbouring ratios settle on L, the radius is 1/L; L = 0 means no fence, and L infinite means only the centre works.
 
 ```math
 f'(x) = \sum_{n=1}^{\infty} n\, a_n (x-c)^{n-1}, \qquad \int_c^x f(t)\,dt = \sum_{n=0}^{\infty} \frac{a_n}{n+1} (x-c)^{n+1}, \qquad |x - c| < R
@@ -58,7 +58,7 @@ f'(x) = \sum_{n=1}^{\infty} n\, a_n (x-c)^{n-1}, \qquad \int_c^x f(t)\,dt = \sum
 The card's two series, centred at c = 0:
 
 ```math
-\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n, \qquad \ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\, x^n
+\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n \ \ (-1 < x < 1), \qquad \ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\, x^n \ \ (-1 < x \le 1)
 ```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
@@ -75,7 +75,7 @@ The card's two series, centred at c = 0:
 ### When it holds
 
 - **Strictly inside.** At distance exactly R the theorem is silent: the two series here behave differently at their endpoints.
-- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([Convergence tests](02-comparison-ratio-and-root-tests.md)), in general through the [lim sup](../01-Limits%20and%20Continuity/10-limsup-and-liminf.md).
+- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([Convergence tests](02-comparison-ratio-and-root-tests.md)), in general through the limit superior ([Limit superior and inferior](../01-Limits%20and%20Continuity/10-limsup-and-liminf.md)).
 - **Term by term only inside.** At x = 1 the log series converges; its differentiated series 1 − 1 + 1 − … does not.
 
 ---
@@ -84,13 +84,13 @@ The card's two series, centred at c = 0:
 
 ### Step 0: at a fixed input, a power series is a plain series
 
-At x = 0.5, 1 + x + x^2 + … is 1 + 0.5 + 0.25 + …, the shelf's house example, adding up to 2. Each fixed input gives an ordinary series, decided by comparing with a geometric one.
+At x = 0.5, 1 + x + x^2 + … is the geometric series 1 + 0.5 + 0.25 + …, adding up to 2. Each fixed input gives an ordinary series, decided by comparing with a geometric one.
 
 ### Step 1: working at one distance forces working at every smaller distance
 
-Say the series converges at distance d from the centre. Its terms shrink to zero, so none exceeds some ceiling M. At a nearer input the n-th term is at most M times (|x − c|/d)^n, a geometric series with ratio below 1, so it converges, even with every term made positive.
+Say the series converges at a nonzero distance d from the centre. Its terms shrink to zero, so none exceeds some ceiling M. At a nearer input the n-th term is at most M times (|x − c|/d)^n, a geometric series with ratio below 1, so it converges, even with every term made positive.
 
-So the working inputs fill a stretch around c with no holes. Let R be the least upper bound (sup) of the working distances. Anything nearer than R lies below some working distance, so works; anything farther cannot work, or R would not be an upper bound.
+So the working inputs fill a stretch around c with no holes. Let R be the least upper bound (sup) of the working distances (infinite if every distance works, and 0 if only distance 0 works). Anything nearer than R lies below some working distance, so works; anything farther cannot work, or R would not be an upper bound.
 
 ### Step 2: the ratio test measures the fence
 
@@ -120,7 +120,7 @@ Take c = 0, and a distance r between |x| and d: |x| < r < d < R. Convergence at 
 
 **Slope.** For a small step h with |x + h| ≤ r, the mean value theorem applied twice to $`y^n`$ gives $`|((x+h)^n - x^n)/h - n x^{n-1}| \le |h|\, n(n-1)\, r^{n-2}`$. Summed, the gap between f's difference quotient and $`\sum n a_n x^{n-1}`$ is at most $`|h| (M/r^2) \sum n(n-1)(r/d)^n`$. That sum converges by the ratio test, so the gap is a constant times |h|; for any tolerance ε, |h| below ε over the constant works.
 
-**Same radius.** Convergence of the differentiated series at a point y with |y| > R would, by Step 1, give absolute convergence at some z with R < |z| < |y|; since $`|a_n z^n| \le |z| \cdot n |a_n| |z|^{n-1}`$, the original would converge beyond R. The integrated series has the original as its derivative series, so its radius is R too.
+**Same radius.** Convergence of the differentiated series at a point y with |y| > R would, by Step 1, give absolute convergence at some z with R < |z| < |y|; since for $`n \ge 1`$, $`|a_n z^n| \le |z| \cdot n |a_n| |z|^{n-1}`$, the original would converge beyond R. The integrated series has the original as its derivative series, so its radius is R too.
 
 **Integral.** For |t| ≤ |x| the tail beyond N terms is at most $`\sum_{n>N} M (|x|/d)^n`$, a number independent of t that heads for 0; its integral is at most |x| times that.
 
@@ -819,11 +819,11 @@ example : (1 : ℚ) / (1 - 2) = -1 ∧ (List.range 4).map (fun n : ℕ => (2 : �
 ## Where you meet it in real life
 
 - **Calculators.** Logs come from polynomials, on inputs first shrunk towards the centre so few terms are needed.
-- **Finance.** The geometric series prices a perpetual bond (a fixed payment every year, forever), the shelf's house example; x times its derivative, x + 2x^2 + 3x^3 + …, weights each payment by its date; divided by the price, it gives the bond's duration, the average wait for the money.
+- **Finance.** The geometric series prices a perpetual bond (a fixed payment every year, forever). Then x times its derivative, x + 2x^2 + 3x^3 + …, weights each payment by its date; divided by the price, it gives the bond's duration, the average wait for the money.
 - **Differential equations.** Solutions are sought as power series, and the radius says how far to trust them: [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md).
 
 > **Say it back**
-> A power series is a polynomial that never stops, read as the limit of its partial sums. Working at one distance forces working at every smaller one, so one radius R splits inside from outside. Coefficient ratios find R; the two points exactly R away are tested one by one. Inside, term-by-term calculus holds, and integrating 1 − t + t^2 − … gives the log series with its error bound.
+> A power series is a polynomial that never stops, read as the limit of its partial sums. Working at one distance forces working at every smaller one, so one radius R splits inside from outside. Coefficient ratios (when nonzero and settling) find R; when R is finite and positive, the two endpoints are tested one by one. Inside, term-by-term calculus holds, and integrating 1 − t + t^2 − … gives the log series with its error bound.
 
 ---
 

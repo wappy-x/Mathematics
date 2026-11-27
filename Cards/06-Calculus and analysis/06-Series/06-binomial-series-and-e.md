@@ -12,7 +12,7 @@ Isaac Newton pushed the rule past them. The pieces keep their shape but never ru
 
 The same pieces settle two older questions. The compounding ceiling e is exactly 1 + 1 + 1/2 + 1/6 + …, one over every factorial, added. And of the 720 ways six people can draw names, the 265 that leave nobody with their own are 720 divided by e, rounded.
 
-**A power that is not whole still expands into choice-count pieces, endlessly; the sum is exact when the added bit lies between −1 and 1, and the same pieces, in the limit, build e and 1/e.**
+**A power other than a whole number 0, 1, 2, … still expands into choice-count pieces, endlessly; the sum is exact when the added bit lies strictly between −1 and 1, and the same pieces, in the limit, build e and 1/e.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the extended choice count C(a, k) is a definition.
 
@@ -40,13 +40,13 @@ Reminder: a sigma sum running to infinity means the limit of its partial sums ([
 C(a,k) = \frac{a(a-1)(a-2)\cdots(a-k+1)}{k!}, \qquad C(a,0) = 1.
 ```
 
-That is $`k`$ factors counting down from $`a`$, divided by $`k!`$. For a whole $`a`$ it is "a choose k" ([The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $`a`$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
+That is $`k`$ factors counting down from $`a`$, divided by $`k!`$. For a whole $`a`$ of 0 or more, it is "a choose k" ([The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $`a`$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
 
 ```math
 (1+x)^a = \sum_{k=0}^{\infty} C(a,k)\,x^k \qquad \text{whenever } -1 < x < 1
 ```
 
-**Read it aloud:** one plus x to the power a is the sum, over every k, of the extended choice count times x to the k.
+**Read it aloud:** whenever x lies strictly between −1 and 1 (or a is a whole number of 0 or more), one plus x to the power a is the sum over every k of the extended choice count times x to the k.
 
 Three consequences:
 
@@ -86,7 +86,7 @@ Treat $`(1+x)^a`$ as a function of $`x`$ and take its Taylor series: the endless
 
 Each derivative brings the current power down as a factor and lowers it by one: $`a(1+x)^{a-1}`$, then $`a(a-1)(1+x)^{a-2}`$, and the $`k`$-th is $`a(a-1)\cdots(a-k+1)(1+x)^{a-k}`$. At $`x`$ = 0 the bracket is 1. Dividing by $`k!`$, as Taylor's recipe does, gives exactly $`C(a,k)`$.
 
-For a whole $`a`$ the countdown reaches $`a - a`$ = 0 and every later coefficient vanishes. For $`a`$ = 1/2 it runs 1/2, −1/2, −3/2, … and never hits zero.
+For a whole $`a \ge 0`$ the countdown reaches $`a - a`$ = 0 and every later coefficient vanishes. For $`a`$ = 1/2 it runs 1/2, −1/2, −3/2, … and never hits zero.
 
 ### Step 2: the pieces shrink when the added bit is small
 
@@ -146,7 +146,7 @@ by the binomial theorem. For $`m \ge 1`$ that is zero; $`m`$ = 0 gives 1. So the
 
 The sieve of [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) gave the clean share $`D(n)/n!`$ as $`1 - 1/1! + 1/2! - \cdots \pm 1/n!`$: Step 6's series, stopped at $`n`$. By Step 4's rule it misses 1/e by less than $`1/(n+1)!`$. For six people: share 0.368056, gap +0.000176, bound 0.000198.
 
-Times $`n!`$: $`D(n)`$ misses $`n!/e`$ by less than $`1/(n+1)`$, at most one half. A whole number that close to 264.873 must be 265: $`D(n)`$ is $`n!/e`$ rounded.
+For $`n \ge 1`$, multiplying by $`n!`$ shows $`D(n)`$ misses $`n!/e`$ by less than $`1/(n+1)`$, at most one half. A whole number that close to 264.873 must be 265: $`D(n)`$ is $`n!/e`$ rounded.
 
 A second road to 1/e is the Taylor series of the function that is its own rate, read at $`x`$ = −1 ([Taylor series](05-taylor-series.md)).
 
@@ -389,7 +389,7 @@ The two outputs agree line for line.
 
 ### Lean
 
-Lean proves the expansion for every power and every added bit between −1 and 1, and the facts about e for every n.
+Lean proves the expansion for every power and every added bit strictly between −1 and 1 (or whole powers of 0 or more for any x), and the facts about e.
 
 - Take any power a, and an added bit x strictly between −1 and 1. Then the endless sum of C(a, k) times x^k is exactly (1 + x)^a.
 - For a whole power a of 0 or more, the same sum holds for every x.
@@ -588,7 +588,7 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 ## The usual mistake
 
 > [!warning]
-> **Using the endless series for any x.** A whole power expands for every number; the endless series only for an added bit between −1 and 1. The root of 4 as (1 + 3) to the half gives 155.68 after ten pieces. Rewrite first so the added bit is small.
+> **Using the endless series for any x.** A whole power of 0 or more expands for every number; otherwise the series holds for an added bit strictly between −1 and 1 (with endpoints tested separately). The root of 4 as (1 + 3) to the half gives 155.68 after ten pieces. Rewrite first so the added bit is small.
 >
 > - **Forgetting the $`k!`$:** 1.047875 instead of 1.0488125.
 > - **Dropping the signs:** 1957 clean draws out of 720.
@@ -604,7 +604,7 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 - **Secret Santa and hat checks.** In a large group, about 36.8% of all possible draws leave nobody matched ([Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md)).
 
 > **Say it back**
-> The Taylor coefficients of one plus x to any power are choice counts with any top number. For a whole power they stop; otherwise they add up to the power for x between −1 and 1. Expanding compound interest the same way shows e is the sum of one over every factorial. The alternating sum is 1/e, where the share of clean draws settles.
+> The Taylor coefficients of one plus x to any power are choice counts with any top number. For a whole power of 0 or more they stop; otherwise they add up to the power for x strictly between −1 and 1. Expanding compound interest the same way shows e is the sum of one over every factorial. The alternating sum is 1/e, where the share of clean draws settles.
 
 ---
 
@@ -618,7 +618,7 @@ example : (1 : ℚ) + 1 + 1 / 2 = 5 / 2 := by norm_num
 
 - [Uniform convergence](07-uniform-convergence.md): when a whole curve of partial sums settles at once.
 - [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): why Step 3 may differentiate piece by piece.
-- [Stirling's approximation](09-stirlings-approximation.md): e inside the size of $`n!`$.
+- [Stirling's approximation](09-stirlings-approximation.md): how e appears in the size of $`n!`$ for large $`n`$.
 
 The derangement count is now $`n!/e`$ rounded, but $`n!`$ is still a product of $`n`$ numbers; how large it is without multiplying them out is what [Stirling's approximation](09-stirlings-approximation.md) answers.
 

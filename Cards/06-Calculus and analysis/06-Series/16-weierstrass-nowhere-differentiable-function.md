@@ -8,11 +8,13 @@
 
 Zoom into a minute-by-minute price chart and new wiggles appear at every enlargement. A smooth curve, zoomed in, looks straight, and the slope of that straight piece is its derivative.
 
-This card builds a curve that never straightens, using only a sawtooth. The sawtooth φ (the Greek letter phi) gives each input its distance to the nearest whole number: 0 at 0, rising to 0.5 at 0.5, back to 0 at 1. Stack copies of it. Each new layer is 4 times as fast and 3/4 as tall, so it is 3 times as steep.
+This card builds a curve that never straightens, using only a sawtooth. The sawtooth φ (the Greek letter phi) gives each input its distance to the nearest whole number: 0 at 0, rising to 0.5 at 0.5, back to 0 at 1.
 
-Stand at x = 0 and take a step h of 1/4, then 1/16, then 1/64. The slope of the chord, (f(h) − f(0))/h, comes out 1, 4, 13, 40, … . A derivative would need these chord slopes to settle on one number. They grow without bound, and the same happens at every point.
+Stack copies of it, each 4 times as fast and 3/4 as tall, so 3 times as steep.
 
-**Add sawtooth layers whose heights shrink geometrically but whose steepness grows geometrically: the heights add up, so the sum is continuous, while the newest layer's steepness always beats all older layers together, so no chord slope ever settles.**
+Stand at x = 0 and take a step h of 1/4, then 1/16, then 1/64. The chord slope (f(h) − f(0))/h runs 1, 4, 13, 40, … . A derivative needs chord slopes to settle on one number; here they grow without bound at every point.
+
+**Add sawtooth layers whose heights shrink geometrically while their steepness more than doubles each layer (here, 3/4 as tall and 4 times faster): the heights add up, so the sum is continuous, while the newest layer always beats all older layers together, so no chord slope ever settles.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works: this f is continuous at every point and has a derivative at none.
 
@@ -66,11 +68,11 @@ At every other point x the card finds a step $`\delta_m`$ of size $`\tfrac14 \cd
 
 ### When it holds
 
-- **Heights shrink geometrically.** The factor 3/4 is below 1, so the caps add up. At factor 1 every layer adds 1/3 at x = 1/3, and the sum is infinite.
-- **Steepness grows.** Layer n has slope 3 to the n. With heights (1/8) to the n, steepness falls, and at x = 1/3 the chord slopes from both sides settle at 2: a true slope.
+- **Heights shrink geometrically (factor between 0 and 1).** Here 3/4 < 1, so caps add up. At factor 1 every layer adds 1/3 at x = 1/3, diverging.
+- **Steepness grows.** Layer n has slope $`3^n`$. With heights $`(1/8)^n`$, steepness falls, and at x = 1/3 both sides settle at slope 2.
 - **The newest layer beats the rest.** The count below needs steepness to grow by a factor above 2 per layer; here it is 3. At exactly 2 the floor stays at 1; smaller factors need finer arguments.
-- **A whole-number speed-up.** With factor 4, a step that is whole for one layer is whole for every deeper layer, which then does not move. Without it, deeper layers move too and this count breaks.
-- **Infinitely many layers.** Any finite stack is a broken line with corners; 5 layers give chord slope 121 at 0 for every small step to the right.
+- **Speed-up a multiple of 4.** With factor 4, a quarter-step at layer m is a whole number at every deeper layer, so deeper layers do not move. Without that, deeper layers move too and this count breaks.
+- **Infinitely many layers.** Any finite stack is a broken line: 5 layers give slope 121 just right of 0.
 
 ---
 
@@ -78,13 +80,15 @@ At every other point x the card finds a step $`\delta_m`$ of size $`\tfrac14 \cd
 
 ### Step 0: heights add up, slopes do not
 
-Layer n has height at most $`\tfrac12 (3/4)^n`$ and steepness $`3^n`$. The heights have a finite sum; the slopes grow. The first fact gives continuity, the second destroys every derivative.
+Layer n has height at most $`\tfrac12 (3/4)^n`$ and steepness $`3^n`$. The heights have a finite sum; the slopes grow. The first gives continuity, the second destroys every derivative.
 
 ### Step 1: the sum is continuous, by the M-test
 
-Each partial sum $`f_N`$ is continuous. Every layer sits under its cap $`M_n = \tfrac12 (3/4)^n`$ at every x, and the caps add to 2. So the M-test (number caps with a finite sum force uniform convergence) gives one bound on the gap at every x at once ([Uniform convergence](07-uniform-convergence.md), Step 5). A uniform limit of continuous functions is continuous (the same card, Step 4).
+Each partial sum $`f_N`$ is continuous. Every layer sits under $`M_n = \tfrac12 (3/4)^n`$ at every x, and those caps add to 2.
 
-After N layers the caps leave $`2 (3/4)^N`$. The first N below 0.001 is 27, leftover 0.000847. At x = 1/3 every layer is exactly 1/3, since 4 to any power is 1 more than a multiple of 3. So f(1/3) = 4/3 = 1.333333. Twenty-seven layers give 1.332769, a gap of 0.000564, inside the promised 0.000847.
+By the M-test (number caps with a finite sum force uniform convergence), $`f_N \to f`$ uniformly ([Uniform convergence](07-uniform-convergence.md), Step 5), so f is continuous (Step 4).
+
+After N layers the caps leave $`2 (3/4)^N`$, first below 0.001 at N = 27 (0.000847). At x = 1/3 every layer reads 1/3 (since $`4^n`$ is 1 more than a multiple of 3), so f(1/3) = 4/3 = 1.333333; 27 layers give 1.332769, gap 0.000564.
 
 ### Step 2: the chord slopes at 0
 
@@ -110,7 +114,9 @@ At x = 0.3 the steps alternate right and left; the chord slopes are 4, −5, 22,
 <details>
 <summary>Detailed proof: f has no derivative at any x</summary>
 
-Fix x and m. Let $`y = 4^m x`$ and let k/2 be the largest multiple of 1/2 not above y. If y − k/2 is at most 1/4, take $`\delta_m = \tfrac14 4^{-m}`$; otherwise take $`\delta_m = -\tfrac14 4^{-m}`$. Either way $`4^m x`$ and $`4^m(x+\delta_m)`$ lie in [k/2, k/2 + 1/2], where φ is a straight line of slope ±1. Write
+Fix x and m. Let $`y = 4^m x`$ and let k/2 be the largest multiple of 1/2 not above y. Take $`\delta_m = \tfrac14 4^{-m}`$ if $`y - k/2 \le \tfrac14`$, else $`-\tfrac14 4^{-m}`$.
+
+Either way $`4^m x`$ and $`4^m(x+\delta_m)`$ lie in [k/2, k/2 + 1/2], where φ is a straight line of slope ±1. Write
 
 $`\displaystyle \frac{f(x+\delta_m)-f(x)}{\delta_m} = \sum_{n=0}^{\infty} 3^n \gamma_n, \qquad \gamma_n = \frac{\varphi(4^n(x+\delta_m)) - \varphi(4^n x)}{4^n \delta_m}.`$
 
@@ -118,17 +124,17 @@ For n > m, $`4^n\delta_m`$ is a whole number and φ has period 1, so $`\gamma_n 
 
 $`\displaystyle \left\lvert \frac{f(x+\delta_m)-f(x)}{\delta_m} \right\rvert \ge 3^m - \sum_{n=0}^{m-1} 3^n = \frac{3^m+1}{2}.`$
 
-Suppose f had derivative L at x. Since $`\delta_m \to 0`$, these chord slopes would head for L and so stay bounded. They do not, so no derivative exists.
+Suppose f had derivative L at x. Since $`\delta_m \to 0`$, these chord slopes would head for L and stay bounded. They do not, so no derivative exists.
 
 </details>
 
 ### Step 4: why the swap of limits fails here
 
-Each partial sum $`f_N`$ is a broken line, with a slope except at corners, and they converge uniformly. Yet the limit has no slope anywhere. A uniform limit keeps continuity, not derivatives. The derivative theorem on [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md) needs the slopes to converge uniformly; here the layer slopes $`3^n`$ add without bound.
+Each partial sum $`f_N`$ is a broken line, with a slope except at corners, and they converge uniformly. Yet the limit has no slope anywhere. A uniform limit keeps continuity, not derivatives. The derivative theorem on [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md) needs the slopes to converge uniformly; here layer slopes $`3^n`$ grow without bound.
 
 ### Step 5: the original, with cosines
 
-Weierstrass's 1872 example used cosines: $`\sum a^n \cos(b^n \pi x)`$, with a between 0 and 1, b an odd whole number and ab above $`1 + 3\pi/2`$. Heights $`a^n`$ add up; steepness $`(ab)^n`$ explodes. Hardy (1916) showed ab of at least 1 is enough. The sawtooth is easier because each layer is straight between corners.
+Weierstrass's 1872 example used cosines: $`\sum a^n \cos(b^n \pi x)`$, with $`0 < a < 1`$, b a positive odd whole number and $`ab > 1 + 3\pi/2`$. Heights $`a^n`$ add up; steepness $`(ab)^n`$ explodes. Hardy (1916) showed $`0 < a < 1`$ and $`ab \ge 1`$ (for any real $`b > 1`$) are enough. The sawtooth is easier because each layer is straight between corners.
 
 ---
 
@@ -161,7 +167,9 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The code builds the sawtooth layers itself and reaches each chord slope by two roads. At x = 0: layers summed in floating point against $`(3^m - 1)/2`$. At x = 0.3: exact whole-number layer changes against the proof's slope signs and against the floating-point sum. It also tests the floor $`(3^m + 1)/2`$ and, at x = 1/3, the M-test leftover and the (1/8) slopes against hand-worked sums.
+The code builds the sawtooth layers itself and checks each chord slope two ways: at x = 0 against $`(3^m - 1)/2`$, and at x = 0.3 by exact layer changes against slope signs and floating-point sums.
+
+It also tests the floor $`(3^m + 1)/2`$ and, at x = 1/3, the M-test leftover and the (1/8) slopes against hand-worked sums.
 
 ### Python
 
@@ -836,9 +844,10 @@ example : ∀ n < 27, 4 ^ n % 3 = 1 := by decide
 
 ## Where this goes next
 
+- [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): the next shelf moves from curves of one variable to surfaces, taking rates along one input while holding the rest fixed.
 - [Brownian paths](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/02-scaling-and-path-roughness.md): random paths that are continuous everywhere and smooth nowhere, with probability one.
 
-Left open: is this monster a rare freak, or typical? Brownian paths answer part of it: a random path is, with probability one, a monster too.
+Left open: how do derivatives work when a function depends on more than one variable? Partial derivatives opens the next shelf with that question (while Brownian paths shows that random continuous paths are almost surely monsters too).
 
 ---
 
