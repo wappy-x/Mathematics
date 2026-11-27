@@ -1,6 +1,6 @@
 // Goldbach and twin primes -- the same check as goldbach_and_open_problems_check.py,
 // in Rust.  No crates.  Two roads to the same counts: a sieve of Eratosthenes to
-// 200, and trial division.  House numbers 4, 98, 100, 102, and the twins 101 and 103.
+// 200, and trial division.  The card's numbers 4, 98, 100, 102, and the twins 101 and 103.
 fn by_division(n: usize) -> bool {   // road two: hunt for a divisor, up to the square root
     let mut d = 2;
     while d * d <= n && n % d != 0 { d += 1; }

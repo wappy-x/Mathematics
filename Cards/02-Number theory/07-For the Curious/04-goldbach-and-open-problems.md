@@ -126,7 +126,7 @@ Nothing is imported. The pairs of 100 are found the plain way, subtracting each 
 ```python
 # Goldbach and twin primes -- the check behind the card.  Nothing is imported.
 # Two roads to the same counts: a sieve of Eratosthenes to 200, and trial
-# division.  House numbers 4, 98, 100, 102, and the twin pair 101 and 103.
+# division.  The card's numbers 4, 98, 100, 102, and the twin pair 101 and 103.
 flag = [True] * 201                  # road one: the sieve.  flag[m] means "m is prime"
 flag[0] = flag[1] = False
 for p in range(2, 15):
@@ -156,7 +156,7 @@ assert twins[0] == (101, 103) and by_division(101) and by_division(103) and pair
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-25 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 100 = 3 + 97
@@ -178,7 +178,7 @@ ALL CHECKS PASS
 ```rust
 // Goldbach and twin primes -- the same check as goldbach_and_open_problems_check.py,
 // in Rust.  No crates.  Two roads to the same counts: a sieve of Eratosthenes to
-// 200, and trial division.  House numbers 4, 98, 100, 102, and the twins 101 and 103.
+// 200, and trial division.  The card's numbers 4, 98, 100, 102, and the twins 101 and 103.
 fn by_division(n: usize) -> bool {   // road two: hunt for a divisor, up to the square root
     let mut d = 2;
     while d * d <= n && n % d != 0 { d += 1; }
@@ -216,7 +216,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-25 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 100 = 3 + 97

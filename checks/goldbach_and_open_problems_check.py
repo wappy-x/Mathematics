@@ -1,6 +1,6 @@
 # Goldbach and twin primes -- the check behind the card.  Nothing is imported.
 # Two roads to the same counts: a sieve of Eratosthenes to 200, and trial
-# division.  House numbers 4, 98, 100, 102, and the twin pair 101 and 103.
+# division.  The card's numbers 4, 98, 100, 102, and the twin pair 101 and 103.
 flag = [True] * 201                  # road one: the sieve.  flag[m] means "m is prime"
 flag[0] = flag[1] = False
 for p in range(2, 15):
