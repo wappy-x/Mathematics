@@ -12,7 +12,7 @@ A power with a fractional or complex exponent is defined through the logarithm. 
 
 Walk z once round 0 and follow its square root without lifting the pen: it returns as minus itself. A program that recomputes the principal value at each step jumps instead, mid-calculation.
 
-**A complex power z^a is e^(a log z); each choice of logarithm is a branch, the principal branch keeps the angle in (−π, π], and crossing its cut upward multiplies the value by e^(2πia).**
+**For nonzero z, a complex power z^a is e^(a log z); each choice of logarithm is a branch, the principal branch keeps the angle in (−π, π], and crossing its cut upward multiplies the value by e^(2πia).**
 
 **What kind of fact this is:** a definition (the power) and a convention (the principal branch and its cut); the count of values and the size of the jump are proved on this card in Why it works.
 
@@ -29,10 +29,10 @@ Drawn to scale at 40 units per 1, 0 at the centre. The dots are the cube roots o
 Reminder: a logarithm $`\log z`$ of a nonzero z is any number whose exponential is z: real part ln|z|, imaginary part an angle of z, known up to whole turns ([The complex logarithm](04-complex-logarithm.md)). The principal logarithm $`\mathrm{Log}\, z`$ uses the principal argument $`\mathrm{Arg}\, z`$, the angle in (−π, π].
 
 ```math
-z^a = e^{a \log z} = e^{a(\ln|z| + i\mathrm{Arg}\, z + 2\pi i k)}, \qquad k = 0, \pm 1, \pm 2, \dots
+z^a = e^{a \log z} = e^{a(\ln|z| + i\mathrm{Arg}\, z + 2\pi i k)}, \qquad z \neq 0, \quad k = 0, \pm 1, \pm 2, \dots
 ```
 
-**Read it aloud:** z to the a is e to the a times a logarithm of z; each whole number k of extra turns is a branch, and k = 0 is the principal value.
+**Read it aloud:** for nonzero z, z to the a is e to the a times a logarithm of z; each whole number k of extra turns is a branch, and k = 0 is the principal value.
 
 Branches differ by the factor $`e^{2\pi i a k}`$. Across the cut the principal value jumps by one such factor:
 
@@ -55,9 +55,9 @@ Branches differ by the factor $`e^{2\pi i a k}`$. Across the cut the principal v
 
 ### When it holds
 
-- **z not 0.** Zero has no logarithm. 0 is the **branch point**: the point a loop must circle to change the value.
+- **z not 0.** Zero has no logarithm. For non-whole a, 0 is the **branch point**: the point a loop must circle to change the value.
 - **The principal value is a convention.** Angles in [0, 2π) give another function, equal in the upper half-plane, different below.
-- **Off the cut the principal power is holomorphic** (it has a complex derivative at each point: [The complex derivative](01-complex-derivative-and-cauchy-riemann.md)), with derivative a z^a / z. On the cut it is not even continuous.
+- **Off 0 and the cut the principal power is holomorphic** (it has a complex derivative at each point: [The complex derivative](01-complex-derivative-and-cauchy-riemann.md)), with derivative a z^a / z. For non-whole a, on the cut it is not even continuous.
 - **Laws of exponents lose their guarantee.** (zw)^a = z^a w^a can fail by a factor $`e^{2\pi i a k}`$.
 
 ---
@@ -80,7 +80,7 @@ For i^i: Log i = iπ/2, so i · Log i = −π/2 and the principal value is e^(�
 
 ### Step 2: count the values
 
-Branch k repeats the principal value when $`e^{2\pi i a k} = 1`$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
+Branch k repeats the principal value when $`e^{2\pi i a k} = 1`$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms with positive q: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
 
 For (−8)^(1/3): Log(−8) = ln 8 + iπ, and a third of it is ln 2 + iπ/3. The principal value is 2(cos π/3 + i sin π/3) = 1 + 1.732051i. k = 1 adds a turn: 2(cos π + i sin π) = −2. k = −1 gives 1 − 1.732051i. The real cube root is a branch, not the principal one.
 
@@ -92,16 +92,16 @@ The cut must run from 0 to infinity, so that every loop round 0 crosses it. Whic
 
 ### Step 4: follow a value instead of recomputing it
 
-Walk a path in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $`(1 + u)^a`$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([Power series in the plane](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
+Walk a path avoiding 0 in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $`(1 + u)^a`$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([Power series in the plane](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
 
 Walk the diamond 4 → 4i → −4 → −4i → 4 from √4 = 2. The followed square root runs 2 → 1.414214 + 1.414214i → 2i → −1.414214 + 1.414214i → −2. The principal value agrees until the walk crosses the cut, then reads 1.414214 − 1.414214i at −4i and 2 at the end.
 
 <details>
 <summary>Detailed proof: the followed value is e^(a × the angle turned)</summary>
 
-Cut the path at z_0, z_1, …, z_N so each ratio z_(j+1)/z_j lies within distance 1 of 1. There the binomial series equals e^(a Log(1 + u)): both are 1 at u = 0 and satisfy f′ = a f/(1 + u).
+Cut the path at z_0, z_1, …, z_N so each ratio z_(j+1)/z_j lies strictly within distance 1 of 1. There the binomial series equals e^(a Log(1 + u)): both are 1 at u = 0 and satisfy f′ = a f/(1 + u).
 
-So the product is e^(a S), S the sum of Log(z_(j+1)/z_j). The real parts add to ln|z_N/z_0|. Each imaginary part is one step's small turn, with no hidden whole turn, so they add to θ, the total angle turned. The followed value is z_0^a · e^(a(ln|z_N/z_0| + iθ)). One anticlockwise loop has θ = 2π and multiplies by e^(2πia); a closed path not circling 0 has θ = 0.
+So the product is e^(a S), S the sum of Log(z_(j+1)/z_j). The real parts add to ln|z_N/z_0|. Each imaginary part is one step's small turn, with no hidden whole turn, so they add to θ, the total angle turned. The followed value is z_0^a · e^(a(ln|z_N/z_0| + iθ)). One anticlockwise loop round 0 has θ = 2π and multiplies by e^(2πia); a closed path not circling 0 has θ = 0.
 
 </details>
 
@@ -358,7 +358,7 @@ Lean proves the definition, the branches, the count of values and the jump at th
 
 - For nonzero z, the principal power z^a is e^(a(ln|z| + i Arg z)), with Arg z in (−π, π].
 - The values e^(a log z), over every logarithm of z, are exactly z^a · e^(2πiak), one for each whole number k.
-- For a = p/q in lowest terms there are exactly q values, so whole a gives one. Any other a, real or complex, gives infinitely many.
+- For a = p/q in lowest terms (q ≥ 1) there are exactly q values, so whole a gives one. Any other a, real or complex, gives infinitely many.
 - Take x on the negative real axis. Approached from above, the principal power tends to x^a; from below, to x^a · e^(−2πia).
 - So stepping up across the cut multiplies the principal value by e^(2πia), for every exponent a.
 - The hand arithmetic holds exactly: (−8)^(1/3) = 1 + √3 i, branch k = 1 gives −2, and the jump for a = 1/3 is −1/2 + (√3/2)i.
@@ -621,7 +621,7 @@ example : (1 : ℂ) ^ ((1 : ℂ) / 2) = 1 := by simp
 >
 > - **Laws of exponents applied blindly:** √(−1) · √(−1) = −1, but √1 = 1.
 > - **Recomputing through a cut:** a tracked phase (the angle of a complex value) jumps; following it continuously does not.
-> - **Thinking i^i is complex:** every value, 0.207880 among them, is real.
+> - **Thinking i^i is non-real:** every value, 0.207880 among them, is real.
 
 ---
 
@@ -632,24 +632,25 @@ example : (1 : ℂ) ^ ((1 : ℂ) / 2) = 1 := by simp
 - **Phase unwrapping.** Radar and signal processing add back whole turns where measured angles jump by nearly 2π: Step 4 on data.
 
 > **Say it back**
-> z^a means e^(a log z), and z has one logarithm per whole turn. So z^a has one value for whole a, q values for a = p/q, and infinitely many otherwise. The principal branch keeps the angle in (−π, π]; that is why a calculator gives 1 + 1.732i for (−8)^(1/3). Its cut on the negative real axis is where the value jumps by e^(2πia). Followed continuously, one loop round 0 turns √z into −√z.
+> For nonzero z, z^a means e^(a log z), and z has one logarithm per whole turn. So z^a has one value for whole a, q values for a = p/q in lowest terms (positive q), and infinitely many otherwise. The principal branch keeps the angle in (−π, π]; that is why a calculator gives 1 + 1.732i for (−8)^(1/3). Its cut on the negative real axis is where the value jumps by e^(2πia). Followed continuously, one loop round 0 turns √z into −√z.
 
 ---
 
 ## What this builds on
 
-- [The complex logarithm](04-complex-logarithm.md): the logarithms Log z + 2πik.
+- [The complex logarithm](04-complex-logarithm.md): the logarithms Log z + 2πik of any nonzero z, and their cut.
 - [Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md): the q roots a fractional power chooses among.
-- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): x^(p/q) for positive x, which every branch must match.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): x^(p/q) for positive x, which the principal branch matches.
 
 ## Where this goes next
 
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating complex functions along directed paths in the plane, starting the next shelf.
 - [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): a contour hugging both sides of a cut.
 - [The standard maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/03-standard-maps-and-composing-them.md): √z and z^a as maps that open and close wedges.
 - [Riemann surfaces](../../22-Algebraic%20geometry/03-Plane%20Curves/08-riemann-surfaces-and-the-weierstrass-p-function.md): the many-floored surface on which a many-valued function is single-valued.
 - [The monodromy theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/09-monodromy-theorem.md): continuing along homotopic paths gives the same answer, so a region without holes allows only one continuation.
 
-The jump e^(2πia) looks like a defect; a contour run along both sides of the cut turns it into a tool for real integrals.
+The jump e^(2πia) looks like a defect; turning it into a tool for real integrals needs integrals along paths in the plane, starting on [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md).
 
 ---
 

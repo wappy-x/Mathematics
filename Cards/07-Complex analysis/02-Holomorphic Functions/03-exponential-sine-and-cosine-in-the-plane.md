@@ -56,7 +56,7 @@ e^{z} = \sum_{n=0}^{\infty} \frac{z^n}{n!}, \qquad \frac{d}{dz}\,e^{z} = e^{z}
 
 **Read it aloud:** cosine a distance y up the imaginary axis is the hyperbolic cosine of y; sine there is i times the hyperbolic sine.
 
-Proved below: $`|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y`$, so sine is unbounded; $`e^z \neq 0`$; and $`e^{z+2\pi i} = e^z`$.
+Proved below: for real x and y, $`|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y`$, so sine is unbounded; $`e^z \neq 0`$; and $`e^{z+2\pi i} = e^z`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -74,7 +74,7 @@ Proved below: $`|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y`$, so sine is unbounded; $
 - **Every complex input.** The series converges for every z, so $`e^z`$, sin z and cos z are entire.
 - **Identities from adding exponents carry over.** Angle sums and cos^2 z + sin^2 z = 1 hold for all complex z.
 - **Inequalities do not.** |sin x| ≤ 1 is about real x: sin(3i) has size 10.017875. The identity cos^2 z + sin^2 z = 1 survives, but sin(i)^2 = −1.381098 is negative, so cos(i)^2 = 2.381098 exceeds 1.
-- **Undoing needs a choice.** The exponential repeats every 2πi; the choice is made on [The complex logarithm](04-complex-logarithm.md).
+- **Undoing needs a choice.** The exponential is never 0 and repeats every 2πi, so it has no single inverse; the choice is made on [The complex logarithm](04-complex-logarithm.md).
 
 ---
 
@@ -127,7 +127,7 @@ The angle-sum formula for sine comes from adding exponents, so it holds for comp
 \sin(x + iy) = \sin x\,\cosh y + i\cos x\,\sinh y.
 ```
 
-At 1 + 3i both routes give 8.471645 + 5.412681i. Square the two parts, add, and use cosh^2 y = 1 + sinh^2 y:
+At 1 + 3i both routes give 8.471645 + 5.412681i. For real x and y, square the two parts, add, and use cosh^2 y = 1 + sinh^2 y:
 
 ```math
 |\sin(x+iy)|^2 = \sin^2 x\,(1 + \sinh^2 y) + \cos^2 x\,\sinh^2 y = \sin^2 x + \sinh^2 y.
@@ -163,7 +163,7 @@ A second road to the rate: $`e^{x+iy} = e^x\cos y + i e^x\sin y`$. Its real part
 | --- | --- | --- |
 | Size of sin z at most 1 | 10.017875 at 3i | True only for real inputs |
 | Sine over 2, not 2i, at i | −1.175201 | The quarter turn is lost |
-| e^(z-bar) given a rate | slopes 1.468694 − 2.287355i along the real axis, −1.468694 + 2.287355i straight up | Mirroring has no complex rate |
+| e^(z-bar) given a rate at 1 + i | slopes 1.468694 − 2.287355i along the real axis, −1.468694 + 2.287355i straight up | Mirroring has no complex rate |
 | Period 2π, not 2πi | e^(z + 2π) is 535.491656 times e^z | A real shift stretches |
 
 The code prints all four.
@@ -521,6 +521,7 @@ example : Complex.sin (1 + 3 * I) =
 
 ## Where this goes next
 
+- [The complex logarithm](04-complex-logarithm.md): undoing the repeating exponential, with infinitely many answers 2πi apart.
 - [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): signals weighted by e to the minus st, s complex.
 - [Phragmen-Lindelof](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/07-phragmen-lindelof-principle.md): the maximum principle on an unbounded strip, provided the function does not grow too fast.
 

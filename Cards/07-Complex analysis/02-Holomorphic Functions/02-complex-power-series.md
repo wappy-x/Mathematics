@@ -14,7 +14,7 @@ The reason is off the road. Let x be any point z of the complex plane. At z = i 
 
 An open disc is every point closer than its radius to its centre, rim left out. A function is holomorphic on a region when it has a complex slope at every point there ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)); at i and −i the bump has none.
 
-**A power series converges on an open disc and fails outside it; inside, it can be differentiated term by term; and its radius reaches from the centre to the nearest point where the function it sums stops being holomorphic, such as a point where it blows up, even off the real line.**
+**A power series converges on an open disc and fails outside it; inside, it can be differentiated term by term; and its radius reaches from the centre to the nearest point where the function it sums stops being holomorphic, such as a point where it blows up, even off the real line (or to infinity if it never does).**
 
 **What kind of fact this is:** a theorem, proved in Why it works for the disc, the termwise slope and the bump's radius; the general rule "radius = distance to the nearest point where the function stops being holomorphic" is proved on [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md).
 
@@ -44,13 +44,13 @@ f(z) = \sum_{n=0}^{\infty} a_n (z - c)^n = a_0 + a_1 (z-c) + a_2 (z-c)^2 + \cdot
 
 **Read it aloud:** f of z is the coefficients times the powers of the offset from the centre, added for ever.
 
-The ratio test gives R as the limit of |a_n / a_(n+1)| when that limit exists. The Cauchy–Hadamard formula always gives it, using $`\limsup`$, the eventual ceiling of a list: the smallest number the list exceeds, by any fixed margin, only finitely often.
+The ratio test gives R as the limit of |a_n / a_(n+1)| when the coefficients are eventually nonzero and that limit exists. The Cauchy–Hadamard formula always gives it, using $`\limsup`$, the eventual ceiling of a list: the smallest number the list exceeds, by any fixed margin, only finitely often.
 
 ```math
 \frac{1}{R} = \limsup_{n \to \infty} |a_n|^{1/n}
 ```
 
-**Read it aloud:** the n-th roots of the coefficients' sizes have eventual ceiling one over the radius.
+**Read it aloud:** the n-th roots of the coefficients' sizes have eventual ceiling one over the radius. Take R = ∞ when that ceiling is 0, and R = 0 when it is infinite.
 
 Inside the disc, the slope is the series of slopes, with the same radius:
 
@@ -79,7 +79,7 @@ The bump about 0, with $`k`$ counting the non-zero terms:
 
 ### When it holds
 
-- **Strictly inside the disc.** Outside, the terms grow and no sum exists: −1.301 billion after sixty terms at 1.2 metres.
+- **Strictly inside the disc.** Outside, the terms do not shrink to 0 and no sum exists: −1.301 billion after sixty terms at 1.2 metres. The radius R may be 0 (converging only at the centre) or infinite (converging on the whole plane).
 - **The rim is point by point.** On the circle |z − c| = R the theorem is silent. At x = 1 the sums run 1, 0, 1, 0, though the bump is 0.5.
 - **Blow-ups count wherever they are.** The distance to the nearest pole is measured in the plane, not along the road.
 
@@ -89,7 +89,7 @@ The bump about 0, with $`k`$ counting the non-zero terms:
 
 ### Step 0: every term is beaten by a geometric series
 
-Suppose at distance s from the centre every term's length $`|a_n| s^n`$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $`R`$. Beyond $`R`$ the terms do not shrink to 0, so no sum exists.
+Suppose at some positive distance s from the centre every term's length $`|a_n| s^n`$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $`R`$. Beyond $`R`$ the terms do not shrink to 0, so no sum exists.
 
 ### Step 1: the ratio test finds R
 
@@ -108,7 +108,7 @@ At z = 0.5 + 0.5i, sixty terms of the derivative series give −1.12 + 0.16i; so
 
 **Cauchy–Hadamard.** Let L be the limsup of $`|a_n|^{1/n}`$. If $`|z| < 1/L`$, pick q with $`L|z| < q < 1`$; from some n on, $`|a_n|^{1/n}|z| < q`$, so $`|a_n z^n| < q^n`$ and the series converges. If $`|z| > 1/L`$, then $`|a_n|^{1/n}|z| > 1`$ infinitely often, so infinitely many terms have length above 1, and no sum exists.
 
-**The slope.** Fix |z| < ρ < R, with ρ another radius, and a step $`h`$ with $`|z + h| \le ρ`$. The finite identity $`((z+h)^n - z^n)/h - n z^{n-1} = \sum_{j=0}^{n-1} z^{n-1-j}((z+h)^j - z^j)`$ bounds each bracket by $`j|h|ρ^{j-1}`$, so the error in the n-th term is at most $`\tfrac{n(n-1)}{2}|h|ρ^{n-2}|a_n|`$. Summed over n, this is $`C|h|`$ with C finite, by the root test on $`n^2 |a_n| ρ^n`$. For every tolerance ε > 0, a step shorter than ε/C keeps the error below ε, in every direction.
+**The slope.** Fix |z| < ρ < R, with ρ another radius, and a step $`h`$ with $`|z + h| \le ρ`$. The finite identity $`((z+h)^n - z^n)/h - n z^{n-1} = \sum_{j=0}^{n-1} z^{n-1-j}((z+h)^j - z^j)`$ bounds each bracket by $`j|h|ρ^{j-1}`$, so the error in the n-th term is at most $`\tfrac{n(n-1)}{2}|h|ρ^{n-2}|a_n|`$. Summed over n, this is $`C|h|`$ with C finite, by the root test on $`n^2 |a_n| ρ^n`$. For every tolerance ε > 0, any nonzero step with |h| ≤ ρ − |z| and C|h| < ε keeps the error below ε, in every direction.
 
 </details>
 
@@ -358,7 +358,7 @@ The two outputs match line for line.
 
 Lean proves the disc and the termwise slope for every power series with complex coefficients, and the radius for the bump about 0.
 
-- Take R from the root formula: 1/R is the eventual ceiling of |a_n|^(1/n).
+- Take R from the root formula: 1/R is the eventual ceiling of |a_n|^(1/n) (with 1/0 = ∞ and 1/∞ = 0).
 - Strictly inside the disc, the lengths of the terms have a finite total, so the series converges.
 - Strictly outside, the terms do not shrink to 0, and the partial sums settle on no number.
 - On the rim, nothing is claimed.
@@ -704,11 +704,11 @@ example : ((1 : ℂ) - I) * (starRingEnd ℂ ((1 : ℂ) - I)) = 2 := by
 
 ## Where you meet it in real life
 
-- **Counting with generating functions.** A generating function stores a counting sequence as the coefficients of a power series. Its coefficients grow or shrink at rate 1/R, set by the nearest pole: about 1 the bump's shrink by a factor near 1/1.414214 per step.
+- **Counting with generating functions.** A generating function stores a counting sequence as the coefficients of a power series. Its coefficients grow or shrink at rate 1/R, set by the nearest point where it stops being holomorphic: about 1 the bump's shrink by a factor near 1/1.414214 per step.
 - **The elementary functions.** The exponential, sine and cosine are holomorphic on the whole plane, so their series converge everywhere: [The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md).
 
 > **Say it back**
-> A power series settles on an open disc about its centre and fails outside; the rim is decided point by point. The ratio test or the root formula finds the radius. Inside, the series differentiates term by term, so its sum is holomorphic. The radius reaches the nearest point where the function stops being holomorphic. For the bump those points are i and −i, off the road, so the real series stops at one metre.
+> A power series settles on an open disc about its centre and fails outside; the rim is decided point by point. The ratio test or the root formula finds the radius. Inside, the series differentiates term by term, so its sum is holomorphic. The radius reaches the nearest point where the function stops being holomorphic, or infinity if it never does. For the bump those points are i and −i, off the road, so the real series stops at one metre.
 
 ---
 

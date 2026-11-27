@@ -44,7 +44,7 @@ u_x = v_y, \qquad u_y = -v_x, \qquad f'(z_0) = u_x + i\,v_x
 
 Conversely, if the partial derivatives of $`u`$ and $`v`$ are continuous near $`z_0`$ and satisfy the equations at $`z_0`$, then $`f'(z_0)`$ exists.
 
-A function is **holomorphic** on an open region, one where every point has a small disc round it still inside, when it has a complex derivative at every point of the region ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
+An open region is one where every point has a small disc round it still inside ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). A function is **holomorphic** on an open region when it has a complex derivative at every point there.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -138,7 +138,7 @@ The tolerance was arbitrary, so the limit is $`u_x + i v_x`$.
 
 Every disc round 0 holds points where $`\lvert z\rvert^2`$ has no derivative. Holomorphic asks for a derivative throughout an open region: the square filter is holomorphic on the whole plane, the mirror and $`\lvert z\rvert^2`$ on no region.
 
-An alternative route reads the equations as geometry, angles kept, on [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
+An alternative route reads the equations as geometry, angles kept where the derivative is not zero, on [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
 
 ---
 
@@ -375,10 +375,10 @@ Lean proves the Cauchy-Riemann equations and their converse for every complex fu
 
 - A complex derivative at a point forces all four partials to exist there, with u_x = v_y and u_y = −v_x.
 - That derivative then equals u_x + i v_x.
-- If the four partials are continuous near the point and meet the equations there, the complex derivative exists and equals u_x + i v_x.
+- If the four partials exist and are continuous near the point, and meet the equations at the point, the complex derivative exists and equals u_x + i v_x.
 - $`\sqrt{\lvert xy\rvert}`$ has all four partials 0 at 0, so it passes the equations there.
 - Yet on the diagonal h = s(1 + i), s > 0, its quotient is exactly 0.5 − 0.5i, and it has no complex derivative at 0.
-- $`\lvert z\rvert^2`$ has a complex derivative at 0 and at no other point, so it is holomorphic on no open region.
+- $`\lvert z\rvert^2`$ has a complex derivative at 0 and at no other point, so it is holomorphic on no nonempty open region.
 - The hand arithmetic holds exactly: (1 + i)^2 = 2i, the partials 2, −2, 2, 2, the equations, and the derivative 2 + 2i.
 - The square's miss is exactly the step: (z0 + h)^2 − z0^2 = 2 z0 h + h^2.
 - The mirror's quotient is exactly 1, −i and −1 at 0, 45 and 90 degrees.
@@ -737,14 +737,14 @@ example : (1 : ℂ) / (1 + I) = 1 / 2 - I / 2 := by
 
 - [Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): limits in the plane, and open regions.
 - [The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the difference quotient and its limit.
-- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates u_x, u_y, v_x, v_y, and the tangent-plane approximation.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the partial rates u_x, u_y, v_x, v_y, changing one coordinate at a time.
 
 ## Where this goes next
 
 - [Power series in the plane](02-complex-power-series.md): power series are holomorphic inside their disc.
 - [The complex logarithm](04-complex-logarithm.md): a function holomorphic only once a cut is made.
-- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating holomorphic functions along paths.
-- [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): turn-and-stretch at every point, read as geometry.
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating complex functions along directed paths in the plane.
+- [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): angles kept wherever a holomorphic function's derivative is not zero.
 - [Complex steps and dual numbers](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/05-complex-step-and-dual-numbers.md): the imaginary step as a numerical tool.
 
 The test says which functions are holomorphic, not what they look like; that each is a power series near every point begins on [Power series in the plane](02-complex-power-series.md).

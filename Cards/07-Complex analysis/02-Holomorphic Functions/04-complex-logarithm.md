@@ -10,9 +10,9 @@ A car park has a spiral ramp. One full circuit climbs one floor. On the plan, a 
 
 The complex exponential works the same way. By [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), e to the power u + iv is the arrow of length e^u at angle v. Add a full turn, 2π, to the angle and the arrow lands on the same point. So the exponent giving −1 has an answer on every floor: iπ, 3iπ, −iπ, and so on.
 
-From here on a floor is called a **branch**. The house rule picks one, the **principal branch**, written Log with a capital L, which keeps the angle in (−π, π]. Then Log(−1) = iπ. The price is a wall, the **branch cut**, along the negative real axis, where the answer jumps by 2πi. It breaks a familiar law: Log((−1)(−1)) = Log 1 = 0, yet 2 Log(−1) = 2πi.
+From here on a floor is called a **branch**. The standard convention picks one, the **principal branch**, written Log with a capital L, which keeps the angle in (−π, π]. Then Log(−1) = iπ. The price is a wall, the **branch cut**, along the negative real axis, where the answer jumps by 2πi. It breaks a familiar law: Log((−1)(−1)) = Log 1 = 0, yet 2 Log(−1) = 2πi.
 
-**Every nonzero z has infinitely many logarithms, ln|z| + i(arg z + 2πk), one per whole number k; the angle in (−π, π] gives Log z, which has derivative 1/z off the negative real axis and adds over products only up to a multiple of 2πi.**
+**Every nonzero z has infinitely many logarithms, ln|z| + i(arg z + 2πk), one per whole number k; the angle in (−π, π] gives Log z, which has derivative 1/z off 0 and the negative real axis and adds over products of nonzero numbers only up to a multiple of 2πi.**
 
 **What kind of fact this is:** a definition, with the principal branch a convention; the derivative 1/z and the 2πi slip are theorems, proved on this card in Why it works.
 
@@ -29,22 +29,22 @@ To scale: 80 units per 1, 0 at (180, 120); 1 at (260.00, 120.00), −1 at (100.0
 Notation first, in words. Lower-case $`\log z`$ is the whole list of logarithms of z, one per floor. $`\arg z`$ is any angle of z; $`\mathrm{Arg}\, z`$, capital A, is the **principal argument**, the one angle in (−π, π]. The real natural log stays $`\ln`$.
 
 ```math
-\log z = \ln\lvert z\rvert + i\,(\mathrm{Arg}\, z + 2\pi k), \qquad k = 0, \pm 1, \pm 2, \dots
+\log z = \ln\lvert z\rvert + i\,(\mathrm{Arg}\, z + 2\pi k), \qquad z \neq 0, \quad k = 0, \pm 1, \pm 2, \dots
 ```
 
-**Read it aloud:** a logarithm of z is the real log of its length, plus i times its angle, plus any whole number of full turns.
+**Read it aloud:** for nonzero z, a logarithm of z is the real log of its length, plus i times its angle, plus any whole number of full turns.
 
 ```math
-\mathrm{Log}\, z = \ln\lvert z\rvert + i\,\mathrm{Arg}\, z, \qquad \frac{d}{dz}\mathrm{Log}\, z = \frac{1}{z}
+\mathrm{Log}\, z = \ln\lvert z\rvert + i\,\mathrm{Arg}\, z \quad (z \neq 0), \qquad \frac{d}{dz}\mathrm{Log}\, z = \frac{1}{z}
 ```
 
-**Read it aloud:** the principal logarithm takes the ground floor, and off the cut its slope at z is one over z.
+**Read it aloud:** the principal logarithm takes the ground floor, and off 0 and the cut its slope at z is one over z.
 
 ```math
-\mathrm{Log}(zw) = \mathrm{Log}\, z + \mathrm{Log}\, w + 2\pi i N, \qquad N \in \{-1, 0, 1\}
+\mathrm{Log}(zw) = \mathrm{Log}\, z + \mathrm{Log}\, w + 2\pi i N, \qquad z, w \neq 0, \quad N \in \{-1, 0, 1\}
 ```
 
-**Read it aloud:** the log of a product is the sum of the logs, corrected by at most one full turn.
+**Read it aloud:** for nonzero z and w, the log of a product is the sum of the logs, corrected by at most one full turn.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -61,7 +61,7 @@ Notation first, in words. Lower-case $`\log z`$ is the whole list of logarithms 
 ### When it holds
 
 - **z is not 0.** e^w is never 0, so 0 has no logarithm at all.
-- **Off the cut, for the derivative.** On the negative real axis Log jumps by 2πi, so it has no slope there: from below at −1 the slope quotient reads 6282.185308.
+- **Off 0 and the cut, for the derivative.** On the negative real axis Log jumps by 2πi, so it has no slope there: from below at −1, step −0.001i, the slope quotient reads 6282.185308 + 0.000500i.
 - **Product law: the angles must stay on the ground floor.** If Arg z + Arg w lies in (−π, π], N = 0; at z = w = −1 they add to 2π and N = −1.
 
 ---
@@ -89,7 +89,7 @@ Taking k = 0 with the angle in (−π, π] defines Log z. On a positive real x t
 
 At −1 + 0.001i the angle is 3.140593; at −1 − 0.001i it is −3.140593. The jump, 6.281185, tends to 2π as the step shrinks. Everywhere else Arg z moves continuously.
 
-Some jump is forced. A continuous angle followed once round 0 gains 2π, so no rule is continuous on any loop round 0. So some line from 0 out to infinity must be removed; the house rule removes the negative real axis.
+Some jump is forced. A continuous angle followed once round 0 gains 2π, so no rule is continuous on any loop round 0. So some ray from 0 out to infinity must be removed; the standard convention removes 0 and the negative real axis.
 
 The ramp shows it. Drive from 1, adding up each small step divided by the current position, as ln x adds up dt/t on the real line. Round the upper half-circle to −1 the total is iπ; round the lower half, −iπ; one and a half turns anticlockwise, 3iπ. Same endpoint, different floors. That total is the integral of 1/z along the path, made careful in [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md).
 
@@ -107,7 +107,7 @@ Off the cut, Log is continuous and $`e^{\mathrm{Log}\, z} = z`$. With a = Log z 
 \frac{\mathrm{Log}(z+h) - \mathrm{Log}\, z}{h} = \frac{b - a}{e^b - e^a}.
 ```
 
-As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $`e^w`$ at a. That slope is $`e^a`$ ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), and $`e^a = z`$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with the cut removed.
+As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $`e^w`$ at a. That slope is $`e^a`$ ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), and $`e^a = z`$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with 0 and the negative real axis removed.
 
 At z = i, Log i = 1.570796i, and the slope quotients with a real step and an imaginary step both give −i, which is 1/i.
 
@@ -150,7 +150,7 @@ A second road to Log: it is the one antiderivative of 1/z on the cut plane that 
 | --- | --- | --- |
 | Angle by atan(y/x) at −1 + 0.001i | −0.001000i, not 3.140593i | atan, the arctangent of y/x alone, cannot tell z from −z; atan2 reads the signs of x and y |
 | Log(zw) = Log z + Log w at z = w = −1 | 6.283185i, not 0 | The angles summed past π |
-| Slope of Log at −1, from below, step 0.001 | 6282.185308 | Log jumps 6.281185 across the cut |
+| Slope of Log at −1, from below, step −0.001i | 6282.185308 + 0.000500i | Log jumps nearly 2πi across the cut |
 
 Both checks print all three.
 
@@ -479,7 +479,7 @@ example : Complex.log (exp (3 * π * I)) = π * I := by
 ## The usual mistake
 
 > [!warning]
-> **Carrying the real log's laws over unchanged.** Log(zw) = Log z + Log w and Log(e^w) = w hold on the real line because the real exponential never repeats. The complex one repeats every 2πi, so both hold only up to whole turns: Log(e^(3iπ)) is iπ, not 3iπ.
+> **Carrying the real log's laws over unchanged.** Log(zw) = Log z + Log w (for positive real inputs) and Log(e^w) = w (for real inputs) hold because the real exponential never repeats. The complex one repeats every 2πi, so both hold only up to whole turns: Log(e^(3iπ)) is iπ, not 3iπ.
 >
 > - **atan(y/x) for the angle.** It reads −1 + 0.001i as −0.001000i, not 3.140593i.
 > - **Log(z^2) = 2 Log z.** At z = −1 it gives 6.283185i; the truth is 0.
@@ -494,7 +494,7 @@ example : Complex.log (exp (3 * π * I)) = π * I := by
 - **Products into sums.** Infinite products become sums of logs, with the 2πi slip kept in check: [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md).
 
 > **Say it back**
-> The exponential forgets full turns, so every nonzero z has infinitely many logarithms: ln of its length plus i times any of its angles. The angle in (−π, π] gives Log z, and Log(−1) = iπ. The price is a cut along the negative real axis, where Log jumps by 2πi. Off the cut, Log has derivative 1/z. Products slip by whole turns: Log 1 = 0, yet 2 Log(−1) = 2πi.
+> The exponential forgets full turns, so every nonzero z has infinitely many logarithms: ln of its length plus i times any of its angles. The angle in (−π, π] gives Log z, and Log(−1) = iπ. The price is removing 0 and cutting along the negative real axis, where Log jumps by 2πi. Off 0 and the cut, Log has derivative 1/z. Products slip by whole turns: Log 1 = 0, yet 2 Log(−1) = 2πi.
 
 ---
 
@@ -511,13 +511,13 @@ example : Complex.log (exp (3 * π * I)) = π * I := by
 - [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the ramp sum as the integral of 1/z.
 - [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): Log unrolls the plane into a strip.
 - [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products turned into sums of logs.
-- [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the log of the zeta function as a sum over primes.
-- [Local normal form](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/06-open-mapping-theorem-and-local-normal-form.md): near any point a holomorphic function is z to the m in disguise, so open sets go to open sets.
+- [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the Euler product for Re s > 1 and its logarithm summed over primes.
+- [Local normal form](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/06-open-mapping-theorem-and-local-normal-form.md): near any point a non-constant holomorphic function is z to the m in disguise, so open sets go to open sets.
 - [Picard's theorems](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/06-picards-theorems.md): a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often.
 - [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): any list of zeros running off to infinity belongs to an entire function.
 - [Jensen's formula](../10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md): the average of log |f| round a circle counts the zeros inside, so slow growth means few zeros.
 
-The log now has one value per point, bought with a cut; how many values i^i has, and where its cut goes, is the open question.
+The log now has one value per nonzero point, bought with a cut; how many values i^i has, and where its cut goes, is the open question.
 
 ---
 
