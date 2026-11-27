@@ -41,11 +41,11 @@ The integers, written out:
 
 **Read it aloud:** an even room number halved is the guest; an odd one past the first is that room minus 1, halved, made negative.
 
-The fractions, the first ten rooms:
+Zero and the positive fractions, the first ten rooms:
 
 **Room 1: 0. Room 2: 1/1. Room 3: 1/2. Room 4: 2/1. Room 5: 1/3. Room 6: 3/1. Room 7: 1/4. Room 8: 2/3. Room 9: 3/2. Room 10: 4/1.**
 
-**Read it aloud:** 0 goes in room 1. Then take the fractions whose top and bottom add to 2, then 3, then 4, and on. Inside a batch go by rising top, and skip any already queued.
+**Read it aloud:** 0 goes in room 1. Then take the positive fractions whose top and bottom add to 2, then 3, then 4, and on. Inside a batch go by rising top, and skip any already queued.
 
 | Piece | Plain meaning | At the hotel |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ The fractions, the first ten rooms:
 
 ### A queue is a pairing
 
-The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([Same size means pairable](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so a queue pairs the set with them.
+The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([Same size means pairable](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so an endless queue pairs the set with them.
 
 The rule sending guest to room is a function ([Functions](../08-Relations%20and%20Functions/02-functions.md)); one each, none missed, none shared, is a bijection ([One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
 
@@ -375,7 +375,7 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 - **Marks on a ruler.** Every point named by a fraction of an inch is countable, however dense the marks. The points no fraction names are the ones no queue reaches: [Cantor's diagonal](03-cantors-diagonal-argument.md).
 
 > **Say it back**
-> A set is countable when it fits in one queue: a first, a second, a third, everyone in it once. The integers bounce out from zero, so 2 gets room 4 and −2 room 5. The fractions come off the grid of top over bottom, walked along the diagonals with renamed ones skipped: 1/2 gets room 3, 2/1 room 4. The queue never ends, and never has to: a guest needs a room, not a last room.
+> A set is countable when it fits in one queue: a first, a second, a third, everyone in it once. The integers bounce out from zero, so 2 gets room 4 and −2 room 5. The fractions come off the grid of top over bottom, walked along the diagonals with renamed ones skipped: 1/2 gets room 3, 2/1 room 4. For infinite sets, the queue never ends, and never has to: a guest needs a room, not a last room.
 
 ---
 
@@ -387,8 +387,8 @@ example : (fractionQueue 4).tail[1]? = some (1, 2) ∧ (fractionQueue 4).tail[2]
 ## Where this goes next
 
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): the guests who cannot be queued at all. Every list of the real numbers misses one, built out of the list itself.
-- [Cardinal arithmetic](09-cardinal-arithmetic.md): alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line.
-- [Godel's completeness theorem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/12-godels-completeness-theorem.md): whatever is true in every model has a formal proof.
+- [Cardinal arithmetic](09-cardinal-arithmetic.md): adding and multiplying infinite sizes, where countable stays countable and powers reach the real line.
+- [Godel's completeness theorem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/12-godels-completeness-theorem.md): in first-order logic, every statement true in every model (setting fitting the rules) has a formal proof.
 
 Left open: does every infinite set fit in one queue?
 

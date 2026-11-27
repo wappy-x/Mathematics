@@ -12,7 +12,7 @@ Build an independent set one arrow at a time. Take a, then b. Try c: refused, be
 
 Four arrows can be checked by hand. In a space too big to list, the climb never ends on its own. **Zorn's lemma** says a maximal set exists anyway.
 
-**If every climb in a collection has a ceiling inside it, some member has nothing above it; this, the well-ordering theorem and the axiom of choice each prove the others.**
+**If every climb in a non-empty ordered collection has a ceiling inside it, some member has nothing strictly above it; this, the well-ordering theorem and the axiom of choice each prove the others.**
 
 **What kind of fact this is:** a theorem: the three are equivalent, proved in Why it works without assuming any of them, quoting Hartogs' theorem. Zorn and well-ordering hold once choice is an axiom.
 
@@ -33,10 +33,10 @@ Solid arrows keep the set independent. The dotted arrow is the refused step.
 ## The formula
 
 ```math
-\text{every chain in } P \text{ has an upper bound in } P \;\Longrightarrow\; P \text{ has a maximal element}
+\text{in a non-empty ordered } P,\; \text{every chain has an upper bound in } P \;\Longrightarrow\; P \text{ has a maximal element}
 ```
 
-**Read it aloud:** if every climb in the collection has a ceiling inside it, some member has nothing strictly above it.
+**Read it aloud:** if every climb in a non-empty ordered collection has a ceiling inside it, some member has nothing strictly above it.
 
 The order is "inside", written $`\subseteq`$. It passes the three tests on [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md).
 
@@ -237,7 +237,7 @@ ALL CHECKS PASS
 
 Lean proves Zorn's lemma, the well-ordering theorem and Step 4's last move in general, and checks the worked numbers.
 
-- Suppose every chain in an ordered collection has a ceiling inside the collection. Then some member has nothing strictly above it.
+- Suppose every chain (the empty chain included, so the collection is non-empty) in an ordered collection has a ceiling inside the collection. Then some member has nothing strictly above it.
 - Every set has a well-ordering.
 - Suppose every box is non-empty and a partial pick is maximal under "inside". Then it picks from every box.
 - c = a + b, so c − a − b = (0, 0, 0).
@@ -367,7 +367,7 @@ example : Nat.factorial 4 = 24 ∧ 24 / 3 = 8 := by decide
 - **Tychonoff's theorem.** A product of compact spaces (every cover by open sets has a finite sub-cover) is compact ([Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md)).
 
 > **Say it back**
-> If every chain has a ceiling in the collection, some member has nothing above it. The climb a, b, d stops at a maximal independent set: a basis. Choice gives a well-ordering by picking the next one; a well-ordering gives choice by taking first members. Choice gives Zorn by a climb that would outrun the ordinals; Zorn gives choice by a maximal partial pick.
+> If every chain in a non-empty ordered collection has a ceiling in the collection, some member has nothing strictly above it. The climb a, b, d stops at a maximal independent set: a basis. Choice gives a well-ordering by picking the next one; a well-ordering gives choice by taking first members. Choice gives Zorn by a climb that would outrun the ordinals; Zorn gives choice by a maximal partial pick.
 
 ---
 
@@ -381,8 +381,8 @@ example : Nat.factorial 4 = 24 ∧ 24 / 3 = 8 := by decide
 
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): well-ordering gives every set a cardinal, the least ordinal of its size.
 - [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md): Zorn's lemma at work on families of sets.
-- [Stone-Cech compactification](../../17-Topology/02-Topological%20Spaces/12-stone-cech-compactification.md): the biggest compact space a space sits densely inside.
-- [Godel's completeness theorem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/12-godels-completeness-theorem.md): whatever is true in every model has a formal proof.
+- [Stone-Cech compactification](../../17-Topology/02-Topological%20Spaces/12-stone-cech-compactification.md): extending a space that continuous functions separate into one biggest compact space, built with Zorn's lemma.
+- [Godel's completeness theorem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/12-godels-completeness-theorem.md): in first-order logic, every statement true in every model (setting fitting the rules) has a formal proof.
 
 Left open: which theorems need full choice, and which need only a weaker form?
 

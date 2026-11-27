@@ -12,7 +12,7 @@ The hotel empties. Then come endless coaches of endless seats, numbered from 0. 
 
 Merging adds sizes; coaches multiply them. Both fit. The endless 0-1 lists do not. A 0-1 list marks each room 1 or 0: a guest list.
 
-**An infinite size added to itself or multiplied by itself stays the same size, so sums and products go to the bigger size; only powers climb.**
+**An infinite size added to or multiplied by itself stays the same, so sums and nonzero products with an infinite size go to the bigger one; only powers climb.**
 
 **What kind of fact this is:** theorems, proved in Why it works; the rule for every infinite size rests on the axiom of choice.
 
@@ -88,7 +88,7 @@ Each room splits one way only: $`\aleph_0 \times \aleph_0 = \aleph_0`$. [Countab
 
 A second road: queue the pairs in **shells** by their larger number, then by first number, then second. For the counting numbers each shell is finite, so every pair is reached. Pair (2,1) sits at place 8.
 
-Beyond the counting numbers, the set must first stand in a **well-order**: a queue where every part has a first member ([Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md)). Its **cardinal** is the least ordinal that pairs with it ([Ordinals](06-ordinals.md)). $`\aleph_1`$ is the first ordinal that is not countable.
+Beyond the counting numbers, the set must first stand in a **well-order**: a queue where every non-empty part has a first member ([Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md)). Its **cardinal** is the least ordinal that pairs with it ([Ordinals](06-ordinals.md)). $`\aleph_1`$ is the first ordinal that is not countable.
 
 <details>
 <summary>The shell proof for every infinite size</summary>
@@ -261,7 +261,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the size rules for every infinite size, the hotel facts for aleph-null, and the small room counts.
+Lean assumes choice and proves the size rules for every infinite size, the hotel facts for aleph-null, and the small room counts.
 
 - Take any infinite size $`\kappa`$. Then $`\kappa + \kappa = \kappa`$ and $`\kappa \times \kappa = \kappa`$.
 - Take $`\kappa`$ infinite and $`\lambda`$ no bigger. Then $`\kappa + \lambda = \kappa`$, and $`\kappa \times \lambda = \kappa`$ when $`\lambda`$ is not 0.
@@ -368,7 +368,7 @@ example : 3 + 4 = 7 ∧ 3 * 4 = 12 ∧ Fintype.card (Fin 3 → Bool) = 8 := by d
 - **What programs can name.** Programs are finite texts, only $`\aleph_0`$ of them, so most reals have no program printing them.
 
 > **Say it back**
-> Adding merges separate sets, multiplying takes pairs, raising 2 takes all 0-1 lists. Two full hotels fit in one by evens and odds. Coaches fit by room $`2^m \times (2n + 1)`$. An infinite size times itself is itself. Only powers climb: the 0-1 lists outnumber the rooms and match the line.
+> Adding merges separate sets, multiplying takes pairs, raising 2 takes all 0-1 lists. Two full hotels fit in one by evens and odds. Coaches fit by room $`2^m \times (2n + 1)`$. With choice, an infinite size times itself is itself. Only powers climb: the 0-1 lists outnumber the rooms and match the line.
 
 ---
 
@@ -382,8 +382,8 @@ example : 3 + 4 = 7 ∧ 3 * 4 = 12 ∧ Fintype.card (Fin 3 → Bool) = 8 := by d
 
 ## Where this goes next
 
-- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether $`2^{\aleph_0} = \aleph_1`$, and why it cannot be settled.
-- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): finite checks decide everything, and no first-order theory can fix an infinite size.
+- [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether $`2^{\aleph_0} = \aleph_1`$, and why standard set theory cannot settle it.
+- [Compactness and Lowenheim-Skolem](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/13-compactness-and-lowenheim-skolem.md): first-order rules hold somewhere if every finite part does, and none can fix an infinite size.
 
 This card closes Foundations. The two links above carry sizes of infinity further, into later wings. The reading order goes on with [Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md), the first card of Number theory, which starts again from whole numbers.
 

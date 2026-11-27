@@ -10,7 +10,7 @@ The hotel has a room for every counting number, all full. At breakfast the guest
 
 A late guest arrives. At the back, he becomes the last person. At the front, he is just the new first person: shift every place number back by one and the line looks unchanged.
 
-**An ordinal measures the shape of a line-up, not its size; adding at the back of an endless line makes it longer, adding at the front does not.**
+**An ordinal measures the shape of a line-up, not its size; adding one at the back of an endless line makes it longer, adding one at the front does not.**
 
 **What kind of fact this is:** a definition (ordinal, ordinal sum and product), then two theorems: $`1 + \omega = \omega`$, and $`\omega < \omega + 1`$.
 
@@ -46,7 +46,7 @@ The hotel queue has the ordinal $`\omega`$ (omega). Adding puts one line-up behi
 | --- | --- | --- | --- |
 | ω | the endless queue 1, 2, 3, … | the full hotel | — |
 | α + β | α, then β behind it | ω + 1: late guest at the back | longer β, longer line |
-| α · β | β copies of α in a row | ω·2: two hotels in a row | more copies, longer line |
+| α · β | β copies of α in a row | ω·2: two hotels in a row | more copies, longer line (when α > 0) |
 | α + 1 | the **successor**: one more at the back | ω + 1 has a last person | — |
 | < | left is a front part of right, with someone left over | ω < ω + 1 | — |
 
@@ -58,7 +58,7 @@ So 1 then ω gives ω, ω then 1 gives ω + 1, and ω then ω gives ω·2. A lin
 
 ### When it holds
 
-- **Every group has a front-most person.** The negatives …, −2, −1 have no front, so no ordinal.
+- **Every non-empty group has a front-most person.** The negatives …, −2, −1 have no front, so no ordinal.
 - **Order counts, not only size.** ω and ω + 1 have the same size ([Same size means pairable](01-same-size-by-pairing.md)) but differ as ordinals.
 - **Sums read left to right.** Finite line-ups commute: $`2 + 3 = 5`$ and $`3 + 2 = 5`$. Endless pieces may not.
 
@@ -120,7 +120,7 @@ $`2 \cdot \omega`$ is ω copies of 2: guests in pairs. Pair k takes places 2k �
 | --- | --- | --- |
 | Assuming 1 + ω = ω + 1 | ω + 1 | Addition does not commute |
 | Reading 2·ω as two hotels | ω·2 | 2·ω is pairs in one queue |
-| "Anything in front is absorbed", applied to ω + ω | ω | Only a finite front piece is |
+| "Anything in front is absorbed", applied to ω + ω | ω | Only a finite front piece is absorbed by ω |
 
 ---
 
@@ -360,7 +360,7 @@ example : List.flatMap (fun k => [2 * k - 1, 2 * k]) [1, 2, 3] = [1, 2, 3, 4, 5,
 - **Theorem provers.** ACL2 accepts a recursive definition only after proving an ordinal measure falls on every call.
 
 > **Say it back**
-> An ordinal is the shape of a line-up in which every group has a front-most person. Line-ups share an ordinal when they pair off in order. A late guest at the front of the endless queue is absorbed, so 1 + ω = ω. At the back he is a last person, so ω + 1 is longer. Two hotels make ω·2; pairs make 2·ω = ω.
+> An ordinal is the shape of a line-up in which every non-empty group has a front-most person. Line-ups share an ordinal when they pair off in order. A late guest at the front of the endless queue is absorbed, so 1 + ω = ω. At the back he is a last person, so ω + 1 is longer. Two hotels make ω·2; pairs make 2·ω = ω.
 
 ---
 
@@ -373,7 +373,7 @@ example : List.flatMap (fun k => [2 * k - 1, 2 * k]) [1, 2, 3] = [1, 2, 3, 4, 5,
 
 ## Where this goes next
 
-- [Transfinite induction](07-transfinite-induction-and-recursion.md): proof step by step along any ordinal.
+- [Transfinite induction](07-transfinite-induction-and-recursion.md): proving claims and defining sequences across every ordinal, limit steps included.
 - [Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md): with choice, every set can be well-ordered.
 - [Cardinal arithmetic](09-cardinal-arithmetic.md): sizes, where 1 + ω and ω + 1 are equal.
 - [The continuum hypothesis](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/02-continuum-hypothesis-and-independence.md): whether any infinite size lies between the counting numbers and the line, and why standard set theory cannot settle it.

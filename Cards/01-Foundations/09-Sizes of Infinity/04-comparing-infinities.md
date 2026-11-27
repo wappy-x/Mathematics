@@ -370,7 +370,7 @@ example : ∀ a < 100, ∀ b < 100,
 ## Where this goes next
 
 - [The axiom of choice](05-axiom-of-choice.md): one pick from each of endlessly many boxes — not needed for anything above, and not everybody wants it.
-- [Cardinal arithmetic](09-cardinal-arithmetic.md): alephs, why aleph-null plus or times aleph-null is aleph-null, and two to the aleph-null is the line.
+- [Cardinal arithmetic](09-cardinal-arithmetic.md): adding and multiplying infinite sizes, where countable stays countable and powers reach the real line.
 
 The question this card leaves open: with endlessly many boxes and no rule to say which, can you still take one thing from every box?
 

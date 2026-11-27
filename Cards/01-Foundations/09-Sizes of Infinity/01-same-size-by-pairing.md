@@ -410,11 +410,11 @@ example : ((Finset.Icc 1 8).filter Even).card = 4 := by decide
 
 ## Where this goes next
 
-- [Countable sets](02-countable-sets.md): everything that pairs with the counting numbers, fractions included.
+- [Countable sets](02-countable-sets.md): every set that is finite or pairs with the counting numbers, fractions included.
 - [Cantor's diagonal](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
 - [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set.
 - [The axiom of choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
-- [Ordinals](06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
+- [Ordinals](06-ordinals.md): counting past infinity, where one more at the back of an endless line-up makes it longer, but one more at the front does not.
 
 This card leaves one question open: can every endless set be paired with the counting numbers?
 

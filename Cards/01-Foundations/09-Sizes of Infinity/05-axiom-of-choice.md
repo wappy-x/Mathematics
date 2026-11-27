@@ -343,7 +343,7 @@ example : (Fintype.piFinset fun i : Fin 10 =>
 
 - [Ordinals](06-ordinals.md): counting past infinity, the step numbers a line-up of any set needs.
 - [Zorn's lemma and the well-ordering theorem](08-zorns-lemma-and-well-ordering.md): the axiom in two working forms, each equivalent to it.
-- [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md): a topology theorem that leans on the axiom.
+- [Compactness with no distances, and Tychonoff](../../17-Topology/02-Topological%20Spaces/06-compactness-and-tychonoff.md): a theorem about infinite products of spaces that leans on the axiom.
 
 The question this card leaves open: lining up the reals runs past 1st, 2nd, 3rd, so what place comes after every counting number?
 
