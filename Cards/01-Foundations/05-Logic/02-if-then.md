@@ -370,7 +370,7 @@ example : Odd (2 : ℕ) → (1 : ℕ) = 0 := by decide
 - [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): when two wordings count as the same claim, and how "not" moves through "and" and "or".
 - [Valid arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
 - [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
-- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table on one or more inputs is an 'or' of 'and's, and NAND ("not both") alone builds them all.
 
 Left open: the warranty, its "or" form and its contrapositive gave the same verdict for every customer. When do two wordings count as the same claim, and how does a "not" move through "and" and "or"?
 

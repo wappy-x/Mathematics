@@ -364,7 +364,7 @@ example : (Finset.univ.filter (fun c : Bool Ã— Bool => c.1 && !c.2)).card = 1 âˆ
 
 ## Where this goes next
 
-- [Normal forms](07-normal-forms-and-complete-connectives.md): the last card on this shelf. It goes back to truth tables: any table rebuilt as an "or" of "and"s, or from NAND gates alone.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): any truth table on one or more inputs rebuilt as an "or" of "and"s, or from NAND ("not both") gates alone.
 - [Direct proof](../06-Proof/01-direct-proof.md): stringing these forced steps together until the last is what you set out to show.
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
 

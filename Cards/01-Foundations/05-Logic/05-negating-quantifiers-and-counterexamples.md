@@ -354,7 +354,7 @@ example : ∀ a b c : Bool,
 ## Where this goes next
 
 - [Valid arguments](06-valid-arguments.md): the same counterexample hunt, used to test whether an argument's premises force its conclusion.
-- [Turing degrees and the arithmetical hierarchy](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by oracles and by quantifiers.
+- [Turing degrees and the arithmetical hierarchy](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/10-turing-degrees-and-the-arithmetical-hierarchy.md): ranking unsolvable problems by their stacked quantifiers and by extra helper machines (oracles).
 
 This card shows how to knock a claim down. It leaves open which steps are safe when you build a new claim up from true ones.
 

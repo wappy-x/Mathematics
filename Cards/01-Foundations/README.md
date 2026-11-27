@@ -99,7 +99,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 4. [Quantifiers: 'everyone' and 'someone', and why their order matters](05-Logic/04-quantifiers.md)
 5. [Negating a quantifier: to disprove 'every', find one; to disprove 'some', check them all](05-Logic/05-negating-quantifiers-and-counterexamples.md)
 6. [Valid arguments: modus ponens, modus tollens, and the two look-alikes that fail](05-Logic/06-valid-arguments.md)
-7. [Normal forms: every truth table is an 'or' of 'and's, and NAND alone can build them all](05-Logic/07-normal-forms-and-complete-connectives.md)
+7. [Normal forms: every truth table on one or more inputs is an 'or' of 'and's, and NAND alone builds them all](05-Logic/07-normal-forms-and-complete-connectives.md)
 
 [↑ Back to the shelves](#top)
 

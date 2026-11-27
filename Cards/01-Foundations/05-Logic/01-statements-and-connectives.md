@@ -351,7 +351,7 @@ Nothing before it on this shelf. You need only read a sentence and say whether i
 - [Quantifiers](04-quantifiers.md): the sign's "everyone", as an "and" stretched over a group.
 - [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): how one counterexample knocks down an "everyone" claim.
 - [Valid arguments](06-valid-arguments.md): which conclusions a rule like the sign forces, and which it does not.
-- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table on one or more inputs is an 'or' of 'and's, and NAND ("not both") alone builds them all.
 
 This card leaves one question open: the rule applies only after 9 pm, so is it true or false at 8 pm, when it asks for nothing?
 

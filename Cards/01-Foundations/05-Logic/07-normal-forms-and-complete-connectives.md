@@ -1,4 +1,4 @@
-# Normal forms: every truth table is an 'or' of 'and's, and NAND alone can build them all
+# Normal forms: every truth table on one or more inputs is an 'or' of 'and's, and NAND alone builds them all
 
 [Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Logic](../README.md#s05) → Normal forms
 
@@ -12,7 +12,7 @@ The sign is an if-then, so its rule **E** is: not after 9 pm, or shows ID ([If-t
 
 This card reads two standard formulas off that table, then rebuilds the rule from one **gate** (a tiny chip circuit for one connective): **NAND**, "not both".
 
-**Any truth table is an "or" of "and"s, one per true row, or an "and" of "or"s, one per false row, and NAND alone can build every table.**
+**Any truth table with both true and false rows is an "or" of "and"s, one per true row, or an "and" of "or"s, one per false row. On one or more inputs, NAND alone can build every table.**
 
 **What kind of fact this is:** a theorem, proved in Why it works and checked on every table with two or three inputs.
 
@@ -27,7 +27,7 @@ flowchart LR
     G2 --> E["E: the door rule"]
 ```
 
-The first gate turns "shows ID" into "no ID". The second gives "not both after 9 pm and no ID": the sign.
+First gate: "no ID". Second gate: "not both after 9 pm and no ID" — the sign.
 
 ---
 
@@ -55,6 +55,7 @@ E \;=\; (\text{not }A \text{ and not }I) \text{ or } (\text{not }A \text{ and } 
 - **Each input is plainly true or false.** A "maybe" adds rows the forms do not cover.
 - **The rule depends on the inputs alone.** A rule that also depends on the doorman's mood has no fixed table.
 - **The table has a true row and a false row.** If not, one form is empty: use "A and not A" (always false) or "A or not A" (always true).
+- **At least one input.** Zero inputs leave no wire for a gate and no "A" for "A and not A".
 
 ---
 
@@ -78,7 +79,7 @@ To shut out one row, put "not" on each input that is **true** there and join the
 
 ### Step 4: NAND builds "not", "and" and "or"
 
-Steps 1 to 3 build every table from "not", "and" and "or". So any gates that build those three build every table: such a set is **complete**. For inputs X and Y:
+Steps 1 to 3 (with "A and not A" or "A or not A") build every table on one or more inputs from "not", "and" and "or". Any gates building those three build every such table — a **complete** set. For inputs X and Y:
 
 - **Not:** `NAND(X, X)` is "not both X and X", which is "not X".
 - **And:** "X and Y" is "not NAND(X, Y)", so `NAND(NAND(X, Y), NAND(X, Y))`.
@@ -116,7 +117,7 @@ The NAND circuit gives the rule's column.
 
 ## Code, from first principles, and it actually runs
 
-The door rule is worked from the sign, then four more ways: DNF, CNF, NAND and NOR. Then every table with two or three inputs is rebuilt as a DNF, a CNF and from NAND alone.
+The door rule is worked five ways (sign, DNF, CNF, NAND, NOR), then every 2- and 3-input table is rebuilt by DNF, CNF and NAND.
 
 ### Python
 
@@ -232,7 +233,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves three facts for rules on any number of inputs, and checks the club door row by row.
+Lean proves three facts for rules on one or more inputs, and checks the club door row by row.
 
 - Suppose a rule's table has a true row and a false row. Then its DNF and its CNF are each true on exactly the rule's true rows.
 - NAND alone builds every table on one or more inputs.
@@ -241,7 +242,7 @@ Lean proves three facts for rules on any number of inputs, and checks the club d
 - The door rule reads 1, 0, 1, 1, and its DNF, the NAND circuit and the NOR circuit read the same.
 - The four mistakes agree with the rule on 0, 3, 2 and 2 of 4 rows.
 
-Printing the table, counting the rebuilt tables, and the Try changing edits are left to the Python and Rust checks.
+Printing the table and counting the rebuilt tables are left to Python and Rust.
 
 ```lean
 -- Normal forms: every true-or-false table on n inputs equals the "or" of one "and" per true row (DNF) and the "and" of one clause per false row (CNF), NAND alone builds every table, and "and" with "or" alone cannot build "not".
@@ -432,7 +433,7 @@ example :
 ## The usual mistake
 
 > [!warning]
-> **Reading the CNF off the true rows.** Each clause shuts out its own row, so clauses from the true rows give the exact opposite of the sign: it agrees on 0 of 4 rows.
+> **Reading the CNF off the true rows.** Each clause shuts out its own row, so clauses from the true rows give the opposite of the sign: 0 of 4 rows agree.
 >
 > - Putting "not" on the false inputs, as for a term: the false row gives "A or not I", agreeing on 2 of 4 rows.
 > - Missing a true row in the DNF. Drop "A and I" and it agrees on 3 of 4 rows.
@@ -447,7 +448,7 @@ example :
 - **Rules in software.** A permissions rule's DNF lists every case that passes.
 
 > **Say it back**
-> A rule on true-or-false inputs is fixed by its truth table. One "and" per true row, joined by "or", gives the DNF. One clause per false row, with "not" on the inputs true there, joined by "and", gives the CNF: for the door, "not A or I". NAND makes "not", "and" and "or", so NAND alone builds every table.
+> A rule on one or more true-or-false inputs is fixed by its table. When it has both true and false rows, an "or" of one "and" per true row gives the DNF, and an "and" of one clause per false row ("not" on true inputs) gives the CNF: "not A or I". NAND builds "not", "and" and "or", so NAND alone builds every such table.
 
 ---
 
@@ -459,14 +460,14 @@ example :
 
 ## Where this goes next
 
-- [Direct proof](../06-Proof/01-direct-proof.md): the first card of the next shelf, chaining valid steps like those in [Valid arguments](06-valid-arguments.md) into a full proof.
-- [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the laws these forms obey.
+- [Direct proof](../06-Proof/01-direct-proof.md): chaining valid steps like those in [Valid arguments](06-valid-arguments.md) into a full proof.
+- [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): the algebra rules that "and", "or" and "not" obey, turned into a general structure.
 - [SAT solvers](../../24-Computability%20and%20complexity/03-Time%20Complexity/07-sat-solvers-and-hard-problems-in-practice.md): how solvers search a CNF fast in practice.
-- [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md): why telling whether a CNF can be true is as hard as any problem whose answers are quick to check.
+- [Cook-Levin](../../24-Computability%20and%20complexity/03-Time%20Complexity/04-cook-levin-theorem.md): why checking whether a CNF can be true is as hard as any fast-checkable problem.
 - [Formal proofs and soundness](../../24-Computability%20and%20complexity/02-Computability%20and%20Logic/11-formal-deduction-and-soundness.md): rules a machine can check, and why they never prove a falsehood.
-- [Proof complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long must a refutation be, and why that is NP versus coNP in disguise.
+- [Proof complexity](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/09-proof-complexity-and-resolution.md): how long a proof that a CNF always fails must be.
 
-This card ends the Logic shelf, and the Proof shelf opens with Direct proof. Left open for the Algebra and Complexity cards above: the read-off forms can be long; what is the shortest formula for a given table?
+This ends Logic; Proof opens with Direct proof. Left open: what is the shortest formula for a given table?
 
 ---
 

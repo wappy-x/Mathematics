@@ -373,7 +373,7 @@ example : (!true || true) = true ∧ (!(true || true)) = false := by decide
 - [Quantifiers](04-quantifiers.md): "everyone" and "someone" as an "and" and an "or" stretched over a crowd, and why their order matters.
 - [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): this flip applied to "everyone" and "someone".
 - [Set operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
-- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table is an 'or' of 'and's, and NAND alone can build them all.
+- [Normal forms](07-normal-forms-and-complete-connectives.md): every truth table on one or more inputs is an 'or' of 'and's, and NAND ("not both") alone builds them all.
 
 The question this card leaves open: "everyone" and "someone" stretch "and" and "or" over a whole group, so what changes when you swap which comes first?
 
