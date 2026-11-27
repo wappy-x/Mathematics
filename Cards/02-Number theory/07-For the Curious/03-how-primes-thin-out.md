@@ -16,7 +16,7 @@ That count has a shorthand. **pi(x)**, said "pi of x", is how many primes there 
 
 And there is a rule for it, built out of a logarithm ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-**Divide x by the natural log of x and you have roughly how many primes lie below x — and the further you walk, the better "roughly" does.**
+**For large x, divide x by the natural log of x for roughly how many primes lie up to x — and the further you walk, the better "roughly" does.**
 
 **What kind of fact this is:** a theorem from 1896; this card gives the idea, not the proof.
 
@@ -55,7 +55,7 @@ At a million:
 
 ### When it holds
 
-- **x is large.** At 100 the truth is 1.151 times the estimate.
+- **x is large (and above 1 even to write x ÷ ln x: ln 1 = 0, and ln x needs x > 0).** At 100 the truth is 1.151 times the estimate.
 - **"About" means the ratio.** The gap grows to 6,116.
 - **The log is the natural one.** Base 10 predicts 166,667.
 
@@ -65,7 +65,7 @@ At a million:
 
 ### Step 0: every pass of the sieve takes a thinner slice
 
-Every number that is not prime has a smaller prime dividing it; that is what the sieve lives on. The 2s take half the doors, the 3s a third of what is left, the 5s a fifth of that. Each pass thins the survivors by less than the one before. Nothing takes the last one — that is infinitude — but the share sags all the way.
+Every whole number from 2 up that is not prime has a smaller prime dividing it; that is what the sieve lives on. The 2s take half the doors, the 3s a third of what is left, the 5s a fifth of that. Each pass thins the survivors by less than the one before. Nothing takes the last one — that is infinitude — but the share sags all the way.
 
 ### Step 1: near x, about one number in ln x is prime
 
@@ -334,7 +334,7 @@ example : 78498 - 72382 = 6116 ∧ 25 * 10000 = 250000 := by decide
 - **The open questions.** Twin primes and Goldbach ([Goldbach, twin primes and friends](04-goldbach-and-open-problems.md)) ask about the pockets and pairs inside this thinning, and stay hard while the average is settled.
 
 > **Say it back**
-> pi(x) counts the primes up to x: 25 up to 100, 168 up to 1,000, 78,498 up to a million. They thin out as you walk: ever more smaller primes to catch a number. Near x about one number in ln x is prime, so below x there are about x ÷ ln x in all. The estimate lands low and its miss keeps growing, but the ratio of truth to estimate slides to 1 — the prime number theorem.
+> pi(x) counts the primes up to x: 25 up to 100, 168 up to 1,000, 78,498 up to a million. They thin out as you walk: ever more smaller primes to catch a number. For large x, near x about one number in ln x is prime, so up to x there are about x ÷ ln x in all. The estimate lands low and its miss keeps growing, but the ratio of truth to estimate slides to 1 — the prime number theorem.
 
 ---
 

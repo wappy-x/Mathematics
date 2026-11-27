@@ -128,7 +128,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Detours and foundations for later work: Pythagorean triples, perfect numbers and record primes, how primes thin out, the famous open problems, and continued fractions behind the leap-year rule. Analytic prime proofs live in wings 07 and 21.*
 
-1. [Pythagorean triples: every whole-number right triangle comes from two smaller numbers](07-For%20the%20Curious/01-pythagorean-triples.md)
+1. [Pythagorean triples: every whole-number right triangle comes from two smaller numbers, scaled if needed](07-For%20the%20Curious/01-pythagorean-triples.md)
 2. [Perfect numbers and Mersenne primes: 6, 28, 496 and the record-prime hunt](07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md)
 3. [How primes thin out: the prime counting function and the n over log n rule](07-For%20the%20Curious/03-how-primes-thin-out.md)
 4. [Goldbach, twin primes and friends: the simple questions nobody has answered](07-For%20the%20Curious/04-goldbach-and-open-problems.md)

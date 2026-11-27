@@ -1,4 +1,4 @@
-# Pythagorean triples: every whole-number right triangle comes from two smaller numbers
+# Pythagorean triples: every whole-number right triangle comes from two smaller numbers, scaled if needed
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [For the Curious](../README.md#s07) → Pythagorean triples
 
@@ -6,13 +6,13 @@
 
 ## General Overview
 
-A builder wants a square corner and has no set square. She pegs out a knotted rope with sides of 3, 4 and 5 knot-lengths. The corner between the 3 and the 4 comes out square. Every time.
+A builder wants a right-angled corner and has no set square. She pegs out a knotted rope with sides of 3, 4 and 5 knot-lengths. The corner between the 3 and the 4 comes out at right angles. Every time.
 
-Behind the rope is arithmetic: 3 × 3 = 9, 4 × 4 = 16, and 9 + 16 = 25, which is 5 × 5. Three whole numbers where the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself are a **Pythagorean triple**. Why that squares a corner is geometry: [Pythagoras](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md).
+Behind the rope is arithmetic: 3 × 3 = 9, 4 × 4 = 16, and 9 + 16 = 25, which is 5 × 5. Three positive whole numbers where the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself are a **Pythagorean triple**. Why that makes a right angle is geometry: [Pythagoras](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md).
 
 The rope has company: 5, 12, 13 works, and so does 8, 15, 17. Not luck.
 
-**Pick two whole numbers, bigger first, and multiply each by itself. The difference of those answers, twice the two numbers multiplied together, and the sum of those answers always form a triple. Every triple comes out of that recipe, scaled up if need be.**
+**Pick two positive whole numbers, bigger first, and multiply each by itself. The difference of those answers, twice the two numbers multiplied together, and the sum of those answers always form a triple. Every triple comes out of that recipe, scaled up if need be.**
 
 **What kind of fact this is:** a theorem. Why it works proves that the recipe always gives a triple, and sketches why every triple comes from it.
 
@@ -30,7 +30,7 @@ flowchart LR
 
 The two starting numbers are the **seeds**: 3 and 2 in, 5, 12, 13 out.
 
-The two sides that meet at the square corner are the legs. The third side is the long side.
+The two sides that meet at the right-angled corner are the legs. The third side is the long side.
 
 ---
 
@@ -54,7 +54,7 @@ Those three pass the test: **5 × 5 + 12 × 12 = 25 + 144 = 169 = 13 × 13**
 
 ### When it holds
 
-- **Bigger seed first.** Put 2 before 3 and a leg comes out at −5, which is no side at all.
+- **Two positive seeds, bigger first.** Put 2 before 3 and a leg comes out at −5; put 0 for the smaller seed (or equal seeds) and a leg comes out at 0, which is no side at all.
 - **Coprime seeds, one odd and one even, for a primitive triple.** Seeds 3 and 1, both odd, give 6, 8, 10: shared factor 2, the rope doubled.
 - **Scaled copies count.** The recipe gives every primitive triple, and the rest are those scaled up. Drop the scaling and some triples are missed, which is why Step 4 keeps to primitive ones.
 
@@ -64,7 +64,7 @@ Those three pass the test: **5 × 5 + 12 × 12 = 25 + 144 = 169 = 13 × 13**
 
 ### Step 0: a triple is arithmetic, not a drawing
 
-The rope's whole claim is 9 + 16 = 25. Any three whole numbers passing that test are a triple.
+The rope's whole claim is 9 + 16 = 25. Any three positive whole numbers passing that test are a triple.
 
 ### Step 1: run it
 
@@ -237,7 +237,7 @@ ALL CHECKS PASS
 Lean proves the card's claims for every pair of seeds and every triple, not just the ones worked by hand.
 
 - Three whole numbers, both legs above 0, are a triple exactly when the recipe gives them, scaled up if need be.
-- Those seeds go bigger first, share no factor but 1, and are one odd and one even.
+- Those positive seeds go bigger first, share no factor but 1, and are one odd and one even, with a positive scaling factor.
 - Any two seeds, bigger first, give a triple through the recipe.
 - One leg is always even: no triple has two odd legs.
 - The card's worked numbers come out right, from the rope to the Plimpton tablet's 45, 60, 75.
@@ -472,7 +472,7 @@ example : 45 * 45 + 60 * 60 = 75 * 75 ∧ 45 = 15 * 3 ∧ 60 = 15 * 4 ∧ 75 = 1
 > **Try changing**
 > Guess first, then run it.
 > - **New seeds.** Put (5, 2) in the loop instead of (3, 2): the row prints 20 21 29, no assert fires.
-> - **Break the recipe.** Drop the 2 from the even leg, leaving big * small: seeds 3 and 2 give 5, 6, 13, and the first assert fires.
+> - **Break the recipe.** Drop the 2 from the even leg, leaving `big * small`: seeds 3 and 2 give 5, 6, 13, and the first assert fires.
 
 ---
 
@@ -488,12 +488,12 @@ example : 45 * 45 + 60 * 60 = 75 * 75 ∧ 45 = 15 * 3 ∧ 60 = 15 * 4 ∧ 75 = 1
 
 ## Where you meet it in real life
 
-- **Squaring a corner on site.** Still used: 3 along one wall, 4 along the other, until the diagonal reads 5.
+- **Making a right-angled corner on site.** Still used: 3 along one wall, 4 along the other, until the diagonal reads 5.
 - **Clay tablets.** A Babylonian tablet in the Plimpton collection lists rows that are Pythagorean triples, including 45, 60, 75 — the rope times 15 — long before Euclid.
 - **Grids in code.** A step of 3 across and 4 up is exactly 5 away — handy when distances must be whole.
 
 > **Say it back**
-> Three whole numbers are a triple when the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself: 9 + 16 = 25, the rope. Every triple comes from two seeds, bigger first: 3 and 2 give 5, 12, 13. One leg is always even. Scale those and you have them all.
+> Three positive whole numbers are a triple when the two smaller ones, multiplied by themselves, add to the biggest multiplied by itself: 9 + 16 = 25, the rope. Every primitive triple comes from two positive seeds, bigger first: 3 and 2 give 5, 12, 13. One leg is always even. Scale those and you have all triples.
 
 ---
 
@@ -516,7 +516,7 @@ Next on this shelf:
 Later cards use this recipe:
 
 - [Conics](../../22-Algebraic%20geometry/03-Plane%20Curves/01-conics-and-rational-parametrisation.md): where the recipe comes from, as straight lines through one point of a circle.
-- [Fermat's last theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md): the recipe and Step 4, used twice to show that no two fourth powers add up to a fourth power.
+- [Fermat's last theorem](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/04-fermats-last-theorem-history-and-descent.md): the recipe and Step 4, used twice to show that no two positive fourth powers add up to a fourth power.
 - [Kummer and Artin-Schreier](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/11-kummer-theory-and-hilbert-90.md): the same recipe, rebuilt from a general rule about number systems called Hilbert's Theorem 90.
 
 The question this card leaves open: which whole numbers can be the long side of a triple? 5, 13 and 17 can, but the recipe alone does not say which others. No card on this shelf answers it; the next card starts a different hunt, for numbers built from their own divisors.

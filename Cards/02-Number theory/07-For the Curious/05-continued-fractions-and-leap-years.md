@@ -12,7 +12,7 @@ A year is not 365 days. It is 365.2422 days, near enough: 365 whole days and a l
 
 Cut the list short after step 1, then 2, 3, 4, and you get 1/4, 7/29, 8/33, 31/128 — each the best fraction of its size. The first, one leap day every four years, is Julius Caesar's rule.
 
-**Euclid's algorithm on a fraction returns a list of whole numbers; cutting the list short gives the best cheap approximations, cheapest first.**
+**Euclid's algorithm on a fraction returns a list of whole numbers; cutting the list short from step 1 on gives the best cheap approximations, cheapest first.**
 
 **What kind of fact this is:** a theorem. Why it works gives the shape of the proof; Khinchin, in Sources, gives it in full.
 
@@ -53,7 +53,7 @@ That stack is a **continued fraction**. Cut it at a plus sign and work out what 
 ### When it holds
 
 - **The number is a fraction.** If it is irrational, the list never ends.
-- **Best means best for its size.** Allow bigger bottom numbers and a later stop beats it.
+- **Best for its size, from step 1 on.** Bigger bottom numbers beat it; step 0 alone can lose, as 0/1 loses to 1/1 for 3/4.
 - **The year is measured, near enough.** Change a late digit of 0.2422 and the later steps change; 1/4 stays.
 
 ---
@@ -62,7 +62,7 @@ That stack is a **continued fraction**. Cut it at a plus sign and work out what 
 
 ### Step 0: peel off the whole part, then flip what is left
 
-Write down a number's whole part. The leftover is under 1, so turn it upside down: now it is over 1, with a whole part of its own. Write that down. Repeat. Each flip gives the next step.
+Write down a number's whole part. If nothing is left, stop; else flip the leftover (between 0 and 1) so it is over 1, with a whole part of its own. Write that down. Repeat. Each flip gives the next step.
 
 ### Step 1: that is Euclid's algorithm
 
@@ -78,7 +78,7 @@ Write down a number's whole part. The leftover is under 1, so turn it upside dow
 
 The list carries on 4, 1, 1, 1, 2, then a remainder of 0 shuts it down: every ordinary fraction's list stops, because Euclid's algorithm stops ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md) is where they never do).
 
-The stops build themselves from the steps: new top number = the step, times the previous top, plus the top before that. Bottoms the same. Start from 0/1, with 1/0 imagined before it. From 7/29 and the step 1: 8 = 1 × 7 + 1, 33 = 1 × 29 + 4.
+The stops build themselves from the steps: new top number = the step, times the previous top, plus the top before that. Bottoms the same. Start from (whole part)/1 — here 0/1 — with 1/0 imagined before it. From 7/29 and the step 1: 8 = 1 × 7 + 1, 33 = 1 × 29 + 4.
 
 ### Step 2: each stop is the best of its size
 
@@ -238,7 +238,7 @@ The two outputs match line for line.
 
 Lean proves the rules below for every fraction, the list rule for every number, and checks the worked numbers exactly.
 
-- Each stop, from step 1 on, is the best of its size: no fraction with a bottom number up to its own is closer.
+- Each stop, from step 1 on, is the best of its size: no fraction with a positive bottom number up to its own is closer.
 - A number's list of steps ends exactly when the number is a fraction. For an irrational number it never ends.
 - From step 2 on, each new top is the step times the previous top, plus the top before that. Bottoms follow the same rule.
 - The worked numbers: the steps of 1211/5000, the stops 1/4 to 31/128, the 97 leap days, and the steps of 0.2425.
@@ -603,7 +603,7 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 ## The usual mistake
 
 > [!warning]
-> **Thinking a bigger bottom number always means a better fraction.** 97/400 has a bigger bottom number than 31/128 and sits much further from the truth. Only the stops are guaranteed best of their size.
+> **Thinking a bigger bottom number always means a better fraction.** 97/400 has a bigger bottom number than 31/128 and sits much further from the truth. Only the stops (from step 1 on) are guaranteed best of their size.
 >
 > - Reading the step list 0, 4, 7, 1, 3 as the answer. It is the recipe.
 > - Expecting the drift to shrink in a straight line: it goes 3.120, then -0.328, then 0.090.
@@ -632,7 +632,7 @@ example : (GenContFract.of (97 / 400 : ℚ)).h = 0 ∧
 
 This is the last card on the shelf. The next shelf opens with [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md) and [Reduced forms](../08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md), which sort numbers by the shapes like x × x + 5 × y × y that can reach them. Continued fractions return at its third card:
 
-- [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a pattern that repeats forever is exactly the mark of a quadratic irrational.
+- [Periodic continued fractions](../08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md): a repeating pattern of steps marks a quadratic irrational, an irrational root of a whole-number quadratic.
 - [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbours differ by one over the product of their bottoms, and their circles just touch.
 - [Hurwitz's theorem](../08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md): every irrational has infinitely many fractions within 1 over root 5 times the bottom number squared, and the golden ratio shows root 5 cannot be beaten.
 - [Pell's equation](../../03-Algebra/10-For%20the%20Curious/04-pell-equation-and-root-two.md): the same steps on root 2, where every second stop solves an equation in whole numbers.

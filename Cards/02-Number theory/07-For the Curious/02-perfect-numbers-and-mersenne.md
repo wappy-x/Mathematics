@@ -12,7 +12,7 @@ Take 28. The numbers that go into it with nothing left over are 1, 2, 4, 7, 14 a
 
 Add the proper divisors: 1 + 2 + 4 + 7 + 14 = 28. They rebuild the number exactly.
 
-**A number is perfect when its proper divisors — everything that goes into it, except itself — add back up to it.**
+**A positive whole number is perfect when its proper divisors — every positive divisor except itself — add back up to it.**
 
 Almost nothing does this: 6, 28, 496, 8128, then nothing until the numbers get huge.
 
@@ -73,7 +73,7 @@ That is Euclid, around 300 BC. Euler proved the return trip in the 1700s, publis
 <details>
 <summary>Why the count of doublings has to be prime too</summary>
 
-1 to 2 to 4 to 8 is three doublings, and 3 is prime. That is forced: when the count is itself two smaller numbers multiplied, the Mersenne number splits with it — six doublings gives 63, and 7 goes into it.
+1 to 2 to 4 to 8 is three doublings, and 3 is prime. That is forced. Zero and 1 doublings give 0 and 1, neither prime. When the count is two numbers above 1 multiplied, the Mersenne number splits with it — six doublings gives 63, and 7 goes into it.
 
 </details>
 
@@ -97,7 +97,7 @@ That is Euclid, around 300 BC. Euler proved the return trip in the 1700s, publis
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Counting 28 itself as a proper divisor | 56 | That is every divisor, always twice the number |
+| Counting 28 itself as a proper divisor | 56 | That is every divisor, always twice a perfect number |
 | Skipping the prime check: eleven doublings, 1024 × 2047 = 2096128 | 2325392 | 2047 = 23 × 89, so its divisors overshoot |
 
 ---
@@ -335,7 +335,7 @@ example : mersenne 6 = 63 ∧ 7 ∣ 63 := by
 - **Sorting numbers by their divisors.** Overshoot and a number is abundant, fall short and it is deficient; perfect is the knife edge.
 
 > **Say it back**
-> A number is perfect when everything that goes into it, itself not counted, adds back up to it: 28 = 1 + 2 + 4 + 7 + 14. Euclid's recipe makes them: double 1 along, take one off the last doubling, and if that is prime, multiply it by the doubling below. It works because the divisors split into two brackets that multiply to exactly twice the number. Euler proved every even perfect number comes that way, so the perfect-number hunt and the Mersenne-prime hunt are one job.
+> A positive whole number is perfect when every positive divisor, itself not counted, adds back up to it: 28 = 1 + 2 + 4 + 7 + 14. Euclid's recipe makes them: double 1 along, take one off the last doubling, and if that is prime, multiply it by the doubling below. It works because the divisors split into two brackets that multiply to exactly twice the number. Euler proved every even perfect number comes that way, so the perfect-number hunt and the Mersenne-prime hunt are one job.
 
 ---
 

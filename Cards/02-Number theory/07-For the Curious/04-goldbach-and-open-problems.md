@@ -10,7 +10,7 @@ Take 100. Break it into two primes added together — a prime being a whole numb
 
 3 + 97. Both prime. That works. So do 11 + 89, 17 + 83, 29 + 71, 41 + 59 and 47 + 53. Six ways, and past the middle they repeat backwards. The neighbours behave too: 98 comes apart 3 ways, 102 comes apart 8 ways.
 
-In 1742 Christian Goldbach and Leonhard Euler traded letters about it: is every even number two primes added together? That wording is Euler's, and nobody has answered it since. Computers have ground through every even number up to 4,000,000,000,000,000,000 — a 4 with eighteen zeros — without one failure. Still not a proof.
+In 1742 Christian Goldbach and Leonhard Euler traded letters about it: is every even number from 4 up two primes added together? That form of the question is Euler's, and nobody has answered it since. Computers have ground through every even number up to 4,000,000,000,000,000,000 — a 4 with eighteen zeros — without one failure. Still not a proof.
 
 **One miss would kill the claim on the spot; no pile of hits will ever prove it.**
 
@@ -46,7 +46,7 @@ Three famous claims, each covering every case:
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
-| a prime | nothing divides it but 1 and itself | 3, 47, 97, 101, 103 |
+| a prime | a whole number above 1 that nothing divides but 1 and itself | 3, 47, 97, 101, 103 |
 | an even number | 2 divides it exactly | 4, 98, 100, 102 |
 | a pair | two primes adding to it, smaller first | 3 + 97 |
 | a for-all claim | every case, no exceptions | "every even number from 4 up…" |
@@ -368,7 +368,7 @@ example : 101 + 2 = 103 := by decide
 ## Where this goes next
 
 - [Continued fractions](05-continued-fractions-and-leap-years.md): next on this shelf, and it ends the shelf on a question that has an answer.
-- [Goldbach](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/07-goldbach-and-chens-theorem.md): how much of Goldbach is proved, from Chen's theorem to Helfgott's odd cousin.
+- [Goldbach](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/07-goldbach-and-chens-theorem.md): how much of Goldbach is proved, from Chen's near-miss (a prime plus at most two primes multiplied) to Helfgott's odd cousin.
 - [Bounded gaps](../../21-Algebraic%20and%20analytic%20number%20theory/04-Sieves%20and%20Prime%20Gaps/05-bounded-gaps-zhang-maynard.md): how Zhang's gap between primes came down to 246.
 - [Twin primes](../../25-Frontier/03-Primes%20and%20Numbers/01-twin-primes-and-bounded-gaps.md) and [Goldbach](../../25-Frontier/03-Primes%20and%20Numbers/02-goldbach-conjecture.md): where the two open questions stand, and how the computer check to 4,000,000,000,000,000,000 works.
 
