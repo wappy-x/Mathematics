@@ -1,4 +1,4 @@
-# Reduced forms: every form slides to one tidy representative, and counting them gives the class number
+# Reduced forms: every positive definite form slides to one tidy representative, and counting primitive ones gives the class number
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Quadratic Forms and Approximation](../README.md#s08) → Reduced forms
 
@@ -10,7 +10,7 @@ $`3x^2 + 8xy + 7y^2`$ is a **binary quadratic form** ([Binary quadratic forms](0
 
 That end point is the **reduced form** of its family. Two forms share a family exactly when they reduce to the same triple. The number of families is the **class number**, $`h(D)`$.
 
-**Every positive form slides, by two kinds of renaming, to exactly one reduced form, so equivalence is decided by reducing both sides, and the class number is the length of a short, finite list.**
+**Every positive definite form slides, by two renamings, to one unique reduced form, so reducing decides equivalence and gives a finite class number.**
 
 **What kind of fact this is:** a theorem. Why it works proves it and sketches uniqueness (full proof: Buell, Chapter 2).
 
@@ -52,7 +52,7 @@ h(D) = \#\{(a, b, c) \text{ reduced and primitive} : b^2 - 4ac = D\}
 ### When it holds
 
 - **Determinant 1.** A renaming $`x, y \to px + qy, rx + sy`$ must have **determinant** $`ps - qr = 1`$, the cross number of [Binary quadratic forms](01-binary-quadratic-forms.md). A plain swap $`x \leftrightarrow y`$ has determinant $`-1`$ and merges families.
-- **Positive forms.** For $`D > 0`$, reduction does not stop at one form; it runs round a loop. The same kind of loop appears in the next card, [Periodic continued fractions](03-periodic-continued-fractions.md).
+- **Positive definite forms ($`D < 0`$ and $`a > 0`$).** With $`a < 0`$ every value is negative. For $`D > 0`$, reduction does not stop at one form; it runs round a loop, like the one in [Periodic continued fractions](03-periodic-continued-fractions.md).
 - **One sign at each edge.** $`b = -a`$ is one shift from $`b = a`$, and on a tie a turn flips $`b`$. Without both rules, $`(2, -2, 3)`$ and $`(3, -2, 3)`$ count twice.
 - **Primitive only.** $`(2, 0, 4)`$, twice $`(1, 0, 2)`$, is not counted: $`h(-32) = 2`$.
 
@@ -119,7 +119,7 @@ The code reduces $`(3, 8, 7)`$ and lists reduced forms for five discriminants. C
 3. Values separate the two families of $`-20`$.
 4. Dirichlet's sum gives $`h(-23)`$ and $`h(-163)`$.
 
-Dirichlet's sum, for a prime like 23 that leaves 3 on division by 4: from 1 to half the prime, count squares on that prime's clock minus non-squares. Divide by 1 if the prime leaves 7 on division by 8, else by 3.
+Dirichlet's sum, for a prime above 3 (like 23) that leaves 3 on division by 4: from 1 to half the prime, count squares on that prime's clock minus non-squares. Divide by 1 if the prime leaves 7 on division by 8, else by 3.
 
 ### Python
 
@@ -238,9 +238,9 @@ The outputs match line for line. Flipping both signs never changes a form, so th
 
 ### Lean
 
-Lean proves the reduction theorem for every positive form, not just $`(3, 8, 7)`$.
+Lean proves the reduction theorem for every positive definite form ($`a > 0`$ and $`D < 0`$), not just $`(3, 8, 7)`$.
 
-- Every positive form is equivalent, by a renaming with determinant 1, to exactly one reduced form.
+- Every positive definite form is equivalent, by a renaming with determinant 1, to exactly one reduced form.
 - That includes the uniqueness that Why it works only sketches.
 - A renaming with determinant 1 never changes the discriminant.
 - Suppose $`(a, b, c)`$ is reduced. Then $`3a^2 \le |D|`$, so each discriminant has a finite list.
@@ -618,10 +618,10 @@ example : reducedList (-163) 8 = {(1, 1, 41)} := by decide +kernel
 
 - **Euler's prime run.** $`h(-163) = 1`$, with reduced form $`x^2 + xy + 41y^2`$. At $`y = 1`$, $`x^2 + x + 41`$ is prime for $`x = 0`$ to 39; $`x = 40`$ gives $`1681 = 41 \times 41`$. Rabinowitsch (1913) tied such runs to class number 1.
 - **Lattices.** Squared distance to a grid point is a form; reducing it finds the two shortest grid steps, as in cryptography's lattice reduction.
-- **Gauss's class number problem.** $`-163`$ is the last discriminant with class number 1, settled 1952 to 1967.
+- **Gauss's class number problem.** $`-163`$ is the last negative discriminant with class number 1, settled 1952 to 1967.
 
 > **Say it back**
-> Shifts and turns push any positive form to $`|b| \le a \le c`$. Each turn shrinks $`a`$, so it stops at the family's only reduced form. $`(3, 8, 7)`$ ends at $`(2, 2, 3)`$, not $`(1, 0, 5)`$: two families. Counting reduced forms gives $`h`$: 1, 2, 3 and 1 for $`-4`$, $`-20`$, $`-23`$ and $`-163`$.
+> Shifts and turns push any positive definite form to $`|b| \le a \le c`$. Each non-tie turn shrinks $`a`$, so it stops at the family's only reduced form. $`(3, 8, 7)`$ ends at $`(2, 2, 3)`$, not $`(1, 0, 5)`$: two families. Counting primitive reduced forms gives $`h`$: 1, 2, 3 and 1 for $`-4`$, $`-20`$, $`-23`$ and $`-163`$.
 
 ---
 
@@ -632,9 +632,9 @@ example : reducedList (-163) 8 = {(1, 1, 41)} := by decide +kernel
 
 ## Where this goes next
 
-- [Periodic continued fractions](03-periodic-continued-fractions.md): the shelf turns from forms to approximation; a root of a quadratic gives a continued fraction that repeats.
-- [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): reduced forms return as ideal classes.
-- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
+- [Periodic continued fractions](03-periodic-continued-fractions.md): an irrational root of a whole-number quadratic gives a continued fraction that repeats forever.
+- [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): reduced forms return as ideal classes, counted by infinite sums.
+- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): how forms of one discriminant multiply, matching ideal classes in algebraic number theory.
 
 Left open: families combine into a group. By what rule? [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md) answers that in a later wing. This shelf turns next to continued fractions.
 

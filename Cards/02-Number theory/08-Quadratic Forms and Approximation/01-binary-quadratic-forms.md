@@ -12,7 +12,7 @@ A cousin, $`2x^2 + 2xy + 3y^2`$, reaches them: x = y = 1 gives 7. It also reache
 
 No search is needed: a clock test decides. For a prime, only its remainder mod 20 matters.
 
-**A number n is reached by some form like these of discriminant D, with x and y sharing no factor, exactly when D is a square on a clock of 4n hours.**
+**A positive whole number n is reached by some form of discriminant D, with x and y sharing no factor, exactly when D is a square on a clock of 4n hours.**
 
 **What kind of fact this is:** a theorem, proved in Why it works. Sorting primes mod 20 also needs quadratic reciprocity, proved elsewhere and checked here below 100.
 
@@ -42,7 +42,7 @@ D = b^2 - 4ac
 
 With D below zero and a above zero, every value except at (0, 0) is positive: the form is **positive definite**.
 
-A form **properly represents** n when n = f(x, y) with x and y coprime: no common factor but 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). The test, with $`\equiv`$ meaning "same remainder" ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)):
+A form **properly represents** n when n = f(x, y) with x and y coprime: no common factor but 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). For any positive whole n, the test, with $`\equiv`$ meaning "same remainder" ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)):
 
 ```math
 n \text{ is properly represented by some form of discriminant } D \text{ exactly when } b^2 \equiv D \pmod{4n} \text{ for some whole } b
@@ -100,11 +100,11 @@ So 26² + 20 = 696 = 6 × 116, and 26² ≡ −20 (mod 116). The same steps work
 
 ### Step 5: the converse builds the form
 
-Given b² ≡ D (mod 4n), the number c = (b² − D) ÷ 4n is whole. The form (n, b, c) has discriminant D and gives n at (1, 0). For 23, b = 16 gives (23, 16, 3). [Reduced forms](02-reduced-forms-and-class-numbers.md) renames it to (2, 2, 3) and shows −20 has only these two forms.
+For n ≠ 0, given b² ≡ D (mod 4n), the number c = (b² − D) ÷ 4n is whole. The form (n, b, c) has discriminant D and gives n at (1, 0). For 23, b = 16 gives (23, 16, 3). [Reduced forms](02-reduced-forms-and-class-numbers.md) renames it to (2, 2, 3) and shows −20 has only these two forms.
 
 ### Step 6: which form gets which prime
 
-A prime is always reached properly.
+A prime is always reached properly. For any prime other than 2 and 5:
 
 - **$`x^2 + 5y^2`$** is $`x^2`$ mod 5, so 1 or 4; an odd value is 1 mod 4. Together: 1 or 9 mod 20.
 - **$`2x^2 + 2xy + 3y^2`$** is $`2(x + 3y)^2`$ mod 5, so 2 or 3; an odd value needs y odd and is then 3 mod 4. Together: 3 or 7 mod 20.
@@ -253,7 +253,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the test for every whole n and D, the renaming rule for every form, and the prime sorting for every prime.
+Lean proves the test for every whole n and D, the renaming rule for every form, and the prime sorting for every prime other than 2 and 5.
 
 - Some form of discriminant D properly represents n exactly when D is a square on a clock of 4n hours.
 - Suppose a renaming has cross number 1. Then the discriminant stays the same, and the new first coefficient is the old value at the point renamed (1, 0).
@@ -483,10 +483,10 @@ example : (4 : ℤ) ^ 2 + 5 * 1 ^ 2 = 21 := by decide
 
 ## Where this goes next
 
-- [Reduced forms](02-reduced-forms-and-class-numbers.md): rename any form into a standard one and count forms per discriminant.
-- [Periodic continued fractions](03-periodic-continued-fractions.md), [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md), [Hurwitz's theorem](05-hurwitz-approximation-theorem.md): the shelf's turn to approximation.
+- [Reduced forms](02-reduced-forms-and-class-numbers.md): rename any positive definite form into a unique standard one and count primitive ones per discriminant.
+- [Periodic continued fractions](03-periodic-continued-fractions.md), [Farey fractions and Ford circles](04-farey-sequences-and-ford-circles.md), [Hurwitz's theorem](05-hurwitz-approximation-theorem.md): the shelf's turn to approximating real numbers with fractions.
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md) and [Gaussian integers](../../03-Algebra/10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the case D = −4, with one form, $`x^2 + y^2`$.
-- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): multiplying binary quadratic forms is multiplying ideal classes.
+- [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): how forms of one discriminant multiply together, matching ideal classes in algebraic number theory.
 
 Left open: how do you tell when two forms are renamings of each other? The next card, Reduced forms, answers that. A second puzzle waits for Composition and genus: 3 and 7 need the second form, so why does their product 21 = 4² + 5 × 1² land on the first?
 

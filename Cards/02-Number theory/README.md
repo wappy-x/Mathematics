@@ -143,7 +143,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Binary quadratic forms, their discriminant, reduction and class numbers; repeating continued fractions, Farey fractions, and how closely fractions can trap an irrational. Rests on shelves 3, 4 and 7.*
 
 1. [Binary quadratic forms: which numbers x^2 + 5y^2 and its cousins can reach, read off the discriminant](08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md)
-2. [Reduced forms: every form slides to one tidy representative, and counting them gives the class number](08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md)
+2. [Reduced forms: every positive definite form slides to one tidy representative, and counting primitive ones gives the class number](08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md)
 3. [Periodic continued fractions: a pattern that repeats forever is exactly the mark of a quadratic irrational](08-Quadratic%20Forms%20and%20Approximation/03-periodic-continued-fractions.md)
 4. [Farey fractions and Ford circles: neighbours differ by one over the product of their bottoms, and their circles just touch](08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md)
 5. [Hurwitz's theorem: every irrational has infinitely many fractions within 1/(root 5 q^2), and the golden ratio shows root 5 cannot be beaten](08-Quadratic%20Forms%20and%20Approximation/05-hurwitz-approximation-theorem.md)

@@ -44,7 +44,7 @@ x = (P + \sqrt{D})/Q, \qquad a = \text{whole part of } x, \qquad \text{new } P =
 The theorem:
 
 ```math
-\text{the steps of } x \text{ repeat forever} \iff x = (P + \sqrt{D})/Q \text{ with whole } P, Q, D \text{ and } D \text{ not a square}
+\text{the steps of } x \text{ repeat forever} \iff x = (P + \sqrt{D})/Q \text{ with whole } P, Q \ne 0, D > 0 \text{ and } D \text{ not a square}
 ```
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
@@ -58,8 +58,8 @@ The theorem:
 
 ### When it holds
 
-- **D is not a square.** Root 9 is 3, x is a fraction, and its list stops.
-- **Q divides D − P².** It keeps every new Q whole; if not, multiply top and bottom by |Q| (Q without its sign).
+- **D is positive and not a square.** If D < 0 there is no real root; root 9 is 3, x is a fraction, and its list stops.
+- **Q is not 0 and divides D − P².** It keeps every new Q whole; if not, multiply top and bottom by |Q| (Q without its sign).
 - **Exact arithmetic.** On a decimal, root 7 goes wrong at flip 26.
 
 ---
@@ -92,7 +92,7 @@ y is no fraction, since a fraction's list stops. A front part, like root 7's 2, 
 
 ### Step 2: every quadratic root takes the shape (P + root D)/Q
 
-The quadratic formula gives each root as (P + root D)/Q, where:
+For a real quadratic root, the quadratic formula gives it as (P + root D)/Q, where:
 
 - P is minus the middle coefficient,
 - D is middle² − 4 × first × last,
@@ -275,7 +275,7 @@ ALL CHECKS PASS
 Lean proves the card's theorem in both directions, for every number, plus Step 3 and the by-hand numbers.
 
 - A continued fraction repeats forever exactly when its number is a quadratic irrational.
-- Take whole numbers P, Q and D, with D not a square and Q dividing D − P². Then the steps of (P + root D)/Q repeat forever.
+- Take whole numbers P, Q ≠ 0 and D > 0, with D not a square and Q dividing D − P². Then the steps of (P + root D)/Q repeat forever.
 - Suppose the steps of x repeat forever. Then x = (P + root D)/Q for such whole numbers P, Q and D.
 - Take x = (P + root D)/Q as above, and any whole number a. Then 1/(x − a) = (new P + root D)/new Q, with new Q whole and not 0.
 - Root 7's table is exact: the pair P = 2, Q = 3 comes back after four flips.
@@ -932,7 +932,7 @@ end PeriodicContinuedFractions
 - **The golden ratio.** All steps are 1, so the stops are Fibonacci ratios: 1/1, 2/1, 3/2, 5/3, 8/5, 13/8.
 
 > **Say it back**
-> A continued fraction repeats forever exactly when its number is a quadratic irrational. A repeating block folds into a quadratic. Conversely, the number left to expand is always (P + root D)/Q, with P and Q trapped in a box, so a pair comes back and the steps loop.
+> A continued fraction repeats forever exactly when its number is a quadratic irrational. A repeating block folds into a quadratic. Conversely, the number left to expand is always (P + root D)/Q, with P and Q eventually trapped in a box, so a pair comes back and the steps loop.
 
 ---
 

@@ -12,13 +12,13 @@ Neighbours 1/3 and 2/5 cross-multiply to 2 × 3 − 1 × 5 = 1, and their gap is
 
 Each new mark at a higher order is the **mediant** of its neighbours, tops and bottoms added: 1/3 and 1/2 give (1 + 1)/(3 + 2) = 2/5.
 
-**Farey neighbours a/b and c/d have b × c − a × d = 1, so their gap is 1/(b × d), their mediant comes first between them, and their Ford circles just touch.**
+**Farey neighbours a/b < c/d have b × c − a × d = 1, so their gap is 1/(b × d), their mediant comes first between them, and their Ford circles just touch.**
 
 **What kind of fact this is:** a theorem, proved in Why it works. Step 4 is Dirichlet's approximation theorem.
 
 <p align="center"><img src="../figures/farey-sequences-and-ford-circles.svg" alt="Ford circles on the eleven order-5 fractions, drawn to scale; the circles on 1/3 and 2/5 are highlighted and touch at the point (13/34, 1/34)" width="420"></p>
 
-Each fraction p/q carries a **Ford circle** of radius 1/(2q²). It sits on the number line at p/q, so its centre is (p/q, 1/(2q²)). The circles on 1/3 and 2/5 touch at (13/34, 1/34).
+Each fraction p/q in lowest terms carries a **Ford circle** of radius 1/(2q²). It sits on the number line at p/q, so its centre is (p/q, 1/(2q²)). The circles on 1/3 and 2/5 touch at (13/34, 1/34).
 
 ---
 
@@ -98,7 +98,7 @@ Each centre's height is its radius, so neighbours' centres are 1/(b × d) apart 
 
 At order 5, x = 0.618034 sits between 3/5 and 2/3. Their mediant 5/8 splits the gap, leaving x within 1/(5 × 8) of 3/5, under 1/5².
 
-In general, the mediant cuts the gap into widths 1/(b(b + d)) and 1/(d(b + d)). So x is under 1/(q(b + d)) from the neighbour p/q ending its half: under 1/q², and at most 1/(N + 1).
+Any irrational shifts into (0, 1) by subtracting its whole part. There, the mediant cuts the gap into widths 1/(b(b + d)) and 1/(d(b + d)). So x is under 1/(q(b + d)) from the neighbour p/q ending its half: under 1/q², and at most 1/(N + 1).
 
 As x is not a fraction, that distance is positive; a larger N with 1/(N + 1) below it catches a closer fraction, forever. Order 8 gives 5/8.
 
@@ -249,7 +249,7 @@ The two outputs match line for line.
 
 Lean proves the card's facts for Farey lists of every order and for every irrational, not just the examples.
 
-- Take neighbours a/b and c/d on a Farey list of any order. Then b × c − a × d = 1, so their gap is 1/(b × d).
+- Take neighbours a/b < c/d on a Farey list of any order. Then b × c − a × d = 1, so their gap is 1/(b × d).
 - Their Ford circles just touch: the distance between the centres equals the sum of the radii.
 - Take the same neighbours. Then the mediant (a + c)/(b + d) lies between them, with bottom b + d. Every other fraction between them has a bigger bottom.
 - Take any irrational x. Then infinitely many p/q in lowest terms lie within 1/q² of x.
@@ -543,11 +543,11 @@ example : (1 * 4 - 2 * 2 : ℤ) = 0 := by norm_num
 ## Where you meet it in real life
 
 - **Clock gears.** In 1861 the clockmaker Achille Brocot found the best gear ratios by repeated mediants.
-- **Rounding to a simple fraction.** The closest fraction with bottom at most N is an order-N neighbour: 3/5 for 0.618034 at N = 5.
+- **Rounding to a simple fraction.** For a number between 0 and 1, the closest fraction with bottom at most N is on the order-N Farey list: 3/5 for 0.618034 at N = 5.
 - **Points on a circle.** Step round a circle by an irrational part of a turn; the gaps take at most three lengths: [Three distances](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/04-three-distance-theorem.md).
 
 > **Say it back**
-> The Farey list of order N holds the fractions from 0 to 1 with bottom at most N. Neighbours a/b and c/d have b × c − a × d = 1, so their gap is 1/(b × d). The first fraction between them is the mediant. Circles of radius 1/(2q²) on neighbours just touch. Trapping an irrational between neighbours gives infinitely many p/q within 1/q².
+> The Farey list of order N holds the fractions from 0 to 1 in lowest terms with bottom at most N. Neighbours a/b < c/d have b × c − a × d = 1, so their gap is 1/(b × d). The first fraction between them is the mediant. Circles of radius 1/(2q²) on neighbours just touch. Trapping an irrational between neighbours gives infinitely many p/q within 1/q².
 
 ---
 
