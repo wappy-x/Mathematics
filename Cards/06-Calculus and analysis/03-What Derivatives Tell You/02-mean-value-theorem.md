@@ -12,9 +12,9 @@ However the train is driven, a trip with no teleporting and no instant change of
 
 Its main use runs the other way: facts about the derivative at single points ("zero speed at every instant") become facts about a whole stretch ("the train never moved").
 
-**If a function has no jumps on a stretch and a derivative at every inside point, then at some inside point the derivative equals the average rate over the whole stretch.**
+**If a function has no jumps on a closed stretch between two different ends and has a derivative at every inside point, then at some inside point the derivative equals the average rate over the whole stretch.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, with its special case, Rolle's theorem, and its consequence: zero derivative means constant.
+**What kind of fact this is:** a theorem, proved on this card in Why it works, with its special case, Rolle's theorem, and its consequence: zero derivative on an unbroken stretch means constant.
 
 ### The picture: the train's speed through the hour
 
@@ -36,7 +36,7 @@ The orange curve is the train's speed, peaking at 150 km/h at half past. The tea
 
 Notation first, in words. $`[a, b]`$ means every input from a to b, ends included; $`(a, b)`$ leaves the two ends out. A function is **continuous** on a stretch when it has no jumps there, and **differentiable** at a point when it has a derivative there.
 
-If $`f`$ is continuous on $`[a, b]`$ and differentiable on $`(a, b)`$, then at least one point $`c`$ strictly between a and b has
+If $`a < b`$, $`f`$ is continuous on $`[a, b]`$, and $`f`$ is differentiable on $`(a, b)`$, then at least one point $`c`$ strictly between $`a`$ and $`b`$ has
 
 ```math
 f'(c) = \frac{f(b) - f(a)}{b - a}.
@@ -75,6 +75,7 @@ Drawn to scale: 280 units across per hour, 1.8 units up per km. The solid curve 
 
 ### When it holds
 
+- **Two different ends ($`a < b`$).** When $`a = b`$, the average rate divides by zero and there is no inside point.
 - **No jumps, ends included.** A position leaping to 100 km at the final instant averages 100 km/h with inside speed 0.
 - **A derivative at every inside point.** 200 km/h for half an hour, then stopped dead, averages 100 km/h but never shows it: the corner has no derivative.
 - **One unbroken stretch**, for constancy. Across a gap the value can change while the rate is zero wherever it exists.
@@ -352,7 +353,7 @@ The two outputs are identical.
 
 Lean proves three theorems, for every function on the real numbers that meets their conditions.
 
-- The mean value theorem: continuous on $`[a, b]`$ and differentiable on $`(a, b)`$ gives an inside $`c`$ with $`f'(c) = (f(b) - f(a))/(b - a)`$.
+- The mean value theorem: for $`a < b`$, continuous on $`[a, b]`$ and differentiable on $`(a, b)`$ gives an inside $`c`$ with $`f'(c) = (f(b) - f(a))/(b - a)`$.
 - Rolle's theorem: with the same conditions and $`f(a) = f(b)`$, some inside point has a flat tangent, $`f'(c) = 0`$.
 - A derivative of 0 at every point of one unbroken stretch means the function is constant there.
 
@@ -438,7 +439,7 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 > **Try changing**
 > - **Guess first:** in `lead`, replace `100 * t` by `90 * t`. Does road 3 still agree with road 1? No: it now finds the instants of 90 km/h, and the second assert fails.
 > - **Guess first:** run road 2's bisection on the corner trip, over 0 to 1 h. It returns 30 min, where the speed jumps from 200 to 0: a change of sign, not a speed of 100.
-> - **Guess first:** shrink the difference-quotient step further. The error keeps falling a hundredfold per tenfold cut: it shrinks with the square of the step.
+> - **Guess first:** shrink the difference-quotient step further (down to 10^-5 h). The error keeps falling a hundredfold per tenfold cut — shrinking with the square of the step — until rounding error takes over around 10^-6 h.
 
 ---
 
@@ -459,7 +460,7 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 - **Solving by iteration.** A map with slope below 1 in size pulls points together, by this theorem: the engine of [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md).
 
 > **Say it back**
-> A function with no jumps on a closed stretch and a derivative inside takes its average rate as an instantaneous rate somewhere inside. The 100 km, one-hour train did exactly 100 km/h at 12.68 and 47.32 minutes. The proof levels the ends by subtracting the steady line, then finds a lowest or highest point, where the slope is zero. So a zero derivative on an unbroken stretch means a constant. A corner, a jump or a gap removes the guarantee.
+> A function with no jumps on a closed stretch between two different ends and a derivative inside takes its average rate as an instantaneous rate somewhere inside. The 100 km, one-hour train did exactly 100 km/h at 12.68 and 47.32 minutes. The proof levels the ends by subtracting the steady line, then finds a lowest or highest point, where the slope is zero. So a zero derivative on an unbroken stretch means a constant. A corner, a jump or a gap removes the guarantee.
 
 ---
 
@@ -473,13 +474,13 @@ example : ((200 : ℚ) * (1 / 2) - 0) / (1 - 0) = 100 := by norm_num
 - [Optimisation](03-monotonicity-and-optimisation.md): a positive derivative means rising, by Step 3's argument.
 - [L'Hopital's rule](04-lhopitals-rule.md): Cauchy's two-function version settles 0 over 0.
 - [Taylor's theorem](05-taylors-theorem.md): repeated use sizes a polynomial approximation's error.
-- [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): antiderivatives differ by a constant.
+- [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): two antiderivatives on one unbroken interval differ by a constant.
 - [Differentiating under the integral sign](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): slope bounds control quotients inside an integral.
 - [The interpolation error theorem](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/03-polynomial-interpolation-error.md): Rolle, repeated, measures an interpolation miss.
 - [Sobolev and Poincare](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/09-sobolev-embedding-and-poincare-inequality.md): size bounded by derivative size, in many dimensions.
 - [Darboux's theorem](09-darboux-theorem-for-derivatives.md): a derivative cannot jump, even when it is not continuous.
 
-The theorem uses one derivative at one unknown point; how much more the higher derivatives say about a function between the ends is the question [Taylor's theorem](05-taylors-theorem.md) answers.
+Next on this shelf, [Optimisation](03-monotonicity-and-optimisation.md) turns Step 3's argument into tests for rises, falls and peaks; further along, [Taylor's theorem](05-taylors-theorem.md) answers how much more higher derivatives say between the ends.
 
 ---
 

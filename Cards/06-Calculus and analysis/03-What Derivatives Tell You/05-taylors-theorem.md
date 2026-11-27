@@ -12,7 +12,7 @@ Four terms give 1 + 0.1 + 0.005 + 0.000166667 = 1.105166667. The true value is 1
 
 The polynomial copies the function's value, slope, bend and higher rates of change at one point. The gap it leaves is the **remainder**, the word used from here on.
 
-**Match a function's value and first n derivatives at one point and a polynomial of degree n follows; what it misses is the next term with the next derivative read somewhere between the anchor and the target, so bounding that derivative bounds the error.**
+**Match a function's value and first n derivatives at one point and a polynomial of degree n follows; when the function has n + 1 derivatives between the anchor and the target, with the n-th continuous up to both ends, what the polynomial misses is the next term with the next derivative read somewhere in between, so bounding that derivative bounds the error.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the polynomial itself is a definition.
 
@@ -45,7 +45,7 @@ P_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}\,(x-a)^k
 
 **Read it aloud:** the value at the anchor, plus each derivative at the anchor times the step to the k-th power, over k factorial.
 
-**Taylor's theorem, Lagrange's form of the remainder:** for each x other than a there is a point $`\xi`$ (the Greek letter xi) strictly between a and x with
+**Taylor's theorem, Lagrange's form of the remainder:** if $`f`$ has $`n + 1`$ derivatives strictly between $`a`$ and $`x`$ (with $`x \ne a`$) and $`f^{(n)}`$ is continuous up to both ends, there is a point $`\xi`$ (the Greek letter xi) strictly between $`a`$ and $`x`$ with
 
 ```math
 f(x) = P_n(x) + R_n(x), \qquad R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\,h^{n+1}, \quad h = x - a
@@ -146,7 +146,7 @@ A road with no series gives 1.105170918, inside the window. One year at 10% comp
 | No factorials: 1 + 0.1 + 0.01 + 0.001 | 1.111, off by 0.005829082 | coefficients are derivatives over k! |
 | Ceiling read at the anchor, e^ξ at most 1 | ceiling 1.105170833, below the truth 1.105170918 | $`\xi`$ can be anywhere up to 0.1 |
 | Four terms, no remainder | 1.105167 against 1.105171 | the polynomial misses 0.000004251 |
-| Corner \|x − 0.05\|, anchor 0, n = 1 | remainder 0.1; Lagrange needs f″ = 20, but f″ is 0 wherever it exists | no second derivative at 0.05, so no ξ |
+| Corner \|x − 0.05\|, anchor 0, n = 1 | remainder 0.1; Lagrange needs f″ = 20, but f″ is 0 wherever it exists | no first or second derivative at 0.05, so no ξ |
 
 The corner function has slope −1.00 at 0, so its tangent line reads −0.05 at 0.1 where the function is 0.05.
 
@@ -502,7 +502,7 @@ example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
 - **Ratios heading for 0 over 0.** Taylor polynomials show which part vanishes faster, the idea [L'Hopital's rule](04-lhopitals-rule.md) packages as a rule.
 
 > **Say it back**
-> A Taylor polynomial copies a function's value and first n derivatives at one anchor; the factorials make the copy exact. What it misses is the next term, its derivative read at an unknown point in between. Bound that derivative across the whole stretch and the error is bounded. For e^0.1, four terms and a two-sided remainder give a window whose ends both round to 1.105171.
+> A Taylor polynomial copies a function's value and first n derivatives at one anchor; the factorials make the copy exact. When the function has n + 1 derivatives across the stretch and the n-th is continuous up to both ends, what it misses is the next term, its derivative read at an unknown point in between. Bound that derivative across the whole stretch and the error is bounded. For e^0.1, four terms and a two-sided remainder give a window whose ends both round to 1.105171.
 
 ---
 
@@ -513,23 +513,24 @@ example : 2 * (1/10 : ℚ) / (1/10) ^ 2 = 20 := by norm_num
 
 ## Where this goes next
 
+- [Newton's method](06-newtons-method.md): next on this shelf, where Taylor's degree-2 remainder proves the error squares each step.
 - [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): a difference quotient's error, from a remainder.
 - [Numerical integration](../04-Integrals/08-numerical-integration.md): why Simpson's rule errs so little.
-- [Taylor series](../06-Series/05-taylor-series.md): the polynomial carried on forever.
+- [Taylor series](../06-Series/05-taylor-series.md): carrying the Taylor polynomial on forever as a power series.
 - [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): a second-order expansion behind the bell curve.
 - [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): an expansion whose second-order term survives.
 - [Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): a bond's first two terms in yield.
 - [The Greeks together](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): daily profit as a sum of Greeks.
 - [The volatility surface](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): local expansions of a price surface.
-- [Two different errors](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md): the remainder as truncation error.
-- [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): why Newton's error squares.
+- [Two different errors](../../16-Numerical%20analysis/01-Floating%20Point%20and%20Error/04-truncation-versus-rounding-error.md): the Taylor remainder treated as truncation error against rounding.
+- [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): using Taylor's remainder to prove why Newton's error squares.
 - [The interpolation error theorem](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/03-polynomial-interpolation-error.md): the same form through several points.
-- [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md): the integral remainder at work.
+- [Error bounds and Romberg](../../16-Numerical%20analysis/05-Quadrature/02-error-bounds-and-romberg.md): using the integral form of the remainder to bound quadrature error.
 - [Runge-Kutta](../../16-Numerical%20analysis/06-ODE%20Solvers/01-runge-kutta-and-butcher-tableaux.md): steps built to match Taylor terms.
 - [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): difference formulas ranked by Taylor terms.
 - [Universal approximation](../../14-Applied%20and%20computational/09-Deep%20Networks/01-universal-approximation-theorem.md): one hidden layer can fit any continuous curve, at a price.
 
-The theorem controls one polynomial of fixed degree; whether adding terms forever recovers e^x far from 0 is the question [Taylor series](../06-Series/05-taylor-series.md) answers.
+The theorem controls one polynomial of fixed degree; next on this shelf, [Newton's method](06-newtons-method.md) solves the degree-1 polynomial to find roots, while [Taylor series](../06-Series/05-taylor-series.md) answers whether adding terms forever recovers e^x far from 0.
 
 ---
 

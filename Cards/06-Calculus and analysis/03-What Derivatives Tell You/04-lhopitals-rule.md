@@ -12,7 +12,7 @@ A second race: multiply x by the shrinking factor e^(-x). At x = 5 the product i
 
 L'Hopital's rule settles both by comparing speeds instead of sizes.
 
-**When a ratio reads 0 over 0 or infinity over infinity, replace top and bottom by their rates; if the new ratio settles on a limit, the old one settles on the same limit.**
+**When a ratio reads 0 over 0 or infinity over infinity, replace top and bottom by their rates; if both rates exist near the target, the bottom's rate stays nonzero there, and the new ratio settles on a limit, the old one settles on the same limit.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; its use on other forms is a method.
 
@@ -40,7 +40,7 @@ The limit notation from [Limits](../01-Limits%20and%20Continuity/01-limits.md): 
 \lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)} = L
 ```
 
-**Read it aloud:** if top and bottom both head for 0, or both blow up, and the ratio of their rates heads for L, then the ratio itself heads for L.
+**Read it aloud:** if top and bottom both head for 0 or both blow up, both have rates near a with the bottom's rate nonzero there, and the ratio of their rates heads for L, then the ratio itself heads for L.
 
 The two limits agree; the two ratios need not agree anywhere. At x = 0.1 the ratio is 0.998334 and the rate ratio 0.995004.
 
@@ -74,7 +74,7 @@ Close to 0, sin x is nearly the line through the origin with slope cos 0 = 1, an
 
 The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) gives one function a point where its rate equals its average slope. On f and g separately it gives two different points; the rule needs one shared point, Cauchy's mean value theorem.
 
-Set f(a) = g(a) = 0; since both head for 0, this makes both unbroken at a. Fix x near a and build a helper h(t) = f(t) g(x) − g(t) f(x), for t from a to x. At t = a both terms are 0; at t = x they cancel. So h starts and ends at 0, and Rolle's theorem (the equal-ends case of the mean value theorem) gives a point c between a and x where the rate of h is 0:
+For a finite a, set f(a) = g(a) = 0; since both head for 0, this makes both unbroken at a. Fix x near a and build a helper h(t) = f(t) g(x) − g(t) f(x), for t from a to x. At t = a both terms are 0; at t = x they cancel. So h starts and ends at 0, and Rolle's theorem (the equal-ends case of the mean value theorem) gives a point c between a and x where the rate of h is 0:
 
 ```math
 f'(c)\,g(x) = g'(c)\,f(x) \quad\text{so}\quad \frac{f(x)}{g(x)} = \frac{f'(c)}{g'(c)}
@@ -88,7 +88,7 @@ In numbers: at x = 0.1 the ratio is 0.998334, and cos c / 1 hits that value at c
 
 The point c is trapped between a and x, so as x heads for a, c is dragged along. The rate ratio at c heads for L, and the ratio at x equals it exactly.
 
-The tolerance game in numbers: to land sin x / x within 0.001 of 1, it is enough, by Step 1, that cos c is. Now 1 − cos c = 2 sin^2(c/2), and sin t < t, so 1 − cos c is at most c^2/2, below 0.001 once c is below the square root of 0.002, about 0.0447 (cos 0.0447 = 0.9990002). Since c is smaller than x, every x within 0.0447 of 0 wins. At x = 0.0447 the ratio is 0.999667.
+The tolerance game in numbers: to land sin x / x within 0.001 of 1, it is enough, by Step 1, that cos c is. Now 1 − cos c = 2 sin^2(c/2), and $`\lvert\sin t\rvert \le \lvert t\rvert`$, so 1 − cos c is at most c^2/2, below 0.001 once $`\lvert c\rvert`$ is below the square root of 0.002, about 0.0447 (cos 0.0447 = 0.9990002). Since $`\lvert c\rvert`$ is smaller than $`\lvert x\rvert`$, every nonzero x within 0.0447 of 0 wins. At x = 0.0447 the ratio is 0.999667.
 
 Where c sits is sharper than "between": at x = 0.01, c/x = 0.57735, which is 1/sqrt(3), because sin x / x falls from 1 like x^2/6 and cos c like c^2/2. Reading limits off such leading terms is the other route, done properly in [Taylor's theorem](05-taylors-theorem.md).
 
@@ -655,7 +655,7 @@ example : (20 * π + sin (20 * π)) / (20 * π) = 1 ∧ (21 * π + sin (21 * π)
 - **A dose that rises and fades.** In the simplest model with equal absorption and elimination rates, a drug level after one oral dose has the shape x e^(-x): a peak, then a fade to 0.
 
 > **Say it back**
-> When a ratio reads 0 over 0 or infinity over infinity, compare the rates of top and bottom. If the bottom's rate stays off 0 and the rate ratio has a limit, the ratio has it too. Cauchy's mean value theorem gives one in-between point where the two agree, dragged to the limit. Products, differences and powers are rearranged first. A rate ratio with no limit proves nothing.
+> When a ratio reads 0 over 0 or infinity over infinity, compare the rates of top and bottom. If both have rates near the target, the bottom's rate stays off 0, and the rate ratio has a limit, the ratio has it too. Cauchy's mean value theorem gives one in-between point where the two agree, dragged to the limit. Products, differences and powers are rearranged first. A rate ratio with no limit proves nothing.
 
 ---
 

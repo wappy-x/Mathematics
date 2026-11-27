@@ -12,7 +12,7 @@ A flat can wastes metal on two huge lids; a thin one wastes it on a tall wall. T
 
 The derivative settles it. Where the rate of metal per centimetre of radius is negative, widening saves metal; where positive, it costs metal. The best radius sits where the sign flips: the best can is as tall as it is wide, using 264.3568 square cm of metal. If a factory line limits the width, the best can may sit at the limit instead, where the derivative is not zero.
 
-**The sign of the derivative says where a function rises and where it falls; a best value sits where the sign flips or at an end of the allowed range, and comparing those few candidates finds it.**
+**On an unbroken interval, the derivative's sign says where a continuous function rises or falls; on a closed interval, its best values sit where the derivative is zero or missing, or at an end, and comparing those few candidates finds them.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works from the mean value theorem; the candidate-and-compare recipe built on it is a method.
 
@@ -53,11 +53,11 @@ A'(r) = 4\pi r - \frac{2V}{r^2}, \qquad A''(r) = 4\pi + \frac{4V}{r^3}
 
 **Read it aloud:** the rate of metal per cm of radius is the lids' growth minus the wall's saving; its own rate is always positive.
 
-Three tests, for a function $`f`$ on an interval:
+Three tests, for a continuous function $`f`$ on an unbroken interval:
 
 - **Sign test.** If $`f'(x) > 0`$ at every inside point, $`f`$ rises: $`x_1 < x_2`$ gives $`f(x_1) < f(x_2)`$. Negative slope, it falls.
 - **First derivative test.** If the slope is negative just left of $`c`$ and positive just right, $`c`$ is a local minimum, lower than every nearby point. Reversed signs, a maximum.
-- **Second derivative test.** If $`f'(c) = 0`$ and $`f''(c) > 0`$, $`c`$ is a local minimum; $`f''(c) < 0`$, a local maximum; $`f''(c) = 0`$, no verdict.
+- **Second derivative test.** At an inside point $`c`$, if $`f'(c) = 0`$ and $`f''(c) > 0`$, $`c`$ is a local minimum; $`f''(c) < 0`$, a local maximum; $`f''(c) = 0`$, no verdict.
 
 For a continuous $`f`$ on a closed interval from $`a`$ to $`b`$, the lowest and highest values sit among the candidates: points where $`f'`$ is zero or does not exist, and the ends $`a`$ and $`b`$.
 
@@ -326,8 +326,8 @@ ALL CHECKS PASS
 Lean proves the sign test and the closed-interval candidates for every function that meets their conditions, and the can's shape for every volume.
 
 - Sign test: on an interval with no gaps, let f have no jump and a slope at every inside point. Positive slope inside means f rises; negative means it falls.
-- Candidates: a continuous f on a closed interval from a to b reaches a lowest and a highest value. Each sits at an end, where f has no slope, or where the slope is zero.
-- The can: for any fixed volume V, a radius r gives the least metal among all positive radii exactly when the height equals the diameter.
+- Candidates: a continuous f on a closed interval from a to b (with $`a \le b`$) reaches a lowest and a highest value. Each sits at an end, where f has no slope, or where the slope is zero.
+- The can: for any positive fixed volume V, a positive radius r gives the least metal among all positive radii exactly when the height equals the diameter.
 - The 330 ml can's numbers: 2V = 660 and 4V = 1320.
 - A gap in the domain: -1/x has slope 1 at -1 and at 1, yet f(-1) = 1 > f(1) = -1.
 - Flat is not a turn: x^3 has slope 0 at 0, yet (-0.1)^3 = -0.001 < 0 < 0.001 = (0.1)^3.
@@ -489,7 +489,7 @@ example : (3 * 0 ^ 2 : ℚ) = 0 ∧ (-1 / 10 : ℚ) ^ 3 = -1 / 1000 ∧ (1 / 10 
 - **Fitting a model to data.** The best-fitting parameter sits where a derivative is zero; the second derivative says how sharply it is pinned ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
 > **Say it back**
-> Positive slope across an interval means rising, negative means falling, by the mean value theorem. A minimum sits where the slope flips from negative to positive; a positive second derivative at zero slope guarantees the flip. Ends of a restricted range are candidates too. The 330 ml can uses least metal, 264.3568 square cm, when its height equals its diameter; held to 6.6 cm across, its best is the widest allowed.
+> For a continuous function on an unbroken interval, positive inside slope means rising and negative means falling, by the mean value theorem. Inside, a minimum sits where the slope is zero or missing (a flip from negative to positive, or a positive second derivative at zero slope, guarantees one); ends of a closed range are candidates too. The 330 ml can uses least metal, 264.3568 square cm, when its height equals its diameter; held to 6.6 cm across, its best is the widest allowed.
 
 ---
 
@@ -500,11 +500,12 @@ example : (3 * 0 ^ 2 : ℚ) = 0 ∧ (-1 / 10 : ℚ) ^ 3 = -1 / 1000 ∧ (1 / 10 
 
 ## Where this goes next
 
+- [L'Hopital's rule](04-lhopitals-rule.md): next on this shelf, using derivatives to resolve 0 over 0 and infinity over infinity limits.
 - [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): the best whole curve, not the best single number.
 - [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the parameter making observed data most probable.
 - [Stock](../../14-Applied%20and%20computational/05-Operations%20Research/06-inventory-models-eoq-and-newsvendor.md): the can's trade-off in a warehouse.
 
-Left open: when the thing to choose is a whole curve, not one radius, what takes the place of setting the derivative to zero?
+Left open: when the thing to choose is a whole curve, not one radius, what takes the place of setting the derivative to zero? [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md) answers that far ahead; next on this shelf, [L'Hopital's rule](04-lhopitals-rule.md) puts derivatives to work on stalemate limits.
 
 ---
 

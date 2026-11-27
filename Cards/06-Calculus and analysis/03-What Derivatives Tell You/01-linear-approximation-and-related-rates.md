@@ -12,7 +12,7 @@ Volume and radius are tied by the volume of a sphere, so the known volume rate f
 
 And where will the radius be one second from now? Walking along the present slope instead of the curve gives a quick forecast: the tangent line (the straight line touching the curve with the same slope) stands in for the curve. That stand-in is the **linear approximation**; the card says how far off it is.
 
-**Near a point where a function has a derivative, the value a small step away is the value here plus slope times step, with an error that shrinks faster than the step; two quantities tied by a relation have their rates tied by the slope of that relation.**
+**Near a point where a function has a derivative, the value a small step away is the value here plus slope times step, with an error that shrinks faster than the step; two differentiable quantities tied by a differentiable relation have their rates tied by its slope.**
 
 **What kind of fact this is:** an approximation, with its error bounded on this card in Why it works; the related-rates formula is exact at each instant.
 
@@ -42,7 +42,7 @@ f(a+h) = f(a) + f'(a)\,h + R(h), \qquad \frac{R(h)}{h} \to 0 \text{ as } h \to 0
 
 **Read it aloud:** the value a step away is the value here, plus slope times step, plus a remainder tiny even compared with the step.
 
-When the size of $`f''`$ stays below a ceiling $`M`$ all the way from $`a`$ to $`a+h`$, the remainder has a bound:
+When $`f'`$ and $`f''`$ exist at every point from $`a`$ to $`a+h`$ and the size of $`f''`$ stays at most a ceiling $`M`$ there, the remainder has a bound:
 
 ```math
 \lvert R(h)\rvert \le \frac{M\,h^2}{2}
@@ -53,7 +53,7 @@ When the size of $`f''`$ stays below a ceiling $`M`$ all the way from $`a`$ to $
 For the balloon, the sphere's volume gives the related-rates formula:
 
 ```math
-V = \tfrac{4}{3}\pi r^3, \qquad \frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}, \qquad \frac{dr}{dt} = \frac{dV/dt}{4\pi r^2}
+V = \tfrac{4}{3}\pi r^3, \qquad \frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}, \qquad \frac{dr}{dt} = \frac{dV/dt}{4\pi r^2} \quad (r \ne 0)
 ```
 
 **Read it aloud:** the volume rate is the surface area times the radius rate; so the radius rate is the pump rate spread over the surface.
@@ -73,7 +73,7 @@ V = \tfrac{4}{3}\pi r^3, \qquad \frac{dV}{dt} = 4\pi r^2\,\frac{dr}{dt}, \qquad 
 
 - **A derivative at the base.** At a corner, such as the absolute value of x at 0, the slopes from right and left disagree; there is no tangent line to use.
 - **A small step.** The error grows as the step squared: 20 s out, the line says 17.96 cm against a true 15.02 cm.
-- **A ceiling on the bend.** The bound needs $`M`$, which blows up as the balloon empties. Without one, $`R(h)/h`$ still heads for 0, but $`R`$ need not stay under any multiple of $`h^2`$: for $`\lvert x\rvert^{3/2}`$ at 0, $`R/h^2`$ is 10 at $`h = 0.01`$ and 100 at $`h = 0.0001`$.
+- **A ceiling on the bend.** The bound needs $`f''`$ to exist across the whole step and stay at most $`M`$ in size; $`M`$ blows up as the balloon empties. Without one, $`R(h)/h`$ still heads for 0, but $`R`$ need not stay under any multiple of $`h^2`$: for $`\lvert x\rvert^{3/2}`$ at 0, $`R/h^2`$ is 10 at $`h = 0.01`$ and 100 at $`h = 0.0001`$.
 - **The relation at every instant.** A balloon stretching into a sausage makes 4πr^2 the wrong surface.
 - **A nonzero surface.** At radius 0 the division by 4πr^2 fails.
 
@@ -108,7 +108,7 @@ Take h > 0; a negative step is the mirror image. For s from 0 to h let g(s) = f(
 
 Since the size of f'' is at most M, by the [Mean value theorem](02-mean-value-theorem.md), f'(a+s) − f'(a) equals f'' at some point times s, so |g'(s)| ≤ Ms.
 
-Let p(s) = Ms^2/2 − g(s). Then p(0) = 0 and p'(s) = Ms − g'(s) ≥ 0. A function whose derivative is never negative never falls ([Optimisation](03-monotonicity-and-optimisation.md)), so p(h) ≥ 0: g(h) ≤ Mh^2/2. The same on Ms^2/2 + g(s) gives g(h) ≥ −Mh^2/2. So |R(h)| ≤ Mh^2/2. In epsilon language: every step with |h| < delta = 2 epsilon / M keeps |R(h)/h| below epsilon.
+Let p(s) = Ms^2/2 − g(s). Then p(0) = 0 and p'(s) = Ms − g'(s) ≥ 0. A function whose derivative is never negative never falls ([Optimisation](03-monotonicity-and-optimisation.md)), so p(h) ≥ 0: g(h) ≤ Mh^2/2. The same on Ms^2/2 + g(s) gives g(h) ≥ −Mh^2/2. So |R(h)| ≤ Mh^2/2. In epsilon language, when M > 0, every nonzero step with |h| < delta = 2 epsilon / M keeps |R(h)/h| below epsilon (when M = 0, R(h) = 0 for every step).
 
 </details>
 
@@ -348,9 +348,9 @@ ALL CHECKS PASS
 Lean proves both ideas for every function with the needed derivatives, and the related-rates formula for every round balloon.
 
 - With a derivative at the base, the remainder divided by the step heads for 0 as the step shrinks.
-- When the size of $`f''`$ stays below $`M`$ from $`a`$ to $`a+h`$, the remainder is at most $`M h^2 / 2`$ in size.
-- If $`V = \tfrac{4}{3}\pi r^3`$ at every instant, the volume rate is $`4\pi r^2`$ times the radius rate.
-- When the radius is not 0, the radius rate is the volume rate divided by $`4\pi r^2`$.
+- When $`f'`$ and $`f''`$ exist at every point from $`a`$ to $`a+h`$ and $`\lvert f''\rvert \le M`$ there, the remainder is at most $`M h^2 / 2`$ in size.
+- If $`V = \tfrac{4}{3}\pi r^3`$ at every instant and $`r`$ has a derivative at time $`t`$, the volume rate is $`4\pi r^2`$ times the radius rate.
+- When the radius is also not 0 at time $`t`$, the radius rate is the volume rate divided by $`4\pi r^2`$.
 - The absolute value of x has no derivative at 0, so there is no tangent line there.
 - At 20 cm the surface is four times larger, so the radius rate is a quarter.
 
@@ -493,7 +493,7 @@ example : 500 / (4 * π * (20 : ℝ) ^ 2) = 500 / (4 * π * 10 ^ 2) / 4 := by fi
 > [!TIP]
 > **Try changing**
 > - **Double the pump rate.** Guess first: the radius rate doubles; at a fixed radius it is a straight multiple of the pump rate.
-> - **Let air out: h = −500.** Guess first: the error stays negative. The curve bends downwards on both sides, so the tangent sits above it either way.
+> - **Let air out: h = −500.** Guess first: the error stays negative (−0.016973 cm). The curve bends downwards on both sides, so the tangent sits above it either way; the third assert fails because `M` was read at 10 cm rather than the smaller deflated radius.
 > - **Use the chord from t − dt to t + dt.** Guess first: the off-by column shrinks as dt squared instead of dt, because the bend cancels between the two sides.
 
 ---
@@ -526,11 +526,12 @@ example : 500 / (4 * π * (20 : ℝ) ^ 2) = 500 / (4 * π * 10 ^ 2) / 4 := by fi
 
 ## Where this goes next
 
+- [Mean value theorem](02-mean-value-theorem.md): the exact link between average change and instant slope behind Step 2's error bound.
 - [Newton's method](06-newtons-method.md): set the tangent line to zero and solve.
 - [Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): follow a rate forward in many short tangent steps.
 - [Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the slope carries a measurement's spread through a function.
 
-Open question: where to step to make a function zero. [Newton's method](06-newtons-method.md) repeats the tangent step.
+Open question: how Step 2's error bound connects a whole stretch to a single instant's slope. [Mean value theorem](02-mean-value-theorem.md) answers it next on this shelf; further on, [Newton's method](06-newtons-method.md) repeats the tangent step to make a function zero.
 
 ---
 

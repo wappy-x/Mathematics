@@ -12,7 +12,7 @@ Guess 1 metre. That tile covers 1 square metre, 1 short. The area grows at 2 squ
 
 Each round replaces the curve of area against side by its tangent line (the straight line touching the curve at the guess, with the same slope) and slides down it to the target. This is **Newton's method**. It needs the derivative: the rate of area per unit of side.
 
-**Newton's method replaces the equation by its tangent line at the current guess, solves the line exactly, and repeats; near a root where the slope is not zero, each round roughly doubles the number of correct digits.**
+**Newton's method replaces the equation by its tangent line at the current guess, solves the line exactly, and repeats; when $`f''`$ is continuous near a root with nonzero slope, each round roughly doubles the number of correct digits.**
 
 **What kind of fact this is:** a method; its two guarantees, the exact error rule for square roots and fast convergence near a simple root (one where the slope is not zero), are theorems proved in Why it works.
 
@@ -53,7 +53,7 @@ The **residual** is $`f(x_n)`$: how far the guess misses, in the equation's unit
 
 ### When it holds
 
-- **A nonzero slope at the root.** Where the curve only touches the axis, as $`x^2`$ does at 0, the error merely halves each step.
+- **A nonzero slope and continuous second derivative at the root.** Local error-squaring needs $`f''`$ continuous near the root and $`f'(r) \neq 0`$. Where the curve only touches the axis, as $`x^2`$ does at 0, the error merely halves each step.
 - **A start close enough, or a bracket.** Far off, the tangent can point anywhere: $`x^3 - 2x + 2`$ from 0 bounces 0, 1, 0, 1.
 - **No flat point on the way.** From $`x_0 = 0`$ the tile's step divides by zero.
 - **A residual stop in the right units.** The residual is in square metres, the answer in metres; dividing by $`m`$ converts.
@@ -80,7 +80,7 @@ Subtract the root $`r`$ from both sides of $`x_{n+1} = (x_n^2 + 2)/(2x_n)`$ and 
 e_{n+1} = \frac{x_n^2 - 2 r x_n + r^2}{2x_n} = \frac{e_n^2}{2x_n}
 ```
 
-No approximation was made. For $`x_n > 0`$ the new error is positive, so after one step every guess sits above $`r`$. It is at most half the old one, so the guesses fall to $`r`$. Near $`r`$ it is the old error squared times about 1/(2 × 1.414) = 0.3536: 0.0025 becomes 0.0000021.
+No approximation was made. For $`x_n > 0`$ the new error is never negative, so after one step every guess sits at or above $`r`$. From then on, each new error is at most half the old one, so the guesses fall to $`r`$. Near $`r`$ it is the old error squared times about 1/(2 × 1.414) = 0.3536: 0.0025 becomes 0.0000021.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -114,7 +114,7 @@ By continuity, pick $`\delta > 0`$ so that from $`r - \delta`$ to $`r + \delta`$
 
 ### Step 4: a small residual bounds the error, through the slope
 
-The error needs the unknown root; the residual does not. The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) connects them: $`f(x_n) - f(r) = f'(\xi)(x_n - r)`$ for some $`\xi`$ between. With $`f(r) = 0`$ and every slope at least $`m`$ in size:
+The error needs the unknown root; the residual does not. The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) connects them: $`f(x_n) - f(r) = f'(\xi)(x_n - r)`$ for some $`\xi`$ between. With $`f(r) = 0`$, a derivative across the bracket, and every slope at least $`m > 0`$ in size:
 
 ```math
 |x_n - r| \le \frac{|f(x_n)|}{m}
@@ -361,7 +361,7 @@ Lean proves the convergence rule for every function near a simple root, and the 
 - Each new error is also at most half the old one, so the guesses tend to the root.
 - For the tile, one step from any positive guess gives exactly $`e_{n+1} = e_n^2/(2x_n)`$.
 - So the new guess never sits below the root, and from at or above it the error at least halves.
-- If every slope on a bracket is at least $`m`$ in size, any point there is within $`|f(x)|/m`$ of a root there.
+- If $`f`$ has a derivative at every point of a bracket and every slope is at least $`m > 0`$ in size, any point there is within $`|f(x)|/m`$ of a root there.
 - The bracket's signs, the tangent $`y = 2x - 3`$, and the steps 3/2, 17/12, 577/408 and 665857/470832.
 - The residual after step 4 is exactly 1 over 470832 squared, below the stop; half of it is below $`10^{-11}`$.
 - Bisection needs 34 halvings to get under $`10^{-10}`$ wide; 33 are not enough.
@@ -619,7 +619,7 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 - **Optimisation.** A lowest point solves "slope = 0", and Newton on the slope finds it: [Newton and BFGS](../../15-Optimization/02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md).
 
 > **Say it back**
-> Write the equation as a miss that should be zero. At each guess, replace the curve by its tangent and take the tangent's zero as the next guess. Near a root with a nonzero slope the error is squared each step: root two goes from 1 to eleven decimals in four steps. Stop when the residual over the smallest slope is small, and keep a sign-changing bracket so a bad tangent costs only a halving.
+> Write the equation as a miss that should be zero. At each guess, replace the curve by its tangent and take the tangent's zero as the next guess. When $`f''`$ is continuous near a root with a nonzero slope, the error is squared each step: root two goes from 1 to eleven decimals in four steps. Stop when the residual over the smallest slope is small, and keep a sign-changing bracket so a bad tangent costs only a halving.
 
 ---
 
@@ -629,27 +629,27 @@ example : |(1 / 10 ^ 12 : ℚ) * (1 ^ 2 - 2)| < 1 / 10 ^ 10 ∧
 
 ## Where this goes next
 
-- [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md): Newton as one rule among many.
-- [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): Newton on a launch angle.
+- [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md): Newton's step viewed as one fixed-point iteration among many.
+- [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): using Newton's method to tune a launch angle to hit a target.
 - [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): the 0, 1, 0, 1 cycle as an orbit.
-- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): inverting the bell curve's area.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): inverting the bell curve's cumulative area with Newton steps.
 - [NPV and IRR](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md): a rate of return as a root.
 - [Solving backwards](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bracketed Newton as the desk's inverse.
 - [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): the guarded step on an option price.
-- [Strike or spot from a target premium](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md): solving for strike or spot.
-- [SABR from three quotes](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): three unknowns at once.
+- [Strike or spot from a target premium](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md): solving for an option's strike or spot price as a root.
+- [SABR from three quotes](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): solving for three volatility model parameters at once.
 - [Barone-Adesi-Whaley](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/06-barone-adesi-whaley-approximation.md): an exercise boundary as a root.
 - [Compound options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): a critical price as a root.
 - [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike for a quoted delta.
-- [Implied vol for a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): implied volatility with two rates.
-- [Implied vol on a futures option and the commodity smile](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): one inversion per strike.
-- [Implied vol from an Asian quote](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): inverting an averaged payoff.
+- [Implied vol for a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): solving for implied volatility when two interest rates enter.
+- [Implied vol on a futures option and the commodity smile](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): inverting option prices by root finding at each strike.
+- [Implied vol from an Asian quote](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): inverting an average-price option quote to recover volatility.
 - [Newton and BFGS](../../15-Optimization/02-Unconstrained%20Methods/05-newton-and-quasi-newton-bfgs.md): Newton on the gradient, the slope in every direction; BFGS learns the bend from slopes alone.
-- [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): Newton without a derivative.
+- [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md): the secant method, approaching Newton's speed without needing a derivative.
 - [Feigenbaum renormalisation](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/10-feigenbaum-renormalisation.md): why every one-hump map doubles its period at the same rate 4.669.
 - [Generalised linear models](../../09-Probability%20and%20statistics/09-Regression/10-generalised-linear-models.md): one recipe for counts, proportions and positive amounts.
 
-Left open: each step needs the slope $`f'`$. When the slope is costly or unknown, can a step still converge almost as fast?
+Left open: each step needs the slope $`f'`$, which [Newton and secant](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/02-newton-and-secant-with-convergence-orders.md) replaces when the slope is costly; next on this shelf, [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md) asks when any repeated rule of the form "next = rule(current)" must settle.
 
 ---
 

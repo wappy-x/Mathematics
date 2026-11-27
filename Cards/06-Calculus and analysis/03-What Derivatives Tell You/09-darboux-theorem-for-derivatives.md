@@ -39,7 +39,7 @@ The line is $`x^2`$ minus a line of slope 0.5. It dips to −0.0625 at $`x`$ = 0
 
 At an end of $`[a, b]`$, the derivative is **one-sided**: the slope from inside the stretch.
 
-If $`f`$ has a derivative at every point of $`[a, b]`$, and the target $`y`$ lies strictly between $`f'(a)`$ and $`f'(b)`$, then
+If $`a \le b`$, $`f`$ has a derivative at every point of $`[a, b]`$, and the target $`y`$ lies strictly between $`f'(a)`$ and $`f'(b)`$, then
 
 ```math
 f'(c) = y \quad \text{for some } c \text{ in } (a, b).
@@ -57,14 +57,14 @@ g(x) = f(x) - y\,x, \qquad g'(x) = f'(x) - y.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$, $`f'`$, $`F`$ | the function and its derivative (slope); $`F`$, a supposed function (Step 5) | $`x^2`$ and $`2x`$ | — |
-| $`x`$, $`n`$, $`\pi`$ | one input; a whole-number count in $`x = 1/(n\pi)`$; pi | $`x`$ from −0.5 to 1.5; n = 20, 200, 2000 | — |
-| $`a`$, $`b`$, $`p`$ | the ends of the stretch; a break point (Step 5 fold) | −0.5 and 1.5 | — |
-| $`y`$ | the target slope, strictly between $`f'(a)`$ and $`f'(b)`$ | 0.5 | $`c`$ moves right (here) |
-| $`c`$ | an inside point with $`f'(c) = y`$ | 0.25 | found, not chosen |
-| $`g`$ | the tilted function, $`f(x) - y\,x`$ | $`x^2 - 0.5x`$ | — |
-| $`h`$, $`d`$ | a small step in a difference quotient (change over the step, divided by the step); a small margin (Step 5 fold) | $`h`$ = 0.1, 0.01, 0.001 | — |
-| $`\mathrm{sgn}`$, $`L`$, $`R`$ | the sign function (−1 below 0, 0 at 0, +1 above); a breaking slope's limits from the left and right | sgn takes −1, 0, 1 | — |
+| $`f`$, $`f'`$, $`F`$ | function and its derivative; $`F`$, a supposed antiderivative | $`x^2`$ and $`2x`$ | — |
+| $`x`$, $`n`$, $`\pi`$ | input; whole number in $`1/(n\pi)`$; pi | $`x`$ from −0.5 to 1.5; n = 20, 200, 2000 | — |
+| $`a`$, $`b`$, $`p`$ | stretch ends; a break point | −0.5 and 1.5 | — |
+| $`y`$ | target slope, strictly between $`f'(a)`$ and $`f'(b)`$ | 0.5 | $`c`$ moves right (here) |
+| $`c`$ | inside point with $`f'(c) = y`$ | 0.25 | found, not chosen |
+| $`g`$ | tilted function, $`f(x) - y\,x`$ | $`x^2 - 0.5x`$ | — |
+| $`h`$, $`d`$ | difference-quotient step; a small margin | $`h`$ = 0.1, 0.01, 0.001 | — |
+| $`\mathrm{sgn}`$, $`L`$, $`R`$ | sign function (−1, 0, +1); left and right slope limits | sgn takes −1, 0, 1 | — |
 
 ### When it holds
 
@@ -78,7 +78,7 @@ g(x) = f(x) - y\,x, \qquad g'(x) = f'(x) - y.
 
 ### Step 0: turn the target slope into a flat slope
 
-The [Mean value theorem](02-mean-value-theorem.md) card proves, in its Step 0, that at an inside lowest or highest point where a derivative exists, the slope is 0.
+At an inside lowest or highest point where a derivative exists, the slope is 0 ([Mean value theorem](02-mean-value-theorem.md), Step 0).
 
 So tilt the function until the target slope becomes 0, find its lowest point, and show it is not at an end.
 
@@ -90,45 +90,43 @@ At the ends, $`g'(-0.5) = -1 - 0.5 = -1.5`$ and $`g'(1.5) = 3 - 0.5 = 2.5`$.
 
 ### Step 2: a lowest point exists
 
-A function with a derivative at a point is continuous there ([The derivative](../02-Derivatives/01-the-derivative.md) proves it), so $`g`$ is continuous on $`[a, b]`$. By the [Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md), $`g`$ takes a lowest value on $`[a, b]`$.
+Differentiable implies continuous ([The derivative](../02-Derivatives/01-the-derivative.md)), so $`g`$ is continuous on $`[a, b]`$ and takes a lowest value there ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)).
 
 ### Step 3: the lowest point is not at an end
 
-A negative slope at the left end means $`g`$ goes down as it leaves $`a`$. So some point just inside is lower than $`g(a)`$: here $`g(-0.4)`$ = 0.36, below $`g(-0.5)`$ = 0.5.
+A negative slope at the left end means $`g`$ falls as it leaves $`a`$, so some inside point is lower: $`g(-0.4)`$ = 0.36, below $`g(-0.5)`$ = 0.5.
 
-A positive slope at the right end means $`g`$ was lower just before $`b`$: $`g(1.4)`$ = 1.26, below $`g(1.5)`$ = 1.5. Neither end is the lowest point, so it lies strictly inside. If $`f'(a)`$ is above $`y`$ and $`f'(b)`$ below, the highest point of $`g`$ is inside instead.
+A positive slope at the right end means $`g`$ was lower just before $`b`$: $`g(1.4)`$ = 1.26, below $`g(1.5)`$ = 1.5. Neither end is lowest, so the lowest point lies strictly inside. When $`f'(a) > y > f'(b)`$, the highest point of $`g`$ lies inside instead.
 
 <details>
 <summary>Detailed proof: why a negative end slope puts a lower point just inside</summary>
 
-The one-sided derivative $`g'(a) = -1.5`$ is the limit of $`(g(a + h) - g(a))/h`$ as the step $`h > 0`$ shrinks. Take the tolerance 0.75, half of 1.5. Below some step size, every such quotient lies within 0.75 of −1.5, so it is negative.
-
-For that $`h`$, a negative quotient with a positive step means $`g(a + h) < g(a)`$. So $`a`$ is not the lowest point. At $`b`$ the step is negative and the quotient positive, so again $`g(b + h) < g(b)`$.
+The one-sided derivative $`g'(a) = -1.5`$ is the limit of $`(g(a + h) - g(a))/h`$ as $`h > 0`$ shrinks. For $`h`$ small enough, that quotient lies within 0.75 of −1.5, so it is negative and $`g(a + h) < g(a)`$. Thus $`a`$ is not lowest. At $`b`$, a negative step $`h < 0`$ with positive quotient likewise gives $`g(b + h) < g(b)`$.
 
 </details>
 
 ### Step 4: inside, the slope is zero
 
-At an inside lowest point $`c`$, Step 0 gives $`g'(c) = 0`$. Since $`g'(c) = f'(c) - y`$, that is $`f'(c) = y`$.
+At an inside lowest point $`c`$, Step 0 gives $`g'(c) = 0`$, so $`f'(c) = y`$.
 
-For $`x^2`$: $`g`$ is lowest at $`c`$ = 0.25, with $`g(c)`$ = −0.0625, and $`f'(0.25) = 2 \times 0.25 = 0.5`$.
+For $`x^2`$: $`g`$ is lowest at $`c`$ = 0.25, with $`g(c)`$ = −0.0625 and $`f'(0.25) = 2 \times 0.25 = 0.5`$.
 
-Here $`2x`$ is continuous, so the intermediate value theorem already gives this point. The proof never used continuity of $`f'`$, so it covers every derivative.
+Here $`2x`$ is continuous, so the intermediate value theorem already applies; the proof never used continuity of $`f'`$, so it covers every derivative.
 
 ### Step 5: a function with a jump is never a derivative
 
-Suppose some function $`F`$ had $`F'(x) = \mathrm{sgn}(x)`$ at every point of $`[-1, 1]`$. Then $`F'(-1) = -1`$ and $`F'(1) = 1`$, so Step 4 promises an inside point with $`F'(c) = 0.5`$. But the sign function takes only −1, 0 and 1. No such $`F`$ exists; it would be the bouncing ball's position, timed from the bounce.
+Suppose some $`F`$ had $`F'(x) = \mathrm{sgn}(x)`$ everywhere on $`[-1, 1]`$. Then $`F'(-1) = -1`$ and $`F'(1) = 1`$, so Step 4 promises an inside point with $`F'(c) = 0.5`$, impossible for the sign function. No such $`F`$ exists; it would be the bouncing ball's position, timed from the bounce.
 
-Any jump fails the same way: pick a target between its two sides. So do a hole and an infinite break (see the fold): of the four kinds of break in [Continuity](../01-Limits%20and%20Continuity/05-continuity.md), a derivative can only oscillate, as in Step 6.
+Any jump fails the same way, and so do a hole and an infinite break (see the fold): of the four breaks in [Continuity](../01-Limits%20and%20Continuity/05-continuity.md), a derivative can only oscillate, as in Step 6.
 
 <details>
 <summary>Detailed proof: no derivative has a jump</summary>
 
-Suppose $`f'`$ heads for $`L`$ from the left of a point $`p`$ and for $`R`$ from the right, with $`L < R`$ ($`L > R`$ is the mirror image). Pick a target $`y`$ strictly between $`L`$ and $`R`$, not equal to $`f'(p)`$, and at distance more than some $`d > 0`$ from $`L`$ and $`R`$.
+Suppose $`f'`$ heads for $`L`$ from the left of $`p`$ and $`R`$ from the right, with $`L < R`$ (the case $`L > R`$ is symmetric). Pick $`y`$ strictly between $`L`$ and $`R`$, not equal to $`f'(p)`$, at distance over $`d > 0`$ from both.
 
-Close enough to $`p`$, every value of $`f'`$ left of $`p`$ is within $`d`$ of $`L`$, and every value right of $`p`$ is within $`d`$ of $`R`$. Take ends $`a < p < b`$ in that window. Then $`f'(a) < y < f'(b)`$, so Darboux's theorem gives $`c`$ in $`(a, b)`$ with $`f'(c) = y`$. But $`c`$ is left of $`p`$, right of $`p`$, or $`p`$ itself, and none of those values equals $`y`$. That is a contradiction.
+Pick $`a < p < b`$ close enough to $`p`$ that $`f'`$ stays within $`d`$ of $`L`$ on $`[a, p)`$ and within $`d`$ of $`R`$ on $`(p, b]`$. Then $`f'(a) < y < f'(b)`$, so Darboux's theorem gives $`c`$ in $`(a, b)`$ with $`f'(c) = y`$, contradicting all three cases ($`c < p`$, $`c = p`$, $`c > p`$).
 
-A hole ($`L = R`$, not equal to $`f'(p)`$) or an infinite break ($`f'`$ heading off to plus or minus infinity on one side) fails with $`p`$ itself as an end. Some $`y`$ lies strictly between $`f'(p)`$ and every value of $`f'`$ in a window on one side, say the right. For $`b`$ in that window, Darboux's theorem on $`[p, b]`$ gives a point $`c`$ in the window with $`f'(c) = y`$: a contradiction.
+For a hole ($`L = R \ne f'(p)`$) or an infinite one-sided limit, pick $`y`$ strictly between $`f'(p)`$ and every value of $`f'`$ in a one-sided window, say $`(p, b]`$. Darboux's theorem on $`[p, b]`$ gives $`c`$ in $`(p, b)`$ with $`f'(c) = y`$, a contradiction.
 
 </details>
 
@@ -140,13 +138,13 @@ Let $`f(x) = x^2 \sin(1/x)`$, with $`f(0) = 0`$. Away from 0, the product and ch
 f'(x) = 2x \sin(1/x) - \cos(1/x).
 ```
 
-At 0, use the difference quotient $`(f(h) - f(0))/h = h \sin(1/h)`$. It is trapped between $`-\lvert h\rvert`$ and $`\lvert h\rvert`$, so it heads for 0 ([Limit laws and the squeeze](../01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md)). At $`h`$ = 0.1, 0.01 and 0.001 it reads −0.054402, −0.005064 and 0.000827. So $`f'(0) = 0`$.
+At 0, the difference quotient $`(f(h) - f(0))/h = h \sin(1/h)`$ sits between $`-\lvert h\rvert`$ and $`\lvert h\rvert`$, so it heads for 0 ([Limit laws and the squeeze](../01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md)). At $`h`$ = 0.1, 0.01 and 0.001 it reads −0.054402, −0.005064 and 0.000827, so $`f'(0) = 0`$.
 
-Near 0, though, $`f'`$ has no limit. At $`x = 1/(n\pi)`$ the sine is 0 and the cosine is $`\pm 1`$, so $`f'`$ alternates +1, −1, +1, −1 for n = 1, 2, 3, 4 and on, however close to 0: it exists everywhere but is not continuous at 0.
+Near 0, $`f'`$ has no limit. At $`x = 1/(n\pi)`$ the sine is 0 and the cosine is $`\pm 1`$, so $`f'`$ alternates +1, −1, +1, −1 as $`n`$ grows: it exists everywhere but breaks at 0.
 
-Darboux's theorem holds even across the break. On the stretch from 0 to $`1/(20\pi)`$ = 0.015915494, the end slopes are 0 and −1. The intermediate value theorem cannot be used, since $`f'`$ breaks at 0, yet −0.5 is hit: the tilted function $`f(x) + 0.5x`$ is highest at 0.015662193, where $`f'`$ = −0.5.
+Darboux's theorem holds even across the break. On $`[0, 1/(20\pi)]`$ (0 to 0.015915494), the end slopes are 0 and −1. The intermediate value theorem fails because $`f'`$ breaks at 0, yet $`f(x) + 0.5x`$ peaks at 0.015662193, where $`f' = -0.5`$.
 
-Each swing closer to 0 runs between +1 and −1 again. From $`1/(21\pi)`$ = 0.015157614 to $`1/(20\pi)`$ the slope hits 0.5 at 0.015409468; nearer 0, at 0.001586270 and 0.000159102.
+Between $`1/(21\pi)`$ = 0.015157614 and $`1/(20\pi)`$, the slope hits 0.5 at 0.015409468; closer to 0, at 0.001586270 and 0.000159102.
 
 ---
 
@@ -370,7 +368,7 @@ ALL CHECKS PASS
 
 Lean proves the theorem and that no derivative has a jump or a hole, for every function that meets the conditions.
 
-- Suppose $`f`$ has a derivative at every point of $`[a, b]`$, one-sided at the ends. Then every $`y`$ strictly between $`f'(a)`$ and $`f'(b)`$ equals $`f'(c)`$ for some $`c`$ in $`(a, b)`$.
+- Suppose $`a \le b`$ and $`f`$ has a derivative at every point of $`[a, b]`$, one-sided at the ends. Then every $`y`$ strictly between $`f'(a)`$ and $`f'(b)`$ equals $`f'(c)`$ for some $`c`$ in $`(a, b)`$.
 - Suppose $`f`$ has a derivative at every point near $`p`$, and $`f'`$ heads for $`L`$ from the left and $`R`$ from the right. Then $`L = f'(p)`$ and $`R = f'(p)`$, so a derivative has no jump and no hole.
 - Take $`f(x) = x^2 \sin(1/x)`$, with $`f(0) = 0`$. Then $`f`$ has a derivative at every point, $`f'(0) = 0`$, and $`f'`$ is not continuous at 0.
 - The hand arithmetic for $`x^2`$: end slopes −1 and 3, and the values of $`g`$ at the ends and one step in.
@@ -513,9 +511,9 @@ example : ((3 / 2 : ℚ) ^ 2 - (-1 / 2) ^ 2) / 2 = 1 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Guess first:** set `y = 2.5`, still between the end slopes −1 and 3. All three roads give $`c`$ = 1.25. But the slope of $`x^2 \sin(1/x)`$ swings only between about −1 and +1, so the second assert stops the run.
-> - **Guess first:** set `y = 4`, above both end slopes. Road 1 says 2, outside the stretch; roads 2 and 3 return the end 1.5, where the slope is 3. The first assert stops the run.
-> - **Guess first:** change `(20, 200, 2000)` to `(20, 200, 2000, 20000)`. The slope still hits 0.5 in that swing and every assert passes, but at nine decimals all four printed numbers read 0.000015915: swings near 0 are very narrow.
+> - **Guess first:** set `y = 2.5`, still between −1 and 3. All three roads give $`c`$ = 1.25, while the slope of $`x^2 \sin(1/x)`$ stays near $`[-1, 1]`$, so the second assert fails.
+> - **Guess first:** set `y = 4`, above both end slopes. Road 1 gives 2 (outside the stretch); roads 2 and 3 return the end 1.5, where the slope is 3, and the first assert fails.
+> - **Guess first:** change `(20, 200, 2000)` to `(20, 200, 2000, 20000)`. The slope still hits 0.5 and every assert passes, but at nine decimals all four printed numbers read 0.000015915: swings near 0 are very narrow.
 
 ---
 
@@ -537,7 +535,7 @@ example : ((3 / 2 : ℚ) ^ 2 - (-1 / 2) ^ 2) / 2 = 1 := by norm_num
 - **The sign test in optimisation.** A derivative that is never 0 on a stretch keeps one sign, since a sign change would force a 0, even if it is not continuous. So the function only rises or only falls ([Optimisation](03-monotonicity-and-optimisation.md)).
 
 > **Say it back**
-> If a function has a derivative at every point of a closed stretch, the derivative takes every value between its end values. The proof tilts the function by the target slope; its lowest point is inside, where the slope is 0. For $`x^2`$ on −0.5 to 1.5, slope 0.5 appears at 0.25. So the sign function, which jumps, is never a derivative. A derivative can still be discontinuous, like the slope of $`x^2 \sin(1/x)`$ at 0.
+> If a function has a derivative at every point of a closed stretch, the derivative takes every value between its end values. The proof tilts the function by the target slope; its lowest or highest point is inside, where the tilted slope is 0. For $`x^2`$ on −0.5 to 1.5, slope 0.5 appears at 0.25. So the sign function, which jumps, is never a derivative. A derivative can still be discontinuous, like the slope of $`x^2 \sin(1/x)`$ at 0.
 
 ---
 
@@ -550,9 +548,10 @@ example : ((3 / 2 : ℚ) ^ 2 - (-1 / 2) ^ 2) / 2 = 1 := by norm_num
 
 ## Where this goes next
 
+- [The integral](../04-Integrals/01-riemann-integral.md): the next shelf, building area as a limit of thin rectangles even when a function jumps.
 - [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): integrating a function with a jump gives a function with a corner, not one whose derivative is the jump.
 
-This card says which functions cannot be derivatives; which functions can be has no simple test.
+This card says a function with a jump cannot be a derivative; the next shelf, starting with [The integral](../04-Integrals/01-riemann-integral.md), asks whether you can still integrate a function that jumps.
 
 ---
 

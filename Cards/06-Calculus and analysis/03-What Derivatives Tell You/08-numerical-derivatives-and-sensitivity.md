@@ -6,7 +6,7 @@
 
 ## General Overview
 
-A stock trades at $100. A call option on it is the right to buy one share for $100, the **strike**, in one year. With interest at 5% a year, dividends at 2% and volatility (the yearly size of the stock's swings) at 20%, the library's finance example prices it at $9.227005508154 by the Black–Scholes formula. Its **delta** is the derivative of that price with respect to the stock price. The formula's own derivative gives 0.586851146135.
+A stock trades at $100. A call option on it is the right to buy one share for $100, the **strike**, in one year. With interest at 5% a year, dividends at 2% and volatility (the yearly size of the stock's swings) at 20%, the Black–Scholes formula prices it at $9.227005508154. Its **delta** is the derivative of that price with respect to the stock price. The formula's own derivative gives 0.586851146135.
 
 Most pricing code has no formula for the delta, so a risk desk **bumps** the stock: price at $101, subtract the price at $100, divide by the $1 bump. The answer, 0.596254007798, is off in the second decimal place. Bumping $1 each way and dividing by the $2 span gives 0.586780115041, right to three decimals.
 
@@ -14,7 +14,7 @@ Smaller bumps help, for a while. A hundredth of a cent each way gives 0.58685114
 
 Two errors compete. The **truncation error** comes from a finite step standing in for a limit; it shrinks with the step. The **rounding error** comes from prices known to limited digits; dividing by the step magnifies it.
 
-**As the step shrinks, a difference quotient's truncation error falls and its rounding error rises; the step to trust is where they meet. A central difference makes that step larger and the answer far more accurate.**
+**For a smooth function, as the step shrinks, a difference quotient's truncation error falls and its rounding error rises; the step to trust is where they meet. A central difference makes that step larger and the answer far more accurate.**
 
 **What kind of fact this is:** an approximation, with its error stated and proved on this card in Why it works.
 
@@ -46,7 +46,7 @@ D_+(h) = \frac{C(S+h) - C(S)}{h}, \qquad D_0(h) = \frac{C(S+h) - C(S-h)}{2h}
 
 **Read it aloud:** forward is the price change over one bump up, per dollar; central is the change from one bump down to one bump up, per dollar of that span.
 
-Their truncation errors, proved below:
+For a smooth $`C`$ and step $`h > 0`$, their truncation errors, proved below:
 
 ```math
 D_+(h) - C'(S) = \tfrac{h}{2}\,C''(\xi), \qquad D_0(h) - C'(S) = \tfrac{h^2}{6}\,C'''(\xi)
@@ -60,7 +60,7 @@ If each computed price is off by at most $`\eta`$ dollars, the total errors $`E_
 E_+(h) \le \frac{h M_2}{2} + \frac{2\eta}{h}, \qquad E_0(h) \le \frac{h^2 M_3}{6} + \frac{\eta}{h}
 ```
 
-and the bounds are smallest at
+and when $`\eta`$, $`M_2`$ and $`M_3`$ are positive, the bounds are smallest at
 
 ```math
 h^\ast_+ = 2\sqrt{\eta / M_2}, \qquad h^\ast_0 = \left(3\eta / M_3\right)^{1/3}.
@@ -555,8 +555,8 @@ example : (1 / 100 : ℚ) / (2 * (1 / 100)) = 1 / 2 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Quote to a hundredth of a cent** (100 becomes 10000 in `cents`). Guess first: does the best central bump shrink 100-fold? No: by the cube root of 100.
-> - **Bump at a stock of $140.** Guess first: which way does each error move? Truncation shrinks, since the third derivative is smaller there; the rounding floor rises with the larger price.
+> - **Quote to a hundredth of a cent** (100 becomes 10000 in `cents`). Guess first: does the best central bump shrink 100-fold? No: by the cube root of 100, and the last assert fails because `h = 0.01` is now close enough to beat the 100-fold gap.
+> - **Bump at a stock of $140.** Guess first: which way does each error move? Truncation shrinks, since the third derivative is smaller there; the rounding floor rises with the larger price, and the last assert fails at $140.
 
 ---
 
@@ -589,13 +589,14 @@ example : (1 / 100 : ℚ) / (2 * (1 / 100)) = 1 / 2 := by norm_num
 
 ## Where this goes next
 
+- [Darboux's theorem](09-darboux-theorem-for-derivatives.md): next on this shelf, proving that no derivative can jump, even when it is not continuous.
 - [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping a simulated price, whose noise is random.
 - [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): input errors carried through a model by derivatives.
 - [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md): exact derivatives by the chain rule, no step.
-- [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): higher-order formulas and Richardson extrapolation.
+- [Forward, backward and central differences](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/01-forward-backward-and-central-differences.md): higher-order finite-difference formulas and Richardson extrapolation to cancel error terms.
 - [Choosing the step](../../16-Numerical%20analysis/08-Derivatives%20by%20Machine/04-choosing-the-step-truncation-against-rounding.md): the step rule in floating-point detail.
 
-This card leaves open how to get a derivative with no step, and so no rounding floor.
+This card leaves open how to get a derivative with no step, and so no rounding floor, which [Backpropagation](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/04-backpropagation.md) answers via the chain rule; next on this shelf, [Darboux's theorem](09-darboux-theorem-for-derivatives.md) closes the derivative story by asking which functions can be derivatives at all.
 
 ---
 

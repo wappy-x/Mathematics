@@ -12,7 +12,7 @@ There the key has no effect: the cosine of 0.7390851332 is 0.7390851332. It solv
 
 Does pressing always settle, and how far off is the reading? One condition answers both. A rule that pulls every two points closer by a fixed factor is a **contraction**: it has exactly one fixed point, reached from any start, with an error bounded in advance.
 
-**A rule that maps a closed interval into itself and shrinks every distance by a factor below 1 has exactly one fixed point, repeated pressing always reaches it, and the error after n presses is at most that factor to the power n, times a known constant.**
+**A rule that maps a non-empty closed interval into itself and shrinks every distance by a fixed factor below 1 has exactly one fixed point there, repeated pressing from any start in the interval always reaches it, and the error after n presses is at most that factor to the power n, times a known constant.**
 
 **What kind of fact this is:** a theorem, Banach's fixed-point theorem on a closed interval, proved on this card in Why it works.
 
@@ -37,10 +37,10 @@ Notation first, in words. The rule is $`g`$; the reading after $`n`$ presses is 
 Pressing is $`x_{n+1} = g(x_n)`$. The theorem then gives two bounds on the error:
 
 ```math
-|x_n - p| \le \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad\qquad |x_n - p| \le \frac{q}{1 - q}\,|x_n - x_{n-1}|
+|x_n - p| \le \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad\qquad |x_n - p| \le \frac{q}{1 - q}\,|x_n - x_{n-1}| \quad (n \ge 1)
 ```
 
-**Read it aloud:** the error after n presses is at most q to the n over one minus q, times the first step; and at most q over one minus q, times the last step.
+**Read it aloud:** the error after n presses is at most q to the n over one minus q, times the first step; and, from press 1 on, at most q over one minus q, times the last step.
 
 The **first-step bound** budgets the work before it starts; the **last-step bound** says when to stop.
 
@@ -87,7 +87,7 @@ Repeated down to the first step: $`|x_{n+1} - x_n| \le q^n |x_1 - x_0|`$. For co
 From press n to any later press m, the pressing covers at most the sum of the steps between; bound each by Step 1 and sum:
 
 ```math
-|x_m - x_n| \le \left(q^n + q^{n+1} + \dots + q^{m-1}\right)|x_1 - x_0| < \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad \text{for every } m > n
+|x_m - x_n| \le \left(q^n + q^{n+1} + \dots + q^{m-1}\right)|x_1 - x_0| \le \frac{q^n}{1 - q}\,|x_1 - x_0| \qquad \text{for every } m > n
 ```
 
 The tolerance game, with numbers: to keep every later reading within 0.001 of the reading at press n, make the right side at most 0.001. For cos from 0 that first happens at n = 51, and it holds however long the pressing goes on.
@@ -111,7 +111,7 @@ Let m run on in Step 2: the reading at press m heads for p, giving the first-ste
 
 Let g map [a, b] into itself with |g(x) − g(y)| ≤ q|x − y|, 0 ≤ q < 1, and B the first step's length.
 
-*Cauchy.* By induction step k is at most B q^k, so for m > n the triangle inequality and the finite geometric sum give |x_m − x_n| < B q^n / (1 − q). For any tolerance ε > 0 pick N with B q^N / (1 − q) < ε; then |x_m − x_n| < ε for all m > n ≥ N.
+*Cauchy.* By induction step k is at most B q^k, so for m > n the triangle inequality and the finite geometric sum give |x_m − x_n| ≤ B q^n / (1 − q). For any tolerance ε > 0 pick N with B q^N / (1 − q) < ε; then |x_m − x_n| < ε for all m > n ≥ N.
 
 *Limit.* The reals are complete, so x_n converges to some p, with a ≤ p ≤ b.
 
@@ -131,7 +131,7 @@ Two facts about cos on 0 to 1. It maps the interval into itself: cos falls from 
 |\cos x - \cos y| = |\sin c|\,|x - y| \le \sin 1\,|x - y|
 ```
 
-since sin rises from 0 to 0.841471 across the interval. So q = sin 1. In general, **a rule whose slope stays between −q and q on the interval is a contraction with factor q**: the derivative certifies the shrinking.
+since sin rises from 0 to 0.841471 across the interval. So q = sin 1. In general, **a continuous rule on $`[a, b]`$ whose inside slope stays between $`-q`$ and $`q`$ (with $`0 \le q < 1`$) is a contraction with factor $`q`$**: the derivative certifies the shrinking.
 
 That q is a worst case. Near the answer each press shrinks the error by the slope there, sin p = 0.673612; the code measures 0.673611 at press 30.
 
@@ -353,10 +353,10 @@ The two outputs match line for line.
 
 Lean proves the contraction rule for every rule and closed interval that meet its conditions, and checks the cos example exactly.
 
-- A rule that maps a closed interval into itself, with one factor q from 0 to below 1 for every pair, has exactly one fixed point there.
+- A rule that maps a non-empty closed interval $`[a, b]`$ (with $`a \le b`$) into itself, with one factor q from 0 to below 1 for every pair, has exactly one fixed point there.
 - Pressing it from any start in the interval settles on that fixed point.
 - After n presses the error is within the first-step bound, and from press 1 on, within the last-step bound.
-- A rule whose slope stays between −q and q on the interval is a contraction with factor q.
+- A rule continuous on $`[a, b]`$ whose inside slope stays between −q and q shrinks every distance on $`[a, b]`$ by at least the factor q.
 - cos maps 0 to 1 into itself and shrinks every distance there by q = sin 1, which is below 1.
 - So cos x = x has exactly one solution from 0 to 1.
 - x/2 + 1 sends 1 to 1.5, and its fixed point is 2.
@@ -577,7 +577,7 @@ example : ∀ x : ℝ, 1 ≤ x → x + 1 / x ≠ x := by
 - **Planning and ranking.** Value iteration and PageRank press rules that shrink by a discount or damping factor.
 
 > **Say it back**
-> A fixed point is a place a rule leaves alone. If the rule keeps a closed interval inside itself and shrinks every distance by a factor q below 1, pressing settles on its one fixed point. The error bounds come from summing the shrinking steps. For cos, the mean value theorem gives q = sin 1, and pressing reaches 0.7390851332.
+> A fixed point is a place a rule leaves alone. If the rule keeps a non-empty closed interval inside itself and shrinks every distance by a factor q below 1, pressing from any start in the interval settles on its one fixed point. The error bounds come from summing the shrinking steps. For cos, the mean value theorem gives q = sin 1, and pressing reaches 0.7390851332.
 
 ---
 
@@ -589,15 +589,16 @@ example : ∀ x : ℝ, 1 ≤ x → x + 1 / x ≠ x := by
 
 ## Where this goes next
 
+- [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): next on this shelf, measuring derivatives by finite steps when no slope formula is at hand.
 - [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the theorem on curves: one solution per equation.
-- [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): a yield recovered by iteration.
-- [The Bellman operator contracts](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/04-the-bellman-operator-as-a-contraction.md): the discount factor as q.
-- [Fixed points](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/06-fixed-point-iteration-and-contraction.md): rates, rounding and acceleration.
+- [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): recovering a bond's yield to maturity by fixed-point iteration.
+- [The Bellman operator contracts](../../15-Optimization/07-Dynamic%20Programming%20and%20Learning/04-the-bellman-operator-as-a-contraction.md): dynamic programming where the discount factor plays the role of q.
+- [Fixed points](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/06-fixed-point-iteration-and-contraction.md): convergence rates, rounding floors and accelerating fixed-point iteration.
 - [Banach's fixed point theorem](../../17-Topology/01-Metric%20Spaces/08-banach-fixed-point-in-metric-spaces.md): the same proof in any complete space.
 - [Brouwer and Borsuk-Ulam](../../17-Topology/04-Homotopy/08-brouwer-and-borsuk-ulam.md): fixed points without shrinking, or a way to find them.
-- [Neumann series](../../18-Functional%20analysis/03-Bounded%20Operators/06-neumann-series-and-inverting-close-to-the-identity.md): inverting a matrix by pressing.
+- [Neumann series](../../18-Functional%20analysis/03-Bounded%20Operators/06-neumann-series-and-inverting-close-to-the-identity.md): inverting a matrix near the identity by repeated contraction.
 
-Whether the argument survives on curves and matrices, where distance must first be defined, is what Banach's fixed point theorem answers.
+Whether the argument survives on curves and matrices, where distance must first be defined, is what [Banach's fixed point theorem](../../17-Topology/01-Metric%20Spaces/08-banach-fixed-point-in-metric-spaces.md) answers; next on this shelf, [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md) turns back to estimating slopes when no formula exists.
 
 ---
 
