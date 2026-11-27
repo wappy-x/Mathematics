@@ -91,7 +91,7 @@ Recipes times schedule asks: for each ingredient and each day, how many kilogram
 
 Both matrices here happen to be 2 × 2, so the flipped arithmetic still runs. It gives `[[12, 8], [7, 5]]` beside `[[13, 8], [6, 4]]`: same matrices, different answer. Under the same labels the flipped table claims 7 kg of butter on Monday, against a true 6 kg.
 
-Some pairs do agree either way, such as a square matrix and the do-nothing matrix of [Matrices](01-matrices-and-the-matrix-zoo.md). But nothing makes that the rule, and at other sizes only one order runs.
+Some pairs do agree either way, such as a square matrix and the do-nothing matrix of [Matrices](01-matrices-and-the-matrix-zoo.md). But nothing makes that the rule, and at non-square sizes often only one order runs, or the two orders give different sizes.
 
 ### Step 5: brackets do not carry meaning
 

@@ -365,7 +365,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three facts for every linear map, between spaces of any size, not only for the shear and the turn.
+Lean proves the card's three facts for every linear map between spaces of any finite size, not only for the shear and the turn.
 
 - A rule that passes both tests at every input is its matrix times the vector, the columns being where the axis arrows go.
 - Two matrices that send each axis arrow to the same place are equal: only one matrix fits.
@@ -522,7 +522,7 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 
 - **Every screen.** Rotating, scaling, flipping and skewing a sprite is one matrix per move, and a chain collapses into one matrix before a pixel is drawn — [Matrix multiplication](03-matrix-multiplication.md) earning its keep.
 - **Photo filters.** Converting an image between colour systems multiplies each pixel's three numbers by a fixed 3 × 3 matrix: three axis arrows instead of two.
-- **Fixed weighted sums.** Ingredients per product, nutrients per serving, sensor readings per source: if doubling every input doubles every output, a matrix is hiding there.
+- **Fixed weighted sums.** Ingredients per product, nutrients per serving, sensor readings per source: if adding inputs adds the outputs and scaling every input scales every output the same way, a matrix is hiding there.
 
 > **Say it back**
 > A linear map is a rule on vectors that survives adding and stretching, which forces it to leave the origin alone. Every point is a mix of the two axis arrows, so those two answers, written down the columns, give a matrix that does the job. One map then another is the two matrices multiplied, first move on the right. The corner (1, 1) ends at (0, 1) turning then leaning, at (-1, 2) leaning then turning.
