@@ -344,7 +344,7 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run it. The asserts are pinned to the house numbers, so expect one to fire.
+> Guess first, then run it. The asserts are pinned to the card's numbers, so expect one to fire.
 > - **A tape ten times finer.** Change all three 1000s to 10000: two on the area line, one in the row below it. The first assert fires, because 1414 and 1415 are pinned. Now change every 1414 to 14142 and every 1415 to 14143. It passes again: 3836 short, 24449 over, still no whole number on the mark.
 > - **Divide by 8, not 11.** Change the 11 in the long division. The block? There is none: a remainder hits zero, the division stops, the assert fires.
 
