@@ -145,7 +145,7 @@ Neither split changes the total, 3.
 | --- | --- | --- |
 | Adding rank and nullity to the number of rows | nullity 0 for the projector | The sum counts inputs, and there are 3 |
 | Counting nonzero rows as the rank | rank 2 for the flattener | B's second row is twice its first; 1 pivot survives |
-| Keeping that wrong rank and adding | 2 + 2 = 4, not 3 | A sum over the column count means no elimination |
+| Keeping that wrong rank and adding | 2 + 2 = 4, not 3 | If rank plus free columns is more than the column count, the rank was not found by elimination |
 
 The code prints all three wrong numbers.
 
@@ -506,7 +506,7 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - [Constant rank theorem](../../06-Calculus%20and%20analysis/07-Several%20Variables/10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 - [The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md): the rank sets the size of all four pieces: row space, null space, column space and left null space.
 - [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): when a square matrix has too few stretch directions (eigenvectors), bigger null spaces fill the gap.
-- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): simplifies any square matrix into near-diagonal blocks whose sizes are counted from ranks.
+- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): simplifies any square matrix over the complex numbers into near-diagonal blocks whose sizes are counted from ranks.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): blur the null space to a point and what is left is the image, rank plus nullity again.
 - [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): shows how transposing acts on linear readings and why row rank equals column rank.
 - [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a full-rank matrix proves blocks never number fewer than points.

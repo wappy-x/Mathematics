@@ -1,4 +1,4 @@
-# Cramer's rule: when a square matrix has nonzero determinant, each unknown is a ratio of two determinants, and the inverse is the flipped cofactor table divided by it
+# Cramer's rule: when a square matrix has nonzero determinant, each unknown is a ratio of two determinants, and the inverse is the flipped cofactor table divided by that determinant
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Cramer's rule
 
