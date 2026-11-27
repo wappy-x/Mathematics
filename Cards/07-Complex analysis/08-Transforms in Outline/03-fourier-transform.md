@@ -8,11 +8,13 @@
 
 A camera flash fires once: fully on for one second, centred on noon, off at every other time. It never repeats, so no Fourier series fits it ([Fourier series](01-fourier-series-in-complex-form.md)).
 
-Still, how much of each steady tone is in it? Pick a frequency ω (omega), in radians per second: ω = 2π is one turn a second. Multiply the flash by a probe wave spinning at that rate and add up over all time. The flash holds 0.958851 at ω = 1, 0.636620 at ω = π, and nothing at ω = 2π, where the probe turns once during the flash and cancels itself.
+Still, how much of each steady tone is in it? Pick a frequency ω (omega), in radians per second: ω = 2π is one turn a second. Multiply the flash by a probe wave spinning at that rate and add up over all time.
+
+The flash holds 0.958851 at ω = 1, 0.636620 at ω = π, and nothing at ω = 2π, where the probe turns once during the flash and cancels itself.
 
 Done for every ω, this gives the flash's **spectrum**, by a rule called the **Fourier transform**. Frequency becomes a smooth dial, not a list of harmonics.
 
-**The Fourier transform measures how much of each frequency a one-off signal holds, by integrating it against a spinning probe; the Gaussian bell comes back as a bell, and an inverse integral with 1/(2π) in front rebuilds the signal.**
+**For a signal whose size has finite total area, the Fourier transform measures how much of each frequency it holds by integrating it against a spinning probe; the Gaussian bell comes back as a bell, and when its spectrum's size also has finite area, an inverse integral with 1/(2π) in front rebuilds the signal wherever it has no jump.**
 
 **What kind of fact this is:** a definition; its three transform pairs are theorems proved on this card in Why it works, and the inversion theorem is proved there in outline, fully in a folded proof.
 
@@ -73,7 +75,7 @@ The three pairs on this card:
 ### When it holds
 
 - **Finite area under |f|.** For f = 1 the integral from −L to L against e^(−it) swings for ever: 1.978716 at L = 8, −0.575807 at L = 16.
-- **Inversion is exact where f is continuous and |f-hat| has finite area.** Both bells qualify. The flash's spectrum shrinks only like 1/ω, and at a jump the inverse gives the midpoint.
+- **Inversion is exact where f is continuous and both |f| and |f-hat| have finite area.** Both bells qualify. The flash's spectrum shrinks only like 1/ω, so its inverse is taken as a symmetric cut-off limit and gives the midpoint at each jump.
 - **One convention throughout.** Books using cycles per second move the 2π; mixing conventions is off by 2π.
 - **Close the Cauchy loop where the probe decays.** At height y its size is e^(ωy): for ω > 0, close below.
 
@@ -89,7 +91,7 @@ As T grows the samples fill the ω line, the sum becomes an integral, and the sp
 
 ### Step 1: the flash, by one antiderivative
 
-The integral runs over the flash's one second, and e^(−iωt) has antiderivative e^(−iωt)/(−iω):
+The integral runs over the flash's one second, and for ω ≠ 0 the probe e^(−iωt) has antiderivative e^(−iωt)/(−iω):
 
 ```math
 \hat f(\omega) = \frac{e^{i\omega/2} - e^{-i\omega/2}}{i\omega} = \frac{2i\sin(\omega/2)}{i\omega} = \frac{2\sin(\omega/2)}{\omega}.
@@ -127,7 +129,7 @@ To scale, 50 units to one unit of the plane. The loop runs right, up, left, down
 
 At ω = 1 the integrand is e^(−iz)/(1 + z^2), with poles at ±i, and the probe's size e^(y) decays downward. Close below with a half-circle, whose integral Jordan's lemma sends to 0; the loop is clockwise, so the integral is −2πi times the residue at −i.
 
-Since 1 + z^2 = (z − i)(z + i), the residue is e^(−i·(−i))/(−2i) = e^(−1)/(−2i) = 0.183940i. Then −2πi × 0.183940i = π e^(−1) = 1.155727. The bell is symmetric, so the sine part cancels and this is the cosine integral on the Jordan's lemma card. For ω < 0 close above and get π e^(ω). Together: π e^(−|ω|).
+Since 1 + z^2 = (z − i)(z + i), the residue is e^(−i·(−i))/(−2i) = e^(−1)/(−2i) = 0.183940i. Then −2πi × 0.183940i = π e^(−1) = 1.155727. The bell is symmetric, so the sine part cancels and this is the cosine integral on the Jordan's lemma card. For any ω > 0 the same loop gives π e^(−ω); for ω < 0 close above and get π e^(ω); at ω = 0 the integral of 1/(1 + t^2) is π. Together: π e^(−|ω|).
 
 ### Step 4: the inversion theorem
 
@@ -144,7 +146,7 @@ For a small width ε > 0, let $`I_\varepsilon`$ be (1/2π) × the integral of f-
 
 Write f-hat as its integral over s. The double integrand is at most |f(s)| e^(−ε^2 ω^2/2), with finite double integral, so the order may swap. The inner integral over ω is Step 2 with time and frequency exchanged: the bell $`g_\varepsilon(t - s)`$ = e^(−(t − s)^2/(2ε^2))/(ε√(2π)), of area 1. So $`I_\varepsilon`$ − f(t) is the integral of (f(s) − f(t)) $`g_\varepsilon(t - s)`$ over s.
 
-Near t, within δ where |f(s) − f(t)| is below a chosen tolerance, the integral is below the tolerance. Beyond δ the bell is at most e^(−δ^2/(2ε^2))/(ε√(2π)), which tends to 0, times the area of |f|, plus |f(t)| times the bell's tail, also tending to 0. So $`I_\varepsilon`$ → f(t). At a jump each half of the bell carries 1/2: the midpoint.
+Near t, within δ where |f(s) − f(t)| is below a chosen tolerance, the integral is below the tolerance. Beyond δ the bell is at most e^(−δ^2/(2ε^2))/(ε√(2π)), which tends to 0, times the area of |f|, plus |f(t)| times the bell's tail, also tending to 0. So $`I_\varepsilon`$ → f(t). At a jump, where |f-hat| cannot have finite area, the damped integral $`I_\varepsilon`$ still tends to the midpoint, since each half of the bell carries weight 1/2.
 
 </details>
 
@@ -539,7 +541,7 @@ example : (1 / (2 * Real.pi)) * (2 * Real.pi) = 1 := by have := Real.pi_ne_zero;
 - **Option pricing.** Some models give only a transform; inversion gives prices ([Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)).
 
 > **Say it back**
-> The Fourier transform integrates a signal against a probe spinning at rate ω, for every ω. The one-second flash gives 2 sin(ω/2)/ω. Completing the square and sliding the line shows the Gaussian comes back as a bell. The Cauchy bell gives π e^(−|ω|), from one residue, closing where the probe decays. The inverse, with 1/(2π) in front, rebuilds the signal; a jump rebuilds as its midpoint.
+> For a signal whose size has finite total area, the Fourier transform integrates it against a probe spinning at rate ω, for every ω. The one-second flash gives 2 sin(ω/2)/ω. Completing the square and sliding the line shows the Gaussian comes back as a bell. The Cauchy bell gives π e^(−|ω|), from one residue, closing where the probe decays. When the spectrum's size also has finite area, the inverse, with 1/(2π) in front, rebuilds the signal wherever it has no jump; for the flash, the symmetric cut-off rebuilds each jump as its midpoint.
 
 ---
 
@@ -557,7 +559,7 @@ example : (1 / (2 * Real.pi)) * (2 * Real.pi) = 1 := by have := Real.pi_ne_zero;
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices from the inversion integral.
 - [Sampling](../../13-Engineering%20mathematics/05-Signals/01-sampling-and-the-nyquist-theorem.md): how often to sample a signal whose spectrum stops, and sampling as multiplying by a train of spikes.
 - [Uncertainty](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/05-uncertainty-principle.md): narrow in time forces wide in frequency.
-- [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): the transform keeps energy, up to 2π.
+- [Plancherel](../../18-Functional%20analysis/03-Bounded%20Operators/04-the-fourier-transform-as-a-unitary-operator.md): for finite-energy signals, the transform keeps energy up to 2π.
 - [Tempered distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md): a transform for f = 1 and other signals without finite area.
 - [The Fourier transform of an absolutely integrable signal, and why it fades at infinity](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/01-fourier-transform-on-l1-and-riemann-lebesgue.md): why every finite-area signal's spectrum fades at high frequency.
 

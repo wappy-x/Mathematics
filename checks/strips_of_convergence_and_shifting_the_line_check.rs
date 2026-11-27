@@ -68,7 +68,7 @@ fn main() {
     println!("rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop {}; 2 pi i x residue {}", show(pole), show(want));
     let pul = fwd(&|_| 1.0, c(-1.0, 0.0), 0.0, 1.0, 2000);
     let at_i = div(sub(c(1.0, 0.0), cexp(c(0.0, -1.0))), c(0.0, 1.0));
-    println!("house pulse (1 - e^(-s))/s: s = -1 {:.6}, summed {}; s = i {}", std::f64::consts::E - 1.0, show(pul), show(at_i));
+    println!("one-second pulse (1 - e^(-s))/s: s = -1 {:.6}, summed {}; s = i {}", std::f64::consts::E - 1.0, show(pul), show(at_i));
     let (x, y) = (|sg: f64| (240.0 + 800.0 * sg).round() as i64, |im: f64| (120.0 - 800.0 * im).round() as i64);
     println!("figure, 800 units per unit, origin (240, 120): poles x = {}, {}; lines x = {}, {}, {}; rectangle y = {} to {}",
         x(-DD), x(CG), x(-0.1), x(0.0), x(0.1), y(0.1), y(-0.1));

@@ -49,7 +49,7 @@ print(f"top side size at R = 0.1, 1, 10: {tops[0]:.6f}, {tops[1]:.6f}, {tops[2]:
 pole, res = loop(0, 0.1, 0.1, 5), -bal(5)          # residue of H(s) e^(st) at 0.05 is -e^(0.05t)
 print(f"rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop {show(pole)}; 2 pi i x residue {show(2j * math.pi * res)}")
 pul = fwd(lambda t: 1.0, -1, 0, 1, 2000)
-print(f"house pulse (1 - e^(-s))/s: s = -1 {math.e - 1:.6f}, summed {show(pul)}; s = i {show((1 - cexp(-1j)) / 1j)}")
+print(f"one-second pulse (1 - e^(-s))/s: s = -1 {math.e - 1:.6f}, summed {show(pul)}; s = i {show((1 - cexp(-1j)) / 1j)}")
 x, y = (lambda sg: round(240 + 800 * sg)), (lambda im: round(120 - 800 * im))
 print(f"figure, 800 units per unit, origin (240, 120): poles x = {x(-d)}, {x(c)}; lines x = {x(-0.1)}, {x(0)}, {x(0.1)}; rectangle y = {y(0.1)} to {y(-0.1)}")
 assert abs(one - F(0.1)) < 1e-9 and abs(damped - F(0.1 + 0.05j)) < 1e-9 and abs(two - H(0.1j)) < 1e-9

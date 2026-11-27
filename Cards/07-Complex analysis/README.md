@@ -147,13 +147,13 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Fourier series in complex form, the discrete Fourier transform through roots of unity, the Fourier transform, convolution, the Laplace transform, strips of convergence and sliding the line, inversion by residues. Outline: existence and inversion theorems are stated here and proved in wing 20; wing 08 uses Laplace to solve equations; wings 09 and 12 apply the strip and damping to characteristic functions and pricing.*
 
-1. [Fourier series: any repeating signal is a sum of spinning arrows e to the inx, and each coefficient is an average](08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md)
-2. [The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the matrix is unitary](08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)
+1. [Fourier series: a repeating signal made of smooth pieces is a sum of spinning arrows e to the inx, and each coefficient is an average](08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md)
+2. [The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the scaled matrix is unitary](08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)
 3. [The Fourier transform: a continuous dial of frequencies, and the Gaussian is its own transform](08-Transforms%20in%20Outline/03-fourier-transform.md)
 4. [Convolution: smear one signal with another, and under the transform the smear becomes a multiplication](08-Transforms%20in%20Outline/04-convolution-theorem.md)
-5. [The Laplace transform: multiply by e to the minus st and integrate from zero, and derivatives become multiplication by s](08-Transforms%20in%20Outline/05-laplace-transform.md)
+5. [The Laplace transform: multiply by e to the minus st and integrate from zero, and a derivative becomes multiplication by s, minus the starting value](08-Transforms%20in%20Outline/05-laplace-transform.md)
 6. [Where a transform lives: a strip or half plane of convergence, and inside it the line of integration slides without changing the answer](08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)
-7. [Inverting a Laplace transform: integrate up a vertical line, close it to the left, and every pole hands back an exponential](08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)
+7. [Inverting a Laplace transform: integrate up a vertical line, close it to the left, and every simple pole hands back an exponential](08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)
 
 [↑ Back to the shelves](#top)
 

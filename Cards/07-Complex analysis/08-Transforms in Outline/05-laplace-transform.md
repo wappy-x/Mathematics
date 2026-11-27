@@ -1,4 +1,4 @@
-# The Laplace transform: multiply by e to the minus st and integrate from zero, and derivatives become multiplication by s
+# The Laplace transform: multiply by e to the minus st and integrate from zero, and a derivative becomes multiplication by s, minus the starting value
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → The Laplace transform
 
@@ -10,9 +10,9 @@ A car doing 5 metres per second brakes, and its speed falls at twice its current
 
 Weigh the whole speed record by a fading exponential and add it up. The rule about rates becomes algebra: V = 5/(s + 2), where s sets how fast the weight fades. A table read backwards gives v = 5e^(−2t), 0.676676 m/s after one second; the weighing at s = 0 gives the distance, 2.5 metres.
 
-The weighing is the **Laplace transform**. It works on any signal that starts at t = 0, such as a camera shutter open for one second, whose transform is (1 − e^(−s))/s.
+The weighing is the **Laplace transform**. It works on any signal starting at t = 0 that grows no faster than an exponential, such as a camera shutter open for one second, whose transform is (1 − e^(−s))/s for s ≠ 0 (and 1 at s = 0).
 
-**The Laplace transform weighs a signal from time zero on by e^(−st) and adds it up; it lives right of a vertical line in the plane of s, and turns each derivative into multiplication by s, minus the starting value.**
+**The Laplace transform weighs a signal from time zero on by e^(−st) and adds it up; when the signal grows no faster than an exponential, it converges right of a vertical line in the plane of s, and for a signal with no jumps it turns a derivative into multiplication by s, minus the starting value.**
 
 **What kind of fact this is:** a definition; the four transform pairs, the half plane where each converges and the derivative rule are theorems proved on this card in Why it works.
 
@@ -40,7 +40,7 @@ The derivative rule:
 \mathcal{L}[f'](s)=sF(s)-f(0)
 ```
 
-**Read it aloud:** the transform of a rate of change is s times the transform, minus where the signal started.
+**Read it aloud:** for a signal with no jumps that grows no faster than an exponential, when its rate of change also has a transform, the transform of the rate of change is s times the transform, minus where the signal started.
 
 The pairs on this card:
 
@@ -50,7 +50,7 @@ The pairs on this card:
 | t | 1/s^2 | Re s > 0 | 0.111111 | −0.5i |
 | e^(at) | 1/(s − a) | Re s > a | 0.2 (a = −2) | 0.3 − 0.1i |
 | cos(bt) | s/(s^2 + b^2) | Re s > 0 | 0.3 (b = 1) | 0.6 − 0.2i |
-| shutter: 1 until t = 1, then 0 | (1 − e^(−s))/s | every s | 0.316738 | — |
+| shutter: 1 until t = 1, then 0 | (1 − e^(−s))/s (1 at s = 0) | every s | 0.316738 | — |
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -151,11 +151,11 @@ Transform both sides of v' = −2v, with v(0) = 5:
 sV-5=-2V \quad\Longrightarrow\quad V(s)=\frac{5}{s+2}.
 ```
 
-That is the e^(at) row with a = −2, times 5. So v = 5e^(−2t), and v(1) = 0.676676 m/s. Reading the table backwards rests on Lerch's theorem, stated without proof: continuous signals with equal transforms are equal. The direct way back, an integral up a vertical line inside the half plane (the Bromwich integral), is [Inverting a Laplace transform](07-inverse-laplace-by-residues.md).
+That is the e^(at) row with a = −2, times 5. So v = 5e^(−2t), and v(1) = 0.676676 m/s. Reading the table backwards rests on Lerch's theorem, stated without proof: continuous signals on t ≥ 0 with equal transforms on a half plane are equal. The direct way back, an integral up a vertical line inside the half plane (the Bromwich integral), is [Inverting a Laplace transform](07-inverse-laplace-by-residues.md).
 
 At s = 0, right of the pole at −2, the weight is 1, so V(0) is the distance: 2.5 metres.
 
-The shutter's transform, the integral of e^(−st) from 0 to 1, is (1 − e^(−s))/s at every s. At s = i it is 0.841471 − 0.459698i, of size 0.958851, which is 2 sin(1/2), the centred shutter's Fourier transform at frequency 1 ([The Fourier transform](03-fourier-transform.md)). Starting at 0 instead of −1/2 only turns the value. On the imaginary axis the two transforms meet.
+The shutter's transform, the integral of e^(−st) from 0 to 1, is (1 − e^(−s))/s for s ≠ 0, and 1 at s = 0. At s = i it is 0.841471 − 0.459698i, of size 0.958851, which is 2 sin(1/2), the centred shutter's Fourier transform at frequency 1 ([The Fourier transform](03-fourier-transform.md)). Starting at 0 instead of −1/2 only turns the value. On the imaginary axis the two transforms meet.
 
 ---
 
@@ -387,7 +387,7 @@ The two outputs match line for line.
 Lean proves the half plane of convergence, the derivative rule and the four table pairs, at every s inside each half plane.
 
 - If a signal stays below M e^(at) from time zero on, its transform converges absolutely at every s with Re s > a.
-- Let f have no jumps from time zero on, a rate of change f' after time zero, and stay below M e^(at). If f' has a transform too, then at every s with Re s > a, the transform of f' is s F(s) − f(0).
+- Let f have no jumps from time zero on, a rate of change f' after time zero, and stay below M e^(at). If f' has an absolutely convergent transform at s too, then at every s with Re s > a, the transform of f' is s F(s) − f(0).
 - 1 transforms to 1/s, and t to 1/s^2, for Re s > 0.
 - e^(at) transforms to 1/(s − a) for Re s > a, for every growth rate a.
 - cos(bt) transforms to s/(s^2 + b^2) for Re s > 0, for every turning rate b.
@@ -651,7 +651,7 @@ example : (1 : ℚ) / (1 / 2 - 1) = -2 := by norm_num
 - **Electric circuits.** A capacitor draining through a resistor follows the car's rule. Each capacitor or coil becomes a factor of s; driving the circuit is a convolution, a product after transforming ([Convolution](04-convolution-theorem.md)).
 
 > **Say it back**
-> The Laplace transform weighs a signal from time zero on by e^(−st) and adds it up. It converges right of a vertical line, Re s > a, for a signal growing no faster than e^(at). A derivative becomes s times the transform, minus the starting value. So v' = −2v with v(0) = 5 becomes V = 5/(s + 2), read back as 5e^(−2t).
+> The Laplace transform weighs a signal from time zero on by e^(−st) and adds it up. It converges right of a vertical line, Re s > a, for a signal growing no faster than a constant times e^(at). For a signal with no jumps whose derivative also has a transform, a derivative becomes s times the transform, minus the starting value. So v' = −2v with v(0) = 5 becomes V = 5/(s + 2), read back as 5e^(−2t).
 
 ---
 
@@ -664,8 +664,8 @@ example : (1 : ℚ) / (1 / 2 - 1) = -2 := by norm_num
 
 ## Where this goes next
 
-- [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): the car's 5/(s + 2) is a formula on the whole plane but an integral only right of −2. That card finds where convergence starts and joins Laplace and Fourier into one transform.
-- [Inverting a Laplace transform](07-inverse-laplace-by-residues.md): the direct way back from V to v, an integral up a vertical line, instead of reading the table backwards.
+- [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): strips of convergence, sliding the inverse line, and Laplace and Fourier as one transform.
+- [Inverting a Laplace transform](07-inverse-laplace-by-residues.md): the direct way back from a transform to a signal, by an integral up a vertical line.
 
 Left open: the integral fails left of −2, but the formula 5/(s + 2) goes on. What does the formula mean there?
 

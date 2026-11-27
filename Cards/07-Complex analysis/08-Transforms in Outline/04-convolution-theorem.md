@@ -14,7 +14,7 @@ Now take light and dark stripes 2 mm apart. One box blur leaves 0.636620 of thei
 
 The smearing is called **convolution**, the word used from here on. The rule the stripes show is the **convolution theorem**: the Fourier transform of a convolution is the product of the two transforms. The Fourier transform, from [The Fourier transform](03-fourier-transform.md), is a signal's recipe of stripes, one strength per frequency.
 
-**Convolving two signals slides one across the other and adds up the overlap; under the Fourier transform that sliding sum becomes plain multiplication, frequency by frequency.**
+**Convolving two signals slides one across the other and adds up the overlap; when both signals have finite total area under their sizes, under the Fourier transform that sliding sum becomes plain multiplication, frequency by frequency.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with the full argument in a folded Detailed proof; convolution itself is a definition.
 
@@ -55,7 +55,7 @@ The theorem:
 \widehat{f * g}(\omega) = \hat f(\omega)\, \hat g(\omega)
 ```
 
-**Read it aloud:** the transform of the smear is the transform of one signal times the transform of the other, at each frequency separately.
+**Read it aloud:** when both signals have finite area under their sizes, the transform of the smear is the transform of one signal times the transform of the other, at each frequency separately.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -68,7 +68,7 @@ The theorem:
 | $`\hat f(\omega)`$ | the transform: how much stripe at ω the signal holds | b-hat(π) = 0.636620 | — |
 | $`e^{-i\omega t}`$ | the turning arrow; i is the quarter turn, i^2 = −1 | e^(−iπ) = −1 at t = 1 mm | — |
 
-For the box, the transform works out by hand as b-hat(ω) = sin(ω/2)/(ω/2), the shelf's 2 sin(ω/2)/ω. The tent's is its square, sin^2(ω/2)/(ω/2)^2.
+For the box, the transform works out by hand as b-hat(ω) = sin(ω/2)/(ω/2) for ω ≠ 0 (and 1 at ω = 0), equal to 2 sin(ω/2)/ω. The tent's is its square, sin^2(ω/2)/(ω/2)^2 (and 1 at ω = 0).
 
 ### When it holds
 
@@ -101,7 +101,9 @@ The turning arrow splits: e^(−iωt) = e^(−iωs) e^(−iωu). A shift by s is
 
 Let the areas under |f| and |g| be A and B, both finite. For a function that is never negative the order of a double integral does not matter (Tonelli's theorem). So integrate |f(s)| |g(t − s)| over t first: with s fixed the inner integral is B, and the outer gives A × B. So the integral of |f * g| is at most A × B, and f * g has a transform.
 
-Since |e^(−iωt)| = 1, the integrand f(s) g(t − s) e^(−iωt) has absolute value with the same finite double integral. A double integral with that property may be taken in either order (Fubini's theorem). Take s outside. In the inner integral over t, substitute u = t − s, with du = dt and the whole line still the range: it is e^(−iωs) g-hat(ω). The outer integral is then g-hat(ω) times the integral of f(s) e^(−iωs) ds, which is f-hat(ω) g-hat(ω). The swap is the only step that needs a hypothesis.
+Since |e^(−iωt)| = 1, the integrand f(s) g(t − s) e^(−iωt) has absolute value with the same finite double integral. A double integral with that property may be taken in either order (Fubini's theorem).
+
+Take s outside. In the inner integral over t, substitute u = t − s, with du = dt and the whole line still the range: it is e^(−iωs) g-hat(ω). The outer integral is then g-hat(ω) times the integral of f(s) e^(−iωs) ds, which is f-hat(ω) g-hat(ω). The swap is the only step that needs a hypothesis.
 
 </details>
 
@@ -358,7 +360,7 @@ Lean proves the convolution theorem at every frequency, for every pair of signal
 
 - If the areas under |f| and |g| are finite, the transform of f * g is f-hat times g-hat, at every frequency ω.
 - Under the same condition, the area under |f * g| is finite too, so the smear has a transform.
-- Without the flip the operation is correlation. For a real g, its transform is f-hat times the conjugate of g-hat.
+- Without the flip the operation is correlation. Under the same finite-area condition, for a real g, its transform is f-hat times the conjugate of g-hat.
 - The hand arithmetic holds exactly: the tent's 0.75 at 0.25 mm, 2/π, 4/π^2, 2/(iπ) and its square, −4/π^2.
 - A 3-pixel box blur applied twice gives weights 1, 2, 3, 2, 1. Two dice give 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, both ways.
 
@@ -511,7 +513,7 @@ example : (List.range' 2 11).map (fun n =>
 ## The usual mistake
 
 > [!warning]
-> **Reading the star as multiplication.** f * g is a sliding integral, not f times g. The box times itself is the box again, transform 0.636620 at ω = π; the box smeared with itself is the tent, 0.405285. Multiplying in one domain is convolving in the other, never both: the transform of f times g is the convolution of the transforms, divided by 2π.
+> **Reading the star as multiplication.** f * g is a sliding integral, not f times g. The box times itself is the box again, transform 0.636620 at ω = π; the box smeared with itself is the tent, 0.405285. Multiplying in one domain is convolving in the other, never both: when the integrals converge, the transform of f times g is the convolution of the transforms, divided by 2π.
 >
 > - **Dropping the flip.** For the one-sided blur the transform at π comes out +0.405285, not −0.405285: the 1 mm shift is lost.
 > - **Mixing conventions.** Constants such as √(2π) move with the convention; the theorem's shape does not.
@@ -527,7 +529,7 @@ example : (List.range' 2 11).map (fun n =>
 - **Engineering systems.** A circuit's output is its input convolved with its response to one sharp kick; under the Laplace transform ([The Laplace transform](05-laplace-transform.md)) this becomes a product, which turns a differential equation into algebra.
 
 > **Say it back**
-> Convolution smears one signal with another: flip the second, slide it to each point, add up the overlap. Two 1 mm box blurs make a tent. A stripe passes through any blur unchanged in shape, multiplied by the blur's transform at its frequency, so two blurs multiply their factors. Swapping the order of a double integral proves it, provided both signals have finite area.
+> Convolution smears one signal with another: flip the second, slide it to each point, add up the overlap. Two 1 mm box blurs make a tent. A stripe passes through any blur unchanged in shape, multiplied by the blur's transform at its frequency, so two blurs multiply their factors. Swapping the order of a double integral proves it, provided both signals have finite area under their sizes.
 
 ---
 
@@ -538,12 +540,13 @@ example : (List.range' 2 11).map (fun n =>
 
 ## Where this goes next
 
+- [The Laplace transform](05-laplace-transform.md): damping a one-sided signal by e^(−st) so growing signals get a transform, and derivatives become multiplication by s minus the starting value.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): convolving long sampled signals by multiplying their discrete transforms.
 - [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md): the algorithm that makes the multiply-instead route fast.
 - [Tempered distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md): smearing signals that are not integrable, such as a constant or a single sharp spike.
 - [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): every steady, linear system is a convolution with its response to one kick.
 
-The theorem needed both signals to have finite area, and f = g = 1 broke it. What a transform and a smear mean for signals that never die away is the question tempered distributions answer.
+The theorem needed both signals to have finite area under their sizes, and f = g = 1 broke it. How can a constant or growing signal starting at time zero get a transform at all? [The Laplace transform](05-laplace-transform.md) answers that by multiplying by a fading weight e^(−st), while [Tempered distributions](../../18-Functional%20analysis/04-Distributions%20and%20Sobolev%20Spaces/05-tempered-distributions-and-the-fourier-transform.md) extends the Fourier transform itself.
 
 ---
 

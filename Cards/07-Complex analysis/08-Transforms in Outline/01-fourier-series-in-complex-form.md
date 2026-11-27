@@ -1,4 +1,4 @@
-# Fourier series: any repeating signal is a sum of spinning arrows e to the inx, and each coefficient is an average
+# Fourier series: a repeating signal made of smooth pieces is a sum of spinning arrows e to the inx, and each coefficient is an average
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → Fourier series
 
@@ -12,9 +12,9 @@ The difference is hidden tones. A spectrum analyser shows energy at 220, 660 and
 
 Each pure tone is an arrow spinning round a circle, the point e^(inx) of [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). How much of each arrow the signal holds is one average over a cycle.
 
-**A signal that repeats every 2π is a sum of arrows c_n e^(inx), each spinning n times per cycle, and each coefficient c_n is the average over one cycle of the signal times e^(−inx).**
+**A signal made of finitely many smooth pieces that repeats every 2π is a sum of arrows c_n e^(inx) (landing on the midpoint at any jump), each spinning n times per cycle, and each coefficient c_n is the average over one cycle of the signal times e^(−inx).**
 
-**What kind of fact this is:** a theorem. The coefficient formula is proved in Why it works. That the sum returns the signal, under the conditions in When it holds, is proved in Fourier coefficients. Parseval's identity is stated, its proof folded.
+**What kind of fact this is:** a theorem. The coefficient formula is proved in Why it works. That the sum returns the signal, under the conditions in When it holds, is proved in [Dirichlet's theorem](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/04-pointwise-and-uniform-convergence.md) and [Convergence in energy](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/05-l2-convergence-and-riesz-fischer.md). Parseval's identity is stated, its proof folded.
 
 ### The picture: two arrows make one real tone
 
@@ -64,7 +64,7 @@ c_n=\frac{2}{i\pi n}\ \ (n \text{ odd}), \qquad c_n=0\ \ (n \text{ even}), \qqua
 ### When it holds
 
 - **Repeats every 2π, finite average size.** Otherwise, as for 1/x near 0, the averages do not exist.
-- **Piecewise smooth, for each point.** With finitely many jumps, S_N(x) tends to f(x) where f is continuous and to the jump's midpoint at a jump: 0 at x = 0, however f(0) is set.
+- **Piecewise smooth (finitely many smooth pieces), for each point.** With finitely many jumps, S_N(x) tends to f(x) where f is continuous and to the jump's midpoint at a jump: 0 at x = 0, however f(0) is set.
 - **Also continuous, for uniform closeness.** Only without jumps does the largest error shrink to 0. Beside each jump the square wave's sums overshoot above 1.178980 for every N: the Gibbs phenomenon.
 - **Finite average of |f|^2, for closeness on average.** Then the average of |f − S_N|^2 tends to 0 and Parseval holds.
 
@@ -100,7 +100,7 @@ If f is smooth and repeats, [Integration by parts](../../06-Calculus%20and%20ana
 
 ### Step 5: Parseval
 
-The average of |f|^2 over a cycle equals the sum of |c_n|^2: the power of a signal is the sum of the powers of its tones. For the square wave |f|^2 = 1, and each odd pair contributes 2 × 4/(π^2 n^2), so
+For any repeating signal with a finite average of |f|^2, the average of |f|^2 over a cycle equals the sum of |c_n|^2: the power of a signal is the sum of the powers of its tones. For the square wave |f|^2 = 1, and each odd pair contributes 2 × 4/(π^2 n^2), so
 
 ```math
 1=\frac{8}{\pi^2}\Big(1+\frac{1}{9}+\frac{1}{25}+\cdots\Big), \qquad 1+\frac{1}{9}+\frac{1}{25}+\cdots=\frac{\pi^2}{8}
@@ -165,7 +165,9 @@ Orange: the square wave, through 0 at the jumps, where the series lands. Teal: t
 
 ## Code, from first principles, and it actually runs
 
-Two roads to every coefficient, n from −7 to 7: the closed form 2/(iπn), and the average itself by Simpson's rule (a weighted sum over 2,000 slices per half-cycle). Sine amounts come from the partners and from the real average of f times sin nx. Parseval is checked two ways: the odd sum against π^2/8, and S_5's mean-square error against a direct integral. Gibbs peaks approach (2/π) Si(π), where Si(π) is the integral of sin t / t from 0 to π.
+Two roads to every coefficient, n from −7 to 7: the closed form 2/(iπn), and the average itself by Simpson's rule (a weighted sum over 2,000 slices per half-cycle). Sine amounts come from the partners and from the real average of f times sin nx.
+
+Parseval is checked two ways: the odd sum against π^2/8, and S_5's mean-square error against a direct integral. Gibbs peaks approach (2/π) Si(π), where Si(π) is the integral of sin t / t from 0 to π.
 
 ### Python
 
@@ -683,7 +685,7 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 - **Digital audio.** A sampled signal has only finitely many tones, found by [The discrete Fourier transform](02-discrete-fourier-transform.md).
 
 > **Say it back**
-> A signal repeating every 2π is a sum of arrows e^(inx), each turning n times per cycle. Different arrows average to zero against each other, so the amount of arrow n is the average of the signal times e^(−inx). Partners n and −n make a real cosine and sine. The square wave has only odd tones, c_n = 2/(iπn), and Parseval gives 1 + 1/9 + 1/25 + … = π^2/8. Beside a jump the sums overshoot to about 1.178980, however many tones are kept.
+> A piecewise smooth signal repeating every 2π is a sum of arrows e^(inx) (landing on the midpoint at any jump), each turning n times per cycle. Different arrows average to zero against each other, so the amount of arrow n is the average of the signal times e^(−inx). Partners n and −n make a real cosine and sine. The square wave has only odd tones, c_n = 2/(iπn), and Parseval gives 1 + 1/9 + 1/25 + … = π^2/8. Beside a jump the sums overshoot to about 1.178980, however many tones are kept.
 
 ---
 
@@ -699,12 +701,12 @@ example : (1 : ℚ) + 1 / 9 + 1 / 25 = 259 / 225 := by norm_num
 - [The Fourier transform](03-fourier-transform.md): a signal that never repeats; the tones fill a continuum.
 - [Completeness of sines and cosines](../../18-Functional%20analysis/02-Hilbert%20Spaces/04-completeness-of-the-trigonometric-system.md): why the arrows are enough; Parseval in full.
 - [Wiener's lemma](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/02-wieners-lemma-and-invertible-filters.md): when a filter's action on the coefficients can be undone.
-- [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): the three kinds of convergence, proved.
+- [Fourier coefficients](../../20-Harmonic%20analysis/01-Fourier%20Series%20in%20Depth/01-fourier-coefficients-and-orthogonality.md): each wave's share as an inner product, and orthonormality of the complex waves.
 - [Poisson summation and sampling](../../20-Harmonic%20analysis/02-The%20Fourier%20Transform/08-poisson-summation-and-sampling.md): series and transform tied together.
 - [Equidistribution](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/03-equidistribution-and-weyls-criterion.md): arrow averages deciding whether a sequence spreads evenly.
 - [Isoperimetric and four-vertex](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/09-isoperimetric-and-four-vertex-theorems.md): Parseval proving the circle encloses the most area.
 
-A repeating signal has a list of tones; a camera shutter's one-second pulse never repeats, and what replaces the list is [The Fourier transform](03-fourier-transform.md).
+A repeating signal read across the whole cycle has a list of tones; what if you only have finitely many readings taken at regular steps? [The discrete Fourier transform](02-discrete-fourier-transform.md) answers that, before [The Fourier transform](03-fourier-transform.md) drops the repeat altogether.
 
 ---
 

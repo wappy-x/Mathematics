@@ -12,9 +12,9 @@ It has no Fourier transform ([The Fourier transform](03-fourier-transform.md)). 
 
 Multiply by a damping factor e^(−0.10t). The product e^(−0.05t) dies away, and its transform exists: 20 at frequency 0. The damping must beat the growth.
 
-A complex number s = σ + iω holds a damping rate σ and a frequency ω. A transform converges on a vertical band of such points, and its inverse may run up any vertical line in the band.
+A complex number s = σ + iω holds a damping rate σ and a frequency ω. When a transform converges absolutely, its region is a vertical band of such points, and when it fades fast enough up the band, its inverse may run up any vertical line inside.
 
-**A transform converges on a vertical strip fixed by the signal's growth at each end; damping by e^(−at) moves the line to Re s = a, and inside the strip the line slides without changing the inverse.**
+**A transform converges on an open vertical strip fixed by the signal's exponential growth rates at each end, whenever the strip is nonempty; damping by e^(−at) moves the line to Re s = a, and when the transform fades up the strip, the line slides inside without changing the inverse.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with one step's full proof folded.
 
@@ -36,7 +36,7 @@ The inverse runs up a vertical line:
 f(t) = \frac{1}{2\pi i}\int_{\sigma - i\infty}^{\sigma + i\infty} F(s)\, e^{st}\, ds \quad \text{for every } \sigma \text{ with } \alpha < \sigma < \beta
 ```
 
-**Read it aloud:** the signal at t is the transform, spun forward to t, integrated up any vertical line in the strip.
+**Read it aloud:** where the signal has no jump and the transform fades enough up the strip, the signal at t is the transform times e to the st, integrated up any vertical line in the strip and divided by 2πi.
 
 On the line s = a + iω, e^(−st) is e^(−at) times e^(−iωt), so:
 
@@ -71,7 +71,7 @@ On the line s = a + iω, e^(−st) is e^(−at) times e^(−iωt), so:
 
 ### Step 0: only the real part of s decides convergence
 
-The factor e^(−st) is e^(−σt) times e^(−iωt), and the second part has size 1. So the integrand's size is |f(t)| e^(−σt) whatever ω is. Convergence depends on σ alone: the region is a band of whole vertical lines.
+The factor e^(−st) is e^(−σt) times e^(−iωt), and the second part has size 1. So the integrand's size is |f(t)| e^(−σt) whatever ω is. Absolute convergence depends on σ alone: its region is a band of whole vertical lines.
 
 ### Step 1: the balance from today on converges on a half plane
 
@@ -106,7 +106,9 @@ In words: differentiating e^(−st) brings down −t. Strictly inside, a little 
 <details>
 <summary>Detailed proof: the transform is holomorphic in the strip</summary>
 
-Fix s0 inside and δ > 0 with Re s0 ± 2δ inside. For s within δ of s0, |f(t) e^(−st)| ≤ g(t) = |f(t)| (e^(−(Re s0 − δ)t) + e^(−(Re s0 + δ)t)), which has finite integral. Each partial integral over −T to T is holomorphic (swap the order in a loop integral; Cauchy gives 0; by Morera's theorem, zero loop integrals make a continuous function holomorphic). The tail beyond T is at most the integral of g over |t| > T, which tends to 0 uniformly in s, and a uniform limit of holomorphic functions is holomorphic.
+Fix s0 inside and δ > 0 with Re s0 ± 2δ inside. For s within δ of s0, |f(t) e^(−st)| ≤ g(t) = |f(t)| (e^(−(Re s0 − δ)t) + e^(−(Re s0 + δ)t)), which has finite integral.
+
+Each partial integral over −T to T is holomorphic (swap the order in a loop integral; Cauchy gives 0; by Morera's theorem, zero loop integrals make a continuous function holomorphic). The tail beyond T is at most the integral of g over |t| > T, which tends to 0 uniformly in s, and a uniform limit of holomorphic functions is holomorphic.
 
 </details>
 
@@ -138,9 +140,9 @@ Read backwards, with ds = i dω, the inverse up Re s = σ is the Fourier inverse
 | Damped by 0.10, frequency 0.05 | 1/(0.05 + 0.05i) = (0.05 − 0.05i)/0.005 | 10 − 10i |
 | h's Fourier transform at ω = 0.1 | (0.05 + 0.1i)/0.0125 + (0.20 − 0.1i)/0.05 | 8 + 6i |
 | h at t = 5, from either line | e^(−0.20 × 5) | **0.367879** |
-| House pulse at s = −1 | (1 − e^(1))/(−1) = e − 1 | 1.718282 |
+| One-second pulse at s = −1 | (1 − e^(1))/(−1) = e − 1 | 1.718282 |
 
-As a payment stream, F(0.10) = 20 is the balance's present value at a 10 percent discount rate: the growing-perpetuity rule 1/(r − g). The shelf's one-second pulse, (1 − e^(−s))/s, lives on the whole plane; at s = i it reads 0.841471 − 0.459698i, as on the Fourier card.
+As a payment stream, F(0.10) = 20 is the balance's present value at a 10 percent discount rate: the growing-perpetuity rule 1/(r − g). The one-second pulse's transform, (1 − e^(−s))/s (and 1 at s = 0), lives on the whole plane; at s = i it reads 0.841471 − 0.459698i, as on the Fourier card.
 
 ### What breaks if you drop a piece
 
@@ -219,7 +221,7 @@ print(f"top side size at R = 0.1, 1, 10: {tops[0]:.6f}, {tops[1]:.6f}, {tops[2]:
 pole, res = loop(0, 0.1, 0.1, 5), -bal(5)          # residue of H(s) e^(st) at 0.05 is -e^(0.05t)
 print(f"rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop {show(pole)}; 2 pi i x residue {show(2j * math.pi * res)}")
 pul = fwd(lambda t: 1.0, -1, 0, 1, 2000)
-print(f"house pulse (1 - e^(-s))/s: s = -1 {math.e - 1:.6f}, summed {show(pul)}; s = i {show((1 - cexp(-1j)) / 1j)}")
+print(f"one-second pulse (1 - e^(-s))/s: s = -1 {math.e - 1:.6f}, summed {show(pul)}; s = i {show((1 - cexp(-1j)) / 1j)}")
 x, y = (lambda sg: round(240 + 800 * sg)), (lambda im: round(120 - 800 * im))
 print(f"figure, 800 units per unit, origin (240, 120): poles x = {x(-d)}, {x(c)}; lines x = {x(-0.1)}, {x(0)}, {x(0.1)}; rectangle y = {y(0.1)} to {y(-0.1)}")
 assert abs(one - F(0.1)) < 1e-9 and abs(damped - F(0.1 + 0.05j)) < 1e-9 and abs(two - H(0.1j)) < 1e-9
@@ -229,7 +231,7 @@ assert abs(inside[1]) < 1e-9 and abs(pole - 2j * math.pi * res) < 1e-8 and tops[
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 balance, s = 0.10: 1/(s - 0.05) 20.000000; summed to T = 600 20.000000 + 0.000000i
@@ -248,7 +250,7 @@ h itself: 0.367879, 0.606531; minus e^(0.05t): -0.916146, 0.000000; minus e^(-0.
 rectangle Re s -0.10 to 0, t = 5: loop at R = 0.1 0.000000 + 0.000000i, at R = 10 0.000000 + 0.000000i
 top side size at R = 0.1, 1, 10: 0.753695, 0.019309, 0.000197
 rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop 0.000000 - 8.067770i; 2 pi i x residue 0.000000 - 8.067770i
-house pulse (1 - e^(-s))/s: s = -1 1.718282, summed 1.718282 + 0.000000i; s = i 0.841471 - 0.459698i
+one-second pulse (1 - e^(-s))/s: s = -1 1.718282, summed 1.718282 + 0.000000i; s = i 0.841471 - 0.459698i
 figure, 800 units per unit, origin (240, 120): poles x = 80, 280; lines x = 160, 240, 320; rectangle y = 40 to 200
 ALL CHECKS PASS
 ```
@@ -328,7 +330,7 @@ fn main() {
     println!("rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop {}; 2 pi i x residue {}", show(pole), show(want));
     let pul = fwd(&|_| 1.0, c(-1.0, 0.0), 0.0, 1.0, 2000);
     let at_i = div(sub(c(1.0, 0.0), cexp(c(0.0, -1.0))), c(0.0, 1.0));
-    println!("house pulse (1 - e^(-s))/s: s = -1 {:.6}, summed {}; s = i {}", std::f64::consts::E - 1.0, show(pul), show(at_i));
+    println!("one-second pulse (1 - e^(-s))/s: s = -1 {:.6}, summed {}; s = i {}", std::f64::consts::E - 1.0, show(pul), show(at_i));
     let (x, y) = (|sg: f64| (240.0 + 800.0 * sg).round() as i64, |im: f64| (120.0 - 800.0 * im).round() as i64);
     println!("figure, 800 units per unit, origin (240, 120): poles x = {}, {}; lines x = {}, {}, {}; rectangle y = {} to {}",
         x(-DD), x(CG), x(-0.1), x(0.0), x(0.1), y(0.1), y(-0.1));
@@ -340,7 +342,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 balance, s = 0.10: 1/(s - 0.05) 20.000000; summed to T = 600 20.000000 + 0.000000i
@@ -359,7 +361,7 @@ h itself: 0.367879, 0.606531; minus e^(0.05t): -0.916146, 0.000000; minus e^(-0.
 rectangle Re s -0.10 to 0, t = 5: loop at R = 0.1 0.000000 + 0.000000i, at R = 10 0.000000 + 0.000000i
 top side size at R = 0.1, 1, 10: 0.753695, 0.019309, 0.000197
 rectangle Re s 0 to 0.10 round the pole 0.05, t = 5: loop 0.000000 - 8.067770i; 2 pi i x residue 0.000000 - 8.067770i
-house pulse (1 - e^(-s))/s: s = -1 1.718282, summed 1.718282 + 0.000000i; s = i 0.841471 - 0.459698i
+one-second pulse (1 - e^(-s))/s: s = -1 1.718282, summed 1.718282 + 0.000000i; s = i 0.841471 - 0.459698i
 figure, 800 units per unit, origin (240, 120): poles x = 80, 280; lines x = 160, 240, 320; rectangle y = 40 to 200
 ALL CHECKS PASS
 ```
@@ -654,7 +656,7 @@ example : (240 : ℚ) + 800 * (-1 / 5) = 80 ∧ (240 : ℚ) + 800 * (1 / 20) = 2
 - **Valuation.** The growing-perpetuity price 1/(r − g) is the balance's transform at s = r; its failure at r ≤ g is the half plane's edge.
 
 > **Say it back**
-> The size of e^(−st) depends only on Re s, so a transform converges on a vertical band: Re s > 0.05 for the balance from today, −0.20 < Re s < 0.05 when it is later drawn down. Inside, the transform is holomorphic and Cauchy's theorem lets the inverse's line slide. Crossing an edge crosses a pole and changes the signal by its residue. Damping by e^(−at) reads the transform on Re s = a.
+> The size of e^(−st) depends only on Re s, so a transform converges absolutely on a vertical band whenever the signal's growth allows one. That band is Re s > 0.05 for the balance from today, and −0.20 < Re s < 0.05 when it is later drawn down. Inside, the transform is holomorphic and, when it fades up the strip, Cauchy's theorem lets the inverse's line slide. Crossing a pole at an edge changes the signal by its residue. Damping by e^(−at) reads the transform on Re s = a.
 
 ---
 
@@ -667,7 +669,7 @@ example : (240 : ℚ) + 800 * (-1 / 5) = 80 ∧ (240 : ℚ) + 800 * (1 / 20) = 2
 ## Where this goes next
 
 - [Inverting a Laplace transform](07-inverse-laplace-by-residues.md): slide the line left past every pole and sum the residues.
-- [The Mellin transform](../09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md): the same strips for the transform built on powers t^s.
+- [The Mellin transform](../09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md): the same strips for the transform built on powers t^(s−1).
 
 Left open: when the line can slide left past every pole, does the inverse become a plain sum of residues?
 

@@ -1,4 +1,4 @@
-# The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the matrix is unitary
+# The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the scaled matrix is unitary
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → The discrete Fourier transform
 
@@ -12,7 +12,7 @@ The discrete Fourier transform turns the 8 readings into 8 complex numbers, one 
 
 The tool is one 8 by 8 table built from the 8th roots of unity, the eight points on the unit circle whose 8th power is 1. Multiplying by the table is the transform; its mirror image, the conjugate table, divided by 8, undoes it. Nothing is lost: the sum of squared readings, 1968, reappears as the outputs' squared sizes, 15744, divided by 8.
 
-**The discrete Fourier transform multiplies N samples by the N by N matrix of powers of one N-th root of unity; because different powers cancel round the circle, the conjugate matrix divided by N undoes it, and the matrix divided by the square root of N keeps lengths.**
+**For any positive whole number N, the discrete Fourier transform multiplies N samples by the N by N matrix of powers of one N-th root of unity; because different powers cancel round the circle, the conjugate matrix divided by N undoes it, and the matrix divided by the square root of N keeps lengths.**
 
 **What kind of fact this is:** a theorem (inversion, the unitary matrix, and Parseval's energy identity), proved on this card in Why it works; the transform itself is a definition.
 
@@ -50,7 +50,7 @@ As a matrix ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-
 
 **Read it aloud:** the conjugate transpose of U undoes U, which is what unitary means; so the samples' energy equals the outputs' energy divided by N.
 
-T is the transpose, rows swapped with columns, and I the identity matrix ([Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, outputs k and N − k are conjugate twins that together make one cosine wave, $`A\cos(2\pi kn/N + \varphi)`$, with amplitude $`A = 2\lvert X_k\rvert/N`$ and phase $`\varphi = \arg X_k`$, the angle of $`X_k`$.
+T is the transpose, rows swapped with columns, and I the identity matrix ([Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, each frequency k strictly between 0 and N/2 pairs with its conjugate twin N − k to make one cosine wave, $`A\cos(2\pi kn/N + \varphi)`$, with amplitude $`A = 2\lvert X_k\rvert/N`$ and phase $`\varphi = \arg X_k`$, the angle of $`X_k`$. Output 0 stands alone as the mean $`X_0/N`$, and for even N the middle output $`k = N/2`$ also stands alone with factor $`1/N`$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -65,7 +65,7 @@ T is the transpose, rows swapped with columns, and I the identity matrix ([Compl
 
 ### When it holds
 
-- **Any N complex numbers.** Inversion and Parseval hold for every list; the conditions below are for reading k as a frequency.
+- **Any nonempty list of N complex numbers.** Inversion and Parseval hold for every N ≥ 1; the conditions below are for reading k as a frequency.
 - **Equally spaced samples.** With uneven spacing, output k no longer measures k cycles per record.
 - **The record read as one period.** A record whose end does not join its start leaks energy into every frequency.
 - **The 1/N on one side only.** Drop it from the inverse and the samples return 8 times too big: 88, 72, 80.
@@ -91,7 +91,9 @@ A steady day would walk round an octagon back to the start: Step 0. The warm aft
 
 ### Step 2: the columns are perpendicular, so the conjugate matrix inverts
 
-Row j of $`\overline{F}`$ against column k of $`F`$ adds eight products w^(kn) times the conjugate of w^(jn), each equal to w^((k − j)n), since conjugating a point on the unit circle turns it back. By Step 0 the total is 8 when j = k and 0 otherwise. So $`\overline{F}`$ times $`F`$ is 8 times the identity, and dividing by 8 gives the inverse. F is symmetric, since $`w^{kn} = w^{nk}`$, so $`\overline{F}`$ is also its conjugate transpose.
+Row j of $`\overline{F}`$ against column k of $`F`$ adds eight products w^(kn) times the conjugate of w^(jn), each equal to w^((k − j)n), since conjugating a point on the unit circle turns it back.
+
+By Step 0 the total is 8 when j = k and 0 otherwise. So $`\overline{F}`$ times $`F`$ is 8 times the identity, and dividing by 8 gives the inverse. F is symmetric, since $`w^{kn} = w^{nk}`$, so $`\overline{F}`$ is also its conjugate transpose.
 
 ### Step 3: unitary means lengths are kept, and that is Parseval
 
@@ -110,11 +112,11 @@ For a whole number m, if w^m = 1 the sum of w^(mn) over n = 0 to N − 1 is N. O
 
 ### Step 4: twins make one cosine wave
 
-Real samples make $`X_{N-k}`$ the conjugate of $`X_k`$: here $`X_7`$ = −18.899495 − 17.485281i. In the inverse sum the twins add to twice a real part. With $`X_1`$ of length 25.747349 and angle 2.395043 rad, that is a cosine of amplitude 2 × 25.747349 / 8 = 6.436837, peaking where its angle is a whole turn, at hour 14.851609.
+For each k from 1 to N − 1, real samples make $`X_{N-k}`$ the conjugate of $`X_k`$: here $`X_7`$ = −18.899495 − 17.485281i. In the inverse sum the twins add to twice a real part. With $`X_1`$ of length 25.747349 and angle 2.395043 rad, that is a cosine of amplitude 2 × 25.747349 / 8 = 6.436837, peaking where its angle is a whole turn, at hour 14.851609.
 
 ### Step 5: the fast route
 
-The matrix costs N × N = 64 complex multiplications. Splitting even slots from odd gives two 4-point transforms, stitched by one turn per output pair; repeating the split is the fast Fourier transform, FFT: 12 multiplications for N = 8. [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md) builds it properly; the code uses it as the second road.
+The matrix costs N × N = 64 complex multiplications. When N is even, splitting even slots from odd gives two half-size transforms, stitched by one turn per output pair; repeating the split when N is a power of 2 is the fast Fourier transform, FFT: 12 multiplications for N = 8. [The fast Fourier transform](../../16-Numerical%20analysis/07-PDE%20Solvers/09-the-fast-fourier-transform.md) builds it properly; the code uses it as the second road.
 
 ---
 
@@ -590,6 +592,7 @@ example : ∑ k : Fin 8, ‖∑ m : Fin 8, (![11, 9, 10, 15, 20, 22, 19, 14] : F
 
 ## Where this goes next
 
+- [The Fourier transform](03-fourier-transform.md): the continuous spectrum when readings grow dense and the record stretches over all time.
 - [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices for many strikes from one FFT.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): windows, leakage and spectra of real signals.
 - [Von Neumann analysis](../../16-Numerical%20analysis/07-PDE%20Solvers/03-von-neumann-analysis-and-the-cfl-condition.md): each grid frequency tested for growth.

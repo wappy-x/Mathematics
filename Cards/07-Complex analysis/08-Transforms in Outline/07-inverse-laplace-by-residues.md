@@ -1,4 +1,4 @@
-# Inverting a Laplace transform: integrate up a vertical line, close it to the left, and every pole hands back an exponential
+# Inverting a Laplace transform: integrate up a vertical line, close it to the left, and every simple pole hands back an exponential
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Transforms in Outline](../README.md#s08) → Inverting a Laplace transform
 
@@ -12,7 +12,7 @@ The Laplace transform ([The Laplace transform](05-laplace-transform.md)) turns t
 
 V(s) blows up at s = 0 and s = −2. Think of each as a tuning fork: its place sets how fast its tone dies, one number sets how loud. From here on the forks are **poles** and the loudness is the **residue** ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)). The pole at 0 hands back 1, the pole at −2 hands back −e^(−2t), and their sum is the charging curve.
 
-**To invert a Laplace transform, integrate V(s)e^(st) up a vertical line to the right of every pole, close the line with a large half circle to the left, and the residue theorem turns the integral into a sum: each pole a hands back its residue, a number times e^(at).**
+**To invert a Laplace transform at a positive time t, integrate V(s)e^(st) up a vertical line to the right of every pole and divide by 2πi. When V has finitely many poles, no other singularities, and fades fast enough on a large half circle to the left, closing the line with that half circle turns the integral into a sum of residues: each simple pole a hands back a number times e^(at).**
 
 **What kind of fact this is:** a method, resting on the inversion formula (proved from Fourier inversion in the folded Detailed proof) and the residue theorem; why closing to the left is allowed is proved in Why it works.
 
@@ -32,7 +32,7 @@ Reminders: Re s is the real part of s; Res is the residue, the coefficient of 1/
 v(t) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} V(s)\,e^{st}\,ds = \sum_{k} \mathrm{Res}\bigl(V(s)e^{st},\, a_k\bigr) \qquad (t > 0)
 ```
 
-**Read it aloud:** the signal at time t is one over two pi i times the integral of V(s) e^(st) up a vertical line right of every pole, which equals the sum of the residues of V(s) e^(st).
+**Read it aloud:** for positive time t, the signal at time t is one over two pi i times the integral of V(s) e^(st) up a vertical line right of every pole; when V has finitely many poles, no other singularities and fades fast enough to the left, this equals the sum of the residues of V(s) e^(st).
 
 The first equality is the **Bromwich integral**, after Thomas Bromwich. He used it to put Heaviside's circuit calculus, Oliver Heaviside's rules for solving circuit equations by algebra, on firm ground. The second equality is the residue theorem, once the line is closed. At a simple pole (V behaves like a constant over s − a) the residue is a limit, worked below:
 
@@ -56,7 +56,7 @@ The first equality is the **Bromwich integral**, after Thomas Bromwich. He used 
 - **The line sits right of every pole.** Here c > 0. Up Re s = −1, between the poles, the integral gives −0.135335 at t = 1: the signal whose transform lives on the strip between −2 and 0 ([Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md)).
 - **V fades on the big half circle.** Here it falls like 2 over R squared. The shelf's one-second pulse (1 from t = 0 to 1, then 0) has transform (1 − e^(−s))/s, and it does not: e^(−s) grows to the left. It has no poles, so its residue sum is 0 at t = 0.5; the line integral gives 1.001, near the pulse's true value 1.
 - **t > 0 to close left.** For t < 0, e^(st) explodes on the left, so close right: no poles, v = 0 before the switch. At t = −1 the line integral gives 0.000000.
-- **Finitely many poles.** Infinitely many give an infinite sum, which needs its own convergence proof.
+- **Finitely many poles, and no other singularities.** Branch cuts break the loop, and infinitely many poles give an infinite sum that needs its own convergence proof.
 
 ---
 
@@ -76,7 +76,7 @@ Cut the line at heights −R and R and join the ends with a half circle to the l
 
 ### Step 3: the half circle's share vanishes
 
-On the half circle, s is at least R − 1 from 0 and at least R − 3 from −2, so |V(s)| is at most 2/((R − 1)(R − 3)). Its real part is at most c, so for t > 0, |e^(st)| is at most e^(ct). The arc is πR long. Its share is therefore at most R e^(ct)/((R − 1)(R − 3)), which falls to 0 like 1/R.
+For R > 3, every point s on the half circle is at least R − 1 from 0 and at least R − 3 from −2, so |V(s)| is at most 2/((R − 1)(R − 3)). Its real part is at most c, so for t > 0, |e^(st)| is at most e^(ct). The arc is πR long. Its share is therefore at most R e^(ct)/((R − 1)(R − 3)), which falls to 0 like 1/R.
 
 At t = 1 the code measures −0.011540, −0.000085 and 0.000001 for R = 10, 100 and 1000. So the full line integral equals the residue sum.
 
@@ -89,7 +89,9 @@ Split V into partial fractions ([Rational functions](../05-Laurent%20Series%2C%2
 
 **Inversion.** Let v be zero for t < 0, piecewise smooth, with |v(t)| ≤ M e^(bt), and take c > b. Then g(t) = v(t)e^(−ct) is absolutely integrable, with Fourier transform V(c + iω). Where v is continuous, Fourier inversion gives g(t) as the limit, as W → ∞, of (1/2π) times the integral from −W to W of V(c + iω)e^(iωt) dω; multiply by e^(ct) and put s = c + iω. At a jump the limit is the average of the two sides.
 
-**Closing.** Let V be holomorphic (complex-differentiable) except at finitely many poles, all with real part below c, with |V(s)| ≤ K/|s|^2 for large |s|. The segment from c − iR to c + iR plus the half circle s = c + Re^(iθ), θ from π/2 to 3π/2, is a loop, and the residue theorem gives its integral over 2πi as the residue sum. On the half circle Re s ≤ c, so for t > 0 the arc integral is at most πR K e^(ct)/(R − |c|)^2, which tends to 0. If V only falls like 1/|s|, Jordan's lemma ([Jordan's lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md)) gives the same limit: the factor e^(st), which shrinks fast to the left, makes up for V's slower fall. For t < 0 close right: no poles, v = 0.
+**Closing.** Let V be holomorphic (complex-differentiable) except at finitely many poles, all with real part below c, with |V(s)| ≤ K/|s|^2 for large |s|. The segment from c − iR to c + iR plus the half circle s = c + Re^(iθ), θ from π/2 to 3π/2, is a loop, and the residue theorem gives its integral over 2πi as the residue sum.
+
+On the half circle Re s ≤ c, so for t > 0 the arc integral is at most πR K e^(ct)/(R − |c|)^2, which tends to 0. If V only falls like 1/|s|, Jordan's lemma ([Jordan's lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md)) gives the same limit: the factor e^(st), which shrinks fast to the left, makes up for V's slower fall. For t < 0 close right: no poles, v = 0.
 
 </details>
 
@@ -663,7 +665,7 @@ example : (25 : ℤ) * 4 = 100 ∧ (245 : ℤ) - 100 = 145 := by norm_num
 - **Delayed inputs.** A factor e^(−s) delays a signal by one second and blocks closing left. Split it off, invert the rest, then shift the answer.
 
 > **Say it back**
-> Integrate V(s)e^(st) up a vertical line right of every pole. For t > 0, close it to the left with a big half circle, whose share fades when V falls fast enough. The residue theorem turns the integral into a sum: each pole a gives a number times e^(at). For the capacitor, 0 and −2 give 1 and −e^(−2t), so v(1) = 0.864665. Partial fractions are the same sum.
+> Integrate V(s)e^(st) up a vertical line right of every pole and divide by 2πi. For t > 0, when V has finitely many poles, no other singularities and falls fast enough on a big half circle to the left, closing the line turns the integral into the sum of residues: each simple pole a gives a number times e^(at). For the capacitor, 0 and −2 give 1 and −e^(−2t), so v(1) = 0.864665. Partial fractions are the same sum.
 
 ---
 
@@ -675,9 +677,10 @@ example : (25 : ℤ) * 4 = 100 ∧ (245 : ℤ) - 100 = 145 := by norm_num
 
 ## Where this goes next
 
+- [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): opens the next shelf, building functions such as sine from their zeros instead of their poles.
 - [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a system's poles as its fingerprint, and its response to any input.
 
-The same poles predict a circuit's output for every input, and whether it stays bounded.
+Here a rational transform broke into a sum over its finitely many poles; what happens when a function has endlessly many zeros, and you want to build it as a product over them instead? [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md) opens the next shelf with that question.
 
 ---
 
