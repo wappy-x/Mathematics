@@ -70,7 +70,7 @@ That is the **first isomorphism theorem**; the sign means isomorphic, one group 
 
 ### When it holds
 
-- $`N`$ must be a subgroup first, or its shifted copies overlap instead of cutting $`G`$ into non-overlapping piles.
+- $`N`$ must be a subgroup first. One pile has to hold the identity, and a set that holds the identity but is not a subgroup has shifted copies that overlap.
 - The test covers every member of $`G`$: the tile's flip subgroup survives the half turn, dies at the quarter turn.
 - Normality concerns $`N`$ inside $`G`$, never $`N`$ alone, and needs no finiteness: the integers do not run out.
 - Where moves commute, giving one result in either order, every subgroup passes, a conjugate being the original move, so the clock could not fail.

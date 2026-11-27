@@ -532,7 +532,7 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 
 ## Where you meet it in real life
 
-- **Counters that wrap separately.** Hours and minutes, a lock's wheels, fields packed in a machine word: each is a direct product, coming home only at the least common multiple of its parts ([When cycles meet again](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md)).
+- **Counters that wrap separately.** A lock's wheels, fields packed in a machine word: each is a direct product, coming home only at the least common multiple of its parts ([When cycles meet again](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md)).
 - **Arithmetic done in pieces.** Work on a 15-clock splits into the 3-clock and the 5-clock, runs in smaller numbers, then rebuilds by the reverse formula — routine in cipher work ([RSA in outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
 
 > **Say it back**
@@ -552,7 +552,7 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 - [Group actions](08-group-actions-and-counting.md): the next card; a group moving the members of a set, used to count patterns its moves cannot tell apart.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
 - [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): the rational points on a cubic curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
-- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
+- [The Sylow theorems](11-sylow-theorems.md): for the largest power of a prime p dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
 - [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): breaking functions on a finite commutative group into basic waves (characters), including patterns on bit strings.
 
