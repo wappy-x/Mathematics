@@ -103,7 +103,7 @@ Put $`b`$ in place of column 1 and split it into its three parts:
 \det A_1 = x_1 \det[\,\text{col } 1,\ \text{col } 2,\ \text{col } 3\,] + x_2 \det[\,\text{col } 2,\ \text{col } 2,\ \text{col } 3\,] + x_3 \det[\,\text{col } 3,\ \text{col } 2,\ \text{col } 3\,]
 ```
 
-The last two have a repeated column, so they are zero. What survives is $`x_1 \det A`$. Divide by $`\det A`$ and $`x_1`$ stands alone. The same holds for any column and any $`n`$, which proves Cramer's rule.
+The last two have a repeated column, so they are zero. What survives is $`x_1 \det A`$. When $`\det A`$ is not zero, divide by it and $`x_1`$ stands alone. The same holds for any column and any $`n`$, which proves Cramer's rule.
 
 On the cafe: $`\det A_1`$ = 4 × (−4) = −16.
 
@@ -120,7 +120,7 @@ Entry $`(i, k)`$ of $`A\,\mathrm{adj}(A)`$ is row $`i`$ of $`A`$ against the cof
 
 On the cafe, row 1 of $`A`$ is (2, 1, 1). Against its own cofactors (−3, 1, 1): −6 + 1 + 1 = −4. Against row 2's cofactors (1, 1, −3): 2 + 1 − 3 = 0. So $`A\,\mathrm{adj}(A)`$ is −4 down the diagonal and 0 elsewhere.
 
-Divide by $`\det A`$ and the product is $`I`$: the adjugate over the determinant is the inverse.
+When $`\det A`$ is not zero, divide by it and the product is $`I`$: the adjugate over the determinant is the inverse.
 
 <details>
 <summary>Detailed proof: the other order, adj(A) times A</summary>

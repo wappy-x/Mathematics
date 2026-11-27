@@ -18,7 +18,7 @@ Three matrices, three fates:
 
 One number, worked out from the four in the matrix, tells the three apart.
 
-**The determinant of a matrix is the number every area gets multiplied by when that matrix is applied, and a determinant of zero means the picture was flattened, which can never be undone.**
+**The determinant of a square matrix is the number every signed area gets multiplied by when that matrix is applied, and a determinant of zero means the picture was flattened, which can never be undone.**
 
 **What kind of fact this is:** a definition — ad − bc, built from the matrix's four numbers in The formula below, names the number; that it multiplies every area, and that determinants multiply, are theorems proved below.
 
@@ -52,7 +52,7 @@ For a 2 by 2 read row by row, $`A`$ = `[[a, b], [c, d]]` — $`a`$, $`b`$ on top
 | $`A`$ | the matrix applied, square: rows match columns | the shear `[[1, 1], [0, 1]]` | — |
 | $`a`$, $`b`$, $`c`$, $`d`$ | its four numbers, row by row (p, q, r, s on [The inverse matrix](03-inverse-matrix.md)) | 1, 1, 0, 1 | raise $`a`$ and it climbs by $`d`$, raise $`b`$ and it drops by $`c`$ |
 | $`e`$, $`f`$, $`g`$, $`h`$, $`i`$ | a 3 by 3's five further numbers | 1, 1, 1, 0, 4 below | each through its own minor |
-| $`\det A`$ | what $`A`$ multiplies every area by | 1 for the shear, 0 for the flattener | more stretch; a minus sign means flipped |
+| $`\det A`$ | what $`A`$ multiplies every signed area by | 1 for the shear, 0 for the flattener | more stretch; a minus sign means flipped |
 | $`B`$ | a second matrix, applied before $`A`$ in AB | the stretch `[[3, 0], [0, 2]]` | AB's is $`\det A`$ times $`\det B`$ |
 
 In a 3 by 3 the letters restart row by row, so $`c`$ is top right: $`A`$ = `[[a, b, c], [d, e, f], [g, h, i]]`.
@@ -119,7 +119,7 @@ flowchart LR
 
 ### Step 4: multipliers multiply, and staircases fall out
 
-Run the shear (area × 1), then the stretch (area × 6): area × 6. The two as one matrix are `[[3, 3], [0, 2]]`, determinant 6. Why always? $`B`$ multiplies every area by $`\det B`$, then $`A`$ by $`\det A`$, and one number does that for every shape.
+Run the shear (area × 1), then the stretch (area × 6): area × 6. The two as one matrix are `[[3, 3], [0, 2]]`, determinant 6. Why always? $`B`$ multiplies every signed area by $`\det B`$, then $`A`$ by $`\det A`$, and one number does that for every shape.
 
 Staircases are easy for another reason. Expand along the first column: everything below the top-left number is zero, so only it contributes, and the same happens in the square left behind. Only the diagonal's product survives.
 
@@ -128,7 +128,7 @@ The method at any size: row-move to a staircase ([Gaussian elimination](02-gauss
 <details>
 <summary>The grown-up definition</summary>
 
-Textbooks ask for a rule turning a square matrix's columns into one number, under three demands: doubling one column doubles the answer, the others held still (**multilinear**); swapping two columns flips the sign (**alternating**); the identity matrix, ones on the diagonal, gives 1. Exactly one rule qualifies: the determinant.
+Textbooks ask for a rule turning a square matrix's columns into one number, under three demands: scaling one column scales the answer, and splitting a column into a sum splits the answer into a sum, the others held still (**multilinear**); swapping two columns flips the sign (**alternating**); the identity matrix, ones on the diagonal, gives 1. Exactly one rule qualifies: the determinant.
 
 </details>
 
@@ -487,11 +487,11 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 ## Where you meet it in real life
 
 - **Volume in three dimensions.** For a 3 by 3 the number multiplies volume: `[[2, 1, 1], [0, 1, 1], [1, 0, 4]]` takes a unit cube to a box of 8, and a negative one mirrors it ([Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)).
-- **Solving systems.** Not zero: one answer and an inverse ([The inverse matrix](03-inverse-matrix.md)). Zero: no answer or a line of them ([Solving A x = b](01-matrix-equation-ax-b.md)), the count in [Rank and nullity](05-rank-nullity.md).
+- **Solving systems.** Not zero: one answer and an inverse ([The inverse matrix](03-inverse-matrix.md)). Zero: no answer or infinitely many ([Solving A x = b](01-matrix-equation-ax-b.md)), the count in [Rank and nullity](05-rank-nullity.md).
 - **Statistics packages.** A determinant near zero, on entries of sensible size, warns that a model's inputs are near-copies, so the fitted answer wobbles: the nudged flattener's 0.2 buys an untrustworthy inverse.
 
 > **Say it back**
-> A square matrix turns a sprite of area 1 into a slanted shape whose signed area is the determinant. For a 2 by 2 it is ad − bc; a minus sign means the picture turned over. Zero means flattened onto a line, which nothing unflattens, so there is no inverse. Two matrices in a row multiply their determinants; a staircase's is its diagonal.
+> A square matrix turns a sprite of area 1 into a slanted shape whose signed area is the determinant. For a 2 by 2 it is ad − bc; a minus sign means the picture turned over. Zero means flattened (in the plane, onto a line or a point), which nothing unflattens, so there is no inverse. Two matrices in a row multiply their determinants; a staircase's is its diagonal.
 
 ---
 

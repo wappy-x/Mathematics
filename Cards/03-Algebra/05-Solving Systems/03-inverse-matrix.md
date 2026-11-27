@@ -119,7 +119,7 @@ For a square matrix these agree: if one fails, all fail.
 
 The third rules out every inverse, not just this formula: if another price list also gave zero takings, no matrix could send those takings back to both. That is the one-to-one test from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), and [Rank and nullity](05-rank-nullity.md) counts what is lost.
 
-A zero determinant always supplies such a list: the columns are then multiples of one another. `[[2, 4], [1, 2]]` fails all three.
+A zero determinant always supplies such a list: one column is then a mix of the others (for a 2 by 2, one is a multiple of the other). `[[2, 4], [1, 2]]` fails all three.
 
 ### Step 4: bigger than 2 by 2, by Gauss-Jordan on [A | I]
 
@@ -532,7 +532,7 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 >
 > - **Order matters.** $`A^{-1} b`$, not $`b`$ then $`A^{-1}`$. Matrices do not commute ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)).
 > - **Square is not the same as invertible.** `[[2, 4], [1, 2]]` is square and singular. Square is only the entry ticket.
-> - **Undoing two flips their order.** The inverse of AB is the inverse of B times the inverse of A. Socks then shoes; to undo, shoes first.
+> - **Undoing two flips their order.** For two invertible square matrices, the inverse of AB is the inverse of B times the inverse of A. Socks then shoes; to undo, shoes first.
 
 ---
 

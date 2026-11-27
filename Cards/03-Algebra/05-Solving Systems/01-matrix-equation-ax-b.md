@@ -16,7 +16,7 @@ Strip the words off the slips and only the counts are left, written row by row i
 
 **counts × prices = takings**, or in letters, $`A x = b`$.
 
-**That line asks one question: which mix of $`A`$'s columns lands exactly on $`b`$? One mix, a whole line of mixes, or none — and the columns of $`A`$ say whether it is exactly one before $`b`$ is read.**
+**That line asks one question: which mix of $`A`$'s columns lands exactly on $`b`$? One mix, infinitely many, or none — and for a square $`A`$, the columns say whether it is exactly one before $`b`$ is read.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; $`A x = b`$ itself is a definition.
 
@@ -62,7 +62,7 @@ A x = b
 | $`A x`$ | $`A`$'s columns mixed, with $`x`$'s entries as the amounts | $`(11, 7)`$, the takings rebuilt | — |
 | $`A^{-1}`$ | the matrix that undoes $`A`$, when it exists | exists here, not needed here | [The inverse matrix](03-inverse-matrix.md) |
 
-Two words do the classifying, both about $`A`$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when neither is a multiple of the other ([Linear independence](../03-Vectors/04-linear-independence.md)).
+Two words do the classifying, both about $`A`$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when none is a mix of the others — for two columns, neither is a multiple of the other ([Linear independence](../03-Vectors/04-linear-independence.md)).
 
 One warning about $`x`$: alone it is the coffee price, but in $`A x = b`$ the letter means the whole list $`(x, y)`$.
 
@@ -109,8 +109,8 @@ Change that total to $23 and $`(11, 23)`$ is off the line: no mix reaches it, an
 | The columns of $`A`$ | Where $`b`$ sits | Outcome | The cafe |
 | --- | --- | --- | --- |
 | independent, neither a multiple of the other | anywhere: they span the whole plane | exactly one answer | prices (4.00, 3.00) |
-| dependent, one a multiple of the other | on their line | a line of answers | takings (11, 22) |
-| dependent, one a multiple of the other | off their line | no answer | takings (11, 23) |
+| dependent, one a multiple of the other | in their span | infinitely many answers (a line, unless $`A`$ is all zeros) | takings (11, 22) |
+| dependent, one a multiple of the other | outside their span | no answer | takings (11, 23) |
 
 That is the "before you start" in the title: for a square system, independent columns give one answer for every $`b`$. Dependent columns give none or infinitely many, and only then does $`b`$ matter.
 
@@ -548,7 +548,7 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 > [!warning]
 > **Two equations and two unknowns do not guarantee one answer.** The doubled Tuesday has two of each and a square block of counts, yet its answers number infinitely many or none. What decides is whether the columns are independent.
 >
-> - **"Just divide by $`A`$."** There is no dividing by a matrix; the nearest thing is the inverse, [The inverse matrix](03-inverse-matrix.md), which exists only when the columns are independent.
+> - **"Just divide by $`A`$."** There is no dividing by a matrix; the nearest thing is the inverse, [The inverse matrix](03-inverse-matrix.md), which exists only when $`A`$ is square and its columns are independent.
 > - **"No answer means I slipped up."** No: the $23 day is impossible, two days contradicting each other, and 0 = 1.00 says so.
 > - **"A line of answers means any prices at all."** They still satisfy 2x + y = 11: one choice is free, the other follows.
 

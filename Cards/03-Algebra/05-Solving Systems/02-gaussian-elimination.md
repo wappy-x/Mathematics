@@ -56,7 +56,7 @@ Row k clears, row i gets cleared. The **pivot** is row k's leading number: its f
 
 **Read it aloud:** take away as many copies of the row above as it takes to kill the entry aimed at.
 
-Column by column, that builds the staircase, whose real name is **row echelon form**: each pivot right of the one above, everything below a pivot zero. Reading it back is **back substitution**: each row's total, less its counts times the prices already found, divided by its pivot. With nothing below it, the bottom row is just total ÷ pivot.
+Column by column, that builds the staircase, whose real name is **row echelon form**: each pivot right of the one above, everything below a pivot zero. Reading it back is **back substitution**: each row's total, less its counts times the prices already found, divided by its pivot. With nothing below it, the lowest pivot row is just total ÷ pivot.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -723,7 +723,7 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 > - **Multiplying a row by zero.** The row becomes 0 = 0 and its fact is gone.
 > - **Dividing by a zero pivot.** Swap a row up from below first.
 > - **Reading the staircase from the top.** That row still holds three unknown prices; only the bottom holds one.
-> - **Seeing `[0, 0, 0 | 0]` as "no solution".** It rules nothing out, so a line of price lists fits.
+> - **Seeing `[0, 0, 0 | 0]` as "no solution".** It rules nothing out — here, with two pivots above it, a line of price lists fits.
 
 ---
 

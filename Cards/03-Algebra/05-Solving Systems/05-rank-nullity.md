@@ -106,7 +106,7 @@ The **row space** is everything you can build out of the rows, and its size is a
 
 </details>
 
-**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero ([Determinants](04-determinants.md)). The determinant is the one number that says how much a square block stretches space, so such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
+**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero, or 0 if every entry is zero ([Determinants](04-determinants.md)). The determinant is the one number that says how much a square block stretches space, so such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
 
 ---
 
@@ -475,9 +475,9 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 ## Where you meet it in real life
 
 - **Every frame of a 3D game.** Depth dies on the way to the screen, which is why a renderer keeps a depth buffer: the flat picture cannot say what is in front.
-- **Reading A x = b before solving it.** Nullity 0 means at most one answer; nullity 1 a line of them, one answer plus any amount of the killed direction ([Solving A x = b](01-matrix-equation-ax-b.md)).
+- **Reading A x = b before solving it.** Nullity 0 means at most one answer; nullity 1 means none, or a line of them — one answer plus any amount of the killed direction ([Solving A x = b](01-matrix-equation-ax-b.md)).
 - **Undoing a matrix, and one-to-one.** Nullity 0 says different inputs always give different outputs ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)), since collisions are killed directions. For a square matrix that is exactly when an inverse exists, the same fact as a nonzero determinant ([The inverse matrix](03-inverse-matrix.md), [Determinants](04-determinants.md)).
-- **Spreadsheets and sensors.** A table with one column the sum of two others has nullity above zero, so fitting anything to it gives a line of equally good answers, not one. Rank warns first.
+- **Spreadsheets and sensors.** A table with one column the sum of two others has nullity above zero, so fitting anything to it gives infinitely many equally good answers, not one. Rank warns first.
 
 > **Say it back**
 > Some input directions come through a matrix, some are sent to nothing. The count coming through is the rank, the count that dies is the nullity, and they add to the number of columns — going in, not coming out. Elimination gives both: pivot columns the rank, free columns the nullity. The projector `[[1, 0, 0], [0, 1, 0]]` keeps 2 and kills 1: 2 + 1 = 3.
