@@ -398,7 +398,7 @@ example : (14142 * 14142 : ℕ) < 2 * 10 ^ 8 := by norm_num
 ## Where you meet it in real life
 
 - **Any measurement.** A length, a temperature, a time. The reading is a real number whether or not the marks reach it: [The number line and inequalities](02-number-line-and-inequalities.md).
-- **Solvers that close in.** A calculator's root key, a spreadsheet goal seek — each halves a bracket. They work because the squeeze lands somewhere.
+- **Solvers that close in.** A calculator's root key, a spreadsheet goal seek — each closes in on its answer step by step, as the bracket does here. They work because the squeeze lands somewhere.
 - **A graph crossing a line.** A cost curve meets a revenue line at a point: the line has no gap to jump.
 
 > **Say it back**
