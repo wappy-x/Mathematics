@@ -54,7 +54,7 @@ Two lines are the whole method, with b the base and e the exponent:
 
 ### When it holds
 
-- **The step count is a whole number.** Halving with the spare dropped walks it down to 1. A fraction of a step has no rung to climb.
+- **The step count is a positive whole number** (step 0 gives 1 mod n directly). Halving walks any positive count to 1; a negative or fractional count has no rung.
 - **The same 7 at every step.** Squaring doubles the steps only because every step uses the same base. Change the multiplier from step to step and there is no ladder.
 - **Every product fits the computer's numbers.** Here the biggest is 889249. On a far wider clock, fixed-size computer numbers, like the Rust check's 64-bit `i64`, overflow and the outputs come out wrong.
 
@@ -74,7 +74,7 @@ The step 15 output is 7 used 15 times, thousands thrown away. Square it and 7 ha
 
 ### Step 2: every step count halves to 1
 
-Halve, dropping the spare when the count is odd: 123, 61, 30, 15, 7, 3, 1. Seven rungs; the five odd ones above the bottom each cost an extra 7. Double the steps and the list gains one rung, not double the rungs.
+Halve, dropping the spare when the count is odd: 123, 61, 30, 15, 7, 3, 1. Seven rungs; the five odd ones above the bottom each cost an extra 7. Double any positive step count and the list gains one rung, not double the rungs.
 
 ### Step 3: climb back up
 
@@ -227,12 +227,12 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the method correct for every base, every whole-number exponent and every modulus.
+Lean proves the method for every non-negative whole-number base, exponent and modulus.
 
-- Square-and-multiply, keeping only the remainder after each multiplication, gives the same output as multiplying by the base step after step.
-- The ladder makes at most two multiplications per halving of the step count.
-- Doubling the step count adds one rung and one multiplication, not double the work.
-- Every product the ladder forms stays below the modulus times itself: under 1,000,000 in this generator.
+- Square-and-multiply, reducing after each multiplication, matches multiplying by the base step by step.
+- For step count at least 1, the ladder uses at most two multiplications per halving.
+- Doubling a step count of at least 1 adds one rung and one multiplication, not double the work.
+- For any positive modulus, every product stays below the modulus squared: under 1,000,000 here.
 - On the generator itself: step 123 gives 343, the rungs give the outputs in the table, and the ladder makes eleven multiplications.
 
 Running the method as real programs, where Rust's `i64` whole numbers must hold every product, is left to the Python and Rust checks.
@@ -404,12 +404,12 @@ example : 7 ^ 64 % 1000 = 401 := by norm_num
 
 ## Where this goes next
 
-- [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock the outputs return to 1 on a schedule, shrinking the exponent before you climb.
-- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): the ladder run backwards. Given only the output 343, nobody knows a fast way to find the step count.
-- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): a primality test, one ladder per round.
+- [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock, any base the prime does not divide returns to 1 on a schedule, shrinking the exponent before you climb.
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): the ladder run backwards. Given only the output on a huge clock, nobody knows a fast way to find the step count.
+- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): a fast test for whether a big number is prime, running one ladder per round.
 - [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): on many prime clocks, one fast power gives a square root.
 
-Left open: step 3 and step 123 both give 343, so the outputs repeat. On a prime clock, which power always brings a number back to 1?
+Left open: step 3 and step 123 both give 343, so the outputs repeat. On a prime clock, which power always brings a base the prime does not divide back to 1?
 
 ---
 

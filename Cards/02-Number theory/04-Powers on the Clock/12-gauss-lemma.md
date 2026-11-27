@@ -1,4 +1,4 @@
-# Gauss's lemma: count how many of a, 2a, 3a, ... land in the top half of the clock to tell whether a is a square
+# Gauss's lemma: on an odd prime clock, count how many of the first (p − 1)/2 multiples of a land in the top half, to tell whether a is a square
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Gauss's lemma
 
@@ -34,7 +34,7 @@ Two bars rise above the line at half the clock, 5.5: an even count.
 
 ## The formula
 
-For a number $`a`$ that $`p`$ does not divide, the **Legendre symbol** $`(a/p)`$ is 1 if $`a`$ is a square on the $`p`$-clock, and -1 if not.
+For an odd prime $`p`$ and a number $`a`$ that $`p`$ does not divide, the **Legendre symbol** $`(a/p)`$ is 1 if $`a`$ is a square on the $`p`$-clock, and -1 if not.
 
 ```math
 (a/p) \equiv a^{h} \equiv (-1)^{m} \pmod{p}
@@ -53,7 +53,7 @@ On the 11-clock: $`3^5 = 243`$, 22 whole clocks and 1 over, and $`(-1)^2 = 1`$. 
 | $`(a/p)`$ | 1 if $`a`$ is a square, -1 if not | 1 | only 1 or -1 |
 | $`x`$ | a square root: $`x \times x`$ reads $`a`$ | 5 | — |
 
-Two rules follow (Step 4):
+For an odd prime $`p`$, two rules follow (Step 4):
 
 - **-1 is a square** exactly when $`p`$ leaves 1 on division by 4: yes on 17 ($`4^2 = 16`$), no on 11.
 - **2 is a square** exactly when $`p`$ leaves 1 or 7 on division by 8: yes on 7, 17 and 23, no on 11 and 13.
@@ -85,9 +85,9 @@ The multiples multiply to $`a^h`$ times $`1 \times 2 \times \dots \times h`$. Fo
 
 ### Step 3: Euler's test, squares read 1 and the rest -1
 
-This is **Euler's criterion**. Squaring 1 to $`p-1`$ hits each square exactly twice, from $`x`$ and $`-x`$ (no third: the root bound), so there are $`h`$ squares.
+This is **Euler's criterion**. Squaring 1 to $`p-1`$ hits each nonzero square exactly twice, from $`x`$ and $`-x`$ (no third: the root bound), so there are $`h`$ nonzero squares.
 
-- A square $`x^2`$ raised to the $`h`$ is $`x^{p-1}`$, which reads 1 ([Fermat's little theorem](02-fermats-little-theorem.md)).
+- A nonzero square $`x^2`$ raised to the $`h`$ is $`x^{p-1}`$, which reads 1 ([Fermat's little theorem](02-fermats-little-theorem.md)).
 - $`x^h - 1`$ has at most $`h`$ roots on a prime clock ([Lagrange's root bound](07-lagrange-root-bound.md)). The squares fill them all.
 - A non-square's $`a^h`$ is then not 1, yet squares to $`a^{p-1}`$, which reads 1. Only 1 and -1 do that ([Wilson's theorem](06-wilsons-theorem.md), Step 1), so it reads -1.
 
@@ -118,7 +118,7 @@ So 2 has a square root on the 17-clock.
 | --- | --- | --- |
 | Counting the bottom half, 3 on 11 | 3, odd: "no" | that is $`h - m`$, flipped when $`h`$ is odd |
 | All ten multiples, 3 on 11 | 5, odd: "no" | always 5 on top: the row is 1 to 10 shuffled |
-| Power 10, not 5, for 2 on 11 | $`2^{10}`$ reads 1: "yes" | everything reads 1 there, by Fermat |
+| Power 10, not 5, for 2 on 11 | $`2^{10}`$ reads 1: "yes" | every nonzero hour reads 1 there, by Fermat |
 
 ---
 
@@ -392,25 +392,25 @@ example : 2 ^ 10 % 11 = 1 := by norm_num
 
 ## Where you meet it in real life
 
-- **Elliptic-curve keys.** Rebuilding a stored key takes a square root on a prime clock; Euler's test says if one exists.
+- **Elliptic-curve keys.** Rebuilding a stored key takes a square root on an odd prime clock; Euler's test says if one exists.
 - **Primality testing.** The Solovay–Strassen test runs Euler's test; composites often fail it.
 - **Quadratic reciprocity.** Gauss's count, as dots in a rectangle, proves the law linking $`(p/q)`$ and $`(q/p)`$ ([Quadratic reciprocity by counting dots](13-quadratic-reciprocity-by-lattice-points.md)).
 
 > **Say it back**
-> On a prime clock, half the nonzero hours are squares. Euler's test: raised to the power $`h`$, a square reads 1, a non-square -1. Gauss's count of top-half readings gives the same sign by its parity. -1 is a square when the prime leaves 1 on division by 4; 2 when it leaves 1 or 7 on division by 8.
+> On an odd prime clock, half the nonzero hours are squares. For any nonzero hour, Euler's test raises it to the power $`h = (p - 1)/2`$: a square reads 1, a non-square -1. Gauss's count of top-half readings gives the same sign by its parity. On an odd prime clock, -1 is a square exactly when the prime leaves 1 on division by 4, and 2 when it leaves 1 or 7 on division by 8.
 
 ---
 
 ## What this builds on
 
-- [Fermat's little theorem](02-fermats-little-theorem.md): every square reads 1 at Euler's power.
+- [Fermat's little theorem](02-fermats-little-theorem.md): every nonzero square reads 1 at Euler's power.
 - [Lagrange's root bound](07-lagrange-root-bound.md): at most $`h`$ roots, so the squares are all of them.
 - [Wilson's theorem](06-wilsons-theorem.md): only 1 and -1 square to 1 on a prime clock.
 
 ## Where this goes next
 
-- [Quadratic reciprocity by counting dots](13-quadratic-reciprocity-by-lattice-points.md): Gauss's count as lattice points, proving reciprocity.
-- [Quadratic residues](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/02-quadratic-residues-and-the-legendre-symbol.md): the fuller treatment of the Legendre symbol.
+- [Quadratic reciprocity by counting dots](13-quadratic-reciprocity-by-lattice-points.md): turns Gauss's count into grid dots to prove quadratic reciprocity for different odd primes.
+- [Quadratic residues](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/02-quadratic-residues-and-the-legendre-symbol.md): goes further with squares on odd prime clocks and the Legendre symbol.
 
 Left open: is there a simple rule for 3, 5 or 7?
 

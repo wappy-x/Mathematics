@@ -1,4 +1,4 @@
-# The order of a number and primitive roots: how many steps until the powers return to 1, and the numbers that visit everything
+# The order of a number and primitive roots: how many steps until the powers return to 1, and the numbers that visit every coprime remainder
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → The order of a number and primitive roots
 
@@ -14,9 +14,9 @@ Long division carries a remainder, and each step multiplies that carry by 10 bef
 
 On the 7-clock they run 3, 2, 6, 4, 5, 1; on the 13-clock, 10, 9, 12, 3, 4, 1. Six steps home both times: the **order** of 10 is 6.
 
-On the 7-clock those carries hit all six numbers that share no factor above 1 with 7: the numbers you can multiply by and undo. On the 13-clock they hit only half of the twelve. A number whose powers reach everything is a **primitive root**.
+On the 7-clock those carries hit all six numbers that share no factor above 1 with 7: the numbers you can multiply by and undo. On the 13-clock they hit only half of the twelve. A number whose powers reach all of those is a **primitive root**.
 
-**The order is how many steps a number's powers take to return to 1. It always divides the count of remainders you can get back from, and equalling that count makes the number a primitive root.**
+**For a number sharing no factor above 1 with the clock size, its order is the fewest steps its powers take to return to 1. It always divides the count of remainders you can undo, and equalling that count makes the number a primitive root.**
 
 **What kind of fact this is:** a theorem, proved in Why it works; which clocks have a primitive root is stated here and proved on [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md).
 
@@ -397,7 +397,7 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 
 ## Where you meet it in real life
 
-- **Repeating decimals.** The block of 1/n is as long as the order of 10 on the n-clock ([Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)): 142857 for 7, 076923 for 13.
+- **Repeating decimals.** When n shares no factor above 1 with 10, the repeating block of 1/n is as long as the order of 10 on the n-clock ([Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)): 142857 for 7, 076923 for 13.
 - **Key exchange.** Diffie-Hellman needs a large prime and a primitive root on it ([Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md)).
 - **Card shuffles.** A perfect riffle doubles each position on a clock; the deck returns at the order of 2 ([Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md)).
 
@@ -413,10 +413,10 @@ example : 10 % 3 = 1 ∧ 3 * 3 = 9 := by decide
 
 ## Where this goes next
 
-- [Wilson's theorem](06-wilsons-theorem.md): next on this shelf. It multiplies all the remainders you can undo together, instead of powering one of them.
+- [Wilson's theorem](06-wilsons-theorem.md): next on this shelf. On a prime clock, it multiplies all the nonzero remainders together instead of powering one of them.
 - [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): proves every prime clock has one, by counting how many numbers have each order.
 - [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): the proof of Gauss's list from the fold above.
-- [Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): the order of 2 on a clock, riffles back to a fresh deck.
+- [Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): how the order of 2 on a clock counts riffles back to a fresh deck.
 - [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): why key exchange rests on a primitive root of a large prime.
 - [Square roots on a prime clock](../06-Codes%20and%20Secrets/06-square-roots-mod-p.md): the orders of small helper numbers steer the search for a square root.
 

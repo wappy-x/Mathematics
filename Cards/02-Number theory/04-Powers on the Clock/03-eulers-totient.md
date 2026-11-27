@@ -57,7 +57,7 @@ Write p for a prime. A prime clock gets one bracket: phi(7) = 7 × (1 − 1/7) =
 - **One bracket per different prime.** A bracket for each copy of 2 gives 2, not 4.
 - **A bracket for every different prime.** Stop after the 2 and you get 6.
 - **Parts that share no factor.** 4 and 3 share none, so phi(4) × phi(3) = 2 × 2 = 4. Parts that share a factor do not multiply this way.
-- **phi(p) = p − 1 needs a prime clock.** On the 12-note clock it gives 11, not 4.
+- **phi(p) = p − 1 needs a prime clock.** On clock size 1 it gives 0 instead of phi(1) = 1 (1 has no prime factors, so no brackets apply); on the 12-note clock it gives 11, not 4.
 
 ---
 
@@ -334,7 +334,7 @@ example : ∀ n ∈ Finset.Icc 1 60,
 ## The usual mistake
 
 > [!warning]
-> **Using n − 1 when n is not prime.** On a prime clock every smaller number is coprime, so p − 1 is right. On the octave seven of the eleven below 12 share a factor: phi(12) is 4, not 11.
+> **Using n − 1 when n is not prime.** On a prime clock every number from 1 to p − 1 is coprime, so p − 1 is right. On the octave seven of the eleven below 12 share a factor: phi(12) is 4, not 11.
 >
 > - **Counting a repeated prime twice.** 12 is 2 × 2 × 3, but the formula takes two brackets. Use three brackets and you get 2.
 > - **Stopping at the first prime.** Dropping only the evens gives 6.
@@ -349,7 +349,7 @@ example : ∀ n ∈ Finset.Icc 1 60,
 - **Keys and secrets.** The totient is the exponent clock behind public-key encryption: why a message put through two powers comes back unchanged ([Euler's theorem](04-eulers-theorem.md)).
 
 > **Say it back**
-> An octave has 12 notes. A jump visits all 12 only if it shares no factor with 12: jumps 1, 5, 7 and 11. That count is Euler's totient, phi(12) = 4. No listing needed: 12 is 2 × 2 × 3, one bracket per different prime, 12 × (1 − 1/2) × (1 − 1/3) = 4. On a prime clock nothing below shares a factor, so phi(p) = p − 1.
+> An octave has 12 notes. A jump visits all 12 only if it shares no factor with 12: jumps 1, 5, 7 and 11. That count is Euler's totient, phi(12) = 4. No listing needed: 12 is 2 × 2 × 3, one bracket per different prime, 12 × (1 − 1/2) × (1 − 1/3) = 4. On a prime clock nothing from 1 to p − 1 shares a factor above 1, so phi(p) = p − 1.
 
 ---
 
@@ -365,7 +365,7 @@ example : ∀ n ∈ Finset.Icc 1 60,
 ## Where this goes next
 
 - [Euler's theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — the rule of [Fermat's little theorem](02-fermats-little-theorem.md), freed from prime clocks.
-- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses phi(d) to count how many numbers have each order d on a prime clock.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses phi(d) to count how many numbers have order d for each divisor d of p − 1 on a prime clock.
 
 The card leaves one question open: phi(n) counts the jumps that tour the clock, so what does it say when you multiply round the clock instead of adding?
 

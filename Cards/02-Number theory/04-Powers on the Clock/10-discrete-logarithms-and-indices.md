@@ -14,7 +14,7 @@ So each remainder has a step number: 7 is step 11. That number is its **index**,
 
 Indices turn a fifth power into multiplying by 5. With $`i`$ the index of the unknown, the question becomes $`5i \equiv 11 \pmod{12}`$, a **linear congruence**: an equation on a clock with the unknown to the first power only ([Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md)). Its answer $`i = 7`$ gives $`x = 2^7 \equiv 11`$, and indeed $`11^5 \equiv 7`$.
 
-**An index table turns every power equation on a prime clock into a linear congruence on a clock one smaller, which gives the number of answers and the answers themselves.**
+**An index table turns any prime-clock power equation with a nonzero target into a linear congruence mod p − 1, giving the nonzero answers and their count.**
 
 **What kind of fact this is:** a theorem, proved in Why it works; a primitive root exists by [Every prime clock has a primitive root](08-primitive-roots-mod-p.md).
 
@@ -35,7 +35,7 @@ All twelve heights appear once. Height 7 stands at index 11.
 
 ## The formula
 
-Three rules, on a prime clock $`p`$ with a primitive root $`g`$, for nonzero remainders $`a`$ and $`b`$:
+Three rules on a prime clock $`p`$ with primitive root $`g`$, for nonzero $`a, b, x`$ and whole-number $`k \ge 0`$:
 
 ```math
 \mathrm{ind}(ab) \equiv \mathrm{ind}(a) + \mathrm{ind}(b) \pmod{p-1}
@@ -46,10 +46,10 @@ x^k \equiv a \pmod{p} \iff k \cdot \mathrm{ind}(x) \equiv \mathrm{ind}(a) \pmod{
 ```
 
 ```math
-x^k \equiv a \text{ has } d \text{ answers if } a^{(p-1)/d} \equiv 1 \pmod{p}, \text{ and none otherwise}
+x^k \equiv a \text{ has } d \text{ nonzero answers if } a^{(p-1)/d} \equiv 1 \pmod{p}, \text{ and none otherwise}
 ```
 
-**Read it aloud:** indices add when numbers multiply, on a clock of size p − 1. A k-th power multiplies the index by k. Passing the power test means d answers.
+**Read it aloud:** indices add when nonzero numbers multiply, on a clock of size p − 1. A k-th power multiplies the index by k. Passing the power test means d nonzero answers.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -438,23 +438,23 @@ example : (10 : ZMod 13) ^ 5 = 4 := by decide
 
 - **Printed index tables.** Before computers, index tables were printed and used like log tables.
 - **Key exchange.** On a prime of hundreds of digits, powers are fast but no fast way to find an index is known: the discrete logarithm problem ([One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md)). [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md) rests on it.
-- **Exponents that can be undone.** If $`\gcd(k, p-1) = 1`$, every target has exactly one k-th root. [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md) picks its exponent with this in mind.
+- **Exponents that can be undone.** For a positive power $`k`$ with $`\gcd(k, p-1) = 1`$, every target has exactly one k-th root. [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md) picks its exponent with this in mind.
 
 > **Say it back**
-> A primitive root's powers visit every nonzero remainder once, so each has an index: its discrete logarithm. Indices add when numbers multiply, on a clock of size p − 1. Taking indices turns $`x^k \equiv a`$ into a linear congruence with $`d`$ answers or none, and $`a^{(p-1)/d} \equiv 1`$ decides which. On the 13-clock, $`x^5 \equiv 7`$ has one answer, 11; $`x^3 \equiv 5`$ has three: 8, 11 and 7.
+> A primitive root's powers hit every nonzero remainder once, giving each an index (discrete logarithm). Indices add when nonzero numbers multiply, mod p − 1. For nonzero $`a`$ and $`x`$, $`x^k \equiv a`$ becomes a linear congruence with $`d`$ nonzero answers when $`a^{(p-1)/d} \equiv 1`$ and none otherwise. On the 13-clock, $`x^5 \equiv 7`$ gives 11; $`x^3 \equiv 5`$ gives 8, 11 and 7.
 
 ---
 
 ## What this builds on
 
-- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): the base whose powers give every remainder an index.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): the base whose powers give every nonzero remainder an index.
 - [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): the gcd rule that counts and finds the answers.
 - [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): "how many of the base got me here?", now on a clock.
 
 ## Where this goes next
 
 - [Carmichael's function](11-carmichael-function.md): next on this shelf. On a clock that is not prime there may be no primitive root, so it asks for the longest order instead.
-- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): powers are fast, indices slow.
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): why powers on a huge prime clock are fast, while nobody knows a fast way to find indices.
 - [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): a shared secret kept safe by that slowness.
 
 Left open: is there a fast way to find an index on a huge prime clock? None is known for ordinary computers. That question belongs to the Codes and Secrets shelf; this shelf goes on to clocks that are not prime.

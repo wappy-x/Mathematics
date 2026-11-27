@@ -28,6 +28,8 @@ The line runs to (2.5, 3.5): half of 5 across, half of 7 up.
 
 ## The formula
 
+For two different odd primes $`p`$ and $`q`$:
+
 ```math
 (p/q) \times (q/p) = (-1)^{h \times k}, \qquad h = (p-1)/2, \quad k = (q-1)/2
 ```
@@ -67,7 +69,7 @@ Divide q, 2q, up to hq by p. Gauss's count m is how many remainders land above p
 W = \lfloor q/p \rfloor + \lfloor 2q/p \rfloor + \dots + \lfloor hq/p \rfloor
 ```
 
-For odd q, W and m are both even or both odd, so $`(q/p) = (-1)^{W}`$. For 7 on the 5-clock: 7 = 5 + 2 and 14 = 2 × 5 + 4, so W = 3 and m = 1: both odd, not a square.
+For odd $`q`$ not divisible by $`p`$, W and m are both even or both odd, so $`(q/p) = (-1)^{W}`$. For 7 on the 5-clock: 7 = 5 + 2 and 14 = 2 × 5 + 4, so W = 3 and m = 1: both odd, not a square.
 
 <details>
 <summary>Proof that W and m are both even or both odd</summary>
@@ -98,7 +100,7 @@ Row y holds $`\lfloor yp/q \rfloor`$ dots left of the line: above it. Their tota
 
 ### Step 4: no dot sits on the line
 
-A dot (x, y) on the line needs xq = yp. Then the prime p divides xq but not q, so it divides x ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), yet x is below p. So the counts add to h × k, and the two signs multiply to $`(-1)^{h \times k}`$.
+A dot (x, y) on the line needs xq = yp. Then the prime p divides xq but not q, so it divides x ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), yet x lies between 1 and h, below p. So the counts add to h × k, and the two signs multiply to $`(-1)^{h \times k}`$.
 
 ---
 
@@ -406,7 +408,7 @@ example : (∑ x ∈ Finset.Icc 1 5, x * 19 / 11) = 23 ∧ (∑ y ∈ Finset.Icc
 - **Primality testing.** The Solovay–Strassen test checks Euler's test against the symbol found by flips.
 
 > **Say it back**
-> "Is p a square on the q-clock?" and "is q a square on the p-clock?" answer each other. Cut the h by k rectangle of dots with a line from the corner. Dots below decide one answer, dots above the other. Together they fill the rectangle. The answers agree unless both primes leave 3 on division by 4.
+> For two different odd primes p and q, "is p a square on the q-clock?" and "is q a square on the p-clock?" answer each other. Cut the h by k rectangle of dots with a line from the corner. Dots below decide one answer, dots above the other. Together they fill the rectangle. The answers agree unless both primes leave 3 on division by 4.
 
 ---
 
@@ -416,8 +418,8 @@ example : (∑ x ∈ Finset.Icc 1 5, x * 19 / 11) = 23 ∧ (∑ y ∈ Finset.Icc
 
 ## Where this goes next
 
-- [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): a second, deeper proof, by Gauss sums.
-- [The Jacobi symbol](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md): flips without factoring.
+- [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): a second, deeper proof using Gauss sums, built from points spaced evenly round a circle.
+- [The Jacobi symbol](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/08-jacobi-symbol-and-computing-without-factoring.md): extends the flip rule to odd composite clocks so you can compute symbols without factoring.
 - [The Langlands program](../../25-Frontier/06-Algebra%2C%20Logic%20and%20Computation/06-langlands-program-and-geometric-langlands.md): the far-reaching modern descendant of this law.
 - [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): the first card of the next shelf in this wing, where clock arithmetic catches typing errors in everyday codes.
 

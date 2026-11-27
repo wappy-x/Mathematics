@@ -16,7 +16,7 @@ Some clocks have none: on the 8-clock every odd square leaves 1, short of 4 step
 
 **A primitive root of an odd prime p lifts to every power of p after one test, and if odd, to twice those; no other clock above 4 has one.**
 
-**What kind of fact this is:** a theorem, proved in Why it works. It proves the list stated in [The order of a number and primitive roots](05-order-and-primitive-roots.md).
+**What kind of fact this is:** a theorem, proved in Why it works, proving the list in [The order of a number and primitive roots](05-order-and-primitive-roots.md).
 
 ### The picture
 
@@ -42,7 +42,7 @@ g^{p-1} \not\equiv 1 \pmod{p^2} \;\Longrightarrow\; g \text{ is a primitive root
 
 **Read it aloud:** if g to the p minus 1 does not leave 1 on the p-squared clock, g is a primitive root on every power of p.
 
-Here $`\equiv`$ with "(mod m)" means "same remainder on the m-clock" ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Gauss's list of clocks with a primitive root:
+Here $`\equiv`$ (mod m) means "same remainder on the m-clock" ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Gauss's list:
 
 ```math
 n = 1,\ 2,\ 4,\ p^k \text{ or } 2p^k
@@ -63,7 +63,7 @@ n = 1,\ 2,\ 4,\ p^k \text{ or } 2p^k
 
 - **The prime is odd.** Otherwise: the 8-clock's best order is 2, not 4.
 - **The test is passed.** Otherwise the order stops short: 31 has order 6 on the 49-clock.
-- **The clock does not split into two parts above 2.** Otherwise no root exists: on the 15-clock the best order is 4, not 8.
+- **The clock does not split into two coprime parts above 2.** Otherwise no root exists: on the 15-clock the best order is 4, not 8.
 
 ---
 
@@ -113,7 +113,9 @@ By [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder
 
 ### Step 4: the 8-clock
 
-An odd number $`2m + 1`$ squares to $`4m(m+1) + 1`$, and $`m(m+1)`$ is even, so it leaves 1 on the 8-clock. Each squaring doubles the clock that leaves 1: $`(1 + 8s)^2 = 1 + 16s + 64s^2`$. So no order passes a quarter of the clock, half of phi: 2, 4, 8, 16 on the 8, 16, 32, 64 clocks.
+Small clocks 1, 2 and 4 work: 1 on 1 and 2 (order 1); 3 on 4 (order 2).
+
+An odd number $`2m + 1`$ squares to $`4m(m+1) + 1`$, and $`m(m+1)`$ is even, so it leaves 1 on the 8-clock. Each squaring doubles the clock that leaves 1: $`(1 + 8s)^2 = 1 + 16s + 64s^2`$. So no order passes a quarter of the clock: 2, 4, 8, 16 on the 8, 16, 32, 64 clocks.
 
 ### Step 5: the 15-clock
 
@@ -148,7 +150,7 @@ So 3 is primitive on every power of 7 and twice each.
 
 ## Code, from first principles, and it actually runs
 
-Two roads: brute force multiplies until the remainder is 1; the lifting test and Gauss's list read the answer from the factors. They agree on clocks 2 to 100.
+Brute force multiplies until remainder 1; the lifting test and Gauss's list read factors. Both agree on clocks 2 to 100.
 
 ### Python
 
@@ -260,11 +262,11 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the card's three claims for every odd prime and every clock size, not just 7.
+Lean proves the card's three claims for every odd prime and every positive clock size, not just 7.
 
 - A primitive root of an odd prime that passes the test is primitive on every power of that prime, and an odd one on twice each power.
 - If $`g`$ is a primitive root on an odd prime $`p`$-clock, $`g`$ or $`g + p`$ passes the test.
-- Gauss's list is exact: a clock has a primitive root just when it is 1, 2, 4, an odd prime power, or twice one.
+- Gauss's list is exact: a clock of any positive size has a primitive root just when that size is 1, 2, 4, an odd prime power, or twice one.
 - It also re-checks the card's numbers: the 7-, 49-, 98- and 343-clocks, the failing lift 31, and the 8- and 15-clocks.
 
 Brute force on clocks 2 to 100 and printing the output are left to the Python and Rust checks.
@@ -487,11 +489,11 @@ example : (∀ x, x < 15 → Nat.gcd x 15 = 1 → x ^ 4 % 15 = 1) ∧ Nat.totien
 
 ## Where you meet it in real life
 
-- **Repeating decimals.** 1/n repeats with the order of 10 on the n-clock. 10 passes the test, so 1/49 repeats every 42 digits, 1/343 every 294.
-- **Random-number generators.** Multiplying by a constant on a power-of-2 clock cycles at most a quarter of the clock (Step 4).
+- **Repeating decimals.** For n sharing no factor with 10, 1/n repeats with the order of 10 on the n-clock: 42 digits for 1/49, 294 for 1/343.
+- **Random-number generators.** Multiplying on a power-of-2 clock from 8 up cycles at most a quarter of it (Step 4).
 
 > **Say it back**
-> The order on a bigger clock is squeezed: a multiple of the p-clock order, dividing phi. For an odd prime, one test on the p-squared clock settles every power of p. An odd root also works on twice the power. Powers of 2 from 8 up, and clocks splitting into two parts above 2, have none.
+> The higher-power order is squeezed: a multiple of the p-clock order dividing phi. For an odd prime, one test on the p-squared clock settles every power of p, and an odd root covers twice each power. Powers of 2 from 8 up, and clocks splitting into two coprime parts above 2, have none.
 
 ---
 
@@ -503,8 +505,8 @@ example : (∀ x, x < 15 → Nat.gcd x 15 = 1 → x ^ 4 % 15 = 1) ∧ Nat.totien
 
 ## Where this goes next
 
-- [Indices](10-discrete-logarithms-and-indices.md): a primitive root turns multiplying into adding exponents.
-- [Carmichael's function](11-carmichael-function.md): the best order on any clock, root or not.
+- [Indices](10-discrete-logarithms-and-indices.md): a primitive root turns multiplying coprime remainders into adding exponents.
+- [Carmichael's function](11-carmichael-function.md): the largest order on any positive clock, whether it has a primitive root or not.
 
 Left open: is 10 a primitive root on infinitely many prime clocks? That is Artin's conjecture, still unproved. The next card uses primitive roots as the base of clock logarithms.
 

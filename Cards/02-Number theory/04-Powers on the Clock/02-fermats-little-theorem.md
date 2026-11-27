@@ -54,7 +54,7 @@ a^{p-1} \equiv 1 \pmod{p}
 
 The ≡ means the same reading on the dial; the (mod p) says which dial.
 
-One more doubling takes that 1 back to 2: 2 taken thirteen times over is 8,192, and the dial reads 2. That second form, a to the p ≡ a (mod p), needs no condition.
+One more doubling takes that 1 back to 2: 2 taken thirteen times over is 8,192, and the dial reads 2. That second form, a to the p ≡ a (mod p), needs no condition on a, only that p is prime.
 
 ### When it holds
 
@@ -88,7 +88,7 @@ So 4,096 times the row's product reads the same as that product alone. It cancel
 
 What is left is 4,096 alone, reading 1. That is the theorem.
 
-The other classical route expands a bracket raised to a power, every middle term carrying a factor of 13. Drop the word prime from the statement and you get [Euler's theorem](04-eulers-theorem.md), the same shuffle over a shorter row.
+The other classical route expands a bracket raised to a power, every middle term carrying a factor of 13. Drop the word prime — keeping only bases coprime to the dial size and using their count as the power — and you get [Euler's theorem](04-eulers-theorem.md), the same shuffle over a shorter row.
 
 ---
 
@@ -238,7 +238,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the theorem for every prime dial and every whole number, not just 13 and 2. It proves both forms on this card and the shuffle the proof rests on, and it re-checks the card's 13-dial numbers. The printed tables and the long-way runs stay with the Python and Rust checks.
+Lean proves both forms on this card and the shuffle the proof rests on for every prime dial p — with the first form and the shuffle requiring that p does not divide a, and the second form holding for every whole number a — and it re-checks the card's 13-dial numbers. The printed tables and the long-way runs stay with the Python and Rust checks.
 
 ```lean
 -- Fermat's little theorem: for a prime p and a whole number a that p does not divide, a to the power p − 1 leaves remainder 1 on division by p, and a to the power p always reads a.
@@ -346,7 +346,7 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 >
 > - **Forgetting the exclusion.** Start from 26 and the reading is 0 forever: multiples of the dial size are stuck.
 > - **A dial that is not prime.** A 15-dial with power 14 reads 4. The fix is a different count: [Euler's theorem](04-eulers-theorem.md).
-> - **Reading it backwards.** A prime dial always gives 1. That only prime dials do is a different claim, and false: [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
+> - **Reading it backwards.** A prime dial always gives 1 for any base it does not divide. That only prime dials do is a different claim, and false: [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
 
 ---
 
@@ -372,10 +372,10 @@ example : 2 ^ 11 % 13 = 7 ∧ 2 * 7 = 1 * 13 + 1 := by norm_num
 ## Where this goes next
 
 - [Euler's totient](03-eulers-totient.md): next on this shelf. It counts the numbers a dial that is not prime can still undo, and that count replaces p − 1.
-- [Euler's theorem](04-eulers-theorem.md): the same statement without the word prime.
+- [Euler's theorem](04-eulers-theorem.md): replaces p − 1 with the count of numbers coprime to n, for any clock size n and any base coprime to n.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
 - [Lagrange's root bound](07-lagrange-root-bound.md): this theorem gives x^(p − 1) − 1 a root at every nonzero position, so it splits fully and proves Wilson's theorem again.
-- [Gauss's lemma](12-gauss-lemma.md): takes half of Fermat's power, a to the (p − 1)/2, which reads 1 or −1 and tells squares from non-squares.
+- [Gauss's lemma](12-gauss-lemma.md): for an odd prime p and a base p does not divide, half of Fermat's power, a^((p − 1)/2), reads 1 or −1 and tells squares from non-squares.
 
 Left open: on a dial that is not prime, like 15, what power brings the reading back to 1?
 

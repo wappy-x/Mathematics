@@ -10,7 +10,7 @@ A random-number generator multiplies by a fixed multiplier each step, keeping th
 
 On the 13-clock, multiplier 2 gives 2, 4, 8, 3, 6, 12, 11, 9, 5, 10, 7, 1: all twelve. Multiplier 3 gives 3, 9, 1: a loop of three.
 
-Call the clock size p, a prime; here p = 13. A number that visits everything is a **primitive root**: its order, the steps until its powers return to 1, is the full p − 1 ([The order of a number and primitive roots](05-order-and-primitive-roots.md)). Every prime clock has one; the 13-clock has four: 2, 6, 7 and 11.
+Call the clock size p, a prime; here p = 13. A number whose powers visit every nonzero remainder is a **primitive root**: its order, the steps until its powers return to 1, is the full p − 1 ([The order of a number and primitive roots](05-order-and-primitive-roots.md)). Every prime clock has one; the 13-clock has four: 2, 6, 7 and 11.
 
 phi(d), [Euler's totient](03-eulers-totient.md), counts the numbers from 1 to d sharing no factor above 1 with d.
 
@@ -53,7 +53,7 @@ Each bar is phi(d); the last bar is the primitive roots.
 ### When it holds
 
 - **The clock is prime.** On the 15-clock x^2 − 1 has 4 roots. phi(8) = 4 promises four numbers of order phi(15) = 8; there are 0.
-- **Count with phi(p − 1), not phi(p).** phi(13) = 12 counts every number.
+- **Count with phi(p − 1), not phi(p).** phi(13) = 12 counts every nonzero number.
 - **Existence, not a recipe.** The proof names none; Step 4 finds one by search.
 
 ---
@@ -102,7 +102,7 @@ Each pile holds at most phi(d) (Step 1), and the phi(d) add up to 12 (Step 2). O
 
 ### Step 4: testing one candidate
 
-Suppose a has a shorter order d. Then (p − 1)/d is at least 2, so some prime q divides it, and d divides (p − 1)/q. That q also divides p − 1. So a is a primitive root exactly when a^((p − 1)/q) is not 1 for every prime q dividing p − 1.
+Suppose a nonzero number a has a shorter order d. Then (p − 1)/d is at least 2, so some prime q divides it, and d divides (p − 1)/q. That q also divides p − 1. So a nonzero number a is a primitive root exactly when a^((p − 1)/q) is not 1 for every prime q dividing p − 1.
 
 On the 13-clock, q is 2 or 3: test the 6th and 4th powers. 2^6 = 12 and 2^4 = 3, so 2 passes. 5 fails, because 5^4 = 1.
 
@@ -126,7 +126,7 @@ Four of the twelve multipliers give the generator a full cycle.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Every number taken for a primitive root | 12 | Only order 12 visits everything |
+| Every number taken for a primitive root | 12 | Only order 12 visits every nonzero remainder |
 | Testing only the 6th power | 6 | 5 and 8, of order 4, pass too |
 | The count used on the 15-clock | promises 4, finds 0 | Not prime: the root bound fails |
 
@@ -400,7 +400,7 @@ example : (univ.filter fun a : ZMod 15 => a ^ 8 = 1 ∧ ∀ m < 8, 0 < m → a ^
 > [!warning]
 > **Testing one power and calling it done.** A primitive root must avoid 1 at (p − 1)/q for every prime q dividing p − 1. On the 13-clock, the 6th power alone passes 6 numbers, but 5 and 8 have order 4.
 >
-> - Counting phi(p) instead of phi(p − 1) gives 12: every number.
+> - Counting phi(p) instead of phi(p − 1) gives 12: every nonzero number.
 > - The count on the 15-clock, not prime, promises 4 and finds 0.
 > - Any multiplier will do: 3 loops 3, 9, 1.
 
@@ -425,9 +425,9 @@ example : (univ.filter fun a : ZMod 15 => a ^ 8 = 1 ∧ ∀ m < 8, 0 < m → a ^
 
 ## Where this goes next
 
-- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): prime powers and twice them.
-- [Indices](10-discrete-logarithms-and-indices.md): logarithms on the clock, base a primitive root.
-- [Carmichael's function](11-carmichael-function.md): the longest order on any clock.
+- [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): proves that only 1, 2, 4, odd prime powers, and twice those have a primitive root.
+- [Indices](10-discrete-logarithms-and-indices.md): uses a primitive root as the base of clock logarithms to turn powers into multiplication.
+- [Carmichael's function](11-carmichael-function.md): finds the largest order on any positive clock, even clocks with no primitive root.
 
 Left open: 3 is a primitive root on the 7-clock. Is it still one on the 49-clock, and on every power of 7?
 

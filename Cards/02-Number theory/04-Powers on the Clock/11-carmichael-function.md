@@ -1,4 +1,4 @@
-# Carmichael's function: the smallest power that sends every coprime number home, often far below Euler's count
+# Carmichael's function: the smallest positive power that sends every coprime number home, often far below Euler's count
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Carmichael's function
 
@@ -12,7 +12,7 @@ Why: 561 = 3 × 11 × 17, and a coprime base comes home every 2 steps on the 3-c
 
 The **Fermat test** screens n for primality: raise a coprime base to the power n − 1; a prime always gives 1 ([Fermat's little theorem](02-fermats-little-theorem.md)). 80 divides 560, so every coprime base gives 1 on 561, though 561 is composite.
 
-**Carmichael's function λ(n) is the smallest power that sends every number coprime to n back to 1 on the n-clock: the lcm of the return times on the prime-power pieces of n.**
+**For any positive clock size n, Carmichael's function λ(n) is the smallest positive power that sends every number coprime to n back to 1 on the n-clock: the lcm of the return times on the prime-power pieces of n.**
 
 **What kind of fact this is:** a theorem, proved in Why it works, with Korselt's test.
 
@@ -38,7 +38,7 @@ flowchart LR
 ```
 
 ```math
-\lambda(p^k) = (p-1)\, p^{k-1} \text{ for an odd prime } p, \qquad \lambda(2) = 1, \quad \lambda(4) = 2, \quad \lambda(2^k) = 2^{k-2} \text{ for } k \ge 3
+\lambda(p^k) = (p-1)\, p^{k-1} \text{ for an odd prime } p \text{ and } k \ge 1, \qquad \lambda(1) = \lambda(2) = 1, \quad \lambda(4) = 2, \quad \lambda(2^k) = 2^{k-2} \text{ for } k \ge 3
 ```
 
 ```math
@@ -53,7 +53,7 @@ flowchart LR
 | p | a prime dividing n | 3, 11, 17 | a longer return time, p − 1 |
 | k | how many times p divides n | 1 each | multiplies an odd piece's return time by p |
 | a | a base sharing no factor with n | 2, 5, 13 | — (its cycle divides λ(n)) |
-| λ(n) | the smallest power sending every such base to 1 | 80 | — |
+| λ(n) | the smallest positive power sending every such base to 1 | 80 | — |
 | φ(n) | Euler's totient: the count of such bases | 320 | a whole multiple of λ(n) |
 
 On the 15-clock φ is 8, λ is 4: $`2^4 = 16 = 15 + 1`$.
@@ -422,7 +422,7 @@ example : carmichael 3233 = 780 := by
 ## The usual mistake
 
 > [!warning]
-> **Taking Euler's count as the smallest power that works.** φ(561) = 320 works, but so does 80. Euler multiplies the return times; Carmichael takes their lcm.
+> **Taking Euler's count as the smallest positive power that works.** φ(561) = 320 works, but so does 80. Euler multiplies the return times; Carmichael takes their lcm.
 >
 > - A base sharing a factor: $`3^{80}`$ leaves 375.
 > - λ(8) taken as 4: it is 2.
@@ -434,10 +434,10 @@ example : carmichael 3233 = 780 := by
 
 - **RSA keys.** RSA locks with a public power e, unlocks with a private power d. Its standard (PKCS #1) lets d undo e on a λ(n)-clock: for 3233 = 61 × 53 and e = 17, λ is 780 and d is 413, not 2753, and 2790 still unlocks to 65 ([RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
 - **Primality testing.** Exactly the composites passing Korselt's test fool the Fermat test for every coprime base: 561, 1105, 1729 and on.
-- **Random number generators.** Multiplying by a fixed number on an n-clock repeats within λ(n) steps.
+- **Random number generators.** Multiplying by a fixed number coprime to n on an n-clock repeats within λ(n) steps.
 
 > **Say it back**
-> λ(n) is the smallest power that sends every number coprime to n back to 1. It is the lcm of the prime-power pieces' return times: 80 for 561, against Euler's 320. It equals φ(n) exactly when n has a primitive root. A composite n fools the Fermat test for every coprime base exactly when λ(n) divides n − 1.
+> For any positive clock size n, λ(n) is the smallest positive power that sends every number coprime to n back to 1. It is the lcm of the prime-power pieces' return times: 80 for 561, against Euler's 320. It equals φ(n) exactly when n has a primitive root. A composite n fools the Fermat test for every coprime base exactly when λ(n) divides n − 1.
 
 ---
 
@@ -449,7 +449,7 @@ example : carmichael 3233 = 780 := by
 
 ## Where this goes next
 
-- [Gauss's lemma](12-gauss-lemma.md): next on this shelf. It turns from return powers to a new question: which numbers are squares on a prime clock.
+- [Gauss's lemma](12-gauss-lemma.md): next on this shelf. It turns from return powers to a new question: which numbers are squares on an odd prime clock.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the test in use, and how Carmichael numbers fool it.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the repaired test, which catches Carmichael numbers.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the cipher, worked there with φ(n); its standard swaps in λ(n), as in the RSA keys example above.

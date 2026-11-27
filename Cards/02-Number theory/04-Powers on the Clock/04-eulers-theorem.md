@@ -47,12 +47,12 @@ On our clock, this is the whole thing:
 | phi(n), Euler's totient | how many numbers below the clock are coprime to it ([Euler's totient](03-eulers-totient.md)) | 40 |
 | the exponent | how many times the base is multiplied by itself | 2026, cut to 26 |
 
-Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock everything below is coprime, so the count is one less than the prime: [Fermat's little theorem](02-fermats-little-theorem.md).
+Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock every number from 1 to p − 1 is coprime, so the count is one less than the prime: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 ### When it holds
 
 - **The base shares no factor with the clock.** 2 to the 40 reads 76 and 10 to the 40 reads 0, not 1.
-- **The power is the coprime count.** One less than the clock works on prime clocks only: 3 to the 99 reads 67.
+- **The power is the coprime count.** One less than the clock is guaranteed on prime clocks only: 3 to the 99 reads 67.
 - **The exponent is cut by the count, not the clock size.** On the 7-clock, 3 to the 10 reads 4 cut by 6, but 6 cut by 7.
 
 ---
@@ -110,7 +110,7 @@ The numbers run on a 100-clock; the exponents run on a 40-clock.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | a base sharing a factor: 2 to the 40, 10 to the 40 | 76, 0 | anything but 1, and not always 0 |
-| treating 100 as prime: 3 to the 99 | 67 | one less than the clock works on prime clocks only |
+| treating 100 as prime: 3 to the 99 | 67 | one less than the clock is guaranteed on prime clocks only |
 | keeping the quotient: 3 to the 50 | 49 | 50 counts the blocks thrown away, 26 is the leftover |
 
 ---
@@ -347,7 +347,7 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 > [!TIP]
 > **Try changing**
 > - **Break the coprime rule.** Set `a` to 2. Guess first: 2 to the 40 is 76, not 1, and the first assert fires: the gcd line catches it before Euler is tested.
-> - **Move to a prime clock.** Set `n` to 97, then delete the factored-totient line, its row, and the asserts holding 40 and 29. Everything below 97 is coprime, so the count is 96 and 3 to the 96 is 1: Euler back as Fermat.
+> - **Move to a prime clock.** Set `n` to 97, then delete the factored-totient line, its row, and the asserts holding 40 and 29. Every number from 1 to 96 is coprime, so the count is 96 and 3 to the 96 is 1: Euler back as Fermat.
 
 ---
 
@@ -383,9 +383,9 @@ example : φ 7 = 6 ∧ 3 ^ 10 % 7 = 4 ∧ 3 ^ (10 % 6) % 7 = 4 ∧ 3 ^ (10 % 7) 
 ## Where this goes next
 
 - [The order of a number and primitive roots](05-order-and-primitive-roots.md): the smallest exponent returning to 1, often below 40.
-- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the theorem doing paid work.
+- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): how public-key encryption locks and unlocks a message using Euler's theorem.
 - [Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md): which clocks have a base whose first return to 1 takes the full phi(n) steps, and why the 8-clock and 15-clock have none.
-- [Carmichael's function](11-carmichael-function.md): the smallest power that sends every coprime number home, often far below Euler's count.
+- [Carmichael's function](11-carmichael-function.md): the smallest positive power that sends every coprime number home, often far below Euler's count.
 
 Left open: what is the smallest power that brings 3 back to 1?
 

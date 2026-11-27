@@ -1,4 +1,4 @@
-# Lagrange's root bound: a degree-d polynomial has at most d roots on a prime clock, but x^2 = 1 has four on the 8-clock
+# Lagrange's root bound: a degree-d polynomial not zero on a prime clock has at most d roots, but x^2 = 1 has four on the 8-clock
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Lagrange's root bound
 
@@ -14,7 +14,7 @@ A **polynomial** is a sum of powers of an unknown x, each times a whole number, 
 
 The payoff: on the 7-clock, x^6 − 1 has six roots, the most allowed, so it splits into six pieces. Their constant terms prove [Wilson's theorem](06-wilsons-theorem.md) again.
 
-**On a prime clock, a degree-d polynomial has at most d roots: each root splits off a factor, and two non-zero pieces never multiply to 0.**
+**On a prime clock, a polynomial of degree d on that clock (not zero on the clock) has at most d roots: each root splits off a factor, and two non-zero pieces never multiply to 0.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -35,13 +35,13 @@ Prime clocks stay at 2, the degree; the 8-, 12-, 15- and 16-clocks go over.
 
 ## The formula
 
-For a prime clock size p and a polynomial f(x) of degree d:
+For a prime clock p and a polynomial f(x) of degree d on it (not zero on the p-clock):
 
 ```math
 f(x) \equiv 0 \pmod{p} \;\text{ has at most } d \text{ roots among } 0, 1, \dots, p-1
 ```
 
-**Read it aloud:** on a prime clock, a degree-d polynomial reads 0 at d of the clock's numbers at most.
+**Read it aloud:** on a prime clock, a polynomial of degree d on it reads 0 at d numbers at most.
 
 The payoff, coefficient by coefficient:
 
@@ -74,13 +74,13 @@ If 7 divides a product, it divides one of the pieces ([Euclid's lemma](../02-Gre
 
 ### Step 1: a root splits off a factor x − r
 
-For any power k, multiplying out the right side cancels the middle terms:
+For any positive power k, multiplying out the right side cancels the middle terms:
 
 ```math
 x^{k} - r^{k} = (x - r)(x^{k-1} + x^{k-2}r + \dots + r^{k-1})
 ```
 
-So f(x) − f(r) is (x − r) times a polynomial g(x) of degree d − 1. If r is a root, f(r) reads 0, so f(x) ≡ (x − r) g(x). For example, x^2 − 1 = (x − 1)(x + 1).
+So when d is at least 1, f(x) − f(r) is (x − r) times a polynomial g(x) of degree d − 1. If r is a root, f(r) reads 0, so f(x) ≡ (x − r) g(x). For example, x^2 − 1 = (x − 1)(x + 1).
 
 ### Step 2: every other root is a root of the smaller piece
 
@@ -245,7 +245,7 @@ ALL CHECKS PASS
 
 Lean proves the bound, the splitting and Wilson's theorem for every prime clock, not just 7.
 
-- Suppose p is prime and f has degree d on the p-clock. Then f reads 0 at d of the numbers 0 to p − 1 at most.
+- Suppose p is prime and f has degree d on the p-clock (its x^d coefficient is not a multiple of p, and every higher one is). Then f reads 0 at d of the numbers 0 to p − 1 at most.
 - Take any prime clock size p. Then x^(p − 1) − 1 ≡ (x − 1)(x − 2)…(x − (p − 1)), coefficient by coefficient.
 - Take any prime clock size p. Then 1 × 2 × … × (p − 1) reads −1 on the p-clock.
 - It re-checks the card's numbers: the roots on the 7- and 8-clocks, the row for clocks 3 to 16, and all 294 quadratics.
@@ -432,7 +432,7 @@ end LagrangeRootBound
 - **Primality testing.** On a prime clock only 1 and −1 square to 1. A third, like 3 on the 8-clock, proves the clock size is not prime. [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md) hunts for one.
 
 > **Say it back**
-> Each root of a polynomial splits off a factor x − r. On a prime clock a product reads 0 only when a factor does, so the roots never outnumber the degree. On the 8-clock that fails: x^2 = 1 has four roots. On the 7-clock, x^6 − 1 has six roots, so it equals (x − 1)…(x − 6), and the constant terms give 720 ≡ −1.
+> Each root splits off a factor x − r. On a prime clock a product reads 0 only when a factor does, so a polynomial not zero on the clock has at most its degree in roots. On the 8-clock that fails: x^2 = 1 has four roots. On the 7-clock, x^6 − 1 has six roots, so it equals (x − 1)…(x − 6), and the constant terms give 720 ≡ −1.
 
 ---
 
@@ -445,8 +445,8 @@ end LagrangeRootBound
 
 ## Where this goes next
 
-- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses this bound to find a number whose powers visit the whole clock.
-- [Gauss's lemma](12-gauss-lemma.md): uses the same count to sort squares on a prime clock.
+- [Every prime clock has a primitive root](08-primitive-roots-mod-p.md): uses this bound to find a number whose powers visit every nonzero number on the clock.
+- [Gauss's lemma](12-gauss-lemma.md): uses the same count to sort squares from non-squares on an odd prime clock.
 - [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): the full factor theorem for ordinary polynomials.
 - [Finding a pattern in text](../../14-Applied%20and%20computational/01-Algorithms%20and%20Growth/11-string-matching-kmp-and-rabin-karp.md): Rabin–Karp text search treats two words as polynomials on a prime clock. This bound keeps false matches rare.
 

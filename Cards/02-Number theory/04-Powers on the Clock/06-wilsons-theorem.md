@@ -1,4 +1,4 @@
-# Wilson's theorem: multiply everything below a prime and the clock shows -1, and only primes do this
+# Wilson's theorem: multiply 1 to one below a prime and the clock shows -1, and no composite clock does this
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Powers on the Clock](../README.md#s04) → Wilson's theorem
 
@@ -14,7 +14,7 @@ Multiply all six together. Each couple collapses to 1. 6 undoes itself, but it i
 
 6 is one short of a full clock, so the reading is -1 ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
 
-**Multiply every number below a prime clock size together and the clock reads -1 — and no clock that is not prime ever does that.**
+**Multiply every number from 1 up to one below a prime clock size together and the clock reads -1 — and no composite clock ever does that.**
 
 **What kind of fact this is:** a theorem in both directions, proved on this card in Why it works.
 
@@ -54,7 +54,7 @@ The ≡ means the same reading; the (mod 7) says which clock.
 
 Call the clock size p, for prime: multiply every number from 1 up to p - 1 and the reading is -1 (mod p).
 
-It runs backwards too: a reading of -1 means the clock size is prime.
+It runs backwards too: for any clock size of at least 2, a reading of -1 means the clock size is prime.
 
 ### When it holds
 
@@ -237,7 +237,7 @@ ALL CHECKS PASS
 Lean proves the card's three facts for every clock size, not just 7.
 
 - A clock size of at least 2 is prime exactly when its row reads -1.
-- On a clock that is not prime, the row reads 0, except the 4-clock, where it reads 2.
+- On a composite clock (size at least 2 and not prime), the row reads 0, except the 4-clock, where it reads 2.
 - On a prime clock, only 1 and -1 are their own partner.
 - It also re-checks the card's numbers: 720, the partner table, the pairing road, and the 4-, 5-, 8-, 9- and 12-clocks.
 
@@ -382,11 +382,11 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 ## Where you meet it in real life
 
 - **Proving a number prime on paper.** An exact test both ways, with no composite numbers slipping through, unlike Fermat's test ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
-- **Square roots on a prime clock.** Step 1 stands alone: only 1 and the top hour are their own partner, so a nonzero number has two square roots or none.
-- **Multiplying only the numbers that have an undo.** On a clock that is not prime, multiply just the numbers sharing no factor above 1 with the clock size. They still pair off, but more of them can be their own partner, so the answer can change: an 8-clock and a 12-clock read 1. Only 2, 4, powers of an odd prime, and twice those read -1. These are exactly the clocks with a primitive root ([Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md)).
+- **Square roots on a prime clock.** Step 1 stands alone: on an odd prime clock, only 1 and the top hour are their own partner, so a nonzero number has two square roots or none.
+- **Multiplying only the numbers that have an undo.** On a clock that is not prime, multiply just the numbers sharing no factor above 1 with the clock size. They still pair off, but more of them can be their own partner, so the answer can change: an 8-clock and a 12-clock read 1. Only 1, 2, 4, powers of an odd prime, and twice those read -1 (on the 1- and 2-clocks, 1 and -1 are the same hour). These are exactly the clocks with a primitive root ([Which clocks have a primitive root](09-primitive-roots-mod-prime-powers.md)).
 
 > **Say it back**
-> Line up 1 to 6. Each has one partner it multiplies with to reach 1 on the 7-clock, and only 1 and 6 are their own partner. So the row folds into couples reading 1, leaving 1 × 6 = 6, one short of the clock: -1. A clock that is not prime never gets there: its own factors sit in the row and spoil it. A reading of -1 proves a prime — exact, and far too slow to use.
+> Line up 1 to 6. Each has one partner it multiplies with to reach 1 on the 7-clock, and only 1 and 6 are their own partner. So the row folds into couples reading 1, leaving 1 × 6 = 6, one short of the clock: -1. A composite clock never gets there: its own factors sit in the row and spoil it. For any clock size of at least 2, a reading of -1 proves a prime — exact, and far too slow to use.
 
 ---
 
@@ -401,7 +401,7 @@ example : (1 * 3 * 5 * 7) % 8 = 1 ∧ (1 * 5 * 7 * 11) % 12 = 1 := by decide
 - [Lagrange's root bound](07-lagrange-root-bound.md): next on this shelf. It proves Wilson's theorem a second way, from the roots of x^(p − 1) − 1 on a prime clock.
 - [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): a quick primality test, and the numbers that fool it.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the test RSA actually uses. RSA locks messages with two large primes ([RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
-- [Gauss's lemma](12-gauss-lemma.md): uses Step 1, only 1 and -1 square to 1, to tell squares from non-squares on a prime clock.
+- [Gauss's lemma](12-gauss-lemma.md): uses Step 1, only 1 and -1 square to 1, to tell squares from non-squares on an odd prime clock.
 
 Left open: is there a prime test as exact as this one, but fast enough for big numbers? The next card stays with the theory; the speed question moves to the Fermat and Miller-Rabin tests on the Codes and Secrets shelf.
 
