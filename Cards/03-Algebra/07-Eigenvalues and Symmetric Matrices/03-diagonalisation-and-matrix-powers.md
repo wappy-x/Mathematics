@@ -570,7 +570,7 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 - **Page ranking, and masses on springs.** A link matrix applied over and over lands on the largest stretch's direction; coupled springs come apart into independent motions.
 
 > **Say it back**
-> A matrix usually turns and stretches at once, but a few directions it only stretches. Put those eigenvectors in the columns of P and their stretches on the diagonal of D, and the matrix comes apart as P D P inverse: translate into eigenvector amounts, stretch each amount, translate back. Apply it n times and the inner translations cancel in pairs, so only D is raised to the power. The fleet is 200 lots of (3, 2) plus 400 lots of (1, −1), and the second halves monthly, so a year on city A holds 600.1 cars.
+> A square matrix usually turns and stretches at once, but a few directions it only stretches. When there are enough independent eigenvectors, put them in the columns of P and their stretches on the diagonal of D, and the matrix comes apart as P D P inverse: translate into eigenvector amounts, stretch each amount, translate back. Apply it n times and the inner translations cancel in pairs, so only D is raised to the power. The fleet is 200 lots of (3, 2) plus 400 lots of (1, −1), and the second halves monthly, so a year on city A holds 600.1 cars.
 
 ---
 
@@ -582,21 +582,21 @@ example : ((!![3, 1; 2, -1] : Matrix (Fin 2) (Fin 2) ℚ) * !![1, 0; 0, (1/2) ^ 
 
 ## Where this goes next
 
-- [The spectral theorem](04-spectral-theorem.md): eigenvectors always, and at right angles, so P's inverse is free.
-- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): a sequence rule as a matrix.
-- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): the same split in continuous time.
-- [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): eigenvalue 1 among probabilities.
-- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): these powers on credit ratings.
-- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): why repetition finds one direction.
-- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): eigenvalues for a thousand rows.
-- [Bounded and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md): infinitely many directions.
-- [Semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md): with time as the power.
-- [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
-- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
-- [Generalised eigenvectors](09-generalised-eigenvectors.md): when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap.
-- [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
+- [The spectral theorem](04-spectral-theorem.md): real symmetric matrices always have perpendicular unit eigenvectors, so P's inverse is its transpose.
+- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): writes a step-by-step sequence rule as matrix powers to get a direct formula.
+- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): uses the same eigenvector split to solve coupled differential equations in continuous time.
+- [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): applies matrix powers to random transition tables, where eigenvalue 1 marks the steady state.
+- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): uses matrix powers to project credit-rating shifts and cumulative default rates over time.
+- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): shows why multiplying a vector repeatedly lands on the largest eigenvalue's direction.
+- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): finds eigenvalues of large matrices by repeated steps rather than a polynomial.
+- [Bounded and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/10-spectral-theorem-for-bounded-self-adjoint-operators.md): extends diagonalisation to symmetric rules on infinite-dimensional spaces of functions.
+- [Semigroups](../../18-Functional%20analysis/05-Unbounded%20Operators%20and%20Semigroups/04-strongly-continuous-semigroups.md): replaces whole-number powers with continuous time for systems evolving smoothly.
+- [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular complex basis, with its eigenvalues on the diagonal.
+- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every square matrix satisfies its own characteristic equation, and the smallest such equation tests complex diagonalisation.
+- [Generalised eigenvectors](09-generalised-eigenvectors.md): when a square matrix has too few eigenvectors, vectors killed by a power of A minus lambda I fill the gap.
+- [Jordan form](10-jordan-canonical-form.md): every complex square matrix becomes a stack of blocks, each an eigenvalue with ones just above, with sizes read from ranks.
 - [Systems of conservation laws](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
-- [The Killing form and roots](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): a Lie algebra split into directions that a torus scales.
+- [The Killing form and roots](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): splits a continuous symmetry algebra into simultaneous eigenvector directions scaled by commuting turns.
 
 This card was handed its eigenvectors and got lucky; the next names a family where that luck is guaranteed and the eigenvectors arrive at right angles.
 

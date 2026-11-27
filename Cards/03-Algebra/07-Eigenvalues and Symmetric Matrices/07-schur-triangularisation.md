@@ -1,4 +1,4 @@
-# Schur's triangle: every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal
+# Schur's triangle: every square matrix is upper triangular in some perpendicular complex basis, with its eigenvalues on the diagonal
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Schur's triangle
 
@@ -637,7 +637,7 @@ example : (1 : ℤ) ^ 2 + 1 ^ 2 + (-1) ^ 2 + 3 ^ 2 = 12 ∧ (2 : ℤ) ^ 2 + (-2)
 - **Control and stability.** A state multiplied by A at every step dies away when every diagonal entry has size below 1. A corner can add temporary growth first, defective matrix or not.
 
 > **Say it back**
-> Every square matrix has an eigenvector, once complex numbers are allowed. Make it the first perpendicular unit axis, and the first column becomes the eigenvalue, then zeros. Repeat on the smaller block, and the matrix is upper triangular, its diagonal holding the eigenvalues, which add to the trace and multiply to the determinant. A = `[[1, 1], [-1, 3]]` becomes `[[2, -2], [0, 2]]`; the quarter turn needs complex axes.
+> Every square matrix of size 1 or more has an eigenvector, once complex numbers are allowed. Make it the first perpendicular unit axis, and the first column becomes the eigenvalue, then zeros. Repeat on the smaller block, and the matrix is upper triangular, its diagonal holding the eigenvalues, which add to the trace and multiply to the determinant. A = `[[1, 1], [-1, 3]]` becomes `[[2, -2], [0, 2]]`; the quarter turn needs complex axes.
 
 ---
 
@@ -649,10 +649,10 @@ example : (1 : ℤ) ^ 2 + 1 ^ 2 + (-1) ^ 2 + 3 ^ 2 = 12 ∧ (2 : ℤ) ^ 2 + (-2)
 
 ## Where this goes next
 
-- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): a matrix satisfies its own characteristic polynomial, proved on the triangle.
+- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every square matrix satisfies its own characteristic polynomial, proved directly on the triangle.
 - [Generalised eigenvectors](09-generalised-eigenvectors.md): directions that fill a defective matrix's gap.
 - [Jordan form](10-jordan-canonical-form.md): the simplest triangle, with axes no longer perpendicular.
-- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): exactly when the triangle is diagonal.
+- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): identifies the matrices whose Schur triangle has all zeros above the diagonal.
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex dot products and unitary matrices in full.
 - [Computing e^A](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/10-computing-the-matrix-exponential.md): scale down, use a ratio of two polynomials (a Padé approximation), square back up, and why eigenvectors are a trap.
 

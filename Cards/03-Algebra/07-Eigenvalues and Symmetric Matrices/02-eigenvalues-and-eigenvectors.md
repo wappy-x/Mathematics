@@ -1,4 +1,4 @@
-# Eigenvalues and eigenvectors: the directions a matrix only stretches, and the stretch factors, found from a quadratic
+# Eigenvalues and eigenvectors: the directions a square matrix only rescales, and the stretch factors, found from a quadratic at 2 by 2
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Eigenvalues and eigenvectors
 
@@ -94,7 +94,7 @@ Call $`A - \lambda I`$ the shift: the matrix with lambda taken off both diagonal
 
 ### Step 1: only a flattening matrix kills a pattern
 
-Sending a nonzero column to the origin collapses two directions into one and takes area to zero ([Determinants](../05-Solving%20Systems/04-determinants.md)), so lambda is an eigenvalue exactly when the shift's determinant is zero.
+Sending a nonzero column to the origin flattens the plane onto a line or a point and takes area to zero ([Determinants](../05-Solving%20Systems/04-determinants.md)), so lambda is an eigenvalue exactly when the shift's determinant is zero.
 
 <details>
 <summary>Detailed proof: the determinant test, for a 2 by 2</summary>
@@ -542,10 +542,10 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 
 - **Fixed reshuffles.** Cars, customers, money: a steady pattern with factor 1, and fading ones saying how fast the start is forgotten. As probability: [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
 - **Structures.** A bridge has a few patterns in which all of it moves together, their factors fixing the frequencies it rings at: [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md).
-- **Better coordinates.** Along its stretch directions a problem stops mixing: [Change of basis](01-change-of-basis.md). Always-real, square-on directions: [The spectral theorem](04-spectral-theorem.md). Their shapes: [Quadratic forms](05-quadratic-forms-and-positive-definite.md). Not-square matrices: [The singular value decomposition](06-singular-value-decomposition.md).
+- **Better coordinates.** Along its stretch directions a problem stops mixing: [Change of basis](01-change-of-basis.md). Directions at right angles, with real factors: [The spectral theorem](04-spectral-theorem.md). Their shapes: [Quadratic forms](05-quadratic-forms-and-positive-definite.md). Not-square matrices: [The singular value decomposition](06-singular-value-decomposition.md).
 
 > **Say it back**
-> A few patterns come out of a matrix rescaled along the line they went in on; the rest point somewhere new. Those few are the eigenvectors, their rescaling numbers the eigenvalues. To find them, take the eigenvalue off both diagonal entries and ask which values flatten the plane. For a 2 by 2 that test is a quadratic; the fleet's gives 1 and 0.5, patterns (3, 2) and (1, −1).
+> Some patterns may come out of a square matrix rescaled along the line they went in on, while others point somewhere new. Those rescaled directions are the eigenvectors, their rescaling numbers the eigenvalues. To find them, take the eigenvalue off both diagonal entries and ask which values flatten the plane. For a 2 by 2 that test is a quadratic; the fleet's gives 1 and 0.5, patterns (3, 2) and (1, −1).
 
 ---
 
@@ -557,33 +557,33 @@ example : ((4 / 5 : ℚ) - 5 / 7) * (7 / 10) - (3 / 10) * (1 / 5) = 0 := by norm
 
 ## Where this goes next
 
-- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): both patterns at once.
-- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): counting rules.
-- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex factors.
-- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): continuous change.
-- [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): whole curves.
-- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): probability, properly.
-- [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): trade schedules.
-- [Pole placement](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md): factors by design.
+- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): splits a matrix along all its stretch directions to take powers fast.
+- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): turns a step-by-step sequence rule into matrix powers solved by eigenvalues.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): handles rotations and negative discriminants by allowing complex stretch factors.
+- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): solves coupled differential equations in continuous time using eigenvectors and exponentials.
+- [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): finds whole curves that a differential rule merely rescales.
+- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): proves when a random step matrix settles onto its eigenvalue-1 steady split.
+- [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): schedules large trades over time using the eigenvalues of a cost balance.
+- [Pole placement](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/04-pole-placement-and-observers.md): uses feedback to move a system's eigenvalues to chosen stable values.
 - [Vibration modes](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/06-vibration-modes-and-resonance.md): the few shapes a structure rings in, and their frequencies.
-- [The quantum oscillator](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md): allowed energies.
-- [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): measured values.
-- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): road two at scale.
-- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): network cuts.
-- [Every root at once](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/08-polynomial-roots-and-companion-matrices.md): the trick reversed.
-- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): no quadratic.
-- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): infinite dimensions.
-- [Finitely many solutions](../../22-Algebraic%20geometry/01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md): polynomial systems.
+- [The quantum oscillator](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/04-quantum-harmonic-oscillator.md): finds discrete allowed energy levels as eigenvalues of an energy rule.
+- [Spin one-half](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/06-spin-and-two-state-systems.md): reads the two possible measured outcomes of particle spin off 2 by 2 eigenvalues.
+- [PageRank by power iteration](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/02-power-iteration-and-the-damping-factor.md): scales road two to huge web graphs to rank pages by the top eigenvector.
+- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): uses a network's second eigenvalue and eigenvector to split it into communities.
+- [Every root at once](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/08-polynomial-roots-and-companion-matrices.md): reverses this card's trick, turning any polynomial's roots into a matrix's eigenvalues.
+- [Eigenvalues by iteration](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm.md): finds eigenvalues of large matrices by repeated steps instead of a polynomial.
+- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): extends eigenvalues to infinite-dimensional spaces, where new kinds of values appear.
+- [Finitely many solutions](../../22-Algebraic%20geometry/01-Polynomial%20Systems/07-solving-zero-dimensional-systems.md): solves systems of polynomial equations by reading answers off matrix eigenvalues.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): every shape a matrix can take, found without needing its eigenvalues.
-- [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): matrix generators.
-- [Schur's triangle](07-schur-triangularisation.md): every square matrix is upper triangular in some perpendicular basis, with its eigenvalues on the diagonal.
-- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised.
-- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): a map between two irreducible pieces is zero or an isomorphism, so their traces are perpendicular.
+- [Lie algebra](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/02-lie-algebras-and-the-exponential-map.md): studies small matrix steps whose exponentials build smooth families of turns and stretches.
+- [Schur's triangle](07-schur-triangularisation.md): puts any square matrix into upper triangular form in perpendicular complex axes, eigenvalues on the diagonal.
+- [Cayley-Hamilton and the minimal polynomial](08-cayley-hamilton-and-minimal-polynomial.md): every square matrix obeys its own characteristic equation, and the smallest one tests complex diagonalisation.
+- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): any symmetry-preserving map between two indivisible pieces is either zero or an exact match.
 - [Floquet theory](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/08-floquet-theory-and-parametric-resonance.md): a system with periodic coefficients is a constant one seen through a periodic lens, and pumping at twice the natural rate makes it grow.
-- [The structured singular value](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/07-structured-singular-value.md): robustness when the uncertainty has a known shape.
+- [The structured singular value](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/07-structured-singular-value.md): measures how much structured model error a control system can withstand.
 - [Systems of conservation laws](../../19-Partial%20differential%20equations/02-First-Order%20Equations%20and%20Characteristics/08-systems-of-conservation-laws.md): several wave families, and the shocks, fans and contacts between them.
-- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
-- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): every one is a ladder of weights that steps by two.
+- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): uses matrix eigenvalues on a cube to bound how sensitive a true-false rule is to flipping one bit.
+- [Representations of sl(2)](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/01-representations-of-sl2.md): sorts eigenvectors of 2 by 2 matrix symmetries into a ladder of eigenvalues stepping by two.
 
 This card says nothing about a mixture of the two patterns, which is every other pattern there is. Splitting any column into its two is next.
 

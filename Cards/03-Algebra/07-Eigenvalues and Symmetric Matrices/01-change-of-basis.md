@@ -571,10 +571,10 @@ example : !![(1/2 : ℚ), 1/2; -1/2, 1/2] *ᵥ ![1, 1] = ![1, 0] := by
 - [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $`A_B`$ diagonal turns many moves into small multiplies.
 - [The DFT and the FFT](../../13-Engineering%20mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft.md): the same translation on a whole signal, samples in time becoming pure tones.
 - [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): conjugation (the $`P^{-1} A P`$ sandwich) again, for matrices forming a group, a set closed under multiplying and undoing ([Groups](../08-Groups/01-groups.md)).
-- [Jordan form](10-jordan-canonical-form.md): every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks.
-- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
-- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
-- [Equivalence of categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/10-equivalence-of-categories.md): the right notion of 'the same', weaker than isomorphism.
+- [Jordan form](10-jordan-canonical-form.md): rewrites any complex square matrix into nearly diagonal blocks of stretch factors with ones just above.
+- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): pairs two vectors into one number, where a new basis replaces $`P^{-1} A P`$ by $`P^T B P`$.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): rotates a material's stress matrix onto its main pull directions, read off a circle diagram.
+- [Equivalence of categories](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/10-equivalence-of-categories.md): when two systems count as the same even though they are not exact copies.
 
 Any invertible $`P`$ gives a new address book, and nothing here says which book is worth having. The next card answers that: it finds the directions a matrix only stretches.
 

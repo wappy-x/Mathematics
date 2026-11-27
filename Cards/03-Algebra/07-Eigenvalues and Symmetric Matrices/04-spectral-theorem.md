@@ -1,4 +1,4 @@
-# The spectral theorem: a symmetric matrix has real stretch factors along perpendicular axes, A = Q D Q^T
+# The spectral theorem: a real symmetric matrix has real stretch factors along perpendicular axes, A = Q D Q^T
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → The spectral theorem
 
@@ -151,7 +151,7 @@ Two roads, one answer: a rewriting, not an approximation.
 | --- | --- | --- |
 | Q's columns left at raw length | rows (4.000000, 2.000000), (2.000000, 4.000000) | perpendicular is half the condition; over-long columns double it |
 | 3 and 1 swapped in D alone | rows (2.000000, -1.000000), (-1.000000, 2.000000) | a factor belongs to one axis: swap both or neither |
-| symmetry dropped, the fleet table | its directions dot to 1.000000 | real factors, but axes not square, so no transpose inverts |
+| symmetry dropped, the fleet table | its directions dot to 1.000000 | real factors, but axes not at right angles, so no transpose inverts |
 
 The code prints all three.
 
@@ -518,7 +518,7 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 - **Things that vibrate.** A stiffness table's axes are the shapes a structure moves in, none feeding another ([Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)).
 
 > **Say it back**
-> A symmetric matrix equals its own transpose, which lets it step across a dot product. Two directions with different stretch factors then have to meet at a right angle. Stand them up at length one as Q's columns, put the factors down D's diagonal, and the matrix is Q D Q transpose — the transpose doing the inverse's job for free. This table's axes are "both up together" and "one up, one down", stretched by 3.000000 and 1.000000.
+> A real symmetric matrix equals its own transpose, which lets it step across a dot product. Two directions with different stretch factors then have to meet at a right angle. Stand them up at length one as Q's columns, put the factors down D's diagonal, and the matrix is Q D Q transpose — the transpose doing the inverse's job for free. This table's axes are "both up together" and "one up, one down", stretched by 3.000000 and 1.000000.
 
 ---
 
@@ -529,28 +529,28 @@ example : (1 / 2 : ℝ) • (!![1, 1; 1, -1] * !![1, 0; 0, 3] * (!![1, 1; 1, -1]
 
 ## Where this goes next
 
-- [Quadratic forms](05-quadratic-forms-and-positive-definite.md): stretch, studied directly.
-- [The singular value decomposition](06-singular-value-decomposition.md): any matrix, two axis sets.
-- [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): the folded proof's analysis.
-- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex condition.
-- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): axes as motions.
-- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): a bell curve's axes.
-- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
-- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): real measured factors.
-- [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): that summary, applied.
-- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): where to cut a network.
-- [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): non-negative factors, optimised.
-- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): factors set solver speed.
-- [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): Step 0 as a definition.
-- [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): the infinite version.
-- [Principal, mean and Gaussian curvature](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/05-principal-mean-and-gaussian-curvature.md): how a surface bends.
-- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): the matrices that commute with their conjugate transpose are exactly those with perpendicular eigenvectors, and every matrix is a rotation times a stretch.
-- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
-- [Perturbation theory](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md): nudge the energy levels without solving again.
-- [Sums of squares](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
+- [Quadratic forms](05-quadratic-forms-and-positive-definite.md): studies $`x^T A x`$ directly to test when every nonzero mix stays positive.
+- [The singular value decomposition](06-singular-value-decomposition.md): splits any real matrix, even rectangular ones, using two perpendicular axis sets.
+- [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): supplies the smooth-maximum analysis behind this card's folded general proof.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): extends symmetry to complex matrices by flipping imaginary signs on the transpose.
+- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): turns a stiffness matrix's perpendicular axes into independent vibration motions.
+- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): uses a covariance matrix's perpendicular axes to draw a tilted bell curve.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): keeps the axes with the biggest stretch factors to summarise high-dimensional data.
+- [States as vectors](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/02-state-vectors-operators-and-measurement.md): uses symmetric-style matrices in quantum mechanics so every measured value is real.
+- [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): applies the largest-stretch axes to compress tables in machine learning.
+- [The graph Laplacian](../../14-Applied%20and%20computational/07-Network%20Science%20and%20Spectral%20Graphs/03-graph-laplacian-and-spectral-clustering.md): uses a symmetric network matrix's eigenvectors to find clean cuts across a graph.
+- [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): optimises over symmetric matrices whose stretch factors are never negative.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): shows how the spread between largest and smallest factors sets solver speed.
+- [Adjoints](../../18-Functional%20analysis/03-Bounded%20Operators/03-adjoints-self-adjoint-and-unitary-operators.md): turns Step 0's dot-product hop into a general definition for operators.
+- [Compact and symmetric](../../18-Functional%20analysis/03-Bounded%20Operators/08-spectral-theorem-for-compact-self-adjoint-operators.md): extends perpendicular eigenvectors to infinite-dimensional symmetric operators on functions.
+- [Principal, mean and Gaussian curvature](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/05-principal-mean-and-gaussian-curvature.md): finds a curved surface's steepest and flattest bending directions as symmetric eigenvectors.
+- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): complex square matrices commuting with their conjugate transpose have perpendicular eigenvectors, and every square matrix is a turn (a rotation or a mirror flip) times a stretch.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): finds a material's main pull directions from a symmetric stress matrix, read off a circle diagram.
+- [Perturbation theory](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/10-time-independent-perturbation-theory.md): estimates how small changes to a symmetric matrix nudge its eigenvalues without solving again.
+- [Sums of squares](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md): proves a polynomial is never negative by finding a symmetric matrix with no negative eigenvalues.
 - [Lanczos](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/14-lanczos-and-rayleigh-ritz.md): the extreme eigenvalues of a huge symmetric matrix from a three-term recurrence.
-- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): decision trees, Fourier coefficients, and Huang's sensitivity theorem.
-- [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): averaging a modular form over matrices of determinant n, and why tau is multiplicative.
+- [Boolean functions](../../24-Computability%20and%20complexity/04-Beyond%20Worst%20Case/12-boolean-functions-fourier-and-sensitivity.md): uses symmetric-matrix eigenvalues on a cube to bound how sensitive a true-false rule is to bit flips.
+- [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): uses commuting symmetric operators on number-theory functions to show their coefficients multiply across coprime indices.
 
 The quadratic runs out past 2 by 2, so finding the axes at any size is a numerical problem. What the factors' signs say about a table's shape is the next card's question.
 

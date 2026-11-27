@@ -1,4 +1,4 @@
-# Normal matrices and the polar form: the matrices that commute with their conjugate transpose are exactly those with perpendicular eigenvectors, and every matrix is a rotation times a stretch
+# Normal matrices and the polar form: complex square matrices commute with their conjugate transpose exactly when they have a full set of perpendicular eigenvectors, and every square matrix is a turn (a rotation or a mirror flip) times a stretch
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Normal matrices and the polar form
 
@@ -8,7 +8,7 @@
 
 A testing machine pulls a square of rubber to twice its height, then turns it a quarter turn anticlockwise. One matrix records where each point goes, `[[0, -2], [1, 0]]`: the point (east, north) lands at (−2 × north, east).
 
-An engineer wants the two moves apart: the stretch strains the material, the turn does not. The split always exists: every square matrix is a turn U times a stretch P, written A = U P. Here U is the quarter turn `[[0, -1], [1, 0]]` and P stretches north by 2.
+An engineer wants the two moves apart: the stretch strains the material, the turn does not. The split always exists: every square matrix is a turn U (a rotation or a mirror flip) times a stretch P, written A = U P. Here U is the quarter turn `[[0, -1], [1, 0]]` and P stretches north by 2.
 
 The quarter turn alone has no real eigenvector. Over complex numbers it has two, at right angles: (1, −i) and (1, i), with eigenvalues i and −i. Matrices with perpendicular eigenvectors like this are the **normal** matrices. One test finds them: commuting with the conjugate transpose (the transpose, with each i turned to −i). The rubber matrix fails it.
 
@@ -761,7 +761,7 @@ end NormalMatricesAndPolarDecomposition
 - **Quantum mechanics.** Measurable quantities are Hermitian and time steps unitary: both normal, so both have perpendicular eigenvectors.
 
 > **Say it back**
-> A matrix is normal when it commutes with its conjugate transpose. Schur's triangle shows that is exactly when its eigenvectors can be chosen perpendicular. Hermitian, unitary and skew-Hermitian matrices are normal, with real, size-1 and imaginary eigenvalues. Every square matrix is a unitary turn times a stretch that is never negative, read off the SVD. The rubber matrix `[[0, -2], [1, 0]]` is not normal, and it is a quarter turn after the stretch `diag(1, 2)`.
+> A complex square matrix is normal when it commutes with its conjugate transpose. Schur's triangle shows that is exactly when it has a full set of perpendicular eigenvectors. Hermitian, unitary and skew-Hermitian matrices are normal, with real, size-1 and imaginary eigenvalues. Every square matrix is a unitary turn times a stretch that is never negative, read off the SVD. The rubber matrix `[[0, -2], [1, 0]]` is not normal, and it is a quarter turn after the stretch `diag(1, 2)`.
 
 ---
 
@@ -775,7 +775,7 @@ end NormalMatricesAndPolarDecomposition
 
 - [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): the next card on this shelf, on pairing two vectors through a matrix.
 - [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex dot product in full, with Hermitian and unitary matrices at work.
-- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
+- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): extends the turn-times-stretch split to bounded operators on infinite-dimensional spaces.
 
 Every card on this shelf so far treats a matrix as a map that moves vectors. What changes when a matrix instead pairs two vectors to give one number? That is the next card's question.
 

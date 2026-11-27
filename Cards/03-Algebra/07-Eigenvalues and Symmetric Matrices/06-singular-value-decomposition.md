@@ -1,4 +1,4 @@
-# The singular value decomposition: every matrix is rotate, stretch the axes, rotate, and the stretch factors are the singular values
+# The singular value decomposition: every real matrix is turn or flip, stretch the axes, turn or flip, and the stretch factors are the singular values
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → The singular value decomposition
 
@@ -12,7 +12,7 @@ By how much did the coin stretch? No single entry says, since the 4 spills east 
 
 Every matrix with real entries does its job in three moves: swing the input onto two perpendicular directions that suit it, stretch along each by a fixed non-negative factor, swing the result onto two perpendicular output directions. A move that keeps lengths and angles is called an **orthogonal matrix**: a turn, perhaps with a mirror flip.
 
-**Every matrix is an orthogonal move, a stretch along perpendicular axes, and a second orthogonal move; the stretch factors are the singular values.**
+**Every real matrix is an orthogonal move, a stretch along perpendicular axes, and a second orthogonal move; the stretch factors are the singular values.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -789,18 +789,18 @@ Step 3 writes the matrix as one piece per factor: $`\sigma_1`$ times the grid ma
 
 ## Where this goes next
 
-- [Schur's triangle](07-schur-triangularisation.md): the next card. When a square matrix must use one perpendicular basis on both sides, it can always be made upper triangular, though not always diagonal.
-- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
-- [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): how many axes a wide table needs.
+- [Schur's triangle](07-schur-triangularisation.md): the next card. When a square matrix must use one perpendicular complex basis on both sides, it can always be made upper triangular, though not always diagonal.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): uses these perpendicular axes on centred data to capture the directions of greatest spread.
+- [Principal components](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/07-principal-components-and-dimension-reduction.md): decides how many top singular-value axes are needed to compress a wide data table.
 - [Singular value decomposition](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/08-svd-and-the-pseudoinverse.md): the factors without building $`A^T A`$; best answers to unsolvable systems.
-- [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank off the factors, deciding whether a system steers.
-- [Writing down model error](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): the largest factor as worst-case gain.
+- [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): reads a matrix's rank off its singular values to decide whether a system can be steered or observed.
+- [Writing down model error](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/01-model-uncertainty-and-the-small-gain-theorem.md): uses the largest singular value to bound a system's worst-case amplification of error.
 - [Compressed sensing](../../13-Engineering%20mathematics/05-Signals/10-compressed-sensing-in-outline.md): recovery when a matrix flattens most of its input.
-- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): the matrices that commute with their conjugate transpose are exactly those with perpendicular eigenvectors, and every matrix is a rotation times a stretch.
-- [Several inputs, several outputs](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md): singular values, zeros and the RGA.
-- [Subspace identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): the Hankel matrix's rank is the model's order.
-- [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fill the missing entries with the table of lowest nuclear norm.
-- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): every operator is a stretch followed by a partial turn.
+- [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): complex square matrices commuting with their conjugate transpose have perpendicular eigenvectors, and every square matrix is a turn (a rotation or a mirror flip) times a stretch.
+- [Several inputs, several outputs](../../13-Engineering%20mathematics/10-Robustness%20and%20Adaptation/06-multivariable-feedback-and-singular-values.md): uses singular values to measure sensitivity and input-output pairing in multi-channel feedback control.
+- [Subspace identification](../../13-Engineering%20mathematics/11-Models%20from%20Data/03-subspace-identification-and-hankel-matrices.md): reads a hidden system's number of states off the rank of a shifted data table.
+- [Matrix completion](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/13-matrix-completion-and-the-nuclear-norm.md): fills missing table entries by minimising the sum of singular values, called the nuclear norm.
+- [Polar decomposition](../../18-Functional%20analysis/03-Bounded%20Operators/11-polar-decomposition-and-partial-isometries.md): splits a bounded operator on an infinite-dimensional space into a stretch followed by a length-keeping turn.
 
 The decomposition always works because it may use two different sets of perpendicular axes, one for inputs and one for outputs. What can a square matrix still be made to look like when both sides must share one perpendicular basis? That is the next card's question.
 

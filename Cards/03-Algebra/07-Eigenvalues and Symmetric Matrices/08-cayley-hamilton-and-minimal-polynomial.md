@@ -1,4 +1,4 @@
-# Cayley-Hamilton and the minimal polynomial: every matrix satisfies its own characteristic equation, and the smallest such equation says whether it can be diagonalised
+# Cayley-Hamilton and the minimal polynomial: every square matrix satisfies its own characteristic equation, and the smallest such equation says whether it diagonalises over the complex numbers
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Cayley-Hamilton and the minimal polynomial
 
@@ -12,7 +12,7 @@ Make every code one symbol longer. Each binary code gets a 0 or a 1 on the end, 
 
 That step is the matrix A = `[[2, 1, 0], [0, 2, 0], [0, 0, 3]]` applied to the column of counts (1s, binary codes, three-symbol codes). Forget the new 1s and the step is D = `[[2, 0, 0], [0, 2, 0], [0, 0, 3]]`, written diag(2, 2, 3). They differ only in A's top-row 1: the codes feed the 1s.
 
-Both have eigenvalues (stretch factors, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)) 2, 2 and 3, and the same characteristic polynomial (the polynomial whose roots are the eigenvalues), $`x^3 - 7x^2 + 16x - 12`$. Yet their tenth powers differ: the top row of A's is (1024, 5120, 0), D's (1024, 0, 0).
+Both have eigenvalues (stretch factors, [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)) 2, 2 and 3, and the same characteristic polynomial, $`x^3 - 7x^2 + 16x - 12`$. Yet their tenth powers differ: the top row of A's is (1024, 5120, 0), D's (1024, 0, 0).
 
 From the empty code, (0, 1, 1), ten steps give 1024 ten-bit codes holding 5120 ones: half of their 10,240 bits.
 
@@ -20,7 +20,7 @@ Two facts explain this. Any square matrix put into its own characteristic polyno
 
 The shelf's rental-car fleet — moving cars between two cities each month by F = `[[0.8, 0.3], [0.2, 0.7]]` — obeys the same rule: $`F^2 = 1.5F - 0.5I`$, as [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) checked.
 
-**Every square matrix is a root of its own characteristic polynomial, the lowest-degree polynomial with that property divides every other one, and the matrix can be diagonalised exactly when that lowest one has no repeated root.**
+**Every square matrix is a root of its own characteristic polynomial, the lowest-degree polynomial with that property divides every other one, and the matrix can be diagonalised over the complex numbers exactly when that lowest one has no repeated root.**
 
 **What kind of fact this is:** three theorems, all proved on this card in Why it works.
 
@@ -151,10 +151,10 @@ A fails: $`(A - 2I)(A - 3I)`$ is not zero, and A has 2 eigenvector directions, n
 | try $`(x - 2)(x - 3)`$ on D | $`(D - 2I)(D - 3I)`$ | zero, so $`m_D = x^2 - 5x + 6`$ |
 | try $`(x - 2)(x - 3)`$ on A | $`(A - 2I)(A - 3I)`$ | `[[0, -1, 0], [0, 0, 0], [0, 0, 0]]`, not zero |
 | minimal polynomial of A | only the cubic is left | **$`x^3 - 7x^2 + 16x - 12`$**, root 2 twice |
-| eigenvector directions for 2 and 3 | 3 minus the rank (number of independent rows) of $`A - 2I`$, $`A - 3I`$ | A: 1 and 1; D: 2 and 1 |
+| eigenvector directions for 2 and 3 | 3 minus the rank of $`A - 2I`$, $`A - 3I`$ | A: 1 and 1; D: 2 and 1 |
 | verdict | repeated root against eigenvector count | **A no, D yes** |
 
-A cannot be diagonalised and D can, though their eigenvalues, trace (diagonal sum) and determinant agree.
+A cannot be diagonalised and D can, though their eigenvalues, trace and determinant agree.
 
 Cayley-Hamilton also inverts A: $`A(A^2 - 7A + 16I) = 12I`$, so $`12A^{-1}`$ = `[[6, -3, 0], [0, 6, 0], [0, 0, 4]]`. And $`x^4`$ divided by $`m_D`$ leaves $`65x - 114`$, so $`D^4 = 65D - 114I`$.
 
@@ -616,7 +616,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 - **Recurrences.** Each entry of A's powers obeys the recurrence: 7 times the last term, minus 16 times the one before, plus 12 times the one before that. ([A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md)).
 
 > **Say it back**
-> Put a square matrix into its own characteristic polynomial and every entry comes out zero. On Schur's triangle each factor wipes out one more column. The lowest-degree monic polynomial that kills the matrix is its minimal polynomial, and it divides every other one. The matrix can be diagonalised exactly when that polynomial has no repeated root.
+> Put a square matrix into its own characteristic polynomial and every entry comes out zero. On Schur's triangle each factor wipes out one more column. The lowest-degree monic polynomial that kills the matrix is its minimal polynomial, and it divides every other one. The matrix can be diagonalised over the complex numbers exactly when that polynomial has no repeated root.
 
 ---
 
@@ -632,7 +632,7 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 - [Jordan form](10-jordan-canonical-form.md): the simplest shape of a non-diagonalisable matrix; each root's power in the minimal polynomial is its largest block's size.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): another road, with no roots: reduce $`xI - A`$ to a polynomial diagonal; its last entry is $`m_A`$.
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): division with remainder, borrowed in Step 4, and Euclid's algorithm, proved in full.
-- [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): uses Cayley-Hamilton's determinant trick to show that generators can be checked at a single point.
+- [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): uses Cayley-Hamilton's determinant trick to show a spanning set can be checked at one point.
 
 Here $`(A - 2I)^2`$ kills a direction that $`A - 2I`$ misses. Which vectors fill that gap, and how do they split the space? That is the next card's question.
 

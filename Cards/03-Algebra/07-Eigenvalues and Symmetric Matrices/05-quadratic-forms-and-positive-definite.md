@@ -1,4 +1,4 @@
-# Quadratic forms: x^T A x as the risk of a mix, and positive definite means every mix has positive risk
+# Quadratic forms: x^T A x as the risk of a mix, and positive definite means every nonzero mix has positive risk
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Quadratic forms
 
@@ -624,26 +624,26 @@ example : ![(3 : ℚ), -2] ⬝ᵥ (!![4, 6; 6, 9] *ᵥ ![(3 : ℚ), -2]) = 0 := 
 
 - [The singular value decomposition](06-singular-value-decomposition.md): the next card. For any matrix $`M`$, the product $`M^T M`$ has a quadratic form that is a squared length, so never below zero.
 - [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): second derivatives, gathered in a symmetric matrix whose quadratic form models a curved surface near a point.
-- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes, where the springs' stored energy is a quadratic form, above zero for every displacement.
+- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes, where the springs' stored energy is a quadratic form, above zero for every nonzero displacement.
 - [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): bell shapes, whose tilted distance from the centre is a quadratic form with oval level curves.
 - [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): linked returns, built from a triangular factor that exists exactly when the correlation matrix is positive definite.
 - [Stability of a state-space model](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/05-hurwitz-schur-and-lyapunov-stability.md): falling energy, measured by a positive definite matrix, that proves a model settles.
 - [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): convexity, tested by the quadratic form of the second derivatives.
 - [Convergence rates](../../15-Optimization/02-Unconstrained%20Methods/03-rates-of-convergence-and-conditioning.md): eigenvalue spread, the ratio of a bowl's largest to smallest eigenvalue, which sets how slowly a downhill search closes in.
 - [Semidefinite programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/05-semidefinite-programs-and-relaxations.md): optimising over them, choosing a matrix under the rule that every mix keeps a variance of zero or more.
-- [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): the fastest test.
-- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): solving downhill.
-- [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): naming equations.
-- [Point types](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/06-classification-of-surface-points.md): bowl, dome, saddle.
-- [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): measuring length.
-- [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): their own space.
-- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes.
-- [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): use tomorrow's readings, and keep the covariance honest.
-- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): a symmetric matrix, its principal axes, and Mohr's circle.
-- [The ellipsoid method](../../15-Optimization/04-Linear%20Programming/09-ellipsoid-method.md): trap the answer in shrinking ellipsoids, and linear programming in polynomial time.
+- [Cholesky](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/04-cholesky-decomposition.md): factors a positive definite matrix into a triangle times its transpose, the fastest test.
+- [Iterating instead of factoring](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient.md): solves positive definite systems by stepping downhill to the bottom of a quadratic bowl.
+- [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): sorts partial differential equations into three families by the sign pattern of a quadratic form.
+- [Point types](../../23-Differential%20geometry%20and%20Lie%20groups/02-Surfaces/06-classification-of-surface-points.md): tells bowls, domes and saddles apart on a curved surface from a quadratic form's signs.
+- [Riemannian metric](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/01-riemannian-metrics.md): places a positive definite form at every point of a curved space to measure length.
+- [Covariance matrices](../../23-Differential%20geometry%20and%20Lie%20groups/07-Geometric%20Analysis%20and%20Physics/07-the-manifold-of-covariance-matrices.md): treats all positive definite matrices as a curved geometric space with its own shortest paths.
+- [Bilinear forms](12-bilinear-forms-and-sylvesters-law.md): pairs two vectors instead of one, proves real symmetric sign counts never change in any invertible grid, and measures signed area.
+- [Smoothing and square roots](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/12-rts-smoothing-and-square-root-filters.md): uses later readings too and stores a matrix factor so the covariance stays positive semidefinite.
+- [Stress in 3D](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/10-stress-tensor-and-mohrs-circle.md): finds a material's main pull directions from a symmetric stress matrix, read off a circle diagram.
+- [The ellipsoid method](../../15-Optimization/04-Linear%20Programming/09-ellipsoid-method.md): traps an answer inside shrinking positive-definite ellipsoids to solve linear programs in polynomial time.
 - [Sums of squares](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/12-sum-of-squares-polynomial-optimisation.md): prove a polynomial is never negative by finding a positive semidefinite matrix.
 - [Sums of squares and the Positivstellensatz](../../22-Algebraic%20geometry/01-Polynomial%20Systems/11-sums-of-squares-and-the-positivstellensatz.md): certificates that a polynomial is never negative, or that a system has no real point.
-- [Hasse-Minkowski](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in every completion.
+- [Hasse-Minkowski](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/01-hasse-minkowski-and-the-hilbert-symbol.md): a quadratic equation has a rational solution exactly when it has one in the reals and every prime-power number system.
 
 Every matrix $`M`$, even a rectangular one, builds a form that is never negative: $`x^T M^T M x`$, the squared length of $`M x`$. What that form says about $`M`$ itself is the next card's question.
 

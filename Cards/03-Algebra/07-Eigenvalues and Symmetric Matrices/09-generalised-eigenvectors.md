@@ -1,4 +1,4 @@
-# Generalised eigenvectors: when a matrix has too few eigenvectors, the vectors killed by a power of A minus lambda fill the gap
+# Generalised eigenvectors: when a square matrix has too few eigenvectors, the vectors killed by a power of A minus lambda I fill the gap
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Generalised eigenvectors
 
@@ -8,9 +8,9 @@
 
 A delivery van drives at a steady 1 km a minute. Its tracking app updates once a minute and shows where the van was a minute ago. The state is three numbers: position in km, speed in km a minute, and the shown position.
 
-A minute sends (position, speed, shown) to (position + speed, speed, position): the matrix A = `[[1, 1, 0], [0, 1, 0], [1, 0, 0]]`. Its eigenvalues (stretch factors) are 1, 1 and 0, so 1 has multiplicity 2: it comes twice.
+A minute sends (position, speed, shown) to (position + speed, speed, position): the matrix A = `[[1, 1, 0], [0, 1, 0], [1, 0, 0]]`. Its eigenvalues are 1, 1 and 0, so 1 has multiplicity 2: it comes twice.
 
-[Diagonalisation](03-diagonalisation-and-matrix-powers.md) needs three independent eigenvectors (directions A only stretches). A has two lines of them: a parked van shown correctly, (1, 0, 1), with eigenvalue 1, and a pure display error, (0, 0, 1), wiped out at the next update. One direction is missing.
+[Diagonalisation](03-diagonalisation-and-matrix-powers.md) needs three independent eigenvectors. A has two lines of them: a parked van shown correctly, (1, 0, 1), with eigenvalue 1, and a pure display error, (0, 0, 1), wiped out at the next update. One direction is missing.
 
 Look at (1, 1, 0): the van at km 1 and moving, the app one minute behind. A sends it to itself plus a push of (1, 0, 1). Apply A − I and only the push is left; apply it again and the push goes to zero.
 
@@ -18,7 +18,7 @@ A nonzero vector that some power of A − λI sends to zero is a **generalised e
 
 Start at km 3, the app still showing the depot at km 0: (3, 1, 0). Ten minutes on, it is (13, 1, 12). The split is (3, 1, 2), a van tracked one minute behind, plus (0, 0, −2), a display error that dies at the first update. The tracked part gains the push ten times.
 
-**For each eigenvalue, the vectors killed by some power of A − λI form a generalised eigenspace that A keeps; its size is the eigenvalue's multiplicity, and together these spaces rebuild the whole space, each vector splitting into pieces in one way only.**
+**When a square matrix's characteristic polynomial splits, the vectors killed by powers of A − λI form a generalised eigenspace for each eigenvalue λ that A keeps; its size is λ's multiplicity, and together they rebuild the whole space in one way only.**
 
 **What kind of fact this is:** a definition carrying a theorem, proved on this card in Why it works, for every square matrix whose characteristic polynomial splits into factors t − λ (always true with complex numbers).
 
@@ -615,7 +615,7 @@ example : (!![1, 1, 0; 0, 1, 0; 1, 0, 0] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 - **Splitting a system into blocks.** Engineers solve a large system one eigenvalue block at a time; the direct sum guarantees nothing is lost.
 
 > **Say it back**
-> When an eigenvalue repeats, its eigenvectors can fall short. The vectors killed by some power of A − λI fill the gap: the generalised eigenspace. A keeps each one, and a polynomial mix of 1 splits every vector into one piece per eigenvalue. Each piece has as many directions as the multiplicity: here a plane and a line, 2 + 1 = 3.
+> When an eigenvalue repeats, its eigenvectors can fall short. The vectors killed by some power of A − λI fill the gap: the generalised eigenspace. A keeps each one, and when the characteristic polynomial splits, a polynomial mix of 1 splits every vector into one piece per eigenvalue. Each piece has as many directions as the multiplicity: here a plane and a line, 2 + 1 = 3.
 
 ---
 

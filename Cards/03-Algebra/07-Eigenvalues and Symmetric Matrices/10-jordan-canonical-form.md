@@ -1,4 +1,4 @@
-# Jordan form: every matrix is a stack of blocks, each an eigenvalue with ones just above the diagonal, and the block sizes are read from ranks
+# Jordan form: every complex square matrix becomes a stack of blocks, each an eigenvalue with ones just above the diagonal, with sizes read from ranks
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Jordan form
 
@@ -10,7 +10,7 @@ A step rule makes each term from the two before it: a(n + 2) = 4a(n + 1) − 4a(
 
 Next to it runs plain doubling, b(n + 1) = 2b(n), from b(0) = 1. A step takes (a(n), a(n + 1), b(n)) to (a(n + 1), 4a(n + 1) − 4a(n), 2b(n)). That is the matrix `A = [[0, 1, 0], [-4, 4, 0], [0, 0, 2]]`.
 
-Its only eigenvalue (stretch factor along a direction the rule does not turn) is 2. Doubling alone takes b to 1,024 in ten steps. Yet a(10) is 21,504 = 1,024 + 20,480. The extra 20,480 = 4 × 10 × 2^9 grows with the step count.
+Its only eigenvalue (stretch factor) is 2. Doubling alone takes b to 1,024 in ten steps. Yet a(10) is 21,504 = 1,024 + 20,480. The extra 20,480 = 4 × 10 × 2^9 grows with the step count.
 
 The cause is a missing eigenvector: eigenvalue 2 counts three times, but only two independent directions are merely stretched, so [Diagonalisation](03-diagonalisation-and-matrix-powers.md) fails. Jordan form replaces it with the nearest-to-diagonal basis.
 
@@ -966,7 +966,7 @@ example : (0 : ℤ) ^ 10 * 1 + 1 ^ 10 * 6 + 0 ^ 10 * 1 = 6 ∧ (2 : ℕ) ^ 10 + 
 - **Slow decay in stable systems.** In a control loop or Markov chain, a repeated eigenvalue's n × λ^(n−1) term can grow the error before it shrinks.
 
 > **Say it back**
-> Some matrices have too few eigenvectors to diagonalise. Jordan form still finds a basis: chains that A − λI passes along, ending at an eigenvector. There A is blocks, λ on the diagonal, ones just above. Ranks of the powers of A − λI count blocks of each size. Powers of a block gain n λ^(n−1): a(10) is 21,504, not 1,024.
+> Some complex square matrices have too few eigenvectors to diagonalise. Jordan form still finds a basis: chains that A − λI passes along, ending at an eigenvector. There A is blocks, λ on the diagonal, ones just above. Ranks of the powers of A − λI count blocks of each size. Powers of a block gain n λ^(n−1): a(10) is 21,504, not 1,024.
 
 ---
 
@@ -982,7 +982,7 @@ example : (0 : ℤ) ^ 10 * 1 + 1 ^ 10 * 6 + 0 ^ 10 * 1 = 6 ∧ (2 : ℕ) ^ 10 + 
 
 - [Normal matrices and the polar form](11-normal-matrices-and-polar-decomposition.md): all blocks of size 1, in a perpendicular basis.
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): $`e^{At}`$ of a Jordan block, by the same binomial step.
-- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): the rational canonical form, which needs no eigenvalues.
+- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): builds a block form over any number system without needing complex eigenvalues.
 
 Jordan form shows what happens when a matrix cannot be diagonalised. It leaves open the opposite extreme: which matrices have all blocks of size 1 and perpendicular eigenvectors? That is the next card's question.
 

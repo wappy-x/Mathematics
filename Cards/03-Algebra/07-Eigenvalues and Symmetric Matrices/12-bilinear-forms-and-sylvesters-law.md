@@ -1,4 +1,4 @@
-# Bilinear forms: a matrix that pairs two vectors instead of moving one, the symmetric ones are quadratic forms, the alternating ones measure signed area, and the sign count never changes
+# Bilinear forms: a square matrix that pairs two vectors instead of moving one, the real symmetric ones are quadratic forms whose sign count never changes in any invertible grid, and the alternating ones measure signed area
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Eigenvalues and Symmetric Matrices](../README.md#s07) → Bilinear forms
 
@@ -14,7 +14,7 @@ A second surveyor uses a skewed grid; a third turns the grid along the ridge. Ea
 
 The same kind of object measures area. Survey legs (3, 1) and (1, 2) span a field of 3 × 2 − 1 × 1 = 5 hectares (one step squared is one hectare). Swap the legs and the number is −5: the sign records the order.
 
-**A bilinear form takes two vectors and returns one number; a change of grid turns its matrix $`B`$ into $`P^T B P`$; the symmetric ones are quadratic forms, whose counts of plus, minus and zero squares never change (Sylvester's law); the alternating ones measure signed area and always come in pairs, so their rank is even.**
+**A bilinear form takes two vectors and returns one number; an invertible change of grid turns its matrix $`B`$ into $`P^T B P`$; the real symmetric ones are quadratic forms, whose counts of plus, minus and zero squares never change (Sylvester's law); the alternating ones measure signed area and always come in pairs, so their rank is even.**
 
 **What kind of fact this is:** definitions, a rule derived in Why it works ($`P^T B P`$), and two theorems proved there: Sylvester's law of inertia and the even rank of an alternating form.
 
@@ -146,7 +146,7 @@ For the pass: $`\tfrac{1}{2}(6 - 1 - 1) = 2`$, the corner entry. Symmetric forms
 
 Expand $`\omega(v + w, v + w) = 0`$. The two squared terms are zero, so $`\omega(v, w) + \omega(w, v) = 0`$. Swapping the vectors flips the sign: the matrix is **skew**, its transpose is its negative.
 
-For the field, $`\omega\big((3, 1), (1, 2)\big)`$ = 5. Base times height agrees: the length of (3, 1) is 3.162278, the part of (1, 2) square to it is 1.581139 long, and the product is 5.000000 hectares.
+For the field, $`\omega\big((3, 1), (1, 2)\big)`$ = 5. Base times height agrees: the length of (3, 1) is 3.162278, the part of (1, 2) at right angles to it is 1.581139 long, and the product is 5.000000 hectares.
 
 While $`\omega`$ is not all zero, pick $`u`$ and $`w`$ with $`\omega(u, w)`$ = 1: one pair, with matrix $`\Omega`$. The rest splits off from them; repeat on it.
 
@@ -750,7 +750,7 @@ example : (!![(1 : ℤ), 1; 1, 1])ᵀ * !![(1 : ℤ), 2; 2, 1] * !![(1 : ℤ), 1
 - **Mechanics.** Position and momentum come in pairs, measured by an alternating form.
 
 > **Say it back**
-> A bilinear form turns two vectors into one number. A new grid turns its matrix $`B`$ into $`P^T B P`$, because both vectors go in. Completing squares makes a symmetric form diagonal, and its counts of plus, minus and zero squares never depend on the grid: the pass is one plus, one minus. An alternating form measures signed area, splits into pairs, and so has even rank.
+> A bilinear form turns two vectors into one number. An invertible new grid turns its matrix $`B`$ into $`P^T B P`$, because both vectors go in. Completing squares makes a real symmetric form diagonal, and its counts of plus, minus and zero squares never depend on the grid: the pass is one plus, one minus. An alternating form measures signed area, splits into pairs, and so has even rank.
 
 ---
 
@@ -766,9 +766,9 @@ example : (!![(1 : ℤ), 1; 1, 1])ᵀ * !![(1 : ℤ), 2; 2, 1] * !![(1 : ℤ), 1
 - [Elliptic, parabolic, hyperbolic](../../19-Partial%20differential%20equations/01-Classification%20and%20Well-Posedness/04-classification-elliptic-parabolic-hyperbolic.md): uses Sylvester's sign counts on the second-derivative matrix to sort partial differential equations into three families.
 - [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): second-derivative sign counts telling peaks, pits and saddles apart.
 - [Symplectic form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/10-symplectic-form-and-hamiltonian-flow.md): an alternating form that drives how mechanical systems move.
-- [Generalised eigenproblems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md): Kx = lambda M x, from masses on springs to the QZ algorithm.
-- [Darboux's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): every symplectic form looks the same up close.
-- [The Killing form and roots](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): a Lie algebra split into directions that a torus scales.
+- [Generalised eigenproblems](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/15-generalised-eigenvalue-problems.md): solves $`Kx = \lambda Mx`$, pairing two symmetric matrices for vibrating springs using a triangular reduction.
+- [Darboux's theorem](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/11-darboux-theorem-and-the-moser-trick.md): shows that every non-degenerate alternating area form looks like the standard plane pairing up close.
+- [The Killing form and roots](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/02-killing-form-and-root-decomposition.md): uses a trace-based bilinear form to split a continuous symmetry algebra into scaled eigenvector directions.
 
 This card ends the shelf. Its changes of grid can be combined and undone. What do all such collections of moves have in common? That is the next shelf's question, starting with [Groups](../08-Groups/01-groups.md). Also left open: when the numbers are not real, over the rationals for example, a form keeps far more than its sign counts.
 
