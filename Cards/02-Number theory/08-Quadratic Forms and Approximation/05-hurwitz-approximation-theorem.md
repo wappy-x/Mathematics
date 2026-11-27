@@ -637,7 +637,7 @@ example : Nat.fib 7 = 13 ∧ Nat.fib 6 = 8 ∧ Nat.fib 9 = 34 ∧ Nat.fib 8 = 21
 
 - **Approximating π.** 22/7 and 355/113 score 0.0620 and 0.0034.
 - **Gear trains.** Tooth counts make an irrational ratio a fraction p/q; ever larger gear pairs get error under 1/(√5 q²).
-- **Sunflower seeds.** Turning each seed by the golden angle, φ − 1 of a turn, never lines seeds up in straight spokes: φ is the hardest number to approximate.
+- **Sunflower seeds.** Turning each seed by the golden angle, 2 − φ of a turn (about 137.5°), never lines seeds up in straight spokes: φ is the hardest number to approximate.
 
 > **Say it back**
 > Score p/q by q² times its error. Every irrational has infinitely many fractions scoring under 1/√5 = 0.4472. Trap it between Farey neighbours: of the two and their mediant, one passes. The golden ratio's scores close in on 0.4472 from both sides, so no constant above √5 works for every number.

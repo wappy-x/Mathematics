@@ -53,7 +53,7 @@ n \text{ is properly represented by some form of discriminant } D \text{ exactly
 | a, b, c | the form's three whole coefficients | (1, 0, 5), (2, 2, 3) | the values spread out |
 | f(x, y) | the form's value at x, y | f(3, 2) = 29 | — |
 | x, y (X, Y) | coprime whole inputs; X, Y after renaming | 3, 2 for 29; partner point (1, 1) | the value grows |
-| D | the discriminant | −20 | toward 0: fewer forms (−4 has one) |
+| D | the discriminant | −20 | toward 0: fewer forms on the whole (−4 has one) |
 | n, 4n | the number to reach; the test's clock | 29; 116 | the clock grows |
 | p | a prime being sorted | 3, 7, 23, 29, 41 | only p mod 20 matters |
 
@@ -109,7 +109,7 @@ A prime is always reached properly. For any prime other than 2 and 5:
 - **$`x^2 + 5y^2`$** is $`x^2`$ mod 5, so 1 or 4; an odd value is 1 mod 4. Together: 1 or 9 mod 20.
 - **$`2x^2 + 2xy + 3y^2`$** is $`2(x + 3y)^2`$ mod 5, so 2 or 3; an odd value needs y odd and is then 3 mod 4. Together: 3 or 7 mod 20.
 
-That −20 is a square mod p exactly for these four remainders follows from [Quadratic reciprocity by counting dots](../04-Powers%20on%20the%20Clock/13-quadratic-reciprocity-by-lattice-points.md), whose proof starts from [Gauss's lemma](../04-Powers%20on%20the%20Clock/12-gauss-lemma.md). For odd p, mod p is enough: a root, plus p if odd, is even, and even squares, like −20, are 0 mod 4.
+That −20 is a square mod p exactly for these four remainders follows from [Quadratic reciprocity by counting dots](../04-Powers%20on%20the%20Clock/13-quadratic-reciprocity-by-lattice-points.md), whose proof starts from [Gauss's lemma](../04-Powers%20on%20the%20Clock/12-gauss-lemma.md). For odd p, a square root of −20 mod p is enough. If the root is odd, add p to make it even. An even number squared is 0 mod 4, and so is −20, so the root also works mod 4p.
 
 ---
 
@@ -488,7 +488,7 @@ example : (4 : ℤ) ^ 2 + 5 * 1 ^ 2 = 21 := by decide
 - [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md) and [Gaussian integers](../../03-Algebra/10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the case D = −4, with one form, $`x^2 + y^2`$.
 - [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): how forms of one discriminant multiply together, matching ideal classes in algebraic number theory.
 
-Left open: how do you tell when two forms are renamings of each other? The next card, Reduced forms, answers that. A second puzzle waits for Composition and genus: 3 and 7 need the second form, so why does their product 21 = 4² + 5 × 1² land on the first?
+Left open: how do you tell when two forms are renamings of each other? The next card, [Reduced forms](02-reduced-forms-and-class-numbers.md), answers that. A second puzzle waits for [Composition and genus](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/11-gauss-composition-and-genus-theory.md): 3 and 7 need the second form, so why does their product 21 = 4² + 5 × 1² land on the first?
 
 ---
 

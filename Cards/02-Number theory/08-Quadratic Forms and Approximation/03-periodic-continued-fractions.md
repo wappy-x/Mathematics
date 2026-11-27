@@ -84,9 +84,13 @@ With all 1s:
 x = 1 + 1/x \quad\Rightarrow\quad x^2 - x - 1 = 0 \quad\Rightarrow\quad x = (1 + \sqrt{5})/2 = 1.6180339887
 ```
 
-Any block works. The stops (fractions from cutting the list short) obey new top = step × last top + the top before. Any number may serve as the last step.
+Any block works. The stops (fractions from cutting the list short) obey new top = step × last top + the top before, even when the last step is not whole. Take the tail y as the step after the block:
 
-With the tail y as the step after the block, y equals a fraction in y. Clearing the bottom gives a whole-number quadratic.
+```math
+y = (p\,y + p')/(q\,y + q') \quad \text{where } p/q \text{ and } p'/q' \text{ are the block's last two stops}
+```
+
+Above, the stops were 3/2 and 1/1. Clearing the bottom gives a whole-number quadratic.
 
 y is no fraction, since a fraction's list stops. A front part, like root 7's 2, is undone by x = a + 1/y.
 
