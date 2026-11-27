@@ -16,7 +16,7 @@ Arrows drawn from a corner of a page are another. So are the polynomials of degr
 
 Some subsets are little vector spaces themselves. The sugar-free recipes are: add two, still sugar-free; scale one, still sugar-free. Those are **subspaces**. The recipes with exactly 200 grams of flour are not: add two of them and you have 400 grams of flour.
 
-**A vector space is a collection with an add and a scale that behave the way adding and scaling numbers behave; a subspace is a subset holding the zero that you cannot get out of by adding or scaling.**
+**A vector space is a collection with an add and a scale that behave the way adding and scaling numbers behave; a subspace is a subset that holds the zero vector and that you cannot get out of by adding or scaling.**
 
 **What kind of fact this is:** two definitions: the eight rules are chosen, not discovered. The three-check subspace test is a theorem, proved on this card in Why it works.
 

@@ -95,7 +95,7 @@ In the arrow picture: park the tail of the second arrow on the head of the first
 
 Ride (3, 4) twice and each tally doubles: 3 + 3 = 6 east, 4 + 4 = 8 north. So 2 × (3, 4) = (6, 8). The code reaches (6, 8) both ways, by multiplying and by adding the leg to itself.
 
-Scaling by a whole number is repeated adding, but the rule works for any number. Scale by 0.5 and the cyclist rides half the run. Scale by -1 and the ride reverses: (-3, -4), the same road home. In the arrow picture, scaling changes the arrow's length and leaves its direction alone — unless the scalar is negative, which flips it end for end.
+Scaling by a whole number is repeated adding, but the rule works for any number. Scale by 0.5 and the cyclist rides half the run. Scale by -1 and the ride reverses: (-3, -4), the same road home. In the arrow picture, scaling changes the arrow's length and leaves its direction alone, unless the scalar is negative, which flips it end for end, or zero, which shrinks it to a point.
 
 ### Step 3: nothing, and the opposite of something
 

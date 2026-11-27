@@ -12,7 +12,7 @@ That pair is not the buoy. It is an instruction: go 5 east, then 3 north. Two di
 
 The crew does not steer in east and north. They steer in the river, which runs northeast. One leg downstream carries them 1 km east and 1 km north, the vector (1, 1). Straight across it, at right angles, is (-1, 1). In those two directions the buoy is 4 downstream and 1 back across, because 4 × (1, 1) − 1 × (-1, 1) = (5, 3).
 
-Same buoy, two pairs of numbers: (5, 3) one way, (4, -1) the other. Neither is more real. What did not change is the number two. Each way needed two directions. No set of directions that covers this plane ever has one, or three.
+Same buoy, two pairs of numbers: (5, 3) one way, (4, -1) the other. Neither is more real. What did not change is the number two. Each way needed two directions. No set of directions that gives every point of this plane exactly one address ever has one, or three.
 
 **A basis is a list of vectors that reaches every point with nothing spare; each point then has exactly one list of amounts against it, and every basis of the same space is the same length — that length is the dimension.**
 
