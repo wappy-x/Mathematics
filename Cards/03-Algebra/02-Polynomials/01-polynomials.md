@@ -71,8 +71,8 @@ A difference times a sum leaves the two squares: the middle terms cancel.
 
 - **Whole-number powers of the letter only.** Divide by the letter or take a half power, and the result is no longer a polynomial: 1 divided by t has no value at the kick, t = 0.
 - **Only during the flight.** The height rule fits while gravity alone acts, from 0 to 4 seconds. At 6 seconds it says −60.00 metres, but the ball is on the grass.
-- **Top terms that do not cancel.** Subtract two degree-2 polynomials with the same squared term, and the squared terms cancel. What is left is degree 1, not 2. Step 3 shows it with two balls.
-- **Ordinary numbers as coefficients.** Degrees add when multiplying because two non-zero top coefficients never multiply to zero: 5t times −t gives −5t^2. On a clock dial, two non-zero readings can multiply to zero, and then the degree can drop ([Rings](../09-Rings%20and%20Fields/01-rings.md)).
+- **Top terms that do not cancel.** Subtract two degree-2 polynomials with the same squared term, and the squared terms cancel. What is left has degree 1 or lower, not 2. Step 3 shows it with two balls.
+- **Ordinary numbers as coefficients.** Degrees add when multiplying two non-zero polynomials because their non-zero top coefficients never multiply to zero: 5t times −t gives −5t^2. On a clock dial, two non-zero readings can multiply to zero, and then the degree can drop ([Rings](../09-Rings%20and%20Fields/01-rings.md)).
 
 ---
 
@@ -100,11 +100,11 @@ Look far out and the top power wins. At 10 seconds 20t is 200 but 5t^2 is 500, s
 
 | Degree | What it has in it | The shape |
 | --- | --- | --- |
-| 0 | a plain number, no letter | flat |
+| 0 | a plain non-zero number, no letter | flat |
 | 1 | a number times the letter, plus a plain number | a straight line, no bends |
 | 2 | a squared term as well | one bend, up then down or down then up |
 
-Degree 3 adds a cubed term and can add a second bend, and so on up. A polynomial of degree $`n`$ bends at most $`n`$ − 1 times and crosses zero at most $`n`$ times. [Roots and factors](05-roots-and-the-factor-theorem.md) proves the second ceiling; the count of bends is a fact from calculus.
+Degree 3 adds a cubed term and can add a second bend, and so on up. A non-zero polynomial of degree $`n`$ crosses zero at most $`n`$ times, and for $`n \ge 1`$ bends at most $`n`$ − 1 times. [Roots and factors](05-roots-and-the-factor-theorem.md) proves the first ceiling; the count of bends is a fact from calculus.
 
 ### Step 3: adding is collecting like terms, and the degree can fall
 
@@ -118,7 +118,7 @@ Adding never pushes the degree above the bigger of the two, and can pull it down
 
 ### Step 4: multiplying is every term against every term; degrees add
 
-Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the ball's height again. Degree 1 times degree 1 came out degree 2, and it always does. The top term of one times the top term of the other is the only product reaching that power, so the degrees add.
+Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the ball's height again. Degree 1 times degree 1 came out degree 2, and it always does. The top term of one times the top term of the other is the only product reaching that power, so when neither polynomial is zero, the degrees add.
 
 Add two polynomials, or multiply them, and another polynomial comes back. The family is closed under both, which earns polynomials a name of their own in [Rings](../09-Rings%20and%20Fields/01-rings.md).
 
@@ -373,7 +373,7 @@ The two outputs match line for line.
 
 Lean proves the degree rules for every polynomial with ordinary numbers as coefficients, and the two products for any numbers.
 
-- Multiplying two polynomials adds their degrees.
+- Multiplying two polynomials adds their degrees (as whole numbers when neither is zero; Lean gives the zero polynomial a special degree below every number so the rule needs no exception).
 - Adding two polynomials never pushes the degree above the bigger of the two degrees.
 - $`(a + b)^2 = a^2 + 2ab + b^2`$ and $`(a - b)(a + b) = a^2 - b^2`$, whatever numbers $`a`$ and $`b`$ are.
 

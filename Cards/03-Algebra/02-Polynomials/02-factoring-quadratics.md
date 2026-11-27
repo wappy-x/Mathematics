@@ -134,7 +134,7 @@ Now the courtyard: x metres a side, with a square pond k metres a side, here 3, 
 
 Multiply (x + k)(x − k) out and the middle disappears: x^2 − kx + kx − k^2 = x^2 - k^2. The middle pieces are equal and opposite, so they cancel. At x = 11 with k = 3: 121 − 9 = 112 square metres, and 14 × 8 = 112.
 
-A square *plus* a square does not split into brackets like these. That is the trap below.
+A square *plus* a non-zero square does not split over the reals. That is the trap below.
 
 ### Step 4: set each bracket to zero
 
@@ -190,7 +190,7 @@ The ball is in the air 4 seconds. The patio is 5 m by 6 m: 22 m of edging round 
 | --- | --- | --- |
 | Reading (x − 5)(x − 6) = 30 as x − 5 = 30 | 870, not 30 | The rule works against zero only; x = 35 solves nothing |
 | Taking −3 and −10, which multiply to 30 | 8, not 30, at x = 11 | They add to −13: wrong middle number |
-| Splitting x^2 + 9 into (x + 3)(x − 3) | 112, not 130, at x = 11 | That is x^2 − 9. A sum of squares has no brackets |
+| Splitting x^2 + 9 into (x + 3)(x − 3) | 112, not 130, at x = 11 | That is x^2 − 9. $`x^2 + k^2`$ ($`k \ne 0`$) has no real brackets |
 | Pulling out 5 instead of 5t, giving 5(4 − t) | 10, not 20, at t = 2 | The t was left behind, so the bracket is wrong |
 
 The code prints all four beside the right answers.
@@ -484,7 +484,7 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 ## The usual mistake
 
 > [!warning]
-> **A sum of squares does not factor.** x^2 + 9 is not (x + 3)(x − 3), nor (x + 3)(x + 3). Multiply the first out and you get x^2 − 9; at x = 11 that reads 112 while x^2 + 9 is 130. Only a *difference* of squares splits. No two real numbers multiply to +9 and add to 0, so the code's hunt returns nothing.
+> **$`x^2 + k^2`$ ($`k \ne 0`$) has no real brackets.** x^2 + 9 is not (x + 3)(x − 3), nor (x + 3)(x + 3). Multiply the first out to get x^2 − 9: 112 at x = 11, not 130. Only a *difference* of squares splits. No two real numbers multiply to +9 and add to 0, so the hunt returns nothing.
 >
 > - Setting the brackets equal to anything but zero. From (x − 5)(x − 6) = 30, "x − 5 = 30" gives x = 35, where the polynomial reads 870. The true solutions are x = 0 and x = 11.
 > - A pair that multiplies right but adds wrong. −3 and −10 multiply to 30, but their quadratic reads 8 at x = 11, not 30.
@@ -501,7 +501,7 @@ example : (0 - 5 : ℤ) * (0 - 6) = 30 ∧ (11 - 5 : ℤ) * (11 - 6) = 30 := by 
 - **Reading a graph.** Where a curve crosses the bottom it has a bracket: [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 > **Say it back**
-> Factoring turns a sum of terms into a product of brackets. A product is zero only when one factor is zero, so a factored polynomial gives up its zeros with no searching. Three moves cover most of it: pull out what every term shares, spot a square minus a square, or find two numbers that add to the middle number and multiply to the last. The ball's 20t − 5t^2 is 5t(4 − t), so it lands at t = 4. The patio's x^2 − 11x + 30 is (x − 5)(x − 6), zero at x = 5 and x = 6: a 5 m by 6 m patio. A sum of squares never factors, and a quadratic with no whole-number pair is a job for the formula, not a mistake.
+> Factoring turns a sum of terms into a product of brackets. A product is zero only when one factor is zero, so a factored polynomial gives up its zeros with no searching. Three moves cover most of it: pull out what every term shares, spot a square minus a square, or find two numbers that add to the middle number and multiply to the last. The ball's 20t − 5t^2 is 5t(4 − t), so it lands at t = 4. The patio's x^2 − 11x + 30 is (x − 5)(x − 6), zero at x = 5 and x = 6: a 5 m by 6 m patio. $`x^2 + k^2`$ ($`k \ne 0`$) has no real brackets, and a quadratic with no whole-number pair goes to the formula.
 
 ---
 

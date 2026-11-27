@@ -60,7 +60,7 @@ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 
 **Read it aloud:** start with minus $`b`$; add the square root of $`b`$ squared minus four $`a c`$ for one answer, subtract it for the other; divide each by two $`a`$.
 
-The plus-or-minus sign is not a hedge: it is two answers on one line.
+The plus-or-minus sign is not a hedge: it packs both signs onto one line (two answers when $`D > 0`$, collapsing to one when $`D = 0`$).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -172,13 +172,13 @@ Everything there is ordinary arithmetic except the square root, and under it sit
 - Exactly zero: the root is zero, so both signs give the same answer, -b/(2a) — one moment, counted twice.
 - Below zero: nothing on the number line squares to a negative, so there is no root and no answer.
 
-When the discriminant is a whole number that is not a perfect square, the root runs on forever without repeating, and the answers are irrational ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
+When the coefficients are whole numbers (or fractions) and the discriminant is a positive whole number that is not a perfect square, the root runs on forever without repeating, and the answers are irrational ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
 
 <details>
 <summary>The two answers add and multiply to something you can read off the equation</summary>
 
 Add them: the plus root and the minus root cancel, leaving (-b + -b) / (2a), which is -b/a. Multiply them: a difference of two squares, b^2 - (b^2 - 4ac) = 4ac, over 4a^2, which is c/a.
-So the answers of any quadratic add to -b/a and multiply to c/a — Vieta's formulas, after François Viète. The fastest check there is.
+So whenever $`D \ge 0`$, the answers of any quadratic (counting a repeated answer twice when $`D = 0`$) add to -b/a and multiply to c/a — Vieta's formulas, after François Viète. The fastest check there is.
 For the ball: -b/a is 20/5 = 4 and c/a is 15/5 = 3, and the answers 1 and 3 add to 4 and multiply to 3.
 
 </details>
@@ -420,7 +420,7 @@ Lean proves the formula, the answer count and the sum and product for every quad
 
 - When $`D`$ is not below zero, a number solves $`a x^2 + b x + c = 0`$ exactly when it is one of the formula's two answers.
 - $`D`$ above zero gives exactly two answers on the number line, $`D`$ exactly zero gives one, $`-b/(2a)`$, and $`D`$ below zero gives none.
-- The formula's two answers add to $`-b/a`$ and multiply to $`c/a`$.
+- When $`D`$ is not below zero, the formula's two answers add to $`-b/a`$ and multiply to $`c/a`$.
 
 The ball's decimal times, the third mistake and the square root built by Newton's method are left to the Python and Rust checks.
 

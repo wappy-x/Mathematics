@@ -50,7 +50,7 @@ The size rule is half the formula: the scrap is either zero, or its degree is lo
 | $`x`$ | the cut: the side of the square cut from each corner, in cm | 5 gives the 5 by 20 by 10 tray | a deeper, narrower tray; the volume rises, then falls |
 | $`p(x)`$ | the polynomial you are cutting up | the volume minus 1000, 4x^3 − 100x^2 + 600x − 1000 | a higher power here means a longer quotient |
 | $`d(x)`$ | the divisor: what you divide by | x − 5, from the cut you know | a higher power leaves a shorter quotient, a roomier scrap |
-| $`q(x)`$ | the quotient: how many of the divisor fit | 4x^2 − 80x + 200 | its degree is p's degree minus d's |
+| $`q(x)`$ | the quotient: how many fit | 4x^2 − 80x + 200 | p's degree minus d's when non-zero p has degree ≥ d's, else $`q = 0`$ |
 | $`s(x)`$ | the remainder, or scrap: what is left at the end, zero or lower degree than the divisor | 0 for x − 5; 56 for x − 4 | raise d's degree and the scrap may keep an x |
 | $`r`$ | the divisor's root: the number that makes x − r equal zero. It is a root of p only when the scrap is 0 | 5 for x − 5; 4 for x − 4 | move r and the scrap traces the curve of p |
 
@@ -371,7 +371,7 @@ The two outputs match line for line.
 
 Lean proves the card's three general claims for every polynomial, and checks the tray's numbers exactly.
 
-- Divide by a divisor that is not zero and whose leading number you can divide by. Exactly one quotient and remainder fit, with the remainder of lower degree.
+- Divide by a non-zero divisor whose leading number has a reciprocal: one quotient and remainder fit, remainder zero or lower degree.
 - Divide p by x − r, and p(x) = (x − r) q(x) + p(r) for some quotient q.
 - Any division by x − r that leaves a remainder of lower degree than x − r leaves exactly p(r).
 - The tray: x − 5 goes in exactly with quotient 4x^2 − 80x + 200, and x − 4 leaves 56.

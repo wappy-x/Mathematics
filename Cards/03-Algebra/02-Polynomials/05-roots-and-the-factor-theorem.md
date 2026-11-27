@@ -22,7 +22,7 @@ So the edges are the inputs that make the cubic come out zero — its roots ([Po
 
 A hit, and a hit buys more than one answer. Because 1 is a root, the bracket x - 1 divides the cubic exactly, leaving x^2 - 5x + 6 = (x - 2)(x - 3) ([Factoring](02-factoring-quadratics.md)). The tank is 1 metre by 2 metres by 3 metres.
 
-**A number r is a root of a polynomial exactly when x - r divides it; since each root uses up one degree, a degree-n polynomial has at most n different roots.**
+**A number r is a root of a polynomial exactly when x - r divides it; since each root uses up one degree, a non-zero degree-n polynomial has at most n different roots.**
 
 **What kind of fact this is:** two theorems, the factor theorem and the root ceiling, both proved on this card in Why it works.
 
@@ -81,7 +81,7 @@ The second is the ceiling that follows:
 
 ### Step 0: dividing by x - r always leaves a plain number
 
-Polynomial long division ([Polynomial long division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder has degree 0: a plain number, no x in it. Call it $`c`$.
+Polynomial long division ([Polynomial long division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder is zero or has degree 0: a plain number, no x in it. Call it $`c`$.
 
 ```math
 p(x) = (x - r)\,q(x) + c
@@ -489,7 +489,7 @@ example : ∀ x : ZMod 12, (x ^ 2 - 1 = 0 ↔ x = 1 ∨ x = 5 ∨ x = 7 ∨ x = 
 - **Error-correcting codes.** A scratched disc is repaired on the same ceiling: two short polynomials cannot agree at too many places.
 
 > **Say it back**
-> Divide a polynomial by x - r and the remainder is the polynomial's value at r. So the remainder is zero exactly when r is a root, which is exactly when x - r is a factor. Root and factor are the same fact twice. Each root peels off one bracket and drops the degree by one, so the tank's x^3 - 6x^2 + 11x - 6 runs out after three: 1, 2 and 3 metres. Degree n allows at most n roots, often fewer.
+> Divide a polynomial by x - r and the remainder is the polynomial's value at r. So the remainder is zero exactly when r is a root, which is exactly when x - r is a factor. Root and factor are the same fact twice. Each root peels off one bracket and drops the degree by one, so the tank's x^3 - 6x^2 + 11x - 6 runs out after three: 1, 2 and 3 metres. A non-zero polynomial of degree n allows at most n roots, often fewer.
 
 ---
 
