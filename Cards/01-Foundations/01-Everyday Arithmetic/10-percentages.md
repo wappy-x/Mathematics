@@ -343,7 +343,7 @@ example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to th
 - **Interest, inflation, polls.** All quoted as percents so sizes compare, the job of [Ratios and rates](09-ratios-and-rates.md). Anything "up 3 points" moved on the rate, not the money.
 
 > **Say it back**
-> A percent is a count of hundredths: multiply by the percent, divide by 100. A cut multiplies by 100 minus the percent, a rise by 100 plus it. To undo either (except a 100% cut, which multiplies by zero), divide by what you multiplied by — never add the percent back. Every percent is a percent *of* something.
+> A percent is a count of hundredths: multiply by the percent, divide by 100. A cut multiplies by 100 minus the percent, then divides by 100; a rise does the same with 100 plus the percent. To undo either (except a 100% cut, which multiplies by zero), divide by what you multiplied by — never add the percent back. Every percent is a percent *of* something.
 
 ---
 
