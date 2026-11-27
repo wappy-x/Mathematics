@@ -66,7 +66,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 3. [Residue classes: the n remainder buckets, and the small addition and multiplication tables they form](03-Clock%20Arithmetic/03-residue-classes.md)
 4. [The modular inverse: dividing on the clock works exactly when the number is coprime to the modulus](03-Clock%20Arithmetic/04-modular-inverse.md)
 5. [Solving a x ≡ b (mod n): when it has answers, how many, and how to find them all](03-Clock%20Arithmetic/05-linear-congruences.md)
-6. [The Chinese remainder theorem: three rotas, one day — day numbers on cycles that share no factor pin down one day, and how to rebuild it](03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)
+6. [The Chinese remainder theorem: three rotas, one day — day numbers on cycles where no two share a factor pin down one day, and how to rebuild it](03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)
 7. [The coin problem: with 5-cent and 7-cent stamps every amount above 23 can be paid, and 23 cannot](03-Clock%20Arithmetic/07-frobenius-coin-problem.md)
 
 [↑ Back to the shelves](#top)

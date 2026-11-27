@@ -18,7 +18,7 @@ It does not always exist. Key 13 sends both H (7) and J (9) to N, and nothing pu
 
 **A key can be undone exactly when it and the modulus are coprime — sharing no factor above 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — and the undoing is itself a multiplication, which Euclid's chain ([Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)) run backwards hands you.**
 
-**What kind of fact this is:** a definition, then a theorem proved in Why it works: a key has an inverse exactly when it is coprime to the modulus, and only one.
+**What kind of fact this is:** a definition, then a theorem proved in Why it works: a key has an inverse exactly when it is coprime to the modulus, and only one on the clock.
 
 ### The picture
 
@@ -344,7 +344,7 @@ example : Nat.Coprime 5 26 ∧ 5 * 21 = 105 ∧ 5 * 21 ≡ 1 [MOD 26] := by norm
 ## The usual mistake
 
 > [!warning]
-> **Thinking every key can be undone, because on paper you can divide by anything.** Key 13 folds the alphabet onto two letters.
+> **Thinking every key can be undone, because on paper you can divide by any non-zero number.** Key 13 folds the alphabet onto two letters.
 >
 > - **Cancelling without checking.** 13 × 7 and 13 × 9 both land on 13; cancelling turns 7 into 9.
 > - **Taking a quotient off the chain.** The 3 in 26 = 3 × 7 + 5 gives 17, not 15.
@@ -374,7 +374,7 @@ example : Nat.Coprime 5 26 ∧ 5 * 21 = 105 ∧ 5 * 21 ≡ 1 [MOD 26] := by norm
 ## Where this goes next
 
 - [Solving a x ≡ b (mod n)](05-linear-congruences.md): when key and modulus share a factor.
-- [The Chinese remainder theorem](06-chinese-remainder-theorem.md): inverses as glue for remainders.
+- [The Chinese remainder theorem](06-chinese-remainder-theorem.md): using inverses to rebuild one number from its remainders on coprime clocks.
 - [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the other route, for a prime modulus.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): one inverse nobody else can compute.
 

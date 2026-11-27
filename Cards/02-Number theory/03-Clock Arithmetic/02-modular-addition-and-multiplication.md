@@ -12,7 +12,7 @@ Add the digits instead. 47 gives 4 + 7 = 11, then 1 + 1 = 2. 23 gives 5. Multipl
 
 Both roads end on 1, so the receipt passes. Shrinking a number means keeping the remainder — what is left once whole 9s are thrown away ([Congruence](01-congruence-mod-n.md)).
 
-This is called **casting out nines**. It works because shrinking first then multiplying gives the same result as multiplying first then shrinking.
+This is called **casting out nines**. It works because shrinking first, multiplying and shrinking again gives the same result as multiplying first then shrinking.
 
 **Remainders add and multiply on their own. Reduce before or reduce after, you land on the same remainder.**
 
@@ -53,7 +53,7 @@ The shorthand from [Congruence](01-congruence-mod-n.md): 47 ≡ 2 (mod 9) and 23
 
 - **Adding and multiplying only.** Dividing does not carry over: 3 × 4 = 12 and 3 × 1 = 3 both leave 3, yet 4 is not 1.
 - **Both sides reduced, on the same clock.** Compare 1,081 with 10 instead of 1 with 1, and a right receipt looks wrong.
-- **Digit sums need a clock where 10 leaves 1.** The 9-clock is one. On a 10-clock, adding the digits does not give the remainder.
+- **Digit sums need a clock where 10 leaves the same remainder as 1.** The 9-clock is one. On a 10-clock, adding the digits does not give the remainder.
 
 ---
 

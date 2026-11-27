@@ -1,4 +1,4 @@
-# The Chinese remainder theorem: three rotas, one day — day numbers on cycles that share no factor pin down one day, and how to rebuild it
+# The Chinese remainder theorem: three rotas, one day — day numbers on cycles where no two share a factor pin down one day, and how to rebuild it
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Clock Arithmetic](../README.md#s03) → The Chinese remainder theorem
 
@@ -14,7 +14,7 @@ Count up. Cleaning alone allows day 2, day 5, day 8, on for ever. Deliveries all
 
 The rotas line up again only after 3 × 5 × 7 = 105 days. So the answer is not a date but a day of a 105-day cycle: 23, then 128.
 
-**Cycle lengths sharing no factor above 1 act as independent dials: the three day numbers pin down one day in 105, and that day can be built rather than hunted for.**
+**Cycle lengths where no two share a factor above 1 act as independent dials: the three day numbers pin down one day in 105, and that day can be built rather than hunted for.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -230,7 +230,7 @@ Both outputs match line for line.
 
 Lean proves the card's three facts for any number of rotas, not just 3, 5 and 7.
 
-- When no two cycle lengths share a factor, every set of day numbers fits exactly one day below the combined cycle.
+- When no two cycle lengths share a factor, every set of day numbers (each below its cycle length) fits exactly one day below the combined cycle.
 - On such rotas, two days read the same exactly when they differ by whole combined cycles.
 - When two lengths share no factor, multiplying by the first has an undoer on the second cycle. One fold with it lands on a day that reads right on both.
 - It also re-checks the card's numbers: both folds, day 23 and 128, the chart, the 6-day cycle and day 38.

@@ -14,7 +14,7 @@ From 24 on, everything works: 24 to 28 do, and adding 5s covers the rest.
 
 This is the **coin problem**; its answer is the **Frobenius number**.
 
-**When two stamp values share no factor above 1, only finitely many amounts cannot be paid, and the largest is the product minus both values: 5 × 7 − 5 − 7 = 23.**
+**When two stamp values of 2 or more share no factor above 1, only finitely many amounts cannot be paid, and the largest is the product minus both values: 5 × 7 − 5 − 7 = 23.**
 
 **What kind of fact this is:** a theorem for two sizes, proved in Why it works; three sizes have no such formula, so this card searches.
 
@@ -50,7 +50,7 @@ $`ab`$ means $`a \times b`$. The values must be coprime: no whole number above 1
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`a`$, $`b`$ | the two stamp values, coprime | 5 and 7 cents | more gaps |
+| $`a`$, $`b`$ | the two stamp values, 2 or more and coprime | 5 and 7 cents | more gaps |
 | $`x`$, $`y`$ | how many of each stamp, 0 or more | 2 and 2, for 24 cents | — |
 | $`n`$ | the amount to pay | 24 cents | above 23, always payable |
 | $`ab - a - b`$ | the largest amount that cannot be paid | 23 | — |
@@ -61,7 +61,7 @@ $`ab`$ means $`a \times b`$. The values must be coprime: no whole number above 1
 
 - **The values are coprime.** 6 and 9 make only multiples of 3, so the gaps never end.
 - **Both values 2 or more.** A 1-cent stamp pays everything.
-- **Counts are 0 or more.** Allow a stamp handed back and every amount works: 3 × 5 − 2 × 7 = 1.
+- **Counts of 0 or more.** Allow stamps back and every amount works: 3 × 5 − 2 × 7 = 1.
 - **Exactly two sizes.** Three sizes have no such formula; boxes of 6, 9 and 20 stop at 43.
 
 ---
@@ -107,7 +107,7 @@ With negative counts, $`a x + b y + c z = n`$ has whole-number answers exactly w
 
 Scaling by $`n`$ reaches any $`n`$. Conversely, the gcd divides every size, hence every mix: 6, 9 and 15 give only multiples of 3.
 
-With counts of 0 or more, boxes of 6, 9 and 20 sort into rows by remainder on 6: doorsteps from 9s and 20s are 0, 49, 20, 9, 40 and 29, so the last gap is 49 − 6 = 43. No formula like $`ab - a - b`$ exists for three sizes, but methods faster than search do.
+With counts of 0 or more, boxes of 6, 9 and 20 sort into rows by remainder on 6: doorsteps from 9s and 20s are 0, 49, 20, 9, 40 and 29, so the last gap is 49 − 6 = 43. No formula like $`ab - a - b`$ exists for three sizes, though faster methods exist.
 
 ---
 
@@ -137,7 +137,7 @@ With counts of 0 or more, boxes of 6, 9 and 20 sort into rows by remainder on 6:
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Search, doorsteps from 7s alone and the formula each reach 23 and 12; the pairing reaches 12. Search and doorsteps also give 43 for the boxes.
+Nothing is imported. Search, doorsteps and the formula each give 23 and 12; pairing also gives 12, and search and doorsteps give 43 for the boxes.
 
 ### Python
 
@@ -525,7 +525,7 @@ example : Int.gcd (Int.gcd 6 9) 20 = 1 ∧ Int.gcd (Int.gcd 6 9) 15 = 3 := by de
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run. Each ends at a pinned assert.
+> Guess first; each hits a pinned assert.
 > - **Set `A, B = 5, 8`.** Last gap 27, with 14 gaps.
 > - **Set `A, B = 3, 5`.** Only 1, 2, 4 and 7 fail.
 > - **Set `BOXES = [9, 20]`.** Two sizes again, so the formula works: 151.
@@ -545,12 +545,12 @@ example : Int.gcd (Int.gcd 6 9) 20 = 1 ∧ Int.gcd (Int.gcd 6 9) 15 = 3 := by de
 
 ## Where you meet it in real life
 
-- **Postage.** With two stamp values, every rate above the Frobenius number is payable exactly.
+- **Postage.** With two coprime stamp values of 2 or more, every rate above the Frobenius number is payable exactly.
 - **Pack sizes.** Boxes of 6, 9 and 20 fill every exact order above 43, but not 43.
-- **Game scores.** Two coprime point values leave a highest impossible score.
+- **Game scores.** Two coprime point values of 2 or more leave a highest impossible score.
 
 > **Say it back**
-> Sort amounts into rows by remainder after dividing by 5. Each row opens at a pile of 7s; the highest is 28. One 5 below is the last gap: 5 × 7 − 5 − 7 = 23. Half of 0 to 23 fails: 12 amounts. Three sizes have no such formula; search finds 43 for 6, 9 and 20.
+> Sort amounts by remainder on 5. Each row opens at a pile of 7s; highest is 28, so the last gap is 28 − 5 = 23 = 5 × 7 − 5 − 7. Half of 0 to 23 fails: 12. Three sizes have no formula; search gives 43 for 6, 9 and 20.
 
 ---
 
@@ -566,7 +566,7 @@ example : Int.gcd (Int.gcd 6 9) 20 = 1 ∧ Int.gcd (Int.gcd 6 9) 15 = 3 := by de
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): the next shelf starts here, turning from sums of multiples to multiplying a number by itself many times on a clock.
 - [Pseudo-polynomial time](../../24-Computability%20and%20complexity/03-Time%20Complexity/06-pseudo-polynomial-time-and-numbers-in-the-input.md): why this card's upward search is fast only for small sizes.
 
-Left open: as the number of sizes grows, can the largest gap still be found quickly? This shelf ends here, so that question points off it; the next shelf turns to powers.
+Left open: as the number of sizes grows, can the largest gap still be found quickly? The next shelf turns to powers.
 
 ---
 

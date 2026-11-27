@@ -49,9 +49,9 @@ A bucket is a set, running on forever:
 
 ### When it holds
 
-- **Every remainder runs from 0 to n − 1, negatives included.** Let a remainder go negative, as some calculators do, and -22 seems to land in "bucket -10", which is not one of the 12.
+- **A modulus n of 1 or more, with every remainder running from 0 to n − 1, negatives included.** Let a remainder go negative, as some calculators do, and -22 seems to land in "bucket -10", which is not one of the 12.
 - **Plus and times only.** Any member stands in for its bucket there: 19 + 19 = 38 still lands in bucket 2. Division is not covered ([The modular inverse](04-modular-inverse.md)).
-- **A prime modulus, if no two non-zero buckets may multiply to 0.** Out of 5 there are 0 such pairs; out of 6, which splits as 2 × 3, there are 4.
+- **A prime modulus (for n of 2 or more), if no two non-zero buckets may multiply to 0.** Out of 5 there are 0 such pairs; out of 6, which splits as 2 × 3, there are 4.
 
 ---
 
@@ -243,7 +243,7 @@ Both outputs match line for line.
 
 ### Lean
 
-Lean proves the card's three facts for every modulus n, not just 12, 5 and 6.
+Lean proves the card's three facts for every modulus n of 1 or more, not just 12, 5 and 6.
 
 - Every whole number, negatives included, lands in exactly one bucket, with a remainder from 0 to n − 1.
 - Swap any member for another from the same bucket, and the sum and the product still land in the same bucket.

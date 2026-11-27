@@ -16,7 +16,7 @@ The odd part: the dial never shows 1, 3, 5, 7 or 9. Ask for 3 and you click fore
 
 In shorthand: **6x ≡ 4 (mod 10)** — x the clicks, six times them leaving remainder 4 on a 10-dial ([Congruence](01-congruence-mod-n.md)). That is a **linear congruence**: the unknown multiplied by a fixed number, on a clock. In letters, **a x ≡ b (mod n)**: a the step, b the target, n the dial.
 
-**The gcd of the step and the dial — the biggest number dividing both — decides everything: if it does not divide the target there is no answer at all, and if it does, there are exactly that many answers.**
+**On any dial of 1 or more positions, the gcd of the step and the dial — the biggest number dividing both — decides everything: if it does not divide the target there is no answer at all, and if it does, there are exactly that many answers on the dial.**
 
 **What kind of fact this is:** a theorem, proved in Why it works: the gcd test, then shrink the clock and undo the step.
 
@@ -59,7 +59,7 @@ The rule: take the gcd of step and dial. If it does not divide the target, stop.
 
 - **The gcd divides the target.** Aim at 3 and there are 0 answers: every reading is even.
 - **The shrink divides all three by the gcd, the dial too.** Halve 6 and 4 but keep the 10, and only one answer comes out, 4; the 9 is lost.
-- **Answers are counted once round the dial, 0 to 9.** Count plain whole numbers instead and the answers never stop: each comes back every 10 clicks.
+- **A dial of 1 or more positions, with answers counted once round it (0 to 9 here).** Count plain whole numbers instead and the answers never stop: each comes back every 10 clicks.
 
 ---
 
@@ -247,7 +247,7 @@ Both outputs match line for line.
 
 ### Lean
 
-Lean proves the gcd rule for every step and target, and every dial of 1 or more positions, not just 10.
+Lean proves the gcd rule for every step and target of 0 or more, and every dial of 1 or more positions, not just 10.
 
 - Counting from 0 to one less than the dial, there are gcd answers if the gcd divides the target, and none if it does not.
 - Dividing all three by the gcd, the dial too, keeps exactly the same answers.
@@ -477,8 +477,8 @@ theorem linear_congruence_answers_are_spaced_n_over_gcd (a b n : ℕ) (hn : 0 < 
 ## Where this goes next
 
 - [The Chinese remainder theorem](06-chinese-remainder-theorem.md): each clock is cut to one answer this way, then the answers stitched together.
-- [The coin problem](07-frobenius-coin-problem.md): the same equation a x + b y = n, but with counts of 0 or more, which leaves a largest amount that cannot be paid.
-- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): on a prime clock this card's a x ≡ b, with a not 0, has one answer; Lagrange allows at most d answers when x is raised to the power d.
+- [The coin problem](07-frobenius-coin-problem.md): the same equation a x + b y = n with coprime values of 2 or more and counts of 0 or more, which leaves a largest amount that cannot be paid.
+- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): on a prime clock this card's a x ≡ b, with a not 0 on the clock, has one answer; Lagrange allows at most d answers when x is raised to the power d.
 - [Indices](../04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md): logarithms on a prime clock turn powers into multiplication and solve x^k ≡ a.
 - [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): from a x + b y = n to quadratic equations like x^2 + 5y^2 = n, again settled by a test on a clock.
 
