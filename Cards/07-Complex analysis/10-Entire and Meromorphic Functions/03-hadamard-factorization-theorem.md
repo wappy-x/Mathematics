@@ -1,4 +1,4 @@
-# Hadamard factorization: an entire function of finite order is its zeros times e to a polynomial
+# Hadamard factorization: a nonzero entire function of finite order is its zeros times e to a polynomial
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Entire and Meromorphic Functions](../README.md#s10) → Hadamard factorization
 
@@ -6,13 +6,13 @@
 
 ## General Overview
 
-The function sin(πz) is zero at every whole number: 0, ±1, ±2, and so on. Euler guessed in 1734 that it is nothing but those zeros multiplied together: πz times (1 − z²/1²)(1 − z²/2²)(1 − z²/3²)…. Put z = 1/2 and the guess says the product of 1 − 1/(4n²) is 2/π = 0.636620. Partial products creep down: 0.651953 after ten factors, 0.636779 after a thousand.
+The function sin(πz) is zero at every whole number: 0, ±1, ±2, and so on. Euler guessed in 1734 that it is nothing but those zeros multiplied together: πz times (1 − z²/1²)(1 − z²/2²)(1 − z²/3²)…. At z = 1/2 the guess says the product of 1 − 1/(4n²) is 2/π = 0.636620; partial products creep down from 0.651953 (ten factors) to 0.636779 (a thousand).
 
-But zeros alone never fix a function. Any function times e to anything keeps its zeros: e^z sin(πz) reads 1.648721 at z = 1/2, not 1. The real question is which "e to something" hides in front of the product.
+Zeros alone never fix a function. Multiplying by e to anything keeps the same zeros: e^z sin(πz) reads 1.648721 at z = 1/2, not 1. The real question is which "e to something" hides in front of the product.
 
-Jacques Hadamard answered it in 1893. If a function does not grow too fast, the hidden factor is e to a **polynomial**, with degree capped by the growth rate. For sin(πz) that is e^(az + b), and two facts about sine force a = 0 and e^b = 1. Applied to the completed zeta function ξ, the same theorem gives the product over zeta's zeros that prime-number theory runs on.
+Hadamard's theorem answers it. If a nonzero entire function grows slowly enough, the hidden factor is e to a **polynomial**, with degree capped by the growth rate. For sin(πz) that leaves e^(az + b), and oddness plus the slope at 0 force a = 0 and e^b = 1. For the completed zeta function ξ, the same theorem builds the product over zeta's zeros that prime-number theory runs on.
 
-**An entire function of finite order equals a power of z, times a product over its zeros made convergent by small exponential factors, times e to a polynomial whose degree is at most the order.**
+**A nonzero entire function of finite order equals a power of z, times a product over its nonzero zeros made convergent by small exponential factors, times e to a polynomial whose degree is at most the order.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for every finite order, then applied to sine and to ξ.
 
@@ -32,23 +32,23 @@ flowchart LR
 
 ## The formula
 
-An **entire function** is holomorphic (complex-differentiable) at every point of the plane. Write $`M(r)`$ for the largest value of $`\lvert f(z)\rvert`$ on the circle $`\lvert z\rvert = r`$; log means ln. The **order** $`\rho`$ is the smallest number such that, for every small $`\varepsilon > 0`$, $`\log M(r) \le r^{\rho + \varepsilon}`$ once $`r`$ is large ([Jensen's formula](02-jensens-formula-and-order-of-growth.md)). For sine, $`\log M(r)`$ is close to $`\pi r`$, so $`\rho = 1`$.
+An **entire function** is holomorphic (complex-differentiable) everywhere. Let $`M(r)`$ be the largest value of $`\lvert f(z)\rvert`$ on $`\lvert z\rvert = r`$; log means ln. The **order** $`\rho`$ is the smallest nonnegative number such that $`\log M(r) \le r^{\rho + \varepsilon}`$ for each $`\varepsilon > 0`$ and large $`r`$ ([Jensen's formula](02-jensens-formula-and-order-of-growth.md)). For sine, $`\rho = 1`$.
 
-The **elementary factor** of degree $`k`$ is a zero at 1 with a correction that keeps long products convergent ([Weierstrass factorization](01-weierstrass-factorization-theorem.md)):
+The **elementary factor** of degree $`k`$ keeps long products convergent ([Weierstrass factorization](01-weierstrass-factorization-theorem.md)):
 
 ```math
 E_k(u) = (1 - u)\, \exp\!\left(u + \frac{u^2}{2} + \cdots + \frac{u^k}{k}\right), \qquad E_0(u) = 1 - u
 ```
 
-**Hadamard's theorem.** Let $`f`$ be entire of order $`\rho`$, with a zero of order $`m`$ at 0 and its other zeros $`a_1, a_2, \ldots`$, each listed as often as it repeats. Let $`k`$ be the largest whole number not above $`\rho`$: each factor's degree of correction, and a cap on the product's **genus**. Then
+**Hadamard's theorem.** Let $`f`$ be a nonzero entire function of finite order $`\rho \ge 0`$, with a zero of order $`m`$ at 0 ($`m = 0`$ if $`f(0) \ne 0`$) and nonzero zeros $`a_1, a_2, \ldots`$, each listed as often as it repeats. Let $`k`$ be the largest whole number not above $`\rho`$ (a cap on the product's **genus**). Then
 
 ```math
 f(z) = z^m\, e^{Q(z)} \prod_{n} E_k\!\left(\frac{z}{a_n}\right), \qquad Q \text{ a polynomial of degree at most } \rho
 ```
 
-**Read it aloud:** f is z to the m, times e to a polynomial of degree at most the order, times one elementary factor of degree k for each zero.
+**Read it aloud:** f is z to the m, times e to a polynomial of degree at most the order, times one elementary factor of degree k for each nonzero zero (a finite product, or 1, if there are finitely many or none).
 
-For sin(πz): $`\rho = 1`$, $`k = 1`$, $`m = 1`$, zeros at $`\pm 1, \pm 2, \ldots`$. The factors for $`n`$ and $`-n`$ pair up, since $`(1 - z/n)e^{z/n}(1 + z/n)e^{-z/n} = 1 - z^2/n^2`$. Writing $`e^{Q(z)} = \pi e^{az + b}`$, so the π stands apart:
+For sin(πz): $`\rho = 1`$, $`k = 1`$, $`m = 1`$, and pairing $`\pm n`$ cancels the exponentials into $`1 - z^2/n^2`$. Writing $`e^{Q(z)} = \pi e^{az + b}`$:
 
 ```math
 \sin(\pi z) = e^{az + b}\, \pi z \prod_{n=1}^{\infty}\left(1 - \frac{z^2}{n^2}\right), \qquad a = 0, \quad e^b = 1
@@ -58,19 +58,18 @@ For sin(πz): $`\rho = 1`$, $`k = 1`$, $`m = 1`$, zeros at $`\pm 1, \pm 2, \ldot
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$, $`z`$, $`s`$ | an entire function; a point of the plane; the same for ξ | sin(πz); z = 1/2 | — |
-| $`a_n`$, $`m`$ | the zeros away from 0; the zero's order at 0 | ±1, ±2, …; m = 1 | — |
-| $`M(r)`$, $`n(r)`$, $`R`$ | largest $`\lvert f\rvert`$ on the circle of radius r; zeros of size at most r; a large radius | log M(100)/100 = 3.134661; n(10) = 20 for sin(πz)/(πz) | — |
-| $`\rho`$, $`\varepsilon`$ | the order: the power of r that log M(r) grows like; any small margin | ρ = 1 | more zeros allowed, higher-degree Q |
-| $`k`$, $`E_k`$ | the factor degree: the largest whole number not above ρ, capping the genus; elementary factor, 1 − u with a correction | k = 1; (1 − u)e^u | longer correction in each factor |
-| $`P`$; $`Q`$; $`a`$, $`b`$ | the product over the zeros; the polynomial in the exponent; its two coefficients for sine | z ∏(1 − z²/n²); e^Q = π; a = 0, e^b = 1 | — |
-| $`g_R`$, $`h`$, $`U`$, $`j`$ | f with its zeros inside R divided out; its logarithm; a ceiling on Re h; a derivative's number | j = k + 1 = 2 | — |
-| $`\xi`$, $`\zeta`$, $`\Gamma`$; $`A`$, $`B`$; $`\gamma`$; $`T`$ | completed zeta, zeta, gamma; ξ's Q = A + Bs; Euler's constant; a height | e^A = 0.5, B = −0.023096; γ = 0.577216 | — |
+| $`f`$, $`z`$, $`s`$ | entire function; complex point (s for ξ) | sin(πz); z = 1/2 | — |
+| $`a_n`$, $`m`$ | nonzero zeros; zero order at 0 | ±1, ±2, …; m = 1 | — |
+| $`M(r)`$, $`n(r)`$, $`R`$ | max $`\lvert f\rvert`$ on $`\lvert z\rvert = r`$; zeros with $`\lvert a\rvert \le r`$; large radius | log M(100)/100 = 3.134661; n(10) = 20 | — |
+| $`\rho`$, $`\varepsilon`$ | order; any small margin | ρ = 1 | more zeros, higher-degree Q |
+| $`k`$, $`E_k`$ | factor degree (largest integer ≤ ρ); elementary factor | k = 1; (1 − u)e^u | longer correction per factor |
+| $`P`$; $`Q`$; $`a`$, $`b`$ | zero product; exponent polynomial; sine's coefficients | z ∏(1 − z²/n²); a = 0, e^b = 1 | — |
+| $`\xi`$, $`A`$, $`B`$, $`\gamma`$ | completed zeta; ξ's Q = A + Bs; Euler's constant | e^A = 0.5, B = −0.023096, γ = 0.577216 | — |
 
 ### When it holds
 
-- **Finite order.** The function $`e^{e^z}`$ has no zeros and infinite order; its exponent $`e^z`$ is no polynomial.
-- **The degree k must be big enough.** Sine's zeros have $`\sum 1/\lvert n\rvert`$ = 14.9709 by $`\lvert n\rvert`$ = 1000, still growing, so unpaired $`k = 0`$ factors do not converge (pairing ±n rescues sine). With $`k = 1`$ the sum that matters is $`\sum 1/n^2`$, which converges (3.287869 by $`\lvert n\rvert`$ = 1000).
+- **Entire, not identically zero, and of finite order.** The zero function has no such factorization, and $`e^{e^z}`$ has infinite order with non-polynomial exponent $`e^z`$.
+- **The degree k must be big enough.** Sine's zeros have $`\sum 1/\lvert n\rvert`$ = 14.9709 by $`\lvert n\rvert`$ = 1000, still growing, so unpaired $`k = 0`$ factors do not converge (pairing ±n rescues sine). With $`k = 1`$ the sum $`\sum 1/n^2`$ converges (3.287869 by $`\lvert n\rvert`$ = 1000).
 - **It caps the degree, not the coefficients.** Other facts, here oddness and the slope at 0, must pin a and b.
 
 ---
@@ -79,13 +78,13 @@ For sin(πz): $`\rho = 1`$, $`k = 1`$, $`m = 1`$, zeros at $`\pm 1, \pm 2, \ldot
 
 ### Step 0: divide out the zeros, then the growth limits what is left
 
-Build a product $`P`$ with the same zeros as $`f`$. Then $`f/P`$ has no zeros, so it is $`e^{Q}`$ for some entire $`Q`$. Growth of $`f`$ bounds the real part of $`Q`$ from above, and that one-sided bound controls all of $`Q`$: its derivative number $`k + 1`$ (Q differentiated k + 1 times) is zero, so $`Q`$ is a polynomial of degree at most $`k`$.
+Build a product $`P`$ with $`f`$'s zeros, so $`f/P = e^{Q}`$ for an entire $`Q`$. Growth of $`f`$ caps, from above, the real part of a logarithm of $`f`$ with its nearby zeros divided out. That one-sided bound forces $`Q`$ differentiated $`k + 1`$ times to be zero, so $`Q`$ is a polynomial of degree at most $`k`$.
 
 ### Step 1: Jensen says the zeros are sparse, so the product converges
 
-Jensen's formula counts zeros against growth: with $`R = er`$, $`n(r) \le \log M(er) - \log\lvert f(0)\rvert`$ when $`f(0) \ne 0`$. For $`\sin(\pi z)/(\pi z)`$, which is 1 at 0, there are 20 zeros in $`\lvert z\rvert \le 10`$ and Jensen allows about 80.26.
+By Jensen's formula with $`R = er`$, $`n(r) \le \log M(er) - \log\lvert f(0)\rvert`$ when $`f(0) \ne 0`$. For $`\sin(\pi z)/(\pi z)`$, there are 20 zeros in $`\lvert z\rvert \le 10`$ against Jensen's ceiling 80.26.
 
-In general $`n(r) \le C r^{\rho + \varepsilon}`$, so $`\sum \lvert a_n\rvert^{-s}`$ is finite for every $`s > \rho`$, in particular for $`s = k + 1`$. That is what makes $`\prod E_k(z/a_n)`$ converge. Call $`P(z) = z^m \prod E_k(z/a_n)`$.
+In general $`n(r) \le C r^{\rho + \varepsilon}`$, so $`\sum \lvert a_n\rvert^{-s}`$ converges for every $`s > \rho`$, including $`s = k + 1`$. Thus $`P(z) = z^m \prod E_k(z/a_n)`$ converges.
 
 ### Step 2: no zeros means a logarithm
 
@@ -93,11 +92,11 @@ A zero-free entire function has an entire logarithm $`Q`$ ([The complex logarith
 
 ### Step 3: the growth bounds the real part of a local logarithm
 
-Fix a large radius $`R`$. Divide $`f`$ by $`z^m`$ and by the factors $`(1 - z/a_n)`$ with $`\lvert a_n\rvert \le R`$, giving $`g_R`$. On $`\lvert z\rvert = 2R`$ each removed factor has size at least 1, so $`\lvert g_R\rvert \le M(2R)`$. [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md) carries the bound inside. And $`g_R`$ has no zeros in $`\lvert z\rvert \le R`$, so $`h = \log g_R`$ is holomorphic there, with real part at most $`\log M(2R) \le (2R)^{\rho+\varepsilon}`$.
+Fix a large radius $`R \ge 1`$. Divide $`f`$ by $`z^m`$ and by the factors $`(1 - z/a_n)`$ with $`\lvert a_n\rvert \le R`$, giving $`g_R`$. On $`\lvert z\rvert = 2R`$ each removed factor has size at least 1, so $`\lvert g_R\rvert \le M(2R)`$. [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md) carries the bound inside. Since $`g_R`$ has no zeros in $`\lvert z\rvert \le R`$, $`h = \log g_R`$ is holomorphic there with $`\mathrm{Re}\, h \le \log M(2R) \le (2R)^{\rho+\varepsilon}`$.
 
 ### Step 4: Borel–Carathéodory turns a one-sided bound into a full one
 
-The **Borel–Carathéodory inequality**: if $`h`$ is holomorphic on $`\lvert z\rvert \le R`$ and its real part stays below $`U`$, then on the half-size disc
+The **Borel–Carathéodory inequality**: if $`h`$ is holomorphic on $`\lvert z\rvert \le R`$ ($`R > 0`$) and $`\mathrm{Re}\, h \le U`$, then
 
 ```math
 \lvert h^{(j)}(z)\rvert \le \frac{2^{j+2}\, j!\, (U - \mathrm{Re}\, h(0))}{R^j} \qquad (\lvert z\rvert \le R/2,\ j \ge 1)
@@ -105,41 +104,39 @@ The **Borel–Carathéodory inequality**: if $`h`$ is holomorphic on $`\lvert z\
 
 **Read it aloud:** on the inner half disc, h's derivative number j is at most a fixed multiple of how far its real part can climb, over R to the j.
 
-The reason: the real part alone fixes every Taylor coefficient, and $`U - \mathrm{Re}\, h`$ is never negative, so its average bounds them all.
+The real part alone fixes every Taylor coefficient, and $`U - \mathrm{Re}\, h \ge 0`$ lets its average bound them all.
 
 <details>
-<summary>Detailed proof: Borel–Carathéodory, and the derivative identity</summary>
+<summary>Detailed proof of Borel–Carathéodory</summary>
 
-**Coefficients.** Write $`h(z) = \sum c_\ell z^\ell`$. On $`\lvert z\rvert = R`$, for $`\ell \ge 1`$, the Fourier coefficient of the real part gives
+Write $`h(z) = \sum c_\ell z^\ell`$. On $`\lvert z\rvert = R`$, for $`\ell \ge 1`$, the Fourier coefficient of the real part, with the constant $`U`$ integrating to 0 against $`e^{-i\ell\theta}`$, gives
 
-$`\displaystyle c_\ell R^\ell = -\frac{1}{\pi}\int_0^{2\pi} \bigl(U - \mathrm{Re}\, h(Re^{i\theta})\bigr) e^{-i\ell\theta}\, d\theta,`$
+$`\displaystyle c_\ell R^\ell = -\frac{1}{\pi}\int_0^{2\pi} \bigl(U - \mathrm{Re}\, h(Re^{i\theta})\bigr) e^{-i\ell\theta}\, d\theta.`$
 
-because the constant U integrates to 0 against $`e^{-i\ell\theta}`$. The bracket is never negative and averages $`U - \mathrm{Re}\, h(0)`$, so $`\lvert c_\ell\rvert R^\ell \le 2(U - \mathrm{Re}\, h(0))`$.
-
-**Derivatives.** Differentiate the series j times at $`\lvert z\rvert \le R/2`$ and sum, using $`\sum_{t \ge 0}\binom{t+j}{j}2^{-t} = 2^{j+1}`$. That gives the bound in Step 4.
-
-**The identity.** For a single zero, $`\log(z - a)`$ has derivative number $`k + 1`$ equal to $`(-1)^k k!/(z - a)^{k+1}`$. So
-
-$`\displaystyle (\log f)^{(k+1)}(z) = (-1)^k k! \sum_{\lvert a_n\rvert \le R} \frac{1}{(z - a_n)^{k+1}} + (-1)^k k!\,\frac{m}{z^{k+1}} + h^{(k+1)}(z).`$
-
-With $`U = (2R)^{\rho+\varepsilon}`$ and $`\mathrm{Re}\, h(0) = \log\lvert f^{(m)}(0)/m!\rvert`$, a fixed number, Step 4 makes $`h^{(k+1)}`$ at most a constant times $`R^{\rho + \varepsilon - k - 1}`$. That tends to 0 because $`k + 1 > \rho + \varepsilon`$ for small $`\varepsilon`$. The sum's tail tends to 0 by Step 1.
-
-**P obeys the same identity.** $`\log E_k(u)`$ is $`\log(1 - u)`$ plus a polynomial of degree k, which k + 1 derivatives remove.
+Since $`U - \mathrm{Re}\, h \ge 0`$ has average $`U - \mathrm{Re}\, h(0)`$, we get $`\lvert c_\ell\rvert R^\ell \le 2(U - \mathrm{Re}\, h(0))`$. Differentiating the series $`j`$ times on $`\lvert z\rvert \le R/2`$ and using $`\sum_{t \ge 0}\binom{t+j}{j}2^{-t} = 2^{j+1}`$ gives the bound in Step 4.
 
 </details>
 
 ### Step 5: the derivative number k + 1 of Q is zero
 
-Differentiate $`\log f = m\log z + \sum_{\lvert a_n\rvert \le R}\log(1 - z/a_n) + h`$ $`k + 1`$ times. Step 4 bounds the $`h`$ part by a constant times $`R^{\rho + \varepsilon - k - 1}`$, which shrinks to 0 as $`R`$ grows, since $`k + 1 > \rho`$. So the derivative number $`k + 1`$ of $`\log f`$ is a sum over the zeros alone. $`\log P`$ has the same derivative, so $`Q^{(k+1)} = 0`$ and $`Q`$ is a polynomial of degree at most $`k`$, so at most $`\rho`$.
+Locally, away from the zeros, differentiate $`\log f = m\log z + \sum_{\lvert a_n\rvert \le R}\log(1 - z/a_n) + h`$ $`k + 1`$ times:
 
-For sine, with $`k = 1`$, the second derivative of $`\log\sin(\pi z)`$ is $`-\pi^2/\sin^2(\pi z)`$, and it must equal $`-\sum_{n} 1/(z - n)^2`$ over every integer. At z = 1/2 both sides are −9.869604; at z = 1/3 both are −13.159473.
+```math
+(\log f)^{(k+1)}(z) = (-1)^k k!\,\frac{m}{z^{k+1}} + (-1)^k k! \sum_{\lvert a_n\rvert \le R} \frac{1}{(z - a_n)^{k+1}} + h^{(k+1)}(z)
+```
+
+With $`U = (2R)^{\rho+\varepsilon}`$ and fixed $`\mathrm{Re}\, h(0) = \log\lvert f^{(m)}(0)/m!\rvert`$, Step 4 bounds $`\lvert h^{(k+1)}\rvert`$ by a constant times $`R^{\rho + \varepsilon - k - 1}`$, which shrinks to 0 as $`R`$ grows because $`k + 1 > \rho`$. The sum over zeros converges by Step 1.
+
+Since $`\log E_k(u)`$ differs from $`\log(1 - u)`$ by a degree-$`k`$ polynomial (killed by $`k + 1`$ derivatives), $`(\log P)^{(k+1)}`$ equals the same sum. Thus $`Q^{(k+1)} = 0`$, so $`Q`$ is a polynomial of degree at most $`k \le \rho`$.
+
+For sine ($`k = 1`$), the second derivative of $`\log\sin(\pi z)`$ is $`-\pi^2/\sin^2(\pi z) = -\sum_{n} 1/(z - n)^2`$. At z = 1/2 both sides are −9.869604; at z = 1/3 both are −13.159473.
 
 ### Step 6: sine's two constants
 
-Two facts fix $`e^{az + b}`$.
+Two facts fix $`e^{az + b}`$:
 
-1. **Oddness.** $`\sin(-\pi z) = -\sin(\pi z)`$, and $`\pi z \prod(1 - z^2/n^2)`$ is odd too. So $`e^{-az + b} = e^{az + b}`$ for every z, which forces $`a = 0`$.
-2. **Slope at 0.** Near 0, $`\sin(\pi z) \approx \pi z`$ and the right side is about $`e^{b}\pi z`$. So $`e^{b} = 1`$.
+1. **Oddness.** Both $`\sin(\pi z)`$ and $`\pi z \prod(1 - z^2/n^2)`$ are odd, so $`e^{-az + b} = e^{az + b}`$ for every $`z`$, forcing $`a = 0`$.
+2. **Slope at 0.** Near 0, $`\sin(\pi z) \approx \pi z`$ against $`e^{b}\pi z`$, forcing $`e^{b} = 1`$.
 
 Fitted from the product at z = 0.3 and 0.7, the checks give a = 0.000000 and e^b = 1.000000.
 
@@ -153,17 +150,13 @@ The **completed zeta function** is
 
 **Read it aloud:** xi is zeta times a gamma factor, a power of π, and s(s − 1)/2.
 
-The factors $`s - 1`$ and $`s`$ cancel the poles of zeta at 1 and of gamma at 0; zeta's zeros at −2, −4, … cancel gamma's other poles ([Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md)). So ξ is entire, and its zeros are exactly zeta's zeros in the strip $`0 < \mathrm{Re}\, s < 1`$. [Stirling's formula](../09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md) bounds $`\log\lvert\xi(s)\rvert`$ by a constant times $`\lvert s\rvert\log\lvert s\rvert`$, and at a real point $`\sigma`$, $`\log\xi(\sigma)`$ grows like $`(\sigma/2)\log\sigma`$. So ξ has order exactly 1.
-
-Its zeros are too many for $`k = 0`$: up to height T there are about $`(T/2\pi)\log(T/2\pi)`$, so $`\sum 1/\lvert a_n\rvert`$ diverges. Hadamard gives
+By [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) and [Stirling's formula](../09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md), $`\xi`$ is entire, satisfies $`\xi(s) = \xi(1 - s)`$, has only zeta's zeros in $`0 < \mathrm{Re}\, s < 1`$, and has order 1. Those zeros are too dense for $`k = 0`$ (about $`(T/2\pi)\log(T/2\pi)`$ up to height $`T`$, so $`\sum 1/\lvert a_n\rvert`$ diverges). Hadamard gives
 
 ```math
 \xi(s) = e^{A + Bs} \prod_{n}\left(1 - \frac{s}{a_n}\right) e^{s/a_n}, \qquad e^{A} = \xi(0) = \tfrac12, \quad B = -1 - \frac{\gamma}{2} + \frac{\ln 4\pi}{2}
 ```
 
-**Read it aloud:** xi is e to A plus B s, times one factor per zero, each corrected by e to s over that zero.
-
-At s = 0, $`e^{A} = \xi(0)`$, and the mirror $`\xi(s) = \xi(1 - s)`$ gives $`\xi(0) = \xi(1) = 1/2`$. The log-derivative at 0 gives $`B = \xi'(0)/\xi(0) = -\xi'(1)/\xi(1)`$; expanding near 1 brings in Euler's constant $`\gamma`$, the limit of $`1 + 1/2 + \cdots + 1/n - \ln n`$.
+The mirror gives $`e^{A} = \xi(0) = \xi(1) = 1/2`$, and the log-derivative at 0 gives $`B = \xi'(0)/\xi(0) = -\xi'(1)/\xi(1) = -0.023096`$.
 
 ---
 
@@ -181,7 +174,7 @@ At s = 0, $`e^{A} = \xi(0)`$, and the mirror $`\xi(s) = \xi(1 - s)`$ gives $`\xi
 | partial products | N = 10, 100, 1000 | 0.651953, 0.638205, 0.636779 |
 | ξ's constants | ξ(0) = 1/2; −1 − 0.577216/2 + ln(4π)/2 | e^A = 0.5, B = −0.023096 |
 
-Sine's zeros alone rebuild it; at z = 1/2 that is Wallis's product, 2/π.
+Sine's zeros rebuild it; at z = 1/2 that gives Wallis's product, 2/π.
 
 ### What breaks if you drop a piece
 
@@ -195,7 +188,7 @@ Sine's zeros alone rebuild it; at z = 1/2 that is Wallis's product, 2/π.
 
 ## Code, from first principles, and it actually runs
 
-The main numbers come by two roads that share no arithmetic: the order by sampling the circle and by the sinh formula; Jensen's bound by the same two roads; Step 5's identity by the closed form and a sum over 200,000 zeros; a and b by fitting the product against the built-in sine; B from Euler's constant and from the slope of a hand-built $`\log\xi`$.
+Each key number is checked by two independent roads: circle sampling against sinh for the order and Jensen's bound, closed form against a 200,000-zero sum for Step 5, fitting a and b against sine, and B from Euler's constant against the slope of $`\log\xi`$.
 
 ### Python
 
@@ -1536,9 +1529,10 @@ example : ⌊(1 : ℝ)⌋₊ = 1 := by norm_num
 
 > [!TIP]
 > **Try changing**
-> - **Fit somewhere else.** Guess first: do a and b move? In the line for `a`, change both `0.7`s to `0.9` and the `0.4` to `0.6`. Answer: still a = 0.000000 and e^b = 1.000000.
-> - **Drop the tail estimate.** Guess first: how far off are a thousand factors? In `prod`, return `p` alone. Answer: 0.636779; the third assert stops it.
-> - **Fewer zeta terms.** Guess first: does Euler–Maclaurin need 20 terms? Set `n=5` in `log_xi`. Answer: B reads −0.023095, still within the assert.
+> Guess first, then run it.
+> - **Fit somewhere else.** In the line for `a`, change both `0.7`s to `0.9` and `0.4` to `0.6`. Still a = 0.000000 and e^b = 1.000000.
+> - **Drop the tail estimate.** In `prod`, return `p` alone. The product reads 0.636779, and the third assert stops it.
+> - **Fewer zeta terms.** Set `n=5` in `log_xi`. B reads −0.023095, still within the assert.
 
 ---
 
@@ -1558,7 +1552,7 @@ example : ⌊(1 : ℝ)⌋₊ = 1 := by norm_num
 - **Sums of reciprocal powers.** Step 5's identity, π²/sin²(πz) = Σ 1/(z − n)², is the derivative of the cotangent expansion, the standard road to sums like Σ 1/n² = π²/6.
 
 > **Say it back**
-> Zeros fix an entire function only up to a factor e^Q. With finite order ρ, Jensen makes the zeros sparse, so a product of genus at most ρ converges. Dividing it out leaves e^Q, and Borel–Carathéodory makes Q a polynomial of degree at most ρ. For sin(πz), oddness and the slope at 0 make a = 0 and e^b = 1: Euler's product, and Wallis's 2/π. For ξ it gives e^(A + Bs) with e^A = 1/2 and B = −0.023096.
+> Zeros fix a nonzero entire function only up to a factor e^Q. With finite order ρ, Jensen makes the zeros sparse, so a product of genus at most ρ converges. Dividing it out leaves e^Q, and Borel–Carathéodory makes Q a polynomial of degree at most ρ. For sin(πz), oddness and the slope at 0 make a = 0 and e^b = 1: Euler's product, and Wallis's 2/π. For ξ it gives e^(A + Bs) with e^A = 1/2 and B = −0.023096.
 
 ---
 

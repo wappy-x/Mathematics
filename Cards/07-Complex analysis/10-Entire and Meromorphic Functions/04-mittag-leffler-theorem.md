@@ -16,9 +16,9 @@ The fix: subtract from each wire's term its own value at 0, $`-1/n`$. The blow-u
 
 Midway between two wires, at z = 1/2, the field is 0 by symmetry, and $`\cot(\pi/2) = 0`$ agrees. A quarter of the way along, at z = 1/4, the field is π = 3.141593, pointing away from the nearer wire.
 
-Mittag-Leffler's theorem says this trick always works. A **meromorphic** function is holomorphic (complex-differentiable) except at isolated poles; any poles running off to infinity, with any blow-up terms, belong to one.
+Mittag-Leffler's theorem says this trick always works. A **meromorphic** function is holomorphic (complex-differentiable) except at isolated poles; any distinct poles running off to infinity, with any blow-up terms, belong to one.
 
-**Choose poles that run off to infinity and a blow-up term (principal part) at each; subtract from each enough of its own Taylor polynomial at 0 (the start of its power series), and the sum converges to a meromorphic function with exactly those poles and blow-up terms, unique up to adding an entire function (one with no poles).**
+**Choose distinct poles that run off to infinity and a blow-up term (principal part) at each; subtract from each term, at every pole but 0, enough of its own Taylor polynomial at 0 (the start of its power series), and the sum converges to a meromorphic function with exactly those poles and blow-up terms, unique up to adding an entire function (one with no poles).**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, together with the two expansions of the cotangent and of $`\pi^2/\sin^2(\pi z)`$.
 
@@ -40,7 +40,7 @@ Orange: the raw terms $`1/(z - n)`$, settling near π − ln 2 = 2.448445. Green
 
 ## The formula
 
-- A **pole** $`a_k`$ is a point where the function blows up; k counts the poles. "Run off to infinity" means only finitely many poles lie in any disc.
+- A **pole** $`a_k`$ is a point where the function blows up; k counts the poles. The poles are distinct. "Run off to infinity" means only finitely many lie in any disc; a finite list counts.
 - The **principal part** $`P_k`$ at $`a_k`$ is the blow-up term: a finite sum of constants over powers of $`(z - a_k)`$, the negative powers of the Laurent series there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)).
 - The **correction** $`q_k`$ is the Taylor polynomial of $`P_k`$ at 0, up to the power $`d_k`$; a pole at 0 gets none. It is a polynomial, so it adds no poles.
 - An **entire** function is holomorphic on the whole plane.
@@ -49,9 +49,9 @@ Orange: the raw terms $`1/(z - n)`$, settling near π − ln 2 = 2.448445. Green
 f(z) = \sum_{k} \bigl(P_k(z) - q_k(z)\bigr) + h(z)
 ```
 
-**Read it aloud:** the function is the sum, over every pole, of its principal part minus that part's own Taylor polynomial at 0, plus any entire function.
+**Read it aloud:** the function is the sum, over every pole, of its principal part minus that part's Taylor polynomial at 0 (none at 0), plus any entire function.
 
-For the wires, $`a_k = n`$, $`P_k = 1/(z - n)`$ and $`q_k = -1/n`$. Pairing n with −n gives the cotangent; differentiating gives a series needing no correction:
+For the wires, $`a_k = n`$, $`P_k = 1/(z - n)`$ and $`q_k = -1/n`$. Pairing n with −n gives the cotangent for every $`z`$ not a whole number; differentiating gives a series needing no correction:
 
 ```math
 \pi\cot(\pi z) = \frac{1}{z} + \sum_{n=1}^{\infty} \frac{2z}{z^2 - n^2}, \qquad \frac{\pi^2}{\sin^2(\pi z)} = \sum_{n=-\infty}^{\infty} \frac{1}{(z - n)^2}
@@ -72,7 +72,7 @@ For the wires, $`a_k = n`$, $`P_k = 1/(z - n)`$ and $`q_k = -1/n`$. Pairing n wi
 
 ### When it holds
 
-- **The poles run off to infinity.** If they crowded to a point, such as $`1/k`$ crowding to 0, that point would be a singularity that is not isolated, and no meromorphic function on the plane has one.
+- **Distinct poles that run off to infinity.** Only finitely many lie in any disc (a finite list works). If they crowded to a point, such as $`1/k`$ crowding to 0, that point would be a singularity that is not isolated, and no meromorphic function on the plane has one.
 - **The corrections are polynomials.** Anything with poles of its own would add poles.
 - **The power $`d_k`$ is high enough.** Power 0 suffices for the wires. For poles at $`\sqrt{k}`$, power 0 leaves a sum that keeps falling, from −5.903105 to −7.057805 as K grows from 10⁴ to 10⁵; power 1 settles.
 - **The answer is fixed only up to h.** Adding $`e^z`$ keeps every pole and principal part; pinning down the cotangent needs period 1, boundedness and oddness.
@@ -88,7 +88,7 @@ Near 0, the far wire's term $`1/(z - 1000)`$ is smooth and close to its value at
 
 ### Step 1: how much to subtract
 
-A principal part at $`a_k`$ is holomorphic on the disc of radius $`|a_k|`$ round 0, and on the half-size disc $`|z| \le |a_k|/2`$ its Taylor terms shrink at least like powers of 1/2 times a polynomial factor (the binomial series of each negative power). Some power $`d_k`$ makes the error after $`q_k`$ at most $`2^{-k}`$ there; those bounds add to at most 1.
+For $`a_k \ne 0`$, a principal part at $`a_k`$ is holomorphic on the disc of radius $`|a_k|`$ round 0, and on the half-size disc $`|z| \le |a_k|/2`$ its Taylor terms shrink at least like powers of 1/2 times a polynomial factor (the binomial series of each negative power). Some power $`d_k`$ makes the error after $`q_k`$ at most $`2^{-k}`$ there; those bounds add to at most 1.
 
 For a wire, the geometric series does it by hand. If $`|z| \le R`$ and $`|n| \ge 2R`$:
 
@@ -104,7 +104,7 @@ Fix a disc $`|z| \le R`$. Only finitely many poles have $`|a_k| \le 2R`$. Every 
 
 Those bounds add to at most 1, so the M-test (bounds with a finite total force uniform convergence) makes that part of the sum converge uniformly on the disc ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)). A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
-The finitely many remaining terms are each $`P_k`$ minus a polynomial, so inside the disc f has exactly those poles and principal parts. Every R works.
+The finitely many remaining terms are each $`P_k`$ minus a polynomial, so inside the disc f has exactly those poles and principal parts. Every $`R > 0`$ works.
 
 ### Step 3: two answers differ by an entire function
 
@@ -353,7 +353,7 @@ Lean proves the theorem for any poles that run off to infinity, both expansions,
 - Take z not a whole number. Then $`\pi\cot(\pi z)`$ equals $`1/z`$ plus the sum over $`n \ge 1`$ of $`2z/(z^2 - n^2)`$.
 - Take z not a whole number. Then the plain sum of $`1/(z - n)^2`$ over every whole number n, in any order, is $`\pi^2/\sin^2(\pi z)`$.
 - Take z = 1/2. Then the pairs n = 1, 2, 3 give −4/3, −4/15 and −4/35.
-- Each pair splits as the telescoping difference above, checked for n = 1 to 20. The pairs to n = 1000 add to exactly −4000/2001.
+- Each pair splits as the telescoping difference above, checked for n = 1 to 20. The negated pairs $`1/(n^2 - 1/4)`$ to n = 1000 add to exactly 4000/2001, so the pairs add to −4000/2001.
 
 Step 6, the field at 2i, the poles at $`\sqrt{k}`$ and the decimals are left to the Python and Rust checks.
 
@@ -935,7 +935,7 @@ example : (4000 : ℚ) / 2001 = 2 - 1 / (2001 / 2) := by norm_num
 - **Exact sums.** Reading an expansion at one point gives sums such as $`\sum 1/n^2 = \pi^2/6`$.
 
 > **Say it back**
-> Pick poles that run off to infinity and a blow-up term at each. Added as they are, the terms usually diverge. Subtracting from each its Taylor polynomial at 0 makes the far terms tiny without moving any pole, so the sum converges. Any other answer differs by an entire function. Poles at the integers give π cot(πz), and its derivative gives π²/6.
+> Pick distinct poles that run off to infinity and a blow-up term at each. Added as they are, the terms usually diverge. Subtracting from each term, at every pole but 0, its Taylor polynomial at 0 makes the far terms tiny without moving any pole, so the sum converges. Any other answer differs by an entire function. Poles at the integers give π cot(πz), and its derivative gives π²/6.
 
 ---
 
@@ -948,10 +948,11 @@ example : (4000 : ℚ) / 2001 = 2 - 1 / (2001 / 2) := by norm_num
 
 ## Where this goes next
 
+- [Filled Julia sets](../11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md): the next shelf turns from building functions to iterating $`z^2 + c`$, and asks which starting points stay bounded.
 - [Riemann surfaces](../../22-Algebraic%20geometry/03-Plane%20Curves/08-riemann-surfaces-and-the-weierstrass-p-function.md): the Weierstrass p-function, the same corrected sum over a grid of double poles.
 - [Runge's theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/11-runges-theorem.md): rational approximation, which carries this theorem to any open region.
 
-Weierstrass factorization builds functions from zeros; this card, from poles. The question it leaves open: given poles and zeros together, how slowly can such a function grow?
+Weierstrass factorization builds functions from zeros; this card, from poles. The last two links follow Mittag-Leffler to lattices and general regions, leaving open how slowly a function with prescribed zeros and poles can grow. Meanwhile, the next shelf turns to complex dynamics: when you iterate $`z^2 + c`$ instead of building a function from poles, which starting points escape to infinity and which stay bounded?
 
 ---
 

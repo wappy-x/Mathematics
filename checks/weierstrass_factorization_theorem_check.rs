@@ -57,10 +57,10 @@ fn main() {
     for (i, z) in ["1", "1/2", "1/4 + i/2"].iter().enumerate() {
         println!("z = {}: product, road one {}; road two {}", z, show(r1[i]), show(r2[i]));
     }
-    let (z0, house) = (pts[2], mul(r1[2], prod(sc(pts[2], -1.0), 100000)));
+    let (z0, paired) = (pts[2], mul(r1[2], prod(sc(pts[2], -1.0), 100000)));
     let s = sc(add(cexp(c(-PI * z0.im, PI * z0.re)), sc(cexp(c(PI * z0.im, -PI * z0.re)), -1.0)), 0.5); // i sin(pi z)
     let sine = mul(c(s.im, -s.re), inv(sc(z0, PI)));
-    println!("house, P(z) P(-z) at 1/4 + i/2: {}; sin(pi z)/(pi z): {}", show(house), show(sine));
+    println!("paired, P(z) P(-z) at 1/4 + i/2: {}; sin(pi z)/(pi z): {}", show(paired), show(sine));
     let grid: Vec<C> = (1..=20).flat_map(|r| (0..72).map(move |k| sc(cexp(c(0.0, 2.0 * PI * k as f64 / 72.0)), r as f64 / 20.0))).collect();
     let ratio: Vec<f64> = (0..3).map(|p| grid.iter().map(|&w| abs(add(c(1.0, 0.0), sc(e_p(p, w), -1.0))) / abs(w).powi(p + 1)).fold(0.0, f64::max)).collect();
     println!("lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: {}", join(&ratio, 6));
@@ -71,7 +71,7 @@ fn main() {
     let (e1, e2) = (partial(1, &|n: f64| n.sqrt(), &big), partial(2, &|n: f64| n.sqrt(), &big));
     println!("mistake, zeros at -sqrt(n), N = 10^2, 10^4, 10^6, with E_1: {}; with E_2: {}", join(&e1, 6), join(&e2, 6));
     assert!((0..3).all(|i| abs(add(r1[i], sc(r2[i], -1.0))) < 1e-8)); // the product meets 1/(z Gamma e^(gamma z))
-    assert!(abs(add(house, sc(sine, -1.0))) < 1e-8); // paired factors rebuild the sine product
+    assert!(abs(add(paired, sc(sine, -1.0))) < 1e-8); // paired factors rebuild the sine product
     assert!((rebuilt - 1.0 / PI.sqrt()).abs() < 1e-8); // e^g z^m P is 1/Gamma
     assert!(fixed.iter().zip(&by_hand).all(|(a, b)| (a - b).abs() < 1e-12)); // the telescoping by hand
     assert!(ratio.iter().all(|&r| r <= 1.0 + 1e-12) && plain[2] > 1000.0); // the lemma; plain factors diverge

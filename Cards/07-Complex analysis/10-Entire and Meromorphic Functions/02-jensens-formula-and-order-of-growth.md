@@ -6,15 +6,15 @@
 
 ## General Overview
 
-Take the polynomial $`f(z) = z - 1/2`$ and walk once round the unit circle $`\lvert z\rvert = 1`$. At each point, write down $`\ln\lvert f\rvert`$, the natural log of the size of the output. At angle 0 the size is 1/2, so the log is −0.693. Halfway round, at −1, the size is 3/2 and the log is 0.405.
+Walk once round the unit circle $`\lvert z\rvert = 1`$ for $`f(z) = z - 1/2`$, recording $`\ln\lvert f\rvert`$, the natural log of the output's size. At angle 0 the size is 1/2 (log −0.693); at −1 the size is 3/2 (log 0.405).
 
-Average those logs over the whole walk. The answer is exactly 0. But at the centre, $`\ln\lvert f(0)\rvert = \ln(1/2) = -0.693147`$. A function with no zeros would have its circle average equal to its centre value. This one misses by 0.693147, which is $`\ln 2`$.
+The average of those logs round the circle is exactly 0, while at the centre $`\ln\lvert f(0)\rvert = \ln(1/2) = -0.693147`$. A holomorphic function with no zeros on the closed disk would have its circle average equal to its centre value. This one misses by 0.693147, which is $`\ln 2`$.
 
-That gap is not an accident. The zero at 1/2 sits inside the circle, and a zero at distance 1/2 from the centre always costs $`\ln(1/(1/2)) = \ln 2`$. Every zero inside adds its own cost. So the circle average, minus the centre value, measures the zeros inside.
+The zero at 1/2 causes that gap: every zero $`a`$ inside the circle of radius $`R`$ adds $`\ln(R/\lvert a\rvert)`$. So the circle average minus the centre value measures the zeros inside.
 
-Turn that round and it limits zeros. Each zero pushes the average up, but the average can never exceed the log of the largest value on the circle. A function that grows slowly cannot hold many zeros. $`\sin z`$ grows like $`e^{r}`$ and has about $`2r/\pi`$ zeros within radius r; $`e^{z^2}`$ grows like $`e^{r^2}`$ and has none.
+Each zero pushes the average up, but the average can never exceed the log of the largest size on the circle. So a slowly growing entire function cannot hold many zeros: $`\sin z`$ grows like $`e^{r}`$ and has about $`2r/\pi`$ zeros within radius r, while $`e^{z^2}`$ grows like $`e^{r^2}`$ and has none.
 
-**The average of ln|f| round a circle equals ln|f(0)| plus ln(R/|a|) for each zero a inside, so a function whose size grows like exp(r^ρ) has at most a constant times r^ρ zeros within radius r.**
+**For a function holomorphic on the closed disk of radius R with f(0) ≠ 0, the average of ln|f| round the circle equals ln|f(0)| plus ln(R/|a|) for each zero a inside (counted with multiplicity), so a nonzero entire function of finite order ρ, one whose size grows no faster than about exp(r^ρ), has at most a constant times r^(ρ+ε) zeros within radius r, for any small ε above 0 and large r.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the zero bound follows from it in two lines.
 
@@ -29,13 +29,13 @@ xychart-beta
     line [-0.693, -0.479, -0.144, 0.112, 0.280, 0.375, 0.405, 0.375, 0.280, 0.112, -0.144, -0.479, -0.693]
 ```
 
-The single line is $`\ln\lvert e^{it} - 1/2\rvert`$. The dip near angle 0, close to the zero, and the hump near 180 degrees balance exactly: the average is 0, not the centre value −0.693.
+The curve is $`\ln\lvert e^{it} - 1/2\rvert`$: the dip near 0 and the hump near 180 degrees cancel to average 0, not −0.693.
 
 ---
 
 ## The formula
 
-Notation first, in words. An **entire function** is one that is holomorphic (complex-differentiable) at every point of the plane, such as a polynomial, $`\sin z`$ or $`e^{z^2}`$. The zeros inside the circle of radius R are $`a_1, a_2, \dots`$, a double zero listed twice.
+An **entire function** is holomorphic (complex-differentiable) on the whole plane. For $`f`$ holomorphic on $`\lvert z\rvert \le R`$ ($`R > 0`$) with $`f(0) \ne 0`$, list its zeros inside the circle as $`a_1, a_2, \dots`$, a double zero listed twice:
 
 ```math
 \frac{1}{2\pi}\int_0^{2\pi} \ln\lvert f(Re^{it})\rvert\,dt \;=\; \ln\lvert f(0)\rvert + \sum_{\lvert a_k\rvert < R} \ln\frac{R}{\lvert a_k\rvert}
@@ -43,33 +43,32 @@ Notation first, in words. An **entire function** is one that is holomorphic (com
 
 **Read it aloud:** the average of ln|f| round the circle is the log of the size at the centre, plus, for each zero inside, the log of the radius over that zero's distance from the centre.
 
-Every correction term is positive, since $`\lvert a_k\rvert < R`$. Growth is measured by $`M(r)`$, the largest size of f on the circle $`\lvert z\rvert = r`$. The **order** of an entire function is the power of r in the exponent of its growth:
+Every term is positive since $`\lvert a_k\rvert < R`$. Let $`M(r)`$ be the largest size of an entire function $`f`$ on $`\lvert z\rvert = r`$. Its **order** $`\rho`$ is the power of $`r`$ in the exponent of its growth (0 for a constant function; it can be infinite):
 
 ```math
 \rho = \limsup_{r\to\infty} \frac{\ln \ln M(r)}{\ln r}, \qquad n(r) \;\le\; \frac{\ln M(2r) - \ln\lvert f(0)\rvert}{\ln 2} \;\le\; C\, r^{\rho+\varepsilon}
 ```
 
-**Read it aloud:** the order is how the double log of the largest size compares with the log of the radius; the number of zeros within radius r is at most the log-growth on the doubled circle over ln 2, and so at most a constant times r to the power order plus a little.
+**Read it aloud:** the order is how the double log of the largest size compares with the log of the radius; for $`r > 0`$ and $`f(0) \ne 0`$, the zero count within radius $`r`$ is at most the log-growth on the doubled circle over $`\ln 2`$, and for finite order at most a constant times r to the power order plus a little, for large r.
 
-Here lim sup (the limit superior) means the largest value the ratio keeps returning to as r grows.
+Here lim sup (limit superior) is the largest value the ratio keeps returning to as $`r`$ grows.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$, $`z = x + iy`$ | the function, holomorphic on the closed disk; a point of the plane, with its real and imaginary parts | z − 1/2; sin z / z | — |
-| $`R`$, $`r`$, $`t`$ | the circle's radius in the formula; a radius in the bound; the angle round the circle, in radians | 1, then 10; 10 to 50 | each zero's term grows |
-| $`a_k`$, $`n(r)`$ | the zeros inside the circle, repeated by multiplicity; how many have size below r | 1/2; ±π, ±2π, ±3π, so n(10) = 6 | a zero nearer 0 costs more |
-| $`\ln`$, $`\sinh`$ | the natural log of a positive number; the hyperbolic sine, sinh s = (e^s − e^(−s))/2 for a real number s | ln 2 = 0.693147; ln sinh 10 = 9.306853 | — |
-| $`M(r)`$ | the largest size of f on the circle of radius r | ln M(10) = 9.306853 for sin z | room for more zeros |
-| $`\rho`$, $`\varepsilon`$, $`C`$ | the order: the power of r in ln M(r); any small slack in that power; a constant depending on f and the slack | 1 for sin z; 2 for e^(z^2) | room for more zeros |
-| $`g`$, $`\zeta`$ | in the proof: f with its zeros divided out; a point on the unit circle | — | — |
-| $`d`$ | a polynomial's degree | 1 for z − 1/2 | more zeros, still order 0 |
+| $`f`$, $`z = x + iy`$ | holomorphic function; complex point | z − 1/2; sin z / z | — |
+| $`R`$, $`r`$, $`t`$ | circle radius; bound radius; angle (radians) | 1, 10; 10 to 50 | each zero's term grows |
+| $`a_k`$, $`n(r)`$ | zeros inside, by multiplicity; count with $`\lvert a\rvert < r`$ | 1/2; ±π, ±2π, ±3π, n(10) = 6 | a zero nearer 0 costs more |
+| $`\ln`$, $`\sinh`$ | natural log; hyperbolic sine, $`(e^s - e^{-s})/2`$ | ln 2 = 0.693147; ln sinh 10 = 9.306853 | — |
+| $`M(r)`$ | largest size of $`f`$ on $`\lvert z\rvert = r`$ | ln M(10) = 9.306853 for sin z | room for more zeros |
+| $`\rho`$, $`\varepsilon`$, $`C`$ | order; small slack; constant depending on $`f`$ and $`\varepsilon`$ | 1 for sin z; 2 for e^(z^2) | room for more zeros |
 
 ### When it holds
 
-- **f holomorphic on the whole closed disk.** A pole counts with the opposite sign: for 1/(z − 1/2), adding ln 2 like a zero gives 1.386294, but the circle average is 0.
-- **f(0) is not 0.** Otherwise ln|f(0)| is minus infinity. For sin z, divide by z first: sin z / z equals 1 at 0.
+- **f holomorphic on the closed disk (R > 0).** A pole counts with the opposite sign: for 1/(z − 1/2), adding ln 2 like a zero gives 1.386294, but the circle average is 0.
+- **f(0) is not 0.** Otherwise ln|f(0)| is minus infinity; if f has a zero of order m at 0, replace ln|f(0)| by ln|f^(m)(0)/m!| + m ln R. For sin z, divide by z first: sin z / z equals 1 at 0.
 - **Zeros counted with multiplicity.** For (z − 1/2)^2, one ln 2 gives −0.693147; the circle gives 0, which needs ln 2 twice.
-- **Finite order, for the zero bound.** For a function such as e^(e^z), ln ln M(r) grows like r, the order is infinite, and the bound says nothing.
+- **Zeros on the circle.** If a zero lies on $`\lvert z\rvert = R`$, the log dips to minus infinity there, but its improper integral stays finite and $`\ln(R/\lvert a\rvert) = 0`$, so the formula still holds (shrink $`R`$ slightly and let it grow back).
+- **Entire function of finite order, for the zero bound.** Order is defined for entire functions (0 for constants, and it can be infinite). For e^(e^z), ln ln M(r) grows like r, the order is infinite, and the bound says nothing.
 
 ---
 
@@ -77,46 +76,35 @@ Here lim sup (the limit superior) means the largest value the ratio keeps return
 
 ### Step 0: without zeros, ln|f| is a mean-value function
 
-Where f has no zeros, a branch of log f exists on a disk ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), and $`\ln\lvert f\rvert`$ is its real part. The real part of a holomorphic function is harmonic: it equals its average round any circle ([Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)). So a zero-free f has circle average exactly $`\ln\lvert f(0)\rvert`$. Zeros are where the log blows up to minus infinity, and the proof prices each one.
+Where f has no zeros, a branch of log f exists on a disk ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), and $`\ln\lvert f\rvert`$ is its real part. The real part of a holomorphic function is harmonic, so it equals its average round any circle ([Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)). Thus a zero-free f has circle average $`\ln\lvert f(0)\rvert`$. Zeros make the log blow up to minus infinity, and the proof prices each one.
 
 ### Step 1: one zero costs ln(R/|a|)
 
-Take a single factor z − a with $`\lvert a\rvert < R`$. On the circle, pull out R:
+Take a single factor $`z - a`$ with $`\lvert a\rvert < R`$. On the circle, pull out $`R`$:
 
 ```math
 \lvert Re^{it} - a\rvert = R\,\Big\lvert 1 - \tfrac{a}{R}e^{-it}\Big\rvert
 ```
 
-The factor $`1 - (a/R)\zeta`$ has no zero for $`\lvert\zeta\rvert \le 1`$, so by Step 0 the average of its log size round the unit circle is its centre value, ln 1 = 0. As t runs round, $`\zeta = e^{-it}`$ runs round that circle too. So the average of $`\ln\lvert Re^{it} - a\rvert`$ is ln R.
-
-At the centre, the factor has size |a|. The gap between average and centre is ln R − ln|a| = ln(R/|a|). For z − 1/2 on the unit circle: average ln 1 = 0, centre ln(1/2) = −0.693147, gap ln 2 = 0.693147.
+The function $`1 - (a/R)\zeta`$ has no zero for $`\lvert\zeta\rvert \le 1`$, so by Step 0 its log-size average round the unit circle is $`\ln 1 = 0`$. Since $`\zeta = e^{-it}`$ traces that circle, the average of $`\ln\lvert Re^{it} - a\rvert`$ is $`\ln R`$. At 0 the factor has size $`\lvert a\rvert`$, so average minus centre is $`\ln(R/\lvert a\rvert)`$.
 
 ### Step 2: factor out every zero
 
-A holomorphic f has only finitely many zeros in the closed disk, since zeros cannot pile up ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)). Divide them out: $`f(z) = g(z)\,(z - a_1)\cdots(z - a_n)`$ with g holomorphic and zero-free.
+A holomorphic f has only finitely many zeros in the closed disk ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)). Divide them out: $`f(z) = g(z)\,(z - a_1)\cdots(z - a_n)`$ with g holomorphic and zero-free (for a zero on $`\lvert z\rvert = R`$, shrink $`R`$ and let it return).
 
-The log of a product is the sum of the logs. Average each piece: Step 0 gives ln|g(0)| for g, and Step 1 gives ln R for each factor. At the centre the pieces give ln|g(0)| plus ln|a_k| for each k. Subtract, and the formula appears.
+The log of a product is the sum of the logs. Step 0 gives $`\ln\lvert g(0)\rvert`$ for g, and Step 1 gives $`\ln R`$ for each factor. At the centre they give $`\ln\lvert g(0)\rvert`$ plus $`\ln\lvert a_k\rvert`$. Subtracting gives Jensen's formula.
 
-On sin z / z at R = 10, the six zeros ±π, ±2π, ±3π give twice ln(10/π) + ln(10/2π) + ln(10/3π) = 2 × (1.157855 + 0.464708 + 0.059243) = 3.363612. The circle average, summed at 4,096 points, is 3.363612.
-
-<details>
-<summary>Zeros on the circle itself</summary>
-
-The proof above assumes no zero sits on |z| = R. The formula still holds when one does. With $`\lvert a\rvert = R`$, the Step 1 term $`\ln\lvert 1 - (a/R)e^{-it}\rvert`$ dips to minus infinity at one angle, but only like the log of the distance to that angle, so its integral is finite and still equals 0. Shrink R slightly, apply the formula, and let R grow back.
-
-</details>
+For sin z / z at R = 10, the six zeros ±π, ±2π, ±3π give 3.363612, matching the 4,096-point circle average.
 
 ### Step 3: a ceiling on the number of zeros
 
-Apply the formula on the circle of radius 2r. Each zero with |a| < r has 2r/|a| > 2, so it adds more than ln 2. The other zeros add positive amounts, so dropping them keeps the inequality. The average of ln|f| is at most ln M(2r), since no value exceeds the largest. So
+Apply the formula on the circle of radius $`2r`$. Each zero with $`\lvert a\rvert < r`$ has $`2r/\lvert a\rvert > 2`$, adding more than $`\ln 2`$; dropping the other positive terms keeps the inequality. The circle average is at most $`\ln M(2r)`$, so
 
 ```math
 n(r)\,\ln 2 \;\le\; \ln M(2r) - \ln\lvert f(0)\rvert
 ```
 
-That is the middle of the second formula.
-
-For sin z / z, the largest size on $`\lvert z\rvert = 2r`$ is $`\sinh(2r)/(2r)`$, reached on the imaginary axis. Here sinh is the hyperbolic sine, $`\sinh s = (e^{s} - e^{-s})/2`$, which is about $`e^{s}/2`$ for large s. At r = 10 the ceiling is 23.5 zeros; the true count is 6.
+For sin z / z, the largest size on $`\lvert z\rvert = 2r`$ is $`\sinh(2r)/(2r)`$, reached on the imaginary axis (since $`\lvert\sin(x + iy)\rvert^2 = \sin^2 x + \sinh^2 y`$, which on $`\lvert z\rvert = r`$ is largest at $`x = 0`$; the code confirms this by sampling). At r = 10 the ceiling is 23.5 zeros; the true count is 6.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -128,30 +116,19 @@ xychart-beta
     line [23.5, 51.4, 79.7, 108.1, 136.6]
 ```
 
-Orange: the true count, by the argument principle. Green: the ceiling (ln M(2r) − ln|f(0)|)/ln 2. Both grow in a straight line, because sin z has order 1.
-
-<details>
-<summary>Why the largest size of sin z on |z| = r is sinh r</summary>
-
-With z = x + iy, $`\lvert\sin z\rvert^2 = \sin^2 x + \sinh^2 y`$. On the circle, $`x^2 + y^2 = r^2`$. Use $`\sin^2 x \le x^2`$. Then use the identity $`\sinh^2 r - \sinh^2 y = \sinh(r - \lvert y\rvert)\,\sinh(r + \lvert y\rvert)`$ and the fact $`\sinh u \ge u`$ for $`u \ge 0`$: the product is at least $`(r - \lvert y\rvert)(r + \lvert y\rvert) = r^2 - y^2 = x^2`$. So $`\sin^2 x + \sinh^2 y \le x^2 + \sinh^2 y \le \sinh^2 r`$, with equality at x = 0.
-
-</details>
+Orange: true zero count, by the argument principle. Green: Jensen's ceiling $`(\ln M(2r) - \ln\lvert f(0)\rvert)/\ln 2`$. Both grow linearly because sin z has order 1.
 
 ### Step 4: order turns the ceiling into a power of r
 
-If the order is ρ, then for any slack ε > 0 and all large r, $`\ln M(r) \le r^{\rho+\varepsilon}`$. That is what the lim sup says. Put it into Step 3: n(r) is at most $`((2r)^{\rho+\varepsilon} - \ln\lvert f(0)\rvert)/\ln 2`$, which is at most $`C\,r^{\rho+\varepsilon}`$.
+For finite order $`\rho`$, the lim sup gives $`\ln M(r) \le r^{\rho+\varepsilon}`$ for any $`\varepsilon > 0`$ and all large $`r`$. Putting that into Step 3 makes $`n(r) \le ((2r)^{\rho+\varepsilon} - \ln\lvert f(0)\rvert)/\ln 2 \le C\,r^{\rho+\varepsilon}`$.
 
-The examples fit:
-
-- **sin z:** ln M(r) = ln sinh r, about r. The ratio ln ln M(r)/ln r reads 0.9688, 0.9985, 0.9999 at r = 10, 100, 1000, so the order is 1. Its zeros are the multiples of π: 63 within radius 100, against 2r/π = 63.66.
-- **e^(z^2):** its size on the circle is e^(x^2 − y^2), largest at e^(r^2). The ratio is 2.0000 at every radius: order 2. It has no zeros at all. The bound is a ceiling, not a count.
-- **A polynomial of degree d:** M(r) grows like r^d, so ln M(r) grows like ln r and the order is 0. It has d zeros, a finite number.
+- **sin z:** $`\ln M(r) = \ln\sinh r \approx r`$. The ratio $`\ln\ln M(r)/\ln r`$ reads 0.9688, 0.9985, 0.9999 at r = 10, 100, 1000 (order 1). It has 63 zeros within radius 100, against $`2r/\pi = 63.66`$.
+- **e^(z^2):** its size is $`e^{x^2 - y^2}`$, largest at $`e^{r^2}`$; the ratio is 2.0000 at every radius (order 2). It has no zeros: the bound is a ceiling, not a count.
+- **A polynomial of degree d ≥ 1:** $`M(r)`$ grows like $`r^d`$, so $`\ln M(r)`$ grows like $`d\ln r`$, giving order 0 and $`d`$ zeros.
 
 ---
 
 ## Worked numbers, by hand
-
-The polynomial z − 1/2 on the unit circle, then sin z / z on the circle of radius 10.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -164,7 +141,7 @@ The polynomial z − 1/2 on the unit circle, then sin z / z on the circle of rad
 | Jensen's right side | 0 + 2 × their sum | **3.363612** |
 | the circle average | 4,096 points, summed | 3.363612 |
 
-The centre plus one ln 2 for the zero at 1/2 reproduces the average exactly; for sin z / z, six zeros give six corrections and the same match.
+Both $`z - 1/2`$ (one zero) and $`\sin z / z`$ (six zeros) match their circle averages.
 
 ### What breaks if you drop a piece
 
@@ -175,13 +152,11 @@ The centre plus one ln 2 for the zero at 1/2 reproduces the average exactly; for
 | The pole of 1/(z − 1/2) added like a zero | 1.386294, against 0 | Poles subtract their term |
 | Judging sin z's growth on the real line only | largest size 1.000000, yet 63 zeros within 100 | Order is measured on whole circles |
 
-The code prints all four.
-
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code reaches each answer by two roads. Road one sums ln|f| at 4,096 equally spaced points round the circle. Road two adds ln|f(0)| and the corrections ln(R/|a|) for the known zeros: 1/2, then ±π, ±2π, ±3π. The argument principle, counting how many times sin z turns round 0 as z walks the circle ([The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)), confirms that exactly six zeros of sin z / z lie within radius 10. The growth M(r) is found by sampling 3,600 points and compared with sinh r, and the zero counts are compared with 2 × the whole part of r/π.
+Road one sums $`\ln\lvert f\rvert`$ at 4,096 points round the circle. Road two adds $`\ln\lvert f(0)\rvert`$ and $`\ln(R/\lvert a\rvert)`$ for the zeros, whose count is checked by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md). The code also checks $`M(r)`$ by 3,600-point sampling against $`\sinh r`$, the order estimates, and the zero bound.
 
 ### Python
 
@@ -361,14 +336,12 @@ mistake 4, size on the real line only: largest |sin x| for -100 <= x <= 100 is 1
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line.
-
 ### Lean
 
 Lean proves Jensen's formula and both zero bounds for every function meeting the conditions in When it holds.
 
-- Suppose f is holomorphic on the closed disk of radius R, with $`f(0) \ne 0`$. Then the circle average of $`\ln\lvert f\rvert`$ equals $`\ln\lvert f(0)\rvert`$ plus $`\ln(R/\lvert a\rvert)`$ for each zero a inside, counted with multiplicity.
-- Suppose f is holomorphic on the closed disk of radius 2r, with $`f(0) \ne 0`$. Then $`n(r) \le (\ln M(2r) - \ln\lvert f(0)\rvert)/\ln 2`$.
+- Suppose f is holomorphic on the closed disk of radius $`R > 0`$, with $`f(0) \ne 0`$. Then the circle average of $`\ln\lvert f\rvert`$ equals $`\ln\lvert f(0)\rvert`$ plus $`\ln(R/\lvert a\rvert)`$ for each zero a inside, counted with multiplicity.
+- Suppose f is holomorphic on the closed disk of radius $`2r`$ ($`r > 0`$), with $`f(0) \ne 0`$, and $`\lvert f\rvert \le M`$ on $`\lvert z\rvert = 2r`$. Then $`n(r) \le (\ln M - \ln\lvert f(0)\rvert)/\ln 2`$.
 - Suppose f is entire with order at most ρ, and $`f(0) \ne 0`$. Then for each ε > 0 some constant C gives $`n(r) \le C\, r^{\rho+\varepsilon}`$ for all large r.
 - The correction for the zero of z − 1/2 on the unit circle is ln(1/(1/2)) = ln 2.
 
@@ -567,9 +540,9 @@ example : Real.log (1 / (1 / 2 : ℝ)) = Real.log 2 := by norm_num
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Move the zero outside.** In `lnlin`, change `x - 0.5` to `x - 2`. Guess the circle average. It becomes 0.693147 = ln 2 = ln|f(0)|: no zero inside, no correction. The first assert stops it, since the correction is still pinned to a zero at 1/2.
-> - **A bigger circle, same zeros.** Set `R, n10 = 12.0, zeros(12)`. 4π lies beyond 12, so the zeros are still the six. Both roads now give 4.457542, and every assert passes. The labels still say 10.
-> - **Faster growth.** In the `oexp` line, replace `x * x - y * y` with `x ** 3 - 3 * x * y * y`, the real part of z^3. The order reads 3.0000, and the last assert stops it.
+> - **Move the zero outside.** In `lnlin`, change `x - 0.5` to `x - 2`. Guess the circle average first. It becomes 0.693147 = ln|f(0)| (no zero inside), and the first assert stops it.
+> - **A bigger circle, same zeros.** Set `R, n10 = 12.0, zeros(12)`. Since 4π > 12, the same six zeros stay inside; both roads give 4.457542, and every assert passes.
+> - **Faster growth.** In `oexp`, replace `x * x - y * y` with `x ** 3 - 3 * x * y * y` (the real part of z^3). The order reads 3.0000, and the last assert stops it.
 
 ---
 
@@ -587,12 +560,11 @@ example : Real.log (1 / (1 / 2 : ℝ)) = Real.log 2 := by norm_num
 
 ## Where you meet it in real life
 
-- **Bounding polynomial factors in computer algebra.** Apply Jensen's formula on the unit circle to a polynomial: the average of the log of its size is ln of its leading coefficient plus ln|a| for each root outside the circle. That quantity, the Mahler measure, bounds the coefficients of any factor, and factoring programs use the bound to know how much precision the factor search needs.
-- **Control engineering.** Bode's sensitivity integral is Jensen's formula moved to a half-plane. For a typical feedback loop it says that an unstable plant forces the integral of the log of the sensitivity over all frequencies to be positive: pushing errors down at some frequencies pushes them up at others.
+- **Bounding polynomial factors in computer algebra.** Applying Jensen's formula on the unit circle to a polynomial gives its Mahler measure: ln of the leading coefficient plus ln|a| for each root outside the circle. Factoring programs use this to bound factor coefficients and set working precision.
 - **Counting the zeros of zeta.** The count of zeros of the Riemann zeta function up to a given height uses Jensen's bound to control an error term ([Counting the zeros](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/08-counting-the-zeros-riemann-von-mangoldt.md)).
 
 > **Say it back**
-> Away from zeros, ln|f| is harmonic, so its circle average equals its centre value. Each zero a inside the circle of radius R raises the average by ln(R/|a|). So the average minus ln|f(0)| measures the zeros inside. The average cannot pass the log of the largest size, so a function of order ρ has at most a constant times r^(ρ+ε) zeros within radius r. sin z, order 1, has about 2r/π; e^(z^2), order 2, has none.
+> For f holomorphic on the closed disk of radius R with f(0) ≠ 0, ln|f| is harmonic away from zeros, so with no zeros its circle average would equal ln|f(0)|. Each zero a inside (counted with multiplicity) raises the average by ln(R/|a|). Since the average cannot exceed ln M(R), a nonzero entire function of finite order ρ has at most a constant times r^(ρ+ε) zeros within radius r for large r. sin z, order 1, has about 2r/π; e^(z^2), order 2, has none.
 
 ---
 

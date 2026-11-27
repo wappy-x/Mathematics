@@ -183,7 +183,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 1. [Weierstrass factorization: any list of zeros running off to infinity belongs to an entire function](10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md)
 2. [Jensen's formula: the average of log |f| round a circle counts the zeros inside, so slow growth means few zeros](10-Entire%20and%20Meromorphic%20Functions/02-jensens-formula-and-order-of-growth.md)
-3. [Hadamard factorization: an entire function of finite order is its zeros times e to a polynomial](10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md)
+3. [Hadamard factorization: a nonzero entire function of finite order is its zeros times e to a polynomial](10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md)
 4. [Mittag-Leffler: put poles and principal parts wherever you like, as long as they run off to infinity](10-Entire%20and%20Meromorphic%20Functions/04-mittag-leffler-theorem.md)
 
 [↑ Back to the shelves](#top)

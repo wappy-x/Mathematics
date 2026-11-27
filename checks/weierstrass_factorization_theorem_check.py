@@ -40,8 +40,8 @@ pts = [1, 0.5, complex(0.25, 0.5)]
 r1, r2 = [P(z) for z in pts], [road2(z) for z in pts]
 for z, a, b in zip(["1", "1/2", "1/4 + i/2"], r1, r2):
     print(f"z = {z}: product, road one {show(a)}; road two {show(b)}")
-house, sine = r1[2] * P(-pts[2]), cmath.sin(math.pi * pts[2]) / (math.pi * pts[2])
-print(f"house, P(z) P(-z) at 1/4 + i/2: {show(house)}; sin(pi z)/(pi z): {show(sine)}")
+paired, sine = r1[2] * P(-pts[2]), cmath.sin(math.pi * pts[2]) / (math.pi * pts[2])
+print(f"paired, P(z) P(-z) at 1/4 + i/2: {show(paired)}; sin(pi z)/(pi z): {show(sine)}")
 grid = [r / 20 * cmath.exp(2j * math.pi * k / 72) for r in range(1, 21) for k in range(72)]
 ratio = [max(abs(1 - E(p, w)) / abs(w) ** (p + 1) for w in grid) for p in (0, 1, 2)]
 print("lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: " + ", ".join(f"{x:.6f}" for x in ratio))
@@ -52,7 +52,7 @@ e1, e2 = (partial(p, math.sqrt, [100, 10000, 1000000]) for p in (1, 2))
 print("mistake, zeros at -sqrt(n), N = 10^2, 10^4, 10^6, with E_1: " + ", ".join(f"{x:.6f}" for x in e1)
       + "; with E_2: " + ", ".join(f"{x:.6f}" for x in e2))
 assert all(abs(a - b) < 1e-8 for a, b in zip(r1, r2))                # the product meets 1/(z Gamma e^(gamma z))
-assert abs(house - sine) < 1e-8                                       # paired factors rebuild the sine product
+assert abs(paired - sine) < 1e-8                                      # paired factors rebuild the sine product
 assert abs(rebuilt - 1 / math.sqrt(math.pi)) < 1e-8                   # e^g z^m P is 1/Gamma
 assert all(abs(a - b) < 1e-12 for a, b in zip(fixed, by_hand))        # the telescoping by hand
 assert max(ratio) <= 1 + 1e-12 and plain[-1] > 1000                   # the lemma; plain factors diverge

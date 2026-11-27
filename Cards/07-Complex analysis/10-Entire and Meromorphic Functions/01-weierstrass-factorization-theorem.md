@@ -44,13 +44,13 @@ E_0(w) = 1 - w, \qquad E_p(w) = (1 - w)\, e^{\,w + w^2/2 + \cdots + w^p/p}
 
 **Read it aloud:** E p of w is one minus w, times e to the first p terms of w plus w squared over two and so on.
 
-It is zero only at w = 1, since an exponential is never zero, so $`E_p(z/a_n)`$ is zero only at z = a_n. Weierstrass's theorem:
+It is zero only at w = 1, since an exponential is never zero, so for $`a_n \ne 0`$, $`E_p(z/a_n)`$ is zero only at z = a_n. Weierstrass's theorem:
 
 ```math
 f(z) = e^{g(z)}\, z^m \prod_{n=1}^{\infty} E_{p_n}\!\left(\frac{z}{a_n}\right)
 ```
 
-**Read it aloud:** any entire function f other than 0 is e to an entire function g, times z to the m, times one elementary factor per nonzero zero.
+**Read it aloud:** any entire function f other than 0 is e to an entire function g, times z to the m, times one elementary factor per nonzero zero (a finite product if finitely many).
 
 The example takes $`a_n = -n`$ and $`p_n = 1`$, so each factor is $`E_1(-z/n) = (1 + z/n)e^{-z/n}`$:
 
@@ -73,9 +73,9 @@ P(z) = \prod_{n=1}^{\infty}\left(1 + \frac{z}{n}\right)e^{-z/n} = \frac{1}{z\,\G
 
 ### When it holds
 
-- **The zeros must run off to infinity.** Zeros piling up at a finite point, such as 1/n at 0, force an entire function to be 0 everywhere ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)).
+- **The zeros must run off to infinity, or be finitely many.** Only finitely many, counted with multiplicity, lie in any disc; a finite list gives a finite product. Zeros piling up at a finite point, such as 1/n at 0, force an entire function to be 0 everywhere ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)).
 - **Repeat each zero by its order.** A double zero takes two factors; one factor gives a single zero.
-- **The degrees must grow with the crowding.** It suffices that the sizes $`(r/\lvert a_n\rvert)^{p_n+1}`$ have a finite total for every r. Zeros at −√n with p = 1 fail: the product sinks to 0.001386 by N = 10^6.
+- **The degrees must grow with the crowding.** It suffices that $`(r/\lvert a_n\rvert)^{p_n+1}`$ has a finite total for every $`r > 0`$; $`p_n = 0`$ works only when $`\sum 1/\lvert a_n\rvert`$ is finite. With zeros at −√n and p = 1 the product sinks toward 0: 0.001386 by N = 10^6.
 - **The zeros do not fix f.** e^g is any entire function with no zeros, so e^z/Γ(z) has the same zeros as 1/Γ(z).
 
 ---
@@ -101,7 +101,7 @@ So degree p makes the miss shrink like the (p + 1)-th power. The code samples th
 <details>
 <summary>Detailed proof of the bound</summary>
 
-Differentiate. The exponent's derivative is $`1 + w + \cdots + w^{p-1}`$, and $`(1 - w)(1 + w + \cdots + w^{p-1}) = 1 - w^p`$. So
+For $`p = 0`$, $`1 - E_0(w) = w`$. For $`p \ge 1`$, differentiate. The exponent's derivative is $`1 + w + \cdots + w^{p-1}`$, and $`(1 - w)(1 + w + \cdots + w^{p-1}) = 1 - w^p`$. So
 
 $`\displaystyle E_p'(w) = -w^p\, e^{\,w + w^2/2 + \cdots + w^p/p}.`$
 
@@ -119,7 +119,7 @@ Fix a disc |z| ≤ r. Only finitely many a_n lie within 2r, since the list runs 
 
 The choice $`p_n = n - 1`$ always works: past the first few factors the miss is at most $`(1/2)^n`$, a finite total. Sparser zeros allow a fixed p; for a_n = −n, p = 1 gives misses of at most r^2/n^2.
 
-One bound serves the whole disc, so the product is holomorphic there ([Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md), Step 4). Every disc is covered, so the product is entire. A convergent product is zero only where a factor is: exactly at the a_n.
+One bound serves the whole disc, so the product is holomorphic there ([Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md), Step 4). Every disc is covered, so the product is entire. A convergent product (factors tending to 1, nonzero tail limit; tending to 0 counts as diverging) is zero only where a factor is: exactly at the a_n.
 
 ### Step 3: every entire function factors this way
 
@@ -141,7 +141,7 @@ Here $`H_N = 1 + 1/2 + \cdots + 1/N`$, and $`H_N - \ln N`$ tends to γ. So 1/Γ(
 
 At z = 1 the partial product telescopes to (N + 1)e^(−H_N).
 
-### Step 5: the house example, sine, is the same product paired up
+### Step 5: sine is the same product paired up
 
 Pair the factor for zero n with the one for −n. The exponentials cancel:
 
@@ -226,8 +226,8 @@ pts = [1, 0.5, complex(0.25, 0.5)]
 r1, r2 = [P(z) for z in pts], [road2(z) for z in pts]
 for z, a, b in zip(["1", "1/2", "1/4 + i/2"], r1, r2):
     print(f"z = {z}: product, road one {show(a)}; road two {show(b)}")
-house, sine = r1[2] * P(-pts[2]), cmath.sin(math.pi * pts[2]) / (math.pi * pts[2])
-print(f"house, P(z) P(-z) at 1/4 + i/2: {show(house)}; sin(pi z)/(pi z): {show(sine)}")
+paired, sine = r1[2] * P(-pts[2]), cmath.sin(math.pi * pts[2]) / (math.pi * pts[2])
+print(f"paired, P(z) P(-z) at 1/4 + i/2: {show(paired)}; sin(pi z)/(pi z): {show(sine)}")
 grid = [r / 20 * cmath.exp(2j * math.pi * k / 72) for r in range(1, 21) for k in range(72)]
 ratio = [max(abs(1 - E(p, w)) / abs(w) ** (p + 1) for w in grid) for p in (0, 1, 2)]
 print("lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: " + ", ".join(f"{x:.6f}" for x in ratio))
@@ -238,7 +238,7 @@ e1, e2 = (partial(p, math.sqrt, [100, 10000, 1000000]) for p in (1, 2))
 print("mistake, zeros at -sqrt(n), N = 10^2, 10^4, 10^6, with E_1: " + ", ".join(f"{x:.6f}" for x in e1)
       + "; with E_2: " + ", ".join(f"{x:.6f}" for x in e2))
 assert all(abs(a - b) < 1e-8 for a, b in zip(r1, r2))                # the product meets 1/(z Gamma e^(gamma z))
-assert abs(house - sine) < 1e-8                                       # paired factors rebuild the sine product
+assert abs(paired - sine) < 1e-8                                      # paired factors rebuild the sine product
 assert abs(rebuilt - 1 / math.sqrt(math.pi)) < 1e-8                   # e^g z^m P is 1/Gamma
 assert all(abs(a - b) < 1e-12 for a, b in zip(fixed, by_hand))        # the telescoping by hand
 assert max(ratio) <= 1 + 1e-12 and plain[-1] > 1000                   # the lemma; plain factors diverge
@@ -246,7 +246,7 @@ assert e1[-1] < e1[0] / 50 and e2[2] - e2[1] < (e2[1] - e2[0]) / 5   # E_1 sinks
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 plain factors (1 + 1/n), N = 10, 100, 1000: 11.000000, 101.000000, 1001.000000
@@ -258,7 +258,7 @@ Euler's constant gamma, by area: 0.577216; e^(-gamma) = 0.561459; e^gamma = 1.78
 z = 1: product, road one 0.561459 + 0.000000i; road two 0.561459 + 0.000000i
 z = 1/2: product, road one 0.845501 + 0.000000i; road two 0.845501 + 0.000000i
 z = 1/4 + i/2: product, road one 1.079794 - 0.219530i; road two 1.079794 - 0.219530i
-house, P(z) P(-z) at 1/4 + i/2: 1.280570 - 0.489242i; sin(pi z)/(pi z): 1.280570 - 0.489242i
+paired, P(z) P(-z) at 1/4 + i/2: 1.280570 - 0.489242i; sin(pi z)/(pi z): 1.280570 - 0.489242i
 lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: 1.000000, 1.000000, 1.000000
 1/Gamma rebuilt, e^(gamma z) z P(z) at z = 1/2: 0.564190; 1/sqrt(pi) = 0.564190
 mistake, e^g dropped: z P(z) at z = 1 is 0.561459, not 1/Gamma(1) = 1
@@ -330,10 +330,10 @@ fn main() {
     for (i, z) in ["1", "1/2", "1/4 + i/2"].iter().enumerate() {
         println!("z = {}: product, road one {}; road two {}", z, show(r1[i]), show(r2[i]));
     }
-    let (z0, house) = (pts[2], mul(r1[2], prod(sc(pts[2], -1.0), 100000)));
+    let (z0, paired) = (pts[2], mul(r1[2], prod(sc(pts[2], -1.0), 100000)));
     let s = sc(add(cexp(c(-PI * z0.im, PI * z0.re)), sc(cexp(c(PI * z0.im, -PI * z0.re)), -1.0)), 0.5); // i sin(pi z)
     let sine = mul(c(s.im, -s.re), inv(sc(z0, PI)));
-    println!("house, P(z) P(-z) at 1/4 + i/2: {}; sin(pi z)/(pi z): {}", show(house), show(sine));
+    println!("paired, P(z) P(-z) at 1/4 + i/2: {}; sin(pi z)/(pi z): {}", show(paired), show(sine));
     let grid: Vec<C> = (1..=20).flat_map(|r| (0..72).map(move |k| sc(cexp(c(0.0, 2.0 * PI * k as f64 / 72.0)), r as f64 / 20.0))).collect();
     let ratio: Vec<f64> = (0..3).map(|p| grid.iter().map(|&w| abs(add(c(1.0, 0.0), sc(e_p(p, w), -1.0))) / abs(w).powi(p + 1)).fold(0.0, f64::max)).collect();
     println!("lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: {}", join(&ratio, 6));
@@ -344,7 +344,7 @@ fn main() {
     let (e1, e2) = (partial(1, &|n: f64| n.sqrt(), &big), partial(2, &|n: f64| n.sqrt(), &big));
     println!("mistake, zeros at -sqrt(n), N = 10^2, 10^4, 10^6, with E_1: {}; with E_2: {}", join(&e1, 6), join(&e2, 6));
     assert!((0..3).all(|i| abs(add(r1[i], sc(r2[i], -1.0))) < 1e-8)); // the product meets 1/(z Gamma e^(gamma z))
-    assert!(abs(add(house, sc(sine, -1.0))) < 1e-8); // paired factors rebuild the sine product
+    assert!(abs(add(paired, sc(sine, -1.0))) < 1e-8); // paired factors rebuild the sine product
     assert!((rebuilt - 1.0 / PI.sqrt()).abs() < 1e-8); // e^g z^m P is 1/Gamma
     assert!(fixed.iter().zip(&by_hand).all(|(a, b)| (a - b).abs() < 1e-12)); // the telescoping by hand
     assert!(ratio.iter().all(|&r| r <= 1.0 + 1e-12) && plain[2] > 1000.0); // the lemma; plain factors diverge
@@ -353,7 +353,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 plain factors (1 + 1/n), N = 10, 100, 1000: 11.000000, 101.000000, 1001.000000
@@ -365,7 +365,7 @@ Euler's constant gamma, by area: 0.577216; e^(-gamma) = 0.561459; e^gamma = 1.78
 z = 1: product, road one 0.561459 + 0.000000i; road two 0.561459 + 0.000000i
 z = 1/2: product, road one 0.845501 + 0.000000i; road two 0.845501 + 0.000000i
 z = 1/4 + i/2: product, road one 1.079794 - 0.219530i; road two 1.079794 - 0.219530i
-house, P(z) P(-z) at 1/4 + i/2: 1.280570 - 0.489242i; sin(pi z)/(pi z): 1.280570 - 0.489242i
+paired, P(z) P(-z) at 1/4 + i/2: 1.280570 - 0.489242i; sin(pi z)/(pi z): 1.280570 - 0.489242i
 lemma, largest |1 - E_p(w)| / |w|^(p+1) on |w| <= 1, p = 0, 1, 2: 1.000000, 1.000000, 1.000000
 1/Gamma rebuilt, e^(gamma z) z P(z) at z = 1/2: 0.564190; 1/sqrt(pi) = 0.564190
 mistake, e^g dropped: z P(z) at z = 1 is 0.561459, not 1/Gamma(1) = 1
@@ -1010,7 +1010,7 @@ example (z : ℂ) (n : ℕ) :
 > **Multiplying the plain factors 1 + z/n.** Factors tending to 1 do not suffice: at z = 1 the product is 11, 101, 1001 after 10, 100, 1000 factors. The correcting exponential makes it converge.
 >
 > - **Dropping e^g.** The zeros fix the product, not the function: z P(z) at z = 1 is 0.561459, while 1/Γ(1) = 1.
-> - **One degree for every list.** Zeros at −√n are too dense for p = 1: the product sinks to 0.001386 by N = 10^6, though no factor is zero.
+> - **One degree for every list.** Zeros at −√n are too dense for p = 1: the product diverges to 0 (0.001386 by N = 10^6), though no factor is zero.
 > - **Stopping early.** 1000 factors give 0.561740, not the limit 0.561459; road one adds the tail.
 
 ---
@@ -1023,7 +1023,7 @@ example (z : ℂ) (n : ℕ) :
 - **Zeta's zeros.** Number theory links zeta's zeros to the primes through a product over those zeros: [Hadamard factorization](03-hadamard-factorization-theorem.md).
 
 > **Say it back**
-> Multiplying plain factors 1 + z/n diverges, because the misses 1/n add to infinity. Each elementary factor carries an exponential that cancels its slow part and adds no zero. Then the product converges for any zeros running off to infinity. Dividing an entire function by its product leaves a zero-free function e^g. For the zeros −1, −2, −3, … the product is 1/(zΓ(z)e^(γz)), which reads 0.561459 at z = 1.
+> Multiplying plain factors 1 + z/n diverges, because the misses 1/n add to infinity. Each elementary factor carries an exponential that cancels its slow part and adds no zero. Then the product converges for any zeros running off to infinity. Dividing a nonzero entire function by z^m and its product over nonzero zeros leaves a zero-free function e^g. For the zeros −1, −2, −3, … the product is 1/(zΓ(z)e^(γz)), which reads 0.561459 at z = 1.
 
 ---
 
@@ -1037,8 +1037,8 @@ example (z : ℂ) (n : ℕ) :
 ## Where this goes next
 
 - [Jensen's formula](02-jensens-formula-and-order-of-growth.md): how fast an entire function grows limits how many zeros it can have.
-- [Hadamard factorization](03-hadamard-factorization-theorem.md): for functions of limited growth, one fixed degree p serves every factor and g is a polynomial.
-- [Mittag-Leffler](04-mittag-leffler-theorem.md): the same construction for poles, building a function with any prescribed poles.
+- [Hadamard factorization](03-hadamard-factorization-theorem.md): for entire functions of limited growth, one fixed degree p serves every factor and g is a polynomial.
+- [Mittag-Leffler](04-mittag-leffler-theorem.md): the same construction for poles, building a meromorphic function with any prescribed poles running off to infinity.
 
 The question this card leaves open: g can be any entire function, so what does the growth of f say about g and the degrees p_n?
 
