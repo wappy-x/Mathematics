@@ -58,7 +58,7 @@ On the 23 clock, whole 23s dropped as you go, both routes land on the shared num
 ### When it holds
 
 - **The counts stay private.** Post 6, not 8, and anyone reaches 2 from Ray's 19.
-- **The base tours every slot.** Base 2 reaches only 11 of the 22, a shorter search.
+- **The base tours every non-zero slot.** Base 2 reaches only 11 of the 22, a shorter search.
 - **The clock is huge.** At 23, 22 tries find 6 at once.
 - **Nobody alters the posts.** Someone in the middle can run the exchange twice.
 
@@ -336,7 +336,7 @@ example : (Finset.Icc 1 22).filter (fun c => 2 ^ c % 23 = 18) = {6, 17} := by de
 - [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): multiplying on a clock.
 - [One-way streets](01-one-way-streets.md): the quick-forwards, slow-backwards job this sits on.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying out on a clock, and square-and-multiply.
-- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why base 5 tours all 22 slots, base 2 only 11.
+- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why base 5 tours all 22 non-zero slots, base 2 only 11.
 
 ## Where this goes next
 

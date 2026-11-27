@@ -1,4 +1,4 @@
-# Square roots on a prime clock: a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest
+# Square roots on a prime clock: a one-line formula when p is 3 mod 4, and Tonelli-Shanks for other odd primes
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → Square roots on a prime clock
 
@@ -8,7 +8,7 @@
 
 A Bitcoin key is a point on the curve y × y = x cubed + 7, sent as x and one bit. On a toy 23 clock, x = 4 gives 71 = 3 × 23 + 2, so y is a **square root** of 2, and 2 a **square**. Trying all 23 finds 5 and 18; the bit picks one.
 
-At real size trying all is hopeless, but Bitcoin's prime leaves 3 on division by 4, so one power does it: on 23, 2 to the (23 + 1)/4 = 6th is 64 = 2 × 23 + 18.
+At real size trying all fails, but Bitcoin's prime leaves 3 on division by 4, so one power suffices: on 23, 2 to the (23 + 1)/4 = 6th is 64 = 2 × 23 + 18.
 
 On 41, which leaves 1, **Tonelli-Shanks** guesses, then corrects. **Rabin encryption** locks a message by squaring it on a clock of two secret primes; unlocking takes a square root. On a toy key, 77 = 7 × 11, the message 2 travels as 4; a key holder who unlocks it as 9 leaks the factor 7.
 
@@ -20,7 +20,7 @@ On 41, which leaves 1, **Tonelli-Shanks** guesses, then corrects. **Rabin encryp
 
 ```mermaid
 flowchart LR
-  A["a square on a prime clock"] --> B{"does the prime leave 3 on division by 4?"}
+  A["a nonzero square on an odd prime clock"] --> B{"does the prime leave 3 on division by 4?"}
   B -->|"yes: 23"| C["one power: 2 to the 6th = 18"]
   B -->|"no: 41"| D["Tonelli-Shanks with the non-square 3: root of 2 is 17 (10 needs no correction: 16)"]
   E["a square on the 77 clock"] --> F["four roots: 2, 9, 68, 75"]
@@ -43,16 +43,16 @@ x = a^{(p+1)/4} \bmod p
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`p`$ | the prime clock size | 23, then 41 | a few more powers |
-| $`a`$ | the square whose root is wanted | 2, then 10 | — |
+| $`p`$ | the odd prime clock size | 23, then 41 | a few more powers |
+| $`a`$ | the nonzero square whose root is wanted | 2, then 10 | — |
 | $`x`$ | a square root of $`a`$ | 18, or 5 | — |
 | $`s`$, $`t`$ | the 2s and the odd rest of p − 1 | $`40 = 2^3 \times 5`$ | more correction rounds |
 | $`z`$ | a non-square: no number squares to it | 3 on 41 | — |
 
 ### When it holds
 
-- **The clock is prime.** On 77, 4 has four roots.
-- **The number is a square.** 5 has no root on 23, yet the formula returns a number.
+- **The clock is an odd prime.** The 2 clock has one nonzero slot; on 77, 4 has four roots.
+- **The number is a nonzero square.** 0 is its own root; 5 has no root on 23, yet the formula returns a number.
 - **For the shortcut, p leaves 3 on division by 4.** On 41 the power is not whole.
 - **Tonelli-Shanks gets a true non-square.** With the square 2 as helper, the root of 2 on 41 is never found.
 
@@ -62,11 +62,11 @@ x = a^{(p+1)/4} \bmod p
 
 ### Step 0: Euler's test says which numbers are squares
 
-On a prime clock, a to the power (p − 1)/2 lands on 1 for a square, p − 1 otherwise: Euler's test, proved on [Gauss's lemma](../04-Powers%20on%20the%20Clock/12-gauss-lemma.md). On 23, 2 to the 11th is 1. On 41, 3 to the 20th is 40: a non-square.
+On an odd prime clock, a nonzero a to the power (p − 1)/2 lands on 1 for a square, p − 1 otherwise: Euler's test, proved on [Gauss's lemma](../04-Powers%20on%20the%20Clock/12-gauss-lemma.md). On 23, 2 to the 11th is 1. On 41, 3 to the 20th is 40: a non-square.
 
 ### Step 1: the shortcut is Euler's test, multiplied by a
 
-$`a^{(p+1)/4}`$ squared is $`a^{(p+1)/2}`$: a times $`a^{(p-1)/2}`$, and that second factor is 1 by Step 0. So 18 × 18 lands on 2 × 1. The power is whole exactly when p leaves 3 on division by 4.
+$`a^{(p+1)/4}`$ squared is $`a^{(p+1)/2}`$: a times $`a^{(p-1)/2}`$, which is 1 for nonzero a by Step 0 (0 gives 0). So 18 × 18 lands on 2. The power is whole exactly when p leaves 3 on division by 4.
 
 ### Step 2: Tonelli-Shanks guesses, then shrinks the error
 
@@ -110,7 +110,7 @@ A root-finder handed 4 cannot know you began from 2, so half its answers, 9 and 
 | roots of 4 on 77 | try all 77 | 2, 9, 68, 75 |
 | two unrelated roots | gcd of 9 − 2 and 77 | **7** |
 
-One power gave the root 18; one gcd gave the factor 7.
+One power gave 18; one gcd gave 7.
 
 ### What breaks if you drop a piece
 
@@ -124,7 +124,7 @@ One power gave the root 18; one gcd gave the factor 7.
 
 ## Code, from first principles, and it actually runs
 
-Two roads: the shortcut and Tonelli-Shanks against brute force, for every square on 23 and 41. On 77, a gcd turns roots into factors.
+Shortcut and Tonelli-Shanks checked against brute force on 23 and 41; on 77, a gcd gives factors.
 
 ### Python
 
@@ -359,7 +359,7 @@ example : Nat.gcd (9 - 2) 77 = 7 ∧ Nat.gcd (68 - 2) 77 = 11 ∧ Nat.gcd (75 - 
 > **Try changing**
 > - Guess first: does Tonelli-Shanks correct anything on 23? Run `tonelli(2, 23, 5, True)`. No: its first guess is the shortcut, 18.
 > - Guess first: can a square help? Make the 3 in `tonelli(2, 41, 3, True)` a 2. No: its fix 32 has order 4, too small: the loop crashes.
-> - Guess first: how many roots has 5 on 23? Print `roots(5, 23)`. None.
+> - Guess first: how many roots has 5 on 23? `roots(5, 23)`: none.
 
 ---
 
@@ -380,7 +380,7 @@ example : Nat.gcd (9 - 2) 77 = 7 ∧ Nat.gcd (68 - 2) 77 = 11 ∧ Nat.gcd (75 - 
 - **Factoring programs.** The quadratic sieve takes roots on many small prime clocks.
 
 > **Say it back**
-> On an odd prime clock a nonzero square has two roots, x and p − x. If p leaves 3 on division by 4, a to the (p + 1)/4 is one. Otherwise Tonelli-Shanks guesses, then powers of a non-square halve the error's order until it is 1. On 77, unrelated roots 9 and 2 give the factor 7.
+> On an odd prime clock a nonzero square has two roots, x and p − x. If p leaves 3 on division by 4, a to the (p + 1)/4 is one; otherwise Tonelli-Shanks halves the error's order with a non-square. On 77, unrelated roots 9 and 2 give factor 7.
 
 ---
 

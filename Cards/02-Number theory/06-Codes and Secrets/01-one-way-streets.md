@@ -8,7 +8,7 @@
 
 Multiply 1,009 by 1,013. Four digits by four digits: sixteen little multiplications and a column of adding, about a minute on paper. It comes to 1,022,117.
 
-Now the other way. Someone hands you 1,022,117 and says it is two primes multiplied — a **prime** being a number nothing divides but itself and 1 ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Which two? There is no cheap way back: you try 2, then 3, then 5, on up. 1,009 is the 169th prime, so 168 tries fail first.
+Now the other way. Someone hands you 1,022,117 and says it is two primes multiplied — a **prime** being a number above 1 that nothing divides but itself and 1 ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Which two? There is no cheap way back: you try 2, then 3, then 5, on up. 1,009 is the 169th prime, so 168 tries fail first.
 
 A minute out, an afternoon back, by hand; by machine, both under a second. Give each prime a few hundred digits: the way out is still under a second, the way back a research project. A 240-digit number came apart in 2020, after centuries of processor time.
 
@@ -46,7 +46,7 @@ Two pairs of jobs: one easy, its undoing not.
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
-| a prime | a number nothing divides but itself and 1 | 1,009 and 1,013 |
+| a prime | a number above 1 that nothing divides but itself and 1 | 1,009 and 1,013 |
 | the product | the two primes multiplied out | 1,022,117 |
 | factoring | pulling the primes back out | 168 tries and counting |
 | the clock | the size the count wraps at ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 1,009 |
@@ -57,7 +57,7 @@ Two pairs of jobs: one easy, its undoing not.
 
 - **The primes are huge.** Four-digit ones fall in under a second.
 - **The way out is done fast.** One 11 at a time, it costs 613, like the way back.
-- **11 visits every slot.** If not, the walk back is short: see Try changing.
+- **11 visits every non-zero slot.** If not, the walk back is short: see Try changing.
 
 ---
 
@@ -77,7 +77,7 @@ Off the clock, 11 raised to a power grows steadily: bigger exponent, bigger answ
 
 On a clock of 1,009 the answer wraps every time it passes 1,009, and the size is gone. For all you can tell from looking at 956, it is the 2nd step or the 613th. Nothing steers you, so the only move left is to try exponents. The exponent you are hunting has a real name: the **discrete logarithm**, discrete because it is counted in whole steps.
 
-11 is a **primitive root** of 1,009: its powers visit all 1,008 non-zero slots, each once ([The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)). So the exponent is unique.
+11 is a **primitive root** of 1,009: its first 1,008 powers visit all 1,008 non-zero slots, each once ([The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)). So the exponent below 1,008 is unique.
 
 ### Step 3: fast up, slow down
 
@@ -223,8 +223,8 @@ ALL CHECKS PASS
 
 Lean proves the card's three general facts for every prime clock and every whole number, not just 1,009 and 1,022,117.
 
-- On a prime clock where a number's powers visit every non-zero slot, each slot has exactly one exponent from 0 up to the clock size minus 2.
-- If a non-zero number's powers miss a slot, two different exponents in that same range land together, so the exponent is no longer unique.
+- On a prime clock where a number's powers visit every non-zero slot, each non-zero slot has exactly one exponent from 0 up to the clock size minus 2.
+- If a non-zero number's powers miss a non-zero slot, two different exponents in that same range land together, so the exponent is no longer unique.
 - A number of at least 2 that is not prime has a prime factor no bigger than its square root.
 - It also re-checks the card's numbers: 1,022,117, the 168 failed tries, 956, the 15 multiplications, the 613-step walk, 729, 426 and the 1,013 clock.
 
@@ -383,7 +383,7 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 > **Thinking a slow job is a broken job.** Factoring is not impossible: trial division on 1,022,117 finishes in under a second. A code is a bet on how long, and every bet has a date on it — a working quantum machine already has a factoring method waiting.
 >
 > - **Reading "hard" as "nobody has tried".** People have tried for centuries; what is missing is a shortcut.
-> - **Assuming the clock is the hard part.** Multiplying on a clock is cheaply undoable ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)); raising to a power is not.
+> - **Assuming the clock is the hard part.** Multiplying by a coprime number on a clock is cheaply undoable ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)); raising to a power is not.
 
 ---
 
@@ -403,7 +403,7 @@ example : (11 : ZMod 1013) ^ 46 = 1 ∧ ∀ k ∈ Finset.Icc 1 45, (11 : ZMod 10
 - [Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md): what a prime is.
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock, and taking whole clocks off.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): 15 steps instead of 613.
-- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why 11 visits all 1,008 slots.
+- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why 11 visits all 1,008 non-zero slots.
 - [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): adding a fixed amount against multiplying by a fixed factor, which is how extra digits grow the hunt.
 
 ## Where this goes next

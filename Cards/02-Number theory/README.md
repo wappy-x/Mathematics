@@ -116,9 +116,9 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 1. [One-way streets: multiplying two primes and raising to a power on the clock are easy, and undoing them is slow](06-Codes%20and%20Secrets/01-one-way-streets.md)
 2. [Diffie-Hellman key exchange: two strangers agree a secret over an open line using powers on a clock](06-Codes%20and%20Secrets/02-diffie-hellman.md)
 3. [RSA in outline: lock with e, unlock with d, and Euler's theorem is why the message comes back](06-Codes%20and%20Secrets/03-rsa-in-outline.md)
-4. [The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it every time](06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)
+4. [The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it on every base sharing no factor with them](06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)
 5. [The Miller-Rabin test: how RSA finds 300-digit primes, with an error as small as you like](06-Codes%20and%20Secrets/05-miller-rabin.md)
-6. [Square roots on a prime clock: a one-line formula when p is 3 mod 4, and Tonelli-Shanks for the rest](06-Codes%20and%20Secrets/06-square-roots-mod-p.md)
+6. [Square roots on a prime clock: a one-line formula when p is 3 mod 4, and Tonelli-Shanks for other odd primes](06-Codes%20and%20Secrets/06-square-roots-mod-p.md)
 
 [↑ Back to the shelves](#top)
 

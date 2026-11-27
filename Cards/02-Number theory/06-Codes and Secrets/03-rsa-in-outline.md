@@ -14,7 +14,7 @@ You held 2753 back. Raise 2790 to the 2753rd, take the 3233s off, and 65 is back
 
 The pair is a padlock handed out open: anyone can shut it, nobody can open it. 3233 and 17 are the **public key**, 2753 the **private key**. And 3233 is not random: it is 61 × 53, two primes you told nobody.
 
-**Lock by raising to 17 on a 3233 clock; unlock by raising to 2753. They undo each other because 17 × 2753 is one past a run of 3120s, and Euler's theorem sends each run back to 1.**
+**Lock by raising to 17 on a 3233 clock; unlock by raising to 2753. They undo each other because 17 × 2753 is one past a run of 3120s, and for messages sharing no factor with 3233, Euler's theorem sends each run back to 1.**
 
 **What kind of fact this is:** a theorem, proved in Why it works: the message comes back. That it stays secret is not proved. It rests on splitting a large clock size being slow.
 

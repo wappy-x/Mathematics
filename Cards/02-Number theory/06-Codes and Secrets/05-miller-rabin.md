@@ -6,13 +6,13 @@
 
 ## General Overview
 
-Is 221 prime? Divide and see. Not 2, not 3, not 5, not 7, not 11 — and 13 goes in. 221 = 13 × 17.
+Is 221 prime? Try 2, 3, 5, 7, 11 — then 13 goes in: 221 = 13 × 17.
 
 Now give it three hundred digits. RSA ([RSA in outline](03-rsa-in-outline.md)) wants two like that before lunch, and dividing up to the square root would outlast the sun. Miller-Rabin settles one in moments, at a price: it proves a number composite, but at that size never prime.
 
-Back to 221, by hand. Pick a number below it — call it the **base**. Raise it to a power 221 fixes — the 55th, here — on the 221 clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), square that, and read the result. Base 137 lands in a shape no prime could make. Base 174 looks blameless, and lies.
+Back to 221, by hand. Pick a number from 1 up to one below it — call it the **base**. Raise it to a power 221 fixes — the 55th, here — on the 221 clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), square that, and read the result. Base 137 lands in a shape no prime could make. Base 174 looks blameless, and lies.
 
-**A prime's chain of squarings has only two allowed shapes, and a chain with neither proves the number composite.**
+**For an odd prime and any base from 1 up to one below it, the chain of squarings has only two allowed shapes, and a chain with neither proves the number composite.**
 
 **What kind of fact this is:** a theorem, proved in Why it works, except the three-in-four bound in Step 3, taken on trust from Rabin.
 
@@ -38,7 +38,7 @@ Halve one-below until it stops: **221 − 1 = 220, and 220 = 4 × 55** — 220, 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
 | the number under test | the odd number tested | 221 |
-| the base | a number below it, drawn at random | 174, 18, 137 |
+| the base | a number from 1 to one below it, drawn at random | 174, 18, 137 |
 | the odd part | halve one-below until odd | 55 |
 | the halvings | how far one-below halves | 2, so the chain is 2 long |
 | the chain | the power, then its squaring | 47, then 220 |
@@ -48,9 +48,9 @@ A chain passes if it starts at 1 or shows 221 − 1; anything else is a witness.
 
 ### When it holds
 
-- **An odd number under test.** One-below must halve, or there is no chain. Even numbers need no test.
+- **An odd number of 3 or more under test, and a base from 1 up to one below it.** One-below must halve to an odd number, and base 0 fails even on a prime. Even numbers need no test.
 - **Every value in the chain is read.** Look only at the top, the base to the 220th, and this is the Fermat test: 16 bases fool it, not 6.
-- **A fresh random base each round.** The one-in-four bound needs a random draw. A fixed base can lie every time: 174 always says 221 is prime.
+- **A fresh random base each round.** The one-in-four bound needs randomness: fixed base 174 always passes 221.
 
 ---
 
@@ -76,7 +76,7 @@ Base 137 gives 188, then 205: not 1, never 221 − 1. No prime could do that, so
 
 ### Step 3: why each base cuts the doubt fourfold
 
-For any odd composite, at least three in four bases are witnesses — taken on trust here. On 221 it is generous: 214 witnesses, 6 liars. Fermat is fooled by 16.
+For any odd composite, at least three in four bases from 1 up to one below it are witnesses — taken on trust here. On 221 it is generous: 214 witnesses, 6 liars. Fermat is fooled by 16.
 
 Carmichael numbers fall too. On 561, from [The Fermat test](04-fermat-test-and-carmichael.md), 560 = 16 × 35, and base 2's chain is 263, 166, 67, 1. 67 squares to 1, so 2 is a witness. Only 10 of 560 bases lie.
 
@@ -113,7 +113,7 @@ Bases 174 and 18 both pass Fermat. The squaring separates them.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Every power on show is taken twice — square-and-multiply, then one multiplication at a time — and the roads must agree on all 220 bases. Then every base is tried, to count the liars.
+Nothing is imported. Every power runs twice (square-and-multiply and stepwise) across all 220 bases, then all bases are counted.
 
 ### Python
 
@@ -227,10 +227,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves Steps 0 and 2 for every prime and every base below it, then re-checks the card's 221 numbers.
+Lean proves Step 0 for every prime and Step 2 for every odd prime and base from 1 to one below it, plus the 221 numbers.
 
 - On a prime clock, a number that squares to 1 is 1 or one-below the prime.
-- If the odd number under test is prime, every base's chain starts at 1 or shows one-below. A chain with neither shape proves it composite.
+- If the odd number under test is prime, the chain of every base from 1 to one below it starts at 1 or shows one-below. A chain with neither shape proves it composite.
 - 221 = 13 × 17, and trial division finds no factor before 13.
 - 220 = 4 × 55, so the odd part is 55 and the chain is 2 long.
 - Base 174's chain is 47, then 220: a liar.
@@ -383,14 +383,14 @@ example : 13 ^ 55 % 221 ≠ 1 ∧ 13 ^ 55 % 221 ≠ 220 ∧ 13 ^ 110 % 221 ≠ 2
 - **Setting up Diffie-Hellman.** It needs a big prime clock too ([Diffie-Hellman key exchange](02-diffie-hellman.md)).
 
 > **Say it back**
-> Take one less than the number and halve it until odd: 220 becomes 4 × 55. Raise a random base to the 55th, then keep squaring. A prime's chain starts at 1 or shows one-below, since only those two square to 1 there. Anything else proves it composite: that base is a witness. Base 18 fools the older Fermat test; this one catches it, on the 103.
+> Halve one less than an odd number of 3 or more until odd: 220 = 4 × 55. Raise a random base from 1 to one below it to the 55th, then square. A prime's chain starts at 1 or shows one-below; anything else proves composite. Base 18 fools Fermat; this catches it on 103.
 
 ---
 
 ## What this builds on
 
 - [The Fermat test](04-fermat-test-and-carmichael.md): the weaker test this one repairs.
-- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why only two numbers square to 1 on a prime clock.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why only two numbers square to 1 on an odd prime clock.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): the base to the 55th, without 55 multiplications.
 
 ## Where this goes next

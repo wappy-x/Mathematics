@@ -1,4 +1,4 @@
-# The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it every time
+# The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it on every base sharing no factor with them
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Codes and Secrets](../README.md#s06) → The Fermat test
 
@@ -16,7 +16,7 @@ A prime would force exactly that ([Fermat's little theorem](../04-Powers%20on%20
 
 Base 3 lands on **56**. Not 1, so 341 is composite — proved, without naming 11 or 31.
 
-**A fail proves the number composite. A pass is only a maybe — and 561 passes for every base that shares no factor with it.**
+**For any base the number does not divide, a fail proves the number composite. A pass is only a maybe — and 561 passes for every base that shares no factor with it.**
 
 **What kind of fact this is:** a test resting on a theorem: a fail proves composite (Why it works). That 561 passes is checked by the code; that Carmichael numbers never run out is cited, not proved.
 
@@ -42,19 +42,19 @@ On 341, run twice:
 
 The ≡ sign: both sides leave the same remainder on the clock in brackets ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
-**Read it aloud:** raise your base to one less than the number under test, on that number's clock. Land on 1 and it survives; land elsewhere and it is composite.
+**Read it aloud:** pick a base the number does not divide and raise it to one less than the number under test, on that number's clock. Land on 1 and it survives; land elsewhere and it is composite.
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
 | the number under test | what needs a verdict | 341 |
-| the base | any number you pick to raise | 2, then 3 |
+| the base | a number not divisible by the number under test | 2, then 3 |
 | the exponent | one less than that number | 340 |
 | the answer | where the power lands, whole clocks off | 1, then 56 |
 | a witness | a base answering anything but 1 | 3 |
 
 ### When it holds
 
-- **A base other than 1.** Base 1 passes every number, prime or not.
+- **A base other than 1, not a multiple of the number.** Base 1 passes everything; 0 or the number fails even on a prime.
 - **The exponent one less than the number.** Raise 2 to the 341 and it lands on 2: the theorem's other form, where "not 1" proves nothing.
 - **Only bases sharing no factor count.** Base 3 shares a factor with 561 and never lands on 1; "every base" means the 320 coprime ones.
 - **One direction only.** Landing on 1 proves nothing: base 2 on 341 lands on 1, yet 341 = 11 × 31.
@@ -113,16 +113,14 @@ Base 2 says maybe; base 3 says composite, and that is final.
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Testing with base 1 | 1 | 1 to any power is 1: it passes everything |
-| Raising to 341, not 340 | 2 | the other form: a prime lands on the base too, so "not 1" proves nothing, and 341 still passes |
+| Raising to 341, not 340 | 2 | the other form: a prime lands on the base, so "not 1" proves nothing |
 | Reading a pass as a verdict | calls 341 prime | base 3 answers 56 |
-
-The code prints all three.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. Road one squares and multiplies. Road two multiplies it out 340 times over, and must agree. Road three does base 3 by hand: 11 clock, 31 clock, glued back. Then the bases are counted.
+Nothing is imported. Road one squares and multiplies; road two multiplies 340 times; road three splits base 3 across the 11 and 31 clocks. Then the bases are counted.
 
 ### Python
 
@@ -235,7 +233,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves that a fail proves composite for every number and base, and checks 341, 561, 1105 and 1729 exactly.
+Lean proves that a fail proves composite for every number and every base sharing no factor with it, and checks 341, 561, 1105 and 1729 exactly.
 
 - A fail proves composite. For any number and any base sharing no factor with it, landing anywhere but 1 means not prime.
 - A pass proves nothing, even with a base other than 1: base 2 on 341 lands on 1, yet 341 = 11 × 31.
@@ -340,7 +338,7 @@ example : ((Finset.range 1729).filter
 > **Reading a pass as a verdict.** The test never says prime. It says "not caught this time". The true sentence — prime, so the answer is 1 — does not run backwards.
 >
 > - **One base, then stopping.** 100 of 341's 300 coprime bases let it through, base 2 among them.
-> - **More bases must eventually work.** On 561 they never do: all 320 answer 1.
+> - **More bases must eventually work.** On 561 coprime bases never do: all 320 answer 1.
 > - **Testing with base 1.** It answers 1 for every number.
 
 ---
@@ -352,13 +350,13 @@ example : ((Finset.range 1729).filter
 - **1729.** The "taxicab number", the smallest sum of two cubes in two ways, is Carmichael too, answering 1 to all 1296 coprime bases.
 
 > **Say it back**
-> Pick any base and raise it to one less than the number under test, on that number's clock. A prime forces a landing on 1, so landing elsewhere proves it composite without finding a factor: base 3 lands on 56 and settles 341. Landing on 1 proves nothing: base 2 lands on 1, yet 341 = 11 × 31. Most fakes fall to a second base; the Carmichael numbers, 561 the smallest, answer 1 to every coprime base.
+> Pick a base the number does not divide and raise it to one less than the number on its clock. A prime forces 1, so anything else proves composite without a factor: base 3 gives 56 on 341. Landing on 1 proves nothing: base 2 gives 1 on 341 = 11 × 31. Carmichael numbers, 561 the smallest, answer 1 to every coprime base.
 
 ---
 
 ## What this builds on
 
-- [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the fact the test rides on, a prime sending every base home to 1.
+- [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the fact the test rides on, a prime sending every base it does not divide home to 1.
 - [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): squaring and multiplying, which makes raising to the 340 cheap.
 - [If-then](../../01-Foundations/05-Logic/02-if-then.md): which way a true sentence turns, and which way traps you.
 
