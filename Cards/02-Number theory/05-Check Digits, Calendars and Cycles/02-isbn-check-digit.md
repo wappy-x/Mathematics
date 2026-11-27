@@ -44,7 +44,7 @@ If the first nine leave 0, the check digit is 0. If they leave 1, it is 10, writ
 
 ### When it holds
 
-- **A prime modulus.** On a clock of 10, a weight gap of 2 and a digit gap of 5 move the total by 10, which leaves 0, and the swap passes ([Barcode check digits](01-barcode-check-digit.md)).
+- **A prime modulus bigger than every gap.** On a clock of 10, a weight gap of 2 and a digit gap of 5 move the total by 10, which leaves 0, and the swap passes ([Barcode check digits](01-barcode-check-digit.md)).
 - **Weights that all differ.** Weights 10 down to 1 are 1 to 9 apart. Give two places the same weight and a swap between them leaves the total where it was.
 - **One mistake at a time.** Two wrong digits can cancel each other, and the total lands on a multiple of 11 again.
 
@@ -382,7 +382,7 @@ example : isbnTotal ![0, 3, 0, 6, 4, 0, 6, 1, 5, 3] = 133 ∧ 133 % 11 = 1 := by
 ## The usual mistake
 
 > [!warning]
-> **Treating the 11 as arbitrary, a number the committee liked.** It is the mechanism: a swap shifts the total by one small number times another, and only a prime beats every such product.
+> **Treating the 11 as arbitrary, a number the committee liked.** It is the mechanism: a swap shifts the total by one small number times another, and a prime bigger than both beats every such product. 11 is the smallest number that does.
 >
 > - Reading the X as a letter, or as a zero. A clock of 11 has eleven leftovers, 0 to 10, but only ten single digits, 0 to 9. The leftover 10 needs its own mark: X.
 > - Expecting a clock of 10 to catch swaps too. It cannot: 10 splits into 2 × 5 ([Barcode check digits](01-barcode-check-digit.md)).
