@@ -1,4 +1,4 @@
-# Splitting into groups: the multinomial coefficient for named piles, and divide by k! when the piles are not named
+# Splitting into groups: the multinomial coefficient for named piles, and divide by k! when k equal-sized non-empty piles are not named
 
 [Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../README.md) → [Repeats, Groups and Double Counting](../README.md#s02) → Splitting into groups
 

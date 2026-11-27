@@ -52,7 +52,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 1. [Arranging with repeats: divide out the orderings of the identical copies](02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)
 2. [Stars and bars: identical items into labelled boxes, counted by placing dividers](02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)
-3. [Splitting into groups: the multinomial coefficient for named piles, and divide by k! when the piles are not named](02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)
+3. [Splitting into groups: the multinomial coefficient for named piles, and divide by k! when k equal-sized non-empty piles are not named](02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)
 4. [Round tables and bracelets: fix one seat to kill the rotations, halve again if flipping counts the same](02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)
 5. [Bijections and double counting: match two collections one-to-one, or count one collection two ways, and the numbers must agree](02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)
 6. [Polya counting: record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type](02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md)
