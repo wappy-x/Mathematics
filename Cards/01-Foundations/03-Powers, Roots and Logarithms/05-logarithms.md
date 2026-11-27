@@ -47,7 +47,7 @@ The 10 straight after "log" is the base, 10,000,000 is what you are reaching, 7 
 
 | Piece | Plain meaning | In our earthquake | Push it up and the answer… |
 | --- | --- | --- | --- |
-| the base | the number multiplied over and over | 10, one step of magnitude | a bigger base gets there in fewer multiplies, so the log is smaller |
+| the base | the number multiplied over and over | 10, one step of magnitude | for a number above 1, a bigger base gets there in fewer multiplies, so the log is smaller |
 | the number inside | the number you are trying to reach | 10,000,000, the needle swing | in base 10, ten times bigger inside is one more on the log |
 | the log | how many of the base it took | 7, the magnitude | this is the answer itself |
 
@@ -79,7 +79,7 @@ Multiply seven tens together and you land on 10,000,000 again. Powering and logg
 
 ### Step 3: the base does not have to be ten
 
-Nothing above cared that the base was ten. Halve 32 until you reach 1: five halvings, so the log base 2 of 32 is 5. And 1 needs no multiplying at all, so the log of 1 is 0 whatever the base.
+Nothing above cared that the base was ten. Halve 32 until you reach 1: five halvings, so the log base 2 of 32 is 5. And 1 needs no multiplying at all, so the log of 1 is 0 for any base bigger than 1.
 
 Multiply the base by itself however you like and the answer stays positive — never 0, never negative. So 0 and negative numbers have no log.
 
@@ -404,8 +404,8 @@ example : ∀ k : ℕ, 10 ^ k ≠ 5000000 := by
 
 ## Where this goes next
 
-- [Log laws and log scales](06-log-laws-and-log-scales.md): what happens when you multiply two numbers and log the result, and how an axis marked 1, 10, 100 reads.
-- [Indices](../../02-Number%20theory/04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md): logarithms on a prime clock turn powers into multiplication and solve x^k ≡ a.
+- [Log laws and log scales](06-log-laws-and-log-scales.md): what happens when you multiply two positive numbers and log the result, and how an axis marked 1, 10, 100 reads.
+- [Indices](../../02-Number%20theory/04-Powers%20on%20the%20Clock/10-discrete-logarithms-and-indices.md): logarithms on a prime-sized clock, turning powers into multiplication when numbers wrap around.
 
 Left open: how do you read a count that lands between two whole numbers?
 

@@ -14,9 +14,9 @@ A million pads covers a pond. The doubling pond is covered on day 20. The garden
 
 Growth that **adds** a fixed amount every step is **linear** — it draws a straight line. Growth that **multiplies** by a fixed factor every step is **exponential**.
 
-**Adding always loses to multiplying, and not by a little.**
+**Adding eventually loses to multiplying from a positive start by any factor bigger than 1, and not by a little.**
 
-**What kind of fact this is:** "linear" and "exponential" are definitions. That multiplying by a factor bigger than 1 always overtakes adding is a theorem, shown in words in Why it works.
+**What kind of fact this is:** "linear" and "exponential" are definitions. That multiplying from a positive start by a factor bigger than 1 always overtakes adding is a theorem, shown in words in Why it works.
 
 ### The picture: the first ten days
 
@@ -80,7 +80,7 @@ The doubling pond obeys the same rule on day 2 as on day 20, but doubling a smal
 
 ### Which one wins, always
 
-Any straight line loses to any curve that multiplies by a factor bigger than 1, if you wait. Hand the gardener a thousand pads a day and the doubling pond still passes him, a few days later.
+Any straight line loses to any curve that starts positive and multiplies by a factor bigger than 1, if you wait. Hand the gardener a thousand pads a day and the doubling pond still passes him, a few days later.
 
 The reason: the gardener's daily gain stays fixed, but the doubling pond's overnight gain grows with the pond. Once one night's gain beats the gardener's lump, the gap widens every day after.
 

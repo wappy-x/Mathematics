@@ -14,7 +14,7 @@ Writing 3 × 3 × 3 × 3 × 3 gets old fast, so it has a shorthand: **3^5**, sai
 
 The 3 is the **base**, the number doing the multiplying. The 5 is the **exponent**, how many copies of the base are multiplied. The answer, 243, is the **power**.
 
-**An exponent counts copies of the base. Once counts can be added and taken away, an exponent of zero and a negative exponent each have only one possible meaning.**
+**An exponent counts copies of the base. For any nonzero base, once counts can be added and taken away, an exponent of zero and a negative exponent each have only one possible meaning.**
 
 **What kind of fact this is:** a definition, then three rules that follow from counting, shown in Why it works. The meanings of 3^0 and 3^-3 are the only ones that keep those rules true.
 
@@ -371,7 +371,7 @@ example : (3 : ℕ) ^ 6 = 729 := by norm_num
 - **Huge and tiny numbers.** Star distances and virus sizes are a number times a power of ten: [Scientific notation](04-scientific-notation.md).
 
 > **Say it back**
-> An exponent counts copies. 3^5 means five 3s multiplied together, which is 243; the 3 is the base, the 5 is the exponent. Multiplying powers of the same base adds those counts, dividing subtracts them. Stacking, (3^2)^3, multiplies them. That settles the odd cases: 243 ÷ 243 is 1 and is also 3^0; 9 ÷ 243 is 1/27 and is also 3^-3.
+> An exponent counts copies. 3^5 means five 3s multiplied together, which is 243; the 3 is the base, the 5 is the exponent. Multiplying powers of the same base adds those counts; for a nonzero base, dividing subtracts them. Stacking, (3^2)^3, multiplies them. That settles the odd cases: 243 ÷ 243 is 1 and is also 3^0; 9 ÷ 243 is 1/27 and is also 3^-3.
 
 ---
 

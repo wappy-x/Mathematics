@@ -8,9 +8,9 @@
 
 The Sun is about 150,000,000 km away. A red blood cell is about 0.000007 m across. Put both on one page and neither reads: one is a wall of zeros, the other is zeros before a single 7.
 
-Scientific notation — also called **standard form** — splits a number in two. First comes a **front number** between 1 and 10, properly the **coefficient** (or significand). Then comes a **power of ten**, counting the tens to multiply or divide by. The Sun becomes 1.5 x 10^8 km. The cell becomes 7 x 10^-6 m. No zeros left to count, nothing rounded away.
+Scientific notation — also called **standard form** — splits any positive number in two. First comes a **front number** from 1 up to, not including, 10, properly the **coefficient** (or significand). Then comes a **power of ten**, counting the tens to multiply or divide by. The Sun becomes 1.5 x 10^8 km. The cell becomes 7 x 10^-6 m. No zeros left to count, nothing rounded away.
 
-**Write the front number, then the count of tens it rides on, and the number is written.**
+**Write the front number, then the count of tens it rides on, and any positive number is written.**
 
 **What kind of fact this is:** a convention for writing numbers, not a theorem. Why it works shows nothing is lost.
 
@@ -51,6 +51,7 @@ The minus in 10^-6 does not make the number negative. It says *divide* by ten si
 
 ### When it holds
 
+- **The number is positive.** Negatives take a minus sign out front; 0 has no such form.
 - **The front number is from 1 up to, not including, 10.** Otherwise 0.2142857 x 10^17 is the right size but hard to read.
 - **The power counts places the dot moves, not zeros.** Count zeros in 0.000007 and the cell comes out at 0.000070 m.
 - **Both numbers are in one unit.** Leave the Sun in km and its power is 8, not 11.
@@ -79,7 +80,7 @@ How many blood cells wide is the distance to the Sun? Divide 1.5 x 10^11 m by 7 
 
 1.5 ÷ 7 ≈ 0.2142857, and 11 − (−6) = 17, because taking away a debt of six tens hands you six more tens.
 
-That is 0.2142857 x 10^17, not yet standard form: the front number must sit between 1 and 10. Slide the dot one place right, drop the power by one. **2.142857 x 10^16.**
+That is 0.2142857 x 10^17, not yet standard form: the front number must sit from 1 up to, not including, 10. Slide the dot one place right, drop the power by one. **2.142857 x 10^16.**
 
 The power alone is the number's **order of magnitude**: the ten-fold bracket it sits in. For 1.5 x 10^8 that is from 10^8 up to 10^9. Counting tens like this, for any base, is [Logarithms](05-logarithms.md).
 
@@ -226,7 +227,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the rules for all numbers, not only the Sun and the cell, and checks the worked numbers exactly.
+Lean proves the rules for every positive number, not only for the Sun and the cell, and checks the worked numbers exactly.
 
 - Every positive number splits into a front number from 1 up to, not including, 10, times a power of ten.
 - That split is the only one, so nothing is lost.
@@ -368,7 +369,7 @@ example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (
 - **Lab and engineering measurements.** A gap of 1.5 x 10^-9 m is a length no ruler shows: the power carries the smallness, the front number the precision.
 
 > **Say it back**
-> Very big and very small numbers are hard to read because they are mostly zeros. Split each one: a front number between 1 and 10, times a power of ten. The power counts the places the dot moved, right if positive, left if negative. The Sun is 1.5 x 10^11 m away, a red blood cell 7 x 10^-6 m across. Divide the front numbers and subtract the powers: the two powers are 17 apart, and with the front number back between 1 and 10 that is 2.142857 x 10^16 cell widths.
+> Very big and very small numbers are hard to read because they are mostly zeros. Split any positive number into a front number (1 up to, not including, 10) times a power of ten. The power counts the places the dot moved, right if positive, left if negative. The Sun is 1.5 x 10^11 m away, a red blood cell 7 x 10^-6 m across. Divide the front numbers and subtract the powers: 2.142857 x 10^16 cell widths.
 
 ---
 
@@ -379,10 +380,10 @@ example : (3 / 2 / 7 : ℝ) * (10 : ℝ) ^ (5 : ℤ) = (15 / 7) * (10 : ℝ) ^ (
 
 ## Where this goes next
 
-- [Logarithms](05-logarithms.md): "what power got me here?", asked for any base, starting with whole powers.
+- [Logarithms](05-logarithms.md): "what power got me here?", asked for any base bigger than 1, starting with whole powers.
 - [Log laws and log scales](06-log-laws-and-log-scales.md): an axis marked 1, 10, 100 instead of 1, 2, 3 — this card's picture as a ruler.
 
-This card leaves one question open: here the power of ten was found by sliding a dot, so how do you find the count for any base, such as how many 2s multiply to 32? [Logarithms](05-logarithms.md) answers it.
+This card leaves one question open: here sliding a dot found the power of ten. How do you find the count for any base bigger than 1, such as how many 2s multiply to 32? [Logarithms](05-logarithms.md) answers it.
 
 ---
 

@@ -12,7 +12,7 @@ On an ordinary axis — every centimetre worth the same number of people — the
 
 So mark it differently: 1 at the bottom, then 10, 100, 1,000, each mark ten times the one below. That is a **log scale** — an axis where a fixed distance means a fixed multiply, not a fixed amount. Steps up from the 1: village two, town four, city seven — the logarithms from [Logarithms](05-logarithms.md), turned into distances.
 
-**On a log scale, distance is a count of tens — so multiplying two numbers only adds their distances.**
+**On a log scale, position from 1 is a count of tens — so multiplying two positive numbers only adds their positions.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works for whole counts of tens.
 
@@ -51,7 +51,7 @@ Said aloud: divide by how many tens one step is worth.
 
 | Piece | Plain meaning | In our chart | Push it up and the answer… |
 | --- | --- | --- | --- |
-| the base | the number multiplied over and over | 10, one mark to the next | fewer steps, smaller counts |
+| the base | the number multiplied over and over | 10, one mark to the next | for numbers above 1, fewer steps and smaller counts |
 | the count, or log | how many of the base reach a number | 2, 4 and 7 | one more is ten times the people |
 | a mark on the axis | one step, a multiply by ten | 1, 10, 100, 1,000 | — spacing only, the multiply stays ten |
 
@@ -59,7 +59,7 @@ Said aloud: divide by how many tens one step is worth.
 
 - **Both numbers are positive.** No run of tens multiplies out to zero or to a negative number, so neither has a count.
 - **The numbers are multiplied, not added.** A sum such as 100 + 10,000 = 10,100 does not split.
-- **Every count uses the same base.** Tens and steps of 100 do not add. Convert first: 6 tens are 3 steps of 100.
+- **Every count uses the same base, bigger than 1.** Tens and steps of 100 do not add. Convert first: 6 tens are 3 steps of 100.
 - **Each mark is one fixed multiply above the last.** Mark it by fixed amounts and halfway from 100 to 10,000 moves to 5,050.
 
 ---
@@ -68,7 +68,7 @@ Said aloud: divide by how many tens one step is worth.
 
 ### Step 0: a count of tens is a length
 
-The village is 10 × 10, the town 10 × 10 × 10 × 10. Every number on this axis is a run of tens, and its position is the length of that run.
+The village is 10 × 10, the town 10 × 10 × 10 × 10. Every mark on this axis is a run of tens, and its position is the length of that run.
 
 ### Step 1: multiplying joins two runs end to end
 
@@ -253,7 +253,7 @@ Lean proves the log laws for any two positive numbers, not only whole runs of te
 
 - The count of a product is the sum of the counts: log10(x × y) = log10(x) + log10(y).
 - Dividing subtracts: log10(x ÷ y) = log10(x) − log10(y).
-- Powers multiply: log10(x^n) = n × log10(x), for any x and any whole n.
+- Powers multiply: log10(x^n) = n × log10(x), for any positive x and any whole n.
 - Change of base: log100(x) = log10(x) ÷ log10(100), for any positive x.
 - The chart's numbers: counts 2, 4 and 7, the region's 6, the quotient's 5, the country's 8 and 12, and the 1,000 mark halfway.
 
@@ -353,7 +353,7 @@ example : 100 + 10000 = 10100 ∧ (100 + 10000) / 2 = 5050 ∧ 2 * 4 = 8 := by n
 - **Scales you already read this way.** Earthquake magnitude, decibels and pH, met in [Logarithms](05-logarithms.md) — each a count of multiplies in plain clothes.
 
 > **Say it back**
-> A village of 100, a town of 10,000 and a city of 10,000,000 have counts of 2, 4 and 7 tens. Multiply and the counts add: 100 towns of 10,000 people: 2 + 4 = 6, and 100 × 10,000 really is 1,000,000. Divide and they subtract: 7 − 2 = 5. Square and the count doubles: 4 + 4 = 8. To count in bigger steps, divide by how many tens one step is worth: 1,000,000 is three steps of 100, 100 × 100 × 100. Equal distances on the axis are equal multiplies, so halfway from 100 to 10,000 is 1,000, not 5,050.
+> Village (100), town (10,000) and city (10,000,000) have counts of 2, 4 and 7 tens. Multiply positive numbers and their counts add: 2 + 4 = 6, matching 1,000,000. Divide and they subtract: 7 − 2 = 5. Square and the count doubles: 4 + 4 = 8. To count in steps of 100, divide by 2: 1,000,000 is 3 steps. Equal distances on the axis are equal multiplies, so halfway from 100 to 10,000 is 1,000, not 5,050.
 
 ---
 
@@ -365,7 +365,7 @@ example : 100 + 10000 = 10100 ∧ (100 + 10000) / 2 = 5050 ∧ 2 * 4 = 8 := by n
 
 - [Growth factors](../04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): the next shelf's first card — a percent rise as one multiplier.
 - [Natural log and doubling time](../04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the base growth picks for itself, and the log law turned into a time.
-- [Geometric programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md): far ahead: logs turn products into sums for solvers.
+- [Geometric programs](../../15-Optimization/06-Conic%2C%20Quadratic%20and%20Stochastic%20Programs/11-geometric-programming-and-the-exponential-cone.md): far ahead: logs turn products of positive numbers into sums that optimisation tools can solve.
 
 This card leaves one question open: when something grows a little each year, not tenfold, how many years make one step? The next shelf answers it, ending at Natural log and doubling time.
 

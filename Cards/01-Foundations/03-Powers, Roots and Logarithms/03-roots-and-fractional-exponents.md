@@ -14,7 +14,7 @@ The bed's side is the **square root** of 50: the number that, times itself, give
 
 As powers, in the notation from [Exponents](01-exponents-and-powers.md), they are 50^(1/2) and 8^(1/3); the old sign for the first is √50. The bottom of the fraction says how many copies: 2 for the bed, 3 for the tank.
 
-**A root is a power run backwards, and written as the exponent 1/2 or 1/3 it obeys every law powers already obey.**
+**A root is a power run backwards, and for a positive base, written as the exponent 1/2 or 1/3 it obeys every law powers already obey.**
 
 **What kind of fact this is:** a definition, and Why it works shows the power laws force it.
 
@@ -238,7 +238,7 @@ The two outputs match line for line.
 Lean proves the card's three root facts for every base, not just 50 and 8.
 
 - For a base of zero or more, the exponent 1/2 gives a number of zero or more. Times itself, it is the base, and no other such number is.
-- The same holds for 1/3 with three copies, and for any number of copies.
+- The same holds for 1/3 with three copies, and for any count of 1 or more copies.
 - For a base of zero or more, the numbers that square to it are exactly its square root and the minus twin. A negative base has none.
 - Every ordinary number, plus or minus, has exactly one cube root.
 - The tank's side, 8^(1/3), is exactly 2, and one face, 8^(2/3), is exactly 4.
