@@ -471,7 +471,7 @@ example : (!![2, 1; 1, 1] : Matrix (Fin 2) (Fin 2) ℤ) *ᵥ ![4, 3] = ![11, 7] 
 - [From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): this product as the rule pushing a state forward in time.
 - [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): a table times a message, the answer betraying which bit flipped.
 - [The perceptron and its stack](../../14-Applied%20and%20computational/06-Machine%20Learning%20Mathematics/03-perceptron-and-neural-networks.md): one layer is one such product, with a bend after it.
-- [Three model operators](../../18-Functional%20analysis/03-Bounded%20Operators/02-integral-operators-and-the-shift.md): the list becomes a function, the table an integral, the rule unchanged.
+- [Three model operators](../../18-Functional%20analysis/03-Bounded%20Operators/02-integral-operators-and-the-shift.md): the list becomes a function and the table a continuous sum (an integral), with the rule unchanged.
 
 This card mixes the columns for one list of weights; many lists at once, each wanting the same table, is [Matrix multiplication](03-matrix-multiplication.md).
 

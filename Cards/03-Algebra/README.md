@@ -75,7 +75,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 1. [Matrices: a table of numbers with a size, plus the named shapes you will keep meeting](04-Matrices/01-matrices-and-the-matrix-zoo.md)
 2. [Matrix times vector: mix the columns, or run each row along the list, and get the same answer](04-Matrices/02-matrix-times-vector.md)
 3. [Matrix multiplication: row by column, because it is 'do this, then that', and why the order matters](04-Matrices/03-matrix-multiplication.md)
-4. [Linear maps: a rule that keeps lines straight and the origin fixed is secretly a matrix, whose columns say where the axes go](04-Matrices/04-linear-maps-as-matrices.md)
+4. [Linear maps: a rule that keeps lines straight and evenly spaced, with the origin fixed, is secretly a matrix, whose columns say where the axes go](04-Matrices/04-linear-maps-as-matrices.md)
 
 [↑ Back to the shelves](#top)
 

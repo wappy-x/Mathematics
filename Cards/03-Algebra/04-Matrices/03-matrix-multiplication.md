@@ -123,7 +123,7 @@ Column 2 of $`A`$ against row 2 of $`B`$ gives the croissants, `[[3, 3], [2, 2]]
 
 </details>
 
-A second route reaches the recipe from the other end: compose two rules that keep lines straight and read off the table, the job of [Linear maps](04-linear-maps-as-matrices.md).
+A second route reaches the recipe from the other end: compose two rules that keep lines straight and evenly spaced with the origin fixed, and read off the table, the job of [Linear maps](04-linear-maps-as-matrices.md).
 
 ---
 
@@ -524,7 +524,7 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 
 ## Where this goes next
 
-- [Linear maps](04-linear-maps-as-matrices.md): why keeping lines straight forces this recipe.
+- [Linear maps](04-linear-maps-as-matrices.md): why keeping lines straight and evenly spaced with the origin fixed forces this recipe.
 - [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): the matrix undoing another, defined through this product.
 - [Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): a best-fit line, from a matrix times a rearranged copy.
 - [Rings](../09-Rings%20and%20Fields/01-rings.md): multiplication that need not answer the same either way.
@@ -534,13 +534,13 @@ example : vecMulVec (fun i => (recipe * schedule) i 1) (fun j => month 1 j) = !!
 - [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): maps of the plane chained as 2 × 2 products.
 - [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): matrix powers added up to move a system in time.
 - [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): a table of chances multiplied per step.
-- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of rating moves multiplied out.
+- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of credit-rating chances multiplied out step by step.
 - [Riemann curvature tensor](../../23-Differential%20geometry%20and%20Lie%20groups/05-Riemannian%20Geometry/06-riemann-curvature-tensor.md): products of tables of rates, measuring how space bends.
-- [Tensor products](../11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md): two spaces paired into a bigger one, where maps on both sides act through the Kronecker product and order matters again.
+- [Tensor products](../11-Duals%2C%20Quotients%20and%20Tensors/03-tensor-products.md): two spaces paired into a bigger one, where two matrices multiply block by block and order matters again.
 - [Two-ports](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/13-two-port-networks-and-s-parameters.md): four numbers describe a box with an input and an output, and two boxes in a chain multiply their matrices.
-- [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): one matrix product scores every word against every other word, and a second mixes their values by softmax weights.
+- [Attention](../../14-Applied%20and%20computational/09-Deep%20Networks/04-attention-and-transformers.md): one matrix product scores every word against every other, and a second mixes their values using weights that add to 1.
 
-This card got row-by-column from chaining two tables. Why every rule that keeps lines straight and the origin fixed is a table at all, and why chaining two such rules forces this product, is the next card: [Linear maps](04-linear-maps-as-matrices.md).
+This card got row-by-column from chaining two tables. Why every rule that keeps lines straight and evenly spaced, with the origin fixed, is a table at all, and why chaining two such rules forces this product, is the next card: [Linear maps](04-linear-maps-as-matrices.md).
 
 ---
 

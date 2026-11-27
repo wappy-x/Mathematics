@@ -1,4 +1,4 @@
-# Linear maps: a rule that keeps lines straight and the origin fixed is secretly a matrix, whose columns say where the axes go
+# Linear maps: a rule that keeps lines straight and evenly spaced, with the origin fixed, is secretly a matrix, whose columns say where the axes go
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Matrices](../README.md#s04) → Linear maps
 
@@ -10,7 +10,7 @@ A game sprite is drawn on the unit square: corners (0, 0), (1, 0), (1, 1), (0, 1
 
 The first leans it: the bottom edge stays put, the top edge slides one step right, and the square becomes a slanted parallelogram — a **shear**. The second spins the sprite a quarter turn anticlockwise about (0, 0).
 
-Both buttons are rules: feed in a point, get a point back. Neither bends a straight edge, and neither budges the corner at (0, 0), the origin. Those habits mark a **linear map**; two exact tests pin it down below.
+Both buttons are rules: feed in a point, get a point back. Neither bends a straight line or upsets even spacing along it, and neither budges the corner at (0, 0), the origin. Those habits mark a **linear map**; two exact tests pin it down below.
 
 Such a map needs no rule written out: four numbers hold it. Watch where it sends (1, 0), one step along the bottom, and (0, 1), one step up the side. Those two answers, down the columns of a table, reproduce the map everywhere.
 
@@ -546,7 +546,7 @@ example : squareFirst ((2 : ℝ) • ![1, 1]) ≠ (2 : ℝ) • squareFirst ![1,
 - [Bounded operators](../../18-Functional%20analysis/03-Bounded%20Operators/01-bounded-operators-and-the-operator-norm.md): linear maps whose input lists never end, sized by the most they stretch a vector.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point; blurring what a linear map ignores leaves a copy of what it reaches.
 - [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the linear maps that output one number form a space of their own, and a linear map pulls them back through its transpose.
-- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): each move of a group as a linear map, so combining moves multiplies matrices; Maschke's theorem splits every one into pieces that cannot split further.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): each move of a finite symmetry set as a linear map, multiplying matrices and splitting into smallest pieces.
 
 This card runs a matrix forward, from a point to where it lands. The next shelf starts by running it backwards: given a landing spot, which points get sent there, if any? That is [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md).
 

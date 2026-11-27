@@ -494,7 +494,7 @@ example : (1 : Matrix (Fin 2) (Fin 2) ℤ).trace = 2 := by decide
 - [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): a square table of which dots are joined.
 - [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the Advanced Encryption Standard, a widely used cipher, holds its state as a 4 by 4 table of bytes.
 - [Simplicial complexes and chains](../../17-Topology/05-Homology/01-simplicial-complexes-and-chains.md): tables recording which piece borders which, signs included.
-- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): square matrices that form groups in their own right.
+- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): smooth families of square matrices that combine and undo each other, such as rotations.
 - [BQP](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/06-quantum-computation-and-bqp.md): the problems a quantum computer can solve efficiently; each quantum gate is a square table acting on a list of numbers.
 
 A table on its own only stores. What turns it into a rule sending one list of numbers to another is [Matrix times vector](02-matrix-times-vector.md).
