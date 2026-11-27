@@ -1,4 +1,4 @@
-# Polynomials behave like integers: division with remainder, Euclid's algorithm and unique factorisation all work again
+# Polynomials behave like integers: over a field, division with remainder, Euclid's algorithm and unique factorisation all work again
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Polynomials behave like integers
 
@@ -593,7 +593,7 @@ example : [-2, -1, 1, 2].map (fun t : ℤ => t ^ 2 - 2) = [2, -1, -1, 2] := by d
 - [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): another ring, numbers built from root 2, where units never run out.
 - [Field extensions](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/01-field-extensions-and-degree.md): an irreducible divisor makes a bigger field.
 - [Minimal polynomials](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/02-minimal-polynomials-and-conjugates.md): each new number carries one irreducible polynomial.
-- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): the Euclidean domain, PID and UFD hierarchy named above, proved.
+- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): proves the chain from division-with-remainder rings to unique-factorisation rings named above.
 - [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
 
 The loop returns x - 1 and stops. Treat all polynomials with the same remainder as one object and the remainders become a number system: that is the next card.

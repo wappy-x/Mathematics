@@ -1,4 +1,4 @@
-# Finite fields: a clock with a prime number of hours is a field, and a four-hour field exists if you build it from a polynomial
+# Finite fields: a clock with a prime number of hours is a field, and a four-element field exists if you build it from a polynomial
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Finite fields
 
@@ -14,7 +14,7 @@ Four is not prime, and a clock divides only at a prime number of hours ([Fields]
 
 That makes a times a + 1 equal 1, so a and a + 1 are reciprocals and every nonzero element divides.
 
-**A finite field's size is always a prime raised to a positive whole power: at prime sizes it is the clock, and at every other size it is polynomials wrapped at one that does not factor.**
+**A finite field's size is always a prime raised to a positive whole power: at prime sizes it is the clock, and at every other prime-power size it is polynomials wrapped at one that does not factor.**
 
 **What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power and sameness after renaming are stated here and proved in [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md) (in Algebraic and analytic number theory). That one element's powers give every nonzero element is stated here and checked for GF(4).
 
@@ -493,7 +493,7 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 - **AES (the Advanced Encryption Standard), in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $`k`$ = 8 ([AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md)).
 
 > **Say it back**
-> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded.
+> A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other prime-power size is polynomials over a prime clock, the multiples of one that does not factor discarded.
 >
 > GF(2) and $`x^2 + x + 1`$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
 
@@ -509,16 +509,16 @@ example : IsPrimePow 4 ∧ ¬ IsPrimePow 6 ∧ ¬ IsPrimePow 10 := by decide
 ## Where this goes next
 
 - [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): the next shelf's first card, where over the complex numbers every polynomial factors completely.
-- [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): the codes behind it.
-- [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): the field inside a cipher.
-- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): curves over a finite field.
-- [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): squares on a prime clock.
+- [Hamming and Reed-Solomon](../../14-Applied%20and%20computational/03-Information%20Theory/08-error-correcting-codes-hamming-and-reed-solomon.md): error-correcting codes that use finite fields to repair damaged QR symbols and discs.
+- [AES](../../14-Applied%20and%20computational/04-Cryptography/02-symmetric-ciphers-and-aes.md): how modern web encryption scrambles bytes using arithmetic in the 256-element field.
+- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): points on a cubic curve over a finite field, added together to form a group.
+- [Quadratic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/07-quadratic-reciprocity-via-gauss-sums.md): which numbers are squares on a prime clock, and how two primes match.
 - [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md) (in Algebraic and analytic number theory): existence, uniqueness, symmetry, and an irreducible polynomial of every degree.
-- [The curve mod p](../../22-Algebraic%20geometry/04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md): counting points field by field.
+- [The curve mod p](../../22-Algebraic%20geometry/04-Elliptic%20Curves/05-reduction-mod-p-and-hasse.md): counting a curve's points over each prime clock and bounding how far the count wanders.
 - [Finite planes and orthogonal Latin squares](../../04-Combinatorics%20and%20graphs/16-Designs/03-projective-planes-and-orthogonal-latin-squares.md): build a plane of order q from a field with q elements, read off q - 1 Latin squares that pair perfectly, and why order 6 has none.
 - [Secret sharing](../../14-Applied%20and%20computational/04-Cryptography/12-shamir-secret-sharing.md): hide a number in a polynomial, and any k shares bring it back.
-- [The Jacobian](../../22-Algebraic%20geometry/03-Plane%20Curves/11-jacobians-and-abel-jacobi.md): degree-zero divisor classes on a curve form a group that is itself a g-dimensional variety.
-- [Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md): roots of unity at x and at 1/x, and why the total stays below 2 root p.
+- [The Jacobian](../../22-Algebraic%20geometry/03-Plane%20Curves/11-jacobians-and-abel-jacobi.md): turning combinations of points on a curve into a smooth geometric group.
+- [Kloosterman sums](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/11-kloosterman-sums.md): wave sums from a prime clock's numbers and reciprocals, and why they stay small.
 
 Degree two over GF(2) was easy by hand. Whether an irreducible polynomial of every degree exists is settled in wing 21's [Finite fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/09-finite-fields-and-frobenius.md): it does. The next shelf turns to the opposite world: over the complex numbers, does any polynomial above degree one stay unfactored? [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md) answers no.
 

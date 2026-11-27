@@ -12,7 +12,7 @@ A delivery note lists 47 crates of bolts at $23 a crate. The printed total is $1
 
 Notice what held. Every multiple of 9 became 0, almost every whole number gone, and multiplication still worked. Not every set can go that way: the multiples of 9 can, {0, 4, 6, 8} on the 12-hour clock cannot. A set that can is an **ideal**, and the arithmetic left behind is a **quotient ring**.
 
-**An ideal is a set a ring can afford to treat as zero: throw it away, and addition and multiplication still work on what is left.**
+**An ideal is a nonempty set a ring can afford to treat as zero: throw it away, and addition and multiplication still work on what is left.**
 
 **What kind of fact this is:** a definition, the two-part ideal test, with one theorem proved below: a ring map's kernel is always an ideal, and collapsing by it leaves the image.
 
@@ -509,13 +509,13 @@ example : ((Finset.univ : Finset (ZMod 9)).filter (fun a => a ≠ 0 ∧ ∃ b, a
 ## Where this goes next
 
 - [Finite fields](05-finite-fields.md): collapse by a polynomial that cannot be factored, and division appears.
-- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): rings of functions, where a maximal ideal gives a number.
+- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): rings of functions, where collapsing by a largest proper ideal leaves a number.
 - [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): the x^2 + 1 move on purpose, to make a root.
-- [Ideals factor uniquely even where numbers do not](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/04-ideals-and-unique-factorisation-in-dedekind-domains.md): factorisation into ideals where numbers fail.
+- [Ideals factor uniquely even where numbers do not](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/04-ideals-and-unique-factorisation-in-dedekind-domains.md): factoring ideals uniquely into prime ideals even when ordinary number factorisation fails.
 - [Ideals and varieties](../../22-Algebraic%20geometry/01-Polynomial%20Systems/01-ideals-and-varieties.md): an ideal as every equation a shape satisfies.
 - [Affine varieties](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/01-affine-varieties-and-coordinate-rings.md): that quotient ring as functions on a shape.
-- [The spectrum of a ring](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md): prime ideals as a space, a ring as geometry.
-- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): one-sided absorbing sets, and which groups are sofic; for both, a "no" was claimed in 2026 and is not yet refereed.
+- [The spectrum of a ring](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/02-spectrum-of-a-ring-and-schemes.md): prime ideals gathered into a geometric space, turning any commutative ring into geometry.
+- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): one-sided absorbing sets, and groups approximated by finite shuffles ("sofic"); both have unrefereed 2026 "no" claims.
 
 This collapse kept addition and multiplication and lost division. Which ideals leave a world where division works? The next card.
 

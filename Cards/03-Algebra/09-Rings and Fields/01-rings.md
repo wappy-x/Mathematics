@@ -127,7 +127,7 @@ Write $`d`$ for the greatest common divisor of a reading $`a`$ with the dial siz
 
 **Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient, the number in front of its highest power, is the product of the two leading ones.
 
-So they form an integral domain whose only units are 1 and −1. Once the coefficients come from a field, polynomials divide with a remainder, just as whole numbers do ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
+So they form an integral domain whose only units are 1 and −1. Once the coefficients come from a field (a commutative ring with 1 ≠ 0 where every nonzero member has an undo), polynomials divide with a remainder, just as whole numbers do ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
 
 **The 2 by 2 matrices of whole numbers** ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two familiar rules fail here. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`. And `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
 
@@ -508,7 +508,7 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 > **Say it back**
 > A ring is one collection with two operations: adding, which every member can undo, and multiplying, which not every member can, linked by the rule that a multiplier reaches every term in a bracket.
 >
-> On a 12-hour dial 3 × 4 = 0 with neither factor 0, and only 1, 5, 7 and 11 have a partner reaching 1. The whole numbers have no zero products, and only two units. Order may matter, and nonzero is not safe to divide by.
+> On a 12-hour dial 3 × 4 = 0 with neither factor 0, and only 1, 5, 7 and 11 have a partner reaching 1. The whole numbers have no zero divisors, and only two units. Order may matter, and nonzero is not safe to divide by.
 
 ---
 
@@ -523,15 +523,15 @@ example : !![(1 : ℤ), 0; 0, 0] * !![0, 0; 0, 1] = 0 := by decide
 
 ## Where this goes next
 
-- [Fields](02-fields.md): every nonzero member a unit.
-- [Ideals and quotient rings](04-ideals-and-quotient-rings.md): rings from declared zeros.
-- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
-- [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
-- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): members with size.
-- [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): Banach algebras with a mirror operation, like swapping $`i`$ for $`-i`$ in a complex number.
+- [Fields](02-fields.md): commutative rings where 1 ≠ 0 and every nonzero member has an undo.
+- [Ideals and quotient rings](04-ideals-and-quotient-rings.md): building new rings by declaring a subset of members equal to zero.
+- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): a ring built from root 2 whose infinitely many units approximate root 2.
+- [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): true/false logic, sets and switches obeying ring-like laws where every member squares to itself.
+- [Banach algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/01-banach-algebras-and-the-gelfand-transform.md): rings of vectors or functions with a length so limits make sense.
+- [C-star algebras](../../18-Functional%20analysis/06-Banach%20Algebras%20and%20Fixed%20Points/03-c-star-algebras-in-outline.md): rings with a length and a mirror operation, like swapping $`i`$ for $`-i`$.
 - [Algebraic integers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/01-algebraic-integers-and-number-fields.md): numbers beyond the whole numbers that still form a ring.
 - [Rings of integers](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/03-rings-of-integers-and-integral-bases.md): the algebraic integers inside one larger number system.
-- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): factoring into primes.
+- [Domains, principal ideals and unique factorisation](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/01-integral-domains-pids-and-unique-factorisation.md): which integral domains let every nonzero non-unit factor uniquely into prime-like pieces.
 
 Dividing stays a privilege of the few here, which is the next card's question: what changes when every nonzero member has an undo.
 

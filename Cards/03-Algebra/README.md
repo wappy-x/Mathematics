@@ -160,10 +160,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Rings with two operations and the clock as the model, zero divisors and units, fields where division always works, polynomials as a ring that behaves like the integers, ideals and quotient rings with Z mod n as the model, finite fields including the four-element field. Rests on shelf 8 and wing 02 clock arithmetic.*
 
 1. [Rings: add, subtract and multiply, but not always divide, and the clock where 3 times 4 is zero](09-Rings%20and%20Fields/01-rings.md)
-2. [Fields: a ring where every nonzero thing has a reciprocal, so every linear equation has exactly one answer](09-Rings%20and%20Fields/02-fields.md)
-3. [Polynomials behave like integers: division with remainder, Euclid's algorithm and unique factorisation all work again](09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md)
+2. [Fields: a commutative ring where 1 is not 0 and every nonzero thing has a reciprocal, so ax = b with a nonzero has one answer](09-Rings%20and%20Fields/02-fields.md)
+3. [Polynomials behave like integers: over a field, division with remainder, Euclid's algorithm and unique factorisation all work again](09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md)
 4. [Ideals and quotient rings: the multiples of n are the model, collapsing by them gives Z mod n, and every ring map has one as its kernel](09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md)
-5. [Finite fields: a clock with a prime number of hours is a field, and a four-hour field exists if you build it from a polynomial](09-Rings%20and%20Fields/05-finite-fields.md)
+5. [Finite fields: a clock with a prime number of hours is a field, and a four-element field exists if you build it from a polynomial](09-Rings%20and%20Fields/05-finite-fields.md)
 
 [↑ Back to the shelves](#top)
 

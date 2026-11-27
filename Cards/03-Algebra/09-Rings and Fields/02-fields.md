@@ -1,4 +1,4 @@
-# Fields: a ring where every nonzero thing has a reciprocal, so every linear equation has exactly one answer
+# Fields: a commutative ring where 1 is not 0 and every nonzero thing has a reciprocal, so ax = b with a nonzero has one answer
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Rings and Fields](../README.md#s09) → Fields
 
