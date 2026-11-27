@@ -162,7 +162,7 @@ Set them beside `[[1, 0, 0], [0, 1, 0], [0, 0, 1]]`, run row moves until the lef
 | --- | --- | --- |
 | Flip the signs, no swap | prices (15, -4) | a pastry at minus $4 gives it away |
 | Swap the diagonal, no minus signs | prices (18, 25) | the rows reinforce, not cancel |
-| Skip the divide by the determinant, three items: the cofactor table of [Cramer's rule](06-cramers-rule-and-the-adjugate.md) alone, determinant −1 | prices (-4, -3, -6) | dividing by −1 flips every sign; the cafe's 2 by 2 has determinant 1, so there this slip hides |
+| Skip the divide by the determinant, three items: the flipped cofactor table of [Cramer's rule](06-cramers-rule-and-the-adjugate.md) alone, determinant −1 | prices (-4, -3, -6) | dividing by −1 flips every sign; the cafe's 2 by 2 has determinant 1, so there this slip hides |
 | Try it on `[[2, 4], [1, 2]]` | no answer at all | swap-and-flip times it is `[[0, 0], [0, 0]]` |
 
 The code prints all four.
@@ -560,14 +560,14 @@ example : (2 : ZMod 4) ≠ 0 ∧ ∀ x : ZMod 4, 2 * x ≠ 1 := by decide
 
 - [Determinants](04-determinants.md): ps − qr in full, and why zero means squashed flat.
 - [Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the closest answer when the matrix is not square.
-- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map in different directions.
+- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): rewriting the same map in a new basis, using the inverse to switch back.
 - [Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md): undoing a curved map near a point, via the inverse of its slopes.
-- [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): an inverse inside a driven system's answer.
+- [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): using a matrix inverse to solve a system pushed by an outside force.
 - [Absorption](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/06-absorption-and-first-step-analysis.md): average steps to the end of a random walk, from one inverse.
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three option prices fixed by inverting a 3 by 3.
-- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): portfolio weights from the inverse of a covariance table.
+- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): finding lowest-risk portfolio weights by inverting the table of how assets move together.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far an almost-flat matrix magnifies an error.
-- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): a determinant formula for each unknown and for the whole inverse matrix at any size.
 
 The determinant has been only a number that must not be zero; what it measures, and why zero flattens, is [Determinants](04-determinants.md).
 

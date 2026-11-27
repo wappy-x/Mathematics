@@ -494,21 +494,21 @@ example : (!![1, 0, 0; 0, 1, 0; 0, 0, 1] : Matrix (Fin 3) (Fin 3) ℤ) *ᵥ ![3,
 ## Where this goes next
 
 - [Cramer's rule](06-cramers-rule-and-the-adjugate.md): on a square matrix with nullity 0, each unknown is a ratio of two determinants.
-- [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): rank read off a list of sizes.
-- [Buckingham Pi](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md): the same count on a table of units.
-- [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank deciding whether a machine can be steered.
-- [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): these two counts along one map after another.
-- [Mayer-Vietoris and exact sequences](../../17-Topology/05-Homology/06-mayer-vietoris-and-long-exact-sequences.md): the same bookkeeping along a chain of maps.
-- [Compact operators](../../18-Functional%20analysis/03-Bounded%20Operators/05-compact-operators.md): rank where the inputs are functions.
-- [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): which equations have answers.
-- [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): rank of a slope matrix as a dimension.
+- [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): splits any matrix into stretches, where the number of nonzero stretch sizes equals the rank.
+- [Buckingham Pi](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md): counts how many unit-free ratios a physics formula can use, as the nullity of a units table.
+- [Can you steer every state, and can you see every state](../../13-Engineering%20mathematics/04-State%20Space%20and%20Optimal%20Control/03-controllability-and-observability.md): rank tests whether a control system can reach every state and infer every state from sensors.
+- [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): compares what one boundary map kills with what the next one reaches to count holes in shapes.
+- [Mayer-Vietoris and exact sequences](../../17-Topology/05-Homology/06-mayer-vietoris-and-long-exact-sequences.md): chains rank-and-nullity bookkeeping across linked maps to count holes in a glued shape from its pieces.
+- [Compact operators](../../18-Functional%20analysis/03-Bounded%20Operators/05-compact-operators.md): linear maps on functions that behave almost like finite-rank matrices.
+- [Fredholm alternative](../../18-Functional%20analysis/03-Bounded%20Operators/09-fredholm-alternative-and-integral-equations.md): extends the rank-nullity trade-off to infinite-dimensional function equations, showing when solutions exist.
+- [Dimension and tangent space](../../22-Algebraic%20geometry/02-Affine%20and%20Projective%20Varieties/07-dimension-and-tangent-spaces.md): measures the dimension of a curved shape from the rank and nullity of its slope matrix.
 - [Diffeomorphism, immersion, submersion](../../23-Differential%20geometry%20and%20Lie%20groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings.md): full rank as the test for a map that folds nothing.
 - [Constant rank theorem](../../06-Calculus%20and%20analysis/07-Several%20Variables/10-constant-rank-theorem.md): a map whose derivative keeps the same rank is a projection in disguise.
 - [The four fundamental subspaces](../06-Dot%20Products%20and%20Best%20Fits/05-four-fundamental-subspaces.md): the rank sets the size of all four pieces: row space, null space, column space and left null space.
-- [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): null spaces of powers of A minus lambda fill in missing eigenvectors.
-- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): the sizes of its blocks are read from ranks.
+- [Generalised eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): when a square matrix has too few stretch directions (eigenvectors), bigger null spaces fill the gap.
+- [Jordan form](../07-Eigenvalues%20and%20Symmetric%20Matrices/10-jordan-canonical-form.md): simplifies any square matrix into near-diagonal blocks whose sizes are counted from ranks.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): blur the null space to a point and what is left is the image, rank plus nullity again.
-- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): the transpose as the dual map, and why row rank equals column rank.
+- [Dual spaces](../11-Duals%2C%20Quotients%20and%20Tensors/02-dual-spaces.md): shows how transposing acts on linear readings and why row rank equals column rank.
 - [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a full-rank matrix proves blocks never number fewer than points.
 
 Nullity 0 on a square matrix says there is exactly one answer, but not what it is. A formula that writes each unknown straight from determinants is [Cramer's rule](06-cramers-rule-and-the-adjugate.md), the last card on this shelf.

@@ -22,7 +22,7 @@ No line can be solved alone; each holds more than one unknown. But half of Monda
 
 Repeat, and the unknowns fall away until a line holds one price: the sandwich, $6. That is Gaussian elimination. Direct solvers, the programs that solve a system in a fixed number of steps, run it.
 
-**Take whole equations away from one another until the bottom line holds one price, then climb back up filling in each price as it appears.**
+**Swap, scale, and subtract whole equations until they form a staircase of zeros, then read the answers — or whether none or infinitely many fit — back up from the bottom.**
 
 **What kind of fact this is:** a method, resting on a theorem proved below in Why it works: the row moves change no solution.
 
@@ -745,18 +745,18 @@ example : transvection (2 : Fin 3) 1 (-1 : ℚ) *ᵥ (transvection 2 0 (-(3/2)) 
 
 ## Where this goes next
 
-- [The inverse matrix](03-inverse-matrix.md): these same moves build the counts' undo.
-- [Rank and nullity](05-rank-nullity.md): the pivot count as rank, the rest free directions.
-- [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): a curve's values as one system.
-- [Bootstrapping](../../12-Financial%20mathematics/02-Curves/04-bootstrapping-the-discount-curve.md): bond prices, one maturity at a time.
-- [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): option prices on a grid.
-- [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three quotes, three weights.
-- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): currents in a circuit.
-- [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): the multipliers kept and reused.
-- [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md), in Topology: the moves over whole numbers, turning boundary matrices into hole counts.
-- [The persistence algorithm](../../17-Topology/06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md): elimination on shapes.
+- [The inverse matrix](03-inverse-matrix.md): these same row moves build the matrix that undoes the counts.
+- [Rank and nullity](05-rank-nullity.md): the pivot count gives the rank, and the columns without pivots give the free directions.
+- [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): finding an unknown curve's values at grid points by solving one linear system.
+- [Bootstrapping](../../12-Financial%20mathematics/02-Curves/04-bootstrapping-the-discount-curve.md): finding interest rates from bond prices by back-substituting one maturity date at a time.
+- [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): computing option prices across a time-and-price grid by solving a staircase system at each step.
+- [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): solving a three-equation system to match three currency-option quotes with three hedge weights.
+- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): finding every unknown current in an electrical circuit by eliminating the loop equations.
+- [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): saving the row-clearing multipliers and row swaps so new right-hand sides solve fast.
+- [Smith normal form](../../17-Topology/05-Homology/03-computing-homology-by-smith-normal-form.md), in Topology: row and column moves over whole numbers that count holes in a shape.
+- [The persistence algorithm](../../17-Topology/06-Topological%20Data%20Analysis/03-the-persistence-algorithm.md): running elimination on a growing shape to see which holes last across scales.
 - [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md), in Algebraic geometry: one standard diagonal that every whole-number matrix reduces to.
-- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): an exact formula for each unknown of a square system using determinants instead of row moves.
 
 The staircase is thrown away once these days are answered; keeping the moves, so tomorrow's takings cost one multiplication, is [The inverse matrix](03-inverse-matrix.md).
 

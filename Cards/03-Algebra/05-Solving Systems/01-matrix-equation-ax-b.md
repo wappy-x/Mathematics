@@ -1,4 +1,4 @@
-# Solving A x = b: one answer, no answer or a line of answers, and how to tell which before you start
+# Solving A x = b: one answer, no answer or infinitely many, and when a square system guarantees one before you start
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Solving A x = b
 
@@ -563,7 +563,7 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 > **Say it back**
 > A pile of linear equations is one matrix equation, $`A x = b`$: counts in $`A`$, unknowns in $`x`$, totals in $`b`$. Multiplying $`A`$ into $`x`$ mixes $`A`$'s columns, so solving means finding the mix that lands on $`b`$. Elimination does it: subtract a multiple of one row from another to kill an unknown, then read the answers back up.
 >
-> Independent columns in a square $`A`$ give one answer whatever $`b`$ is — the cafe's $4.00 coffee and $3.00 pastry. Collapsed onto one line, $`b`$ on the line gives a line of answers, $`b`$ off it none.
+> Independent columns in a square $`A`$ give one answer whatever $`b`$ is — the cafe's $4.00 coffee and $3.00 pastry. When the columns collapse onto one line, $`b`$ on the line gives infinitely many answers, $`b`$ off it none.
 
 ---
 
@@ -576,17 +576,17 @@ example : !![(2 : ℝ), 1; 1, 1] *ᵥ ![-4, 15] = ![7, 11] := by
 ## Where this goes next
 
 - [Gaussian elimination](02-gaussian-elimination.md): the same row moves, organised, past 2 by 2.
-- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $`b`$ a multiple of $`x`$.
-- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): far more rows than unknowns.
+- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the related question where $`A x`$ lands on a scaled copy of $`x`$ itself.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): fitting several inputs to noisy data when there are far more rows than unknowns.
 - [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): the Greeks are a price's sensitivities to market moves, and the hedge sizes are the cancelling $`x`$.
-- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): junction and loop rules, one system.
-- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): a heat or stress field, chopped up.
+- [Kirchhoff's laws](../../13-Engineering%20mathematics/06-Circuits%20and%20Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits.md): current and voltage rules around a circuit, solved together as one linear system.
+- [Finite elements](../../13-Engineering%20mathematics/08-Fluids%20and%20Heat/09-finite-element-method-in-outline.md): chopping a heat or stress problem into small pieces to solve as one linear system.
 - [Linear programs](../../14-Applied%20and%20computational/05-Operations%20Research/01-modelling-with-linear-programs.md): the same rows, plus inequalities and a cost; rows as walls, answers as corners.
-- [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md): huge systems by descent, no $`A^{-1}`$.
+- [Conjugate gradient](../../15-Optimization/02-Unconstrained%20Methods/07-conjugate-gradient-method.md): solving huge linear systems step by step downhill, without ever building an inverse matrix.
 - [Newton in several unknowns, and Broyden when a Jacobian is too expensive](../../16-Numerical%20analysis/02-Root%20Finding%20and%20Fixed%20Points/07-newton-for-systems-and-broyden.md): a curved system, one solve per step, with the Jacobian (the table of slopes) as $`A`$.
 - [Matrix norms and the condition number](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/01-matrix-norms-and-the-condition-number.md): how far $`x`$ moves when $`b`$ is rounded.
-- [One polynomial through n points](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/02-lagrange-and-newton-interpolation.md): a curve through points, solved for coefficients.
-- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
+- [One polynomial through n points](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/02-lagrange-and-newton-interpolation.md): finding the unique polynomial through given points by solving a linear system for its coefficients.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): when a square system has nonzero determinant, each unknown as a ratio of two determinants.
 
 Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [Gaussian elimination](02-gaussian-elimination.md).
 

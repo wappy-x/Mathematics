@@ -1,4 +1,4 @@
-# Determinants: the one number that says how much a matrix stretches area, and zero means it squashed something flat
+# Determinants: the one number that says how much a square matrix stretches signed area, and zero means it squashed something flat
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Determinants
 
@@ -504,21 +504,21 @@ example : Matrix.det !![(4 : ℤ), 2, 2; 0, 1, 1; 1, 0, 4] = 16 := by
 
 - [Rank and nullity](05-rank-nullity.md): how many directions survive and how many die, even when the matrix is not square.
 - [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the stretch factors whose product is this number.
-- [Spanning trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): it counts a network's trees.
-- [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the same signed area as an arrow.
-- [Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md): the 3 by 3 as a box's volume.
-- [The Wronskian](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md): it tests whether two solutions are copies.
-- [Trace and determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): it decides how a system settles.
-- [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): steps built to keep it at 1.
+- [Spanning trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): a determinant counts how many ways a network can connect every node with no loops.
+- [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): packs the same signed area of two 3D arrows into a perpendicular arrow.
+- [Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md): reads a 3 by 3 determinant as the signed volume of a slanted box.
+- [The Wronskian](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md): a determinant testing whether two solutions of a rate equation are multiples of each other.
+- [Trace and determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): trace and determinant together show whether a moving system settles, spirals, or escapes.
+- [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): numerical simulation steps built to keep determinant 1 so area is never lost or gained.
 - [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): a 3 by 3 solve behind hedge weights.
 - [LU with partial pivoting](../../16-Numerical%20analysis/03-Numerical%20Linear%20Algebra/02-lu-decomposition-and-pivoting.md): elimination packaged, row swaps carrying the sign.
 - [The resultant](../../22-Algebraic%20geometry/01-Polynomial%20Systems/06-resultants-and-common-roots.md): zero exactly when two polynomials share a root.
-- [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): the alternating rule made an algebra.
-- [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): the same sum without minus signs is hard.
-- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant.
+- [Differential form](../../23-Differential%20geometry%20and%20Lie%20groups/04-Differential%20Forms/01-forms-and-the-wedge-product.md): turning the sign-flipping volume rule into a tool for measuring curved shapes.
+- [Permanent against determinant](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/03-algebraic-complexity-permanent-versus-determinant.md): drop the alternating minus signs from the determinant and computing the sum becomes vastly harder.
+- [Cramer's rule](06-cramers-rule-and-the-adjugate.md): when the determinant is not zero, each unknown is a ratio of two determinants and the inverse is the flipped cofactor table divided by it.
 - [Bilinear forms](../07-Eigenvalues%20and%20Symmetric%20Matrices/12-bilinear-forms-and-sylvesters-law.md): a matrix that pairs two vectors; the alternating ones measure signed area, as this number does.
-- [The matrix-tree theorem](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): cut one row and column from the graph's Laplacian, and the determinant counts its spanning trees.
-- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a nonzero determinant forces full rank, which proves blocks never number fewer than points.
+- [The matrix-tree theorem](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/07-matrix-tree-theorem.md): drop one row and column from a network's link table (its Laplacian) to count loop-free spanning trees.
+- [Block designs](../../04-Combinatorics%20and%20graphs/16-Designs/01-block-designs-and-fishers-inequality.md): a nonzero determinant proves a balanced design can never have fewer groups (blocks) than items.
 - [Hadamard matrices](../../04-Combinatorics%20and%20graphs/16-Designs/04-hadamard-matrices.md): tables of plus and minus ones with the largest determinant such a table can have.
 - [The Henon map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/09-the-henon-map.md): each step's table of slopes has determinant −0.3, so every step shrinks area and mirrors it.
 - [Change of variables for Lebesgue measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/08-lebesgue-change-of-variables-and-polar-coordinates.md): a linear map scales every volume by |det A|, a smooth map does so point by point, and polar coordinates follow.

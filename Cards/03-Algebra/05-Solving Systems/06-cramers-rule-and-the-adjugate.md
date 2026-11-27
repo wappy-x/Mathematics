@@ -1,4 +1,4 @@
-# Cramer's rule: each unknown is a ratio of two determinants, and the inverse is the cofactor table divided by the determinant
+# Cramer's rule: when a square matrix has nonzero determinant, each unknown is a ratio of two determinants, and the inverse is the flipped cofactor table divided by it
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Solving Systems](../README.md#s05) → Cramer's rule
 
@@ -18,7 +18,7 @@ Now put the takings column (13, 11, 12) in place of the coffee column and take t
 
 No clearing out of unknowns, as in [Gaussian elimination](02-gaussian-elimination.md): each price comes on its own. Determinants arranged in a table also give the inverse matrix (the matrix that undoes the counts).
 
-**Each unknown is a determinant with the known column swapped in, over the determinant of the counts; and the inverse is the table of cofactors, flipped across its diagonal, divided by that same determinant.**
+**For a square system with nonzero determinant, each unknown is a determinant with the known column swapped in, over the determinant of the counts; and the inverse is the table of cofactors, flipped across its diagonal, divided by that same determinant.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works. It is exact but slow: worth it for formulas with letters; with numbers, elimination does less work.
 
@@ -507,7 +507,7 @@ example : adjugate (!![2, 1, 1; 1, 1, 2; 1, 2, 1] : Matrix (Fin 3) (Fin 3) ℤ) 
 - **Codes on a clock.** The Hill cipher scrambles letters with a matrix, mod 26. Decoding uses the adjugate, which needs no dividing, times the modular inverse of the determinant.
 
 > **Say it back**
-> To find unknown $`j`$, swap the known column into column $`j`$, take that determinant, and divide by the plain matrix's determinant. On the cafe: −16, −12 and −8 over −4 give $4, $3 and $2. It works because the known column is a mix of the matrix's columns, and a repeated column has determinant zero. The signed minors, flipped across the diagonal, form the adjugate; adjugate over determinant is the inverse. The rule costs about $`n!`$ work, so elimination does the real solving.
+> For a square system with nonzero determinant, find unknown $`j`$ by swapping the known column into column $`j`$, taking that determinant, and dividing by the plain matrix's determinant. On the cafe: −16, −12 and −8 over −4 give $4, $3 and $2. It works because the known column is a mix of the matrix's columns, and a repeated column has determinant zero. The signed minors, flipped across the diagonal, form the adjugate; when the determinant is not zero, adjugate over determinant is the inverse. The rule costs about $`n!`$ work, so elimination does the real solving.
 
 ---
 
