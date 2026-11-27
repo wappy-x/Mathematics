@@ -97,12 +97,12 @@ example : ∑ s : Snack, (univ.filter (fun b => wiring b = s)).card = 6 := by de
 -- Image of {A1, A3} is crisps and chocolate: 2 snacks.
 example : ({A1, A3} : Finset Button).image wiring = {crisps, chocolate} := by decide
 
--- Sold out {chocolate, mints}: indicator 0 1 0 0 1, sum 2; only A3 hits it.
-def soldOut : Finset Snack := {chocolate, mints}
-example : [crisps, chocolate, flapjack, gum, mints].map (fun s => if s ∈ soldOut then 1 else 0)
+-- Out of date {chocolate, mints}: indicator 0 1 0 0 1, sum 2; only A3 hits it.
+def outOfDate : Finset Snack := {chocolate, mints}
+example : [crisps, chocolate, flapjack, gum, mints].map (fun s => if s ∈ outOfDate then 1 else 0)
     = [0, 1, 0, 0, 1] := by decide
-example : ∑ s : Snack, (if s ∈ soldOut then 1 else 0) = 2 := by decide
-example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
+example : ∑ s : Snack, (if s ∈ outOfDate then 1 else 0) = 2 := by decide
+example : univ.filter (fun b => wiring b ∈ outOfDate) = {A3} := by decide
 
 #print axioms relation_is_function_iff_exactly_once
 #print axioms sum_preimage_counts_eq_domain_size

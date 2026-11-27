@@ -85,11 +85,11 @@ Counting backwards tests forwards. Buttons behind each snack: crisps 2, chocolat
 
 ### The indicator function
 
-Chocolate and mints have sold out. Write that as a function from the 5 snacks stocked to two values: 1 if sold out, 0 if not. In order it reads 0 1 0 0 1. That is the **indicator function** of the sold-out set, also called the characteristic function. It is written $`1_A`$, where A names the set it marks: here, the sold-out snacks.
+Chocolate and mints are out of date. Write that as a function from the 5 snacks stocked to two values: 1 if out of date, 0 if not. In order it reads 0 1 0 0 1. That is the **indicator function** of the out-of-date set, also called the characteristic function. It is written $`1_A`$, where A names the set it marks: here, the out-of-date snacks.
 
-Add the five values: 2, the number sold out. Turning a yes or no into a 1 or a 0 makes counting into adding — why probability leans on it.
+Add the five values: 2, the number out of date. Turning a yes or no into a 1 or a 0 makes counting into adding — why probability leans on it.
 
-It sends two snacks to 1: chocolate and mints. Push that pair back through f and you get the buttons that will disappoint: A3 alone, 1 button. Not 2: the sold-out mints had no button.
+It sends two snacks to 1: chocolate and mints. Push that pair back through f and you get the buttons that will disappoint: A3 alone, 1 button. Not 2: the out-of-date mints had no button.
 
 ---
 
@@ -101,8 +101,8 @@ It sends two snacks to 1: chocolate and mints. Push that pair back through f and
 | the range, snacks reached | 5 stocked, 1 never given | **4** |
 | the preimage of crisps | A1 and A2 | **2** |
 | buttons behind each snack | 2 + 1 + 1 + 2 + 0 | **6** |
-| the indicator of sold out | 0 + 1 + 0 + 0 + 1 | 2 |
-| buttons giving a sold-out snack | A3 only | 1 |
+| the indicator of the out-of-date set | 0 + 1 + 0 + 0 + 1 | 2 |
+| buttons giving an out-of-date snack | A3 only | 1 |
 
 Six buttons, four outcomes, one snack you can see and cannot have.
 
@@ -127,7 +127,7 @@ Nothing is imported. The wiring is read forwards, button by button, then backwar
 BUTTONS = ["A1", "A2", "A3", "B1", "B2", "B3"]
 SNACKS = ["crisps", "chocolate", "flapjack", "gum", "mints"]
 WIRING = [("A1", "crisps"), ("A2", "crisps"), ("A3", "chocolate"), ("B1", "flapjack"), ("B2", "gum"), ("B3", "gum")]
-SOLD_OUT = ["chocolate", "mints"]
+OUT_OF_DATE = ["chocolate", "mints"]
 def out(pairs, b):                       # forwards: the snacks this button hands out
     return [s for x, s in pairs if x == b]
 def preimage(pairs, target):             # backwards: every button whose snack is in target
@@ -136,7 +136,7 @@ def image(pairs, buttons):               # forwards: every snack those buttons h
     return [s for s in SNACKS if any(s in out(pairs, b) for b in buttons)]
 counts, answered = [len(preimage(WIRING, [s])) for s in SNACKS], [len(out(WIRING, b)) for b in BUTTONS]
 rng, rng2 = image(WIRING, BUTTONS), [s for s in SNACKS if counts[SNACKS.index(s)] > 0]   # two routes to the range
-indicator = [1 if s in SOLD_OUT else 0 for s in SNACKS]
+indicator = [1 if s in OUT_OF_DATE else 0 for s in SNACKS]
 jam, double = [p for p in WIRING if p[0] != "B3"], WIRING + [("A1", "chocolate")]         # B3 gives nothing; A1 drops two
 print(f"buttons (domain): {', '.join(BUTTONS)} -- {len(BUTTONS)}")
 print(f"snacks stocked (codomain): {', '.join(SNACKS)} -- {len(SNACKS)}")
@@ -146,16 +146,16 @@ print(f"range (snacks actually given): {', '.join(rng)} -- {len(rng)}")
 print("buttons per snack: " + ", ".join(f"{s} {n}" for s, n in zip(SNACKS, counts)) + f" -- {sum(counts)} in total")
 print(f"preimage of crisps: {', '.join(preimage(WIRING, ['crisps']))} -- {len(preimage(WIRING, ['crisps']))} buttons; preimage of mints: none -- {len(preimage(WIRING, ['mints']))} buttons")
 print(f"image of A1 and A3: {', '.join(image(WIRING, ['A1', 'A3']))} -- {len(image(WIRING, ['A1', 'A3']))} snacks")
-print(f"sold out {{{', '.join(SOLD_OUT)}}}: indicator {' '.join(str(i) for i in indicator)}, sum {sum(indicator)}; buttons hitting it: {', '.join(preimage(WIRING, SOLD_OUT))} -- {len(preimage(WIRING, SOLD_OUT))}")
+print(f"out of date {{{', '.join(OUT_OF_DATE)}}}: indicator {' '.join(str(i) for i in indicator)}, sum {sum(indicator)}; buttons hitting it: {', '.join(preimage(WIRING, OUT_OF_DATE))} -- {len(preimage(WIRING, OUT_OF_DATE))}")
 print(f"broken: a jammed B3 answers {len(jam)} of {len(BUTTONS)}; A1 dropping two answers {len(double)} pairs for {len(BUTTONS)} buttons")
 assert answered == [1] * 6 and len(WIRING) == 6 and len(jam) == 5 and len(double) == 7
 assert rng == ["crisps", "chocolate", "flapjack", "gum"] and rng == rng2 and len(rng) == 4 and "mints" not in rng
 assert counts == [2, 1, 1, 2, 0] and sum(counts) == len(BUTTONS) and preimage(WIRING, ["crisps"]) == ["A1", "A2"] and preimage(WIRING, ["mints"]) == []
-assert sum(indicator) == 2 and preimage(WIRING, SOLD_OUT) == ["A3"] and image(WIRING, ["A1", "A3"]) == ["crisps", "chocolate"] and preimage(double, ["chocolate"]) == ["A1", "A3"]
+assert sum(indicator) == 2 and preimage(WIRING, OUT_OF_DATE) == ["A3"] and image(WIRING, ["A1", "A3"]) == ["crisps", "chocolate"] and preimage(double, ["chocolate"]) == ["A1", "A3"]
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-06 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 buttons (domain): A1, A2, A3, B1, B2, B3 -- 6
@@ -166,7 +166,7 @@ range (snacks actually given): crisps, chocolate, flapjack, gum -- 4
 buttons per snack: crisps 2, chocolate 1, flapjack 1, gum 2, mints 0 -- 6 in total
 preimage of crisps: A1, A2 -- 2 buttons; preimage of mints: none -- 0 buttons
 image of A1 and A3: crisps, chocolate -- 2 snacks
-sold out {chocolate, mints}: indicator 0 1 0 0 1, sum 2; buttons hitting it: A3 -- 1
+out of date {chocolate, mints}: indicator 0 1 0 0 1, sum 2; buttons hitting it: A3 -- 1
 broken: a jammed B3 answers 5 of 6; A1 dropping two answers 7 pairs for 6 buttons
 ALL CHECKS PASS
 ```
@@ -181,7 +181,7 @@ Same numbers, same labels, via `rustc --edition 2021 -O`.
 const BUTTONS: [&str; 6] = ["A1", "A2", "A3", "B1", "B2", "B3"];
 const SNACKS: [&str; 5] = ["crisps", "chocolate", "flapjack", "gum", "mints"];
 const WIRING: [(&str, &str); 6] = [("A1", "crisps"), ("A2", "crisps"), ("A3", "chocolate"), ("B1", "flapjack"), ("B2", "gum"), ("B3", "gum")];
-const SOLD_OUT: [&str; 2] = ["chocolate", "mints"];
+const OUT_OF_DATE: [&str; 2] = ["chocolate", "mints"];
 fn out(pairs: &[(&'static str, &'static str)], b: &str) -> Vec<&'static str> {          // forwards: the snacks this button hands out
     pairs.iter().filter(|p| p.0 == b).map(|p| p.1).collect()
 }
@@ -196,9 +196,9 @@ fn main() {
     let counts: Vec<usize> = SNACKS.iter().map(|s| preimage(&WIRING, &[s]).len()).collect();
     let answered: Vec<usize> = BUTTONS.iter().map(|b| out(&WIRING, b).len()).collect();
     let (rng, rng2) = (image(&WIRING, &BUTTONS), SNACKS.iter().cloned().enumerate().filter(|&(i, _)| counts[i] > 0).map(|(_, s)| s).collect::<Vec<&str>>());   // two routes to the range
-    let indicator: Vec<usize> = SNACKS.iter().map(|s| if SOLD_OUT.contains(s) { 1 } else { 0 }).collect();
+    let indicator: Vec<usize> = SNACKS.iter().map(|s| if OUT_OF_DATE.contains(s) { 1 } else { 0 }).collect();
     let (jam, double): (Vec<(&str, &str)>, Vec<(&str, &str)>) = (WIRING.iter().cloned().filter(|p| p.0 != "B3").collect(), WIRING.iter().cloned().chain([("A1", "chocolate")]).collect());   // B3 gives nothing; A1 drops two
-    let (crisps, mints, sold) = (preimage(&WIRING, &["crisps"]), preimage(&WIRING, &["mints"]), preimage(&WIRING, &SOLD_OUT));
+    let (crisps, mints, dated) = (preimage(&WIRING, &["crisps"]), preimage(&WIRING, &["mints"]), preimage(&WIRING, &OUT_OF_DATE));
     let img = image(&WIRING, &["A1", "A3"]);
     println!("buttons (domain): {} -- {}", join(&BUTTONS), BUTTONS.len());
     println!("snacks stocked (codomain): {} -- {}", join(&SNACKS), SNACKS.len());
@@ -208,17 +208,17 @@ fn main() {
     println!("buttons per snack: {} -- {} in total", SNACKS.iter().zip(&counts).map(|(s, n)| format!("{} {}", s, n)).collect::<Vec<String>>().join(", "), counts.iter().sum::<usize>());
     println!("preimage of crisps: {} -- {} buttons; preimage of mints: none -- {} buttons", join(&crisps), crisps.len(), mints.len());
     println!("image of A1 and A3: {} -- {} snacks", join(&img), img.len());
-    println!("sold out {{{}}}: indicator {}, sum {}; buttons hitting it: {} -- {}", join(&SOLD_OUT), indicator.iter().map(|i| i.to_string()).collect::<Vec<String>>().join(" "), indicator.iter().sum::<usize>(), join(&sold), sold.len());
+    println!("out of date {{{}}}: indicator {}, sum {}; buttons hitting it: {} -- {}", join(&OUT_OF_DATE), indicator.iter().map(|i| i.to_string()).collect::<Vec<String>>().join(" "), indicator.iter().sum::<usize>(), join(&dated), dated.len());
     println!("broken: a jammed B3 answers {} of {}; A1 dropping two answers {} pairs for {} buttons", jam.len(), BUTTONS.len(), double.len(), BUTTONS.len());
     assert!(answered == vec![1; 6] && WIRING.len() == 6 && jam.len() == 5 && double.len() == 7);
     assert!(rng == ["crisps", "chocolate", "flapjack", "gum"] && rng == rng2 && rng.len() == 4 && !rng.contains(&"mints"));
     assert!(counts == [2, 1, 1, 2, 0] && counts.iter().sum::<usize>() == BUTTONS.len() && crisps == ["A1", "A2"] && mints.is_empty());
-    assert!(indicator.iter().sum::<usize>() == 2 && sold == ["A3"] && img == ["crisps", "chocolate"] && preimage(&double, &["chocolate"]) == ["A1", "A3"]);
+    assert!(indicator.iter().sum::<usize>() == 2 && dated == ["A3"] && img == ["crisps", "chocolate"] && preimage(&double, &["chocolate"]) == ["A1", "A3"]);
     println!("ALL CHECKS PASS");
 }
 ```
 
-**Ran 2026-09-06 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 buttons (domain): A1, A2, A3, B1, B2, B3 -- 6
@@ -229,7 +229,7 @@ range (snacks actually given): crisps, chocolate, flapjack, gum -- 4
 buttons per snack: crisps 2, chocolate 1, flapjack 1, gum 2, mints 0 -- 6 in total
 preimage of crisps: A1, A2 -- 2 buttons; preimage of mints: none -- 0 buttons
 image of A1 and A3: crisps, chocolate -- 2 snacks
-sold out {chocolate, mints}: indicator 0 1 0 0 1, sum 2; buttons hitting it: A3 -- 1
+out of date {chocolate, mints}: indicator 0 1 0 0 1, sum 2; buttons hitting it: A3 -- 1
 broken: a jammed B3 answers 5 of 6; A1 dropping two answers 7 pairs for 6 buttons
 ALL CHECKS PASS
 ```
@@ -346,19 +346,19 @@ example : ∑ s : Snack, (univ.filter (fun b => wiring b = s)).card = 6 := by de
 -- Image of {A1, A3} is crisps and chocolate: 2 snacks.
 example : ({A1, A3} : Finset Button).image wiring = {crisps, chocolate} := by decide
 
--- Sold out {chocolate, mints}: indicator 0 1 0 0 1, sum 2; only A3 hits it.
-def soldOut : Finset Snack := {chocolate, mints}
-example : [crisps, chocolate, flapjack, gum, mints].map (fun s => if s ∈ soldOut then 1 else 0)
+-- Out of date {chocolate, mints}: indicator 0 1 0 0 1, sum 2; only A3 hits it.
+def outOfDate : Finset Snack := {chocolate, mints}
+example : [crisps, chocolate, flapjack, gum, mints].map (fun s => if s ∈ outOfDate then 1 else 0)
     = [0, 1, 0, 0, 1] := by decide
-example : ∑ s : Snack, (if s ∈ soldOut then 1 else 0) = 2 := by decide
-example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
+example : ∑ s : Snack, (if s ∈ outOfDate then 1 else 0) = 2 := by decide
+example : univ.filter (fun b => wiring b ∈ outOfDate) = {A3} := by decide
 
 #print axioms relation_is_function_iff_exactly_once
 #print axioms sum_preimage_counts_eq_domain_size
 #print axioms sum_indicator_eq_card
 ```
 
-**Checked 2026-11-11 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-27 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'relation_is_function_iff_exactly_once' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -392,7 +392,7 @@ example : univ.filter (fun b => wiring b ∈ soldOut) = {A3} := by decide
 - **Chaining rules.** Button to snack, snack to price: two functions back to back — [Composing functions](03-composition.md).
 
 > **Say it back**
-> A function hands every input exactly one output. Six buttons, six pairs, one snack each. The domain is the six buttons; the codomain the five snacks stocked, declared up front; the range the four that turn up, never the mints. The preimage of crisps is the two buttons giving it; of mints, empty. The indicator of sold out reads 0 1 0 0 1, and adding it counts them: 2.
+> A function hands every input exactly one output. Six buttons, six pairs, one snack each. The domain is the six buttons; the codomain the five snacks stocked, declared up front; the range the four that turn up, never the mints. The preimage of crisps is the two buttons giving it; of mints, empty. The indicator of the out-of-date set reads 0 1 0 0 1, and adding it counts them: 2.
 
 ---
 
