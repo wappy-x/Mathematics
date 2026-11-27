@@ -10,7 +10,7 @@ An hour is 60 minutes. You are cutting one into lessons, all the same length, an
 
 A 15-minute lesson works: four of them fill the hour. A 12-minute lesson works: five. An 8-minute lesson does not — seven of them leave 4 minutes stranded.
 
-Twelve lengths work, and only twelve. Each goes into 60 a whole number of times. There is a word for that: each of them **divides** 60.
+Twelve whole-minute lengths work, and only twelve. Each goes into 60 a whole number of times. There is a word for that: each of them **divides** 60.
 
 **One whole number divides another when the second is the first multiplied by a whole number, with nothing left over.**
 
@@ -358,7 +358,7 @@ example : Nat.divisors 59 = {1, 59} := by decide
 - **Head-checks.** Whether 2 divides a number is [Even and odd](02-even-and-odd.md); digit tricks for 3, 4, 5, 6, 8, 9 and 10 are [Divisibility rules](03-divisibility-rules.md).
 
 > **Say it back**
-> One whole number divides another when it goes in with nothing left over: 4 divides 60, because 60 = 4 × 15. For any positive whole number, positive divisors come in pairs — 4 brings 15 with it — so test upwards and write both ends down, stopping once the ends cross. Sixty has twelve divisors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. 1 divides everything, every number divides 0, and "12 divides 60" is a yes-or-no, not a number.
+> One whole number divides another when it goes in with nothing left over: 4 divides 60, because 60 = 4 × 15. For any positive whole number, positive divisors come in pairs — 4 brings 15 with it, though in a square such as 36 the root 6 is its own partner — so test upwards and write both ends down, stopping once the ends cross. Sixty has twelve divisors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. 1 divides everything, every number divides 0, and "12 divides 60" is a yes-or-no, not a number.
 
 ---
 

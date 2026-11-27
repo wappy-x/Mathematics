@@ -334,7 +334,7 @@ example : Even (6 : ℤ) ∧ Even (2 : ℤ) ∧ (6 : ℤ) / 2 = 3 ∧ Odd (3 : �
 
 ## Where you meet it in real life
 
-- **Anything that toggles.** A light switch, a door bolt. Count the presses; the parity gives the state, however long ago you stopped watching.
+- **Anything that toggles.** A light switch, a door bolt. Count the presses; with a known start, the parity gives the state, however long ago you stopped watching.
 - **Splitting a group in two.** An odd headcount will not split into two equal halves; one person is left over. Same fact as 2 not dividing it: [Divides](01-divides.md).
 - **Ruling a claim out.** Someone says three odd numbers add to an even total. Say no without hearing them: two odds make an even, and that even plus the third odd is odd. It narrows down [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md) later.
 

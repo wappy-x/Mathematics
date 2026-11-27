@@ -372,7 +372,7 @@ example : 100 / 60 = 1 ∧ 100 % 60 = 40 := by decide
 - [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
 - [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
 
-Next on this shelf, [Primes and composites](05-primes-and-composites.md) asks a new question of the leftover: which whole numbers above 1 leave one on every try except 1 and themselves? The question this card leaves open, the remainder of a negative count, waits for [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
+Next on this shelf, [Primes and composites](05-primes-and-composites.md) asks a new question of the leftover: which whole numbers above 1 leave a leftover on every try except 1 and themselves? The question this card leaves open, the remainder of a negative count, waits for [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
 
 ---
 
