@@ -14,7 +14,7 @@ Write it on one line and it looks like this:
 
 Type those keystrokes into a spreadsheet and it answers 775. The right answer is 25. The spreadsheet is not broken. The line says something you did not mean.
 
-A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations**. They are the same in every scientific calculator, spreadsheet and programming language.
+A line of arithmetic is not a to-do list worked through in reading order. It is a shape flattened onto one line, and the rules for folding it back up are the **order of operations**. They are the same in scientific calculators, spreadsheets and nearly every programming language.
 
 **In one sentence: multiplying and dividing are packages that get unwrapped before any adding or subtracting can touch them, and brackets exist so you can say "this part first" when that default is wrong.**
 
@@ -40,7 +40,7 @@ Which part happens first is settled by a four-rung ladder, in words:
 
 **brackets → powers → multiply and divide → add and subtract**
 
-Higher rung first, and left to right inside a rung. A power is a number multiplied by itself, such as 10 × 10; this card does not need one.
+Higher rung first, and left to right inside the multiply-and-divide and add-and-subtract rungs. A power is a number multiplied by itself, such as 10 × 10; this card does not need one.
 
 | Symbol | Plain meaning | In our example |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Higher rung first, and left to right inside a rung. A power is a number multipli
 
 ### When it holds
 
-- **The machine uses the rungs.** Spreadsheets, scientific calculators and programming languages do. A cheap four-function calculator works strictly left to right and gives a different number.
+- **The machine uses the rungs.** Spreadsheets, scientific calculators and most programming languages do. A cheap four-function calculator works strictly left to right and gives a different number.
 - **Left to right inside a rung.** Take a rung in any other order and `8 ÷ 2 × 4` gives 1, not 16.
 - **The brackets go round the whole quantity you mean.** Drop them and the line gives 775, not 25.
 - **The divide comes out even.** 100 cents split four ways is exactly 25. The code divides in whole cents, so a split that does not come out even would silently lose the leftover cents.
@@ -308,7 +308,7 @@ example : (1000 - 12 * 80) / 4 = 10 := by decide
 - **Any formula you are handed.** A tax rule, a dosage, an interest calculation: the moment it becomes one line of typing, the brackets are yours to keep.
 
 > **Say it back**
-> A line of arithmetic is a shape flattened onto one line, not a list of instructions in reading order. Four rungs decide the shape: brackets, then powers, then multiply and divide together, then add and subtract together, left to right inside a rung. Multiplying is shorthand for adding, so it must be unwrapped before the rung below can touch it, and brackets are the override. Twelve apples at 75 cents from a 1000-cent note, four ways, is 25 cents each, and it needs a bracket to say so on one line.
+> A line of arithmetic is a shape flattened onto one line, not a list of instructions in reading order. Four rungs decide the shape: brackets, then powers, then multiply and divide together, then add and subtract together, left to right inside each of the bottom two rungs. Multiplying is shorthand for adding, so it must be unwrapped before the rung below can touch it, and brackets are the override. Twelve apples at 75 cents from a 1000-cent note, four ways, is 25 cents each, and it needs a bracket to say so on one line.
 
 ---
 
@@ -319,7 +319,7 @@ example : (1000 - 12 * 80) / 4 = 10 := by decide
 
 ## Where this goes next
 
-- [The three rearranging laws](05-arithmetic-laws.md): swapping, regrouping, and spreading multiplication over addition. This card says which operation goes first; that one says which rearrangements are safe inside a rung.
+- [The three rearranging laws](05-arithmetic-laws.md): swapping, regrouping, and spreading multiplication over addition. This card says which operation goes first; that one says which rearrangements keep the same value.
 
 This card leaves one question open: when can you reorder or regroup a line and still get the same answer?
 

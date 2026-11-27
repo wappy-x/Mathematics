@@ -10,11 +10,11 @@ You buy twelve apples at 75 cents each. You hand over a $10 bill and get $1.00 b
 
 None of that was hard. But you read the 1 in $10 as ten dollars and the 1 in $1.00 as one dollar — same mark, two different jobs, no hesitation.
 
-The job is decided by **where the mark sits**. That is why ten marks — 0 1 2 3 4 5 6 7 8 9 — are enough to write any number there has ever been. It is called **place value**.
+The job is decided by **where the mark sits**. That is why ten marks — 0 1 2 3 4 5 6 7 8 9 — are enough to write any whole number there has ever been. It is called **place value**.
 
 **A digit's worth is the digit itself times the worth of the column it sits in, and each column is worth ten times the column on its right.**
 
-**What kind of fact this is:** a convention, the agreed rule for writing numbers down. The picture below shows why the rule never gives one numeral two meanings.
+**What kind of fact this is:** a convention, the agreed rule for writing numbers down. The picture below shows why two different numerals of the same width never mean the same number.
 
 ### The picture: what a column is worth
 
@@ -243,9 +243,9 @@ The two outputs match line for line: whole cents throughout, nothing to round.
 
 Lean proves the column rule for every whole number and any number of columns, not just 523 and 900.
 
-- Any number that fits in the columns has exactly one numeral, so no numeral has two meanings.
+- Any whole number that fits in the columns has exactly one numeral of that width, so no two of them mean the same number.
 - A column is always worth more than all 9s to its right: 9999 still loses to 10000.
-- Divide by ten over and over: each remainder times its column's worth adds back up to the number.
+- For any whole number that fits in the columns, divide by ten over and over: each remainder times its column's worth adds back up to the number.
 
 Printing the apple stall's numbers and the column table is left to the Python and Rust checks.
 

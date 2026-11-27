@@ -14,9 +14,9 @@ Both shortcuts shoved the numbers around and neither changed the answer. That is
 
 - **Swapping**, real name **commutative**. 12 × 75 and 75 × 12 come to the same thing. Same for adding.
 - **Regrouping**, real name **associative**. In an all-plus or all-times chain, the brackets do not matter.
-- **Spreading**, real name **distributive**. A multiplier outside a bracket hits everything inside: 12 × (70 + 5) is 12 × 70 plus 12 × 5.
+- **Spreading**, real name **distributive**. A multiplier outside a sum in brackets hits every piece inside: 12 × (70 + 5) is 12 × 70 plus 12 × 5.
 
-**Adding and multiplying let you swap, regroup and spread the numbers without changing the answer.**
+**Adding and multiplying let you swap and regroup, and spread multiplication over addition, without changing the answer.**
 
 **What kind of fact this is:** three laws, true for every whole number; Why it works shows why by counting.
 
@@ -57,7 +57,7 @@ a \times (b + c) = a \times b + a \times c
 
 12 × (70 + 5) = 12 × 70 + 12 × 5 = 840 + 60 = 900.
 
-**Read it aloud:** order does not matter, grouping does not matter, and a multiplier outside a bracket hits every piece inside it, not just the first. Only the third law has both operations in it, and it does the real work.
+**Read it aloud:** order does not matter, grouping does not matter, and a multiplier outside a sum in brackets hits every piece inside it, not just the first. Only the third law has both operations in it, and it does the real work.
 
 | Symbol | Plain meaning | In 12 × (70 + 5) |
 | --- | --- | --- |
@@ -327,7 +327,7 @@ example : (1000 - 900) - 100 = 0 := by decide
 > **Assuming the three laws cover all four operations.** They do not. Swapping and regrouping are claims about adding and multiplying only. Move something across a minus or a divide and you need a separate argument: spend 900 on apples and 100 on the bus, and 1000 − (900 − 100) hands you 200 cents that are not there.
 >
 > Two smaller ones:
-> - **Spreading to only the first piece.** 12 × (70 + 5) written as 12 × 70 + 5 gives 845, not 900. The multiplier is outside the bracket, so it applies to everything in it.
+> - **Spreading to only the first piece.** 12 × (70 + 5) written as 12 × 70 + 5 gives 845, not 900. The multiplier is outside the sum in brackets, so it applies to every piece in it.
 > - **Confusing these laws with order of operations.** [Order of operations](04-order-of-operations.md) tells you what an expression means; these three tell you which rewrites keep its value. One is reading, the other is moving.
 
 ---
@@ -339,7 +339,7 @@ example : (1000 - 900) - 100 = 0 := by decide
 - **Splitting a bill.** Four friends, 900 cents, 225 each, everyone checking it a different way.
 
 > **Say it back**
-> Adding and multiplying obey three rules. Swapping: the order does not matter. Regrouping: in an all-plus or all-times chain, the brackets do not matter. Spreading: a multiplier outside a bracket hits everything inside, so 12 × (70 + 5) is 840 + 60, which is 900. Subtraction and division obey neither of the first two: 1000 − (900 − 100) hands you 200 cents you never had.
+> Adding and multiplying obey three rules. Swapping: the order does not matter. Regrouping: in an all-plus or all-times chain, the brackets do not matter. Spreading: a multiplier outside a sum in brackets hits every piece inside, so 12 × (70 + 5) is 840 + 60, which is 900. Subtraction and division obey neither of the first two: 1000 − (900 − 100) hands you 200 cents you never had.
 
 ---
 
@@ -350,7 +350,7 @@ example : (1000 - 900) - 100 = 0 := by decide
 
 ## Where this goes next
 
-- [Negative numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $`a - b`$ is $`a + (-b)`$, an addition in disguise, and swapping and regrouping cover it after all.
+- [Negative numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $`a - b`$ is $`a + (-b)`$, an addition in disguise, and swapping and regrouping cover the rewritten sum after all.
 
 The question this card leaves open: what does subtraction become, so that the three laws reach it too?
 

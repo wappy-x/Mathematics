@@ -16,7 +16,7 @@ Make it fourteen apples and the friends still get three each, but two sit there.
 
 **Multiplying is adding the same number over and over, in one move. Dividing asks how many times that number goes in. The remainder is what would not go round again.**
 
-**What kind of fact this is:** multiplying and dividing are definitions. That order does not matter when you multiply, and that the leftover stays smaller than the number sharing, are theorems, shown in words in Why it works.
+**What kind of fact this is:** multiplying and dividing are definitions. That order does not matter when you multiply, and that the leftover stays smaller than the number sharing when one or more share, are theorems, shown in words in Why it works.
 
 ### The picture: one row for every apple
 
@@ -72,7 +72,7 @@ A dot for every cent: twelve rows, one per apple, 75 dots in a row. Count row by
 
 Two things fall out. **Order does not matter when you multiply**: twelve lots of 75 is 75 lots of twelve.
 
-And **dividing is that block with a different hole in it**: multiplying, you know both sides and want the dots; dividing, you know the dots and one side. That is why every division can be checked by multiplying back: four lots of 225 comes back to 900.
+And **dividing is that block with a different hole in it**: multiplying, you know both sides and want the dots; dividing, you know the dots and one side. That is why every division can be checked by multiplying back and adding any remainder: four lots of 225 comes back to 900.
 
 ### Step 1: the leftover stays smaller than the number sharing
 
@@ -91,7 +91,7 @@ For any pile shared by one or more people, exactly one share-and-leftover pair f
 
 ### Step 2: why dividing by zero has no answer
 
-"12 shared by 4 is 3" is shorthand for this: four lots of three make twelve. Every division is a multiplication asked backwards.
+"12 shared by 4 is 3" is shorthand for this: four lots of three make twelve. Every exact division is a multiplication asked backwards.
 
 So "12 shared by 0" asks for a number of zeros adding up to twelve. Any number of zeros adds up to 0, never 12, so there is no answer. "0 shared by 0" breaks the other way, because every number fits, and endless answers is no answer.
 
@@ -247,7 +247,7 @@ The two outputs match line for line.
 Lean proves the card's three facts for all whole numbers, not just the apples and cents.
 
 - Any pile shared by one or more people splits into exactly one share and one leftover, the leftover under the number sharing.
-- Order does not matter when you multiply: twelve lots of 75 is 75 lots of twelve, and the same holds for any two numbers.
+- Order does not matter when you multiply: twelve lots of 75 is 75 lots of twelve, and the same holds for any two whole numbers.
 - Dividing by zero has no answer. No number of zeros adds up to a pile that is not empty. For an empty pile every number of zeros fits.
 
 Lean also checks the card's own sums, so only the dollars-and-cents printing is left to the Python and Rust checks.
@@ -352,7 +352,7 @@ example : ∀ q, q < 100 → (List.replicate q 0).sum ≠ 12 := by decide
 - **Time.** Minutes into hours, days into weeks: a division, and the remainder is what you say out loud.
 
 > **Say it back**
-> Multiplying is adding the same number again and again, in one move: 12 apples at 75 cents is 900 cents, and the $10 bill leaves a dollar of change. It works because a block of dots counts the same whichever way you turn it, so order does not matter. Dividing is that block backwards: hand the pile round until you cannot go again, and what is left is the remainder.
+> Multiplying is adding the same number again and again, in one move: 12 apples at 75 cents is 900 cents, and the $10 bill leaves a dollar of change. It works because a block of dots counts the same whichever way you turn it, so order does not matter. Dividing by one or more sharers is that block backwards: hand the pile round until you cannot go again, and what is left is the remainder.
 
 ---
 

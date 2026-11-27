@@ -42,7 +42,7 @@ Nothing to memorise. Three worked statements:
 
 **3/8 ÷ 1/8 = 3/8 × 8/1 = 3/1** — three eighths of a cup holds three one-eighth scoops.
 
-**Read it aloud:** to add, cut both into pieces of one size first; to multiply, take tops times tops and bottoms times bottoms; to divide, flip the second fraction and multiply.
+**Read it aloud:** to add, cut both into pieces of one size first; to multiply, take tops times tops and bottoms times bottoms; to divide by a nonzero fraction, flip it and multiply.
 
 | Part | Plain meaning | In our example |
 | --- | --- | --- |
@@ -56,7 +56,7 @@ Nothing to memorise. Three worked statements:
 
 - **The pieces are equal.** A fraction counts equal pieces. Cut the pizza into 8 uneven slices and 3 slices need not be 3/8 of it.
 - **Both fractions are of one whole.** 3/8 of a large pizza plus a quarter of a small one is not 5/8 of either pizza.
-- **The bottom is never zero.** You cannot cut a pizza into no pieces, so there is no fraction to name.
+- **The bottom is never zero.** You cannot cut a pizza into no pieces, so there is no fraction to name. When dividing, the second fraction cannot be zero either, because its top flips to the bottom.
 
 ---
 
@@ -70,7 +70,7 @@ Write that share in one mark: **8/3** — the pile on top, the number sharing un
 
 ### Step 1: cut both amounts to one size, then add
 
-Cut each quarter of the pizza in two and you have eighths: a quarter of 8 slices is 2 slices. Nothing was added or thrown out, so 1/4 and 2/8 are one amount spelt two ways. Multiplying top and bottom by the same number cuts finer; dividing both goes back. Dividing both is simplifying; this card calls it tidying.
+Cut each quarter of the pizza in two and you have eighths: a quarter of 8 slices is 2 slices. Nothing was added or thrown out, so 1/4 and 2/8 are one amount spelt two ways. Multiplying top and bottom by the same nonzero number keeps the amount unchanged; dividing both goes back. Dividing both is simplifying; this card calls it tidying.
 
 That is what makes adding work. 3/8 and 1/4 will not add, the way three slices and two mouthfuls will not. Rewrite the quarter as 2/8 and both are in one unit: three plus two is five, 5/8. Multiplying the two bottoms always gives a size both fit into. Taking away works the same: match the bottoms, take the tops away. The whole pizza is 8/8, so 8/8 − 5/8 = 3/8.
 
@@ -84,7 +84,7 @@ You have 3/8 cup of flour and a 1/8-cup scoop. How many scoops? Three. Nobody ne
 
 Watch the rule do it. Dividing by 1/8 asks how many eighths there are, and each cup holds 8, so it is multiplying by 8: 3/8 × 8/1. The 8s cancel, leaving 3/1 — a top over one, which is 3.
 
-Dividing by a fraction is multiplying by its flip. Dividing by 2/3 is dividing by 2 thirds: times 3 for the thirds, halved for the 2 — times 3/2. That is why dividing by something between 0 and 1 makes the answer bigger.
+Dividing by a nonzero fraction is multiplying by its flip. Dividing by 2/3 is dividing by 2 thirds: times 3 for the thirds, halved for the 2 — times 3/2. That is why dividing a positive number by something between 0 and 1 makes the answer bigger.
 
 ---
 
@@ -232,7 +232,7 @@ Lean proves the card's rules for every whole-number top and every bottom that is
 
 - To add or take away, use the common bottom made by multiplying the two bottoms, then add or take away the tops.
 - To multiply, take tops times tops and bottoms times bottoms.
-- To divide by a fraction that is not zero, flip it and multiply. Dividing by a zero fraction has no answer.
+- To divide by a fraction that is not zero, flip it and multiply.
 - Multiplying top and bottom by the same number, not zero, keeps the amount the same. Tidying goes back the same way.
 - Any top over a bottom is the whole share plus the leftover over the bottom, as 8/3 is 2 and 2/3.
 - Every worked number, the three mistakes and both Try changing results come out as the card says.
@@ -363,7 +363,7 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 - **Anything sold in a fixed cut.** Spanners in sixteenths of an inch, music in quarter and eighth notes.
 
 > **Say it back**
-> A fraction is a division left standing: the bottom counts the equal pieces the whole was cut into, the top counts how many you hold. Add, and take away, only over a common bottom. Multiply tops by tops and bottoms by bottoms. Divide by flipping the second one. Tidy by dividing both by what goes into both.
+> A fraction is a division left standing: the bottom counts the equal pieces the whole was cut into, the top counts how many you hold. Add, and take away, only over a common bottom. Multiply tops by tops and bottoms by bottoms. Divide by a nonzero fraction by flipping it. Tidy by dividing both by what goes into both.
 
 ---
 
@@ -373,7 +373,7 @@ example : (4 : ℚ) / 8 + 1 / 4 = 3 / 4 := by norm_num
 
 ## Where this goes next
 
-- [Decimals](08-decimals.md): fractions whose bottom is ten, a hundred, a thousand.
+- [Decimals](08-decimals.md): place value past the ones, where stopping decimals are fractions over powers of ten.
 - [Ratios and rates](09-ratios-and-rates.md): comparing two amounts and scaling both.
 - [Building the integers and fractions](../02-The%20Number%20Line/06-constructing-integers-and-fractions.md): a debt as a pair of counts, a fraction as a pair with a sameness rule.
 

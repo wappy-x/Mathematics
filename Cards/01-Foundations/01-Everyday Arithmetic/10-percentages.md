@@ -24,7 +24,7 @@ after 25% off      ████████████████████�
 with 8% tax added  ████████████████████████████████          $64.80
 ```
 
-The last bar does not climb back to the first. A cut and a rise do not cancel: each is taken of a different amount.
+The last bar does not climb back to the first. Percents in a chain do not simply add or cancel: each is taken of a different amount.
 
 ---
 
@@ -58,7 +58,7 @@ Undoing one turns that multiply into a divide:
 
 - **The percent names its amount.** The 8% tax is of the $60.00 sale price. Without "of what", a percent has no size.
 - **Each step in a chain is taken of the amount it meets.** Add the percents instead and the till says $66.40, not $64.80.
-- **To undo a step, divide by the same multiply.** Add the 25% back instead and $60.00 becomes $75.00, not the $80.00 tag.
+- **To undo a step, divide by the same multiply (so long as it is not zero, as in a 100% cut).** Add the 25% back instead and $60.00 becomes $75.00, not the $80.00 tag.
 - **A change in a rate is counted in percentage points.** A tip that moves from 15% to 18% has gone up 3 points. Read that as "3% more tip" and the tip is $7.11, not $8.28.
 
 ---
@@ -234,7 +234,7 @@ The two outputs match line for line, cent for cent.
 Lean proves three rules for every amount and every percent, not just the card's numbers.
 
 - A rise is one multiply: times 100 plus the percent, then ÷ 100. A cut is the same with 100 minus the percent.
-- To undo a step, multiply by 100 and divide by the same multiply. This works for every step except a 100% cut, whose multiply is zero.
+- To undo a step, multiply by 100 and divide by the same multiply. This works whenever that multiply is not zero (excluding a 100% cut, where it is zero).
 - Percents do not add. A cut then a rise equals the single cut you get by adding the percents only if the amount or one percent is zero.
 
 The worked numbers are checked here in whole cents too; printing the price list is left to the Python and Rust checks.
@@ -338,12 +338,12 @@ example : (690 * 103 + 50) / 100 = 711 := by decide      -- "3% more tip", to th
 
 ## Where you meet it in real life
 
-- **Sale tags and sales tax.** Stacked discounts — "extra 20% off sale prices" — multiply. They never add.
+- **Sale tags and sales tax.** Stacked discounts — "extra 20% off sale prices" — multiply. Nonzero discounts on a nonzero price never add.
 - **Tips and service charges.** A menu price with service "included" is already a rise on something: ask on what.
 - **Interest, inflation, polls.** All quoted as percents so sizes compare, the job of [Ratios and rates](09-ratios-and-rates.md). Anything "up 3 points" moved on the rate, not the money.
 
 > **Say it back**
-> A percent is a count of hundredths: multiply by the percent, divide by 100. A cut multiplies by 100 minus the percent, a rise by 100 plus it. To undo either, divide by what you multiplied by — never add the percent back. Every percent is a percent *of* something.
+> A percent is a count of hundredths: multiply by the percent, divide by 100. A cut multiplies by 100 minus the percent, a rise by 100 plus it. To undo either (except a 100% cut, which multiplies by zero), divide by what you multiplied by — never add the percent back. Every percent is a percent *of* something.
 
 ---
 

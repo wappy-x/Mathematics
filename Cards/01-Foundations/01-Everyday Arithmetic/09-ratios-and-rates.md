@@ -14,7 +14,7 @@ A car covers 120 kilometres in 1.5 hours. Different kinds of amount: distance an
 
 Prices are rates too. Blue paint sells at 3 litres for $22.50, which is $7.50 per litre.
 
-**A ratio says how a whole splits up; a rate says how much per one. Both survive scaling: do the same to both sides and nothing changes.**
+**A ratio says how a whole splits up; a rate says how much per one. Both survive scaling: multiply or divide both sides by the same nonzero number and nothing changes.**
 
 **What kind of fact this is:** two definitions, ratio and rate, and one rule about them: scaling both sides by the same number, other than zero, changes nothing, shown on this card in Why it works.
 
@@ -57,7 +57,7 @@ Making a rate:
 ### When it holds
 
 - **Every part is the same size.** The 3 : 2 counts equal scoops. Measure blue with a teaspoon and white with a bucket, and the paint is not 3 : 2 at all.
-- **Both sides are scaled by the same number.** 9 litres to 6 is 3 : 2 times 3. Scale the blue alone, 9 litres against 2, and the colour changes.
+- **Both sides are scaled by the same nonzero number.** 9 litres to 6 is 3 : 2 times 3. Scale the blue alone, 9 litres against 2, and the colour changes.
 - **The rate stays steady.** 80 kilometres per hour gives 40 kilometres by the half hour only if the car holds its speed. With a stop on the way, 80 is only an average, and the half-hour figure can be wrong.
 - **Every litre costs the same.** Twelve litres at $7.50 cost $90.00 only with no bulk discount. A shop that sells big tins cheaper breaks the multiply.
 
@@ -67,7 +67,7 @@ Making a rate:
 
 ### Step 0: a ratio only cares about relative size
 
-9 litres of blue with 6 of white is the same colour as 3 with 2: both sides were multiplied by 3, so nothing shifted between them. **Both sides, same number** — the whole engine, and the cancelling move from [Fractions](07-fractions.md).
+9 litres of blue with 6 of white is the same colour as 3 with 2: both sides were multiplied by 3, so nothing shifted between them. **Both sides, same nonzero number** — the whole engine, and the cancelling move from [Fractions](07-fractions.md).
 
 ### Step 1: find what one part is worth
 
@@ -347,7 +347,7 @@ example : (120 : ℚ) / 2 = 60 ∧ (60 : ℚ) * 2 = 120 := by norm_num
 - **Mixing and scaling.** Paint, concrete, cocktails, dough. Hold the ratio, change the batch.
 
 > **Say it back**
-> A ratio compares two amounts of the same kind: 3 parts blue to 2 parts white. Add the parts to get 5, divide the 15 litre tin by 5 for one part of 3 litres, so blue is 9 litres to white's 6. A rate compares different kinds: 120 kilometres in 1.5 hours is 80 per hour — divide until the bottom is 1. A ratio splits by the total parts. Both survive scaling done to both sides.
+> A ratio compares two amounts of the same kind: 3 parts blue to 2 parts white. Add the parts to get 5, divide the 15 litre tin by 5 for one part of 3 litres, so blue is 9 litres to white's 6. A rate compares different kinds: 120 kilometres in 1.5 hours is 80 per hour — divide until the bottom is 1. A ratio splits by the total parts. Both survive scaling both sides by the same nonzero number.
 
 ---
 

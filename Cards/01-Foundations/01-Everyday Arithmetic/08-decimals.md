@@ -1,4 +1,4 @@
-# Decimals: fractions whose bottom is a power of ten
+# Decimals: stopping decimals as fractions whose bottom is a power of ten
 
 [Syllabus](../../../SYLLABUS.md) → [Foundations](../README.md) → [Everyday Arithmetic](../README.md#s01) → Decimals
 
@@ -10,7 +10,7 @@ Petrol is $1.85 a litre. You fill a 42.5-litre tank. The receipt says **$78.63**
 
 The petrol was worth 78 dollars, 62 cents and half a cent. The pump picked a side and rounded up.
 
-That dot is not a new kind of number. It is the columns from [Place value](01-place-value.md), carried right: after ones come tenths, hundredths, thousandths. Those columns make a fraction — 1.85 is 185 over 100 — so decimals obey the rules from [Fractions](07-fractions.md).
+That dot is not a new kind of number. It is the columns from [Place value](01-place-value.md), carried right: after ones come tenths, hundredths, thousandths. Any decimal that stops makes a fraction — 1.85 is 185 over 100 — so stopping decimals obey the rules from [Fractions](07-fractions.md).
 
 **A decimal that stops is a fraction over 10, 100, 1000 and so on, so you can strip the point out, work in whole numbers, and put the point back.**
 
@@ -73,7 +73,7 @@ Shift the point three columns left and 78625 becomes **78.625**. Two places from
 <details>
 <summary>Why some fractions never land</summary>
 
-Ten is two times five, so a bottom built only from twos and fives rebuilds as tens and stops. Here 8 is 2 × 2 × 2. A bottom of 3 cannot, so a third runs 0.333 forever — exact as a fraction, no last column.
+Ten is two times five, so once reduced to lowest terms, a bottom built only from twos and fives rebuilds as tens and stops. Here 8 is 2 × 2 × 2. A reduced bottom of 3 cannot, so a third runs 0.333 forever — exact as a fraction, no last column.
 
 </details>
 
@@ -225,7 +225,7 @@ The two outputs match line for line. Neither language holds a decimal: thousandt
 
 ### Lean
 
-Lean proves the method and the stopping rule for every decimal and every fraction, not just this fill.
+Lean proves the method for every non-negative stopping decimal and the stopping rule for every fraction, not just this fill.
 
 - Multiply two stopping decimals as whole numbers, then put the point back by both counts of places added together.
 - A fraction stops as a decimal exactly when its bottom, once reduced, is built only from twos and fives.
@@ -391,7 +391,7 @@ example : 185 * 430 = 79550 ∧ 185 * 430 / 10 = 7955 := by norm_num
 - **Anything measured.** Litres and kilograms are read to a decimal place, and counting places carries into [Ratios and rates](09-ratios-and-rates.md).
 
 > **Say it back**
-> A decimal is place value carried right of the dot: tenths, hundredths, thousandths — a fraction whose bottom is a power of ten. To multiply, strip the points out, multiply whole numbers, then walk the point back by as many places as you removed: 185 × 425 is 78625, so 1.85 × 42.5 is 78.625. To add, stack the points. Money keeps two places, so the receipt says $78.63.
+> A decimal is place value carried right of the dot: tenths, hundredths, thousandths — and any decimal that stops is a fraction whose bottom is a power of ten. To multiply, strip the points out, multiply whole numbers, then walk the point back by as many places as you removed: 185 × 425 is 78625, so 1.85 × 42.5 is 78.625. To add, stack the points. Money keeps two places, so the receipt says $78.63.
 
 ---
 

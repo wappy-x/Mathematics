@@ -47,7 +47,7 @@ Then multiplying: three $25 fees charged, then all three cancelled.
 
 **3 × (−25) = −75  and  (−3) × (−25) = 75**
 
-**Read it aloud:** to subtract, add the opposite; and when multiplying, same signs give a plus, different signs a minus.
+**Read it aloud:** to subtract, add the opposite; and when multiplying nonzero numbers, same signs give a plus, different signs a minus.
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -76,11 +76,11 @@ The opposite of 65 is −65: the number that cancels it. 65 + (−65) = 0. That 
 
 Taking $65 out of an account and adding a $65 debt to it leave the same balance, so 40 − 65 and 40 + (−65) are one sum: −25. The thermometer agrees: −3 − 5 is −3 + (−5) = −8.
 
-Subtraction is now a kind of adding, so the laws on [The three rearranging laws](05-arithmetic-laws.md) cover it.
+Subtraction is now a kind of adding, so the laws on [The three rearranging laws](05-arithmetic-laws.md) cover the rewritten sum.
 
 ### Step 2: a plus times a minus is a minus
 
-Two facts do the rest. Three lots of nothing is nothing: 3 × 0 = 0. And spreading, from [The three rearranging laws](05-arithmetic-laws.md), sends a multiplier outside a bracket into everything inside. Aim it at a bracket worth zero.
+Two facts do the rest. Three lots of nothing is nothing: 3 × 0 = 0. And spreading, from [The three rearranging laws](05-arithmetic-laws.md), sends a multiplier outside a sum in brackets into every piece inside. Aim it at a bracket worth zero.
 
 - 25 + (−25) = 0, so 3 × (25 + (−25)) = 3 × 0 = 0.
 - Spread it: 3 × 25 + 3 × (−25) = 0, that is 75 + 3 × (−25) = 0.
@@ -97,7 +97,7 @@ The same move, minus three lots.
 
 Nobody chose it. Once spreading holds, plus is the only answer that fits: cancel three $25 charges and you are $75 better off.
 
-Dividing undoes multiplying, so the rule holds there: −75 ÷ 3 = −25 and −75 ÷ (−25) = 3.
+Dividing by a number other than 0 undoes multiplying, so the sign rule holds there: −75 ÷ 3 = −25 and −75 ÷ (−25) = 3.
 
 ---
 

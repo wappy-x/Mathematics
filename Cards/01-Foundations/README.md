@@ -35,7 +35,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 5. [The three rearranging laws: swapping, regrouping, and spreading multiplication over addition](01-Everyday%20Arithmetic/05-arithmetic-laws.md)
 6. [Negative numbers: the number line runs both ways](01-Everyday%20Arithmetic/06-negative-numbers.md)
 7. [Fractions: parts of a whole, and how to add, multiply and divide them](01-Everyday%20Arithmetic/07-fractions.md)
-8. [Decimals: fractions whose bottom is a power of ten](01-Everyday%20Arithmetic/08-decimals.md)
+8. [Decimals: stopping decimals as fractions whose bottom is a power of ten](01-Everyday%20Arithmetic/08-decimals.md)
 9. [Ratios and rates: comparing two quantities and scaling them together](01-Everyday%20Arithmetic/09-ratios-and-rates.md)
 10. [Percentages: parts per hundred, rises, cuts, and undoing them](01-Everyday%20Arithmetic/10-percentages.md)
 

@@ -14,7 +14,7 @@ Nobody handles twelve numbers as a lump. You work in columns, ones under ones an
 
 **Adding puts piles of the same size together. Subtracting takes one pile out of another. Carrying and borrowing are trades: ten of one size for one of the size up, and back again.**
 
-**What kind of fact this is:** a method, shown on this card in Why it works to give the right answer every time. It rests on what written digits mean, from [Place value](01-place-value.md).
+**What kind of fact this is:** a method, shown in Why it works to give the right answer. For whole-number subtraction, the number taken away must be no bigger than the starting one. It rests on what written digits mean, from [Place value](01-place-value.md).
 
 ```
 apples in the bag    the bill so far    (one block = one apple, 75 cents)
@@ -102,7 +102,7 @@ The change is four quarters, so each friend gets 25 cents back with their apples
 | A short column takes the smaller digit from the bigger | 1000 − 900 comes out at 1900: more change than the note, which cannot happen. |
 | The subtraction is done the wrong way round | 900 − 1000 is −100: an answer past zero, a debt, not change. |
 
-Swapping the numbers in an addition changes nothing. In a subtraction it changes everything.
+Swapping the numbers in an addition changes nothing. In a subtraction of two different numbers, it changes the answer.
 
 ---
 
@@ -228,11 +228,11 @@ Same numbers, same labels, line for line.
 
 ### Lean
 
-Lean proves that carrying and borrowing give the right answer for every pair of whole numbers.
+Lean proves that carrying gives the right answer for every pair of whole numbers, and borrowing does whenever the number taken away is no bigger than the starting one.
 
 - Adding two whole numbers in columns, with carrying, writes out exactly the digits of their sum.
 - When the bill is no bigger than the note, borrowing in columns gives digits 0 to 9. Their value is the note take away the bill.
-- Adding the change back to the bill gives back the note.
+- When the bill is no bigger than the note, adding the change back to the bill gives back the note.
 - The card's own sums come out exact: 75 + 75 is 150, twelve apples are 900 cents, and the change is 100.
 
 The running bill, apple by apple, is left to the Python and Rust checks.
