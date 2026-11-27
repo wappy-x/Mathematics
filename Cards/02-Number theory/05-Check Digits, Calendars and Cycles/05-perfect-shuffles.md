@@ -10,9 +10,9 @@ Take a sealed deck of 52. Cut it into halves of 26 and riffle them so the cards 
 
 Number the positions 0 to 51, top down. The card at position 10 goes to 20, then 40, 29, 7, 14, 28, 5, and the eighth riffle returns it to 10. Each riffle doubles the position, and 51 comes off when the doubling reaches it: 40 doubled is 80, less 51 is 29.
 
-**A perfect riffle doubles a card's position on a clock of 51 spots, and eight doublings bring every position home.**
+**In a 52-card deck, a perfect out-riffle doubles every position under 51 on a 51-spot clock while leaving the bottom card fixed, and eight restore the deck.**
 
-**What kind of fact this is:** a theorem, proved in Why it works: each riffle doubles every position, and eight doublings bring 1 back to 1.
+**What kind of fact this is:** a theorem, proved in Why it works. On a 52-card deck, each out-riffle doubles positions 0 to 50 mod 51 while fixing 51, and eight doublings bring 1 back to 1.
 
 ### The picture: one round trip
 
@@ -35,7 +35,7 @@ One rule, on a clock of 51 spots, 0 to 50:
 
 **new position = old position doubled, then keep taking 51s off until it is under 51 — and the bottom card, position 51, never moves.**
 
-**Read it aloud:** double where the card is, then take 51s off until it is under 51.
+**Read it aloud:** double where the card is, then take 51s off until it is under 51, leaving the bottom card put.
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -104,7 +104,7 @@ Position 10's card, riffle by riffle.
 | 7 | 28 doubled is 56, − 51 | 5 |
 | 8 | 5 doubled | **10** |
 
-Those eight riffles reset all 52 seats at once. Any even deck runs the same way, on a clock one spot smaller. A deck of 8 comes home after 3 riffles, 10 after 6, 52 after 8, and 64 after 6. The bigger deck finishing sooner says the count is not about size.
+Those eight riffles reset all 52 seats at once. Any non-empty even deck runs the same way, on a clock one spot smaller. A deck of 8 comes home after 3 riffles, 10 after 6, 52 after 8, and 64 after 6. The bigger deck finishing sooner says the count is not about size.
 
 ### What breaks if you drop a piece
 
@@ -242,7 +242,7 @@ Lean proves that eight perfect riffles restore 52 cards, and proves the doubling
 
 - Eight perfect riffles put a deck of 52 back in its starting order, whatever the cards are.
 - In any even deck, one perfect riffle doubles a card's position on a clock one spot smaller than the deck. The bottom card never moves.
-- A number of riffles restores every even deck exactly when doubling 1 that many times on that clock gives 1.
+- For any non-empty even deck, a number of riffles restores every ordering exactly when 2 to that power leaves the same remainder as 1 on that clock.
 - The card's numbers hold: the trip from 10, 50 cards out after seven riffles, decks of 8, 10 and 64, and the in-shuffle's 52.
 
 Printing the tables, counting riffles on a list of cards, and the binary in-and-out trick are left to the Python and Rust checks.
@@ -492,7 +492,7 @@ example : 2 ^ 52 % 53 = 1 ∧ ∀ t < 52, 0 < t → 2 ^ t % 53 ≠ 1 := by decid
 - **Wiring.** Data crossing a parallel machine follows this pattern: each stage doubles an address.
 
 > **Say it back**
-> A perfect out-shuffle doubles a seat number, top card counted as 0, on a clock of 51 spots; the end cards never move. Follow seat 1: 2, 4, 8, 16, 32, 13, 26, 1 — home in eight, because 256 is 5 × 51 + 1. Eight riffles reset every card; seven reset almost none.
+> A perfect out-shuffle of a 52-card deck doubles a seat number, top card counted as 0, on a clock of 51 spots; the end cards never move. Follow seat 1: 2, 4, 8, 16, 32, 13, 26, 1 — home in eight, because 256 is 5 × 51 + 1. Eight riffles reset every card; seven reset almost none.
 
 ---
 

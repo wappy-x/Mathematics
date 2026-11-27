@@ -40,13 +40,13 @@ The next multiple of 10 above 83 is 90, so:
 
 **check digit = 90 − 83 = 7**
 
-**Read it aloud:** weight the twelve digits, add them up, and the check digit is how far short of the next multiple of 10 you landed.
+**Read it aloud:** weight the twelve digits and add them. The check digit is how far short of the next multiple of 10 you landed, or 0 if already on one.
 
 | Piece | Plain meaning | In our barcode |
 | --- | --- | --- |
 | the weights | 1, 3, 1, 3, … from the left | 1 for the 5, 3 for the 9 |
 | the weighted sum | each digit times its weight, added | 83 |
-| the check digit | how far short of the next multiple of 10 | 7 |
+| the check digit | how far short of the next multiple of 10, or 0 if already on one | 7 |
 | the whole code | all thirteen weighted, check digit at weight 1 | 90 |
 
 ### When it holds
@@ -61,7 +61,7 @@ The next multiple of 10 above 83 is 90, so:
 
 ### Step 0: zero is the only leftover the scanner accepts
 
-Thirteen is odd, so the check digit sits in an odd position and carries weight 1. Whatever the twelve leave over, it pays off — 10 minus that leftover. A good code therefore leaves nothing over on a 10-hour clock ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): the remainder after dividing by 10 is 0. One number to look at, one value allowed.
+Thirteen is odd, so the check digit sits in an odd position and carries weight 1. Whatever the twelve leave over, it pays off — 10 minus that leftover, or 0 when nothing is left over. A good code therefore leaves nothing over on a 10-hour clock ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): the remainder after dividing by 10 is 0. One number to look at, one value allowed.
 
 The same in remainders: 83 leaves 3, and 10 − 3 is the 7.
 

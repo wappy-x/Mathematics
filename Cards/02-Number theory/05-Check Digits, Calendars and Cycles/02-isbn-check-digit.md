@@ -12,7 +12,7 @@ Nine digits name the book. The tenth argues. It is picked so one total lands on 
 
 One wrong digit shifts the total off the multiple. So does a swap, and that case works only because 11 is prime.
 
-**A swap shifts the total by one gap between weights times one gap between digits, and 11 divides no such product.**
+**Swapping two different digits shifts the total by one gap between weights times one gap between digits, and 11 divides no such product.**
 
 **What kind of fact this is:** a rule set by the ISBN (International Standard Book Number) standard, plus a theorem proved in Why it works. It catches every single wrong digit and every swap of two different digits.
 
@@ -396,7 +396,7 @@ example : isbnTotal ![0, 3, 0, 6, 4, 0, 6, 1, 5, 3] = 133 ∧ 133 % 11 = 1 := by
 - **ISBN-13, on books since 2007.** Thirteen digits on a clock of 10: no more X, and a few swaps get through.
 
 > **Say it back**
-> Nine digits name a book; the tenth checks them. Multiply by 10, 9, down to 1 and add: for 0-306-40615-2 that is 132, a clean 12 × 11. The first nine come to 130, 9 past a multiple of 11, so the check digit is 2. Trade two digits and the total shifts by the weight gap times the digit gap: 1 × 4 = 4, landing on 136, rejected. Both gaps are under 11 and 11 is prime, so no swap slips past.
+> Nine digits name a book; the tenth checks them. Multiply by 10, 9, down to 1 and add: for 0-306-40615-2 that is 132, a clean 12 × 11. The first nine come to 130, 9 past a multiple of 11, so the check digit is 2. Trade two different digits and the total shifts by the weight gap times the digit gap: 1 × 4 = 4, landing on 136, rejected. Both gaps are nonzero and under 11, and 11 is prime, so no swap slips past.
 
 ---
 

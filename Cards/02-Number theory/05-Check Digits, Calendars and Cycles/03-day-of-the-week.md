@@ -12,7 +12,7 @@ The calendar looks like a mess of 30s and 31s and one short month. Underneath it
 
 Four numbers do it, for any date from 1900 to 2099. For 20 July 1969: the **20** itself, **6** for July, **69** years since 1900, **17** leap days in those years. They add to 112: 16 weeks exactly, nothing over. A leftover of 0 means Sunday. Apollo 11 touched down on a Sunday.
 
-**Every date carries four small numbers; add them, divide by 7, and the leftover names the day.**
+**Every date from 1900 to 2099 carries four small numbers; add them, divide by 7, and the leftover names the day.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the month offsets and the Monday on 1 January 1900 are facts of the calendar.
 
@@ -53,7 +53,7 @@ The twelve month offsets, January to December: **0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3
 
 ### When it holds
 
-- **A date from 1900 to 2099.** A century year is a leap year only if it divides by 400 — 1900 was not, 2000 was — so in between, every fourth year is right. From 1 January 2100 every answer comes out a day late.
+- **A date from 1900 to 2099.** A century year is a leap year only if it divides by 400 — 1900 was not, 2000 was — so in between, every fourth year is right. From 2100 to 2199 every answer comes out a day late, and further off from 2200 on.
 - **The step back in January and February of a leap year.** Leave it out and 1 January 1904 comes out Saturday, not Friday.
 - **Leftovers named from a known day.** 1 January 1900 was a Monday and gives leftover 1, so 0 is Sunday. Name the leftovers from the wrong day and every answer is off by the same amount.
 
@@ -399,7 +399,7 @@ example : 90 % 7 = 6 := by decide
 >
 > - Using the calendar year, 1969, instead of the years since 1900, 69.
 > - Rounding 69 ÷ 4 up to 18: the fraction is dropped, not rounded.
-> - Pushing past 2099. 2100 is not a leap year, but dividing by 4 counts it as one, so every date from 1 January 2100 comes out a day late.
+> - Pushing past 2099. 2100 is not a leap year, but dividing by 4 counts it as one, so dates from 2100 to 2199 come out a day late (and further off from 2200).
 
 ---
 
@@ -410,7 +410,7 @@ example : 90 % 7 = 6 := by decide
 - **Remainder tricks at the till.** Throwing away the multiples also checks a barcode ([Barcode check digits](01-barcode-check-digit.md)) and an ISBN ([ISBN-10 and the prime modulus 11](02-isbn-check-digit.md)).
 
 > **Say it back**
-> A week is 7 days and never skips, so any date question is a leftover after dividing by 7. Add the day of the month, the month's offset, the years since 1900 and the leap days in those years; divide by 7 and read the leftover, 0 being Sunday. For 20 July 1969: 20 + 6 + 69 + 17 = 112, leftover 0, Sunday.
+> A week is 7 days and never skips, so any date question is a leftover after dividing by 7. For any date from 1900 to 2099, add the day, the month's offset, the years since 1900 and the leap days, taking 1 off in a leap-year January or February. Divide by 7 and read the leftover, 0 being Sunday. For 20 July 1969: 20 + 6 + 69 + 17 = 112, leftover 0, Sunday.
 
 ---
 

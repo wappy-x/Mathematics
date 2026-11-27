@@ -12,7 +12,7 @@ A Chinese year carries two names. One list is ten long and names an element: Woo
 
 Ten names against twelve looks like 120 combinations. Only 60 are ever a year: both lists read the same count, so both notice whether it is odd or even, and they must agree.
 
-**Two cycles meet again after their lengths multiplied, then divided by the biggest number both share — and that shared number rules pairs out.**
+**Two cycles meet again after their lengths multiplied, then divided by the biggest number both share — and any shared factor above 1 rules pairs out.**
 
 **What kind of fact this is:** a theorem about remainders, proved on this card in Why it works.
 
@@ -223,7 +223,7 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the card's three claims for any two cycle lengths, not just 10 and 12, or 260 and 365.
+Lean proves the card's three claims for any two positive cycle lengths, not just 10 and 12, or 260 and 365.
 
 - Both lists are home together for the first time after their lengths multiplied, then divided by their gcd.
 - A pair of positions happens exactly when the two positions leave the same remainder on division by the gcd.
