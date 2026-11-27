@@ -1,4 +1,4 @@
-# Rigid motions in space: every one is a screw, a turn about an axis plus a slide along it
+# Rigid motions in space: every one without a mirror is a screw, a turn about an axis plus a slide along it
 
 [Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../README.md) → [Vectors in Space](../README.md#s05) → Rigid motions in space
 

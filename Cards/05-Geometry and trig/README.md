@@ -103,7 +103,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 6. [Desargues and Pappus: two theorems where only which lines meet matters, and the duality that swaps points and lines](05-Vectors%20in%20Space/06-desargues-and-pappus.md)
 7. [Cross-ratio: the one number a perspective photo cannot change, and harmonic sets of points](05-Vectors%20in%20Space/07-cross-ratio-and-harmonic-points.md)
 8. [Every rigid motion of the plane is at most three mirror flips, so there are only four kinds](05-Vectors%20in%20Space/08-plane-isometries-and-three-reflections.md)
-9. [Rigid motions in space: every one is a screw, a turn about an axis plus a slide along it](05-Vectors%20in%20Space/09-rigid-motions-in-space-and-screws.md)
+9. [Rigid motions in space: every one without a mirror is a screw, a turn about an axis plus a slide along it](05-Vectors%20in%20Space/09-rigid-motions-in-space-and-screws.md)
 
 [↑ Back to the shelves](#top)
 
