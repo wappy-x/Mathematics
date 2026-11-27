@@ -6,11 +6,11 @@
 
 ## General Overview
 
-Take the rule $`f(z) = z^2 - 1`$ and apply it over and over. Start at 0 and the values go 0, −1, 0, −1 for ever: a **cycle** (a list of points the rule visits in turn) of period 2. Start at 2 and they run off: 2, 3, 8, 63, 3968.
+Apply $`f(z) = z^2 - 1`$ repeatedly. Start at 0 and the values go 0, −1, 0, −1 forever: a **cycle** (points visited in turn) of period 2. Start at 2 and they run off: 2, 3, 8, 63, 3968.
 
-The rule also has two **fixed points** (points it sends to themselves): 1.618034 and −0.618034, the roots of $`z^2 - 1 = z`$. Start 0.001 above 1.618034 and the gap grows: 0.003237, then 0.010486, and after 6 steps the value is past 2 and escaping. Start 0.001 below it and the orbit falls onto the cycle 0, −1.
+The rule has two **fixed points** (points sent to themselves): 1.618034 and −0.618034, solving $`z^2 - 1 = z`$. Start 0.001 above 1.618034 and the gap grows to 0.003237, then 0.010486, escaping past 2 after 6 steps. Start 0.001 below it and the orbit falls onto 0, −1.
 
-One number predicts this: the **multiplier**, the slope of the rule repeated round the cycle. At 1.618034 it is 3.236068, so nearby gaps triple. Round 0, −1 it is $`0 \times (-2) = 0`$, so nearby gaps vanish fast.
+One number predicts this: the **multiplier**, the slope of the rule repeated round the cycle. At 1.618034 it is 3.236068, so nearby gaps more than triple. Round 0, −1 it is $`0 \times (-2) = 0`$, so nearby gaps vanish fast.
 
 Where nearby starts part ways for good is the **Julia set**. The calm rest is the **Fatou set**.
 
@@ -37,9 +37,9 @@ Two starts 0.002 apart, either side of 1.618034, end in different places.
 
 ## The formula
 
-Notation first, in words. $`f^n`$ means $`f`$ applied n times, not a power: $`f^2(z) = (z^2 - 1)^2 - 1`$. A cycle of period k is a list $`z_0, z_1, \ldots, z_{k-1}`$ with $`f(z_j) = z_{j+1}`$ and $`f(z_{k-1}) = z_0`$. The slope of $`f(z) = z^2 + c`$ is $`f'(z) = 2z`$.
+Write $`f^n`$ for $`f`$ applied n times, not a power: $`f^2(z) = (z^2 - 1)^2 - 1`$. A cycle of period k is $`z_0, \ldots, z_{k-1}`$ with $`f(z_j) = z_{j+1}`$ and $`f(z_{k-1}) = z_0`$. For $`f(z) = z^2 + c`$, the slope is $`f'(z) = 2z`$.
 
-The multiplier of the cycle is the slope of $`f^k`$ at $`z_0`$. By the chain rule it is the product of the slopes along the cycle:
+The multiplier of the cycle is the slope of $`f^k`$ at $`z_0`$, which by the chain rule is the product of slopes along the cycle:
 
 ```math
 \lambda = (f^k)'(z_0) = f'(z_0)\, f'(z_1) \cdots f'(z_{k-1}) = 2^k\, z_0 z_1 \cdots z_{k-1}
@@ -47,24 +47,23 @@ The multiplier of the cycle is the slope of $`f^k`$ at $`z_0`$. By the chain rul
 
 **Read it aloud:** the multiplier is the product of the slopes of the rule at each point of the cycle, which for z² + c is two to the period times the product of the points.
 
-The product is the same from any starting point, so the multiplier belongs to the whole cycle. The cycle is:
+The product is the same from any point of the cycle. The cycle is:
 
 - **attracting** when $`\lvert\lambda\rvert < 1`$, and **super-attracting** when $`\lambda = 0`$;
 - **neutral** when $`\lvert\lambda\rvert = 1`$;
 - **repelling** when $`\lvert\lambda\rvert > 1`$.
 
-The **Fatou set** $`F`$ holds every point z with a small disc round it on which the repeats $`f, f^2, f^3, \ldots`$ form a **normal family**: every list taken from them has a sub-list that converges evenly on each closed disc inside, or runs off to infinity evenly there (wider than on [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md), so escaping starts lie in F). The **Julia set** $`J`$ is every other point.
+The **Fatou set** $`F`$ holds every point z with a small disc where $`f, f^2, \ldots`$ form a **normal family**: every sub-list has a further sub-list converging evenly on closed discs inside, or diverging evenly to infinity (extending [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md) so escaping starts lie in F). The **Julia set** $`J`$ is every other point.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f`$, $`z`$, $`c`$ | the rule $`z^2 + c`$; a point of the plane; the constant | $`z^2 - 1`$; c = −1 | — |
-| $`f^n`$, $`n`$ | the rule applied n times; the count | $`f^2(0.1) = -0.0199`$ | — |
-| $`p`$; $`z_0, \ldots, z_{k-1}`$; $`k`$ | a fixed point; the points of a cycle; its period | 1.618034; 0, −1; 2 | — |
+| $`f`$, $`z`$, $`c`$ | the rule $`z^2 + c`$; a complex point; the constant | $`z^2 - 1`$; c = −1 | — |
+| $`f^n`$, $`n`$ | the rule applied n times; the step count | $`f^2(0.1) = -0.0199`$ | — |
+| $`p`$; $`z_0, \ldots, z_{k-1}`$; $`k`$ | a fixed point; cycle points; the period | 1.618034; 0, −1; 2 | — |
 | $`\lambda`$ | the multiplier: slope of $`f^k`$ round the cycle | 3.236068, −1.236068, 0 | above 1 in size, gaps grow |
-| $`h`$, $`w`$ | a small gap from a cycle point; a point of a small circle round it, in the code | 0.001; size 0.001 | — |
-| $`K`$, $`q`$ | the filled Julia set: starts whose orbits stay bounded; a point on its edge | holds 0 and −1, not 2; 1.618034 | — |
+| $`h`$ | a small gap from a cycle point | 0.001 | — |
+| $`K`$, $`R`$ | the filled Julia set; its escape bound $`\max(2, \lvert c\rvert)`$ | holds 0 and −1, not 2; R = 2 | — |
 | $`F`$, $`J`$ | the Fatou set; the Julia set | 0 is in F; 1.618034 is in J | — |
-| $`G`$, $`A`$, $`g_n`$, $`U`$, $`r`$, $`R`$ | $`f^k`$; the basin of p under G; a branch of the inverse of $`G^n`$; a disc round p; its radius; a bound on K | for c = 0.2: k = 1, r = 0.1, R = 2 | larger r, smaller cap R/r |
 
 ### When it holds
 
@@ -87,64 +86,56 @@ f(p + h) = p + 2p\,h + h^2 = p + \lambda h + h^2
 
 **Read it aloud:** a gap h from the fixed point becomes the multiplier times h, plus h squared.
 
-For a small gap, $`h^2`$ is tiny, so each step multiplies the gap by about λ. Once $`|h| < (1 - |\lambda|)/2`$, $`|\lambda h + h^2| \le (|\lambda| + |h|)\,|h| < \frac{1 + |\lambda|}{2}\,|h|`$, a fixed fraction of the old gap; for $`|\lambda| > 1`$ the bound turned round makes the gap grow. At 1.618034 the gap 0.001 becomes 0.003237, then 0.010486, 0.034043, 0.111324, 0.372645. At −0.618034 the gap flips sign and grows by 1.236068 a step: −0.001235, 0.001528, −0.001887.
+For small $`h`$, $`h^2`$ is tiny, so each step multiplies the gap by about $`\lambda`$. Once $`\lvert h\rvert \le (1 - \lvert\lambda\rvert)/2`$, $`\lvert\lambda h + h^2\rvert \le (\lvert\lambda\rvert + \lvert h\rvert)\,\lvert h\rvert \le \frac{1 + \lvert\lambda\rvert}{2}\,\lvert h\rvert`$, shrinking the gap by a fixed factor; for $`\lvert\lambda\rvert > 1`$, reversing the bound makes gaps grow. At 1.618034, the gap 0.001 becomes 0.003237, 0.010486, 0.034043, 0.111324, 0.372645. At −0.618034 it flips sign: −0.001235, 0.001528, −0.001887.
 
-For a cycle, apply the same idea to $`f^k`$, whose slope is λ by the chain rule. Round 0, −1, $`f^2(h) = h^4 - 2h^2`$: the gap is squared each round trip. From 0.1 the values are −0.0199000, −0.0007919, −0.0000013. That is super-attraction.
+For a cycle, apply this to $`f^k`$, whose slope is $`\lambda`$. Round 0, −1, $`f^2(h) = h^4 - 2h^2`$ squares the gap each round trip: from 0.1, two steps at a time give −0.0199000, −0.0007919, −0.0000013 (super-attraction).
 
 ### Step 1: repelling cycles lie in the Julia set
 
-Suppose the repeats of f were a normal family on a disc round the repelling fixed point p. Pick a sub-list $`f^{n_1}, f^{n_2}, \ldots`$ that converges evenly near p. It cannot run off to infinity, because every $`f^n(p) = p`$. So it converges to a holomorphic limit, and the slopes converge too ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+Suppose the repeats of f formed a normal family near a repelling fixed point p. A sub-list $`f^{n_j}`$ would converge evenly near p. Since $`f^n(p) = p`$, it cannot diverge to infinity, so its limit is holomorphic and its slopes converge ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
-But the slope of $`f^n`$ at p is $`\lambda^n`$. At 1.618034 that is 354.9 for n = 5, 125943.7 for n = 10 and 15861809082.7 for n = 20. These have no finite limit, so the family is not normal there: p is in J. For a cycle of period k, run the same argument on $`f^k`$.
+Yet $`(f^n)'(p) = \lambda^n`$ grows without limit: at 1.618034 it reaches 354.9 (n = 5), 125943.7 (n = 10) and 15861809082.7 (n = 20). So p lies in J; for a k-cycle, apply this to $`f^k`$.
 
-An attracting fixed point lies in F. A small disc round it maps inside itself, so every repeat stays bounded there, and Montel's theorem makes the family normal.
+An attracting fixed point lies in F: a small disc round it maps inside itself, keeping all repeats bounded, so Montel's theorem applies.
 
 ### Step 2: the Julia set is the edge of the filled Julia set
 
-The filled Julia set K holds every start whose orbit stays bounded. On [Filled Julia sets](01-filled-julia-sets-and-escape.md), any orbit that passes size $`R = \max(2, \lvert c\rvert)`$ runs off, so K sits inside $`\lvert z\rvert \le R`$.
+By [Filled Julia sets](01-filled-julia-sets-and-escape.md), K sits inside $`\lvert z\rvert \le R = \max(2, \lvert c\rvert)`$, and orbits past R escape.
 
-- **Outside K.** Nearby orbits all pass R and run off together. The point is in F.
-- **Inside K, with a disc of K round it.** Every repeat stays within R there, so Montel makes them normal. The point is in F.
-- **On the edge of K.** Every disc round the point q holds starts that escape. A sub-list converging near q cannot run off, since $`f^n(q)`$ stays within R. So its limit is finite, and it stays bounded on a small disc round q. But an escaping start in that disc grows without bound along it. The point is in J.
+- **Outside K.** Nearby starts pass R and diverge evenly together, so the point lies in F.
+- **Interior of K.** On a disc inside K, iterates stay within R, so Montel puts the point in F.
+- **Boundary of K.** Every disc round a boundary point q holds escaping starts. Any convergent sub-list near q stays finite since $`\lvert f^n(q)\rvert \le R`$, so it stays bounded on a small disc. That contradicts the escaping starts inside, so q lies in J.
 
-So J is exactly the edge of K. The repelling point 1.618034 is such an edge point: 1.619034 escapes after 6 steps, and 1.617034 lands on the cycle.
+So J is the edge of K: 1.618034 sits on it, with 1.619034 escaping in 6 steps and 1.617034 landing on 0, −1.
 
 ### Step 3: an attracting cycle pulls in the critical point 0
 
-The **critical point** of f is where its slope is 0: here $`f'(z) = 2z`$, so only z = 0.
+The **critical point** of f is where $`f'(z) = 2z = 0`$, namely z = 0. If $`\lambda = 0`$, some $`2z_j = 0`$, so 0 lies on the cycle (as for c = −1).
 
-If λ = 0, some $`2z_j`$ is 0, so 0 is on the cycle. That is the c = −1 case: the cycle is 0, −1.
+If $`0 < \lvert\lambda\rvert < 1`$, undo $`f^k`$ near the cycle. If 0 did not converge to the cycle, every inverse branch would stay holomorphic on a disc of radius r inside K, capping its slope at R/r by Cauchy's estimate ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), contradicting $`\lvert\lambda\rvert^{-n} \to \infty`$ (proof in the fold).
 
-If $`0 < \lvert\lambda\rvert < 1`$, the argument runs backwards. Undo the rule near the cycle. The undo multiplies gaps by $`1/\lambda`$, which is larger than 1 in size. If the orbit of 0 did not converge to the cycle, the undo of $`f^n`$ would exist on a whole disc of radius r round the cycle for every n, with values inside $`\lvert z\rvert \le R`$. Cauchy's estimate caps its slope at R/r ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), but the slope is $`1/\lambda^n`$, which grows past any cap.
-
-For c = 0.2 the attracting fixed point is 0.276393, with multiplier 0.552786. A disc of radius 0.1 round it maps into itself, and K lies within 2, so the cap is 2/0.1 = 20. The undo's slope is 19.4 at n = 5 and 35.0 at n = 6, already past the cap. So 0 must be pulled in, and it is: after 100 steps its orbit sits at 0.276393.
+For c = 0.2 the attracting fixed point is 0.276393, with multiplier 0.552786. A disc of radius 0.1 maps into itself and K lies within 2, giving cap 2/0.1 = 20. Yet $`\lvert\lambda\rvert^{-n}`$ reaches 19.4 at n = 5 and 35.0 at n = 6. So 0 must be pulled in, and after 100 steps it sits at 0.276393.
 
 <details>
 <summary>Detailed proof: the inverse-branch argument for z² + c</summary>
 
-Let the cycle have period k and multiplier λ with $`0 < \lvert\lambda\rvert < 1`$. Write $`G = f^k`$ and let p be a point of the cycle, so $`G(p) = p`$ and $`G'(p) = \lambda`$. Let A be the **basin** of p: the starts whose G-orbits converge to p. A start is in A exactly when its image under G is, and A contains a disc U of radius r round p with $`G(U)`$ inside U.
+Let the cycle have period k and multiplier $`\lambda`$ with $`0 < \lvert\lambda\rvert < 1`$. Put $`G = f^k`$, so $`G(p) = p`$ and $`G'(p) = \lambda`$ at a cycle point p. Let A be the **basin** of p under G: starts whose G-orbits converge to p. A start is in A exactly when its image under G is, and A holds a disc U of radius r round p with $`G(U)`$ inside U.
 
-Suppose the f-orbit of 0 does not converge to the cycle. By the chain rule the slope of G at z is
+Suppose the f-orbit of 0 does not converge to the cycle. By the chain rule,
 
 $`\displaystyle G'(z) = 2^k\, z\, f(z) \cdots f^{k-1}(z),`$
 
-so G's critical points are the starts that reach 0 within k − 1 steps. None of them is in A, or 0 would be pulled in. Every critical value of $`G^n`$ is the image of such a point under a power of G, so none lies in A either.
+so G's critical points are starts reaching 0 within k − 1 steps. None lies in A, or 0 would converge to the cycle. Every critical value of $`G^n`$ is a G-image of such a point, so none lies in A or U.
 
-A polynomial with no critical value in a disc has an inverse branch on the whole disc: start from the local inverse at one point and continue it along paths, which never fails, and the disc has no holes ([The monodromy theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/09-monodromy-theorem.md)). So for each n there is a holomorphic $`g_n`$ on U with $`G^n(g_n(z)) = z`$ and $`g_n(p) = p`$.
+Because the polynomial $`G^n`$ has no critical value in U, continuing the local inverse at p along paths never fails; since U has no holes, [The monodromy theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/09-monodromy-theorem.md) gives a holomorphic $`g_n`$ on U with $`G^n(g_n(z)) = z`$ and $`g_n(p) = p`$.
 
-Since $`G^n`$ sends $`g_n(U)`$ into U, which lies in A, every $`g_n`$ takes values in A, inside K, so $`\lvert g_n\rvert \le R`$. Cauchy's estimate on the circle of radius r gives
-
-$`\displaystyle \lvert g_n'(p)\rvert \le \frac{R}{r}.`$
-
-Differentiating $`G^n(g_n(z)) = z`$ at p gives $`\lambda^n g_n'(p) = 1`$, so $`\lvert g_n'(p)\rvert = \lvert\lambda\rvert^{-n}`$, which grows without bound. The two cannot both hold, so the orbit of 0 converges to the cycle.
+Since $`G^n`$ sends $`g_n(U)`$ into U, which lies in A, every $`g_n`$ maps into A, hence into K, so $`\lvert g_n\rvert \le R`$. Cauchy's estimate gives $`\lvert g_n'(p)\rvert \le R/r`$, while differentiating $`G^n(g_n(z)) = z`$ at p gives $`\lvert g_n'(p)\rvert = \lvert\lambda\rvert^{-n} \to \infty`$. That is a contradiction, so the orbit of 0 converges to the cycle.
 
 </details>
 
 ### Step 4: so z² + c has at most one attracting cycle
 
-Each attracting cycle pulls in the orbit of 0, and one orbit converges to at most one cycle.
-
-A second road, by brute force: the periodic points of period dividing n are the $`2^n`$ roots of $`f^n(z) - z = 0`$. For c = −1 the code finds all 2, 4, 8 and 16 roots for n = 1 to 4. Only the points 0 and −1 have multiplier below 1 in size.
+Each attracting cycle pulls in the orbit of 0, and one orbit converges to at most one cycle. The code checks this for c = −1 up to period 4: only the cycle 0, −1 attracts.
 
 ---
 
@@ -154,27 +145,26 @@ A second road, by brute force: the periodic points of period dividing n are the 
 | --- | --- | --- |
 | Fixed points of $`z^2 - 1`$ | $`(1 \pm \sqrt 5)/2`$ | 1.618034, −0.618034 |
 | Their multipliers | $`2p`$ | 3.236068, −1.236068 |
-| Cycle 0, −1 | $`f(0) = -1`$, $`f(-1) = 0`$ | period 2 |
-| Its multiplier | $`f'(0)\, f'(-1) = 0 \times (-2)`$ | **0** |
-| Gap 0.001 at 1.618034, one step | $`3.236068 \times 0.001 + 0.001^2`$ | 0.003237 |
+| Cycle 0, −1 and multiplier | $`f(0) = -1`$, $`f(-1) = 0`$; $`0 \times (-2)`$ | period 2, **0** |
+| Gap 0.001 at 1.618034 (1 step) | $`3.236068 \times 0.001 + 0.001^2`$ | 0.003237 |
 | Slope of $`f^{10}`$ at 1.618034 | $`3.236068^{10}`$ | 125943.7 |
-| Attracting cycles up to period 4 | roots of $`f^n(z) - z`$ with size of λ below 1 | **one: 0, −1** |
+| Attracting cycles ($`n \le 4`$) | roots of $`f^n(z) - z`$ with $`\lvert\lambda\rvert < 1`$ | **one: 0, −1** |
 
-The cycle 0, −1 is super-attracting; both fixed points repel, so they lie in the Julia set.
+The cycle 0, −1 is super-attracting; both fixed points repel and lie in J.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| One point's slope for the cycle | $`f'(-1) = -2`$: "repelling" | the multiplier is the product, 0 |
-| Iterating the 6-digit value 1.618034 | leaves $`\lvert z\rvert \le 2`$ after 15 steps | rounding error is multiplied by 3.236068 each step |
-| Calling a neutral point attracting | c = −0.75, gap 0.1 still 0.021965 after 1000 steps | multiplier −1 gives no shrink factor |
+| One point's slope | $`f'(-1) = -2`$ ("repelling") | multiplier is the product, 0 |
+| Iterating 6-digit 1.618034 | leaves $`\lvert z\rvert \le 2`$ after 15 steps | rounding error grows by 3.236068 per step |
+| Calling neutral attracting | c = −0.75: gap 0.1 is 0.021965 at step 1000 | multiplier −1 gives no shrink factor |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-Two roads reach each multiplier: the chain-rule product, and Cauchy's formula, averaging $`(f^k(p + w) - p)/w`$ over 64 points of a circle of radius 0.001. For "at most one", Durand-Kerner root-finding (all roots improved together) finds every root of $`f^n(z) - z`$ for n = 1 to 4, and each root's multiplier is tested. On c = 0.2 the orbit of 0 is followed to the attracting fixed point.
+Two roads find each multiplier: the chain-rule product, and Cauchy's formula averaging $`(f^k(p + w) - p)/w`$ over 64 points on $`\lvert w\rvert = 0.001`$. Durand-Kerner root-finding locates every root of $`f^n(z) - z`$ for n = 1 to 4 to check "at most one", and for c = 0.2 the orbit of 0 is followed to its fixed point.
 
 ### Python
 
@@ -621,45 +611,44 @@ end MultipliersAndTheFatouAndJuliaSets
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Start nearer the repelling point.** In the line that prints "leaves", change `escape(p + 1e-3)` to `escape(p + 1e-6)`. Guess: a gap 1000 times smaller needs about 6 more steps, since 3.236068 to the sixth is above 1000. The run prints 11, not 6.
-> - **Look for longer cycles.** Change `(1, 2, 3, 4)` to `(1, 2, 3, 4, 5)`. Guess the count of attracting points among the 32 roots for n = 5. It is 0, since 2 does not divide 5, and the second assert stops the program, because it expects four counts.
-> - **Break the product.** In `chain`, change `m * 2 * z` to `m * 2`. Every multiplier becomes a power of 2, no point counts as attracting, and the first assert stops the program.
+> - **Start nearer the repelling point.** In the print line with "leaves", change `escape(p + 1e-3)` to `escape(p + 1e-6)`. Guess: a gap 1000 times smaller needs about 6 more steps (since $`3.236068^6 > 1000`$). The run prints 11, not 6.
+> - **Look for longer cycles.** Change `(1, 2, 3, 4)` to `(1, 2, 3, 4, 5)`. Guess the attracting count among the 32 roots for n = 5: 0, since 2 does not divide 5, and the second assert stops it.
+> - **Break the product.** In `chain`, change `m * 2 * z` to `m * 2`. Every multiplier becomes a power of 2, none attracts, and the first assert fails.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Testing a repelling point by iterating it.** The fixed point stays put, but its 6-digit value 1.618034 sits just off it, and the multiplier 3.236068 grows that gap every step until it leaves $`\lvert z\rvert \le 2`$ after 15 steps. Test a cycle by its multiplier, not by watching an orbit.
+> **Testing a repelling point by iterating it.** The fixed point stays put, but its 6-digit value 1.618034 sits slightly off it, and multiplier 3.236068 grows that error until it leaves $`\lvert z\rvert \le 2`$ after 15 steps. Test cycles by their multiplier.
 >
-> - **Reading one point's slope.** $`f'(-1) = -2`$ suggests a repelling cycle; the product round the cycle is 0.
-> - **Calling size 1 attracting.** At c = −0.75 the multiplier is −1, and a gap of 0.1 is still 0.021965 after 1000 steps.
-> - **Taking the filled Julia set for the Julia set.** The point 0 lies in K for c = −1, but in the Fatou set: K is the whole region, J only its edge.
+> - **Reading one point's slope.** $`f'(-1) = -2`$ looks repelling, yet the cycle's product is 0.
+> - **Calling size 1 attracting.** At c = −0.75 the multiplier is −1, and gap 0.1 is still 0.021965 after 1000 steps.
+> - **Confusing K with J.** For c = −1, 0 lies in K and in the Fatou set F; J is only K's edge.
 
 ---
 
 ## Where you meet it in real life
 
-- **Newton's method.** Each simple root of a polynomial is a super-attracting fixed point of Newton's update, so correct digits roughly double each step. Its Julia set is the edge between the roots' basins.
-- **Drawing Julia and Mandelbrot sets.** Plotting programs follow the orbit of 0 to find the one attracting cycle, if there is one.
-- **Iterative solvers.** A repeated calculation closes in on a value by a fixed factor each step only when its slope there is below 1 in size.
+- **Newton's method.** Each simple root of a polynomial is a super-attracting fixed point of Newton's update, roughly doubling correct digits per step. Its Julia set separates the roots' basins.
+- **Drawing Julia and Mandelbrot sets.** Plotting programs follow the orbit of 0 to find the unique attracting cycle, when one exists.
 
 > **Say it back**
-> The multiplier of a cycle is the product of the rule's slopes round it. Near the cycle it multiplies every gap, so size below 1 attracts and above 1 repels. The Julia set is where the repeats stop forming a normal family: the edge of the filled Julia set, holding every repelling cycle. Undoing z² + c near an attracting cycle would break Cauchy's cap unless the orbit of 0 is pulled in. So z² − 1 has one attracting cycle, 0 and −1.
+> A cycle's multiplier is the product of the slopes round it. Near the cycle it scales gaps, so size below 1 attracts and above 1 repels. The Julia set is where iterates stop forming a normal family: the edge of the filled Julia set, holding every repelling cycle. Undoing z² + c near an attracting cycle would break Cauchy's cap unless 0 is pulled in, so z² + c has at most one attracting cycle; for z² − 1 it is 0, −1.
 
 ---
 
 ## What this builds on
 
 - [Filled Julia sets](01-filled-julia-sets-and-escape.md): the filled Julia set K, and the escape bound that puts it inside $`\lvert z\rvert \le R`$.
-- [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md): Montel's theorem, which turns a bound into a convergent sub-list.
+- [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md): Montel's theorem, turning a uniform bound on holomorphic functions into a convergent sub-list.
 
 ## Where this goes next
 
-- [The Mandelbrot set](03-the-mandelbrot-set.md): the values of c whose orbit of 0 stays bounded, mapped by the cycle that 0 finds.
+- [The Mandelbrot set](03-the-mandelbrot-set.md): the values of c whose orbit of 0 stays bounded, sorted by what that orbit does.
 - [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): the same slope test for rules on the real line, applied to populations.
 
-A neutral cycle, with multiplier of size exactly 1, may lie in either set; which one is left open here.
+Left open for The Mandelbrot set: for which c does the orbit of 0 stay bounded, and what does that say about the shape of K? (A neutral cycle, with multiplier of size 1, may lie in F or J; classifying it goes beyond this shelf.)
 
 ---
 
@@ -667,6 +656,6 @@ A neutral cycle, with multiplier of size exactly 1, may lie in either set; which
 
 Verified 2026-11-23: every link below resolves to the publisher's page.
 
-- Milnor, John. *Dynamics in One Complex Variable*, 3rd ed. Princeton University Press, Annals of Mathematics Studies 160, 2006. [doi:10.1515/9781400835539](https://doi.org/10.1515/9781400835539). Parts II and III (pp. 39–141): the Fatou and Julia sets, multipliers, and why an attracting basin holds a critical point.
-- Carleson, Lennart, and Theodore W. Gamelin. *Complex Dynamics*. Springer, Universitext, 1993. [doi:10.1007/978-1-4612-4364-9](https://doi.org/10.1007/978-1-4612-4364-9). Chapters II and III: classifying fixed points by multiplier, and the critical-point theorem.
-- Fatou, P. "Sur les équations fonctionnelles." *Bulletin de la Société mathématique de France* 47 (1919): 161–271. [doi:10.24033/bsmf.998](https://doi.org/10.24033/bsmf.998). The original paper: normal families as the dividing line, and attracting cycles pulling in critical points.
+- Milnor, John. *Dynamics in One Complex Variable*, 3rd ed. Princeton University Press, 2006. [doi:10.1515/9781400835539](https://doi.org/10.1515/9781400835539). Parts II–III: Fatou and Julia sets, multipliers, and critical points in attracting basins.
+- Carleson, Lennart, and Theodore W. Gamelin. *Complex Dynamics*. Springer, 1993. [doi:10.1007/978-1-4612-4364-9](https://doi.org/10.1007/978-1-4612-4364-9). Chapters II–III: multipliers and the critical-point theorem.
+- Fatou, P. "Sur les équations fonctionnelles." *Bulletin de la Société mathématique de France* 47 (1919): 161–271. [doi:10.24033/bsmf.998](https://doi.org/10.24033/bsmf.998). Normal families as the dividing line, and attracting cycles capturing critical points.

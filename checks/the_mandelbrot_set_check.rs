@@ -36,7 +36,7 @@ fn re(x: f64) -> C { C(x, 0.0) }
 fn main() {
     let (i, z0) = (C(0.0, 1.0), C(0.0, 0.0));
     let oi = orbit(i, z0, 5); let m_i = sc(4.0, mul(oi[2], oi[3]));   // 2-cycle multiplier: f' = 2z at both points
-    println!("house c = -1: orbit of 0 is {}; orbit of 2 is {}", g(&orbit(re(-1.0), z0, 4)), g(&orbit(re(-1.0), re(2.0), 3)));
+    println!("c = -1: orbit of 0 is {}; orbit of 2 is {}", g(&orbit(re(-1.0), z0, 4)), g(&orbit(re(-1.0), re(2.0), 3)));
     println!("c = i: orbit of 0 is {}: a 2-cycle, so i is in M", g(&oi));
     println!("c = i: cycle multiplier 4(-1+i)(-i) = {}, size {}; |c + 1| = {}", g(&[m_i]), f4(md(m_i)), f4(md(C(1.0, 1.0))));
     println!("c = 1: orbit of 0 is {}; first |z| > 2 at step {}", g(&orbit(re(1.0), z0, 4)), escape(re(1.0), 1000));

@@ -6,11 +6,13 @@
 
 ## General Overview
 
-Take the rule "square, then add c", with c a fixed complex number. Start at 0 and apply it again and again. The list of points it visits is the **orbit** of 0.
+Apply "square, then add c" repeatedly from 0, for a fixed complex number c. The list of points visited is the **orbit** of 0.
 
-With c = i the orbit is 0, i, −1 + i, −i, −1 + i, −i, … It falls into a loop of two points and stays near home forever. With c = 1 it is 0, 1, 2, 5, 26, … and runs off to infinity. The **Mandelbrot set**, written M, is the map of every c, marking which of the two happens: i is in M, 1 is not.
+With c = i the orbit is 0, i, −1 + i, −i, −1 + i, −i, …: it falls into a loop of two points and stays bounded forever. With c = 1 it is 0, 1, 2, 5, 26, … and runs off to infinity. The **Mandelbrot set** M holds every c whose orbit of 0 stays bounded: i is in M, 1 is not.
 
-Why one orbit? Each c also has its own **filled Julia set**: every start z whose orbit stays bounded ([Filled Julia sets](01-filled-julia-sets-and-escape.md)). For the house example z² − 1, the start 0 cycles 0, −1, 0, −1 while the start 2 runs off as 2, 3, 8, 63. The point 0 is special. It is the map's only **critical point**: z and −z always land on the same point, and the two meet only at 0, so 0 is where the map folds. Where 0 goes decides the shape of the whole filled Julia set. If its orbit stays bounded, the set is one connected piece. If it escapes, the set shatters into dust.
+Each c has its own **filled Julia set** $`K_c`$, every start whose orbit stays bounded ([Filled Julia sets](01-filled-julia-sets-and-escape.md)): for c = −1, the start 0 cycles 0, −1, 0, −1 while 2 runs off as 2, 3, 8, 63. The point 0 is special because it is the map's only **critical point** (where $`z`$ and $`-z`$ meet and the map folds).
+
+Where 0 goes decides the shape of the entire filled Julia set. If its orbit stays bounded, $`K_c`$ is one connected piece; if it escapes, $`K_c`$ shatters into dust.
 
 **The Mandelbrot set is the set of c for which the orbit of 0 under z² + c stays bounded; it sits inside the disc of radius 2, a single step past 2 proves escape, and membership decides whether the filled Julia set is one piece or dust.**
 
@@ -20,13 +22,13 @@ Why one orbit? Each c also has its own **filled Julia set**: every start z whose
 
 <p align="center"><img src="../figures/the-mandelbrot-set.svg" alt="The main cardioid from −3/4 to 1/4 and the period-2 disc centred at −1 with radius 1/4, inside the dashed circle of radius 2, with c = i marked in M and c = 1 marked outside" width="420"></p>
 
-Drawn at 100 pixels per unit. The heart shape is the **main cardioid**, with its notch (the cusp) at 1/4 and its back at −3/4. The disc of radius 1/4 centred at −1 touches it at −3/4. M is much more than these two shapes: c = i lies in neither yet belongs to M. Every point of M lies inside the dashed circle of radius 2.
+Drawn at 100 pixels per unit. The heart is the **main cardioid** (cusp at 1/4, back at −3/4), touched at −3/4 by the period-2 disc of radius 1/4 centred at −1. M holds much more: c = i lies outside both yet belongs to M. All of M lies inside the dashed circle of radius 2.
 
 ---
 
 ## The formula
 
-Notation first, in words. Write $`f_c(z) = z^2 + c`$ for the map. The orbit of 0 is $`z_0 = 0`$, $`z_1 = c`$, $`z_2 = c^2 + c`$, and so on, each point the map of the one before. Bars measure distance from 0: $`\lvert z\rvert`$ is the modulus.
+Write $`f_c(z) = z^2 + c`$. The orbit of 0 is $`z_0 = 0`$, $`z_1 = c`$, $`z_2 = c^2 + c`$, and so on. Bars measure distance from 0: $`\lvert z\rvert`$ is the modulus.
 
 ```math
 c \in M \iff \lvert z_n\rvert \le 2 \ \text{ for every } n, \qquad z_0 = 0,\ \ z_{n+1} = z_n^2 + c
@@ -42,26 +44,24 @@ c = \frac{\lambda}{2} - \frac{\lambda^2}{4} \ \text{ with } \lvert\lambda\rvert 
 
 **Read it aloud:** the main cardioid is traced by λ/2 minus λ²/4 as λ runs over the unit disc; the period-2 disc holds every c within 1/4 of −1.
 
-At $`\lambda = 1`$ the first gives $`c = 1/2 - 1/4 = 1/4`$, the cusp. At $`\lambda = -1`$ it gives $`c = -1/2 - 1/4 = -3/4`$, where $`\lvert c + 1\rvert = 1/4`$: the disc touches.
+At $`\lambda = 1`$ the cardioid gives cusp $`c = 1/4`$; at $`\lambda = -1`$ it gives $`c = -3/4`$, where $`\lvert c + 1\rvert = 1/4`$ and the disc touches.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`f_c`$ | the map: square, then add $`c`$ | $`z^2 + i`$ | — |
-| $`c`$ | the parameter: the point of the map M being tested | i, 1, −1 | far enough out and the orbit escapes |
+| $`f_c`$, $`c`$ | the map $`z^2 + c`$; the parameter tested for M | $`z^2 + i`$; i, 1, −1 | past distance 2, the orbit escapes |
 | $`z_n`$, $`n`$ | the orbit of 0 after $`n`$ steps | $`z_3 = -i`$ for $`c = i`$ | — |
-| $`M`$; $`K_c`$ | the Mandelbrot set: all $`c`$ with a bounded orbit of 0; the filled Julia set: all starts with a bounded orbit | M contains i, not 1; 0 is in $`K_{-1}`$, 2 is not | — |
-| $`D`$, $`U_n`$, $`m`$, $`w`$ | the disc of radius 3; the starts that stay in D for $`n`$ steps; the step at which the orbit of $`c`$ leaves D; a point of a region being pulled back | for $`c = 1`$ the orbit of $`c`$ runs 1, 2, 5 and leaves D at 5 | — |
-| $`\lambda`$ | the multiplier of a fixed point: how much $`f_c`$ stretches near it | 0.5 gives $`c = 0.1875`$ | past size 1 the fixed point repels |
-| $`p`$; $`a`$, $`b`$ | a fixed point, $`f_c(p) = p`$; the two points of a 2-cycle | $`p = 0.25`$ for $`c = 0.1875`$; 0.0916 and −1.0916 for $`c = -1.1`$ | — |
-| $`r`$, $`x`$ | the logistic map's growth rate and population share | $`r = 3.2`$, $`x`$ starting at 1/2 | larger $`r`$ moves $`c`$ left, toward −2 |
+| $`M`$; $`K_c`$ | the Mandelbrot set; the filled Julia set for $`c`$ | i in M, 1 not; 0 in $`K_{-1}`$, 2 not | — |
+| $`\lambda`$ | a cycle's multiplier (stretch factor) | 0.5 gives $`c = 0.1875`$ | past size 1, the cycle repels |
+| $`p`$; $`a`$, $`b`$ | a fixed point; the two points of a 2-cycle | $`p = 0.25`$; 0.0916, −1.0916 for $`c = -1.1`$ | — |
+| $`r`$, $`x`$ | logistic map growth rate and share | $`r = 3.2`$, start $`x = 1/2`$ | larger $`r`$ moves $`c`$ left toward −2 |
 
 ### When it holds
 
-- **The quadratic family only.** $`z^2 + c`$ has one folding point, 0. A cubic has two, and both orbits must be followed.
+- **Quadratic family only.** $`z^2 + c`$ has one folding point, 0. A cubic has two, so both orbits must be followed.
 - **Start at 0.** Starting at 2 tests whether 2 is in $`K_c`$, a different question: for c = −1 it runs 2, 3, 8, 63 although −1 is in M.
-- **Strictly past 2.** The orbit of −2 is 0, −2, 2, 2, 2: it sits exactly on 2 forever, and −2 is in M.
-- **Escape is provable in finite time; membership is not.** c = 0.26 stays within 2 until step 30. A computer that stops at step 29 calls it a member.
-- **The cardioid and disc are only the start.** Infinitely many smaller pieces hang off them, and points like c = i lie on thin hairs outside every piece.
+- **Strictly past 2.** For c = −2, the orbit is 0, −2, 2, 2, 2: it sits on 2 forever, and −2 is in M.
+- **Escape is provable in finite time; membership is not.** c = 0.26 stays within 2 until step 30; stopping at step 29 misclassifies it.
+- **Cardioid and disc are only the start.** Infinitely many smaller bulbs hang off them, and points like c = i lie on thin hairs outside every interior bulb.
 
 ---
 
@@ -69,74 +69,66 @@ At $`\lambda = 1`$ the first gives $`c = 1/2 - 1/4 = 1/4`$, the cusp. At $`\lamb
 
 ### Step 0: once the orbit is past 2, squaring beats adding
 
-Everything rests on the escape rule proved in [Filled Julia sets](01-filled-julia-sets-and-escape.md). Adding c pulls a point back toward 0 by at most $`\lvert c\rvert`$, while squaring pushes it from $`\lvert z\rvert`$ out to $`\lvert z\rvert^2`$:
+By the escape rule in [Filled Julia sets](01-filled-julia-sets-and-escape.md), squaring outruns adding once $`\lvert z\rvert \ge \lvert c\rvert`$:
 
 ```math
 \lvert z^2 + c\rvert \ge \lvert z\rvert^2 - \lvert c\rvert \ge \lvert z\rvert\,(\lvert z\rvert - 1) \quad \text{when } \lvert z\rvert \ge \lvert c\rvert
 ```
 
-So once a point is past both 2 and $`\lvert c\rvert`$, each step multiplies its distance by more than 1, by a factor that never shrinks, and the orbit runs off. That card applies the rule to every start z; this card applies it to the one start 0.
+Once a point is strictly past both 2 and $`\lvert c\rvert`$, each step multiplies its distance by at least $`\lvert z\rvert - 1 > 1`$, so the orbit escapes. Here we apply that rule to the single start 0.
 
 ### Step 1: M lies inside the disc of radius 2
 
-Suppose $`\lvert c\rvert > 2`$. Then $`z_1 = c`$ already meets both conditions of Step 0. Each later step multiplies the distance by at least $`\lvert c\rvert - 1 > 1`$, so the orbit runs off. Every c in M therefore has $`\lvert c\rvert \le 2`$.
+If $`\lvert c\rvert > 2`$, then $`z_1 = c`$ is already strictly past 2 with $`\lvert z_1\rvert = \lvert c\rvert`$. Step 0 multiplies each later distance by at least $`\lvert c\rvert - 1 > 1`$, so the orbit escapes. Thus every c in M satisfies $`\lvert c\rvert \le 2`$.
 
 ### Step 2: one step past 2 proves escape
 
-Now take $`\lvert c\rvert \le 2`$, and suppose some $`z_n`$ has $`\lvert z_n\rvert > 2`$. Then $`\lvert z_n\rvert > 2 \ge \lvert c\rvert`$, so Step 0 applies from that step on, and the orbit escapes. Together with Step 1 this gives the formula: c is in M exactly when every $`z_n`$ stays within 2.
-
-For c = 1 the orbit reads 0, 1, 2, 5. The point 2 is not past 2; the point 5 is, at step 3, so 1 is outside M.
+Take $`\lvert c\rvert \le 2`$. If any $`\lvert z_n\rvert > 2`$, then $`\lvert z_n\rvert > 2 \ge \lvert c\rvert`$, so Step 0 sends the orbit to infinity. With Step 1, c is in M exactly when every $`\lvert z_n\rvert \le 2`$. For c = 1 the orbit 0, 1, 2, 5 passes 2 at step 3, so 1 is outside M.
 
 ### Step 3: the main cardioid is where a fixed point attracts
 
-A **fixed point** p is a point the map leaves in place: $`p^2 + c = p`$. Its **multiplier** is the derivative there, $`\lambda = f_c'(p) = 2p`$. When $`\lvert\lambda\rvert < 1`$ the fixed point attracts: nearby points move closer each step ([Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md)).
-
-Name the fixed point by its multiplier: $`p = \lambda/2`$. The fixed-point equation then solves for c:
+A fixed point p obeys $`p^2 + c = p`$, with multiplier $`\lambda = f_c'(p) = 2p`$; it attracts when $`\lvert\lambda\rvert < 1`$ ([Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md)). Setting $`p = \lambda/2`$ solves for c:
 
 ```math
 c = p - p^2 = \frac{\lambda}{2} - \frac{\lambda^2}{4}
 ```
 
-As λ runs round the unit circle, this c traces the cardioid's edge. For λ = 0.5: c = 0.25 − 0.0625 = 0.1875, and the orbit of 0 settles on p = 0.25, where 2p = 0.5 = λ.
+As $`\lambda`$ runs round the unit circle, c traces the cardioid's edge. For $`\lambda = 0.5`$: $`c = 0.1875`$, and the orbit of 0 settles on $`p = 0.25`$, where $`2p = 0.5`$.
 
 ### Step 4: the period-2 disc is where a 2-cycle attracts
 
-A 2-cycle is a pair a, b with $`f_c(a) = b`$ and $`f_c(b) = a`$. Both satisfy $`f_c(f_c(z)) = z`$. Divide out the two fixed points and what remains is
+A 2-cycle is a pair of distinct points $`a \ne b`$ with $`f_c(a) = b`$ and $`f_c(b) = a`$. Both solve $`f_c(f_c(z)) = z`$. Dividing out the fixed-point factor $`z^2 - z + c`$ leaves
 
 ```math
 z^2 + z + c + 1 = 0, \qquad \text{so} \qquad a + b = -1,\quad ab = c + 1
 ```
 
-The multiplier of the cycle is the product of the derivatives at its two points, by the chain rule: $`2a \cdot 2b = 4ab = 4(c + 1)`$. The cycle attracts when $`\lvert 4(c + 1)\rvert < 1`$, that is $`\lvert c + 1\rvert < 1/4`$.
-
-For c = −1.1 the points are 0.0916 and −1.0916, and $`4ab = -0.4`$. For the house example c = −1, the multiplier is 0: the cycle 0, −1 is as attracting as a cycle can be.
+The cycle's multiplier is $`2a \cdot 2b = 4ab = 4(c + 1)`$, so it attracts when $`\lvert c + 1\rvert < 1/4`$. For c = −1.1 the points are 0.0916 and −1.0916, with $`4ab = -0.4`$. For c = −1 the multiplier is 0: the 2-cycle 0, −1 is super-attracting.
 
 ### Step 5: an attracting cycle captures the orbit of 0
 
-An attracting cycle always pulls in the orbit of 0, the map's only folding point. This is Fatou's theorem, proved in [Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md). So every c in the cardioid or the disc is in M.
+By Fatou's theorem ([Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md)), every attracting cycle pulls in 0, so every c in the cardioid or period-2 disc belongs to M.
 
-The converse fails. For c = i the orbit of 0 lands on the 2-cycle −1 + i, −i. Its multiplier is $`4(-1 + i)(-i) = 4 + 4i`$, of size 5.6569: the cycle repels. The point i is in M with no attracting cycle at all.
+The converse fails. For c = i, the orbit of 0 lands on the 2-cycle −1 + i, −i, whose multiplier $`4(-1 + i)(-i) = 4 + 4i`$ has size 5.6569: it repels, yet i is in M with no attracting cycle.
 
 ### Step 6: in M means one piece, outside means dust
 
-This is the split named in the title. If c is in M, the filled Julia set $`K_c`$ is **connected**: one piece. If c is outside M, $`K_c`$ is a **Cantor dust**: infinitely many points, no two of them joined, like a fine spray. There is never anything in between. Fatou and Julia found this in 1918–1920.
+If c is in M, $`K_c`$ is **connected** (one piece); if c is outside M, $`K_c`$ is a **Cantor dust**: infinitely many points, no two of them joined. There is never anything in between.
 
-The reason is the fold at 0. Pulling a region back through $`z^2 + c`$ means finding, for each point w of the region, the starts z with $`z^2 + c = w`$: the two square roots of $`w - c`$. Take a region in one piece with no holes. If it contains c, the two square roots join up and the pull-back is one piece. If it misses c, the pull-back is two separate pieces.
+Pulling a region back through $`z^2 + c`$ takes both square roots of $`w - c`$ for each point w. Pulling back a one-piece region without holes gives one piece if it contains c (the roots join at 0), and two separate pieces if it misses c.
 
 <details>
 <summary>Proof sketch: why the orbit of 0 decides the shape</summary>
 
-Take the disc D of radius 3. For $`\lvert c\rvert \le 2`$, Step 0 sends every point outside D further out, so the pull-back of D lies inside D. A c outside the disc of radius 2 uses a larger disc in the same way. Write $`U_n`$ for the starts that stay in D for $`n`$ steps. These regions shrink one inside the next, and $`K_c`$ is what all of them share.
+Let D be the closed disc of radius 3 (or larger when $`\lvert c\rvert > 2`$). Step 0 keeps every point outside D outside it, so the pull-back of D lies inside D. Let $`U_n`$ be the starts staying in D for $`n`$ steps: these nested closed regions shrink onto $`K_c`$, with each $`U_{n+1}`$ the pull-back of $`U_n`$.
 
-Each $`U_{n+1}`$ is the pull-back of $`U_n`$. When $`U_n`$ is one piece with no holes, as D is, $`U_{n+1}`$ is one piece with no holes if $`U_n`$ contains c, and two such pieces if it does not.
+If c is in M, the orbit of c stays in D forever, so c lies in every $`U_n`$. Every $`U_n`$ stays one piece without holes. Shrinking one-piece closed regions share a one-piece core, so $`K_c`$ is connected.
 
-If c is in M, the orbit of c stays in D forever, so c lies in every $`U_n`$. Every $`U_n`$ is one piece with no holes. Shrinking one-piece closed regions share a one-piece core, so $`K_c`$ is connected.
-
-If c is outside M, the orbit of c leaves D at some step $`m`$, so c is missing from $`U_m`$. From then on, every piece splits in two at each level: 2, 4, 8, … pieces. With an extra estimate on their sizes, proved in Carleson and Gamelin, the pieces shrink to points, and $`K_c`$ is dust.
+If c is outside M, the orbit of c leaves D at some step $`m`$, so c is missing from $`U_m`$. From then on every piece splits in two at each pull-back (2, 4, 8, … pieces). An extra size estimate (Carleson and Gamelin) shows the pieces shrink to points, leaving Cantor dust.
 
 </details>
 
-In 1982 Adrien Douady and John Hubbard proved that M itself is connected: all its hairs and bulbs hang together in one piece. This card states that without proof.
+Douady and Hubbard (1982) proved that M itself is connected (stated here without proof).
 
 ---
 
@@ -145,32 +137,28 @@ In 1982 Adrien Douady and John Hubbard proved that M itself is connected: all it
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | orbit of 0, c = i | i² + i = −1 + i; (−1 + i)² + i = −i; (−i)² + i = −1 + i | 0, i, −1 + i, −i, −1 + i |
-| orbit of 0, c = 1 | 1, 1 + 1, 4 + 1, 25 + 1 | 0, 1, 2, 5, 26: past 2 at step 3 |
-| cardioid at λ = 1 | 1/2 − 1/4 | 0.25 |
-| cardioid at λ = −1 | −1/2 − 1/4 | −0.75 |
-| period-2 disc at c = −3/4 | \|−0.75 + 1\| | 0.25: the disc touches |
-| cardioid at λ = 0.5 | 0.25 − 0.0625; fixed point 0.5/2 | c = 0.1875, p = 0.25 |
-| 2-cycle at c = −1.1 | 4(c + 1) = 4 × (−0.1) | −0.4: attracting |
-| 2-cycle at c = i | 4(−1 + i)(−i) = 4 + 4i | size **5.6569: repelling, yet i is in M** |
+| orbit of 0, c = 1 | 1, 1 + 1, 4 + 1, 25 + 1 | 0, 1, 2, 5, 26 (past 2 at step 3) |
+| cardioid at λ = 1, −1 | 1/2 − 1/4; −1/2 − 1/4 | 0.25 (cusp); −0.75 (where $`\lvert c + 1\rvert = 0.25`$) |
+| cardioid at λ = 0.5 | 0.25 − 0.0625; p = 0.5/2 | c = 0.1875, p = 0.25 |
+| 2-cycle at c = −1.1 | 4(c + 1) = 4 × (−0.1) | −0.4 (attracting) |
+| 2-cycle at c = i | 4(−1 + i)(−i) = 4 + 4i | size **5.6569 (repelling, yet i is in M)** |
 
-The cardioid and disc are certified members of M, but M holds more: c = i stays bounded on a repelling cycle.
+The cardioid and disc sit inside M, but M holds more: c = i stays bounded on a repelling cycle.
 
 ### What breaks if you drop a piece
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Treating \|z\| ≥ 2 as escape | c = −2 thrown out, though its orbit is 0, −2, 2, 2, 2 | the test is strictly past 2 |
-| Starting the orbit at 2, not 0 | c = −1 called outside: 2, 3, 8, 63 | that tests whether 2 is in $`K_{-1}`$ |
-| Cardioid with the sign flipped, λ/2 + λ²/4 | λ = 1 gives c = 0.75: orbit 0, 0.75, 1.3125, 2.4727, out at step 3 | the fixed point needs c = p − p² |
-| Period-2 disc taken as \|c + 1\| < 1 | c = −1.9: cycle multiplier 4(c + 1) = −3.6, repelling | the multiplier is 4(c + 1), so the radius is 1/4 |
-
-The code prints all four.
+| Using $`\lvert z\rvert \ge 2`$ | c = −2 thrown out (orbit 0, −2, 2, 2, 2) | test is strictly past 2 |
+| Starting at 2, not 0 | c = −1 called outside (2, 3, 8, 63) | tests $`2 \in K_{-1}`$, not M |
+| Sign flipped: $`\lambda/2 + \lambda^2/4`$ | λ = 1 gives c = 0.75 (0, 0.75, 1.3125, 2.4727, out at step 3) | fixed point needs $`c = p - p^2`$ |
+| Disc taken as $`\lvert c + 1\rvert < 1`$ | c = −1.9 gives multiplier −3.6 (repelling) | multiplier is 4(c + 1), radius 1/4 |
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The code takes three independent roads. Road one iterates orbits: exactly, in whole numbers, for c = i, 1, −1 and −2, and in decimals elsewhere. Road two is algebra: the cardioid and the 2-cycle formula predict a multiplier, and the settled orbit is measured against it. Road three rescales the logistic map, a population model, and checks it is the same orbit. A grid of 3,721 values of c tests Steps 1 and 2 directly. Python uses only `cos`, `sin` and `pi` from its standard library; Rust carries its own complex type.
+The code takes three independent roads: exact integer and decimal orbits; cardioid and 2-cycle algebra checked against settled orbits; and rescaling the logistic map. A 3,721-point grid tests Steps 1 and 2 directly. Python uses only `cos`, `sin` and `pi`; Rust defines its own complex type.
 
 ### Python
 
@@ -202,7 +190,7 @@ def gi(a, b):                            # a whole-number point a + bi, written 
 def g(zs): return ", ".join(gi(int(z.real), int(z.imag)) for z in zs)
 def card(lam): return lam / 2 - lam * lam / 4    # the cardioid: fixed point with multiplier lam
 oi = orbit(1j, 0, 5); m_i = 4 * oi[2] * oi[3]   # 2-cycle multiplier: f' = 2z at both points
-print(f"house c = -1: orbit of 0 is {g(orbit(-1, 0, 4))}; orbit of 2 is {g(orbit(-1, 2, 3))}")
+print(f"c = -1: orbit of 0 is {g(orbit(-1, 0, 4))}; orbit of 2 is {g(orbit(-1, 2, 3))}")
 print(f"c = i: orbit of 0 is {g(oi)}: a 2-cycle, so i is in M")
 print(f"c = i: cycle multiplier 4(-1+i)(-i) = {g([m_i])}, size {f4(abs(m_i))}; |c + 1| = {f4(abs(1j + 1))}")
 print(f"c = 1: orbit of 0 is {g(orbit(1, 0, 4))}; first |z| > 2 at step {escape(1)}")
@@ -235,10 +223,10 @@ assert gap < 1e-9                                                              #
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-11-23 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
-house c = -1: orbit of 0 is 0, -1, 0, -1, 0; orbit of 2 is 2, 3, 8, 63
+c = -1: orbit of 0 is 0, -1, 0, -1, 0; orbit of 2 is 2, 3, 8, 63
 c = i: orbit of 0 is 0, i, -1+i, -i, -1+i, -i: a 2-cycle, so i is in M
 c = i: cycle multiplier 4(-1+i)(-i) = 4+4i, size 5.6569; |c + 1| = 1.4142
 c = 1: orbit of 0 is 0, 1, 2, 5, 26; first |z| > 2 at step 3
@@ -300,7 +288,7 @@ fn re(x: f64) -> C { C(x, 0.0) }
 fn main() {
     let (i, z0) = (C(0.0, 1.0), C(0.0, 0.0));
     let oi = orbit(i, z0, 5); let m_i = sc(4.0, mul(oi[2], oi[3]));   // 2-cycle multiplier: f' = 2z at both points
-    println!("house c = -1: orbit of 0 is {}; orbit of 2 is {}", g(&orbit(re(-1.0), z0, 4)), g(&orbit(re(-1.0), re(2.0), 3)));
+    println!("c = -1: orbit of 0 is {}; orbit of 2 is {}", g(&orbit(re(-1.0), z0, 4)), g(&orbit(re(-1.0), re(2.0), 3)));
     println!("c = i: orbit of 0 is {}: a 2-cycle, so i is in M", g(&oi));
     println!("c = i: cycle multiplier 4(-1+i)(-i) = {}, size {}; |c + 1| = {}", g(&[m_i]), f4(md(m_i)), f4(md(C(1.0, 1.0))));
     println!("c = 1: orbit of 0 is {}; first |z| > 2 at step {}", g(&orbit(re(1.0), z0, 4)), escape(re(1.0), 1000));
@@ -343,10 +331,10 @@ fn main() {
 }
 ```
 
-**Ran 2026-11-23 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
-house c = -1: orbit of 0 is 0, -1, 0, -1, 0; orbit of 2 is 2, 3, 8, 63
+c = -1: orbit of 0 is 0, -1, 0, -1, 0; orbit of 2 is 2, 3, 8, 63
 c = i: orbit of 0 is 0, i, -1+i, -i, -1+i, -i: a 2-cycle, so i is in M
 c = i: cycle multiplier 4(-1+i)(-i) = 4+4i, size 5.6569; |c + 1| = 1.4142
 c = 1: orbit of 0 is 0, 1, 2, 5, 26; first |z| > 2 at step 3
@@ -365,8 +353,6 @@ figure, cusp 0.2500, back -0.7500, disc centre -1 radius 0.2500, points i 1 -1 -
 ALL CHECKS PASS
 ```
 
-The two outputs match line for line.
-
 ### Lean
 
 Lean proves the radius-2 test for every complex c, the cardioid and 2-cycle algebra, and the worked orbits.
@@ -378,7 +364,7 @@ Lean proves the radius-2 test for every complex c, the cardioid and 2-cycle alge
 - The cycle −1 + i, −i has multiplier 4 + 4i.
 - For c = 1 the orbit of 0 reaches 5 at step 3 and 26 at step 4, so 1 is not in M.
 - For c = −2 the orbit of 0 runs 0, −2, 2 and stays on 2, so −2 is in M.
-- For the house example z² − 1, the start 0 is back at 0 after two steps, and the start 2 reaches 63 after three.
+- For z² − 1, the start 0 is back at 0 after two steps, and the start 2 reaches 63 after three.
 - The cardioid gives c = 1/4 at λ = 1 and c = −3/4 at λ = −1, where $`\lvert c + 1\rvert = 1/4`$.
 
 Attraction inside the cardioid and disc, the grid, the slow escape of 0.26 and the logistic link are left to the Python and Rust checks.
@@ -530,7 +516,7 @@ example : (1 : ℂ) ∉ mandelbrotSet := by
     norm_num [Complex.ext_iff, pow_two]
   rw [this] at h3
   norm_num at h3
--- House example c = −1: 0 goes to −1 and back; the start 2 runs off as 2, 3, 8, 63.
+-- Example c = −1: 0 goes to −1 and back; the start 2 runs off as 2, 3, 8, 63.
 example : (fun z : ℂ => z ^ 2 - 1)^[2] 0 = 0 := by
   simp only [Function.iterate_succ_apply', Function.iterate_zero, id]
   norm_num [Complex.ext_iff, pow_two]
@@ -564,7 +550,7 @@ example : ‖(-3 / 4 : ℂ) + 1‖ = 1 / 4 := by norm_num [Complex.ext_iff]
 #print axioms two_cycle_multiplier
 ```
 
-**Checked 2026-11-23 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
+**Checked 2026-11-27 on macOS, Lean 4.36.0-rc2, Mathlib v4.36.0-rc2. Every proof is complete and uses only Lean's standard axioms. Output, pasted from the run:**
 
 ```
 'deriv_sq_add_const' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -577,45 +563,45 @@ example : ‖(-3 / 4 : ℂ) + 1‖ = 1 / 4 := by norm_num [Complex.ext_iff]
 > [!TIP]
 > **Try changing**
 > Guess first, then run it.
-> - **Creep toward the cusp.** Change both `0.26`s in the slow-escape line to `0.2501`. Guess the escape step: it is 312. Near the cusp 1/4, escape takes longer and longer, so no fixed step count can certify membership.
-> - **Shrink the radius.** In the grid line, change `abs(c) > 2` to `abs(c) > 1.9`. One point is now held: c = −2, whose orbit sits on 2. The fourth assert stops the run.
-> - **Leave the disc.** Change `c2 = -1.1` to `c2 = -1.3`, so that $`\lvert c + 1\rvert = 0.3`$ is past 1/4. The 2-cycle repels and the orbit settles on a 4-cycle instead: the run prints two of its points, 0.0194 and −1.2996, 4ab reads −0.1010, and the third assert stops the run.
+> - **Creep toward the cusp.** Change both `0.26`s in the slow-escape line to `0.2501`. Guess the escape step: 312. Near 1/4, escape takes longer and longer, so no fixed step count proves membership.
+> - **Shrink the radius.** Change `abs(c) > 2` to `abs(c) > 1.9` in the grid line. One point is now held (c = −2, whose orbit sits on 2), and the fourth assert fails.
+> - **Leave the disc.** Change `c2 = -1.1` to `c2 = -1.3` ($`\lvert c + 1\rvert = 0.3 > 1/4`$). The 2-cycle repels and the orbit hits a 4-cycle: it prints 0.0194 and −1.2996, 4ab reads −0.1010, and the third assert fails.
 
 ---
 
 ## The usual mistake
 
 > [!warning]
-> **Reading "stayed within 2 for a while" as proof of membership.** Escape is certain the moment the orbit passes 2. Staying inside is never certain from a finite run: c = 0.26 stays within 2 for 29 steps and passes it at step 30. Every computer picture of M is an outer approximation that a longer run can only shrink.
+> **Reading "stayed within 2 for a while" as proof of membership.** Passing 2 proves escape, but staying inside for finitely many steps proves nothing: c = 0.26 escapes at step 30. Every computer picture of M is an outer approximation that a longer run can only shrink.
 >
-> - **Using |z| ≥ 2 as the escape test.** It throws out c = −2, whose orbit 0, −2, 2, 2, 2 never moves past 2.
-> - **Starting the orbit somewhere other than 0.** Starting at 2 with c = −1 gives 2, 3, 8, 63, yet −1 is in M. That run tests the filled Julia set, not M.
-> - **Flipping the cardioid's sign.** λ/2 + λ²/4 at λ = 1 gives c = 0.75, which escapes at step 3.
-> - **Taking the period-2 disc as |c + 1| < 1.** At c = −1.9 the 2-cycle multiplier is −3.6, so the cycle repels.
+> - **Testing $`\lvert z\rvert \ge 2`$.** It throws out c = −2 (orbit 0, −2, 2, 2, 2).
+> - **Starting away from 0.** Starting at 2 for c = −1 gives 2, 3, 8, 63, which tests $`K_{-1}`$ instead of M.
+> - **Flipping the cardioid sign.** $`\lambda/2 + \lambda^2/4`$ at λ = 1 gives c = 0.75, escaping at step 3.
+> - **Taking the period-2 disc as $`\lvert c + 1\rvert < 1`$.** At c = −1.9, the multiplier is −3.6 (repelling).
 
 ---
 
 ## Where you meet it in real life
 
-- **Population models.** The logistic map x → r x(1 − x), a standard model of a breeding population, is the same map in disguise. Rescaling by z = r(1/2 − x) turns it into z² + c with c = r/2 − r²/4, the cardioid formula with λ = r. Growth rate r = 3.2 becomes c = −0.96, and the orbits match step for step. The real segment of M from −2 to 1/4 is the logistic map's whole range from r = 1 to 4.
-- **Computer pictures of fractals.** Every escape-time picture of M or of a Julia set uses the radius-2 test of Step 2. The proof is what lets a program stop as soon as one point passes 2.
-- **Benchmarks for computers.** Drawing M is a standard test of floating-point speed and of splitting work across processors, because every pixel is an independent orbit.
+- **Population models.** Rescaling the logistic map $`x \mapsto r x(1 - x)`$, a standard model of a breeding population, by $`z = r(1/2 - x)`$ yields $`z^2 + c`$ with $`c = r/2 - r^2/4`$. Growth rate r = 3.2 gives c = −0.96, matching orbits step for step; M's real segment from −2 to 1/4 is r from 1 to 4.
+- **Computer pictures of fractals.** Escape-time renderers for M and Julia sets rely on Step 2's radius-2 test to stop an orbit as soon as it passes 2.
 
 > **Say it back**
-> The Mandelbrot set M is every c for which the orbit of 0 under z² + c stays bounded. Once the orbit passes 2 it runs off, so M sits inside the disc of radius 2 and one step past 2 proves escape. An attracting fixed point gives the main cardioid, c = λ/2 − λ²/4, and an attracting 2-cycle gives the disc |c + 1| < 1/4. Inside M the filled Julia set is one piece; outside it is dust. c = i is in M though its cycle repels, and c = 1 escapes at step 3.
+> The Mandelbrot set M holds every c whose orbit of 0 under $`z^2 + c`$ stays bounded. Passing 2 proves escape, so M lies inside radius 2. Attracting fixed points give the main cardioid $`c = \lambda/2 - \lambda^2/4`$, and attracting 2-cycles give the disc $`\lvert c + 1\rvert < 1/4`$. Inside M the filled Julia set is one piece; outside it is dust. c = i is in M though its cycle repels; c = 1 escapes at step 3.
 
 ---
 
 ## What this builds on
 
-- [Filled Julia sets](01-filled-julia-sets-and-escape.md): the set of starts with a bounded orbit for one fixed c, and the escape rule this card turns on c instead.
-- [Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md): the multiplier of a fixed point or cycle, why size below 1 means attraction, and why an attracting cycle pulls in 0.
+- [Filled Julia sets](01-filled-julia-sets-and-escape.md): the bounded-orbit starts for one fixed c, and the escape test this card turns on c.
+- [Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md): cycle multipliers, attraction below size 1, and why an attracting cycle pulls in 0.
 
 ## Where this goes next
 
 - [The logistic map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/03-the-logistic-map-and-period-doubling.md): the real slice of M, where the cardioid's back at −3/4 becomes the logistic map's first period doubling at r = 3.
+- [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): the first card of the next wing, Differential equations and dynamics.
 
-This card leaves open what fills the rest of M. The cardioid and the disc each come from an attracting cycle. Whether every open piece of M does the same is the hyperbolicity conjecture, unproved as of 2026-11-23.
+This card leaves open what fills the rest of M. The cardioid and the period-2 disc each come from an attracting cycle. Whether every open piece of M does the same is the hyperbolicity conjecture, unproved as of 2026-11-23.
 
 ---
 
@@ -623,7 +609,7 @@ This card leaves open what fills the rest of M. The cardioid and the disc each c
 
 Verified 2026-11-23: every link below resolves to the publisher's page.
 
-- Carleson, Lennart, and Theodore W. Gamelin. *Complex Dynamics*. Springer, 1993. [doi:10.1007/978-1-4612-4364-9](https://doi.org/10.1007/978-1-4612-4364-9). Chapter VIII, Quadratic Polynomials, treats M: its definition, the radius-2 bound and its connectedness. Earlier chapters prove that an attracting cycle captures the critical point and the one-piece-or-dust split.
-- Devaney, Robert L. *An Introduction to Chaotic Dynamical Systems*, 2nd ed. CRC Press reissue, 2018. [doi:10.4324/9780429502309](https://doi.org/10.4324/9780429502309). An unhurried treatment of the quadratic family in the complex plane, the escape test and the Mandelbrot set.
-- Milnor, John. *Dynamics in One Complex Variable*, 3rd ed. Princeton University Press, 2006. [doi:10.1515/9781400835539](https://doi.org/10.1515/9781400835539). States the Douady–Hubbard connectedness of M and the hyperbolicity conjecture.
-- Mandelbrot, Benoit B. "Fractal aspects of the iteration of z ↦ λz(1 − z) for complex λ and z." *Annals of the New York Academy of Sciences* 357 (1980): 249–259. [doi:10.1111/j.1749-6632.1980.tb29690.x](https://doi.org/10.1111/j.1749-6632.1980.tb29690.x). Early computer pictures of the set, drawn for the logistic form of the map.
+- Carleson, Lennart, and Theodore W. Gamelin. *Complex Dynamics*. Springer, 1993. [doi:10.1007/978-1-4612-4364-9](https://doi.org/10.1007/978-1-4612-4364-9). Chapter VIII: M, the radius-2 bound, connectedness, and the one-piece-or-dust split.
+- Devaney, Robert L. *An Introduction to Chaotic Dynamical Systems*, 2nd ed. CRC Press, 2018. [doi:10.4324/9780429502309](https://doi.org/10.4324/9780429502309). Introductory treatment of quadratic maps, escape and M.
+- Milnor, John. *Dynamics in One Complex Variable*, 3rd ed. Princeton University Press, 2006. [doi:10.1515/9781400835539](https://doi.org/10.1515/9781400835539). Douady–Hubbard connectedness and the hyperbolicity conjecture.
+- Mandelbrot, Benoit B. "Fractal aspects of the iteration of z ↦ λz(1 − z) for complex λ and z." *Annals of the New York Academy of Sciences* 357 (1980): 249–259. [doi:10.1111/j.1749-6632.1980.tb29690.x](https://doi.org/10.1111/j.1749-6632.1980.tb29690.x). Early computer pictures of M in logistic form.

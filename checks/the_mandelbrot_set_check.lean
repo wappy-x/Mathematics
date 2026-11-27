@@ -144,7 +144,7 @@ example : (1 : ℂ) ∉ mandelbrotSet := by
     norm_num [Complex.ext_iff, pow_two]
   rw [this] at h3
   norm_num at h3
--- House example c = −1: 0 goes to −1 and back; the start 2 runs off as 2, 3, 8, 63.
+-- Example c = −1: 0 goes to −1 and back; the start 2 runs off as 2, 3, 8, 63.
 example : (fun z : ℂ => z ^ 2 - 1)^[2] 0 = 0 := by
   simp only [Function.iterate_succ_apply', Function.iterate_zero, id]
   norm_num [Complex.ext_iff, pow_two]

@@ -25,7 +25,7 @@ def gi(a, b):                            # a whole-number point a + bi, written 
 def g(zs): return ", ".join(gi(int(z.real), int(z.imag)) for z in zs)
 def card(lam): return lam / 2 - lam * lam / 4    # the cardioid: fixed point with multiplier lam
 oi = orbit(1j, 0, 5); m_i = 4 * oi[2] * oi[3]   # 2-cycle multiplier: f' = 2z at both points
-print(f"house c = -1: orbit of 0 is {g(orbit(-1, 0, 4))}; orbit of 2 is {g(orbit(-1, 2, 3))}")
+print(f"c = -1: orbit of 0 is {g(orbit(-1, 0, 4))}; orbit of 2 is {g(orbit(-1, 2, 3))}")
 print(f"c = i: orbit of 0 is {g(oi)}: a 2-cycle, so i is in M")
 print(f"c = i: cycle multiplier 4(-1+i)(-i) = {g([m_i])}, size {f4(abs(m_i))}; |c + 1| = {f4(abs(1j + 1))}")
 print(f"c = 1: orbit of 0 is {g(orbit(1, 0, 4))}; first |z| > 2 at step {escape(1)}")

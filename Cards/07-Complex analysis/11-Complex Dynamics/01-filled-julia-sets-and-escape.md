@@ -1,4 +1,4 @@
-# Filled Julia sets: iterate z squared plus c, and the starting points that never escape form a fractal
+# Filled Julia sets: iterate z squared plus c, and the starting points that never escape usually have a fractal edge
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Complex Dynamics](../README.md#s11) → Filled Julia sets
 
@@ -58,7 +58,7 @@ Here $`\partial`$ means **boundary**: the points whose every small disc meets bo
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $`c`$ | the fixed complex number added after squaring | −1 | the set changes shape; past length 2 it falls apart |
-| $`z_0`$, $`z_n`$, $`n`$, $`k`$ | the start; the orbit's value after $`n`$ steps; $`k`$ more steps after that | start 1.7; $`z_2`$ = 2.5721 | a start farther out escapes sooner |
+| $`z_0`$, $`z_n`$, $`n`$, $`k`$ | the start; the orbit's value after $`n`$ steps; $`k`$ more steps after that | start 1.7; $`z_2`$ = 2.5721 | past $`R`$, larger $`\lvert z_n\rvert`$ raises the growth bound |
 | $`f_c`$ | the rule: square, then add $`c`$ | $`f_{-1}(1.7)`$ = 1.89 | — |
 | $`R`$ | escape radius: the larger of 2 and $`\lvert c\rvert`$ | 2 | a looser, still correct test |
 | $`\lambda`$ | the least growth factor per step once past $`R`$ | 1.5721 at $`z_2`$ | faster escape |
@@ -606,12 +606,12 @@ example : Real.goldenRatio ^ 2 - 1 = Real.goldenRatio := by
 
 ## Where this goes next
 
-- [Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md): why 1.5 falls onto the 2-cycle 0, −1, and why the Julia set is where cycles repel.
+- [Attracting and repelling cycles](02-multipliers-and-the-fatou-and-julia-sets.md): why 1.5 falls onto the 2-cycle 0, −1, and why every repelling cycle lies in the Julia set.
 - [The Mandelbrot set](03-the-mandelbrot-set.md): one picture of every c, sorted by whether the orbit of 0 escapes.
 - [Iteration](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): feeding a rule back into itself on the real line, drawn as a staircase.
 - [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): why a fixed point such as 1.618034 pushes nearby starts away.
 
-Left open: for which c is the filled Julia set one connected piece, and for which does it break into dust?
+Left open: why does 1.5 fall onto the 2-cycle 0, −1 while starts near 1.618034 fly apart? Attracting and repelling cycles answers that next; The Mandelbrot set then answers which c give a one-piece filled Julia set.
 
 ---
 

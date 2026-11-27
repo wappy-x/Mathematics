@@ -194,7 +194,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Iterating z squared plus c: which starts escape, the fractal edge between them, and the map of every c*
 
-1. [Filled Julia sets: iterate z squared plus c, and the starting points that never escape form a fractal](11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md)
+1. [Filled Julia sets: iterate z squared plus c, and the starting points that never escape usually have a fractal edge](11-Complex%20Dynamics/01-filled-julia-sets-and-escape.md)
 2. [Attracting and repelling cycles: the multiplier decides, and the Julia set is where the iterates stop being a normal family](11-Complex%20Dynamics/02-multipliers-and-the-fatou-and-julia-sets.md)
 3. [The Mandelbrot set: the c whose orbit of 0 stays bounded, and why that decides whether the Julia set is in one piece](11-Complex%20Dynamics/03-the-mandelbrot-set.md)
 
