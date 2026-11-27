@@ -1,4 +1,4 @@
-# The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots
+# The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots, counted with repeats
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [For the Curious](../README.md#s10) → The fundamental theorem of algebra
 
@@ -524,10 +524,10 @@ example : (5 * 1 ^ 2 - 20 * 1 + 25 : ℤ) = 10 ∧ (5 * 3 ^ 2 - 20 * 3 + 25 : �
 
 - [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md): whole numbers a + bi, with their own primes.
 - [Complex numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): a + bi as a point on a plane.
-- [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): the missing existence proof.
+- [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): proves Step 0: why every nonconstant complex polynomial must have at least one root.
 - [Homology of spheres, and degree](../../17-Topology/05-Homology/07-homology-of-spheres-and-degree.md): the wrap count of Step 0, made into a tool.
 - [Splitting fields](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/03-splitting-fields-and-algebraic-closure.md): the property stated above has a name there, **algebraically closed**.
-- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): uses a complex root of a characteristic polynomial, which this theorem guarantees, to make every symmetry-respecting map on an irreducible piece a plain scalar.
+- [Schur's lemma and orthogonality](../12-Group%20Representations/02-schurs-lemma-and-character-orthogonality.md): uses a complex root here to show symmetry-keeping maps on unbreakable pieces just scale.
 
 The n roots exist; finding them is another matter — [Why there is no quintic formula](02-why-no-quintic-formula.md).
 

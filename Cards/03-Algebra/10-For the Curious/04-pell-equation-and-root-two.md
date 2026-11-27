@@ -1,4 +1,4 @@
-# Pell's equation: the whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2
+# Pell's equation: the positive whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [For the Curious](../README.md#s10) → Pell's equation
 
@@ -12,7 +12,7 @@ Exactness is impossible: the big side over a small side would be root 2, the num
 
 And the near miss pays: 3/2 = 1.5000000, 17/12 = 1.4166667, 99/70 = 1.4142857, against root 2 = 1.4142136.
 
-**The pairs that leave exactly one counter over never stop coming: each is the pair before it multiplied by 3 + 2 root 2, and each is a sharper fraction for root 2.**
+**The positive pairs that leave exactly one counter over never stop coming: starting from (3, 2), each is the pair before it multiplied by 3 + 2 root 2, and each is a sharper fraction for root 2.**
 
 **What kind of fact this is:** a theorem, proved in Why it works. Among positive whole-number pairs, every positive whole power of 3 + 2 root 2 solves the equation, and nothing else does.
 
@@ -643,7 +643,7 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 - **Photocopier zoom.** Enlarging A4 to A3 is preset as 141%, the two-place fraction 141/100 for root 2. It is close enough for paper, yet 141^2 - 2 × 100^2 = -119, so it is no solution.
 
 > **Say it back**
-> A 17 by 17 square of counters is one more than two 12 by 12 squares, and pairs like that never run out. The left side of x^2 - 2y^2 = 1 is x + y root 2 times its conjugate, so a solution is a number whose conjugate is its reciprocal, still whole. Norms multiply, so multiplying by 3 + 2 root 2 turns any solution into the next, for ever. Backwards it shrinks the bottom number, and shrinking whole numbers must stop, so nothing is missed. Each fraction sits just above root 2: 99/70 is right to four places.
+> A 17 by 17 square of counters is one more than two 12 by 12 squares, and pairs like that never run out. The left side of x^2 - 2y^2 = 1 is x + y root 2 times its conjugate, so a solution is a number whose conjugate is its reciprocal, still whole. Norms multiply, so multiplying by 3 + 2 root 2 turns any solution into the next, for ever. Backwards it shrinks the bottom number, and shrinking positive whole numbers must stop, so nothing is missed. Each positive solution's fraction sits just above root 2: 99/70 is right to four places.
 
 ---
 
@@ -658,7 +658,7 @@ example : (297 : ℚ) / 210 = 99 / 70 := by norm_num
 ## Where this goes next
 
 - [The unit theorem](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/07-dirichlets-unit-theorem.md): how many units a number family has, in general.
-- [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md): any whole number under the root, the continued fraction supplying the first solution.
+- [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md): any non-square positive whole number under the root, with continued fractions supplying the first solution.
 
 This card starts from (3, 2) and never says where that pair came from. Finding the first solution is the job of wing 21's [Pell's equation](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/01-pell-and-continued-fractions-revisited.md) card.
 

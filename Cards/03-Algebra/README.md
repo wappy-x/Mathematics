@@ -173,10 +173,10 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Five stand-alone excursions: the fundamental theorem of algebra with i glossed, why the quintic has no formula, Gaussian integers and sums of two squares, Pell's equation and root 2, and Boolean algebra and lattices. Complex arithmetic proper is wing 07; Galois theory and deeper number theory live in wing 21.*
 
-1. [The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots](10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)
+1. [The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots, counted with repeats](10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)
 2. [Why there is no quintic formula: degrees 2, 3 and 4 have one, degree 5 provably cannot, because the roots' symmetries are too tangled](10-For%20the%20Curious/02-why-no-quintic-formula.md)
 3. [Gaussian integers: whole numbers a + bi, where 5 is no longer prime, and which numbers are a sum of two squares](10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md)
-4. [Pell's equation: the whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2](10-For%20the%20Curious/04-pell-equation-and-root-two.md)
+4. [Pell's equation: the positive whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2](10-For%20the%20Curious/04-pell-equation-and-root-two.md)
 5. [Boolean algebra: true/false, sets and switches obey the same rules, and the power set drawn as a cube is a lattice](10-For%20the%20Curious/05-boolean-algebra-and-lattices.md)
 
 [↑ Back to the shelves](#top)

@@ -6,7 +6,7 @@
 
 ## General Overview
 
-Two equations of degree five: the highest power of the unknown is the fifth. One asks for a number whose fifth power is 2, the other for a number whose fifth power is one more than itself. Both have an answer; only one can be written down.
+Two equations of degree five: the highest power of the unknown is the fifth. One asks for a number whose fifth power is 2, the other for a number whose fifth power is one more than itself. Both have an answer; only one can be written with arithmetic and roots.
 
 The first is x^5 - 2 = 0, answered by the fifth root of 2: 1.1486983550 to ten places. The second is x^5 - x - 1 = 0, answered by 1.1673039783, which fifty halvings of an interval around it pin down.
 

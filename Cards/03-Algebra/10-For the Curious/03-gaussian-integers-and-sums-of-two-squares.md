@@ -16,7 +16,7 @@ Then 5 = (2 + i)(2 - i): expanding, the middle terms cancel, -i × i is +1, and 
 
 A point a across and b up is written a + bi. These are the **Gaussian integers** from here on, and the squared length of one is its **norm**.
 
-**A whole number is a sum of two squares exactly when it splits into a Gaussian integer times its mirror image, and which numbers split is settled by their ordinary prime factors.**
+**A whole number is a sum of two squares exactly when it splits into a Gaussian integer times its mirror image, and which positive ones split is settled by their ordinary prime factors.**
 
 **What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule, on which primes are sums of two squares, is stated here and proved on [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md).
 
@@ -553,7 +553,7 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 - **Phone and Wi-Fi signals.** A common radio scheme packs 4 bits into each pulse by choosing one of 16 points on a square grid, at coordinates ±1 and ±3. Each point's energy is its norm: 1 + 1 = 2, 1 + 9 = 10 or 9 + 9 = 18.
 
 > **Say it back**
-> A Gaussian integer is a grid point a + bi with whole coordinates, where i × i = -1, and its norm is a^2 + b^2. A point times its mirror image is its norm, so a whole number is a sum of two squares exactly when it splits that way: 5 = (2 + i)(2 - i), 13 = (3 + 2i)(3 - 2i). Norms multiply, so those two combine into 65 = 4^2 + 7^2, leaving only the primes to settle. Fermat's rule settles them: 2 and the remainder-1 primes qualify, the rest do not. For a composite, every remainder-3 prime must appear an even number of times — why 45 qualifies and 21 does not.
+> A Gaussian integer is a grid point a + bi with whole coordinates, where i × i = -1, and its norm is a^2 + b^2. A point times its mirror image is its norm, so a whole number is a sum of two squares exactly when it splits that way: 5 = (2 + i)(2 - i), 13 = (3 + 2i)(3 - 2i). Norms multiply, so those two combine into 65 = 4^2 + 7^2, leaving only the primes to settle. Fermat's rule settles them: 2 and the remainder-1 primes qualify, the rest do not. For a positive composite, every remainder-3 prime must appear an even number of times — why 45 qualifies and 21 does not.
 
 ---
 
@@ -566,7 +566,7 @@ example : (List.range 5).map (fun a => a ^ 2 + 3 ^ 2) = [9, 10, 13, 18, 25] ∧
 
 ## Where this goes next
 
-- [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): proves the half stated here, and counts representations.
+- [Two squares](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/02-sums-of-squares-and-gaussian-integers.md): proves Fermat's hard half and counts how many ways a number splits into two squares.
 - [Pell's equation](04-pell-equation-and-root-two.md): the same norm trick with root 2 in place of i, where the units never run out.
 - [Cubic reciprocity](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/12-cubic-reciprocity-and-jacobi-sums.md): the same norm-and-split idea on a triangular grid of whole numbers, used to decide when 2 is a perfect cube in remainder arithmetic with a prime number of hours (a prime clock).
 
