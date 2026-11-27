@@ -14,7 +14,7 @@ One line holds the session: **21 × (−2) + 15 × 3 = 3**. Pouring in counts up
 
 The 3 is not luck: it is the greatest common divisor — gcd for short — of 21 and 15, the biggest number dividing both ([Greatest common divisor](01-gcd.md)).
 
-**Any whole-number mix of two numbers — copies of one poured in, copies of the other thrown away — lands on a multiple of their gcd, and the gcd itself is always reachable.**
+**Any whole-number mix of two whole numbers (not both zero) — copies of one poured in, copies of the other thrown away — lands on a multiple of their gcd, and the gcd itself is always reachable.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works: Euclid's chain, walked back up, always reaches the gcd.
 
@@ -86,7 +86,7 @@ Only the jugs are left: those are the pours.
 
 Nothing here can fail: every chain stops, every line rearranges, and a mix swapped into a mix is still a mix ([Euclid's algorithm](03-euclidean-algorithm.md); careful form on [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)).
 
-Step 0 rules out everything below the gcd; Step 2 reaches it. So the gcd is the smallest amount above zero the tub can hold: biggest thing dividing both, smallest thing you can build.
+Step 0 rules out everything between 0 and the gcd; Step 2 reaches it. So the gcd is the smallest amount above zero the tub can hold: biggest thing dividing both, smallest thing you can build.
 
 ### There is never just one answer
 
@@ -387,7 +387,7 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 - **Measuring puzzles and gear teeth.** A target is reachable exactly when the gcd divides it: 21 and 15 can leave 6 or 9 litres, never 4, and two cogs line up on the multiples of their gcd.
 
 > **Say it back**
-> Pour copies of one number in, throw copies of the other away, and what is left is a multiple of their gcd — so 21 and 15 can never leave 1 or 2 litres. The gcd itself is always reachable: run Euclid down to it, then walk back up, swapping remainders out. Here, 21 × (−2) + 15 × 3 = 3. Slide by each jug over the gcd for another pair, forever.
+> With two whole numbers not both zero, pour whole copies of one in and throw whole copies of the other away, and what is left is a multiple of their gcd — so 21 and 15 can never leave 1 or 2 litres. The gcd itself is always reachable: run Euclid down to it, then walk back up, swapping remainders out. Here, 21 × (−2) + 15 × 3 = 3. Slide by each jug over the gcd for another pair, forever.
 
 ---
 
@@ -405,9 +405,9 @@ example : (3 : ℤ) ∣ 6 ∧ (3 : ℤ) ∣ 9 ∧ ¬ ((3 : ℤ) ∣ 4) := by dec
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the same counts, dividing on a clock.
 - [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): which amounts a mix still reaches when throwing away is banned and both counts must be 0 or more.
 - [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): neighbouring fractions cross-multiply to a mix landing on 1, which fixes their gap and makes their circles touch.
-- [Generalised eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): the same mix landing on 1, built from polynomials instead of numbers, splits a matrix's space into pieces.
+- [Generalised eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/09-generalised-eigenvectors.md): the same mix landing on 1, built from polynomials (sums of powers of x), splits a square matrix's space into pieces.
 
-Left open: when two numbers share no factor and the mix lands on 1, what can that 1 be used for?
+Left open: when two numbers share no factor above 1 and the mix lands on 1, what can that 1 be used for?
 
 ---
 

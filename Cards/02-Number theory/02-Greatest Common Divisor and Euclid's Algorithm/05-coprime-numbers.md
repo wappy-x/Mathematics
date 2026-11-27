@@ -14,7 +14,7 @@ Swap in a 27-tooth gear. Tooth 0 now meets slots 0, 15, 3, 18, 6, 21, 9, 24, 12 
 
 One number does that: 15 and 27 both divide by 3; 15 and 28 divide by nothing but 1.
 
-**Two numbers are coprime when the only whole number that divides both of them is 1 — their greatest common divisor is 1.**
+**Two whole numbers are coprime when the only positive whole number that divides both of them is 1 — their greatest common divisor is 1.**
 
 **What kind of fact this is:** a definition, then a theorem proved in Why it works: a pair is coprime exactly when some whole-number mix of the two equals 1.
 
@@ -69,7 +69,7 @@ The same fact in the form that does the work:
 
 Forward: Bezout's identity ([Bezout's identity](04-bezouts-identity.md)) says the greatest common divisor is always a mix of the two. For 15 and 28 it is 1, so some mix is 1: 28 × 7 − 15 × 13.
 
-Back: suppose a mix equals 1. Anything dividing both numbers divides everything built from them, so it divides that mix, so it divides 1 — so it is 1. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), three lines. **Coprime is a licence to build 1**, not merely a shortage of shared factors.
+Back: suppose a mix equals 1. Any positive whole number dividing both numbers divides everything built from them, so it divides that mix, so it divides 1 — so it is 1. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), three lines. **Coprime is a licence to build 1**, not merely a shortage of shared factors.
 
 ### Step 2: neighbours are always coprime
 
@@ -235,11 +235,11 @@ Both outputs match line for line.
 
 ### Lean
 
-Lean proves all three claims for every pair of whole numbers, not just 15 with 28 and 27.
+Lean proves the first two claims for every pair of whole numbers, and the gear rule for any tooth count from 0 up driving a gear of 1 or more slots, not just 15 with 28 and 27.
 
 - Two whole numbers are coprime exactly when some whole-number mix of them equals 1. The mix may take away.
 - Any two neighbours are coprime.
-- A small gear drives a big one. Tooth 0 meets the big gear's slot count divided by the shared factor. So it meets every slot exactly when the counts are coprime.
+- A small gear (0 or more teeth) drives a big one (1 or more slots). Tooth 0 meets the big gear's slot count divided by the shared factor. So it meets every slot exactly when the counts are coprime.
 
 It also checks the card's numbers exactly: the shared factors, the mixes, the slot lists, the pairings, 15/27 in lowest terms and the usual mistake. The lowest-terms rule in general and walking the gears turn by turn are left to the Python and Rust checks.
 
@@ -395,7 +395,7 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 - **Cicadas.** Some broods surface on a prime number of years, coprime with the cycles of what eats them, so the two seldom peak together.
 
 > **Say it back**
-> Two numbers are coprime when nothing but 1 divides both. 15 and 28 are; 15 and 27 share a 3. Coprime also means some mix of the two lands exactly on 1, which is what makes such a pair useful elsewhere. In the gearbox every tooth meets every slot, so wear spreads instead of digging in.
+> Two whole numbers are coprime when no positive whole number but 1 divides both. 15 and 28 are; 15 and 27 share a 3. Coprime also means some mix of the two lands exactly on 1, which is what makes such a pair useful elsewhere. In the gearbox every tooth meets every slot, so wear spreads instead of digging in.
 
 ---
 
@@ -410,7 +410,7 @@ example : ¬ Nat.Prime 15 ∧ ¬ Nat.Prime 28 ∧ Nat.Coprime 15 28 := by norm_n
 - [Euclid's lemma](06-euclids-lemma.md): a prime dividing a product divides one of the factors, proved by mixing to 1.
 - [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication on a clock face needs a coprime multiplier.
 - [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
-- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number up to their product when the counts are coprime.
 - [The coin problem](../03-Clock%20Arithmetic/07-frobenius-coin-problem.md): when two stamp values are coprime, only finitely many amounts cannot be paid without taking any away.
 - [Binary quadratic forms](../08-Quadratic%20Forms%20and%20Approximation/01-binary-quadratic-forms.md): which numbers x^2 + 5y^2 and its cousins reach when x and y are coprime.
 

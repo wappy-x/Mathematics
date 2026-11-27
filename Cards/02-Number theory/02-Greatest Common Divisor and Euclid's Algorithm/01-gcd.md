@@ -60,7 +60,7 @@ Road two, the primes ([Prime factorisation](../01-Divisibility%20and%20Primes/07
 
 ### When it holds
 
-- **Both numbers bigger than zero.** Every number divides zero, so two zeros share every number and there is no largest. With one zero the answer is the other number, gcd(n, 0) = n ([Euclid's algorithm](03-euclidean-algorithm.md)). Road two also needs prime lists, and zero has none.
+- **Both numbers bigger than zero.** Every number divides zero, so two zeros share every number and there is no largest. With one zero and one positive number, the answer is the positive number, gcd(n, 0) = n ([Euclid's algorithm](03-euclidean-algorithm.md)). Road two also needs prime lists, and zero has none.
 - **The piece goes into both numbers, not just one.** 180 goes into 180 but not into 300.
 - **Each shared prime kept only as often as the poorer side holds it.** Keep both of 300's 5s and you get 300, which does not go into 180.
 
@@ -358,7 +358,7 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 - **Gears.** Two wheels come back into line on a cycle set by what their tooth counts share ([Coprime numbers](05-coprime-numbers.md)).
 
 > **Say it back**
-> The greatest common divisor is the largest number that goes into both with nothing left over. For a 180 cm by 300 cm floor it is 60: 3 tiles across, 5 down, 15 in all, no cutting. Find it by listing what divides each and taking the largest they share, or by keeping each shared prime as often as the poorer side has it. Everything else they share divides 60.
+> The greatest common divisor of two positive whole numbers is the largest number that goes into both with nothing left over. For a 180 cm by 300 cm floor it is 60: 3 tiles across, 5 down, 15 in all, no cutting. Find it by listing what divides each and taking the largest they share, or by keeping each shared prime as often as the poorer side has it. Everything else they share divides 60.
 
 ---
 
@@ -370,9 +370,9 @@ example : Nat.gcd 180 180 = 180 ∧ Nat.gcd 180 200 = 20 ∧ 2 * 2 * 5 = 20 := b
 
 ## Where this goes next
 
-- [Least common multiple](02-lcm.md): the other end — the first number both divide into, and why gcd times lcm is the product.
+- [Least common multiple](02-lcm.md): the other end — the first positive number both divide into, and why gcd times lcm is the product.
 - [Euclid's algorithm](03-euclidean-algorithm.md): the same answer by remainders, fast even for numbers nobody can factor.
-- [Coprime numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share nothing.
+- [Coprime numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share no factor above 1.
 - [Farey fractions and Ford circles](../08-Quadratic%20Forms%20and%20Approximation/04-farey-sequences-and-ford-circles.md): fractions in lowest terms, top and bottom with gcd 1, lined up in order; neighbours sit exactly one over the product of their bottoms apart.
 - [Pick's theorem](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/07-picks-theorem.md): a polygon's area from grid dots, where the gcd of an edge's across and up steps counts the dots on that edge.
 

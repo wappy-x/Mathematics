@@ -45,8 +45,8 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Shared factors and multiples, Euclid's algorithm, Bezout's mix, coprimality, Euclid's lemma, why factorisation is unique, infinitely many primes. First use of negative numbers, fractions and the proof cards.*
 
 1. [Greatest common divisor: the biggest number that divides both, from factor lists and from prime factorisations](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md)
-2. [Least common multiple: the first number both divide into, and why gcd times lcm equals the product](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)
-3. [Euclid's algorithm: divide, keep the remainder, repeat, and the last non-zero remainder is the gcd](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)
+2. [Least common multiple: the first positive number both divide into, and why gcd times lcm equals the product](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)
+3. [Euclid's algorithm: divide, keep the remainder, repeat, and the divisor that leaves zero is the gcd](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)
 4. [Bezout's identity: the gcd is always a whole-number mix of the two numbers, and running Euclid backwards finds the mix](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)
 5. [Coprime numbers: sharing no factor but 1, and why that one condition unlocks so much](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)
 6. [Euclid's lemma: if a prime divides a product it divides one of the factors, and composites carry no such promise](02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)

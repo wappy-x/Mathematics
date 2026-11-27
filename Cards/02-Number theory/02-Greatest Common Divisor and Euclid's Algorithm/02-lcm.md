@@ -1,4 +1,4 @@
-# Least common multiple: the first number both divide into, and why gcd times lcm equals the product
+# Least common multiple: the first positive number both divide into, and why gcd times lcm equals the product
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Least common multiple
 
@@ -12,7 +12,7 @@ Keep counting and they snap back. The drum comes round after 6, 12, 18 and 24 be
 
 That 24 is the **least common multiple** of 6 and 8 — lcm(6, 8) for short. A multiple of a number is that number counted out whole times; a common multiple turns up in both counts; the least one is where the patterns meet. [Greatest common divisor](01-gcd.md) asked what goes into both; this asks what both go into.
 
-**The first number both go into is the two numbers multiplied, divided by the biggest number that goes into both.**
+**For any two whole numbers of 1 or more, the first positive number both go into is the two numbers multiplied, divided by the biggest number that goes into both.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works.
 
@@ -41,7 +41,7 @@ Two ways to the 24. From the lists: write out the multiples of each, stop at the
 | Piece | Plain meaning | In our beats |
 | --- | --- | --- |
 | a multiple | the number counted out whole times | 6, 12, 18, 24 |
-| the least common multiple, lcm | the first number in both lists of multiples | 24 |
+| the least common multiple, lcm | the first positive number in both lists of multiples | 24 |
 | the greatest common divisor, gcd | the biggest number going into both ([Greatest common divisor](01-gcd.md)) | 2 |
 | the product | the two loop lengths multiplied | 48 |
 
@@ -64,7 +64,7 @@ Play the drum 8 times and the bass 6 times: both finish at beat 48, so shared be
 
 Take any beat where both patterns come round. Divide it by 24 and keep the remainder ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)): a whole number of 24s, plus a remainder under 24.
 
-Those 24s are a shared beat, and so is the beat you started with. Subtract, and the remainder is shared too — 6 goes into both, so 6 goes into their difference, and the same for 8. But a shared beat under 24 would have beaten 24 to the title, so the remainder is nothing. Shared beats are exactly 24, 48, and on up in 24s.
+Those 24s are a shared beat, and so is the beat you started with. Subtract, and the remainder is shared too — 6 goes into both, so 6 goes into their difference, and the same for 8. But a shared beat above zero and under 24 would have beaten 24 to the title, so the remainder is nothing. Shared beats are exactly 24, 48, and on up in 24s.
 
 ### Step 2 — why the gcd is exactly what to divide by
 
@@ -74,7 +74,7 @@ It goes into both loops. 48 is 6 × 8 and 24 is 6 × 4, so cancel the 6s: 48 ÷ 
 
 Nothing bigger does. Take any number d that goes into both loops, and divide 48 by it. The answer is 6 times (8 ÷ d) and also 8 times (6 ÷ d), so it is a shared beat. Shared beats are 24 or more, so 48 ÷ d is 24 or more, and d is 2 or less.
 
-So the biggest number into both, times the first number both go into, is the two multiplied. Nothing here was special to 6 and 8: the same argument works for any two counting numbers.
+So the biggest number into both, times the first positive number both go into, is the two multiplied. Nothing here was special to 6 and 8: the same argument works for any two counting numbers.
 
 The prime route says it too: for each prime the lcm takes the most and the gcd the fewest, and most plus fewest is how many the two have between them ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
@@ -216,7 +216,7 @@ The two outputs match line for line.
 
 Lean proves these claims for every pair of whole loop lengths of 1 beat or more, not just 6 and 8.
 
-- The first shared beat is the two lengths multiplied, divided by the gcd.
+- The first shared beat above zero is the two lengths multiplied, divided by the gcd.
 - The gcd times the first shared beat is the two lengths multiplied.
 - Every shared beat is a multiple of the first one, and every multiple of it is a shared beat.
 - The card's numbers for the 6-beat drum and the 8-beat bass all check out.
@@ -349,7 +349,7 @@ example : Nat.gcd 4 8 = 4 ∧ Nat.lcm 4 8 = 8 := by decide
 ## Where this goes next
 
 - [Euclid's algorithm](03-euclidean-algorithm.md): the fast way to find the gcd, which the short way divides by, even when the numbers are too big to factor.
-- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): which beat lands two patterns on any pair of positions you pick.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): which beat lands two patterns on any pair of positions you pick, when their lengths share no factor above 1.
 - [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles of different lengths meeting again, drawn as time.
 
 Left open: the short way needs the gcd first. How do you find the gcd fast when the numbers are too big to list or factor? That is [Euclid's algorithm](03-euclidean-algorithm.md).

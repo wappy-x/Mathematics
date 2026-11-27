@@ -343,7 +343,7 @@ example : 5 * 7 + 1 = 36 ∧ 36 = 2 * 2 * 3 * 3 := by norm_num
 - **Proof by contradiction.** The example everyone learns it on: assume the opposite, build one object, watch it break ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 > **Say it back**
-> Take any finite list of primes. Multiply them and add one. Each listed prime divides the product exactly, so each leaves remainder 1 on the answer and none of them divides it. But every number above 1 has a prime factor, so that factor is a prime the list missed. With 2, 3, 5, 7, 11, 13 the answer is 30031 — not prime, but 59 × 509, both new, which is all the proof asked for. No finite list is complete, so the primes never run out.
+> Take any finite list of primes. Multiply them and add one. Each listed prime divides the product exactly, so each leaves remainder 1 on the answer and none of them divides it. But every whole number above 1 has a prime factor, so that factor is a prime the list missed. With 2, 3, 5, 7, 11, 13 the answer is 30031 — not prime, but 59 × 509, both new, which is all the proof asked for. No finite list is complete, so the primes never run out.
 
 ---
 

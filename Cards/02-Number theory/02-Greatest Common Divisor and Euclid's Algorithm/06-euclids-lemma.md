@@ -18,9 +18,9 @@ Now try a composite cycle. Many schools run a 6-day timetable, Day 1 to Day 6. A
 
 Nine meetings on, 36 days have passed: 6 divides 36 but neither the 4 nor the 9. The 6 came apart: it is 2 × 3, the 2 into the 4, the 3 into the 9.
 
-**A prime that divides a product divides one of the numbers multiplied. A composite can split its factors across the two and divide neither.**
+**A prime that divides a product of whole numbers divides one of the numbers multiplied. A composite can split its factors across the two and divide neither.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works: a prime that misses one factor shares nothing with it, and a mix landing on 1 does the rest.
+**What kind of fact this is:** a theorem, proved on this card in Why it works: a prime that misses one factor shares no factor above 1 with it, and a mix landing on 1 does the rest.
 
 ### The picture: a composite splits, a prime cannot
 
@@ -92,7 +92,7 @@ The left side is 21, so 21 = 7 × 3: the 7 is in the number of calls. A direct p
 
 6 dies at Step 0. 6 and 4 share the factor 2, so every mix of them is even: nothing lands on 1, no line to multiply. And 6 divides 36 but neither the 4 nor the 9.
 
-The tempting route: 84's primes are 2, 2, 3 and 7, so the 7 lands on one side. But that leans on every number having one fixed list of primes — proved *from* this lemma. [Why the factorisation is unique](07-unique-factorisation.md) runs them in that order.
+The tempting route: 84's primes are 2, 2, 3 and 7, so the 7 lands on one side. But that leans on every whole number above 1 having one fixed list of primes — proved *from* this lemma. [Why the factorisation is unique](07-unique-factorisation.md) runs them in that order.
 
 ---
 
@@ -245,7 +245,7 @@ Both outputs match line for line.
 
 ### Lean
 
-Lean proves three things for every whole number, not just the rota's, and checks the rota's numbers one by one.
+Lean proves three facts for every whole number from 0 up, and checks the rota's numbers.
 
 - Euclid's lemma: if a prime divides the product of two whole numbers and misses the first, it divides the second.
 - Step 0: a prime that misses a number shares only 1 with it, so the two are coprime.
@@ -341,7 +341,7 @@ example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by dec
 
 > [!TIP]
 > **Try changing**
-> Guess first, then run. The numbers are pinned to this rota, so the script will stop — on an assert, or on the hunt for the mix coming up empty.
+> Guess first, then run. The script is pinned to this rota, so an assert or the mix hunt stops it.
 > - **Change the prime to 3.** The printed maths works out: the mix 4 × 1 + 3 × (−1) = 1, and 21 = 3 × 7. Then the assert pinned to 4 divided by 7 leaving 4 fires.
 > - **Change the 7 to 6.** The hunt for a mix landing on 1 finds nothing and the script stops there — the lemma failing in front of you.
 
@@ -350,7 +350,7 @@ example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by dec
 ## The usual mistake
 
 > [!warning]
-> **Thinking any number that divides a product sits whole inside one of the two factors.** Only primes promise that. 6 divides 36 and hides in neither: half in the 4, half in the 9.
+> **Thinking any number that divides a product sits whole inside one of the two factors.** Among whole numbers above 1, only primes promise that. 6 divides 36 and hides in neither: half in the 4, half in the 9.
 >
 > - **Expecting the prime in both.** One is all it promises: 4 divided by 7 leaves 4.
 > - **Dropping the "does not divide" half.** Without it you know the prime is in one of the two, but not which. 7 misses the 4, so it is the 21.
@@ -365,7 +365,7 @@ example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by dec
 - **Check digits and primality tests.** A check digit against a prime catches two swapped digits ([ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md)), and one that squares to 1 on a prime clock must be 1 or −1 — the step [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md) leans on.
 
 > **Say it back**
-> 21 calls, 4 days apart, take 84 days, and 7 divides 84. 7 does not divide 4, so the 7 must be inside the 21 — and it is: 21 = 7 × 3. Why: 7 and 4 share no factor, so a mix of them lands on 1, and times 21 that mix puts the 7 in both terms on the left. Only primes get this: 6 divides 36 but neither the 4 nor the 9, since 6 is 2 × 3.
+> 21 calls, 4 days apart, take 84 days, and 7 divides 84. Since 7 misses 4, it sits inside 21 = 7 × 3. Why: 7 and 4 share no factor above 1, so a mix of them lands on 1, and times 21 that mix puts the 7 in both terms. Among whole numbers above 1, only primes get this: 6 = 2 × 3 divides 36 but neither 4 nor 9.
 
 ---
 
@@ -378,13 +378,13 @@ example : (List.range 6).map (fun n => 4 * n % 6) = [0, 4, 2, 0, 4, 2] := by dec
 
 ## Where this goes next
 
-- [Why the factorisation is unique](07-unique-factorisation.md): apply it over and over; every number has one list of primes.
-- [Wilson's theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each number with the one that undoes it, on a prime clock.
+- [Why the factorisation is unique](07-unique-factorisation.md): apply it over and over; every whole number above 1 has one list of primes.
+- [Wilson's theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each non-zero number with the one that undoes it, on a prime clock.
 - [ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md): a check digit against a prime, and why a swap cannot slip past.
 - [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the primality test built on a prime dividing one factor.
-- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): on a prime clock a product reads 0 only when a factor does, so a degree-d polynomial has at most d roots.
+- [Lagrange's root bound](../04-Powers%20on%20the%20Clock/07-lagrange-root-bound.md): on a prime clock a product reads 0 only when a factor does, so a non-zero polynomial of degree d has at most d roots.
 
-Left open: one prime lands in one factor, but does every number break into primes in only one way?
+Left open: one prime lands in one factor, but does every whole number above 1 break into primes in only one way?
 
 ---
 

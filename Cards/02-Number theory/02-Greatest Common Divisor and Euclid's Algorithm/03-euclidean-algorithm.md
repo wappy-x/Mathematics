@@ -1,4 +1,4 @@
-# Euclid's algorithm: divide, keep the remainder, repeat, and the last non-zero remainder is the gcd
+# Euclid's algorithm: divide, keep the remainder, repeat, and the divisor that leaves zero is the gcd
 
 [Syllabus](../../../SYLLABUS.md) → [Number theory](../README.md) → [Greatest Common Divisor and Euclid's Algorithm](../README.md#s02) → Euclid's algorithm
 
@@ -41,7 +41,7 @@ The run is the formula:
 
 **1071 = 2 × 462 + 147, then 462 = 3 × 147 + 21, then 147 = 7 × 21 + 0, so the gcd is 21**
 
-**Read it aloud:** divide, note the remainder, divide the old smaller number by that remainder, repeat until a remainder is zero; the one before it is the gcd.
+**Read it aloud:** divide, note the remainder, divide the old smaller number by that remainder, repeat until a remainder is zero; the divisor that leaves zero is the gcd.
 
 | Piece | Plain meaning | In our run |
 | --- | --- | --- |
@@ -54,7 +54,7 @@ The quotients do no work here, but they are not junk: [Bezout's identity](04-bez
 
 ### When it holds
 
-- **Whole numbers.** The stop relies on whole numbers that cannot fall for ever. A square's side and diagonal never give a zero remainder, so the loop never ends.
+- **Whole numbers, 0 or more.** The stop relies on whole numbers from 0 up that cannot fall for ever. A square's side and diagonal never give a zero remainder, so the loop never ends.
 - **A remainder smaller than the divisor.** Allow a "remainder" as big as the number divided by, and the pair need not shrink, so the loop need not stop.
 - **At least one number above zero.** With two zeros there is no biggest divisor: every whole number divides 0.
 
@@ -72,7 +72,7 @@ Now the reverse: any number dividing 462 and 147 divides 2 × 462 + 147, which i
 
 A remainder is always smaller than what you divided by: 147 under 462, 21 under 147, 0 under 21. Whole numbers falling every step and never going below zero cannot fall for ever, so a remainder hits zero. That is well-ordering: [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
 
-That last line says 21 divides 147, and nothing bigger than 21 divides 21, so 21 is the biggest dividing both. Walk it back up: 21 is also the gcd of 462 and 147, and of 1071 and 462. In general the stop says gcd(n, 0) = n: n divides itself, and divides 0 too.
+That last line says 21 divides 147, and nothing bigger than 21 divides 21, so 21 is the biggest dividing both. Walk it back up: 21 is also the gcd of 462 and 147, and of 1071 and 462. In general, for any whole number n above zero, the stop says gcd(n, 0) = n: n divides itself, and divides 0 too.
 
 <details>
 <summary>How many divisions can this take?</summary>
@@ -226,7 +226,7 @@ Both outputs match line for line: whole metres, nothing to round.
 
 ### Lean
 
-Lean proves the algorithm stops at the gcd for every pair of whole numbers, at least one above zero.
+Lean proves the algorithm stops at the gcd for every pair of whole numbers from 0 up, at least one above zero.
 
 - A remainder always hits zero, and the number divided by at that moment is the biggest number dividing both.
 - The swap loses nothing: whatever divides a pair divides the divisor and remainder, and back.
@@ -384,7 +384,7 @@ example : Nat.gcd 1071 460 = 1 := by norm_num
 - **Cutting stock.** Timber, tape, sheet metal: two supplies cut to one size with no offcut, at their gcd.
 
 > **Say it back**
-> The gcd is the biggest number dividing two numbers with nothing left over. Divide the bigger by the smaller, keep the remainder, then divide the old smaller by that remainder, and keep going. Whatever divides one pair divides the next, and back, so the answer never moves while the numbers shrink. Remainders cannot fall below zero, so one is zero in the end — and the one before it is the answer. For the drums: 21 m, three divisions.
+> The gcd is the biggest number dividing two numbers with nothing left over. Divide the bigger by the smaller, keep the remainder, then divide the old smaller by that remainder, and keep going. Whatever divides one pair divides the next, and back, so the answer never moves while the numbers shrink. Remainders cannot fall below zero, so one is zero in the end — and the divisor that leaves zero is the answer. For the drums: 21 m, three divisions.
 
 ---
 
@@ -398,7 +398,7 @@ example : Nat.gcd 1071 460 = 1 := by norm_num
 
 - [Bezout's identity](04-bezouts-identity.md): run the same divisions backwards and the gcd comes out as whole-number helpings of the two starting numbers.
 - [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the discarded quotients, in order, give the best simple fractions near a ratio — how calendars pick leap years.
-- [Reduced forms](../08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md): Euclid's shrink-by-subtraction step, used on quadratic forms, slides each one down to a single reduced form.
+- [Reduced forms](../08-Quadratic%20Forms%20and%20Approximation/02-reduced-forms-and-class-numbers.md): Euclid's shrink-by-subtraction step slides each positive expression ax^2 + bxy + cy^2 to one tidy standard form.
 
 Left open: 21 is the biggest length both drums share, but can 21 itself be built by adding and taking away whole drum-lengths?
 

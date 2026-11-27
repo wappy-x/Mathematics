@@ -12,7 +12,7 @@ Take 24 and 3,600 down to primes — numbers above 1 that will not split ([Prime
 
 The other pair: 1,440 gives 2, 2, 2, 2, 2, 3, 3, 5; 60 gives 2, 2, 3, 5. Pooled: seven 2s, three 3s, two 5s. The same twelve.
 
-Different trees ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), same leaves. Every number, every time.
+Different trees ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), same leaves. Every whole number above 1, every time.
 
 **Every whole number above 1 is a product of primes in exactly one way: the order can change, the primes and their counts cannot.**
 
@@ -42,14 +42,14 @@ On our number:
 
 | Piece | Plain meaning | In our day |
 | --- | --- | --- |
-| a prime | divides by nothing but 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 2, 3, 5 |
+| a prime | above 1, divides by nothing positive but 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 2, 3, 5 |
 | a factor tree | split until every piece is prime ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) | 24 × 3,600 |
 | the leaves | the primes at the ends of a tree | seven 2s, three 3s, two 5s |
 | Euclid's lemma | a prime dividing a product divides one factor ([Euclid's lemma](06-euclids-lemma.md)) | 3 divides 86,400, so 3 divides 24 or 3,600 |
 
 ### When it holds
 
-- **1 is not a prime.** Let a 1 in and the day's list runs to 13 primes, then 14.
+- **Whole numbers above 1, and 1 is not a prime.** Zero cannot be built from primes, and letting a 1 in runs the day's list to 13 primes, then 14.
 - **Split all the way to primes.** Stop at 24 × 3,600 and you hold 2 pieces that still split, not 12 primes.
 - **Euclid's lemma holds.** In the world 1, 5, 9, 13, ... there is no 3 or 7, so 9, 21 and 49 cannot split. The lemma fails there, and 441 = 9 × 49 = 21 × 21.
 
@@ -59,11 +59,11 @@ On our number:
 
 ### Step 0: the trees finish
 
-Every split makes the pieces smaller, and whole numbers cannot shrink forever, so splitting stops at primes. A list always exists — [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md) does that half. The hard half: never a second.
+Every split into factors above 1 makes the pieces smaller, and whole numbers above 1 cannot shrink forever, so splitting stops at primes. A list always exists — [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md) does that half. The hard half: never a second.
 
 ### Step 1: a smallest failure
 
-Suppose some number above 1 has two genuinely different prime lists. Any collection of whole numbers with something in it has a smallest member ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), so there is a smallest such number. Call it the offender; its lists, List One and List Two. Now squeeze until two facts collide — proof by contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+Suppose some number above 1 has two genuinely different prime lists. Any collection of whole numbers from 0 up with something in it has a smallest member ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), so there is a smallest such number. Call it the offender; its lists, List One and List Two. Now squeeze until two facts collide — proof by contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 ### Step 2: no prime is on both lists
 
@@ -77,7 +77,7 @@ Euclid's lemma ([Euclid's lemma](06-euclids-lemma.md)): a prime dividing a produ
 
 ### Step 4: the collision
 
-Step 2 says no prime is on both lists; Step 3 says one is. So there is no smallest offender, and therefore none. Every number above 1 has exactly one prime list. Without Euclid's lemma, Step 3 dies and the theorem with it.
+Step 2 says no prime is on both lists; Step 3 says one is. So there is no smallest offender, and therefore none. Every whole number above 1 has exactly one prime list. Without Euclid's lemma, Step 3 dies and the theorem with it.
 
 <details>
 <summary>A world where uniqueness really is false</summary>
@@ -375,24 +375,24 @@ example : 96 * 900 = 86400 := by norm_num
 - **Public-key cryptography.** RSA leans on both halves at once: a big number has exactly one prime list, and nobody can find it in time.
 
 > **Say it back**
-> A day is 86,400 seconds. Split it as 24 × 3,600 or as 1,440 × 60, keep splitting: both routes end at seven 2s, three 3s and two 5s. If a number had two different prime lists, take the smallest. Its lists cannot share a prime — cancel and you get a smaller one. But Euclid's lemma forces a shared prime. So none exists.
+> A day is 86,400 seconds. Split it as 24 × 3,600 or as 1,440 × 60, keep splitting: both routes end at seven 2s, three 3s and two 5s. If a whole number above 1 had two different prime lists, take the smallest. Its lists cannot share a prime — cancel and you get a smaller one. But Euclid's lemma forces a shared prime. So none exists.
 
 ---
 
 ## What this builds on
 
 - [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume it fails, squeeze until two facts collide.
-- [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): any collection of whole numbers with something in it has a smallest member — that names the offender.
+- [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): any collection of whole numbers from 0 up with something in it has a smallest member — that names the offender.
 - [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): the factor tree, and the easy half.
 - [Euclid's lemma](06-euclids-lemma.md): the one line the proof turns on.
 
 ## Where this goes next
 
 - [There are infinitely many primes](08-infinitude-of-primes.md): multiply the primes you have, add one, and a new prime must exist.
-- [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): how many numbers up to n share no factor with n, read straight off n's one prime list.
+- [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): how many whole numbers from 1 to n share no factor above 1 with n, read off n's prime list.
 - [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): a lock built on a number with exactly one prime list that nobody can find in time.
 
-Left open: every number has one list of primes, but does the supply of primes ever run out?
+Left open: every whole number above 1 has one list of primes, but does the supply of primes ever run out?
 
 ---
 
