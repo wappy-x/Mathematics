@@ -10,7 +10,7 @@ The function f(z) = 1/(z(z − 1)) is defined everywhere in the plane except z =
 
 A Taylor series about 0 ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)) needs a value at its centre, and there is none. The fix is to allow negative powers too: 1/z, 1/z^2, 1/z^3.
 
-Picture a flat doughnut round the centre: the region between two circles. A series with negative powers converges on such a ring.
+Picture a flat doughnut round the centre: the region between two circles. When both halves converge together, a series with negative powers converges on such a ring.
 
 This function has two rings round 0, split by the circle through its other bad point, 1. Inside, where 0 < |z| < 1, it equals −1/z − 1 − z − z^2 − …. Outside, where |z| > 1, it equals 1/z^2 + 1/z^3 + ….
 
@@ -18,7 +18,7 @@ From here on the ring is an **annulus**, and such a series a **Laurent series**,
 
 A second example, e^z/z^3 = 1/z^3 + 1/z^2 + (1/2)/z + 1/6 + …, has one ring: every z but 0. Its 1/z coefficient, 1/2, will matter most.
 
-**A function holomorphic (with a complex derivative) on a ring round a centre equals exactly one series in positive and negative powers of the distance from that centre; change the ring and the series can change.**
+**A function holomorphic (with a complex derivative) on an open ring round a centre equals exactly one series in positive, zero and negative powers of the point minus that centre; change the ring and the series can change.**
 
 **What kind of fact this is:** a theorem, proved in Why it works, the full argument folded; finding the series by geometric series is a method.
 
@@ -34,7 +34,7 @@ To scale: 50 units per 1, with 0 at (150, 120) and the hole 1 at (200, 120). Sha
 
 Notation first, in words. A sum from −∞ to ∞ means two sums, over the powers 0, 1, 2, … and over −1, −2, …, each converging on its own. The loop sign $`\oint`$ is the contour integral round a closed path, anticlockwise ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 
-If $`f`$ is holomorphic (has a complex derivative) at every point of the ring $`r < |z - a| < R`$, then on that ring
+If $`f`$ is holomorphic (has a complex derivative) at every point of the open ring $`r < |z - a| < R`$, with $`0 \le r < R \le \infty`$, then on that ring
 
 ```math
 f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n=\cdots+\frac{c_{-2}}{(z-a)^2}+\frac{c_{-1}}{z-a}+c_0+c_1(z-a)+\cdots
@@ -93,14 +93,18 @@ The coefficient of z^n becomes 1/(n + 3)! for n ≥ −3. The 1/z term comes fro
 
 ### Step 3: every holomorphic function on a ring has such a series
 
-Cauchy's integral formula gives f(z) as a loop integral of f(ζ)/(ζ − z) round z, divided by 2πi. Used on the ring, it writes f(z) as an integral round an outer circle minus one round an inner circle. On the outer circle the loop point ζ is farther out than z, so 1/(ζ − z) expands in powers of z. On the inner circle ζ is nearer the centre, so it expands in powers of 1/z.
+Cauchy's integral formula gives f(z) as a loop integral of f(ζ)/(ζ − z) round z, divided by 2πi. Used on the ring, it writes f(z) as an integral round an outer circle minus one round an inner circle.
+
+On the outer circle the loop point ζ is farther out than z, so 1/(ζ − z) expands in powers of z. On the inner circle ζ is nearer the centre, so it expands in powers of 1/z.
 
 That is Step 0 inside an integral.
 
 <details>
 <summary>Detailed proof</summary>
 
-Take $`a = 0`$ and z with ρ1 < |z| < ρ2, both radii inside the ring. Cut a small disc round z from the region between the circles. The function $`f(\zeta)/(\zeta - z)`$ is holomorphic on what remains, so by the deformation theorem the outer loop integral equals the inner one plus the small loop's, and shrinking the small loop gives $`2\pi i f(z)`$. So
+Take $`a = 0`$ and z with ρ1 < |z| < ρ2, both radii inside the ring. Cut a small disc round z from the region between the circles.
+
+The function $`f(\zeta)/(\zeta - z)`$ is holomorphic on what remains, so by the deformation theorem the outer loop integral equals the inner one plus the small loop's, and shrinking the small loop gives $`2\pi i f(z)`$. So
 
 $`\displaystyle f(z)=\frac{1}{2\pi i}\oint_{|\zeta|=\rho_2}\frac{f(\zeta)}{\zeta-z}\,d\zeta-\frac{1}{2\pi i}\oint_{|\zeta|=\rho_1}\frac{f(\zeta)}{\zeta-z}\,d\zeta.`$
 
@@ -357,7 +361,7 @@ The two outputs match line for line.
 
 Lean proves the Laurent series theorem for every ring round any centre, and both series of 1/(z(z − 1)) about 0.
 
-- A function holomorphic on the open ring r < |z − a| < R equals exactly one series in powers of z − a there.
+- A function holomorphic on the open ring r < |z − a| < R (with 0 ≤ r < R ≤ ∞) equals exactly one series in powers of z − a there.
 - That series allows negative powers, and the ring may have r = 0 or R = ∞.
 - Each coefficient $`c_n`$ is the loop integral in the formula, on every circle radius ρ between r and R.
 - Inside, where 0 < |z| < 1, 1/(z(z − 1)) equals −1/z − 1 − z − z^2 − …, so $`c_{-1}`$ = −1.
@@ -804,10 +808,10 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 
 - **Digital filters.** A sampled signal's z-transform is a Laurent series, and its ring decides the signal: 1/(z − 1) outside and inside the unit circle are two different signals ([The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md)).
 - **Contour integrals.** A loop integral sees only $`c_{-1}`$: e^z/z^3 round the unit circle gives 2πi times 1/2, or 3.141593i ([The residue theorem](05-the-residue-theorem.md)).
-- **Matrices.** For large z, the inverse of z − A is 1/z + A/z^2 + A^2/z^3 + …, the outer series with a matrix A in place of 1 (Spectrum).
+- **Matrices.** For large z, the inverse of zI − A (with I the identity matrix) is I/z + A/z^2 + A^2/z^3 + …, the outer series with a matrix A in place of 1 ([Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md)).
 
 > **Say it back**
-> A Laurent series allows negative powers, so it can describe a function round a hole. It converges on a ring bounded by circles through the bad points. On a given ring it is unique, since each coefficient is a loop integral. About 0, 1/(z(z − 1)) is −1/z − 1 − z − … inside the unit circle and 1/z^2 + 1/z^3 + … outside. The 1/z coefficient of e^z/z^3 is 1/2.
+> A Laurent series allows negative powers, so it can describe a function round a hole. It converges on a ring bounded by circles through the bad points. On a given open ring where the function is holomorphic, it is unique, since each coefficient is a loop integral. About 0, 1/(z(z − 1)) is −1/z − 1 − z − … inside the unit circle away from 0 and 1/z^2 + 1/z^3 + … outside. The 1/z coefficient of e^z/z^3 is 1/2.
 
 ---
 
@@ -819,10 +823,10 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 
 ## Where this goes next
 
-- [Isolated singularities](02-classifying-singularities.md): the principal part sorts bad points into kinds.
+- [Isolated singularities](02-classifying-singularities.md): the principal part sorts isolated bad points into three kinds.
 - [The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the ring as a region of convergence.
-- [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): fractions matched to series.
-- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): the outer series for operators.
+- [Pade approximants](../../16-Numerical%20analysis/04-Interpolation%20and%20Approximation/09-pade-and-rational-approximation.md): ratios of polynomials matched to power series across poles.
+- [Spectrum](../../18-Functional%20analysis/03-Bounded%20Operators/07-spectrum-and-resolvent.md): the outer series for the inverse of λI − T on bounded operators.
 - [Divisors and Riemann-Roch](../../22-Algebraic%20geometry/03-Plane%20Curves/07-divisors-and-riemann-roch.md): the lowest power as a zero's or pole's order.
 
 The question this card leaves open: on the ring 0 < |z − a| < R, what do the negative powers say about the bad point a itself?

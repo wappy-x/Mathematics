@@ -1,4 +1,4 @@
-# Rational functions: a ratio of polynomials is the sum of its principal parts, one per pole
+# Rational functions: a ratio of polynomials with lower top degree is the sum of its principal parts, one per pole
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Laurent Series, Singularities and Residues](../README.md#s05) → Rational functions
 
@@ -20,7 +20,7 @@ G(s) = (−i/6)/(s − i) + (i/6)/(s + i) + (i/12)/(s − 2i) + (−i/12)/(s + 2
 
 That split is the **partial fraction decomposition**.
 
-**A ratio of polynomials, with the top of lower degree than the bottom, is exactly the sum of its principal parts, one for each pole; and a zero of order n of a function is a pole of order n of its reciprocal.**
+**Over the complex numbers, a ratio of polynomials with the top of lower degree than the bottom is, away from its poles, exactly the sum of its principal parts, one for each pole; and a zero of order n of a holomorphic function is a pole of order n of its reciprocal.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the orders it counts are definitions.
 
@@ -36,9 +36,9 @@ To scale, 40 units per unit of s. Crosses are poles; circles, radius 0.4, are th
 
 Notation first, in words.
 
-- A **rational function** is a ratio f = P/Q of polynomials with no common factor; deg P is the degree of P, its highest power.
+- A **rational function** is a ratio f = P/Q of complex polynomials with Q not identically zero and no common factor; deg P is the degree of P, its highest power.
 - A root p of Q is a pole; its **order** m is how many times (s − p) divides Q, and order 1 is **simple**.
-- A function has a **zero of order n** at p when it equals (s − p)^n times a function holomorphic (complex-differentiable) and nonzero at p; for P/Q, that is (s − p) dividing the top n times.
+- A function has a **zero of order n** (n ≥ 1) at p when it equals (s − p)^n times a function holomorphic (complex-differentiable) and nonzero at p; for P/Q, that is (s − p) dividing the top n times.
 - The coefficient of 1/(s − p)^k at p is written $`c_{-k}`$, as in the Laurent series, and $`Q'`$ is the derivative of Q.
 
 ```math
@@ -77,7 +77,7 @@ c_{-m+j}(p) = \frac{g^{(j)}(p)}{j!}, \qquad j = 0, 1, \dots, m-1
 ### When it holds
 
 - **Top degree below bottom degree.** Else divide first ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)). For s^4/Q the principal parts miss the quotient, 1.
-- **Common factors cancelled.** (s^2 + 1)/Q has no pole at ±i: near i it is 1/3.
+- **Common factors cancelled.** (s^2 + 1)/Q has a removable singularity at ±i, not a pole: near i it is 1/3.
 - **Complex roots allowed.** Every polynomial factors into linear pieces over the complex numbers, so every rational function splits. Over the reals, conjugate poles pair into quadratic pieces.
 
 ---
@@ -104,12 +104,16 @@ At a simple pole only g(p) matters. Write Q(s) = (s − p)R(s); the product rule
 
 ### Step 4: what is left is a polynomial that tends to zero, so it is zero
 
-Let D be f minus all its principal parts. Near a pole p, f minus p's principal part is the Taylor tail of g (its terms from power m up) over (s − p)^m, which stays finite, and the other parts are finite at p. So D has no poles: it is a polynomial. Far out, f and each part tend to 0, so D does too, and a polynomial that tends to 0 is zero.
+Let D be f minus all its principal parts. Near a pole p, f minus p's principal part is the Taylor tail of g (its terms from power m up) over (s − p)^m, which stays finite, and the other parts are finite at p.
+
+So D has no poles: it is a polynomial. Far out, f and each part tend to 0, so D does too, and a polynomial that tends to 0 is zero.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let S be the sum of the principal parts of f = P/Q (lowest terms, deg P < deg Q), and D = f − S = A/B in lowest terms. If B had a root b, then A(b) ≠ 0 and |D| would be unbounded near b. Off the roots of Q, f and S are finite; at a root b of Q, f minus its own principal part is g's Taylor tail over (s − b)^m, holomorphic at b, and the other parts are finite. Either way D is bounded near b, a contradiction. So B is constant and D is a polynomial.
+Let S be the sum of the principal parts of f = P/Q (lowest terms, deg P < deg Q), and D = f − S = A/B in lowest terms. If B had a root b, then A(b) ≠ 0 and |D| would be unbounded near b.
+
+Off the roots of Q, f and S are finite; at a root b of Q, f minus its own principal part is g's Taylor tail over (s − b)^m, holomorphic at b, and the other parts are finite. Either way D is bounded near b, a contradiction. So B is constant and D is a polynomial.
 
 Far out, |f(s)| ≤ C/|s| for a constant C and each c/(s − p)^k tends to 0, so D → 0. A nonzero polynomial is a nonzero constant or grows without bound, so D = 0. The split is unique because the Laurent series at each pole is ([Laurent series](01-laurent-series.md)).
 
@@ -680,23 +684,24 @@ example : (1 : ℚ) / (3 ^ 2 + 1) ^ 2 = 1 / 100 := by norm_num
 - **Counting.** A sequence whose terms each add the two before has a rational generating function (the power series whose coefficients are the terms); splitting it gives every term in closed form.
 
 > **Say it back**
-> A rational function blows up only at uncancelled roots of its bottom. Each pole has a principal part with one term per unit of order. When the top has lower degree, the function is the sum of those parts: the rest has no poles and dies away, so it is zero. At a simple pole the coefficient is P(p)/Q'(p). A zero of order n of a function is a pole of order n of its reciprocal.
+> Over the complex numbers, a rational function blows up only at uncancelled roots of its bottom. Each pole has a principal part with one term per unit of order. When the top has lower degree, the function is, away from its poles, the sum of those parts: the rest has no poles and dies away, so it is zero. At a simple pole the coefficient is P(p)/Q'(p). A zero of order n of a holomorphic function is a pole of order n of its reciprocal.
 
 ---
 
 ## What this builds on
 
-- [Isolated singularities](02-classifying-singularities.md): what a pole is.
+- [Isolated singularities](02-classifying-singularities.md): what an isolated pole and its order are, from the Laurent series.
 - [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): the real version of the split, for integrals.
-- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that comes first when the top is too big.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that comes first when the top degree is at least the bottom's.
 
 ## Where this goes next
 
+- [Residues](04-residues.md): why the 1/(s − p) coefficient alone survives a loop, and three ways to compute it.
 - [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): each principal part turned back into motion in time.
 - [Poles and zeros](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the side of the imaginary axis a pole sits on decides whether a system settles.
 - [Root locus](../../13-Engineering%20mathematics/03-Feedback%20Control/05-root-locus.md): how the poles move when a feedback gain is turned up.
 
-Why c_{−1} alone controls every loop integral: [Residues](04-residues.md).
+The question this card leaves open: when you integrate round a loop, why does only the 1/(s − p) coefficient survive, and how can you find it without expanding the whole series? That is [Residues](04-residues.md).
 
 ---
 

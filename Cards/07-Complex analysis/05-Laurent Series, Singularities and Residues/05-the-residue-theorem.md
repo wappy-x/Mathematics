@@ -10,9 +10,11 @@ Take f(z) = 1/(z^2 + 1). It is finite everywhere in the plane except at i and �
 
 Walk once anticlockwise round the circle of radius 1 centred at i, adding f(z) times each small step dz. That sum is the loop integral ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). At 64 points it comes to 3.141593: π to six decimals. Round the circle of radius 3 centred at 0, enclosing both booths, the total is 0. Round radius 1/2, enclosing neither, it is 0 again.
 
-Each booth inside charges a fixed toll; booths outside charge nothing. From here on the booths are **poles**: points where a function blows up like one over a power of the distance. The toll at a pole is 2πi times a single number, the pole's **residue** ([Residues](04-residues.md)). The pole at i has residue −i/2, so its toll is 2πi × (−i/2) = π. The pole at −i has residue i/2 and toll −π. Round both, the tolls cancel.
+Each booth inside charges a fixed toll; booths outside charge nothing. From here on the booths are **poles**: points where a function blows up like one over a power of the distance.
 
-**A loop integral of a function that is smooth except at a few isolated points depends only on which of those points the loop encloses: it equals 2πi times the sum of their residues.**
+The toll at a pole is 2πi times a single number, the pole's **residue** ([Residues](04-residues.md)). The pole at i has residue −i/2, so its toll is 2πi × (−i/2) = π. The pole at −i has residue i/2 and toll −π. Round both, the tolls cancel.
+
+**Take a function that is holomorphic on and inside a simple loop except at finitely many isolated points inside, none of them on the loop. Its integral once anticlockwise round the loop depends only on which of those points the loop encloses: it equals 2πi times the sum of their residues.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, with the full argument in a folded Detailed proof.
 
@@ -26,7 +28,7 @@ To scale: 34 units per 1, with 0 at (180, 125), i at (180, 91) and −i at (180,
 
 ## The formula
 
-Reminder: a loop is written $`\gamma`$ (gamma), and the integral round it with a ringed integral sign. The residue at a point a, $`\mathrm{Res}(f, a)`$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([Laurent series](01-laurent-series.md)).
+Reminder: a loop is written $`\gamma`$ (gamma), and the integral round it with a ringed integral sign. The residue at a point a, $`\mathrm{Res}(f, a)`$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([Laurent series](01-laurent-series.md)). Let $`\gamma`$ be a simple closed loop traced once anticlockwise, with $`f`$ holomorphic on and inside $`\gamma`$ except at finitely many isolated points $`a_1, \dots, a_m`$ inside it and none on $`\gamma`$. Then
 
 ```math
 \oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} \mathrm{Res}(f, a_k)
@@ -34,13 +36,13 @@ Reminder: a loop is written $`\gamma`$ (gamma), and the integral round it with a
 
 **Read it aloud:** the integral of f once anticlockwise round the loop equals two pi i times the sum of the residues at the singular points inside it.
 
-For a loop that winds more than once, or clockwise, each residue is weighted by its winding number:
+More generally, if $`f`$ is holomorphic on an open disc except at finitely many isolated points $`a_1, \dots, a_m`$, and $`\gamma`$ is any closed loop in that disc passing through none of them, each residue is weighted by its winding number:
 
 ```math
 \oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} n(\gamma, a_k)\,\mathrm{Res}(f, a_k)
 ```
 
-**Read it aloud:** each pole pays its toll once per anticlockwise turn round it.
+**Read it aloud:** each isolated singular point pays its toll once per anticlockwise turn round it.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -90,9 +92,13 @@ Each small circle pays 2πi times its residue, and the loop pays their sum. For 
 
 Let f be holomorphic on an open set containing the loop $`\gamma`$ and its inside, except at points $`a_1, \dots, a_m`$ inside, none on $`\gamma`$. Choose $`\rho > 0`$ so small that the closed discs of radius $`\rho`$ round each $`a_k`$ are disjoint and lie inside $`\gamma`$.
 
-**Deformation.** Join $`\gamma`$ to each small circle by a corridor. The result is one loop: $`\gamma`$ anticlockwise, each small circle clockwise, each corridor twice in opposite directions, with f holomorphic on and inside it. By [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md), a holomorphic function integrates to 0 round a loop with no hole inside, so this integral is 0. The corridors cancel, so the integral round $`\gamma`$ is the sum of the anticlockwise small-circle integrals.
+**Deformation.** Join $`\gamma`$ to each small circle by a corridor. The result is one loop: $`\gamma`$ anticlockwise, each small circle clockwise, each corridor twice in opposite directions, with f holomorphic on and inside it.
 
-**Termwise integration.** For some radius $`R > \rho`$ reaching no other singular point, on the punctured disc $`0 < |z - a_k| < R`$, f equals its Laurent series $`\sum_n c_n (z - a_k)^n`$. The series converges uniformly on the circle $`|z - a_k| = \rho`$: for each $`\varepsilon > 0`$ there is an N with the partial sums over $`|n| \le N`$ within $`\varepsilon`$ of f at every point of the circle.
+By [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md), a holomorphic function integrates to 0 round a loop with no hole inside, so this integral is 0. The corridors cancel, so the integral round $`\gamma`$ is the sum of the anticlockwise small-circle integrals.
+
+**Termwise integration.** For some radius $`R > \rho`$ reaching no other singular point, on the punctured disc $`0 < |z - a_k| < R`$, f equals its Laurent series $`\sum_n c_n (z - a_k)^n`$.
+
+The series converges uniformly on the circle $`|z - a_k| = \rho`$: for each $`\varepsilon > 0`$ there is an N with the partial sums over $`|n| \le N`$ within $`\varepsilon`$ of f at every point of the circle.
 
 So the integral of f round the circle is the limit of the integrals of the partial sums, each within $`2\pi\rho\,\varepsilon`$ of it. Each partial sum integrates term by term, and Step 2 gives $`2\pi i\, c_{-1}`$ for every $`N \ge 1`$. Hence the small circle gives $`2\pi i \mathrm{Res}(f, a_k)`$.
 
@@ -327,10 +333,10 @@ The two outputs match line for line.
 
 Lean proves the theorem for every circle and for every closed loop inside a disc, and the small-circle step for every radius.
 
-- Take f holomorphic on and inside a circle, except at finitely many points inside it. Its integral once anticlockwise round the circle is 2πi times the sum of their residues.
+- Take f holomorphic on and inside a circle of radius R > 0, except at finitely many points strictly inside it and none on it. Its integral once anticlockwise round the circle is 2πi times the sum of their residues.
 - Near each such point, f is taken to equal its Laurent series; the residue is the coefficient of 1/(z − a).
 - Take f holomorphic on a disc except at finitely many points, and a closed loop of smooth pieces in the disc missing them. The integral round the loop is 2πi times the sum of residues, each weighted by its winding number.
-- On a small circle round one point, only the 1/(z − a) term survives. The integral is 2πi times the residue, whatever the radius.
+- On a small circle round one point inside its punctured disc of convergence 0 < |z − a| < r, only the 1/(z − a) term survives. The integral is 2πi times the residue, for every radius ρ with 0 < ρ < r.
 - The hand arithmetic for 1/(z^2 + 1) holds exactly: poles at i and −i, residues −i/2 and i/2, tolls π and −π.
 - Round both poles the total is 0; twice round i gives 2π, clockwise gives −π; taking the residue as 1 gives 2πi, not π.
 
@@ -903,10 +909,10 @@ end TheResidueTheorem
 - **Integrals of sines and cosines over a full turn.** z = e^(iθ) makes them loops round |z| = 1: [Integrals round a full turn](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md).
 - **Control and signal engineering.** A system's response over time is a residue sum over its poles: [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md).
 - **Counting roots.** The residues of f′/f count the zeros of f inside a loop: [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
-- **The primes.** Riemann's prime-counting formula is a residue sum over the zeros of zeta: The explicit formula.
+- **The primes.** Riemann's prime-counting formula is a residue sum over the zeros of zeta: [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md).
 
 > **Say it back**
-> A loop integral of a function holomorphic except at isolated points depends only on which points the loop surrounds. Shrink the loop onto small circles round them. On each, only the 1/(z − a) term survives, giving 2πi times the residue. Add them, weighted by winding number. For 1/(z^2 + 1), a loop round i pays π, round −i pays −π, round both or neither pays 0.
+> A loop integral of a function holomorphic on and inside the loop except at finitely many isolated points inside, with none on the loop, depends only on which points the loop surrounds. Shrink the loop onto small circles round them. On each, only the 1/(z − a) term survives, giving 2πi times the residue. Add them, weighted by winding number. For 1/(z^2 + 1), an anticlockwise loop round i pays π, round −i pays −π, round both or neither pays 0.
 
 ---
 
@@ -917,15 +923,16 @@ end TheResidueTheorem
 
 ## Where this goes next
 
-- [The semicircle contour](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): real integrals closed by a half circle.
-- [Integrals round a full turn](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md): trigonometric integrals as loops.
-- [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): loops dodging a branch cut.
-- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): the residues of f′/f count zeros.
-- [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): signals as sums over poles.
-- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): primes as a residue sum.
-- [Holomorphic functional calculus](../../18-Functional%20analysis/03-Bounded%20Operators/14-holomorphic-functional-calculus-and-riesz-projections.md): put any operator into an analytic function, and cut out part of its spectrum.
+- [Picard's theorems](06-picards-theorems.md): the last card on this shelf, sharpening what happens near an essential singularity.
+- [The semicircle contour](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): evaluates real-line integrals of rational functions by closing with a big half circle.
+- [Integrals round a full turn](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md): turns full-turn integrals of sines and cosines into loops round the unit circle.
+- [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): evaluates real integrals by wrapping a loop round a branch cut.
+- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): uses residues of f′/f to count zeros minus poles inside a loop.
+- [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): recovers a signal in time as a residue sum over its poles.
+- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): writes the prime staircase as a residue sum over the zeros of zeta.
+- [Holomorphic functional calculus](../../18-Functional%20analysis/03-Bounded%20Operators/14-holomorphic-functional-calculus-and-riesz-projections.md): applies an analytic function to a bounded operator and cuts out part of its spectrum.
 
-This card leaves one question open: how does an integral along the real line, which is not a loop, become one the theorem can price?
+This card leaves one question open: how does an integral along the real line, which is not a loop, become one the theorem can price? The semicircle contour, above, answers it. First, the last card on this shelf, Picard's theorems, finishes the story of essential singularities.
 
 ---
 

@@ -10,9 +10,11 @@ Picture a toll booth at each bad point, or singularity, of a function. The funct
 
 Near i the function is a sum of powers of (z − i), negative powers included. Round the loop every power pays nothing except the power −1, which pays 2πi times its coefficient. At i that coefficient is −i/2, and 2πi × (−i/2) = π.
 
-That coefficient has a real name, the **residue**: the coefficient of 1/(z − a) in the series about a bad point a. The toll is always 2πi times it. Three tools get it without the whole series: a limit at a simple pole, a derivative at a higher pole, and the series itself when neither applies. Three booths show them: 1/(z^2 + 1) at i has residue −i/2; e^z/z^3 at 0 has 1/2; z e^(1/z) at 0 has 1/2.
+That coefficient has a real name, the **residue**: the coefficient of 1/(z − a) in the series about a bad point a. The toll is always 2πi times it.
 
-**The residue of a function at an isolated bad point is the coefficient of 1/(z − a) in its series there, the one term a loop round that point does not cancel; limits, derivatives or the series itself compute it.**
+Three tools get it without the whole series: a limit at a simple pole, a derivative at a higher pole, and the series itself when neither applies. Three booths show them: 1/(z^2 + 1) at i has residue −i/2; e^z/z^3 at 0 has 1/2; z e^(1/z) at 0 has 1/2.
+
+**The residue of a function at an isolated bad point is the coefficient of 1/(z − a) in its series there, the one term a small anticlockwise loop round that point alone does not cancel; limits, derivatives or the series itself compute it.**
 
 **What kind of fact this is:** a definition; the three ways of computing it are theorems, proved on this card in Why it works.
 
@@ -26,7 +28,7 @@ To scale: 70 units per 1, with 0 at (180, 135), i at (180, 65), −i at (180, 20
 
 ## The formula
 
-Notation first, in words. The residue of f at a is written $`\mathrm{Res}(f, a)`$. Near an isolated bad point, f is a two-sided power series with coefficients $`c_n`$ ([Laurent series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap.
+Notation first, in words. The residue of f at a is written $`\mathrm{Res}(f, a)`$. Near an isolated bad point, f is a two-sided power series with coefficients $`c_n`$ ([Laurent series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap on a circle of radius r small enough to enclose no other bad point ($`0 < r < R`$).
 
 ```math
 f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n, \qquad \mathrm{Res}(f, a) = c_{-1} = \frac{1}{2\pi i}\oint_{|z-a|=r} f(z)\,dz
@@ -37,12 +39,12 @@ f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n, \qquad \mathrm{Res}(f, a) = c_{-1}
 At a **simple pole** (blowing up like 1/(z − a), no worse):
 
 ```math
-\mathrm{Res}(f, a) = \lim_{z \to a}\,(z-a)\,f(z) = \frac{p(a)}{q'(a)} \quad \text{when } f = \frac{p}{q},\ q(a) = 0,\ q'(a) \neq 0
+\mathrm{Res}(f, a) = \lim_{z \to a}\,(z-a)\,f(z) = \frac{p(a)}{q'(a)} \quad \text{when } f = \frac{p}{q}\text{ with }p,q\text{ holomorphic at }a,\ q(a) = 0,\ q'(a) \neq 0
 ```
 
-**Read it aloud:** cancel the bad factor and let z arrive at a; for a fraction, top at a over the bottom's slope at a.
+**Read it aloud:** cancel the bad factor and let z arrive at a; for a fraction of holomorphic functions, top at a over the bottom's slope at a.
 
-At a **pole of order m** (blows up like 1/(z − a)^m):
+At a **pole of order m** (whole number $`m \ge 1`$, blows up like 1/(z − a)^m):
 
 ```math
 \mathrm{Res}(f, a) = \frac{1}{(m-1)!}\,\lim_{z \to a} \frac{d^{m-1}}{dz^{m-1}}\Big[(z-a)^m f(z)\Big]
@@ -92,7 +94,7 @@ For 1/(z^2 + 1) = 1/((z − i)(z + i)), the product (z − i)f(z) is 1/(z + i). 
 
 ### Step 2: for a fraction, the bottom's slope does the cancelling
 
-Write f = p/q with q(a) = 0 and q'(a) ≠ 0. Near a, q(z) = q'(a)(z − a) + (terms in (z − a)^2 and up), so
+Write f = p/q with p and q holomorphic at a, q(a) = 0 and q'(a) ≠ 0. Near a, q(z) = q'(a)(z − a) + (terms in (z − a)^2 and up), so
 
 ```math
 (z-a)\frac{p(z)}{q(z)} = \frac{p(z)}{q'(a) + (\text{terms in } z-a)} \to \frac{p(a)}{q'(a)}.
@@ -125,7 +127,9 @@ The only 1/z term is z × 1/(2! z^2), so the residue is 1/2. Swapping z for 1/w 
 
 **The loop picks out the residue.** For f holomorphic on 0 < |z − a| < R, the Laurent series converges uniformly on each circle |z − a| = r < R ([Laurent series](01-laurent-series.md)): for every ε > 0 the partial sums lie within ε of f there, their integrals within 2πrε of f's. Step 0 then gives 2πi $`c_{-1}`$ for every such r.
 
-**Order m.** H(z) = (z − a)^m f(z) extends holomorphically to a, and by uniqueness of the series its Taylor coefficient of (z − a)^j is $`c_{j-m}`$. Taking j = m − 1 gives $`c_{-1}`$ = H^(m−1)(a)/(m − 1)!; the limit form holds because H's derivatives are continuous at a. With k > m in place of m, (z − a)^(k−m) H still holds $`c_{-1}`$ in slot k − 1, so overestimating the order is harmless.
+**Order m.** H(z) = (z − a)^m f(z) extends holomorphically to a, and by uniqueness of the series its Taylor coefficient of (z − a)^j is $`c_{j-m}`$. Taking j = m − 1 gives $`c_{-1}`$ = H^(m−1)(a)/(m − 1)!; the limit form holds because H's derivatives are continuous at a.
+
+With k > m in place of m, (z − a)^(k−m) H still holds $`c_{-1}`$ in slot k − 1, so overestimating the order is harmless.
 
 **The quotient.** Write q(z) = (z − a)s(z) with s holomorphic and s(a) = q'(a) ≠ 0; then (z − a)p/q = p/s, whose value at a is p(a)/q'(a).
 
@@ -139,7 +143,7 @@ A second route for fractions of polynomials: the residues at simple poles are th
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| house: split the bottom | z^2 + 1 = (z − i)(z + i), so (z − i)f = 1/(z + i) | simple pole at i |
+| 1/(z^2 + 1): split the bottom | z^2 + 1 = (z − i)(z + i), so (z − i)f = 1/(z + i) | simple pole at i |
 | same by p/q' | p = 1, q'(i) = 2i | 1/(2i) = **−i/2** |
 | the loop's toll | 2πi × (−i/2) | **π = 3.141593** |
 | e^z/z^3: tame it | m = 3, H = e^z | H''(0) = 1 |
@@ -189,18 +193,18 @@ def sci(x):                         # 1.2e-5 style, the same in both languages
     if round(m, 1) >= 10: m, e = m / 10, e + 1
     return f"{m:.1f}e{e}"
 
-house = lambda z: 1 / (z * z + 1)
+simple = lambda z: 1 / (z * z + 1)
 cube = lambda z: cexp(z) / z ** 3
 ess = lambda z: z * cexp(1 / z)
 twice = lambda z: 1 / (z * z + 1) ** 2
 print("figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35")
 for h in (0.1, 0.01, 0.001):        # road 1a: the limit of (z - i) f(z)
-    print(f"1/(z^2+1), limit road, (z - i) f(z) at z = i + {h}: {c(h * house(1j + h))}")
+    print(f"1/(z^2+1), limit road, (z - i) f(z) at z = i + {h}: {c(h * simple(1j + h))}")
 pq = 1 / (2 * 1j)                   # road 1b: p(i)/q'(i) with p = 1, q' = 2z
 print(f"1/(z^2+1), p/q' road: 1/(2i) = {c(pq)} at i; 1/(-2i) = {c(1 / (-2j))} at -i")
 print("1/(z^2+1), loop road r = 0.5, error: " +
-      ", ".join(f"N={n} {sci(abs(loop(house, 1j, 0.5, n) - pq))}" for n in (4, 8, 12)))
-res1 = loop(house, 1j, 0.5, 64)
+      ", ".join(f"N={n} {sci(abs(loop(simple, 1j, 0.5, n) - pq))}" for n in (4, 8, 12)))
+res1 = loop(simple, 1j, 0.5, 64)
 print(f"1/(z^2+1), loop road N=64: {c(res1)}; toll 2 pi i x Res = {c(2j * pi * res1)}")
 h = 1e-3                            # road 1: H = e^z, H''(0)/2! by a central difference
 res2 = (cexp(h) - 2 * cexp(0) + cexp(-h)).real / h ** 2 / 2
@@ -224,7 +228,7 @@ assert abs(res4 - d4) < 1e-6                           # double pole: loop again
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-28 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35
@@ -297,18 +301,18 @@ fn errs(f: &dyn Fn(C) -> C, a: C, rad: f64, want: C) -> String {
 
 fn main() {
     let i = cx(0.0, 1.0);
-    let house = |z: C| r(1.0) / (z * z + r(1.0));
+    let simple = |z: C| r(1.0) / (z * z + r(1.0));
     let cube = |z: C| cexp(z) / (z * z * z);
     let ess = |z: C| z * cexp(r(1.0) / z);
     let twice = |z: C| { let q = z * z + r(1.0); r(1.0) / (q * q) };
     println!("figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35");
     for h in [0.1, 0.01, 0.001] {
-        println!("1/(z^2+1), limit road, (z - i) f(z) at z = i + {}: {}", h, c(r(h) * house(i + r(h))));
+        println!("1/(z^2+1), limit road, (z - i) f(z) at z = i + {}: {}", h, c(r(h) * simple(i + r(h))));
     }
     let pq = r(1.0) / (r(2.0) * i);
     println!("1/(z^2+1), p/q' road: 1/(2i) = {} at i; 1/(-2i) = {} at -i", c(pq), c(r(1.0) / (r(-2.0) * i)));
-    println!("1/(z^2+1), loop road r = 0.5, error: {}", errs(&house, i, 0.5, pq));
-    let res1 = lp(&house, i, 0.5, 64);
+    println!("1/(z^2+1), loop road r = 0.5, error: {}", errs(&simple, i, 0.5, pq));
+    let res1 = lp(&simple, i, 0.5, 64);
     println!("1/(z^2+1), loop road N=64: {}; toll 2 pi i x Res = {}", c(res1), c(r(2.0 * PI) * i * res1));
     let h = 1e-3; // H = e^z, H''(0)/2! by a central difference
     let res2 = (cexp(r(h)) - r(2.0) * cexp(r(0.0)) + cexp(r(-h))).re / (h * h) / 2.0;
@@ -332,7 +336,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-28 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35
@@ -357,7 +361,7 @@ ALL CHECKS PASS
 
 Lean proves the three ways to compute the residue for every function they apply to, and checks the worked numbers exactly.
 
-- If f is holomorphic on the ring 0 < |z − a| < R, every loop of radius r < R pays 2πi c_{−1}.
+- If f is holomorphic and equals its Laurent series on 0 < |z − a| < R, every circle of radius r with 0 < r < R pays 2πi c_{−1}.
 - If (z − a)^m f(z), with m ≥ 1, extends to a function holomorphic on the whole disc, the derivative formula's limit is the residue.
 - For f = p/q, with p, q power series near a, q(a) = 0 and q'(a) ≠ 0, (z − a)f(z) tends to p(a)/q'(a).
 - That same p(a)/q'(a) is the residue for every small enough loop round a.
@@ -673,9 +677,9 @@ example : (1 : ℚ) / (Nat.factorial 2) = 1 / 2 := by
 
 > [!TIP]
 > **Try changing**
-> - **Widen the house loop.** Guess first: the N=64 line at r = 1.5, then r = 2.5? At 1.5 the circle still misses −i: −i/2 again. At 2.5 it encloses both booths: −i/2 + i/2 = 0.
-> - **Starve the loop.** Guess first: N = 8 in place of 64? Off by 7.6e-6, the N=8 error already printed.
-> - **Lower the pole.** Guess first: change e^z/z^3 to e^z/z^2. Now m = 2 and the residue is H'(0) = 1, the same number the "dropping the 2!" line prints.
+> - **Widen the first loop.** Guess first: the N=64 line at r = 1.5, then r = 2.5? At 1.5 the circle still misses −i, printing −i/2 to six decimals (the tight 1e-12 assert stops it). At 2.5 it encloses both booths, printing 0, and stops the first assert.
+> - **Starve the loop.** Guess first: N = 8 in place of 64? Off by 7.6e-6, the N=8 error already printed, and the first assert stops it.
+> - **Lower the pole.** Guess first: change e^z/z^3 to e^z/z^2. Now m = 2 and the residue is H'(0) = 1, so the loop errors against 0.5 settle at 5.0e-1 and the second assert stops it.
 
 ---
 
@@ -698,7 +702,7 @@ example : (1 : ℚ) / (Nat.factorial 2) = 1 / 2 := by
 - **Counting primes.** Perron's formula reads sums over whole numbers off residues of functions built from [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md), the sum of 1/n^s over n = 1, 2, 3, …
 
 > **Say it back**
-> Near an isolated bad point a function is a series in powers of (z − a), negative ones included. A loop round the point returns 2πi times the coefficient of 1/(z − a): the residue. At a simple pole, cancel the bad factor and take the limit, or divide the top by the bottom's slope. At a pole of order m, differentiate the tamed factor m − 1 times and divide by (m − 1)!; at an essential singularity, read the series.
+> Near an isolated bad point a function is a series in powers of (z − a), negative ones included. A small anticlockwise loop round the point alone returns 2πi times the coefficient of 1/(z − a): the residue. At a simple pole, cancel the bad factor and take the limit, or, for a ratio of holomorphic functions, divide the top by the bottom's slope. At a pole of order m, differentiate the tamed factor m − 1 times and divide by (m − 1)!; at an essential singularity, read the series.
 
 ---
 

@@ -16,7 +16,7 @@ That pattern is a law. Near an **essential singularity**, a point whose [Laurent
 
 The same holds for **entire** functions, holomorphic on the whole plane. e^z misses only 0; z^2 misses nothing; no nonconstant one misses two values.
 
-**Near an essential singularity a function takes every complex value infinitely often, with at most one exception (great Picard); so a nonconstant entire function misses at most one value (little Picard).**
+**In every punctured disc round an essential singularity, a function takes every complex value infinitely often, with at most one exception (great Picard); so a nonconstant entire function misses at most one value (little Picard).**
 
 **What kind of fact this is:** two theorems, proved here: little Picard from great, and great Picard from Montel's fundamental normality test, stated with its source, not proved.
 
@@ -44,15 +44,17 @@ f \text{ entire and not constant} \implies \mathbb{C} \setminus f(\mathbb{C}) \t
 
 **Read it aloud:** the values an entire, nonconstant function never takes number zero or one.
 
-**Great Picard theorem.** Let f be holomorphic on a punctured disc round a (a disc with its centre removed), with an essential singularity at a. Then
+**Great Picard theorem.** Let f be holomorphic on a punctured disc $`0 < |z - a| < R`$ (a disc with its centre removed), with an essential singularity at a. Then
 
 ```math
-f(z) = w \text{ for infinitely many } z \text{ with } 0 < |z - a| < r, \quad \text{for every } r > 0 \text{ and every } w \text{ but at most one}
+f(z) = w \text{ for infinitely many } z \text{ with } 0 < |z - a| < r, \quad \text{for every } 0 < r \le R \text{ and every } w \text{ but at most one}
 ```
 
 **Read it aloud:** in every punctured disc round a, however small, f hits every value infinitely often, with at most one exception.
 
-**Montel's fundamental normality test** (stated, not proved: Conway, ch. XII, the Montel–Carathéodory theorem). Holomorphic functions on an open connected set D that all miss the same two values b ≠ c form a **normal** family: every list of them has a sub-list converging evenly (one error bound for all points at once) on each closed disc inside D, to a holomorphic function or to ∞. The limit ∞ widens the definition on [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md): the constants 2, 3, 4, … all miss 0 and 1, and converge only to ∞.
+**Montel's fundamental normality test** (stated, not proved: Conway, ch. XII, the Montel–Carathéodory theorem). Holomorphic functions on an open connected set D that all miss the same two values b ≠ c form a **normal** family: every list of them has a sub-list converging evenly (one error bound for all points at once) on each closed disc inside D, to a holomorphic function or to ∞.
+
+The limit ∞ widens the definition on [Normal families](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/10-normal-families-montel-and-hurwitz.md): the constants 2, 3, 4, … all miss 0 and 1, and converge only to ∞.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -104,11 +106,15 @@ z_4  ####                              0.035368
 z_5  ###                               0.028937
 ```
 
-Two other roads find the same points. Newton's method on e^(1/z) + 1 from −0.3i and −0.1i lands on −0.318310i and −0.106103i. [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) counts zeros by how often the output winds round 0 on a loop: e^(1/z) + 1 turns 0 times on |z| = 0.5 and −6 times on |z| = 0.05, so 6 solutions lie between, as the formula says; e^(1/z) turns 0 times on both.
+Two other roads find the same points. Newton's method on e^(1/z) + 1 from −0.3i and −0.1i lands on −0.318310i and −0.106103i.
+
+[The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md) counts zeros by how often the output winds round 0 on a loop: e^(1/z) + 1 turns 0 times on |z| = 0.5 and −6 times on |z| = 0.05, so 6 solutions lie between, as the formula says; e^(1/z) turns 0 times on both.
 
 ### Step 2: missing two values means not essential
 
-Move a to 0 and suppose f misses b and c on the punctured disc D = {0 < |z| < 1}. The copies $`f_n`$ miss them too, so a sub-list converges evenly on the circle |z| = 1/2. A holomorphic limit bounds f on circles shrinking to 0, and the maximum modulus principle (|f| peaks on the boundary of a region) fills the rings between: 0 is removable. A limit of ∞ does the same for 1/(f − b): 0 is a pole.
+Move a to 0 and suppose f misses b and c on the punctured disc D = {0 < |z| < 1}. The copies $`f_n`$ miss them too, so a sub-list converges evenly on the circle |z| = 1/2.
+
+A holomorphic limit bounds f on circles shrinking to 0, and the maximum modulus principle (|f| peaks on the boundary of a region) fills the rings between: 0 is removable. A limit of ∞ does the same for 1/(f − b): 0 is a pole.
 
 For e^(1/z) the copies $`f_n(z) = e^{2^n/z}`$ on |z| = 1/2 reach 7.389056, 54.598150, 2980.957987 and sink to 0.135335, 0.018316, 0.000335 for n = 0, 1, 2: no settling, as allowed when only one value is missed.
 
@@ -119,9 +125,13 @@ Suppose, for contradiction, that f has an essential singularity at 0 yet misses 
 
 On D = {0 < |z| < 1} the copies $`f_n(z) = f(z/2^n)`$ are holomorphic and miss b and c. By Montel's test a sub-list $`f_{n_1}, f_{n_2}, \dots`$ with $`n_1 < n_2 < \dots`$ converges evenly on the circle K = {|z| = 1/2}, to a holomorphic L or to ∞.
 
-*Case L.* Let M = 1 + max of |L| on K. For large j, |f| ≤ M on the circle $`C_j = \{|z| = 2^{-n_j - 1}\}`$. On the closed ring between $`C_j`$ and $`C_{j+1}`$, |f| peaks on the two circles, so |f| ≤ M there too. These rings fill the punctured disc inside the first such circle, so f is bounded near 0 and, by Riemann's removable-singularity theorem, 0 is removable.
+*Case L.* Let M = 1 + max of |L| on K. For large j, |f| ≤ M on the circle $`C_j = \{|z| = 2^{-n_j - 1}\}`$.
 
-*Case ∞.* For large j, |f| ≥ |b| + 1 on $`C_j`$. Put h = 1/(f − b): holomorphic on D because f never equals b, and |h| ≤ 1 on those $`C_j`$. The ring argument bounds h near 0, so h extends holomorphically to 0, with h(0) = 0 since |h| → 0 on the $`C_j`$. So f = b + 1/h has a pole at 0.
+On the closed ring between $`C_j`$ and $`C_{j+1}`$, |f| peaks on the two circles, so |f| ≤ M there too. These rings fill the punctured disc inside the first such circle, so f is bounded near 0 and, by Riemann's removable-singularity theorem, 0 is removable.
+
+*Case ∞.* For large j, |f| ≥ |b| + 1 on $`C_j`$. Put h = 1/(f − b): holomorphic on D because f never equals b, and |h| ≤ 1 on those $`C_j`$.
+
+The ring argument bounds h near 0, so h extends holomorphically to 0, with h(0) = 0 since |h| → 0 on the $`C_j`$. So f = b + 1/h has a pole at 0.
 
 Both cases contradict "essential".
 
@@ -502,7 +512,7 @@ theorem sq_misses_nothing (w : ℂ) : (∃ z : ℂ, z ^ 2 = w) ∧ I ^ 2 = -1 �
 - **Fractals of iteration.** Montel's test is the main tool for studying the Julia set of z^2 + c: the points where its repeats (the map applied again and again) fail to form a normal family.
 
 > **Say it back**
-> Near an essential singularity a function lands on every value infinitely often, with at most one exception. e^(1/z) hits −1 at −i/(π(2k + 1)) for every whole k and never hits 0. Missing two values would make the zoomed copies settle, by Montel's test, so the singularity could not be essential. An entire non-polynomial turned inside out has an essential singularity, so it misses at most one value: e^z misses only 0.
+> In every punctured disc round an essential singularity, a function lands on every value infinitely often, with at most one exception. e^(1/z) hits −1 at −i/(π(2k + 1)) for every whole k and never hits 0. Missing two values would make the zoomed copies settle, by Montel's test, so the singularity could not be essential. An entire non-polynomial turned inside out has an essential singularity at 0, so it misses at most one value: e^z misses only 0.
 
 ---
 
@@ -516,9 +526,10 @@ theorem sq_misses_nothing (w : ℂ) : (∃ z : ℂ, z ^ 2 = w) ∧ I ^ 2 = -1 �
 
 ## Where this goes next
 
+- [The semicircle contour](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): starts the next shelf, putting the residue theorem to work on real-line integrals of rational functions.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the solutions of f(z) = w inside a loop, as the code does.
 
-Picard says each value is hit infinitely often, but not how fast the solutions pile up as the circle grows; that rate is the subject of value-distribution theory.
+This shelf ends here; the next shelf starts with The semicircle contour, turning the residue theorem onto real integrals. Picard says every value but at most one is hit infinitely often, yet leaves open how fast the solutions pile up as the circle grows or shrinks; that rate is the subject of value-distribution theory.
 
 ---
 

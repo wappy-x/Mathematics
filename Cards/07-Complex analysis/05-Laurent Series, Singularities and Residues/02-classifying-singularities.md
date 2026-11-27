@@ -16,7 +16,7 @@ The third is e^(1/z) at 0: 2980.957987 at 1/8, 0.000335 at −1/8. A sinkhole wi
 
 From here on a pothole is an **isolated singularity**: a point where a function is undefined, though holomorphic (has a complex derivative) everywhere else on a small disc round it. The kinds are **removable**, **pole** and **essential**. One test sorts them: write the Laurent series, a power series allowed negative powers ([Laurent series](01-laurent-series.md)), and read the negative powers.
 
-**No negative powers means removable, finitely many means a pole whose order is the most negative power, infinitely many means essential; bounded near the point means no negative powers, and near an essential point the function comes within any distance of every value.**
+**At an isolated singularity, no negative powers means removable, finitely many (at least one) means a pole whose order is the size of the most negative power, infinitely many means essential; bounded near the point means no negative powers, and near an essential point the function comes within any distance of every value.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; removable, pole, essential and meromorphic are definitions.
 
@@ -48,12 +48,12 @@ Each coefficient is a loop integral, anticlockwise round any circle of radius r 
 c_n = \frac{1}{2\pi i} \oint_{|z-a| = r} \frac{f(z)}{(z-a)^{n+1}}\, dz
 ```
 
-The classification reads the principal part: **removable** if it is empty; a **pole of order m** if $`c_{-m} \ne 0`$ is its lowest term; **essential** if infinitely many of its coefficients are nonzero.
+The classification reads the principal part: **removable** if it is empty; a **pole of order m** (with $`m \ge 1`$) if $`c_{-m} \ne 0`$ is its lowest term; **essential** if infinitely many of its coefficients are nonzero.
 
 Three results make the test usable.
 
 - **Riemann's removable-singularity theorem.** If $`|f(z)| \le M`$ on a punctured disc round a, the singularity is removable.
-- **Pole form.** A pole of order m is exactly $`f(z) = g(z)/(z-a)^m`$ with g holomorphic at a and $`g(a) \ne 0`$.
+- **Pole form.** A pole of order $`m \ge 1`$ is, near $`a`$, $`f(z) = g(z)/(z-a)^m`$ with $`g`$ holomorphic at $`a`$ and $`g(a) \ne 0`$.
 - **Casorati–Weierstrass theorem.** At an essential singularity, for every value $`w`$ and tolerance $`\varepsilon > 0`$, every punctured disc round a, however small, holds a point z with $`|f(z) - w| < \varepsilon`$.
 
 A function is **meromorphic** on an open set when it is holomorphic there apart from isolated points, each removable or a pole.
@@ -71,7 +71,7 @@ A function is **meromorphic** on an open set when it is holomorphic there apart 
 
 ### When it holds
 
-- **Holomorphic on a whole punctured disc**, or there is no Laurent series: 1/sin(1/z) has poles crowding into 0, so 0 is not isolated.
+- **Holomorphic on a whole punctured disc**, or there is no Laurent series: 1/sin(1/z) has poles crowding into 0, and a branch point like log z at 0 has a branch cut running into it, so neither is isolated and none of the three kinds applies.
 - **Bounded on the whole punctured disc, not along a path.** e^(1/z) stays below 1 along the negative real axis, yet 0 is essential.
 - **Holomorphic, not merely bounded.** z-bar/z, where z-bar is z reflected in the real axis, has size 1 everywhere, but is 1 on the real axis and −1 on the imaginary axis: no value at 0 fits.
 
@@ -95,7 +95,7 @@ Put $`n = -k`$ in the coefficient formula. The loop has length $`2\pi r`$, and o
 |c_{-k}| \le \frac{1}{2\pi} \cdot 2\pi r \cdot M r^{k-1} = M r^k
 ```
 
-The left side does not depend on r, so shrinking r squeezes it to 0, for every k, and Step 1 fills the hole. For sin z/z the largest size on the circle of radius 0.5 is 1.042191, which is sinh(0.5)/0.5, and smaller circles give less: that bound alone proves 0 removable.
+The left side does not depend on r, so shrinking r squeezes it to 0 for every k ≥ 1, and Step 1 fills the hole. For sin z/z the largest size on the circle of radius 0.5 is 1.042191, which is sinh(0.5)/0.5, and smaller circles give less: that bound alone proves 0 removable.
 
 ### Step 3: a lowest negative power is a pole
 
@@ -122,7 +122,9 @@ Solving back, $`f = w + 1/h`$: removable if h(a) is not 0, a pole if it is. Eith
 
 *Riemann* is Step 2 with $`|f| \le M`$ on $`0 < |z - a| < \delta`$ and $`0 < r < \delta`$.
 
-*Pole from growth.* If |f| tends to infinity at a, pick $`\delta`$ with $`|f| \ge 1`$ on the punctured disc. Then 1/f is bounded by 1, extends by Riemann, and has value 0 at a. It is not identically 0, so $`1/f = (z - a)^m q`$ with q holomorphic, $`q(a) \ne 0`$. Shrink the disc so q has no zeros: $`f = (z - a)^{-m} (1/q)`$, and 1/q is a power series with nonzero constant term, so the lowest power is −m.
+*Pole from growth.* If |f| tends to infinity at a, pick $`\delta`$ with $`|f| \ge 1`$ on the punctured disc. Then 1/f is bounded by 1, extends by Riemann, and has value 0 at a.
+
+It is not identically 0, so $`1/f = (z - a)^m q`$ with q holomorphic, $`q(a) \ne 0`$. Shrink the disc so q has no zeros: $`f = (z - a)^{-m} (1/q)`$, and 1/q is a power series with nonzero constant term, so the lowest power is −m.
 
 *Casorati–Weierstrass* is Step 5, with this argument supplying the pole when h has a zero at a.
 
@@ -371,7 +373,7 @@ Lean proves the three-way test, Riemann's theorem and Casorati–Weierstrass for
 - Infinitely many nonzero negative-power coefficients hold exactly when a is neither removable nor a pole: essential.
 - Every coefficient may be read off any circle of radius r with 0 < r < R.
 - If |f(z)| ≤ M on the whole punctured disc, every negative-power coefficient is 0 and the singularity is removable.
-- At an essential singularity, f comes within ε of every value w in every punctured disc round a, however small.
+- At an essential singularity, for every tolerance ε > 0 and value w, f comes within ε of w in every punctured disc round a, however small.
 - 1/(z − 2)^2 has a pole of order 2 at 2, with g = 1.
 - The hand arithmetic holds exactly: sizes 100 and 400, the order test's 100, 1 and 0.01, and 1/1!, 1/2!, 1/3!.
 
@@ -888,11 +890,11 @@ example : (1 : ℚ) / (Nat.factorial 3) = 1 / 6 := by norm_num [Nat.factorial]
 
 ## Where this goes next
 
-- [Rational functions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
+- [Rational functions](03-rational-functions-and-partial-fractions.md): ratios of polynomials in lowest terms have only poles and, with lower top degree, split into principal parts.
 - [Residues](04-residues.md): the coefficient on the power −1, found without the whole series.
 - [Picard's theorems](06-picards-theorems.md): a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often.
 
-The question this card leaves open: a loop integral sees only $`c_{-1}`$, so how can that one coefficient be found at a pole without writing out the whole series?
+The question this card leaves open: for a ratio of polynomials, whose only bad points are poles, do its principal parts add up to the whole function? That is [Rational functions](03-rational-functions-and-partial-fractions.md).
 
 ---
 

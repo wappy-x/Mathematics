@@ -21,18 +21,18 @@ def sci(x):                         # 1.2e-5 style, the same in both languages
     if round(m, 1) >= 10: m, e = m / 10, e + 1
     return f"{m:.1f}e{e}"
 
-house = lambda z: 1 / (z * z + 1)
+simple = lambda z: 1 / (z * z + 1)
 cube = lambda z: cexp(z) / z ** 3
 ess = lambda z: z * cexp(1 / z)
 twice = lambda z: 1 / (z * z + 1) ** 2
 print("figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35")
 for h in (0.1, 0.01, 0.001):        # road 1a: the limit of (z - i) f(z)
-    print(f"1/(z^2+1), limit road, (z - i) f(z) at z = i + {h}: {c(h * house(1j + h))}")
+    print(f"1/(z^2+1), limit road, (z - i) f(z) at z = i + {h}: {c(h * simple(1j + h))}")
 pq = 1 / (2 * 1j)                   # road 1b: p(i)/q'(i) with p = 1, q' = 2z
 print(f"1/(z^2+1), p/q' road: 1/(2i) = {c(pq)} at i; 1/(-2i) = {c(1 / (-2j))} at -i")
 print("1/(z^2+1), loop road r = 0.5, error: " +
-      ", ".join(f"N={n} {sci(abs(loop(house, 1j, 0.5, n) - pq))}" for n in (4, 8, 12)))
-res1 = loop(house, 1j, 0.5, 64)
+      ", ".join(f"N={n} {sci(abs(loop(simple, 1j, 0.5, n) - pq))}" for n in (4, 8, 12)))
+res1 = loop(simple, 1j, 0.5, 64)
 print(f"1/(z^2+1), loop road N=64: {c(res1)}; toll 2 pi i x Res = {c(2j * pi * res1)}")
 h = 1e-3                            # road 1: H = e^z, H''(0)/2! by a central difference
 res2 = (cexp(h) - 2 * cexp(0) + cexp(-h)).real / h ** 2 / 2

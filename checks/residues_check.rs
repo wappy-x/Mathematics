@@ -45,18 +45,18 @@ fn errs(f: &dyn Fn(C) -> C, a: C, rad: f64, want: C) -> String {
 
 fn main() {
     let i = cx(0.0, 1.0);
-    let house = |z: C| r(1.0) / (z * z + r(1.0));
+    let simple = |z: C| r(1.0) / (z * z + r(1.0));
     let cube = |z: C| cexp(z) / (z * z * z);
     let ess = |z: C| z * cexp(r(1.0) / z);
     let twice = |z: C| { let q = z * z + r(1.0); r(1.0) / (q * q) };
     println!("figure, 70 units per 1, 0 at (180, 135), i at (180, 65), -i at (180, 205), loop radius 35");
     for h in [0.1, 0.01, 0.001] {
-        println!("1/(z^2+1), limit road, (z - i) f(z) at z = i + {}: {}", h, c(r(h) * house(i + r(h))));
+        println!("1/(z^2+1), limit road, (z - i) f(z) at z = i + {}: {}", h, c(r(h) * simple(i + r(h))));
     }
     let pq = r(1.0) / (r(2.0) * i);
     println!("1/(z^2+1), p/q' road: 1/(2i) = {} at i; 1/(-2i) = {} at -i", c(pq), c(r(1.0) / (r(-2.0) * i)));
-    println!("1/(z^2+1), loop road r = 0.5, error: {}", errs(&house, i, 0.5, pq));
-    let res1 = lp(&house, i, 0.5, 64);
+    println!("1/(z^2+1), loop road r = 0.5, error: {}", errs(&simple, i, 0.5, pq));
+    let res1 = lp(&simple, i, 0.5, 64);
     println!("1/(z^2+1), loop road N=64: {}; toll 2 pi i x Res = {}", c(res1), c(r(2.0 * PI) * i * res1));
     let h = 1e-3; // H = e^z, H''(0)/2! by a central difference
     let res2 = (cexp(r(h)) - r(2.0) * cexp(r(0.0)) + cexp(r(-h))).re / (h * h) / 2.0;

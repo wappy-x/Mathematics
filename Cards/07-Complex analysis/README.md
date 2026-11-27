@@ -99,7 +99,7 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 1. [Laurent series: allow negative powers, and a function with a hole expands in a ring](05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)
 2. [Isolated singularities: removable, a pole or essential, and the negative powers tell you which](05-Laurent%20Series%2C%20Singularities%20and%20Residues/02-classifying-singularities.md)
-3. [Rational functions: a ratio of polynomials is the sum of its principal parts, one per pole](05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)
+3. [Rational functions: a ratio of polynomials with lower top degree is the sum of its principal parts, one per pole](05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)
 4. [Residues: the one coefficient that survives a loop, and three ways to compute it](05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)
 5. [The residue theorem: a loop integral is 2 pi i times the sum of the residues inside](05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)
 6. [Picard's theorems: a nonconstant entire function misses at most one value, and near an essential singularity every value but one comes up infinitely often](05-Laurent%20Series%2C%20Singularities%20and%20Residues/06-picards-theorems.md)
