@@ -14,7 +14,7 @@ A **normal subgroup** is one that looks the same from every position, so it can 
 
 Its size must also divide 60 ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)). The candidates are 13, 16, 21, 25, 28, 33, 36, 40, 45, 48, and none divides 60. Only the two trivial choices survive: do-nothing alone, or all 60.
 
-A group with no normal subgroups except those two is **simple**: it cannot be collapsed into a smaller group. The card proves this for every $`A_n`$ with $`n`$ at least 5.
+A group with more than one member and no normal subgroups except those two is **simple**: it cannot be collapsed into a smaller group. The card proves this for every $`A_n`$ with $`n`$ at least 5.
 
 **For five or more places, any normal subgroup of the even shuffles that holds one move other than do-nothing holds a 3-cycle, then every 3-cycle, then every even shuffle: so the even shuffles cannot be collapsed at all.**
 
@@ -30,7 +30,7 @@ double swaps           ███████████████         15
 3-cycles               ████████████████████    20
 ```
 
-One block per shuffle. A normal subgroup takes the top bar and some whole bars below it; no pick other than the top bar alone or all five bars has a size dividing 60.
+One block per shuffle: a **5-cycle** cycles five places in one loop, such as (1 2 3 4 5), and a **double swap** is two swaps of separate pairs, such as (1 2)(3 4). A normal subgroup takes the top bar and some whole bars below it; no pick other than the top bar alone or all five bars has a size dividing 60.
 
 ---
 
@@ -67,7 +67,7 @@ With $`\sigma = (1\ 2\ 3\ 4\ 5)`$ and $`\tau = (1\ 2\ 4)`$, the commutator is $`
 ### When it holds
 
 - **At least five places.** At four, do-nothing and the 3 double swaps make a normal subgroup of 4, and 4 divides 12.
-- **Even shuffles only.** The full group $`S_n`$ is not simple: $`A_n`$ sits inside it as a normal subgroup of half its size.
+- **Even shuffles only.** For $`n \ge 3`$, the full group $`S_n`$ is not simple: $`A_n`$ sits inside it as a normal subgroup of half its size.
 - **Classes counted inside $`A_n`$.** Conjugating by odd shuffles too merges the two classes of 12, so the test skips unions such as 13.
 
 ---

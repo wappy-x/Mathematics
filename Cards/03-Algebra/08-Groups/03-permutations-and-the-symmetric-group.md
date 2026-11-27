@@ -62,7 +62,7 @@ n! = n \times (n - 1) \times \cdots \times 2 \times 1, \qquad \text{fewest swaps
 
 ### When it holds
 
-- **Finitely many places, each with its own label.** Cards nobody can tell apart make shuffles look alike, and n! over-counts.
+- **Finitely many places, each with its own label.** Cards nobody can tell apart make shuffles look alike, and n! over-counts. The product $`n \times \cdots \times 1`$ is for $`n \ge 1`$, with $`0! = 1`$ for zero places.
 - **One destination per place, one card per destination.** In 2, 2, 1, place 2 takes two cards and place 3 none.
 - **Right-hand factor first, bottom row destinations.** Compose the other way and rt is (2 3); read 2, 3, 1 as occupants and out comes the undo.
 
@@ -105,7 +105,7 @@ Start again at an unused place, and the new cycle shares nothing with the old �
 
 ### Step 5: swaps, and why even or odd never changes
 
-A cycle of k places is k − 1 swaps: hold its first place and swap it with the second, then the third. For (1 2 3) that is (1 3)(1 2), right-hand swap first. Summed over the cycles, fixed places costing nothing, that is the formula above: r is 3 − 1 = 2 swaps, t is 3 − 2 = 1.
+A cycle of k places is k − 1 swaps: hold its first place and swap it with the second, then the third. For (1 2 3) that is (1 3)(1 2), right-hand swap first. Summed over the cycles, fixed places costing nothing, that is the formula above: r is 3 − 1 = 2 swaps, t is 3 − 2 = 1. That many swaps always work, and no shorter chain exists (stated, not proved here).
 
 No shuffle has only one swap count: repeat a swap and nothing moves, so a chain can always be padded by two. What survives is even or odd — the shuffle's **parity**.
 
@@ -369,7 +369,7 @@ The two outputs match line for line.
 Lean proves the main claims for any finite number of labelled places, and checks the three-card and tile numbers.
 
 - Shuffles compose into shuffles, the do-nothing shuffle is one, bracketing never matters, and every shuffle has an undo: a group.
-- n places have exactly n × (n − 1) × … × 1 shuffles.
+- n places have exactly n × (n − 1) × … × 1 shuffles (with 0! = 1 for zero places).
 - Two chains of swaps giving the same shuffle are both even or both odd in length.
 - From three places up, some two shuffles give different results in the two orders.
 - On three cards, rt is (1 3), tr is (2 3), and the undo of r is (1 3 2).
@@ -377,7 +377,7 @@ Lean proves the main claims for any finite number of labelled places, and checks
 - One to five places give 1, 2, 6, 24 and 120 shuffles; $`S_3`$ has 3 even ones.
 - Exactly 8 of the tile's 24 corner shuffles keep neighbours neighbouring, and 2, 2, 1 is not a shuffle.
 
-The fewest-swaps formula, the parity match over all four-place shuffles, and the tile's turns and flips are left to the Python and Rust checks.
+The parity match over all four-place shuffles and the tile's turns and flips are left to the Python and Rust checks; the minimality of the fewest-swaps formula is stated without proof.
 
 ```lean
 -- Permutations: the one-to-one and onto rearrangements of n labelled places compose into rearrangements, each has an undo, there are n! of them, no rearrangement is both an even and an odd number of swaps, and from three places up the order of composing matters, with the card's three-card and four-corner numbers checked.

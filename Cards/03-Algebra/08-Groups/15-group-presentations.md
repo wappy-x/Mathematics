@@ -8,13 +8,13 @@
 
 A square tile can be set down eight ways: four turns and four flips ([Groups](01-groups.md)). Two moves and three rules describe that group in one line.
 
-Call a quarter turn r and the flip over the diagonal f. Every move is a string of r's and f's, called a **word**. Three rules hold: four quarter turns do nothing, two flips do nothing, and flip, turn, flip back is the reverse turn. These rules shorten any word to one of eight short forms.
+Call a quarter turn r and the flip over the diagonal f. Every move is a string of r's and f's, called a **word**. Three rules hold: four quarter turns do nothing, two flips do nothing, and flip, turn, flip back is the reverse turn. These rules shorten any word to one of eight short forms (also called normal forms).
 
 Letters plus the rules they obey are a **presentation**: a recipe for a group that lists no members. Von Dyck's theorem tests the recipe against real moves. If the real moves obey every rule, the whole group maps to them, and onto the moves they generate.
 
 The rules give at most 8 members, the map onto the tile gives at least 8, so the recipe makes exactly the tile group. The quaternion group, another recipe with 8 members, is a different group.
 
-**A presentation names a group by letters and rules: the rules bound its size from above, and von Dyck's theorem lets any model obeying them bound it from below.**
+**A presentation names a group by letters and rules: the rules bound its size from above, and von Dyck's theorem lets any real group of moves obeying them bound it from below.**
 
 **What kind of fact this is:** a definition (the presentation) and a theorem (von Dyck's), proved on this card in Why it works.
 
@@ -119,7 +119,7 @@ So the map is one-to-one and onto, an isomorphism: the tile group *is* $`\langle
 
 **At least 8.** Quaternions extend the numbers by three units i, j and k, with $`i^2 = j^2 = k^2 = ijk = -1`$. Send the letters to the quaternions i and j. The three relations hold, and the 8 short forms land on the 8 different quaternions ±1, ±i, ±j, ±k.
 
-**Different from the tile.** A member's **order** is the number of repeats that first gives the identity, and an isomorphism keeps it. In $`Q_8`$ only $`i^2`$, the quaternion −1, has order 2. In the tile group five do: the half turn and the four flips. So no isomorphism exists.
+**Different from the tile.** A member's **order** is the smallest positive number of repeats that gives the identity, and an isomorphism keeps it. In $`Q_8`$ only $`i^2`$, the quaternion −1, has order 2. In the tile group five do: the half turn and the four flips. So no isomorphism exists.
 
 <details>
 <summary>The word problem: when rewriting cannot decide</summary>
@@ -705,7 +705,7 @@ example : (Finset.univ.filter fun g : QuaternionGroup 2 => g ≠ 1 ∧ g * g = 1
 ## The usual mistake
 
 > [!warning]
-> **Reading the group's size off the rewriting.** Rules that shrink every word to 8 short forms prove "at most 8", nothing more. Change the third rule to $`frf = r^2`$, used as $`fr \to rrf`$: the same 8 forms appear. Yet $`ffr`$ becomes $`r`$ by deleting $`ff`$, and $`e`$ by moving each f right first, so $`r = e`$: only 2 members, and no model among the 24 corner maps has more. Only a model that obeys every relation, with 8 different images, proves "at least 8".
+> **Reading the group's size off the rewriting.** Rules that shrink every word to 8 short forms prove "at most 8", nothing more. Change the third rule to $`frf = r^2`$, used as $`fr \to rrf`$: the same 8 forms appear. Yet $`ffr`$ becomes $`r`$ by deleting $`ff`$, and $`e`$ by moving each f right first, so $`r = e`$: only 2 members, and no real group of moves (model) among the 24 corner maps has more. Only a model that obeys every relation, with 8 different images, proves "at least 8".
 >
 > - **Dropping a relation.** Without $`frf = r^{-1}`$: 18, 43, then 97 members from words of up to 4, 6, 8 letters.
 > - **Skipping a relation check.** With f sent to the half turn, 225 of 510 words land off their short form.
@@ -716,7 +716,7 @@ example : (Finset.univ.filter fun g : QuaternionGroup 2 => g ≠ 1 ∧ g * g = 1
 ## Where you meet it in real life
 
 - **Computer algebra.** Group software stores many groups as presentations and counts their members by coset enumeration, the Todd–Coxeter method.
-- **Knots and shapes.** The loop group of a space arrives as a presentation, read off how the space is glued. Telling two knots apart starts with telling two presented groups apart.
+- **Knots and shapes.** The group of loops you can draw in a space (its loop group) arrives as a presentation, read off how the space is glued. Telling two knots apart starts with telling two presented groups apart.
 - **Rotations in 3D.** Flight software and game engines turn objects with unit quaternions; $`Q_8`$ is the group of the eight basic ones.
 
 > **Say it back**

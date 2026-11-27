@@ -16,7 +16,7 @@ Pairing two groups with that twist built into the rule is a **semidirect product
 
 **A semidirect product pairs two groups and lets one relabel the other as pairs combine, so the same two pieces can build different groups.**
 
-**What kind of fact this is:** a definition, carrying two theorems proved in Why it works. A group splits as a semidirect product when a normal subgroup and a subgroup meet only in the identity and fill the group, and a group of order $`pq`$ is one of at most two groups.
+**What kind of fact this is:** a definition, carrying two theorems proved in Why it works. A group splits as a semidirect product when a normal subgroup and a subgroup meet only in the identity and fill the group, and for primes $`p > q`$ a group of order $`pq`$ is one of at most two groups.
 
 ### The picture: a flip reverses a turn
 
@@ -383,10 +383,10 @@ The two outputs match line for line.
 Lean proves the twisted rule is a group and the card's two theorems, for every group, clock and pair of primes.
 
 - Suppose $`N`$ is normal, $`H`$ is a subgroup, $`N \cap H = \{e\}`$ and $`NH = G`$. Then $`G \cong N \rtimes H`$, with $`H`$ acting by conjugation and $`(x, h)`$ matched to $`x h`$.
-- Suppose $`u`$ shares no factor with $`n`$ and $`u^m = 1 \bmod n`$. Then the twisted rule brackets either way, $`(0, 0)`$ is its identity, and every pair has an undo.
+- Suppose $`m \ge 1`$, $`u`$ shares no factor with $`n`$ and $`u^m = 1 \bmod n`$. Then the twisted rule brackets either way, $`(0, 0)`$ is its identity, and every pair has an undo.
 - Take primes $`p > q`$. Then a multiplier $`u \ne 1`$ with $`u^q = 1 \bmod p`$ exists exactly when $`q`$ divides $`p - 1`$.
 - Take primes $`p > q`$, with $`q`$ not dividing $`p - 1`$. Then every group of order $`pq`$ is the $`pq`$-clock, relabelled.
-- Take two groups of order $`pq`$, neither of them the $`pq`$-clock. Then they are the same group relabelled, so there are at most two groups.
+- Take primes $`p > q`$ and two groups of order $`pq`$, neither of them the $`pq`$-clock. Then they are the same group relabelled, so there are at most two groups.
 - It also re-checks the tile's numbers: $`(3, 1)`$, $`(1, 1)`$, $`(3, 0)`$, 40 commuting pairs and 192 broken triples.
 - It re-checks order 21: $`2^3 = 1 \bmod 7`$, 14 members of order 3, 6 of order 7, and multipliers 1, 2, 4.
 

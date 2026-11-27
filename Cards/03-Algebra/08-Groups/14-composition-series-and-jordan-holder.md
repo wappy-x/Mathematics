@@ -82,7 +82,7 @@ Two breakdowns may start differently, at H and at K. Route both through their ov
 
 ### Step 1: every finite group has a composition series
 
-Take a **maximal normal** subgroup of G: one other than G, with no normal subgroup strictly between it and G. A biggest one by size qualifies. The quotient by it is simple: by the correspondence theorem ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)), a normal subgroup of the quotient would come from one strictly between, and none exists. Repeat inside the smaller group. Sizes drop, so the chain reaches 1.
+If $`G`$ has size 1, the empty chain is already done; otherwise take a **maximal normal** subgroup of G: one other than G, with no normal subgroup strictly between it and G. A biggest one by size qualifies. The quotient by it is simple: by the correspondence theorem ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)), a normal subgroup of the quotient would come from one strictly between, and none exists. Repeat inside the smaller group. Sizes drop, so the chain reaches 1.
 
 ### Step 2: the diamond
 
@@ -117,7 +117,7 @@ Both series have length s + 2. Their factors are G/H, H/D, D's and G/K, K/D, D's
 
 ### Step 4: solvable means every piece is a clock of prime size
 
-A commutative simple group is a clock of prime size. Every subgroup of a commutative group is normal, so a simple one has no subgroups but itself and 1. Any member except do-nothing then generates it, so it is a clock; and a clock of size a × b has a subgroup of size a, so its size is prime.
+A commutative simple group is a clock of prime size. Every subgroup of a commutative group is normal, so a simple one has no subgroups but itself and 1. Any member except do-nothing then generates it, so it is a clock; and a clock of size a × b with $`a, b > 1`$ has a subgroup of size a strictly between 1 and itself, so its size is prime.
 
 Refine a chain with commutative pieces until each step is simple. Each new piece is a subgroup of a quotient of a commutative piece, so it commutes, and is a clock of prime size. Conversely, clocks commute. By Jordan-Holder, one composition series settles it:
 

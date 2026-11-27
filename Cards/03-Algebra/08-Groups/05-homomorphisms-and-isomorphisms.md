@@ -512,7 +512,7 @@ example : [1, 3, 5, 7].map (fun u => (List.range' 1 8).find? (fun n => u ^ n % 8
 >
 > - **Confusing the image with the target group.** The image is only what the map reaches. Here the two coincide, all 12 readings reached — a fact about this map, not a rule.
 > - **Hunting for zero instead of the identity.** The kernel is what lands on the identity: 0 on these clocks, but usually 1 where the operation is multiplication.
-> - **Counting members to match two groups.** Four and four proves nothing: a quarter turn needs four repeats to come home, each of 1, 3, 5, 7 mod 8 needs two.
+> - **Counting members to match two groups.** Four and four proves nothing: a quarter turn needs four repeats to come home, while each of 3, 5, 7 mod 8 needs two and 1 needs one.
 
 ---
 

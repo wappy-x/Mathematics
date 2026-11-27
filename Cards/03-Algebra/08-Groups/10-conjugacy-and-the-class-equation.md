@@ -20,9 +20,9 @@ Sorting the eight moves into look-alikes gives five classes:
 
 So 8 = 1 + 1 + 2 + 2 + 2. The two moves standing alone are the ones every viewpoint agrees on: the **centre**, the moves that give the same result as every other move in either order.
 
-The counting rule behind this split is the **class equation**. When a group's size is a prime power, such as 8 = 2 × 2 × 2, it forces a centre of more than one member.
+The counting rule behind this split is the **class equation**. When a group's size is a prime power above 1, such as 8 = 2 × 2 × 2, it forces a centre of more than one member.
 
-**Conjugation sorts a group into classes of look-alikes; each class's size divides the group's size, the one-member classes are the centre, and in a group of prime-power size that forces a centre with more than one member.**
+**Conjugation sorts a group into classes of look-alikes; each class's size divides the group's size, the one-member classes are the centre, and in a group of prime-power size above 1 that forces a centre with more than one member.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; conjugate, class, centraliser, centre and normaliser are its definitions.
 
@@ -61,7 +61,7 @@ Pick one move from each class with more than one member, and call them $`x_1, x_
 \lvert G\rvert = \lvert Z(G)\rvert + \sum_i \,[G : C(x_i)]
 ```
 
-**Read it aloud:** the group's size is the size of its centre plus, for each bigger class, the number of cosets of that class's centraliser.
+**Read it aloud:** the group's size is the size of its centre plus, for each bigger class, the number of cosets (slid copies of a subgroup) of that class's centraliser.
 
 The **index** $`[G : C(x)]`$ is the number of cosets of $`C(x)`$, which is $`\lvert G\rvert / \lvert C(x)\rvert`$. On the tile each bigger class has a centraliser of 4 moves, so 8 = 2 + 8/4 + 8/4 + 8/4.
 
@@ -83,7 +83,7 @@ A subgroup $`H`$ can be conjugated too, member by member, giving $`g H g^{-1}`$.
 - **A finite group.** The equation is a count; an infinite group can have infinite classes.
 - **Conjugate by the whole group.** Conjugate the tile's moves by the four turns only and the quarter turns split apart: 6 classes, not 5.
 - **The centre counted member by member.** Each central move is its own class of 1. Count the centre as one term and the sum gives 7, not 8.
-- **A prime power, for the centre result.** The six rearrangements of three things (S3 in the code) split 6 = 1 + 2 + 3, and their centre is do-nothing alone. Six is not a prime power, so nothing forced a bigger centre.
+- **A prime power above 1, for the centre result.** The six rearrangements of three things (S3 in the code) split 6 = 1 + 2 + 3, and their centre is do-nothing alone. Six is not a prime power, so nothing forced a bigger centre.
 
 ---
 
@@ -93,7 +93,7 @@ A subgroup $`H`$ can be conjugated too, member by member, giving $`g H g^{-1}`$.
 
 Let each move $`g`$ act on each move $`x`$ by sending it to $`g x g^{-1}`$. Both promises of an action hold ([Group actions](08-group-actions-and-counting.md)). Do-nothing sends $`x`$ to $`x`$. Conjugating by $`h`$ and then by $`g`$ gives $`g h x h^{-1} g^{-1}`$, which is conjugating once by $`g h`$.
 
-So the orbits are the classes. The stabiliser of $`x`$ is the set of $`g`$ with $`g x g^{-1} = x`$, that is $`g x = x g`$: the centraliser.
+So the **orbits** (everything conjugation can turn $`x`$ into) are the classes. The **stabiliser** of $`x`$ (the moves that leave $`x`$ unchanged) is the set of $`g`$ with $`g x g^{-1} = x`$, that is $`g x = x g`$: the centraliser.
 
 ### Step 1: each class size is a count of cosets
 
@@ -128,15 +128,15 @@ Take $`H`$ = r0 and r0f, a diagonal flip with do-nothing. Its normaliser is r0, 
 <details>
 <summary>Nilpotent groups: climbing out of the centre, and why the rearrangements of three things cannot</summary>
 
-The centre is normal, so the group collapses by it into a quotient group. In a prime-power group that quotient, unless it is a single pile, has a centre bigger than one too; pull it back into $`G`$ and climb again:
+The centre is normal, so the group collapses by it into a quotient group. In a prime-power group that quotient, unless it is a single coset, has a centre bigger than one too; pull it back into $`G`$ and climb again:
 
 $`\displaystyle \{e\} = Z_0 \subseteq Z_1 \subseteq Z_2 \subseteq \cdots, \qquad Z_{i+1} = \{\, g : g x g^{-1} x^{-1} \text{ is in } Z_i \text{ for every } x \,\}`$
 
 This is the **upper central series**. Here $`g x g^{-1} x^{-1}`$ is the **commutator** of $`g`$ and $`x`$: it is do-nothing exactly when the two commute. A group whose series reaches all of $`G`$ is **nilpotent**.
 
-- The tile climbs 1, 2, 8. After collapsing by the centre r0, r2, the 4 piles all commute, so the second step takes everything.
+- The tile climbs 1, 2, 8. After collapsing by the centre r0, r2, the 4 cosets all commute, so the second step takes everything.
 - The group of 27 climbs 1, 3, 27.
-- Every prime-power group is nilpotent: each step's quotient is a smaller prime-power group with a centre bigger than one, so the climb never stalls before $`G`$.
+- Every prime-power group is nilpotent: each step's quotient, while bigger than 1, is a smaller prime-power group with a centre bigger than one, so the climb never stalls before $`G`$.
 - The rearrangements of three things have centre do-nothing alone, so the series is stuck at 1. They are not nilpotent.
 
 They are **solvable** (repeated commutators end at do-nothing alone), a weaker property: their commutators make the subgroup of 3 cyclic rearrangements, whose own commutators give do-nothing alone.
@@ -531,7 +531,7 @@ example : (Finset.univ.image (fun x : Equiv.Perm (Fin 3) =>
 - **Change of coordinates.** For matrices, $`P A P^{-1}`$ is the map $`A`$ written in other coordinates. Conjugate matrices share their eigenvalues ([Diagonalisation](../07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)).
 
 > **Say it back**
-> Conjugating a move by another means undo, do, redo: the same move seen from a new position. Conjugation is the group acting on itself, so its orbits, the classes, cut the group into blocks. Each class's size is the group's size divided by its centraliser's size. The one-member classes are the centre, and adding the blocks gives the class equation, 8 = 2 + 2 + 2 + 2 on the tile. In a prime-power group every bigger class is a multiple of the prime, so the centre is too, and it has more than one member.
+> Conjugating a move by another means undo, do, redo: the same move seen from a new position. Conjugation is the group acting on itself, so its orbits, the classes, cut the group into blocks. Each class's size is the group's size divided by its centraliser's size. The one-member classes are the centre, and adding the blocks gives the class equation, 8 = 2 + 2 + 2 + 2 on the tile. In a prime-power group above 1 every bigger class is a multiple of the prime, so the centre is too, and it has more than one member.
 
 ---
 

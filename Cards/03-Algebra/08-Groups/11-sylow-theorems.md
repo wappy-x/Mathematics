@@ -105,7 +105,7 @@ $`\displaystyle (1 + x)^{p^a m} \equiv (1 + x^{p^a})^m \pmod{p}`$
 
 The coefficient of $`x^{p^a}`$ is $`\binom{p^a m}{p^a}`$ on the left and m on the right. The check prints three cases: 735471 and 3 leave 1 on dividing by 2; 455 and 5 leave 2 on dividing by 3; 3003 and 3 leave 3 on dividing by 5.
 
-A second proof inducts on the size with the class equation ([Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md)). There are two cases.
+A second proof inducts on the size with the class equation ([Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md)). When $`a = 0`$, the identity alone has size 1; for $`a \ge 1`$, there are two cases.
 
 - **Some class of more than one member has a size free of p.** The members fixing one of its members form a smaller subgroup whose size $`p^a`$ divides. By induction it holds a subgroup of size $`p^a`$.
 - **Otherwise p divides the size of the centre** (the members that commute with everything). The centre is commutative, so it holds a member of order p (stated here without proof). The quotient by the subgroup that member makes is smaller. By induction that quotient has a subgroup of size $`p^{a-1}`$. Its members are cosets of size p, which together make a subgroup of G of size $`p^a`$ ([The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md)).
