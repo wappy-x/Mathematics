@@ -97,7 +97,7 @@ The games rule calls itself on L and R, each with fewer teams than the whole. Te
 
 The general form is **well-founded recursion**: each call is on something smaller, by a measure that cannot fall forever.
 
-[Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) is one. It finds the largest number dividing both of two numbers. Each call swaps the pair for the second number and the remainder of the first ÷ the second, until the second is 0. Remainders are smaller than the number divided by, so the second number falls: (63, 15) → (15, 3) → (3, 0). The answer is 3.
+[Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md) is one. It finds the largest whole number dividing both of two whole numbers (not both zero). Each call swaps the pair for the second number and the remainder of the first ÷ the second, until the second is 0. Remainders are smaller than the number divided by, so the second number falls: (63, 15) → (15, 3) → (3, 0). The answer is 3.
 
 ### Step 5: the same proof for formulas
 

@@ -243,7 +243,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the stamp claim for every amount from 8 cents up, and well-ordering for every collection of counting numbers.
+Lean proves the stamp claim for every amount from 8 cents up, and well-ordering for every non-empty collection of counting numbers.
 
 - Every amount of 8 cents or more can be paid exactly with 3-cent and 5-cent stamps.
 - Every non-empty collection of counting numbers has a smallest member.
@@ -351,7 +351,7 @@ example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
 
 ## Where you meet it in real life
 
-- **Splitting a number into primes.** Every whole number above 1 is a product of primes: the proof splits it into two smaller factors and leans on both, neither of them the case before.
+- **Splitting a number into primes.** Every whole number above 1 is a product of primes: if it is not prime, the proof splits it into two smaller factors and leans on both, neither of them the case before.
 - **Programs that call themselves.** A routine handing itself a smaller job stops, because the job sizes are counting numbers and cannot fall forever.
 - **Packing sizes.** Beer in 4-packs and 7-packs: every order of 18 or more fills exactly — same argument, different stamps.
 
@@ -366,9 +366,9 @@ example : ∀ k : ℕ, 8 + 3 * k ≠ 9 := by intro k; omega
 
 ## Where this goes next
 
-- [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits which claim.
+- [Choosing a proof strategy](06-choosing-a-proof-strategy.md): how to pick a proof move from a claim's opening words, plus existence and uniqueness.
 - [Structural induction](08-structural-induction-and-recursion.md): prove a fact about every tree or formula by checking each way it can be built.
-- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega + 1 is bigger but 1 + omega is not.
+- [Ordinals](../09-Sizes%20of%20Infinity/06-ordinals.md): counting past infinity, where omega (the first infinite step) plus 1 is bigger than 1 plus omega.
 
 Left open: with five proof moves now on the table, how do you tell from a claim which move to try first?
 

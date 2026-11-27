@@ -75,7 +75,7 @@ Nobody laid a domino.
 
 ### The same move, one shelf over
 
-Root 2 is the number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which is even. An odd number times itself is odd, so p must be even, and that forces q even too. Both even means a factor of 2 was still in there. Wall.
+Root 2 is the positive number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which is even. An odd number times itself is odd, so p must be even, and that forces q even too. Both even means a factor of 2 was still in there. Wall.
 
 Fractions get close and stay wrong: 99 × 99 is 9801; 2 × 70 × 70, 9800. [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md) runs it properly.
 
@@ -221,7 +221,7 @@ Lean proves this card's three claims in every case: any 31 dominoes, any domino,
 
 - No 31 dominoes cover the board with row 1 column 1 and row 8 column 8 cut off.
 - Every domino covers one dark square and one light square.
-- No fraction p over q squares to 2, in lowest terms or not.
+- No fraction p over q (with q not zero) squares to 2, in lowest terms or not.
 
 Lean also confirms the counts on this card; the Python and Rust checks print them and let you change the board.
 

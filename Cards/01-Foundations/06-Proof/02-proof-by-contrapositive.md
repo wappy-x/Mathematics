@@ -104,7 +104,7 @@ Four drivers, paid in dollars. Value is the verdict: 1 means the sign survives t
 
 Wes is the only driver who could tell the two sentences apart. He cannot: he breaks both.
 
-The last row searches twenty numbers; a search is not a proof. The proof above covers every number.
+The last row searches twenty numbers; a search is not a proof. The proof above covers every whole number.
 
 ### What breaks if you drop a piece
 
@@ -337,7 +337,7 @@ example : (Finset.Icc 1 20).filter (fun n : ℕ => (n * n) % 2 = 1)
 - **Proof itself.** Claims about even, odd and factors flip well: "not even" is a fact you can write down. Which move fits which claim: [Choosing a proof strategy](06-choosing-a-proof-strategy.md).
 
 > **Say it back**
-> An if-then and its contrapositive — both halves flipped, then swapped — are one claim in two spellings, breaking in the same case. Prove whichever gives the better place to stand; the other comes free. "If n × n is odd, n is odd" becomes "if n is even, so is n × n": 6 × 6 = 2 × 18 = 36. Swapping without flipping is the converse, a different claim.
+> An if-then and its contrapositive — both halves flipped, then swapped — are one claim in two spellings, breaking in the same case. Prove whichever gives the better place to stand; the other comes free. For whole numbers, "if n × n is odd, n is odd" becomes "if n is even, so is n × n": 6 × 6 = 2 × 18 = 36. Swapping without flipping is the converse, a different claim.
 
 ---
 

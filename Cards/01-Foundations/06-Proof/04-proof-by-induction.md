@@ -40,7 +40,7 @@ The formula is the thing being proved:
 
 **Read it aloud:** take the number of people, multiply by one fewer, and halve the result.
 
-Two jobs prove it for every n. **Base case:** show it at 1 person. **Induction step:** any size k where it holds must hand it to k + 1.
+Two jobs prove it for every whole number n from 1 up. **Base case:** show it at 1 person. **Induction step:** any size k from 1 up where it holds must hand it to k + 1.
 
 | Piece | Plain meaning | In our party |
 | --- | --- | --- |
@@ -53,7 +53,7 @@ Two jobs prove it for every n. **Base case:** show it at 1 person. **Induction s
 ### When it holds
 
 - **The base case is checked by hand.** Skip it and a false claim can still pass the step. The count with a spare 1 added passes it, and gives 29 at eight people.
-- **The step runs from every size k.** If it fails from even one size, the chain stops there, and no larger party is proved.
+- **The step runs from every size k from the base case up.** If it fails from even one of those sizes, the chain stops there, and no larger party is proved.
 - **The sizes are whole numbers in a line.** The proof covers 1 person and every size after it, one guest at a time. It says nothing about sizes below the base case.
 - **Every pair shakes hands once.** Count each handshake from both ends and eight people give 56, not 28.
 
@@ -321,7 +321,7 @@ example : 1 * (1 - 1) / 2 + 1 ≠ 0 := by norm_num
 > **Believing the induction hypothesis assumes what you are proving.** It does not. Inside the step nothing claims the party of 7 works — only that if 7 works, 8 works, for every size at once. The one outright claim is the base case, checked by hand.
 >
 > - **No base case.** A chain attached to nothing. Bolt a spare 1 onto the claim and the step still runs, to a wrong 29.
-> - **A step that only fires from some sizes.** It must run from every k. One gap and the dominoes stop there.
+> - **A step that only fires from some sizes.** It must run from every k from the base case up. One gap and the dominoes stop there.
 > - **Cases instead of a proof.** "Never more than 28 handshakes" passes every size through 8, then fails at 9, at 36.
 
 ---
@@ -333,7 +333,7 @@ example : 1 * (1 - 1) / 2 + 1 ≠ 0 := by norm_num
 - **Counting connections.** n × (n − 1) ÷ 2 is also the cables to wire n machines to each other: 8 machines, 28 cables.
 
 > **Say it back**
-> Induction proves a claim about every whole number with two jobs. Smallest case: a party of 1 has 0 handshakes, and 1 × 0 ÷ 2 is 0. The step: a party of k has k × (k − 1) ÷ 2 handshakes, one more guest shakes k hands, and that total is what the claim says at k + 1. First domino down, each topples its neighbour: eight friends, 28 handshakes, every size with them.
+> Induction proves a claim about every whole number from a starting case up with two jobs. Smallest case: a party of 1 has 0 handshakes, and 1 × 0 ÷ 2 is 0. The step: a party of k has k × (k − 1) ÷ 2 handshakes, one more guest shakes k hands, and that total is what the claim says at k + 1. First domino down, each topples its neighbour: eight friends, 28 handshakes, every size with them.
 
 ---
 
