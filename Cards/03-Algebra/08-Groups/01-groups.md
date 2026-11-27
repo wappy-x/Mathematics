@@ -531,21 +531,21 @@ example : (2 * 3 : ZMod 6) = 0 := by decide
 
 ## Where this goes next
 
-- [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md): the parts that are groups.
-- [Permutations](03-permutations-and-the-symmetric-group.md): rearranging a list.
-- [Rings](../09-Rings%20and%20Fields/01-rings.md): two operations at once.
-- [Symmetry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md): repeating patterns.
-- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): an operation built to fit.
-- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): symmetry paying out.
-- [Diffie-Hellman and ElGamal](../../14-Applied%20and%20computational/04-Cryptography/05-diffie-hellman-and-elgamal.md): key exchange.
-- [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): loops end to end.
-- [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): generating a curve's points.
-- [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): its hard rule proved.
-- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): every angle, not four.
-- [Categories and functors](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/01-categories-and-functors.md): undos dropped.
-- [Adjunctions](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/06-adjunctions.md): loose undos.
-- [Monoids and monads](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/07-monoids-and-monads-for-programmers.md): three rules only.
-- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): infinite from finite.
+- [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md): the subsets inside a group that form groups themselves, and groups built by repeating one member.
+- [Permutations](03-permutations-and-the-symmetric-group.md): the group of all reversible shuffles of a labelled list, where order matters.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): collections with two operations at once, addition and multiplication, like whole numbers and clocks.
+- [Symmetry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md): the symmetry groups of shapes and the seventeen repeating wallpaper patterns on a flat wall.
+- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve whose points combine by a geometric line rule to form a group.
+- [Symmetry and conservation](../../13-Engineering%20mathematics/09-Quantum%20Mechanics%20in%20Outline/08-symmetry-and-conserved-quantities.md): how each continuous symmetry group of a physical system produces a conserved quantity.
+- [Diffie-Hellman and ElGamal](../../14-Applied%20and%20computational/04-Cryptography/05-diffie-hellman-and-elgamal.md): sharing a secret key in public using powers inside a prime-clock multiplication group.
+- [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): turning loops on a shape into a group by following one loop after another.
+- [Rational points on a cubic](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/05-elliptic-curves-over-q-and-mordell-weil.md): how finitely many starting points generate the whole group of rational points on a cubic curve.
+- [The group law](../../22-Algebraic%20geometry/04-Elliptic%20Curves/01-elliptic-curves-and-the-group-law.md): proving associativity for the rule that three points on a line add up to zero.
+- [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): continuous groups of turns through every angle, forming smooth spaces as well as groups.
+- [Categories and functors](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/01-categories-and-functors.md): arrows that compose like group moves, without requiring undos or that every pair combines.
+- [Adjunctions](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/06-adjunctions.md): pairs of structure-keeping maps in opposite directions that act as loose undos of each other.
+- [Monoids and monads](../../24-Computability%20and%20complexity/07-Category%20Theory%20in%20Outline/07-monoids-and-monads-for-programmers.md): keeping the first three group rules without undos, used in programming to chain steps.
+- [Two algebra questions](../../25-Frontier/05-Analysis%20and%20Dynamics/05-sofic-groups-and-kothe.md): open problems asking whether every infinite group can be approximated by finite shuffle groups.
 - [Haar measure](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/02-haar-measure.md): the one fair way to measure size on a group.
 
 The four turns alone pass all four rules, which is the next card's question: which parts of a group are groups, and what one member generates alone.

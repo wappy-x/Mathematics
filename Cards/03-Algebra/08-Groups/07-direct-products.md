@@ -14,9 +14,9 @@ Two on-off switches have four patterns: off-off, off-on, on-off, on-on. Flip bot
 
 Both devices are two groups side by side, each combining by its own rule, neither reaching across: a **direct product**.
 
-**Pairing two groups makes a group in which each half minds its own business: the settings multiply, while whether the pair acts like one bigger clock turns on whether the two clock sizes share a factor.**
+**Pairing two groups makes a group in which each half minds its own business: for finite groups the settings multiply, and two clocks act like one bigger clock exactly when their sizes share no factor above 1.**
 
-**What kind of fact this is:** a definition, the pairing, with two theorems proved below in Why it works. A pair's return time is the least common multiple of its halves' return times. Two clocks make one bigger clock exactly when their sizes share no factor.
+**What kind of fact this is:** a definition, the pairing, with two theorems proved below in Why it works. When both halves come home, a pair's return time is the least common multiple of its halves' return times. Two clocks make one bigger clock exactly when their sizes share no factor above 1.
 
 ### The picture: one move, four devices, how long until it comes home
 
@@ -536,7 +536,7 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 - **Arithmetic done in pieces.** Work on a 15-clock splits into the 3-clock and the 5-clock, runs in smaller numbers, then rebuilds by the reverse formula — routine in cipher work ([RSA in outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
 
 > **Say it back**
-> A direct product stores one member of two groups as an ordered pair and combines each half by its own rule. Settings multiply: dials of 3 and 5 positions make 15. Return times take the least common multiple instead, so both dials turned one notch come home after 15 notches — one move reaching every setting, which makes the padlock a 15-dial in disguise. Two switches have four settings too, but every pattern comes home in two flips where a 4-dial needs four.
+> A direct product stores one member of two groups as an ordered pair and combines each half by its own rule. For finite groups, settings multiply: dials of 3 and 5 positions make 15. Finite return times take the least common multiple instead, so both dials turned one notch come home after 15 notches — one move reaching every setting, which makes the padlock a 15-dial in disguise. Two switches have four settings too, but every pattern comes home in two flips where a 4-dial needs four.
 
 ---
 
@@ -551,10 +551,10 @@ example : 3 * 6 = 18 ∧ Nat.lcm 3 6 = 6 := by decide
 
 - [Group actions](08-group-actions-and-counting.md): the next card; a group moving the members of a set, used to count patterns its moves cannot tell apart.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
-- [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): the points on a curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
-- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
+- [Mordell-Weil](../../22-Algebraic%20geometry/04-Elliptic%20Curves/06-mordell-weil-and-rank.md): the rational points on a cubic curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
+- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
-- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): characters as the waves, and the transform on bit strings.
+- [Fourier analysis on a finite abelian group](../../20-Harmonic%20analysis/08-Harmonic%20Analysis%20on%20Groups/01-fourier-analysis-on-finite-abelian-groups.md): breaking functions on a finite commutative group into basic waves (characters), including patterns on bit strings.
 
 Pairing builds a group from parts. The reverse is harder: given a group, which parts is it made of, and what to do when the parts will not leave each other alone? [The Sylow theorems](11-sylow-theorems.md) and [Semidirect products](12-semidirect-products.md) answer later. Both need one tool first, a group moving the members of a set, which the next card, [Group actions](08-group-actions-and-counting.md), builds.
 

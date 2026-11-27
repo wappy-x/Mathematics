@@ -12,9 +12,9 @@ Wait five hours. The station clock reads 04:00; the wall clock goes 11, 12, 1, 2
 
 A translation between groups that survives the operation is a **homomorphism**. This one is honest about adding and still forgetful: 11:00 and 23:00 both read 11.
 
-A translation that forgets nothing is an **isomorphism**. A square tile has four turns: none, a quarter, a half, three quarters. Rename a quarter turn as 1 and the four behave exactly like the readings 0, 1, 2, 3 on a four-hour clock.
+A translation that forgets nothing and misses nothing is an **isomorphism**. A square tile has four turns: none, a quarter, a half, three quarters. Rename a quarter turn as 1 and the four behave exactly like the readings 0, 1, 2, 3 on a four-hour clock.
 
-**A homomorphism carries the operation across unharmed; an isomorphism loses nothing either, so the two groups are one group wearing two sets of labels.**
+**A homomorphism carries the operation across unharmed; an isomorphism loses nothing and misses nothing in the target, so the two groups are one group wearing two sets of labels.**
 
 **What kind of fact this is:** a definition — two of them — with the small theorems that follow from it proved on this card in Why it works.
 
@@ -540,9 +540,9 @@ example : [1, 3, 5, 7].map (fun u => (List.range' 1 8).find? (fun n => u ^ n % 8
 - [Direct products](07-direct-products.md): a bigger group built from two smaller ones, and how to spot one.
 - [The fundamental group](../../17-Topology/04-Homotopy/03-the-fundamental-group.md): loops followed one after another, where a map of shapes becomes a homomorphism.
 - [Dirichlet characters](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/01-dirichlet-characters.md): homomorphisms from clock arithmetic to numbers on a circle.
-- [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): homomorphisms into groups of matrices.
-- [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): collapsing in two stages is collapsing once, and the subgroups of a quotient are the subgroups above the kernel.
-- [Presentations](15-group-presentations.md): describe a group by generators and the rules they obey, and von Dyck's theorem turns the rules into maps.
+- [Representation](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/05-representations-in-outline.md): homomorphisms that turn group members into invertible matrices so linear algebra can study them.
+- [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): collapsing a group in two stages matches collapsing once, and a collapsed group's subgroups are those above the kernel.
+- [Presentations](15-group-presentations.md): describing a group by generators and rules, where any choice obeying the rules extends to a homomorphism.
 
 Collapsing this kernel would turn a lossy map into an exact match — but not every subgroup can be collapsed, and the next card says which.
 

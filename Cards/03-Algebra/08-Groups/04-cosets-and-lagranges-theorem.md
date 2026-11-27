@@ -1,4 +1,4 @@
-# Cosets and Lagrange's theorem: a subgroup slices the group into equal blocks, so its size divides the group's size
+# Cosets and Lagrange's theorem: a subgroup slices a finite group into equal blocks, so its size divides the group's size
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Cosets and Lagrange's theorem
 
@@ -484,7 +484,7 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 - **Symmetry.** The turns of a square tile are a subgroup of the ways it can be set down, so those ways fall into equal blocks — counted in [Group actions](08-group-actions-and-counting.md).
 
 > **Say it back**
-> A coset is a subgroup slid to a new place by one member of the group. Sliding can be undone, so every coset is the subgroup's size, and two cosets sharing a member are the same coset. Every member sits in one, so the group's size is the block count times the block size. On the clock the quarter marks give three blocks of four; the same count on the hours coprime to 12 is Euler's theorem.
+> A coset is a subgroup slid to a new place by one member of the group. Sliding can be undone, so every coset is the subgroup's size, and two cosets sharing a member are the same coset. Every member sits in one, so a finite group's size is the block count times the block size. On the clock the quarter marks give three blocks of four; the same count on the hours coprime to 12 is Euler's theorem.
 
 ---
 
@@ -499,14 +499,14 @@ example : 2 ^ 12 % 12 = 4 := by norm_num
 
 - [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps whose equal-value blocks are one subgroup's cosets.
 - [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): when the blocks combine into a group of their own.
-- [Group actions](08-group-actions-and-counting.md): equal blocks counting arrangements.
-- [Covering spaces](../../17-Topology/04-Homotopy/05-covering-spaces.md): the index counting sheets above a space.
-- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): subgroups sized by the index.
-- [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): cosets forming a smooth space.
-- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
-- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
-- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
-- [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
+- [Group actions](08-group-actions-and-counting.md): using cosets to count how many arrangements a group of symmetries merges.
+- [Covering spaces](../../17-Topology/04-Homotopy/05-covering-spaces.md): unrolling a space into stacked layers whose count is a subgroup's index.
+- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): matching subgroups of root shuffles to number systems, with the index giving the degree.
+- [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): continuous symmetry groups whose cosets fit together into a smooth surface or space.
+- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a finite group sorted into look-alike classes, forcing a prime-power group above size 1 to have a centre bigger than one.
+- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): from five places up, the even shuffles cannot be collapsed partway into a smaller group, blocking a quintic formula.
+- [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group (words with no extra rules) is itself free, counted from a graph cover.
 - [Hecke operators](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/11-hecke-operators-and-eigenforms.md): the index of a subgroup of matrices, and the matrices of determinant n split into cosets, one sum per block.
 - [Small doubling](../../21-Algebraic%20and%20analytic%20number%20theory/08-Additive%20Combinatorics%20and%20Probabilistic%20Number%20Theory/10-plunnecke-ruzsa-and-freiman.md): a subgroup is a set that does not grow when added to itself, and sets that barely grow sit inside a few of its slid copies.
 

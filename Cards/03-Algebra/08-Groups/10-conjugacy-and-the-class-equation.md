@@ -1,4 +1,4 @@
-# Conjugacy and the class equation: a group sorted into classes of look-alikes, and why every group of prime-power size has a centre
+# Conjugacy and the class equation: a finite group sorted into look-alike classes, and why a prime-power group above size 1 has a centre bigger than one
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Conjugacy and the class equation
 
@@ -22,7 +22,7 @@ So 8 = 1 + 1 + 2 + 2 + 2. The two moves standing alone are the ones every viewpo
 
 The counting rule behind this split is the **class equation**. When a group's size is a prime power above 1, such as 8 = 2 × 2 × 2, it forces a centre of more than one member.
 
-**Conjugation sorts a group into classes of look-alikes; each class's size divides the group's size, the one-member classes are the centre, and in a group of prime-power size above 1 that forces a centre with more than one member.**
+**Conjugation sorts a finite group into classes of look-alikes; each class's size divides the group's size, the one-member classes are the centre, and in a group of prime-power size above 1 that forces a centre with more than one member.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; conjugate, class, centraliser, centre and normaliser are its definitions.
 
@@ -531,7 +531,7 @@ example : (Finset.univ.image (fun x : Equiv.Perm (Fin 3) =>
 - **Change of coordinates.** For matrices, $`P A P^{-1}`$ is the map $`A`$ written in other coordinates. Conjugate matrices share their eigenvalues ([Diagonalisation](../07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)).
 
 > **Say it back**
-> Conjugating a move by another means undo, do, redo: the same move seen from a new position. Conjugation is the group acting on itself, so its orbits, the classes, cut the group into blocks. Each class's size is the group's size divided by its centraliser's size. The one-member classes are the centre, and adding the blocks gives the class equation, 8 = 2 + 2 + 2 + 2 on the tile. In a prime-power group above 1 every bigger class is a multiple of the prime, so the centre is too, and it has more than one member.
+> Conjugating a move by another means undo, do, redo: the same move seen from a new position. Conjugation is the group acting on itself, so its orbits, the classes, cut the group into blocks. In a finite group, each class's size is the group's size divided by its centraliser's size. The one-member classes are the centre, and adding the blocks gives the class equation, 8 = 2 + 2 + 2 + 2 on the tile. In a prime-power group above 1 every bigger class is a multiple of the prime, so the centre is too, and it has more than one member.
 
 ---
 
@@ -543,9 +543,9 @@ example : (Finset.univ.image (fun x : Equiv.Perm (Fin 3) =>
 
 ## Where this goes next
 
-- [The Sylow theorems](11-sylow-theorems.md): the class equation and the prime-power centre, used to find subgroups of the largest prime-power size that divides the group's size.
+- [The Sylow theorems](11-sylow-theorems.md): the class equation and the prime-power centre, used to find subgroups of the largest prime-power size dividing a finite group's size.
 - [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): a normal subgroup is a union of whole classes, and in A5 the class sizes rule out all but the trivial two.
-- [Composition series](14-composition-series-and-jordan-holder.md): chains of normal subgroups, of which the upper central series is one.
+- [Composition series](14-composition-series-and-jordan-holder.md): breaking a finite group down by chains of normal subgroups, like the fold's climb out of the centre.
 
 In a prime-power group the class equation forces a centre. The next card, [The Sylow theorems](11-sylow-theorems.md), turns the same counting on any finite group, to find subgroups of the largest prime-power size dividing its size.
 

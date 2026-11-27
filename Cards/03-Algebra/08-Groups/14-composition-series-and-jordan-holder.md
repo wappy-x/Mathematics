@@ -1,4 +1,4 @@
-# Composition series: break a group into simple pieces, and Jordan-Holder says the pieces are the same however you break it
+# Composition series: break a finite group into simple pieces, and Jordan-Holder says the pieces are the same however you break it
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Composition series
 
@@ -14,7 +14,7 @@ A **composition series** breaks a group down until no step can be split further.
 
 The pieces then decide whether the group is **solvable**. The shuffles of 4 cards break into pieces of sizes 2, 3, 2, 2, all prime: solvable. The shuffles of 5 cards hit a piece of size 60 that cannot split: not solvable, which is why the general fifth-degree equation has no formula in roots.
 
-**Every finite group breaks down, one unsplittable step at a time, into simple pieces, and the list of pieces is the same however the breakdown is done.**
+**Every finite group breaks down, one unsplittable step at a time, into simple pieces, and the same pieces come out, up to order and renaming, however the breakdown is done.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; composition series, simple group and solvable group are its definitions.
 
@@ -53,7 +53,7 @@ The quotients $`G_i/G_{i+1}`$ are the **composition factors**, the pieces. Their
 
 **Jordan-Holder:** any two composition series of a finite group have the same length, and their factors pair off as **isomorphic**, written $`\cong`$: the same group under different names.
 
-A group is **solvable** when it has a chain of normal steps down to 1, not necessarily simple, whose pieces all commute (a then b equals b then a). Step 4 proves this means every composition factor is a clock of prime size.
+A group is **solvable** when it has a chain of normal steps down to 1, not necessarily simple, whose pieces all commute (a then b equals b then a). For a finite group, Step 4 proves this means every composition factor is a clock of prime size.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -817,7 +817,7 @@ open CompositionSeriesCard in
 - **The list of finite simple groups.** Every finite group is built from simple pieces, so group theorists listed them all, in one of the longest proofs in mathematics.
 
 > **Say it back**
-> A composition series breaks a group down, each step leaving a simple piece. Z mod 12 breaks into 2, 2, 3 or 3, 2, 2: the same pieces, reordered. Jordan-Holder says this always happens; the proof meets two breakdowns at their overlap. A group is solvable when every piece is a clock of prime size. S4 is, with pieces 2, 3, 2, 2; S5 is not, because A5 is a simple piece of size 60.
+> A composition series breaks a finite group down, each step leaving a simple piece. Z mod 12 breaks into 2, 2, 3 or 3, 2, 2: the same pieces, reordered. Jordan-Holder says this always happens for finite groups; the proof meets two breakdowns at their overlap. A finite group is solvable when every piece is a clock of prime size. S4 is, with pieces 2, 3, 2, 2; S5 is not, because A5 is a simple piece of size 60.
 
 ---
 
@@ -830,7 +830,7 @@ open CompositionSeriesCard in
 
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): the commutator test, applied to the roots of a fifth-degree equation.
 - [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): why a formula in roots needs exactly a solvable group of root shuffles.
-- [Presentations](15-group-presentations.md): the next card; describing a group by generators and rules, which tells apart the tile and $`Q_8`$, two groups with the same pieces.
+- [Presentations](15-group-presentations.md): the next card; describing a group by generators and rules, telling apart the tile and the quaternion group $`Q_8`$, which share the same pieces.
 
 Jordan-Holder fixes the pieces, not the group: Z mod 8 and the tile share 2, 2, 2. How can a group be named exactly? The next card, [Presentations](15-group-presentations.md), names one by generators and rules, and tells apart two groups with the same pieces.
 

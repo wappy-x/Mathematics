@@ -1,4 +1,4 @@
-# Group actions: a group moving the members of a set, with orbit size times stabiliser size equal to the group's size
+# Group actions: a group moving the members of a set, with orbit size times stabiliser size equal to a finite group's size
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Group actions
 
@@ -12,7 +12,7 @@ Paint each corner black or white: 16 painted tiles. Many are one tile set down t
 
 Each move carries a painted tile to a painted tile, so the group moves the set of 16 patterns: it is **acting** on that set. What a pattern can be carried to is its **orbit**, and the moves leaving it untouched are its **stabiliser**. All-black has orbit 1 and stabiliser 8; one black corner, orbit 4 and stabiliser 2. Both products are 8, the number of moves.
 
-**A group acting on a set cuts it into orbits, and at every member the places it can be sent times the moves that leave it put is the size of the group.**
+**A group acting on a set cuts it into orbits, and when the group is finite, at every member the places it can be sent times the moves that leave it put is the size of the group.**
 
 **What kind of fact this is:** a theorem — orbit-stabiliser — proved below from Lagrange's theorem; action, orbit and stabiliser are its definitions.
 
@@ -527,7 +527,7 @@ example : (∑ k : ZMod 4,
 - **Inside a group.** A group acting on itself by shifting becomes a group of rearrangements ([Permutations](03-permutations-and-the-symmetric-group.md)).
 
 > **Say it back**
-> A group acts on a set when its members carry that set's members around: doing nothing changes nothing, and two moves combined do what the two do in turn. What a member can be carried to is its orbit; the moves leaving it put are its stabiliser. Orbit size times stabiliser size is the group's size, because the moves landing a member on one spot form one coset of the stabiliser. Orbits never overlap, so counting different things means counting orbits: 16 painted tiles fall into 6, the average of what each move leaves untouched.
+> A group acts on a set when its members carry that set's members around: doing nothing changes nothing, and two moves combined do what the two do in turn. What a member can be carried to is its orbit; the moves leaving it put are its stabiliser. When the group is finite, orbit size times stabiliser size is the group's size, because the moves landing a member on one spot form one coset of the stabiliser. Orbits never overlap, so counting different things means counting orbits: 16 painted tiles fall into 6, the average of what each move leaves untouched.
 
 ---
 
@@ -540,17 +540,17 @@ example : (∑ k : ZMod 4,
 ## Where this goes next
 
 - [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): the next card; the shelf returns to collapsing a group, in two stages and with its subgroups matched.
-- [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): seatings and bracelets of distinct items, where every orbit has full size and dividing by the group's size works.
-- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): a group acting on a polynomial's roots, a root's stabiliser matched with a field.
+- [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): seatings and bracelets of three or more distinct items, where every orbit has full size and dividing by the group's size works.
+- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): a group acting on a polynomial's roots, matching each root's stabiliser with a number system (field).
 - [Group action and homogeneous space](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/06-homogeneous-spaces-and-group-actions.md): the same promises with a continuous group, an orbit becoming a surface.
-- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
-- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p.
+- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a finite group sorted into look-alike classes, forcing a prime-power group above size 1 to have a centre bigger than one.
+- [The Sylow theorems](11-sylow-theorems.md): for the largest prime power dividing a finite group's size, subgroups of that size exist, are relabellings of one another, and number 1 more than a multiple of p.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
-- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a group acting by matrices, and Maschke's theorem that every one splits into pieces that cannot split further.
+- [Representations](../12-Group%20Representations/01-representations-and-maschkes-theorem.md): a finite group acting by matrices, splitting into basic matrix actions that cannot split further.
 - [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
-- [Invariants of a finite group](../../22-Algebraic%20geometry/01-Polynomial%20Systems/10-invariant-theory-and-molien-series.md): the Reynolds average, Hilbert's finiteness, and Molien's count.
-- [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
-- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): the Weyl group, made of reflections, acting on a root system; four infinite families and five exceptions.
+- [Invariants of a finite group](../../22-Algebraic%20geometry/01-Polynomial%20Systems/10-invariant-theory-and-molien-series.md): polynomials left unchanged by a finite group of moves, averaging into them, and counting them by degree.
+- [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how the stabiliser of a prime factor inside a root-shuffle group tracks how that prime splits.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): finite reflection groups acting on symmetric sets of vectors, sorting into four infinite families and five exceptions.
 
 Six orbits came out of 16 patterns listed in full, impossible for twenty beads. How far the average alone carries is [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md). This shelf first finishes the story of quotients in [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md). Then [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md) lets a group act on itself.
 

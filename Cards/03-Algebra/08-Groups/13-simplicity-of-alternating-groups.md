@@ -1,4 +1,4 @@
-# A_n is simple for n at least 5: the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic
+# A_n is simple for n at least 5: the even shuffles cannot be collapsed partway, which is the group-theory heart of the quintic
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → A_n is simple for n at least 5
 
@@ -14,9 +14,9 @@ A **normal subgroup** is one that looks the same from every position, so it can 
 
 Its size must also divide 60 ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)). The candidates are 13, 16, 21, 25, 28, 33, 36, 40, 45, 48, and none divides 60. Only the two trivial choices survive: do-nothing alone, or all 60.
 
-A group with more than one member and no normal subgroups except those two is **simple**: it cannot be collapsed into a smaller group. The card proves this for every $`A_n`$ with $`n`$ at least 5.
+A group with more than one member and no normal subgroups except those two is **simple**: it cannot be collapsed partway into a smaller group. The card proves this for every $`A_n`$ with $`n`$ at least 5.
 
-**For five or more places, any normal subgroup of the even shuffles that holds one move other than do-nothing holds a 3-cycle, then every 3-cycle, then every even shuffle: so the even shuffles cannot be collapsed at all.**
+**For five or more places, any normal subgroup of the even shuffles that holds one move other than do-nothing holds a 3-cycle, then every 3-cycle, then every even shuffle: so the even shuffles cannot be collapsed partway.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; "simple" is its definition.
 
@@ -156,7 +156,7 @@ At four places Step 3 breaks. The class sizes are 1, 3, 4, 4: do-nothing and the
 | commutator of $`(1\ 2\ 3\ 4\ 5)`$ and $`(1\ 2\ 4)`$ | trace each place through four steps | $`(1\ 2\ 5\ 3\ 4)`$, 5 places |
 | the same test on $`A_4`$ | 1 + 3 | **4 divides 12** |
 
-$`A_5`$ cannot be collapsed. $`A_4`$ can: by its double swaps, into a smaller group.
+$`A_5`$ cannot be collapsed partway. $`A_4`$ can: by its double swaps, into a three-member group.
 
 ### What breaks if you drop a piece
 
@@ -478,7 +478,7 @@ example : let σ : Perm (Fin 4) := c[0, 1] * c[2, 3]; let τ : Perm (Fin 4) := c
 
 ## Where you meet it in real life
 
-- **The quintic.** The 60 even shuffles of five roots cannot be collapsed into a smaller group, and they do not commute. So the chain of collapses that a radical formula needs stops at 60 and never reaches do-nothing. That is why no general radical formula for degree five exists ([Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md)).
+- **The quintic.** The 60 even shuffles of five roots cannot be collapsed partway into a smaller group, and they do not commute. So the chain of collapses that a radical formula needs stops at 60 and never reaches do-nothing. That is why no general radical formula for degree five exists ([Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md)).
 - **Twisty and sliding puzzles.** Solvers build 3-cycles from commutators. Step 1 says 3-cycles reach every even arrangement; Step 2 says one 3-cycle, carried around by set-up moves, gives them all.
 
 > **Say it back**
@@ -497,7 +497,7 @@ example : let σ : Perm (Fin 4) := c[0, 1] * c[2, 3]; let τ : Perm (Fin 4) := c
 
 - [Composition series](14-composition-series-and-jordan-holder.md): breaking any finite group into simple pieces, with $`A_5`$ as a piece that never breaks further.
 - [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): the chain of collapses for five roots, where this card's group blocks the way.
-- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge from equations to their groups of shuffles.
+- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): the bridge from polynomial equations to their groups of root shuffles, showing when a formula in roots exists.
 - [NC and P-completeness](../../24-Computability%20and%20complexity/05-Algebraic%2C%20Interactive%20and%20Quantum/09-parallel-complexity-nc-and-p-completeness.md): Barrington's theorem uses the even shuffles of five places, which do not break down, to run fast parallel circuits on five places of memory.
 
 Simple groups cannot be broken down further. The next card, [Composition series](14-composition-series-and-jordan-holder.md), asks whether every finite group breaks into simple pieces, and whether those pieces are always the same. Which finite groups are simple at all, and whether the list is complete, this shelf leaves open.

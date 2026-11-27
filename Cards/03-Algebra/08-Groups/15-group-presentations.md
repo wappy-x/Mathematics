@@ -14,7 +14,7 @@ Letters plus the rules they obey are a **presentation**: a recipe for a group th
 
 The rules give at most 8 members, the map onto the tile gives at least 8, so the recipe makes exactly the tile group. The quaternion group, another recipe with 8 members, is a different group.
 
-**A presentation names a group by letters and rules: the rules bound its size from above, and von Dyck's theorem lets any real group of moves obeying them bound it from below.**
+**A presentation names a group by letters and rules: rewriting with the rules bounds its size from above, and von Dyck's theorem lets the distinct moves generated in any group obeying them bound it from below.**
 
 **What kind of fact this is:** a definition (the presentation) and a theorem (von Dyck's), proved on this card in Why it works.
 
@@ -735,9 +735,9 @@ example : (Finset.univ.filter fun g : QuaternionGroup 2 => g ≠ 1 ∧ g * g = 1
 
 - [Rings](../09-Rings%20and%20Fields/01-rings.md): the first card of the next shelf; a second operation, multiplication, joins addition.
 - [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): loop groups of glued spaces, produced as presentations.
-- [CW complexes](../../17-Topology/04-Homotopy/07-cw-complexes-and-gluing-cells.md): one relation for each disc glued on.
+- [CW complexes](../../17-Topology/04-Homotopy/07-cw-complexes-and-gluing-cells.md): building shapes from points, edges and discs, adding one relation for each glued disc.
 - [Nielsen-Schreier](../../17-Topology/04-Homotopy/10-nielsen-schreier-and-covers-of-graphs.md): every subgroup of a free group is free, read off a covering graph.
-- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): Weyl groups presented by reflections and Coxeter rules; four infinite families and five exceptions.
+- [Root systems and Dynkin diagrams](../../23-Differential%20geometry%20and%20Lie%20groups/08-Roots%2C%20Weights%20and%20Representations/03-root-systems-and-dynkin-diagrams.md): finite reflection groups presented by flips and angle rules (Weyl and Coxeter groups), in four infinite families and five exceptions.
 
 The question this card leaves: when do two presentations make the same group? No algorithm decides it in general, as Adian and Rabin proved. That closes this shelf's one-operation story. The next shelf starts with [Rings](../09-Rings%20and%20Fields/01-rings.md), where a second operation joins the first.
 

@@ -719,8 +719,8 @@ example : 3 ∣ 7 - 1 ∧ ¬ 3 ∣ 5 - 1 ∧ 2 ∣ 3 - 1 := by decide
 
 ## Where this goes next
 
-- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the next card; groups with no normal subgroup to split off at all.
-- [Composition series](14-composition-series-and-jordan-holder.md): a finite group's simple pieces are fixed, but order 21 shows the gluing is not.
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the next card; groups with no normal subgroup between do-nothing and the whole group to split off.
+- [Composition series](14-composition-series-and-jordan-holder.md): a finite group's unsplittable (simple) pieces are fixed, even though order 21 shows the gluing is not.
 - [Presentations](15-group-presentations.md): the tile written as "a quarter turn r, a flip f, and f r f equals the undo of r".
 - [Lie group](../../23-Differential%20geometry%20and%20Lie%20groups/06-Lie%20Groups/01-lie-groups-and-matrix-groups.md): groups that are also smooth spaces, such as the rotation matrices, which supply the turns in a rigid motion.
 

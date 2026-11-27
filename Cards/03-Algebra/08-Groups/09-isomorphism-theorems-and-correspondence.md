@@ -569,9 +569,9 @@ example : ((Finset.univ : Finset (Finset (DihedralGroup 4))).filter
 ## Where this goes next
 
 - [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): the next card; a group acting on itself, sorted into classes of look-alikes, with normal subgroups made of whole classes.
-- [Composition series](14-composition-series-and-jordan-holder.md): the diamond theorem proves that the simple pieces of a group do not depend on the chain chosen.
+- [Composition series](14-composition-series-and-jordan-holder.md): for a finite group, the diamond theorem proves that its unsplittable pieces do not depend on the chain chosen.
 - [The Sylow theorems](11-sylow-theorems.md): one standard proof finds a subgroup inside a quotient and lifts it back to the whole group through the correspondence.
-- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): what one map hits the next one kills, and the snake lemma's connecting map.
+- [Exact sequences of modules](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/01-exact-sequences-and-the-snake-lemma.md): chains of structure-keeping maps where each image equals the next kernel, linked by a bridge map.
 
 The next card, [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md), finds normal subgroups by sorting a group into look-alike classes. The question left open here, how far a group can be collapsed into simple pieces and whether those pieces are unique, waits for [Composition series](14-composition-series-and-jordan-holder.md).
 

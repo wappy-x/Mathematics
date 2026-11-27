@@ -14,7 +14,7 @@ Such a move is a **permutation**: every place sends its card to one place and re
 
 **Reversible rearrangements of labelled places compose into further rearrangements, each has an undo, and together they form a group: the symmetric group.**
 
-**What kind of fact this is:** a definition, carrying two theorems proved below: n places have n × (n − 1) × … × 1 rearrangements, and none is both even and odd.
+**What kind of fact this is:** a definition, carrying two theorems proved below: n places have n! rearrangements (n × (n − 1) × … × 1 for n ≥ 1, and 1 for zero places), and none is both even and odd.
 
 ### The picture: two moves, two orders
 
@@ -530,10 +530,10 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 
 - **Sorting.** A routine that swaps neighbours pays one swap per out-of-order pair: the proof's count is the sort's workload.
 - **Puzzles.** Each slide of a sliding-tile puzzle swaps a tile with the blank, and returning the blank home takes an even number of slides, so the numbered tiles are shuffled evenly. Prise two tiles out and swap them: that target is odd, so no slides reach it.
-- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [Group actions](08-group-actions-and-counting.md). A determinant's signs are this same label ([Determinants](../05-Solving%20Systems/04-determinants.md): the one number that says how much a matrix stretches area).
+- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [Group actions](08-group-actions-and-counting.md). A determinant's signs are this same label ([Determinants](../05-Solving%20Systems/04-determinants.md): the number that says how much a square matrix stretches signed area or volume).
 
 > **Say it back**
-> A permutation rearranges labelled places, each sending its card to one place and receiving one, so it can be undone. One after another gives another permutation, so the collection is a group: the symmetric group, with n × (n − 1) × … × 1 members, six for three cards. Order matters: swap then shift is (1 3), the other order (2 3). Following one place round cuts a shuffle into cycles, a cycle of k places being k − 1 swaps — the fewest, though only even-or-odd is fixed.
+> A permutation rearranges labelled places, each sending its card to one place and receiving one, so it can be undone. One after another gives another permutation, so the collection is a group: the symmetric group, with n! members (six for three cards). Order matters: swap then shift is (1 3), the other order (2 3). Following one place round cuts a shuffle into cycles, a cycle of k places being k − 1 swaps — the fewest, though only even-or-odd is fixed.
 
 ---
 
@@ -545,15 +545,15 @@ example : ¬ Function.Bijective (![1, 1, 0] : Fin 3 → Fin 3) := by decide
 
 ## Where this goes next
 
-- [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the next card; why a subgroup's size, like 3 of 6 or 8 of 24, always divides the group's.
-- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps that respect the operation.
-- [Group actions](08-group-actions-and-counting.md): counting what symmetry repeats.
-- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why five roots refuse to break up.
+- [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the next card; why a subgroup's size, like 3 of 6 or 8 of 24, always divides a finite group's.
+- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps that respect the operation, like the +1 or −1 parity label.
+- [Group actions](08-group-actions-and-counting.md): using a group of moves to count arrangements that symmetry merges.
+- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why the shuffles of five roots block a formula in roots for degree five.
 - [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): shuffles leaving nothing in its own place.
-- [Counting shuffles by their loops](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): counting shuffles by their cycle shape.
-- [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md): the shuffles of a polynomial's roots.
-- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): which equations have a formula in radicals.
-- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
+- [Counting shuffles by their loops](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): how many shuffles split into cycles of each given set of lengths.
+- [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md): finding which shuffles of a polynomial's roots keep all algebraic rules between them.
+- [Solvable by radicals](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/07-solvability-by-radicals-and-the-quintic.md): which polynomial equations have a formula built from arithmetic and roots (radicals).
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): from five places up, the even shuffles cannot be collapsed partway into a smaller group, blocking a quintic formula.
 - [Polya counting](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/06-polya-enumeration.md): record each move's cycles in one polynomial, the cycle index, and substitute colours to count patterns by type.
 
 The 3 even shuffles sit inside the 6 of $`S_3`$, and the tile's 8 rigid moves inside the 24 corner shuffles: each subgroup's size divides the group's. Is that always so? The next card, [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md), proves it is.

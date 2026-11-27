@@ -1,4 +1,4 @@
-# The Sylow theorems: for the largest prime power dividing a group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p
+# The Sylow theorems: for the largest prime power dividing a finite group's size, subgroups of exactly that size exist, are all conjugate, and number 1 more than a multiple of p
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → The Sylow theorems
 
@@ -12,7 +12,7 @@ Lagrange's theorem says a subgroup's size divides 24 ([Cosets and Lagrange's the
 
 S4 has exactly 3 subgroups of size 8. Each is the 8 ways of a square whose corners are labelled in a different order round its edge. Relabelling the corners turns any one into any other.
 
-The rules also work on groups nobody has drawn. They prove that every group with 15 members is a 15-position dial.
+The rules also work on groups nobody has drawn. They prove that every group with 15 members is the 15-hour clock: the numbers 0 to 14, added and wrapped at 15.
 
 **For each prime p, a finite group has subgroups of the largest size that is a power of p dividing its size; all of them are relabellings of one another, and their number leaves remainder 1 on dividing by p and divides the rest of the size.**
 
@@ -62,7 +62,7 @@ For S4 and p = 2, m = 3: the divisors 1 and 3 are both odd, so $`n_2`$ is 1 or 3
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
-| $`G`$, $`\lvert G\rvert`$ | a finite group and its size; S4 the 24 shuffles, A4 its 12 even ones, Z mod 15 the 15-dial | S4 | — |
+| $`G`$, $`\lvert G\rvert`$ | a finite group and its size; S4 the 24 shuffles, A4 its 12 even ones (those made from an even number of swaps), Z mod 15 the 15-hour clock | S4 | — |
 | $`p`$, $`a`$, $`m`$ | a prime; its power in the size; the rest | 2, 3, 3 | bigger m, more allowed counts |
 | $`P`$, $`Q`$, $`P'`$ | Sylow p-subgroups | the three squares | — |
 | $`g`$, $`h`$, $`s`$, $`x`$, $`y`$, $`*`$, $`g^{-1}`$ | single members; combining; undoing | a shuffle | — |
@@ -128,7 +128,7 @@ Let any Sylow subgroup Q act on C. C's size escapes p, so Q leaves some P′ in 
 
 The stabiliser of P under conjugation is $`N(P)`$, so $`n_p = [G : N(P)]`$. P lies in $`N(P)`$, so that index divides $`[G : P] = m`$. In S4: 24 / 8 = 3 and 24 / 6 = 4.
 
-### Step 4: every group of 15 is a 15-dial
+### Step 4: every group of 15 is the 15-hour clock
 
 For p = 3, m = 5: of the divisors 1 and 5, only 1 leaves remainder 1 on dividing by 3. For p = 5, m = 3: only 1 leaves remainder 1 on dividing by 5. So $`n_3 = n_5 = 1`$.
 
@@ -152,11 +152,11 @@ A finite group is **nilpotent** (a property defined through its centre) exactly 
 | order 15, p = 3 | divisors of 5 leaving 1 on dividing by 3 | **n_3 = 1** |
 | order 15, p = 5 | divisors of 3 leaving 1 on dividing by 5 | **n_5 = 1** |
 | members of order 1, 3, 5 | 1 + 2 + 4 | 7 |
-| members of order 15 | 15 − 7, and brute force on a 15-dial | **8** |
+| members of order 15 | 15 − 7, and brute force on the 15-hour clock | **8** |
 | S4, p = 2 and p = 3 | odd divisors of 3; divisors of 8 leaving 1 on 3 | 1 or 3; 1 or 4 |
 | S4 by brute force | 30 subgroups: size 8, size 3 | **3 and 4** |
 
-Any group of 15 has a member of order 15, so it is the 15-dial.
+Any group of 15 has a member of order 15, so it is the 15-hour clock.
 
 ### What breaks if you drop a piece
 
@@ -173,7 +173,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The rules from arithmetic alone narrow the S4 counts; three independent roads reach them: brute force over every subgroup, each built from a pair of shuffles (30, the known total); relabelling one Sylow subgroup by all 24 shuffles; and dividing 24 by the normaliser's size. For order 15, the member count meets a brute-force search of the 15-dial.
+Nothing is imported. The rules from arithmetic alone narrow the S4 counts; three independent roads reach them: brute force over every subgroup, each built from a pair of shuffles (30, the known total); relabelling one Sylow subgroup by all 24 shuffles; and dividing 24 by the normaliser's size. For order 15, the member count meets a brute-force search of the 15-hour clock.
 
 ### Python
 
@@ -379,7 +379,7 @@ Lean proves the three Sylow theorems for every finite group and every prime, plu
 - Take any two Sylow p-subgroups P and Q. Then $`Q = g * P * g^{-1}`$ for some g.
 - Take any Sylow p-subgroup P. Then $`n_p \equiv 1 \pmod{p}`$, $`n_p = [G : N(P)]`$ and $`n_p \mid m`$.
 - Take any prime p. Then $`\binom{p^a m}{p^a}`$ leaves the same remainder as m on dividing by p.
-- Every group with 15 members is the 15-dial.
+- Every group with 15 members is the 15-hour clock.
 - It also re-checks the card's numbers: the allowed counts at orders 15, 21, 24 and 56, the member tally, and the subset counts.
 
 Brute force over S4's 30 subgroups, the tile's conjugates and normalisers, and the four mistakes are left to the Python and Rust checks.
@@ -593,7 +593,7 @@ example : Nat.choose 56 7 = 231917400 ∧ 231917400 % 7 = 1 ∧ 8 % 7 = 1 := by 
 - **Solving equations.** A quartic whose root shuffles form a group of 8 has one of S4's three squares, as [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md) uses.
 
 > **Say it back**
-> Split a finite group's size into the largest power of a prime p and a rest m. Subgroups of that prime-power size exist, and any two are relabellings of each other. Their number leaves remainder 1 on dividing by p and divides m. The proofs act on a set whose size p does not divide and read the answer off one orbit. At order 15 the rules force one subgroup of size 3 and one of size 5, so every group of 15 is the 15-dial.
+> Split a finite group's size into the largest power of a prime p and a rest m. Subgroups of that prime-power size exist, and any two are relabellings of each other. Their number leaves remainder 1 on dividing by p and divides m. The proofs act on a set whose size p does not divide and read the answer off one orbit. At order 15 the rules force one subgroup of size 3 and one of size 5, so every group of 15 is the 15-hour clock.
 
 ---
 
@@ -601,17 +601,17 @@ example : Nat.choose 56 7 = 231917400 ∧ 231917400 % 7 = 1 ∧ 8 % 7 = 1 := by 
 
 - [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): conjugates, and the second existence proof.
 - [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): sizes divide, and the index.
-- [Direct products](07-direct-products.md): Z mod 3 × Z mod 5 is the 15-dial.
+- [Direct products](07-direct-products.md): Z mod 3 × Z mod 5 is the 15-hour clock.
 - [Group actions](08-group-actions-and-counting.md): orbit-stabiliser, behind all three proofs.
 
 ## Where this goes next
 
-- [Semidirect products](12-semidirect-products.md): the group of 21 with 7 Sylow 3-subgroups.
-- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): counting conjugates to rule out normal subgroups.
-- [Composition series](14-composition-series-and-jordan-holder.md): cutting a group into simple pieces.
-- [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md): S4's three squares as Galois groups.
+- [Semidirect products](12-semidirect-products.md): gluing two groups with a twist, building the order-21 group with 7 Sylow 3-subgroups.
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): counting look-alike classes to rule out any middle normal subgroup in the even shuffles.
+- [Composition series](14-composition-series-and-jordan-holder.md): breaking a finite group down step by step into pieces that cannot collapse further.
+- [Computing a Galois group](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/06-computing-a-galois-group.md): using S4's three size-8 tile subgroups as root-shuffle groups (Galois groups) of degree-four equations.
 
-The rules count Sylow subgroups but do not say how they fit together when a count is above 1, as for the 7 size-3 subgroups at order 21.
+The rules count Sylow subgroups but do not say how they fit together when a count is above 1, as for the 7 size-3 subgroups at order 21. That is the next card, [Semidirect products](12-semidirect-products.md).
 
 ---
 

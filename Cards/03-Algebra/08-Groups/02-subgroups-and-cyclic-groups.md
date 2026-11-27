@@ -12,7 +12,7 @@ Start at C and keep jumping four semitones: C, E, G sharp, and the next jump is 
 
 Same clock, same move, two results. The twelve notes under wrapping addition are a group: moves combine, a do-nothing move exists, every move can be undone. The triad is a group too, inside that one and under its addition — a **subgroup**. One move fills the whole clock: **cyclic**.
 
-**A subgroup is a smaller set inside a group that is still a group under the same operation; a cyclic group is one that a single member fills out by repeating itself.**
+**A subgroup is a subset of a group that is still a group under the same operation; a cyclic group is one that a single member fills out by repeating itself and its undo.**
 
 **What kind of fact this is:** two theorems, the subgroup test and the order formula, proved below in Why it works; subgroup and cyclic are definitions.
 
@@ -484,7 +484,7 @@ example : (List.range 13).filter (fun d => 0 < d ∧ 12 % d = 0) = [1, 2, 3, 4, 
 - **Symmetry.** Which subgroups an object has describes its symmetry, taken up by [Group actions](08-group-actions-and-counting.md).
 
 > **Say it back**
-> A subgroup is a smaller set inside a group, still a group under the same operation, and one test settles it: not empty, and any member combined with the undo of any other lands inside. Repeating one member always passes, so it always builds a subgroup. On a clock of 12 notes a jump comes home after 12 divided by the largest divisor it shares with 12: jump 4 reaches three notes, jump 5 all twelve. Every cyclic group is a clock or the whole numbers.
+> A subgroup is a subset of a group, still a group under the same operation, and one test settles it: not empty, and any member combined with the undo of any other lands inside. Repeating one member always passes, so it always builds a subgroup. On a clock of 12 notes a jump comes home after 12 divided by the largest divisor it shares with 12: jump 4 reaches three notes, jump 5 all twelve. Every cyclic group is a clock or the whole numbers.
 
 ---
 

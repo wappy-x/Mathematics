@@ -1,4 +1,4 @@
-# Normal subgroups and quotient groups: collapsing a group by a subgroup, and Z mod n is the model
+# Normal subgroups and quotient groups: collapsing a group by a normal subgroup, and Z mod n is the model
 
 [Syllabus](../../../SYLLABUS.md) → [Algebra](../README.md) → [Groups](../README.md#s08) → Normal subgroups and quotient groups
 
@@ -16,7 +16,7 @@ The second is fragile, as a square tile shows. The tile sits down 8 ways, 4 turn
 
 **A subgroup can be collapsed to a point exactly when it looks the same from every position in the group; its piles are then a group in their own right, and the clock is that construction on the integers.**
 
-**What kind of fact this is:** a definition — normality is a test a subgroup passes or fails — carrying one theorem, proved below: collapse a group by what a map forgets and a copy of its image is left.
+**What kind of fact this is:** a definition — normality is a test a subgroup passes or fails — carrying one theorem, proved below: collapse a group by what a homomorphism forgets and a copy of its image is left.
 
 ### The picture: the integers, collapsed
 
@@ -496,7 +496,7 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 - **Ignoring detail on purpose.** A sensor reporting that a part was flipped but not how far it turned builds a quotient group, usable because the ignored moves are normal.
 
 > **Say it back**
-> Cosets cut any group into equal piles, but the piles combine only when the subgroup thrown away is normal: every conjugate of it lands back inside. That frees the product of two piles from their names. The integers by the multiples of 12 give the clock, 12 piles that add. The tile's 4 turns are normal and leave a 2-member group; its flip subgroup is not, and one of its products has 2 answers. Collapse a group by a map's kernel and a copy of its image is left.
+> Cosets cut any group into equal piles, but the piles combine only when the subgroup thrown away is normal: every conjugate of it lands back inside. That frees the product of two piles from their names. The integers by the multiples of 12 give the clock, 12 piles that add. The tile's 4 turns are normal and leave a 2-member group; its flip subgroup is not, and one of its products has 2 answers. Collapse a group by a homomorphism's kernel and a copy of its image is left.
 
 ---
 
@@ -509,20 +509,20 @@ example : (24 : ℕ) / 2 = 12 := by norm_num
 ## Where this goes next
 
 - [Direct products](07-direct-products.md): the next card; the reverse of collapsing, building a bigger group from two smaller ones side by side.
-- [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse, two operations.
-- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
-- [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): quotients gluing two pieces' loop groups.
-- [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): holes as one quotient per dimension.
-- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): normal subgroups matched with fields between roots and rationals.
-- [Class groups](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/05-class-groups-and-the-minkowski-bound.md): a quotient measuring how badly factorisation fails.
-- [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): the same machinery, ring multiplication allowed.
+- [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse when a set has two operations, addition and multiplication, at once.
+- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups that show why degree-five equations have no formula in roots.
+- [Van Kampen's theorem](../../17-Topology/04-Homotopy/06-van-kampens-theorem.md): building the loop group of a glued shape as a quotient of its pieces' loop groups.
+- [Homology groups](../../17-Topology/05-Homology/02-homology-groups.md): measuring a shape's holes in each dimension as a quotient of cycles by boundaries.
+- [The Galois correspondence](../../21-Algebraic%20and%20analytic%20number%20theory/05-Fields%20and%20Galois%20Theory/05-galois-groups-and-the-fundamental-theorem.md): matching normal subgroups of root shuffles with number systems between the rationals and the roots.
+- [Class groups](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/05-class-groups-and-the-minkowski-bound.md): a quotient group measuring how badly unique prime factorisation fails in larger number systems.
+- [Modules](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/05-modules-and-the-structure-theorem.md): commutative groups that also allow scaling by a ring, using the same quotient machinery.
 - [The isomorphism theorems](09-isomorphism-theorems-and-correspondence.md): collapsing in two stages is collapsing once, and the subgroups of a quotient are the subgroups above the kernel.
-- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a group sorted into classes of look-alikes, and why every group of prime-power size has a centre.
+- [Conjugacy and the class equation](10-conjugacy-and-the-class-equation.md): a finite group sorted into look-alike classes, forcing a prime-power group above size 1 to have a centre bigger than one.
 - [Semidirect products](12-semidirect-products.md): glue two groups where one acts on the other, so the tile group is four turns twisted by one flip.
-- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): the even shuffles have no normal subgroup to collapse by, which is the group-theory heart of the quintic.
-- [Presentations](15-group-presentations.md): describe a group by generators and the rules they obey, and von Dyck's theorem turns the rules into maps.
+- [A_n is simple for n at least 5](13-simplicity-of-alternating-groups.md): from five places up, the even shuffles cannot be collapsed partway, blocking a quintic formula.
+- [Presentations](15-group-presentations.md): describing a group by generators and rules, collapsing all words by the rules they obey.
 - [Direct sums and quotient spaces](../11-Duals%2C%20Quotients%20and%20Tensors/01-direct-sums-and-quotient-spaces.md): split a space into independent pieces, or blur a subspace to a point and count what is left.
-- [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how one prime's splitting sits inside the Galois group.
+- [Decomposition and inertia groups](../../21-Algebraic%20and%20analytic%20number%20theory/09-Local%20Fields%20and%20Class%20Field%20Theory/02-decomposition-and-inertia-groups.md): how a prime number's splitting appears as normal subgroups and quotients inside a root-shuffle group.
 
 Collapsing breaks a group down; the next card, [Direct products](07-direct-products.md), goes the other way and builds one up from parts. Both collapses here run on one operation. What a subgroup must satisfy when a second operation appears is [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md).
 
