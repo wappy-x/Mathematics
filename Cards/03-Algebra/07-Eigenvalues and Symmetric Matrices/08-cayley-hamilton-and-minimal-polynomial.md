@@ -18,7 +18,7 @@ From the empty code, (0, 1, 1), ten steps give 1024 ten-bit codes holding 5120 o
 
 Two facts explain this. Any square matrix put into its own characteristic polynomial gives the zero matrix. The lowest-degree polynomial that does this, the **minimal polynomial**, sees the difference. For D it is $`(x - 2)(x - 3)`$, with no repeated root. A needs $`(x - 2)^2`$, and can never be made diagonal.
 
-The shelf's rental-car fleet obeys the same rule: its matrix F = `[[0.8, 0.3], [0.2, 0.7]]` satisfies $`F^2 = 1.5F - 0.5I`$, as [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) checked.
+The shelf's rental-car fleet — moving cars between two cities each month by F = `[[0.8, 0.3], [0.2, 0.7]]` — obeys the same rule: $`F^2 = 1.5F - 0.5I`$, as [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) checked.
 
 **Every square matrix is a root of its own characteristic polynomial, the lowest-degree polynomial with that property divides every other one, and the matrix can be diagonalised exactly when that lowest one has no repeated root.**
 
@@ -134,7 +134,7 @@ So $`m_A`$ divides $`p_A`$. Also, if $`Av = \lambda v`$ then $`f(A)v = f(\lambda
 1 = (x - 2) - (x - 3)
 ```
 
-Put D in: any column v is $`(D - 2I)v - (D - 3I)v`$. The first piece is killed by $`D - 3I`$, so it is an eigenvector for 3; the second, likewise, for 2. With k roots, scale the product of the other k − 1 factors to equal 1 at each root. These k pieces sum to a polynomial of degree below k that equals 1 at k points: the constant 1.
+Put D in: any column v is $`(D - 2I)v - (D - 3I)v`$. The first piece is killed by $`D - 3I`$, so it is zero or an eigenvector for 3; the second, likewise, for 2. With k roots, scale the product of the other k − 1 factors to equal 1 at each root. These k pieces sum to a polynomial of degree below k that equals 1 at k points: the constant 1.
 
 A fails: $`(A - 2I)(A - 3I)`$ is not zero, and A has 2 eigenvector directions, not 3.
 
@@ -630,9 +630,9 @@ example : let F : Matrix (Fin 2) (Fin 2) ℤ := !![8, 3; 2, 7]
 
 - [Generalised eigenvectors](09-generalised-eigenvectors.md): columns that $`(A - 2I)^2`$ kills but $`A - 2I`$ does not, filling A's missing direction.
 - [Jordan form](10-jordan-canonical-form.md): the simplest shape of a non-diagonalisable matrix; each root's power in the minimal polynomial is its largest block's size.
-- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): another road, with no roots: the minimal polynomial is the last invariant factor of $`xI - A`$.
+- [Smith normal form](../../22-Algebraic%20geometry/06-Schemes%20and%20Modern%20Language/06-smith-normal-form-and-canonical-forms.md): another road, with no roots: reduce $`xI - A`$ to a polynomial diagonal; its last entry is $`m_A`$.
 - [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): division with remainder, borrowed in Step 4, and Euclid's algorithm, proved in full.
-- [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): over a local ring, generators can be checked modulo the maximal ideal.
+- [Nakayama's lemma](../../22-Algebraic%20geometry/07-Exact%20Sequences%2C%20Ext%20and%20Tor/03-nakayamas-lemma.md): uses Cayley-Hamilton's determinant trick to show that generators can be checked at a single point.
 
 Here $`(A - 2I)^2`$ kills a direction that $`A - 2I`$ misses. Which vectors fill that gap, and how do they split the space? That is the next card's question.
 

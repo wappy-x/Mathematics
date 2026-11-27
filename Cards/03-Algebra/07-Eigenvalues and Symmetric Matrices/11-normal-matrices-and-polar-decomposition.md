@@ -133,7 +133,7 @@ $`U = W V^*`$ is a product of unitaries, so unitary. $`P = V S V^*`$ stretches b
 
 For the rubber: $`A^* A`$ = `diag(1, 4)`, so $`\sigma`$ = 2.000000 along north and 1.000000 along east. V's columns are (0, 1) and (1, 0); W's are (−1, 0) and (0, 1). Multiplying out gives U = `[[0, -1], [1, 0]]` and P = `diag(1, 2)`.
 
-A second road needs no eigenvalues. Start from U = A and repeatedly replace U by the average of U and the conjugate transpose of its inverse. Each round sends every singular value s to (s + 1/s)/2, which runs to 1: the stretch drains out, the turn stays. The top-right entry goes −2.000000, −1.250000, −1.025000, −1.000305, −1.000000 ([Higham 1986](https://doi.org/10.1137/0907079)). Then $`P = U^* A`$.
+When A is invertible, a second road needs no eigenvalues. Start from U = A and repeatedly replace U by the average of U and the conjugate transpose of its inverse. Each round sends every singular value s to (s + 1/s)/2, which runs to 1: the stretch drains out, the turn stays. The top-right entry goes −2.000000, −1.250000, −1.025000, −1.000305, −1.000000 ([Higham 1986](https://doi.org/10.1137/0907079)). Then $`P = U^* A`$.
 
 ### Step 5: turn and stretch commute exactly when A is normal
 

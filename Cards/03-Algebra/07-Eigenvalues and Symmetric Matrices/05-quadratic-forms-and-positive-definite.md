@@ -30,7 +30,7 @@ xychart-beta
     line [9.00, 7.33, 5.92, 4.77, 3.88, 3.25, 2.88, 2.77, 2.92, 3.33, 4.00]
 ```
 
-Two bowls, neither dipping to zero along this one line of mixes. Positive definite demands that of every mix, negative weights included. The upper line is this pair, covariance 1; the lower is the same variances with covariance zero. They meet at the ends, where all the money sits in one asset; in between, shared movement lifts the real curve. Its floor is 3.181818, between the plotted 3.19 and 3.24.
+Two bowls, neither dipping to zero along this one line of mixes. Positive definite demands that of every mix except all zeros, negative weights included. The upper line is this pair, covariance 1; the lower is the same variances with covariance zero. They meet at the ends, where all the money sits in one asset; in between, shared movement lifts the real curve. Its floor is 3.181818, between the plotted 3.19 and 3.24.
 
 ---
 
@@ -141,7 +141,7 @@ E and S agree through D. D and E argue alike at any size; S is the 2 by 2 case o
 <details>
 <summary>The other cases: semidefinite, negative definite, indefinite</summary>
 
-- **Positive semidefinite:** an eigenvalue at zero, none below — never below zero, but exactly zero along one direction. Covariance matrices from data are at least this; flip every sign for negative semidefinite.
+- **Positive semidefinite:** no eigenvalue below zero. The score is never below zero, and it is zero along a nonzero direction whenever an eigenvalue is zero. Covariance matrices from data are at least this; flip every sign for negative semidefinite.
 - **Negative definite:** both below zero: `[[-4, -1], [-1, -9]]` scores -3.750000 at half and half.
 - **Indefinite:** one of each sign, a saddle: `[[1, 2], [2, 1]]` scores -2.000000 at (1, -1).
 
@@ -178,7 +178,7 @@ Every wrong number is for the half-and-half mix, really 3.750000.
 | --- | --- | --- |
 | Dropping the covariance | 3.250000 | Shared movement is part of the risk |
 | Counting the cross term once | 3.500000 | The corner entry arrives from both sides |
-| Minimising with no budget rule | 0.000000 | Holding nothing has no variance |
+| Minimising without making the weights add to 1 | 0.000000 | Holding nothing has no variance |
 
 ---
 

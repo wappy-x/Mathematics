@@ -148,7 +148,7 @@ Expand $`\omega(v + w, v + w) = 0`$. The two squared terms are zero, so $`\omega
 
 For the field, $`\omega\big((3, 1), (1, 2)\big)`$ = 5. Base times height agrees: the length of (3, 1) is 3.162278, the part of (1, 2) square to it is 1.581139 long, and the product is 5.000000 hectares.
 
-Pick $`u`$ and $`w`$ with $`\omega(u, w)`$ = 1: one pair, with matrix $`\Omega`$. The rest splits off from them; repeat on it.
+While $`\omega`$ is not all zero, pick $`u`$ and $`w`$ with $`\omega(u, w)`$ = 1: one pair, with matrix $`\Omega`$. The rest splits off from them; repeat on it.
 
 <details>
 <summary>Detailed proof: an alternating form splits into pairs, so its rank is even</summary>

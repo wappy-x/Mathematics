@@ -115,7 +115,7 @@ Compare the two outputs with a dot product. $`G v_2`$ is $`\lambda_2`$ times $`v
 (A v_1) \cdot (A v_2) = v_1^T G v_2 = \lambda_2 (v_1 \cdot v_2) = 0
 ```
 
-Perpendicular in, perpendicular out. Each output is $`\sigma_i`$ long, so dividing by that length leaves perpendicular unit vectors with $`A v_i = \sigma_i u_i`$. For the sprite $`A v_1`$ is (2.121320, 6.363961), which over 6.708204 is $`u_1`$, (0.316228, 0.948683).
+Perpendicular in, perpendicular out. Each output is $`\sigma_i`$ long, so when $`\sigma_i > 0`$, dividing by that length leaves perpendicular unit vectors with $`A v_i = \sigma_i u_i`$ (a zero factor flattens its axis, and any perpendicular unit vector completes the set). For the sprite $`A v_1`$ is (2.121320, 6.363961), which over 6.708204 is $`u_1`$, (0.316228, 0.948683).
 
 ### Step 3: rebuild any input
 
@@ -148,7 +148,7 @@ Repeated eigenvalues leave the axes unfixed, the factors fixed.
 
 ### Step 4: two readings the factors hand over
 
-The determinant, det A, is the factor by which a square matrix scales area, negative when it mirrors ([Determinants](../05-Solving%20Systems/04-determinants.md)). An orthogonal move cannot change area except to mirror it, so its determinant is 1 or −1. For a square matrix:
+The determinant, det A, is the factor by which a square matrix scales area, negative when it mirrors ([Determinants](../05-Solving%20Systems/04-determinants.md)). An orthogonal move cannot change area except to mirror it, so its determinant is 1 or −1. For a 2 by 2 matrix (for any square matrix, multiply all the singular values):
 
 ```math
 |\det A| = \sigma_1 \sigma_2

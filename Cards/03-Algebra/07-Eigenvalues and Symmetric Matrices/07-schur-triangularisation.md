@@ -72,7 +72,7 @@ A = Q\,T\,Q^*, \qquad T = Q^* A\, Q \text{ upper triangular}, \qquad t_{11} + \d
 
 ### Step 0: one eigenvector gives one clean column
 
-A matrix may lack a full set of eigenvectors, but it always has one. Put it first among perpendicular unit axes: A only stretches it by λ, so the first column reads λ, then zeros. The smaller square left takes the same move.
+A square matrix of size 1 or more may lack a full set of eigenvectors, but it always has one once complex numbers are allowed. Put it first among perpendicular unit axes: A only stretches it by λ, so the first column reads λ, then zeros. The smaller square left takes the same move.
 
 ### Step 1: there is always an eigenvalue
 
@@ -148,7 +148,7 @@ Each step the gap feeds the total again, so the corner of $`T^k`$ is $`k \times 
 | --- | --- | --- |
 | Axes (1, 1) and (1, 0), transpose used as inverse | `[[4, 0], [2, 1]]`, diagonal sum 5 | Non-perpendicular axes: the transpose does not undo Q |
 | Axes not shrunk to length 1 | `[[4, -4], [0, 4]]`, diagonal 4 and 4 | Each length √2 doubles every entry |
-| A's own diagonal read as eigenvalues | 1 and 3, product 3, not 4 | Only a triangle shows eigenvalues on its diagonal |
+| A's own diagonal read as eigenvalues | 1 and 3, product 3, not 4 | A general matrix does not show eigenvalues on its diagonal |
 | Real axes for the quarter turn | lower-left entry of size 1.000000 at every angle | Its eigenvalues i and −i are not real |
 
 ---

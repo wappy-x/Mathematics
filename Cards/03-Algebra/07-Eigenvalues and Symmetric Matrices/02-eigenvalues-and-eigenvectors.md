@@ -99,7 +99,7 @@ Sending a nonzero column to the origin collapses two directions into one and tak
 <details>
 <summary>Detailed proof: the determinant test, for a 2 by 2</summary>
 
-Which columns (x, y) does `[[p, q], [r, s]]` kill? The rows say px + qy = 0 and rx + sy = 0. Multiply the first by s, the second by q, and subtract: (ps − qr)x = 0. Multiply by r and p instead: (ps − qr)y = 0. Where ps − qr is not zero, only the zero column dies. Where it is zero, (q, −p) or (s, −r) is a nonzero column both rows kill: for (q, −p), pq − qp = 0 and rq − sp = −(ps − qr) = 0.
+Which columns (x, y) does `[[p, q], [r, s]]` kill? The rows say px + qy = 0 and rx + sy = 0. Multiply the first by s, the second by q, and subtract: (ps − qr)x = 0. Multiply by r and p instead: (ps − qr)y = 0. Where ps − qr is not zero, only the zero column dies. Where it is zero, either all four entries are zero (so every nonzero column dies), or (q, −p) or (s, −r) is a nonzero column both rows kill: for (q, −p), pq − qp = 0 and rq − sp = −(ps − qr) = 0.
 
 With p = a − lambda, q = b, r = c, s = d − lambda, that is the shifted determinant, and (q, −p) is (b, lambda − a) — the code's recipe.
 

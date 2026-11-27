@@ -41,15 +41,15 @@ J_k(\lambda) = \lambda I + N_k, \qquad P^{-1} A P = J = \begin{pmatrix} J_{k_1}(
 
 **Read it aloud:** in the right basis, A is blocks down the diagonal, each an eigenvalue times the identity plus a shift that passes each basis vector to the one before it.
 
-The **rank** of a matrix is how many independent directions it outputs ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). Write $`r_k`$ for the rank of $`(A - \lambda I)^k`$, with $`r_0`$ equal to the matrix size:
+The **rank** is how many independent directions a matrix outputs ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). Write $`r_k`$ for the rank of $`(A - \lambda I)^k`$ ($`r_0`$ is the size):
 
 ```math
-\#\{\text{blocks for } \lambda \text{ of size at least } k\} = r_{k-1} - r_k
+\#\{\text{blocks for } \lambda \text{ of size at least } k\} = r_{k-1} - r_k \qquad (k \ge 1)
 ```
 
 **Read it aloud:** each extra power of A − λI loses one rank per block still long enough to feel it.
 
-Powers of a block follow the binomial theorem, since λI commutes with everything and $`N_2^2 = 0`$:
+Since λI commutes with $`N_2`$ and $`N_2^2 = 0`$, the binomial theorem gives, for $`n \ge 1`$ (at $`n = 0`$ the power is $`I`$):
 
 ```math
 J_2(\lambda)^n = \lambda^n I + n\lambda^{n-1} N_2 = \begin{pmatrix} \lambda^n & n\lambda^{n-1} \\ 0 & \lambda^n \end{pmatrix}
@@ -91,9 +91,9 @@ The eigenvalue comes from the characteristic polynomial (whose roots are the eig
 
 ### Step 2: every nilpotent map has a basis of chains
 
-The core step, by induction on dimension.
+By induction on dimension (0 takes the empty basis):
 
-1. The image of N (everything N outputs) is smaller than the space, because N kills a nonzero vector.
+1. Above dimension 0, N's image (its outputs) is smaller than the space, since N kills a nonzero vector.
 2. By induction, the image has a chain basis.
 3. Each chain's top is N of some vector: put that vector on top. Each chain grows by one.
 4. Add eigenvectors (vectors N kills) until the bottoms fill N's kernel. Each is a chain of length one.
@@ -119,7 +119,7 @@ In sequence terms, the eigenvector (1, 2, 0) starts the doubling run 1, 2, 4, �
 
 ### Step 4: the ranks fix the block sizes
 
-For a block of size s, $`N_s^k`$ has rank s − k while k < s, then 0. So the k-th power of N removes one rank from every block of size at least k. So $`r_{k-1} - r_k`$ counts those blocks, and the sizes depend only on A.
+A size-s block's $`N_s^k`$ has rank s − k for k < s, else 0. For $`k \ge 1`$, $`N^k`$ drops one rank per block of size ≥ k, so $`r_{k-1} - r_k`$ counts them and sizes depend only on A.
 
 Here the ranks are 3, 1, 0. Blocks of size at least 1: 3 − 1 = 2. Of size at least 2: 1 − 0 = 1. So the sizes are 2 and 1, with 3 − 1 = 2 independent eigenvectors, one per block.
 
@@ -372,9 +372,9 @@ The two outputs match line for line.
 Lean proves the three general facts for every complex square matrix, and checks the card's worked numbers.
 
 - Every square matrix over the complex numbers can be rewritten, by a change of basis, as Jordan blocks down the diagonal.
-- Take any change of basis P with $`P^{-1} A P = J`$, a stack of Jordan blocks. Then the number of blocks for λ of size at least k is $`r_{k-1} - r_k`$.
+- For any invertible P with $`P^{-1} A P = J`$ (Jordan blocks) and $`k \ge 1`$, there are $`r_{k-1} - r_k`$ blocks for λ of size ≥ k.
 - That holds for every such P, so the block sizes depend only on A, not on the chains chosen.
-- Take any eigenvalue λ and any power n. Then $`J_2(\lambda)^n`$ has $`\lambda^n`$ on the diagonal and $`n\lambda^{n-1}`$ just above it.
+- For any λ and $`n \ge 1`$, $`J_2(\lambda)^n`$ has $`\lambda^n`$ on the diagonal and $`n\lambda^{n-1}`$ above it ($`I`$ at n = 0).
 - Take the card's matrix A. Then its characteristic polynomial is (x − 2)³, $`N^2 = 0`$, the chain vectors work and $`P^{-1} A P = J`$.
 - A^10 is the matrix in the outputs above, and it takes the start (1, 6, 1) to (21,504, 47,104, 1,024).
 - The terms a(0) to a(6), 1, 6, 20, 56, 144, 352, 832, also check, and so do the mistakes' 6 and 41,984.
