@@ -12,7 +12,7 @@ Give every whole number n a weight, divide it by n to the power s, and add. Mult
 
 The series whose product with zeta is 1 has weights 1, −1, −1, 0, −1, 1, −1, 0, 0, 1 for n = 1 to 10: the **Möbius** signs, after August Möbius, 1831. The divisors of 6 add to 1 + 2 + 3 + 6 = 12. Getting 6 back from 12 undoes a divisor sum, and that is dividing by zeta.
 
-**Multiplying two such series convolves their weights over divisor pairs; the series with every weight 1 is zeta, and its reciprocal carries the Möbius signs, which undo any divisor sum.**
+**Multiplying two such series, where both converge absolutely, convolves their weights over divisor pairs; for real part above 1, the series with every weight 1 is zeta, and its reciprocal carries the Möbius signs, which undo any divisor sum.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; the Möbius function and the convolution are definitions.
 
@@ -35,13 +35,13 @@ Each box is one pair of terms meeting at 1/12^s.
 
 ## The formula
 
-Notation first, in words. An **arithmetic function** gives one number for each whole number n; the weights above are an example. The bar in $`d \mid n`$ reads "d divides n". For complex s, $`n^{-s}`$ means $`e^{-s \ln n}`$, of size n to the power −Re s, where Re s is the real part of s. A **Dirichlet series** adds an arithmetic function's values against these powers:
+Notation first, in words. An **arithmetic function** gives one number for each positive whole number n; the weights above are an example. The bar in $`d \mid n`$ reads "d divides n". For complex s, $`n^{-s}`$ means $`e^{-s \ln n}`$, of size n to the power −Re s, where Re s is the real part of s. A **Dirichlet series** adds an arithmetic function's values against these powers:
 
 ```math
 F_a(s)=\sum_{n=1}^{\infty}\frac{a(n)}{n^s},\qquad(a*b)(n)=\sum_{d\mid n}a(d)\,b(n/d),\qquad F_a(s)\,F_b(s)=F_{a*b}(s)
 ```
 
-**Read it aloud:** the product of two Dirichlet series has, at n, the sum over divisors d of a at d times b at n over d.
+**Read it aloud:** where both Dirichlet series converge absolutely, their product has, at n, the sum over divisors d of a at d times b at n over d.
 
 That divisor sum $`a * b`$ is the **Dirichlet convolution**. With weight one everywhere, written $`\mathbf{1}`$, the series is zeta, and $`\mathbf{1} * \mathbf{1}`$ counts divisors, $`\tau`$. The Möbius function $`\mu`$ is
 
@@ -49,13 +49,13 @@ That divisor sum $`a * b`$ is the **Dirichlet convolution**. With weight one eve
 \mu(n)=\begin{cases}1&n=1\\(-1)^r&n\text{ is }r\text{ different primes multiplied}\\0&\text{a prime squared divides }n\end{cases}\qquad\sum_{d\mid n}\mu(d)=\varepsilon(n)
 ```
 
-**Read it aloud:** the Möbius signs over the divisors of n add to $`\varepsilon(n)`$: 1 when n is 1, 0 otherwise.
+**Read it aloud:** for every positive whole number n, the Möbius signs over the divisors of n add to $`\varepsilon(n)`$: 1 when n is 1, 0 otherwise.
 
 ```math
 \frac{1}{\zeta(s)}=\sum_{n=1}^{\infty}\frac{\mu(n)}{n^s}\quad(\mathrm{Re}\,s>1),\qquad g=\mathbf{1}*f\iff f=\mu*g
 ```
 
-**Read it aloud:** one over zeta has the Möbius weights; if g adds f over divisors, Möbius-weighting g gives f back.
+**Read it aloud:** for real part above 1, one over zeta has the Möbius weights; if g adds f over divisors, Möbius-weighting g gives f back.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -130,7 +130,7 @@ Without series: both groupings of $`\mu * \mathbf 1 * f`$ add $`\mu(a) f(c)`$ ov
 
 At n = 6 with $`f(n) = n`$, g is σ. The signs 1, −1, −1, 1 on the divisors 1, 2, 3, 6 meet σ(6), σ(3), σ(2), σ(1): 12 − 4 − 3 + 1 = 6.
 
-A signless road: f(n) is g(n) minus f at the smaller divisors, from f(1) = σ(1) = 1 upward. The general form is The Mobius function.
+A signless road: f(n) is g(n) minus f at the smaller divisors, from f(1) = σ(1) = 1 upward. The general form is on [The Mobius function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/03-mobius-inversion.md).
 
 ---
 
@@ -519,25 +519,26 @@ example : ∑ d ∈ Nat.divisors 4, (-1 : ℤ) ^ (Ω d) = 1 := by decide +kernel
 - **Strings with no repeat.** Necklaces that are not one block repeated, and irreducible polynomials in coding theory, are counted by inverting a divisor sum.
 
 > **Say it back**
-> A Dirichlet series weights each power 1/n^s. Multiplying two sends each pair m, k to mk, so weights convolve over divisors, and zeta squared counts divisors: six at 12. The Möbius signs over a divisor list cancel except at 1, so their series times zeta is 1. Dividing by zeta undoes a divisor sum: 12 − 4 − 3 + 1 brings σ(6) back to 6.
+> A Dirichlet series weights each power 1/n^s. Multiplying two absolutely convergent ones sends each pair m, k to mk, so weights convolve over divisors, and zeta squared counts divisors: six at 12. The Möbius signs over a divisor list cancel except at 1, so for real part above 1 their series times zeta is 1. Dividing by zeta undoes a divisor sum: 12 − 4 − 3 + 1 brings σ(6) back to 6.
 
 ---
 
 ## What this builds on
 
-- [The zeta function](05-zeta-function-and-euler-product.md): zeta's series and prime product.
+- [The zeta function](05-zeta-function-and-euler-product.md): zeta's series and prime product for Re s > 1.
 - [Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): one factorisation per number, so μ is well defined.
 - [Counting divisors](../../02-Number%20theory/01-Divisibility%20and%20Primes/08-counting-divisors.md): τ(12) = (2 + 1)(1 + 1).
 - [Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): its divisor sum is n, so μ recovers it.
 
 ## Where this goes next
 
-- [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): where 1/ζ blows up.
+- [The Mellin transform](07-mellin-transform.md): turns a sum of stretched shapes into gamma times a Dirichlet series.
+- [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): where 1/ζ blows up as zeta vanishes, and how those zeros govern the primes.
 - [The Mobius function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/03-mobius-inversion.md): the totient recovered from its divisor sum.
-- [Dirichlet L-functions](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/03-dirichlet-l-functions.md): weights repeating around a clock.
-- [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): a zeta built on ideals.
+- [Dirichlet L-functions](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/03-dirichlet-l-functions.md): Dirichlet series whose weights repeat around a clock, each with an Euler product.
+- [The class number formula](../../21-Algebraic%20and%20analytic%20number%20theory/06-Algebraic%20Numbers/06-class-number-formula-and-the-dedekind-zeta-function.md): a zeta built on ideals of a number field, whose residue counts failed factorisation.
 
-Everything here stops at Re s > 1, where zeta cannot vanish. Whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
+Everything here stops at Re s > 1, where zeta cannot vanish. Next on this shelf, [The Mellin transform](07-mellin-transform.md) turns Dirichlet series into integrals; whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
 
 ---
 

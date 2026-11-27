@@ -14,7 +14,7 @@ The zeta sum 1 + 1/2^s + 1/3^s + … settles only when the real part of s exceed
 
 **The alternating series over 1 − 2^(1−s) continues zeta to Re s > 0, with one pole, at 1, of residue 1; the functional equation, sending s to 1 − s, carries those values to the rest of the plane.**
 
-**What kind of fact this is:** a theorem. The continuation to Re s > 0 and the pole are proved below; the functional equation is stated with its source and proved in The functional equation.
+**What kind of fact this is:** a theorem. The continuation to Re s > 0 and the pole are proved below; the functional equation is stated with its source and proved in [The functional equation](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/02-functional-equation-proved.md).
 
 ### The picture: the overhang against the number of blocks
 
@@ -42,18 +42,18 @@ Each doubling adds close to half of ln 2 = 0.693147 block lengths, for ever.
 **Read it aloud:** zeta adds one over n to the s; eta adds the same terms with alternating signs, and settles on a bigger region.
 
 ```math
-\zeta(s) = \frac{\eta(s)}{1 - 2^{1-s}}, \qquad \mathrm{Res}_{s=1} \zeta = 1
+\zeta(s) = \frac{\eta(s)}{1 - 2^{1-s}}\ \ (\mathrm{Re}\, s > 0,\; 1 - 2^{1-s} \ne 0), \qquad \mathrm{Res}_{s=1} \zeta = 1
 ```
 
-**Read it aloud:** zeta is eta divided by one minus two to the one minus s, with a single pole, at 1, of residue 1.
+**Read it aloud:** for real part above 0 where the denominator is not zero, zeta is eta divided by one minus two to the one minus s, with a single pole, at 1, of residue 1.
 
 This quotient is road one. Road two is a second route to zeta that skips eta, the Euler–Maclaurin formula of Step 5.
 
 ```math
-\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, \zeta(1-s)
+\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, \zeta(1-s) \qquad (s \ne 0, 1, 2, \ldots)
 ```
 
-**Read it aloud:** zeta at s is zeta at the mirror point 1 − s, times a known factor.
+**Read it aloud:** away from 0, 1, 2, …, zeta at s is zeta at the mirror point 1 − s, times a known factor.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -63,7 +63,7 @@ This quotient is road one. Road two is a second route to zeta that skips eta, th
 | $`\eta`$ | eta: the alternating sum | η(0.5) = 0.604899 | — |
 | $`H_n`$ | 1 + 1/2 + … + 1/n | H_54/2 = 2.2877 | grows like ln n |
 | $`\gamma`$ | Euler's constant, limit of H_n − ln n | 0.57722 | — |
-| $`\Gamma`$ | the gamma function, Γ(n) = (n − 1)! | Γ(2) = 1 | — |
+| $`\Gamma`$ | the gamma function, Γ(n) = (n − 1)! for positive whole n | Γ(2) = 1 | — |
 | $`k`$ | whole number marking where 2^(1−s) = 1 | k = 1: s = 1 + 9.064720i | — |
 
 ### When it holds
@@ -130,7 +130,7 @@ At s = −1, N = 30 it reads 435 − 450 + 15, then the correction −0.083333; 
 
 ### Step 6: the mirror
 
-Riemann's 1859 functional equation pairs s with 1 − s, a half-turn about s = 1/2; real points swap across the dashed line. Its proof writes π^(−s/2) Γ(s/2) ζ(s) as a Mellin transform of θ(x) = Σ e^(−πn^2 x) over whole n ([The Mellin transform](07-mellin-transform.md)), whose symmetry under x → 1/x swaps s and 1 − s.
+Riemann's 1859 functional equation pairs s with 1 − s, a half-turn about s = 1/2; real points swap across the dashed line. Its proof writes π^(−s/2) Γ(s/2) ζ(s) as the Mellin transform of (θ(x) − 1)/2, where θ(x) = Σ e^(−πn^2 x) over all integers n ([The Mellin transform](07-mellin-transform.md)), whose symmetry θ(1/x) = √x θ(x) swaps s and 1 − s.
 
 ### The picture: the s-plane
 
@@ -742,7 +742,7 @@ example : -1 / (2 * π ^ 2) * (π ^ 2 / 6) = -1 / 12 := by
 - **Physics.** Zeta regularisation gives divergent sums their continued values; ζ(−3) = 1/120 sits inside the Casimir force between metal plates.
 
 > **Say it back**
-> The Jenga overhang is half of zeta's sum at 1, and has no total. Eta flips every other sign, settles for Re s > 0, and equals (1 − 2^(1−s)) times zeta. Dividing continues zeta there, with one pole, at 1, of residue 1. The mirror sends s to 1 − s: ζ(0) = −1/2, ζ(−1) = −1/12, zeros at −2, −4, …. Those are values of a function, not totals.
+> The Jenga overhang is half of zeta's sum at 1, and has no total. Eta flips every other sign, settles for real part above 0, and equals (1 − 2^(1−s)) times zeta. Dividing continues zeta there (filling removable 0/0 points), with one pole, at 1, of residue 1. The mirror sends s to 1 − s: ζ(0) = −1/2, ζ(−1) = −1/12, and trivial zeros at the negative even whole numbers −2, −4, …. Those are values of a function, not totals.
 
 ---
 

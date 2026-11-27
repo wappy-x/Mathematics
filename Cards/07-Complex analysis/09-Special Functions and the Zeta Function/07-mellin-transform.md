@@ -12,7 +12,7 @@ Add up a Zipf list with exponent s, sizes 1/k^s times the largest, and the total
 
 The **Mellin transform** turns "stretch the input by k" into "multiply by 1/k^s", the Zipf weight of rank k. So a sum of stretched copies of one shape comes out as ζ(s) times the transform of that shape. Copies of e^(−t) add up to 1/(e^t − 1), and out comes Γ(s)ζ(s): gamma times zeta.
 
-**The Mellin transform weighs a function by t^(s−1) over the positive axis; it is the two-sided Laplace transform after t = e^(−x), it turns stretching into multiplying by a power, and its first two examples are Γ(s), from e^(−t), and Γ(s)ζ(s), from 1/(e^t − 1).**
+**The Mellin transform weighs a function by t^(s−1) over the positive axis where the integral converges; it is the two-sided Laplace transform after t = e^(−x), it turns stretching by a positive factor into multiplying by a power, and its first two examples are Γ(s) (real part above 0), from e^(−t), and Γ(s)ζ(s) (real part above 1), from 1/(e^t − 1).**
 
 **What kind of fact this is:** a definition; the gamma-zeta integral is a theorem, proved on this card in Why it works; the inversion formula is stated, not proved.
 
@@ -37,12 +37,12 @@ Notation first, in words. A script M in front of a function names its Mellin tra
 It converges in a vertical **strip**, a < Re s < b, set by how f behaves near 0 and near infinity. Three facts carry the card:
 
 ```math
-\mathcal{M}\big[f(kt)\big](s) = k^{-s}\,\mathcal{M}f(s), \qquad \mathcal{M}f(s) = \int_{-\infty}^{\infty} e^{-sx} f(e^{-x})\,dx, \qquad \Gamma(s)\,\zeta(s) = \int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt \quad (\text{Re } s > 1).
+\mathcal{M}\big[f(kt)\big](s) = k^{-s}\,\mathcal{M}f(s)\ (k > 0), \qquad \mathcal{M}f(s) = \int_{-\infty}^{\infty} e^{-sx} f(e^{-x})\,dx, \qquad \Gamma(s)\,\zeta(s) = \int_0^\infty \frac{t^{s-1}}{e^t - 1}\,dt \quad (\text{Re } s > 1).
 ```
 
-**Read it aloud:** stretching by k multiplies the transform by k to the minus s; the transform is the two-sided Laplace transform of f(e^(−x)); gamma times zeta is the transform of one over e to the t minus 1.
+**Read it aloud:** stretching by a positive k multiplies the transform by k to the minus s; the transform is the two-sided Laplace transform of f(e^(−x)); for real part above 1, gamma times zeta is the transform of one over e to the t minus 1.
 
-Inversion, for any c inside the strip:
+Inversion, for continuous f and any c inside the strip where the transform is integrable along the line:
 
 ```math
 f(t) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty} t^{-s}\,\mathcal{M}f(s)\,ds
@@ -56,7 +56,7 @@ f(t) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty} t^{-s}\,\mathcal{M}f(s)\,ds
 | $`t`$, $`x`$ | the input; its log-scale twin, t = e^(−x) | t over (0, ∞), x over the whole line | — |
 | $`s`$ | the complex exponent in the weight t^(s−1) | 2, then 4 | Γ(s)ζ(s) grows, 1.644934 to 6.493939 |
 | $`\mathcal{M}f(s)`$ | the Mellin transform of f at s | 1.644934 at s = 2 | — |
-| $`k`$ | a stretch factor; a city's rank | 1, 2, 3, … | weight 1/k^s shrinks |
+| $`k`$ | a positive stretch factor; a city's rank | 1, 2, 3, … | weight 1/k^s shrinks |
 | $`\Gamma(s)`$ | gamma: the transform of e^(−t) | Γ(2) = 1, Γ(4) = 6 | grows like a factorial |
 | $`\zeta(s)`$ | zeta: the Zipf total of 1/k^s | ζ(2) = 1.644934, ζ(4) = 1.082323 | falls towards 1 |
 | $`c`$ | the inversion line's real part | 2 | any c in the strip gives the same f |
@@ -143,7 +143,7 @@ Its power shows when the line moves. For e^(−t), push it left past the poles o
 
 Each crossing collects it times t^n, building 1 − t + t^2/2! − …, the power series of e^(−t). Poles of the transform become the small-t terms of f. The same move on Γ(s)ζ(s), across zeta's pole at 1, starts the next cards.
 
-The code's third road uses no integral: for whole-number s, integrating by parts gives Γ(s) = (s − 1)!, which it multiplies by the Zipf sum.
+The code's third road uses no integral: for positive whole-number s, integrating by parts gives Γ(s) = (s − 1)!, which it multiplies by the Zipf sum.
 
 ---
 
@@ -549,7 +549,7 @@ example : mellin (fun t : ℝ => ((1 / (Real.exp t - 1) : ℝ) : ℂ)) 4 = (π :
 - **Dirichlet series.** Other weights in place of Zipf's give Γ(s) times a Dirichlet series, [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md).
 
 > **Say it back**
-> The Mellin transform weighs a function by t^(s−1) over the positive axis. With t = e^(−x) it is a two-sided Laplace transform: it lives in a vertical strip and inverts up a vertical line. Stretching by k multiplies it by k^(−s). The transform of e^(−t) is Γ(s); 1/(e^t − 1) is a sum of stretched copies of e^(−t), so its transform is Γ(s)ζ(s) for Re s > 1, 1.644934 at s = 2.
+> The Mellin transform weighs a function by t^(s−1) over the positive axis. With t = e^(−x) it is a two-sided Laplace transform: it lives in a vertical strip and inverts up a vertical line. Stretching by a positive k multiplies it by k^(−s). The transform of e^(−t) is Γ(s) for real part above 0; 1/(e^t − 1) is a sum of stretched copies of e^(−t), so its transform is Γ(s)ζ(s) for real part above 1, 1.644934 at s = 2.
 
 ---
 

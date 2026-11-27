@@ -1,4 +1,4 @@
-# Stirling's formula: n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral
+# Stirling's formula: for large n, n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Stirling's formula
 
@@ -10,7 +10,7 @@ A deck of 52 cards can be shuffled into 52! orders: 52 × 51 × … × 2 × 1, w
 
 The calculus wing proves this for whole numbers ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)). This card writes n! as an area, the gamma integral: one tall bump. Near its top the bump looks like a bell curve, whose area is known exactly. Fitting a bell at the peak of an integrand is **Laplace's method**, and it needs no whole numbers: it sizes 4.5!, 0.5! and the factorial of 10i.
 
-**The factorial of s, Γ(s + 1), is about √(2πs) times (s/e) to the s: the gamma integral is one bump at t = s, and a bell of height (s/e) to the s and width √s has that area, short by a factor near 1 + 1/(12s).**
+**For large s away from the negative real axis, the factorial of s, Γ(s + 1), is about √(2πs) times (s/e) to the s: the gamma integral is one bump at t = s, and a bell of height (s/e) to the s and width √s has that area, short by a factor near 1 + 1/(12s).**
 
 **What kind of fact this is:** an approximation, with its error stated; proved for real s in Why it works, checked but not proved for complex s.
 
@@ -38,15 +38,15 @@ Reminder: the gamma function extends the factorial, Γ(s + 1) = s! ([The gamma f
 \Gamma(s+1) = \int_0^\infty t^{s}\,e^{-t}\,dt, \qquad \text{Re}\, s > -1.
 ```
 
-A wavy equals sign, ~, means the ratio of the two sides heads for 1 as s grows:
+A wavy equals sign, ~, means the ratio of the two sides heads for 1 as |s| grows away from the negative real axis:
 
 ```math
 \Gamma(s+1) \sim \sqrt{2\pi s}\,\left(\frac{s}{e}\right)^{s}, \qquad \frac{\Gamma(s+1)}{\sqrt{2\pi s}\,(s/e)^{s}} \approx 1 + \frac{1}{12s}
 ```
 
-**Read it aloud:** the factorial of s is, in ratio, root 2π s times s over e to the s; truth over formula is close to one plus one over 12 s.
+**Read it aloud:** for large s away from the negative real axis, the factorial of s is, in ratio, root 2π s times s over e to the s; truth over formula is close to one plus one over 12 s.
 
-Laplace's method, for a smooth g with one highest point u0, a negative second derivative g''(u0) there (the bend), and a large number M:
+Laplace's method, for a smooth g with one highest point u0 inside the interval, a negative second derivative g''(u0) there (the bend), and a large positive number M:
 
 ```math
 \int e^{M g(u)}\,du \;\sim\; e^{M g(u_0)}\sqrt{\frac{2\pi}{M\,|g''(u_0)|}}
@@ -68,7 +68,7 @@ Laplace's method, for a smooth g with one highest point u0, a negative second de
 ### When it holds
 
 - **s large in size.** Truth over formula is 1 + 1/(12s) to first order: 1.165822 at s = 0.5, 1.018660 at s = 4.5. Small s works, badly. Further correction terms exist, but their full series diverges: a few terms help, more hurt.
-- **s away from the negative real axis.** That is, the principal argument of s lies strictly between −π and π. At s = −4.5 the integral diverges and the formula gives size 0.550256 against a true 0.270088.
+- **s away from the negative real axis.** That is, the principal argument of s stays bounded away from −π and π. At s = −4.5 the integral diverges and the formula gives size 0.550256 against a true 0.270088.
 - **Ratio, not difference.** At 52 the ratio is 0.1601 percent off; the difference is 1.2915 × 10^65 and grows without bound.
 - **Complex s: the size of s sets the error.** At s = 10i the ratio is 0.999965 − 0.008336i, beside 1 + 1/(12s) = 1.000000 − 0.008333i: the error of s = 10, turned.
 
@@ -608,7 +608,7 @@ example : 80658175 * 10 ^ 60 ≤ Nat.factorial 52 ∧ Nat.factorial 52 < 8065818
 - **Counting zeta's zeros.** The count up to a height uses Γ's angle on a vertical line, read off Stirling ([Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md)).
 
 > **Say it back**
-> The factorial of s is the area under t^s e^(−t), one bump peaked at t = s with height (s/e)^s. Near the peak its log is a downward parabola, so the bump is nearly a bell of width √s, with area √(2πs) times the height. Scaling shows the fit improving as s grows: Laplace's method. Truth over formula is 1 + 1/(12s) for whole, fractional and complex s, away from the negative axis.
+> The factorial of s is the area under t^s e^(−t), one bump peaked at t = s with height (s/e)^s. Near the peak its log is a downward parabola, so the bump is nearly a bell of width √s, with area √(2πs) times the height. Scaling shows the fit improving as s grows: Laplace's method. Truth over formula is close to 1 + 1/(12s) for large whole, fractional and complex s, away from the negative real axis.
 
 ---
 
@@ -620,12 +620,12 @@ example : 80658175 * 10 ^ 60 ≤ Nat.factorial 52 ∧ Nat.factorial 52 < 8065818
 
 ## Where this goes next
 
-- [The beta function](03-beta-function.md): gamma ratios, sized by this card.
-- [The zeta function](05-zeta-function-and-euler-product.md): the shelf's other special function.
-- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): the gamma factor sized here.
+- [The beta function](03-beta-function.md): ratios of gammas, sized for large arguments by this card.
+- [The zeta function](05-zeta-function-and-euler-product.md): the sum of 1/n^s for Re s > 1, equal to a product over the primes.
+- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): zeta extended across the plane, carrying a gamma factor sized here.
 - [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): Stirling's angle term in the zero count.
 
-The complex case is checked here, not proved; its proof, the method of steepest descent, comes in a later wing.
+The complex case is checked here, not proved; its proof, the method of steepest descent, comes in a later wing. Next on this shelf, the zeta function moves from integrals of powers to sums of powers 1/n^s: where does that sum converge, and how does it encode the primes?
 
 ---
 

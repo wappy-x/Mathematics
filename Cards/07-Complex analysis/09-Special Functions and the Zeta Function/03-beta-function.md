@@ -1,4 +1,4 @@
-# The beta function: an integral over 0 to 1 built from two gammas, the shape behind every bump between 0 and 1
+# The beta function: an integral over 0 to 1 built from two gammas, the shape behind power bumps between 0 and 1
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The beta function
 
@@ -12,7 +12,7 @@ A second profile, an arch over the same one-metre base, has height √(x(1 − x
 
 Both heights are a power of x times a power of 1 − x: a bump on the stretch from 0 to 1. Its area is the **beta function**. Every such area is a ratio of three values of the gamma function, the continuous factorial ([The gamma function](02-gamma-function.md)). The ramp's is 1!·2!/4! = 2/24.
 
-**The area under x^(a−1)(1 − x)^(b−1) from 0 to 1 is Γ(a)Γ(b)/Γ(a + b), because the product of two gamma integrals splits into a total, which gives Γ(a + b), and a share, which gives this area.**
+**For a and b above 0 (or complex ones with positive real parts), the area under x^(a−1)(1 − x)^(b−1) from 0 to 1 is Γ(a)Γ(b)/Γ(a + b), because the product of two gamma integrals splits into a total, which gives Γ(a + b), and a share, which gives this area.**
 
 **What kind of fact this is:** a definition (the area is named B) and a theorem (its value in gammas), proved on this card in Why it works; the limits are in the folded Detailed proof.
 
@@ -34,13 +34,13 @@ The low, lopsided line is the ramp x(1 − x)^2; the tall, even line is the arch
 
 ## The formula
 
-Reminder from [The gamma function](02-gamma-function.md): the gamma function is $`\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt`$, and at whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
+Reminder from [The gamma function](02-gamma-function.md): for Re a > 0 the gamma function is $`\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt`$, and at positive whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
 
 ```math
 B(a,b) = \int_0^1 x^{a-1}(1-x)^{b-1}\,dx = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}, \qquad a > 0,\; b > 0.
 ```
 
-**Read it aloud:** the area under x to the a minus 1, times one minus x to the b minus 1, from 0 to 1, equals gamma of a times gamma of b, over gamma of a plus b.
+**Read it aloud:** for a and b above 0, the area under x to the a minus 1, times one minus x to the b minus 1, from 0 to 1, equals gamma of a times gamma of b, over gamma of a plus b.
 
 The "minus 1" matches the gamma function's convention. The ramp x(1 − x)^2 has powers 1 and 2, so it is B(2, 3). The arch has powers 1/2 and 1/2, so it is B(3/2, 3/2).
 
@@ -435,20 +435,20 @@ example : (3 + 1) * Nat.choose 3 1 = 12 := by decide
 
 ## Where you meet it in real life
 
-- **Binomial coefficients.** At whole numbers, 1/B(k + 1, n − k + 1) = (n + 1) times the number of ways to choose k of n. The ramp has k = 1, n = 3: 4 × 3 = 12, and 1/12 is its area.
+- **Binomial coefficients.** For whole numbers 0 ≤ k ≤ n, 1/B(k + 1, n − k + 1) = (n + 1) times the number of ways to choose k of n. The ramp has k = 1, n = 3: 4 × 3 = 12, and 1/12 is its area.
 - **The square root of π.** Γ(1/2) = √π comes from B(1/2, 1/2) = π, and so does every half-integer gamma; [Stirling's formula](04-stirlings-formula.md) needs them.
 - **Transforms.** B(a, 1 − a) is the area under t^(a−1)/(1 + t), a single value of the transform on [The Mellin transform](07-mellin-transform.md).
 - **Probability.** The bump divided by its area is the beta distribution, the standard curve for an unknown fraction, on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 - **History.** Euler introduced both integrals in 1729; Binet named this one beta.
 
 > **Say it back**
-> The beta function B(a, b) is the area under x^(a−1)(1 − x)^(b−1) from 0 to 1. Splitting the product of two gamma integrals into a total and a share gives B(a, b) = Γ(a)Γ(b)/Γ(a + b). The ramp x(1 − x)^2 is B(2, 3) = 1/12, and the arch √(x(1 − x)), a half disc, is B(3/2, 3/2) = π/8. The swap x = sin^2 θ gives B(1/2, 1/2) = π, and with it Γ(1/2) = √π.
+> For a and b above 0 (or complex ones with positive real parts), the beta function B(a, b) is the area under x^(a−1)(1 − x)^(b−1) from 0 to 1. Splitting the product of two gamma integrals into a total and a share gives B(a, b) = Γ(a)Γ(b)/Γ(a + b). The ramp x(1 − x)^2 is B(2, 3) = 1/12, and the arch √(x(1 − x)), a half disc, is B(3/2, 3/2) = π/8. The swap x = sin^2 θ gives B(1/2, 1/2) = π, and with it Γ(1/2) = √π.
 
 ---
 
 ## What this builds on
 
-- [The gamma function](02-gamma-function.md): the integral for Γ, the rule Γ(a + 1) = aΓ(a), and Γ(n) = (n − 1)!.
+- [The gamma function](02-gamma-function.md): the integral for Γ (Re a > 0), the rule Γ(a + 1) = aΓ(a), and Γ(n) = (n − 1)! for positive whole n.
 - [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): a product of two integrals as one integral over pairs; the area factor in a change of coordinates is on [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md).
 
 ## Where this goes next

@@ -1,4 +1,4 @@
-# Infinite products: a product converges exactly when the sum of its small parts does, and sine is a product over its zeros
+# Infinite products: a product of nonzero factors converges when the sizes of its small parts have a finite total, and sine is a product over its zeros
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → Infinite products
 
@@ -12,7 +12,7 @@ A second account pays 1/n in year n. Its rates also shrink to nothing, yet after
 
 A product of endlessly many factors is an **infinite product**. Logarithms turn it into a sum, so the test for sums becomes a test for products. In the plane the same test makes Euler's product for sine work: at z = i it is the first account, at z = 1/2 Wallis's product for π/2 = 1.570796327.
 
-**A product of factors 1 + a_n settles on a nonzero limit when the sizes of the small parts a_n have a finite total, since its logarithm is then a convergent sum; and sin(πz) is πz times the product of 1 − z^2/n^2, one factor per pair of zeros.**
+**A product of nonzero factors 1 + a_n settles on a nonzero limit when the sizes of the small parts a_n have a finite total, since its logarithm is then a convergent sum; and sin(πz) is πz times the product of 1 − z^2/n^2, one factor per pair of zeros.**
 
 **What kind of fact this is:** a theorem. The product test is proved on this card in Why it works; Euler's sine product is proved in its folded Detailed proof.
 
@@ -52,13 +52,13 @@ P_N = \prod_{n=1}^{N} (1 + a_n), \qquad \log P_N = \sum_{n=1}^{N} \log(1 + a_n)
 S = \sum_{n=1}^{\infty} |a_n| < \infty \;\Longrightarrow\; P_N \to P \ne 0 \text{ (no factor zero)}, \qquad 1 + S \le P \le e^{S} \text{ when every } a_n \ge 0
 ```
 
-**Read it aloud:** if the sizes of the small parts have a finite total, the product settles on a nonzero limit; for positive parts it lies between one plus that total and e to it.
+**Read it aloud:** if the sizes of the small parts have a finite total and no factor is zero, the product settles on a nonzero limit; for parts of 0 or more it lies between one plus that total and e to it.
 
 ```math
 \sin(\pi z) = \pi z \prod_{n=1}^{\infty} \left(1 - \frac{z^2}{n^2}\right)
 ```
 
-**Read it aloud:** sine of π z is π z times, over every whole number n, one minus z squared over n squared.
+**Read it aloud:** sine of π z is π z times, over every positive whole number n, one minus z squared over n squared.
 
 At z = i each factor is 1 + 1/n^2 and sin(πi) = i sinh(π) ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)): the account. At z = 1/2 each factor is 1 − 1/(4n^2); turned upside down, that is Wallis:
 
@@ -79,7 +79,7 @@ At z = i each factor is 1 + 1/n^2 and sin(πi) = i sinh(π) ([The elementary fun
 
 ### When it holds
 
-- **The sizes must add up, not the signed parts.** Rates of ±1/√n have a finite signed total, 0.396682 by year 100,000, yet the balance drains to 0.005316.
+- **The sizes must add up, not the signed parts.** Rates of ±1/√n (from year 2, so no factor is zero) have a finite signed total, 0.396682 by year 100,000, yet the balance drains to 0.005316.
 - **No factor may be zero.** One zero factor makes the product zero; the sine product uses that to place its zeros.
 - **In the plane, one bound must serve a whole disc.** Then the product is holomorphic there, that is, differentiable in the complex sense; for sine on the disc |z| ≤ R the bound is R^2/n^2.
 - **Matching zeros is not enough.** e^z sin(πz) has sine's zeros too; Step 5 pins down the free factor.
@@ -98,7 +98,7 @@ For a complex number a of size at most 1/2, the series log(1 + a) = a − a^2/2 
 
 ### Step 2: a finite total gives a convergent sum of logs
 
-If $`S`$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P. A product sliding to zero is a log sum running to minus infinity: divergence.
+If $`S`$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P, as long as no early factor is zero. A product sliding to zero is a log sum running to minus infinity: divergence.
 
 ### Step 3: for positive parts the test runs both ways
 
@@ -134,7 +134,7 @@ The coefficient of z^2 in the product is minus the sum of 1/n^2; in sin(πz)/(π
 
 </details>
 
-Building any entire function (one holomorphic on the whole plane) from its zeros, the [Weierstrass](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md) and [Hadamard](../10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md) factorisations, is on the shelf Entire and Meromorphic Functions.
+Building any entire function (one holomorphic on the whole plane) from its zeros, by [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md) and [Hadamard factorization](../10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md), is on the shelf Entire and Meromorphic Functions.
 
 ---
 
@@ -161,7 +161,7 @@ Wallis's gap times N runs 0.369444, 0.390258, 0.392454 towards π/8 = 0.392699, 
 | Rates 1/n, not 1/n^2 | 11, 101, 1001 after 10, 100, 1000 years | the rates' total is infinite |
 | Rates added, not multiplied | 1 + S = 2.644934, not 3.676078 | no interest on interest |
 | A loss of 1/(n + 1) a year | 0.009901 after 100 years, heading to 0 | the losses' total is infinite: divergence to zero |
-| Alternating ±1/√n | rates total 0.396682 by year 10^5; balance 0.176453, 0.016868, 0.005316 | the signed parts converge, the sizes do not |
+| Alternating ±1/√n (from year 2) | rates total 0.396682 by year 10^5; balance 0.176453, 0.016868, 0.005316 | the signed parts converge, the sizes do not |
 
 The code prints all four.
 
@@ -485,7 +485,7 @@ example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
 - **An early formula for π.** Wallis published his product in 1656.
 
 > **Say it back**
-> An infinite product settles when its log sum does: when the sizes of the small parts have a finite total. Rates of 1/n^2 settle at 3.676078; rates of 1/n give N + 1. In the plane the same bound makes a product of functions holomorphic. Euler's product for sine has one factor per pair of zeros; at z = i it is the account, at z = 1/2 Wallis's π/2.
+> An infinite product with no zero factor settles on a nonzero limit when its log sum does, in particular when the sizes of the small parts have a finite total. Rates of 1/n^2 settle at 3.676078; rates of 1/n give N + 1. In the plane a uniform bound on each disc makes a product of holomorphic functions holomorphic. Euler's product for sine has one factor per pair of zeros; at z = i it is the account, at z = 1/2 Wallis's π/2.
 
 ---
 
@@ -497,12 +497,13 @@ example : (1 : ℚ) - 3 ^ 2 / 3 ^ 2 = 0 := by
 
 ## Where this goes next
 
-- [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
+- [The gamma function](02-gamma-function.md): the continuous factorial, whose reciprocal is a product over zeros at 0, −1, −2, ….
+- [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s for Re s > 1.
 - [Mertens' theorems](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/09-mertens-theorems.md): how fast the product of 1 − 1/p over primes p sinks to zero.
 - [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): any list of zeros running off to infinity belongs to an entire function.
 - [Hadamard factorization](../10-Entire%20and%20Meromorphic%20Functions/03-hadamard-factorization-theorem.md): an entire function of finite order is its zeros times e to a polynomial.
 
-The question this card leaves open: zeta's product has one factor per prime, not one per zero, so for which s do its small parts have a finite total, and what does the product equal?
+The question this card leaves open: next on this shelf, how does the gamma function extend the factorial across the plane and take an infinite-product form of its own? Further along, zeta's product has one factor per prime, not one per zero, so for which s do its small parts have a finite total, and what does the product equal?
 
 ---
 

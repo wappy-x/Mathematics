@@ -163,11 +163,11 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 
 *Infinite products, the gamma and beta functions, Stirling's formula, the zeta function and the Euler product, Dirichlet series and Mobius inversion (wing 02's hand-off), the Mellin transform, zeta continued and its functional equation, the zeros and the primes. Rests on shelves 4, 6 and 8 and wing 02 unique factorisation.*
 
-1. [Infinite products: a product converges exactly when the sum of its small parts does, and sine is a product over its zeros](09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md)
-2. [The gamma function: the factorial for every number, defined by an integral and stretched to the whole plane by its own recurrence](09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)
-3. [The beta function: an integral over 0 to 1 built from two gammas, the shape behind every bump between 0 and 1](09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md)
-4. [Stirling's formula: n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral](09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md)
-5. [The zeta function: the sum of 1 over n to the s for complex s, holomorphic past Re s = 1, and equal to a product over the primes](09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md)
+1. [Infinite products: a product of nonzero factors converges when the sizes of its small parts have a finite total, and sine is a product over its zeros](09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md)
+2. [The gamma function: the factorial for every number except 0, -1, -2, ..., defined by an integral and stretched across the plane by its own recurrence](09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)
+3. [The beta function: an integral over 0 to 1 built from two gammas, the shape behind power bumps between 0 and 1](09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md)
+4. [Stirling's formula: for large n, n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral](09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md)
+5. [The zeta function: the sum of 1 over n to the s for s with real part above 1, holomorphic there, and equal to a product over the primes](09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md)
 6. [Dirichlet series: multiply two of them and the coefficients convolve over divisors, so 1 over zeta is a series with the Mobius signs](09-Special%20Functions%20and%20the%20Zeta%20Function/06-dirichlet-series-and-mobius-inversion.md)
 7. [The Mellin transform: a Laplace transform on a log scale, whose first two examples are gamma and zeta](09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md)
 8. [Continuing zeta: past s = 1 with an alternating series, a pole at 1, and a mirror that reflects s to 1 - s](09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md)

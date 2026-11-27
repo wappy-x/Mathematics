@@ -1,4 +1,4 @@
-# The zeta function: the sum of 1 over n to the s for complex s, holomorphic past Re s = 1, and equal to a product over the primes
+# The zeta function: the sum of 1 over n to the s for s with real part above 1, holomorphic there, and equal to a product over the primes
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The zeta function
 
@@ -12,7 +12,7 @@ The π comes from adding one over each whole number squared: 1 + 1/4 + 1/9 + …
 
 Let the power 2 be any complex number $`s`$ and the sum becomes the **zeta function**, written ζ(s), "zeta of s".
 
-**For complex s with real part above 1, the sum of 1/n^s converges to a holomorphic function, zeta, equal to the product over the primes of 1/(1 − 1/p^s); at s = 2 it is π^2/6, and one over it is the share of coprime pairs.**
+**For complex s with real part above 1, the sum of 1/n^s converges to a holomorphic function, zeta, equal to the product over the primes of 1/(1 − 1/p^s); at s = 2 it is π^2/6, and one over it is the limiting share of coprime pairs.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works; zeta itself is a definition, and the sine product used for π^2/6 is taken from [Infinite products](01-infinite-products.md).
 
@@ -26,13 +26,13 @@ To scale: 60 units per 1, 0 at (60, 150). The dashed line Re s = 1 passes the cr
 
 ## The formula
 
-Notation first, in words. For a whole number $`n`$ and complex $`s`$, the power $`n^{-s}`$ means $`e^{-s\ln n}`$, with $`\ln n`$ the ordinary real logarithm. The sign ∏ means "multiply over", as Σ means "add over".
+Notation first, in words. For a positive whole number $`n`$ and complex $`s`$, the power $`n^{-s}`$ means $`e^{-s\ln n}`$, with $`\ln n`$ the ordinary real logarithm. The sign ∏ means "multiply over", as Σ means "add over".
 
 ```math
 \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^{s}} = \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}}, \qquad \mathrm{Re}\, s > 1
 ```
 
-**Read it aloud:** zeta of s is one over n to the s, added over every whole number, and also one over one-minus-p-to-the-minus-s, multiplied over every prime.
+**Read it aloud:** for s with real part above 1, zeta of s is one over n to the s, added over every positive whole number, and also one over one-minus-p-to-the-minus-s, multiplied over every prime.
 
 ```math
 \zeta(2) = \frac{\pi^2}{6} = 1.64493407, \qquad \frac{C(M)}{M^2} \to \frac{1}{\zeta(2)} = \frac{6}{\pi^2} = 0.607927
@@ -61,7 +61,7 @@ Notation first, in words. For a whole number $`n`$ and complex $`s`$, the power 
 
 ### Step 0: one prime factorisation per number
 
-Every whole number is built from primes in exactly one way ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)). A product offering each prime every power once therefore lists every whole number once.
+Every positive whole number is built from primes in exactly one way ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)). A product offering each prime every power once therefore lists every whole number once.
 
 ### Step 1: complex powers of whole numbers
 
@@ -368,7 +368,7 @@ Lean proves the main result for every s with real part above 1, the coprime shar
 - There, zeta equals the product over the primes of 1/(1 − 1/p^s).
 - ζ(2) = π^2/6.
 - The coprime share C(M)/M^2 tends to 6/π^2 as M grows.
-- For every P, the sum of 1/p over the primes up to P is at least ln ln(P + 1) − 1.
+- For every whole P ≥ 1, the sum of 1/p over the primes up to P is at least ln ln(P + 1) − 1.
 - The sum of 1/p over all primes diverges.
 - Tickets 6 and 15 share the factor 3; tickets 8 and 15 are coprime.
 - Tickets 1 to 6 give 23 coprime pairs of 36, and the split by g adds to 36.
@@ -755,7 +755,7 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 ## The usual mistake
 
 > [!warning]
-> **Reading the sum where it does not converge.** The sum defines zeta only on Re s > 1. Values at negative s belong to the continued function of [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md); 1 + 2 + 3 + ⋯ still has no total.
+> **Reading the sum where it does not converge.** Both the sum and the Euler product define zeta only on Re s > 1; elsewhere zeta is defined by continuation, with one pole at 1. Values at negative s belong to the continued function of [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md); 1 + 2 + 3 + ⋯ still has no total.
 >
 > - **A finite product read as a finite sum.** $`E_3(s)`$ is not $`1 + 2^{-s} + 3^{-s}`$: it holds 4, 6, 8, 9, 12, … and never 5.
 > - **The finite count as the limit.** 0.608383 is not 0.607927.
@@ -765,11 +765,11 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 ## Where you meet it in real life
 
 - **Euclid's algorithm.** About six pairs in ten end at greatest common divisor 1.
-- **Squarefree numbers.** Numbers with no repeated prime factor also have share 6/π^2 (Squarefree numbers).
+- **Squarefree numbers.** Numbers with no repeated prime factor also have share 6/π^2 ([Squarefree numbers](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/07-squarefree-numbers-and-their-density.md)).
 - **Counting primes.** The product turns questions about primes into questions about one holomorphic function, whose zeros govern how primes thin out ([Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md)).
 
 > **Say it back**
-> Zeta of s adds one over n to the s. For real part above 1 the sizes add up, so zeta is holomorphic. Unique factorisation makes the sum a product with one factor per prime. At s = 2 the sine product gives π^2/6, and one over it, 0.607927, is the coprime share. At s = 1 the product makes the sum of one over the primes diverge.
+> For real part above 1, zeta of s adds one over n to the s: the sizes add up, so zeta is holomorphic, and unique factorisation makes the sum a product with one factor per prime. At s = 2 the sine product gives π^2/6, and one over it, 0.607927, is the limiting coprime share. Using the finite product at s = 1 makes the sum of one over the primes diverge.
 
 ---
 
@@ -783,14 +783,14 @@ example : (1 / (1 - 1/2^2 : ℚ)) * (1 / (1 - 1/3^2)) * (1 / (1 - 1/5^2)) = 25/1
 
 ## Where this goes next
 
-- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): general sums of a(n)/n^s.
-- [The Mellin transform](07-mellin-transform.md): zeta times gamma as an integral.
-- [The von Mangoldt function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/04-von-mangoldt-and-the-logarithmic-derivative.md): the product's logarithmic derivative.
-- [Squarefree numbers](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/07-squarefree-numbers-and-their-density.md): 6/π^2 again.
+- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): general sums of a(n)/n^s, whose products convolve weights and give 1/ζ.
+- [The Mellin transform](07-mellin-transform.md): zeta times gamma written as one integral for Re s > 1.
+- [The von Mangoldt function](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/04-von-mangoldt-and-the-logarithmic-derivative.md): the logarithmic derivative of zeta's Euler product, weighting prime powers by logs.
+- [Squarefree numbers](../../21-Algebraic%20and%20analytic%20number%20theory/01-Arithmetic%20Functions%20Again/07-squarefree-numbers-and-their-density.md): numbers with no repeated prime factor, which also have limiting share 6/π^2.
 - [Zeta of a complex variable](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/01-zeta-and-the-euler-product-revisited.md): the product pushed to the line Re s = 1.
 - [The L-function](../../22-Algebraic%20geometry/04-Elliptic%20Curves/07-l-functions-of-elliptic-curves.md): Euler products built from a curve's point counts.
 
-Left of the line Re s = 1 the sum fails; zeta reaches there by [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
+The question this card leaves open: next, what happens when you give each 1/n^s its own weight and multiply two such series ([Dirichlet series](06-dirichlet-series-and-mobius-inversion.md))? And left of Re s = 1 the sum fails: zeta reaches there by [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
 
 ---
 

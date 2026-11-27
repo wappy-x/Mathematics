@@ -13,7 +13,7 @@ Climb one step at every prime: 25 steps by 100, 78,498 by a million. This is the
 
 Why li works, and why its error is small, are questions about zeta on the whole plane ([Continuing zeta](08-continuing-zeta-and-the-functional-equation.md)). Its pole at 1 makes li. Its zeros make the error: each adds one wave to the staircase, like one note in a chord. The first zero sits at 0.500000 + 14.134725i.
 
-**Zeta's logarithmic derivative counts prime powers; a contour integral turns that count into the prime staircase, written as a smooth main term plus one wave for each zero of zeta; the Riemann hypothesis puts every zero on the line of real part 1/2, which holds the error to about √x.**
+**Where the real part exceeds 1, zeta's logarithmic derivative counts prime powers; a contour integral turns that count into the prime staircase, written as a smooth main term plus one wave for each nontrivial zero of zeta; the Riemann hypothesis puts every nontrivial zero on the line of real part 1/2, which holds the error to about √x ln x.**
 
 **What kind of fact this is:** a theorem (the explicit formula, and the prime number theorem after it), stated here with the shape of its proof and proved in wing 21; the Riemann hypothesis is a conjecture by kind, proved since 2026-11-21 by a formal proof certified by others ([The Riemann hypothesis](../../25-Frontier/02-The%20Millennium%20Problems/01-riemann-hypothesis.md)).
 
@@ -44,13 +44,13 @@ Re s is the real part of s. A zero of zeta off the real axis is ρ, "rho"; every
 -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^{s}} \qquad (\mathrm{Re}\, s > 1)
 ```
 
-**Read it aloud:** minus zeta's slope over zeta is a series with weight ln p on every prime power.
+**Read it aloud:** for real part above 1, minus zeta's slope over zeta is a series with weight ln p on every prime power.
 
 ```math
 \psi(x) = x - \sum_{\rho} \frac{x^{\rho}}{\rho} - \ln 2\pi - \tfrac12 \ln\!\left(1 - x^{-2}\right)
 ```
 
-**Read it aloud:** the weighted staircase is x, minus one term per zero of zeta, minus two small corrections.
+**Read it aloud:** for x above 1 and not a prime power, the weighted staircase is x, minus one term per nontrivial zero of zeta, minus two small corrections.
 
 This is the **explicit formula**, for x above 1 and not a prime power. Then:
 
@@ -58,7 +58,7 @@ This is the **explicit formula**, for x above 1 and not a prime power. Then:
 \pi(x) \sim \mathrm{li}(x) = \int_0^x \frac{dt}{\ln t}, \qquad \text{RH: every } \rho \text{ has } \mathrm{Re}\,\rho = \tfrac12
 ```
 
-**Read it aloud:** π(x) divided by li(x) tends to 1 (1/ln t blows up at t = 1; li takes the area the same distance either side and lets the two cancel); the Riemann hypothesis says every zero in the strip lies on the line Re s = 1/2.
+**Read it aloud:** π(x) divided by li(x) tends to 1 as x grows (1/ln t blows up at t = 1; li takes the area the same distance either side and lets the two cancel); the Riemann hypothesis says every zero in the strip lies on the line Re s = 1/2.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -89,13 +89,13 @@ Euler's product writes ζ(s) as a product over primes ([The zeta function](05-ze
 
 ### Step 1: the logarithmic derivative is a prime-power series
 
-ζ(s) is the product of 1/(1 − p^(−s)) over primes p, so ln ζ(s) is the sum over p and k of p^(−ks)/k. Differentiating turns each term into −ln p times p^(−ks): weight ln p at n = p^k.
+For Re s > 1, ζ(s) is the product of 1/(1 − p^(−s)) over primes p, so ln ζ(s) is the sum over primes p and whole k ≥ 1 of p^(−ks)/k. Differentiating turns each term into −ln p times p^(−ks): weight ln p at n = p^k.
 
 At s = 2 the prime-power sum gives 0.56996, and zeta's measured slope gives 0.56996. Primes alone give 0.49309.
 
 ### Step 2: a contour integral turns a series into a running total
 
-Up a vertical line right of 0, the line Re s = c, the integral of y^s/s over 2πi is 1 when y > 1 and 0 when y < 1: a switch. With y = x/n it keeps the terms with n below x:
+For y > 0, up a vertical line right of 0, the line Re s = c, the integral of y^s/s over 2πi is 1 when y > 1, 0 when y < 1, and 1/2 at y = 1: a switch. With y = x/n it keeps the terms with n below x:
 
 ```math
 \psi(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} \left(-\frac{\zeta'(s)}{\zeta(s)}\right) \frac{x^{s}}{s}\, ds, \qquad c > 1.
@@ -110,7 +110,7 @@ By [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-t
 <details>
 <summary>Detailed proof: why the line may be moved</summary>
 
-Cut the line at heights ±T away from zeros; close it into a rectangle with left side Re s = −U, and apply the residue theorem. On the top and bottom |ζ′/ζ| is at most a multiple of (ln T)^2, so they contribute at most a multiple of x (ln T)^2/T. On the left, ζ′/ζ grows like ln |s| while x^s shrinks like x^(−U). The cut line differs from ψ(x) by at most a multiple of x (ln x)^2/T. Let T and U grow. Full estimates: The explicit formula.
+Cut the line at heights ±T away from zeros; close it into a rectangle with left side Re s = −U, and apply the residue theorem. On the top and bottom |ζ′/ζ| is at most a multiple of (ln T)^2, so they contribute at most a multiple of x (ln T)^2/T. On the left, ζ′/ζ grows like ln |s| while x^s shrinks like x^(−U). The cut line differs from ψ(x) by at most a multiple of x (ln x)^2/T. Let T and U grow. Full estimates: [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md).
 
 </details>
 
@@ -124,7 +124,7 @@ At 13.5 and 14.5 the staircase reads 12.79 twice; 29 pairs rebuild it as 12.96 a
 
 ψ(x) is close to x, so primes near t, each weighing ln t, come one in every ln t numbers. Adding that density up to x gives li(x), by summation by parts (the discrete form of integration by parts).
 
-π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: The zero-free region, then The prime number theorem.
+π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: [The zero-free region](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/03-the-zero-free-region.md), then [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md).
 
 li beats x ÷ ln x because it charges each stretch its own density, not the thinnest. Series and direct integration both give 30.13 and 78,627.55.
 
@@ -150,7 +150,7 @@ A zero at β + it with β above 1/2 would add a wave of size x^β. With every ze
 |\pi(x) - \mathrm{li}(x)| < \frac{\sqrt{x}\,\ln x}{8\pi}.
 ```
 
-At a million the bound is 549.70; the true gap is 129.55. Von Koch showed in 1901 that such a bound implies the hypothesis back (The Riemann hypothesis).
+At a million the bound is 549.70; the true gap is 129.55. Von Koch showed in 1901 that such a bound implies the hypothesis back ([The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md)).
 
 ---
 
@@ -493,26 +493,27 @@ example : Λ 6 = 0 := by
 - **Random matrices.** Gaps between zeta's zeros match gaps between eigenvalues of large random Hermitian matrices (equal to their own conjugate transpose): Montgomery and Dyson, 1972.
 
 > **Say it back**
-> The prime staircase π(x) is close to li(x): 78,498 against 78,627.55 at a million. Minus zeta's slope over zeta puts weight ln p on every prime power. A contour integral turns that into the weighted staircase ψ(x); sliding the contour collects x from the pole and a wave from each zero, its frequency the zero's height. The Riemann hypothesis puts every zero on Re s = 1/2, holding the error to about √x.
+> The prime staircase π(x) divided by li(x) tends to 1 as x grows: 78,498 against 78,627.55 at a million. For real part above 1, minus zeta's slope over zeta puts weight ln p on every prime power. A contour integral turns that into the weighted staircase ψ(x); sliding the contour collects x from the pole and a wave from each nontrivial zero, its frequency the zero's height. The Riemann hypothesis puts every nontrivial zero on the line of real part 1/2, holding the error to about √x ln x.
 
 ---
 
 ## What this builds on
 
 - [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): zeta on the plane; the mirror confining zeros to the strip.
-- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): series of a(n)/n^s.
+- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): series of a(n)/n^s, the form of −ζ′/ζ for Re s > 1.
 - [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): residues of f′/f; the box.
 - [How primes thin out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md): the staircase and li's promise.
 
 ## Where this goes next
 
-- [The zero-free region](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/03-the-zero-free-region.md): no zero on Re s = 1.
-- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): the theorem in full.
-- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): Step 3's estimates.
-- [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md): equivalent forms.
+- [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md): building an entire function from any list of zeros running off to infinity, the next shelf's opening card.
+- [The zero-free region](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/03-the-zero-free-region.md): why zeta has no zero on the line Re s = 1.
+- [The prime number theorem](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/05-prime-number-theorem-proved.md): the full proof that π(x)/li(x) and π(x)/(x/ln x) tend to 1.
+- [The explicit formula](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/07-the-explicit-formula.md): Step 3's contour bounds and the prime count written as one wave per zero.
+- [The Riemann hypothesis](../../21-Algebraic%20and%20analytic%20number%20theory/02-The%20Zeta%20Function%20and%20the%20Prime%20Number%20Theorem/09-riemann-hypothesis-statement-and-equivalents.md): the exact statement and three equivalent forms in number theory.
 - [The Weil conjectures](../../22-Algebraic%20geometry/08-Sheaf%20Cohomology%20and%20Differentials/07-weil-conjectures-and-etale-cohomology.md): point counts over every F_(q^n) packed into one rational function, explained by etale cohomology.
 
-The question this card leaves open: do all the zeros in the strip lie on the line Re s = 1/2, as the 29 found here do?
+The question this card leaves open: how do you build an entire function from any list of zeros running off to infinity? That opens the next shelf, with [Weierstrass factorization](../10-Entire%20and%20Meromorphic%20Functions/01-weierstrass-factorization-theorem.md). And in number theory, how are the zero-free region and the explicit formula proved in full? The wing 21 cards above do that.
 
 ---
 

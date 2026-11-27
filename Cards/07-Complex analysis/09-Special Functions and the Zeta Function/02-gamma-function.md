@@ -1,4 +1,4 @@
-# The gamma function: the factorial for every number, defined by an integral and stretched to the whole plane by its own recurrence
+# The gamma function: the factorial for every number except 0, -1, -2, ..., defined by an integral and stretched across the plane by its own recurrence
 
 [Syllabus](../../../SYLLABUS.md) → [Complex analysis](../README.md) → [Special Functions and the Zeta Function](../README.md#s09) → The gamma function
 
@@ -10,7 +10,7 @@ Treat a football as a perfect ball and take its radius as the unit of length. It
 
 One formula covers every dimension n: the volume is π^(n/2) divided by (n/2)!. The **factorial** n! is 1 × 2 × … × n, the number of orders n things can stand in; 4! = 24. The football, n = 3, needs (3/2)!, and no one lines up one and a half things.
 
-The **gamma function** supplies that number, from an integral rather than a count. It obeys the factorial's rule, "multiply by the next number", so at whole numbers it gives the factorials back: Γ(5) = 4! = 24. At the half-integers it brings in √π: (3/2)! is 3√π/4 = 1.329340, and π^(3/2)/1.329340 = 4.188790, the football again.
+The **gamma function** supplies that number, from an integral rather than a count. It obeys the factorial's rule, "multiply by the next number", so at positive whole numbers it gives the factorials back: Γ(5) = 4! = 24. At the half-integers it brings in √π: (3/2)! is 3√π/4 = 1.329340, and π^(3/2)/1.329340 = 4.188790, the football again.
 
 Run the same rule backwards and gamma reaches negative inputs, and complex ones across the left half of the plane: Γ(−1/2) = −2√π. At 0, −1, −2, … it would divide by zero, and there it has poles: points where it grows without bound.
 
@@ -41,9 +41,9 @@ The one line is π^(n/2)/Γ(n/2 + 1). The code gets the same ten values by slici
 \Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\, dt, \qquad \mathrm{Re}\, z > 0.
 ```
 
-**Read it aloud:** gamma of z is the area under t to the z minus 1, times e to the minus t, from 0 to infinity.
+**Read it aloud:** when the real part of z is positive, gamma of z is the area under t to the z minus 1, times e to the minus t, from 0 to infinity.
 
-Proved below:
+Proved below, for z off the poles 0, −1, −2, … and whole numbers n ≥ 0:
 
 ```math
 \Gamma(z+1) = z\,\Gamma(z), \qquad \Gamma(n+1) = n!, \qquad \Gamma\!\left(\tfrac12\right) = \sqrt{\pi}.
@@ -55,7 +55,7 @@ The recurrence, turned round, continues gamma to the left. For any whole number 
 \Gamma(z) = \frac{\Gamma(z+m)}{z(z+1)\cdots(z+m-1)}, \qquad \mathrm{Re}\, z > -m,\; z \ne 0, -1, \ldots, -(m-1).
 ```
 
-The reflection formula links gamma at z with gamma at 1 − z, and the example's ball volume uses gamma once:
+For non-whole z, the reflection formula links gamma at z with gamma at 1 − z, and for n ≥ 1 the example's ball volume uses gamma once:
 
 ```math
 \Gamma(z)\,\Gamma(1-z) = \frac{\pi}{\sin \pi z}, \qquad V_n = \frac{\pi^{n/2}}{\Gamma(n/2 + 1)}.
@@ -66,7 +66,7 @@ The reflection formula links gamma at z with gamma at 1 − z, and the example's
 | $`\Gamma(z)`$ | the gamma function at z | Γ(5) = 24, Γ(1/2) = 1.772454 | along the real line it eventually outgrows any power |
 | $`z`$ | the input, a complex number | 5, 1/2, −1/2, 0.75 + 0.5i | — |
 | $`t`$ | the integration variable, over the positive reals | 0 to infinity | — |
-| $`n`$, $`n!`$ | a whole number, its factorial | n = 3 for the football; 4! = 24 | — |
+| $`n`$, $`n!`$ | a whole number (0 or more), its factorial | n = 3 for the football; 4! = 24 | — |
 | $`m`$ | recurrence steps needed to reach Re z > 0 | 1 for −1/2 | reaches one strip further left |
 | $`V_n`$ | volume of the ball of radius 1 in n dimensions | V_3 = 4.188790 | rises to n = 5, then falls toward 0 |
 | $`a`$ | a real number strictly between 0 and 1 | 1/4 | — |
@@ -89,7 +89,7 @@ The factorial rule is n! = n × (n − 1)!. Differentiating $`t^z`$ brings down 
 
 ### Step 1: the integral converges and is holomorphic for Re z > 0
 
-Write σ for Re z. The integrand has size $`t^{\sigma-1}e^{-t}`$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
+Write σ for Re z. The integrand has size $`t^{\sigma-1}e^{-t}`$. For 0 < t ≤ 1 its area is at most 1/σ; for t ≥ 1 the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
 
 Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly, at one rate for every z in the strip. A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
@@ -110,7 +110,7 @@ For Re z > 0, integrate by parts with $`t^z`$ differentiated and $`e^{-t}`$ inte
 
 The bracket tends to 0 at both ends, leaving Γ(z + 1) = z Γ(z).
 
-The start is Γ(1) = area under e^(−t) = 1, so Γ(n + 1) = n!, and Γ(5) = 4 × 3 × 2 × 1 = 24: shifted by one, 4! not 5!.
+The start is Γ(1) = area under e^(−t) = 1, so Γ(n + 1) = n! for every whole n ≥ 0, and Γ(5) = 4 × 3 × 2 × 1 = 24: shifted by one, 4! not 5!.
 
 ### Step 3: Γ(1/2) is the Gaussian integral
 
@@ -124,7 +124,7 @@ The last step is the Gaussian integral ([The Gaussian integral](../../06-Calculu
 
 ### Step 4: continue leftward, one strip at a time
 
-Divide the recurrence by z: Γ(z) = Γ(z + 1)/z. The right side is defined for Re z > −1 except at 0, one strip further left. Applying it m times gives the continuation formula, valid on Re z > −m.
+Divide the recurrence by z: Γ(z) = Γ(z + 1)/z. The right side is defined for Re z > −1 except at 0, one strip further left. Applying it m times gives the continuation formula, valid on Re z > −m away from 0, −1, …, −(m − 1).
 
 Two such formulas agree where both apply, since the recurrence holds where they overlap. By uniqueness of analytic continuation ([Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)), there is one continued gamma, and any other holomorphic extension of the integral equals it.
 
@@ -396,7 +396,7 @@ Lean proves gamma's main facts for every complex input off the poles, and the ca
 - Gamma is holomorphic everywhere except 0, −1, −2, ….
 - Near each −n, (z + n) Γ(z) tends to (−1)^n/n!. So gamma has a simple pole there, with that residue.
 - Any other holomorphic extension of the integral to that same region equals gamma.
-- For Re z > 0, Γ(z + 1) = z Γ(z). For every whole number n, Γ(n + 1) = n!. And Γ(1/2) = √π.
+- For Re z > 0, Γ(z + 1) = z Γ(z). For every whole number n ≥ 0, Γ(n + 1) = n!. And Γ(1/2) = √π.
 - Reflection holds for every complex z off the whole numbers, not only the real case. Gamma is never 0 off its poles.
 - The hand arithmetic holds exactly: Γ(5) = 24, not 5! = 120, and Γ(5/2) = 3√π/4. So do Γ(−1/2) = −2√π, the football's 4π/3 and the residues 1, −1, 1/2, −1/6.
 
@@ -645,7 +645,7 @@ example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ
 > [!warning]
 > **Treating Γ(−1/2) as the value of Euler's integral at −1/2.** That integral diverges: cut off at t = 10^−6 it reads 1996.5 and grows. The value −3.544908 belongs to the continued function.
 >
-> - **Γ(n) taken to be n!.** It is (n − 1)!: Γ(5) = 24, not 120.
+> - **Γ(n) taken to be n!.** It is (n − 1)! for positive whole n: Γ(5) = 24, not 120.
 > - **(n/2)! written Γ(n/2).** The football comes out at 6.283185 instead of 4.188790.
 
 ---
@@ -657,7 +657,7 @@ example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ
 - **The zeta function.** Gamma is the factor that makes zeta's functional equation symmetric, in [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
 
 > **Say it back**
-> Gamma is Euler's integral of t^(z−1) e^(−t), for Re z > 0. Integration by parts gives Γ(z + 1) = z Γ(z), so Γ(n + 1) = n! and Γ(5) = 24. Substituting t = u^2 makes Γ(1/2) the Gaussian integral, √π, which puts 3√π/4 into the football's 4π/3. Dividing the recurrence by z carries gamma left: Γ(−1/2) = −2√π, with simple poles at 0, −1, −2, …. Reflection, Γ(z)Γ(1 − z) = π/sin πz, ties the two halves together.
+> Gamma is Euler's integral of t^(z−1) e^(−t), for real part above 0. Integration by parts gives Γ(z + 1) = z Γ(z), so Γ(n + 1) = n! for whole n ≥ 0 and Γ(5) = 24. Substituting t = u^2 makes Γ(1/2) the Gaussian integral, √π, which puts 3√π/4 into the football's 4π/3. Dividing the recurrence by z carries gamma left: Γ(−1/2) = −2√π, with simple poles at 0, −1, −2, …. For non-whole z, reflection, Γ(z)Γ(1 − z) = π/sin πz, ties the two halves together.
 
 ---
 
@@ -680,7 +680,7 @@ example : ((-1 : ℚ) ^ 0 / (0 ! : ℚ), (-1 : ℚ) ^ 1 / (1 ! : ℚ), (-1 : ℚ
 - [The functional equation of L(s, chi)](../../21-Algebraic%20and%20analytic%20number%20theory/03-Characters%20and%20L-functions/09-dirichlet-l-functions-functional-equation.md): a twisted theta function, with the Gauss sum as the sign.
 - [The L-function of a modular form](../../21-Algebraic%20and%20analytic%20number%20theory/07-Diophantine%20and%20Modular/12-l-functions-of-modular-forms.md): a Mellin transform that inherits the form's symmetry.
 
-The question this card leaves open: the ball volumes fall after n = 5 because gamma outgrows the power of π, so how fast does gamma grow?
+The question this card leaves open: next, how does the beta function turn a product of two gammas into one integral and complete the reflection proof? Then, the ball volumes fall after n = 5 because gamma outgrows the power of π, so how fast does gamma grow (Stirling's formula)?
 
 ---
 
