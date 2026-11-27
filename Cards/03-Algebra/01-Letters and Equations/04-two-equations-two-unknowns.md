@@ -14,9 +14,9 @@ Neither receipt on its own tells you a price. Friday's total fits an adult at 10
 
 Hold both receipts at once and one pair survives. Doubling Saturday gives two adults and four children for 48.00. That is Friday's receipt plus one extra child, and it costs 7.00 more. So a child is 7.00, and Saturday then says an adult is 24.00 − 14.00 = 10.00.
 
-**Two unknown prices need two facts that are not the same fact; put the two together and the pair is pinned.**
+**Two unknown prices need two equations whose mixes are not multiples of each other; put the two together and the pair is pinned.**
 
-**What kind of fact this is:** a theorem, proved in Why it works: when one receipt's ticket counts are not just the other's scaled up, exactly one pair of prices fits both.
+**What kind of fact this is:** a theorem, proved in Why it works: when neither receipt's ticket counts are a multiple of the other's, exactly one pair of prices fits both.
 
 ### The picture: each receipt is a line of possible prices
 
@@ -559,7 +559,7 @@ example : (24 : ℤ) - 41 = -17 ∧ (24 : ℤ) - 2 * (-17) = 58 := by decide
 - **Every later system.** Ten unknowns and ten equations yield to exactly this doubling and subtracting, done in an orderly sweep — what [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) sets up.
 
 > **Say it back**
-> One equation with two unknowns is a line of possible pairs, not an answer. Two of them cross at one pair, and that pair is the answer. You find it by substitution — make one letter the subject and push it into the other equation — or by elimination — scale one equation until a letter matches, then subtract it away. Both give an adult ticket at 10.00 dollars and a child ticket at 7.00. If the crossing number is zero the lines are parallel and nothing fits, or identical and everything on them fits, which means the second receipt never told you anything new.
+> One equation with two unknowns is a line of possible pairs, not an answer. When their crossing number is not zero, two of them cross at one pair, and that pair is the answer. You find it by substitution — make one letter the subject and push it into the other equation — or by elimination — scale one equation until a letter matches, then subtract it away. Both give an adult ticket at 10.00 dollars and a child ticket at 7.00. If the crossing number is zero the lines are parallel and nothing fits, or identical and everything on them fits, which means the second receipt never told you anything new.
 
 ---
 

@@ -124,7 +124,7 @@ $`(F - 32) / 1.8 = C`$ — done. Flip the sides to read it forwards.
 
 A square is undone by a square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). The area of a circle is 3.14159… × radius × radius. Make the radius the subject: radius = the square root of (area / 3.14159…). A round rug of area 12.00 square feet has a radius of 1.9544 feet, so it is a little under four feet across.
 
-Compound interest is the same move with a bigger power. A = P × (1 + r)^n, where P is the money put in, r the yearly rate, n the years and A the balance at the end. Solve it for the rate: r = (A / P)^(1/n) − 1, the n-th root undoing the n-th power. $100.00 that reached $162.89 in 10 years grew at 5.00% a year.
+Compound interest is the same move with a bigger power. A = P × (1 + r)^n, where P is the money put in, r the yearly rate, n the years and A the balance at the end. Solve it for the rate: r = (A / P)^(1/n) − 1, the n-th root undoing the n-th power, for money put in above zero, at least one year, and 1 + r not negative. $100.00 that reached $162.89 in 10 years grew at 5.00% a year.
 
 </details>
 
