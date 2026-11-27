@@ -14,7 +14,7 @@ Cut it into thin rings, like a barrel's hoops. Each ring's area is its circumfer
 
 The answer is 150.796447 cm^2 of bowl, 0.301593 cm^3 of silver, 3.1637 g per glass. The same method gives a whole ball's area, 4 pi R^2 for radius R, which Archimedes found by other means.
 
-**Spin a curve round an axis and its surface area is the sum of thin rings, each one circumference times its slant length, and the slant length is the arc-length element, not the step along the axis.**
+**Spin a smooth curve once round an axis it does not cross, and its surface area is the sum of thin rings, each one circumference times its slant length; the slant length is measured along the curve, not along the axis.**
 
 **What kind of fact this is:** a theorem, proved on this card in Why it works, for surfaces measured by thin cone-shaped bands; the sphere's area is a worked case of it.
 
@@ -28,7 +28,7 @@ Drawn to scale, 1 cm = 25 units. Dotted: the axis. Dashed arc: the ball above th
 
 ## The formula
 
-Let $`x`$ be the height above the bowl's bottom, in cm, and $`f(x)`$ the profile's radius there. The slope $`f'(x)`$ is the rate of radius per unit of height, as on [Arc length](02-arc-length.md). Spin the profile from height $`a`$ to height $`b`$ once round the axis. The area swept is
+Let $`x`$ be the height above the bowl's bottom, in cm, and $`f(x) \ge 0`$ the profile's radius there. The slope $`f'(x)`$ is the rate of radius per unit of height, as on [Arc length](02-arc-length.md). With $`a \le b`$ and $`f'`$ continuous on $`[a, b]`$, spin the profile from height $`a`$ to height $`b`$ once round the axis. The area swept is
 
 ```math
 S = \int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx
@@ -38,7 +38,7 @@ S = \int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx
 
 The factor $`\sqrt{1 + f'(x)^2}\,dx`$ is the arc-length element: the length of wall over an axial step $`dx`$. For the bowl, $`f(x) = \sqrt{8x - x^2}`$, the circle of radius 4 cm with its lowest point at height 0.
 
-For a ball of radius $`R`$ cut to a height $`h`$, it comes out as
+For a ball of radius $`R > 0`$ cut to a height $`h`$ ($`0 \le h \le 2R`$), it comes out as
 
 ```math
 S = 2\pi R h, \qquad \text{and for the whole ball, } h = 2R: \quad S = 4\pi R^2.
@@ -62,7 +62,7 @@ S = 2\pi R h, \qquad \text{and for the whole ball, } h = 2R: \quad S = 4\pi R^2.
 - **The radius is never negative.** A profile below the axis must use its distance, or that part cancels real area: What breaks shows 79.97 cm^2 counted as 0.
 - **The slope is continuous.** A sharp corner: split there and add the pieces.
 - **The slope stays finite at the ends,** or the integral is taken as a limit. The bowl's wall lies flat at its bottom, so its radius changes infinitely fast per unit of height there; Step 5 takes that limit.
-- **One full turn about a straight axis the profile does not cross.** Half a turn gives half the area; a crossing profile sweeps some wall twice.
+- **One full turn about a straight axis the profile does not cross, with $`a \le b`$.** Touching the axis is fine and $`a = b`$ gives 0; half a turn gives half the area, while a crossing profile sweeps wall twice or cancels.
 
 ---
 
@@ -85,7 +85,9 @@ the average edge circumference times the slant.
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-A cone of base radius $`r_2`$ and slant $`L`$ unrolls to a sector of radius $`L`$ and arc $`2\pi r_2`$, area $`\pi r_2 L`$. Extend the frustum to such a cone; the removed tip has slant $`L - \ell`$. Similar triangles give $`r_1 / (L - \ell) = r_2 / L`$ (taking $`r_2 > r_1`$), so $`r_2 (L - \ell) = r_1 L`$. The frustum's area is $`\pi r_2 L - \pi r_1 (L - \ell) = \pi (r_2 - r_1) L + \pi r_1 \ell`$, and $`(r_2 - r_1) L = r_2 \ell`$ from the similar triangles, which gives $`\pi (r_1 + r_2)\ell`$. Equal radii give a cylinder, $`2\pi r_1 \ell`$: the same formula.
+A cone of base radius $`r_2`$ and slant $`L`$ unrolls to a sector of radius $`L`$ and arc $`2\pi r_2`$, area $`\pi r_2 L`$. For $`r_2 > r_1 > 0`$, extend the frustum to such a cone; the removed tip has slant $`L - \ell`$. Similar triangles give $`r_1 / (L - \ell) = r_2 / L`$, so $`r_2 (L - \ell) = r_1 L`$.
+
+The frustum's area is $`\pi r_2 L - \pi r_1 (L - \ell) = \pi (r_2 - r_1) L + \pi r_1 \ell`$. Since $`(r_2 - r_1) L = r_2 \ell`$, this simplifies to $`\pi (r_1 + r_2)\ell`$. When $`r_1 = 0`$, the band is already a cone of area $`\pi r_2 \ell`$; equal radii give a cylinder, $`2\pi r_1 \ell`$. All cases use the same formula.
 
 </details>
 
@@ -103,20 +105,24 @@ The ratio inside is the chord's slope. The bowl's band from $`x = 1`$ to $`x = 2
 
 Cut the profile into equal height steps and add the bands. Six bands fall short of 150.796447 cm^2 by 2.814318; 6000 bands by 0.000006.
 
-As the steps thin, the chord's slope equals the profile's slope $`f'(x)`$ at some height inside the step (the mean value theorem: a point where the curve's slope equals the chord's), and the average radius approaches $`f(x)`$ at that height.
+As the steps thin, the mean value theorem gives a height inside each step where the profile's slope $`f'(x)`$ equals the chord's slope. Meanwhile the average radius approaches $`f(x)`$ at that height.
 
 So each band tends to $`2\pi f(x)\sqrt{1 + f'(x)^2}\,\Delta x`$, and the sum of those is a Riemann sum whose limit is the integral. A Riemann sum is a total of function values times step widths: [The integral](../04-Integrals/01-riemann-integral.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-Let $`f \ge 0`$ with $`f'`$ continuous on $`[a, b]`$, split into steps of width at most $`w`$. On step $`i`$ the mean value theorem gives $`c_i`$ with chord slope $`f'(c_i)`$, so the band's slant is $`\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$. On a closed interval, $`|f'| \le K`$ for some $`K`$, and $`f`$ is uniformly continuous: for every $`\varepsilon > 0`$ some $`\delta > 0`$ makes $`w < \delta`$ put both edge radii within $`\varepsilon`$ of $`f(c_i)`$. The band sum then differs from $`\sum_i 2\pi f(c_i)\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$ by at most $`2\pi\varepsilon\sqrt{1 + K^2}\,(b - a)`$, and that sum is a Riemann sum of a continuous function, tending to the integral as $`w \to 0`$.
+Let $`f \ge 0`$ with $`f'`$ continuous on $`[a, b]`$ ($`a \le b`$), split into steps of width at most $`w`$. On step $`i`$ the mean value theorem gives $`c_i`$ with chord slope $`f'(c_i)`$, so the band's slant is $`\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$.
+
+On a closed interval, $`|f'| \le K`$ for some $`K`$, and $`f`$ is uniformly continuous. Given any $`\varepsilon > 0`$, pick $`\delta > 0`$ so that $`w < \delta`$ puts both edge radii within $`\varepsilon`$ of $`f(c_i)`$.
+
+Then the band sum differs from $`\sum_i 2\pi f(c_i)\sqrt{1 + f'(c_i)^2}\,\Delta x_i`$ by at most $`2\pi\varepsilon\sqrt{1 + K^2}\,(b - a)`$. That sum is a Riemann sum of a continuous function, so it tends to the integral as $`w \to 0`$.
 
 </details>
 
 ### Step 4: on a ball, radius times slant factor is the ball's radius
 
-For the bowl, $`f(x) = \sqrt{8x - x^2}`$ and the slope is $`f'(x) = (4 - x)/f(x)`$. Multiply the radius by the slant factor:
+For the bowl, $`f(x) = \sqrt{8x - x^2}`$ and, for $`0 < x < 8`$, the slope is $`f'(x) = (4 - x)/f(x)`$. Multiply the radius by the slant factor:
 
 ```math
 f\sqrt{1 + f'^2} = \sqrt{f^2 + (4 - x)^2} = \sqrt{8x - x^2 + 16 - 8x + x^2} = 4.
@@ -128,7 +134,7 @@ The product is 4, the ball's radius, at every height. Low down the ring is small
 S = \int_0^6 2\pi \cdot 4\,dx = 2\pi \cdot 4 \cdot 6 = 48\pi = 150.796447 \text{ cm}^2.
 ```
 
-For any radius $`R`$ the product is $`R`$. A slice of height $`h`$ has area $`2\pi R h`$; the whole ball, $`h = 2R`$, has $`4\pi R^2`$, 201.061930 cm^2 here. This is Archimedes' result: a ball has the area of the tube that fits round it, ends excluded.
+For any radius $`R > 0`$ the product is $`R`$. A slice of height $`h`$ ($`0 \le h \le 2R`$) has area $`2\pi R h`$; the whole ball, $`h = 2R`$, has $`4\pi R^2`$, 201.061930 cm^2 here. This is Archimedes' result: a ball has the area of the tube that fits round it, ends excluded.
 
 ### Step 5: the steep bottom is a limit, played with numbers
 
@@ -372,9 +378,9 @@ The two outputs are identical.
 
 Lean proves the band limit for every profile that meets When it holds, and the slice area for a ball of every radius.
 
-- Take a radius that is never negative, with a slope that is continuous and finite at the ends. Cut $`[a, b]`$ into $`n`$ equal height steps and add the chord bands. As $`n`$ grows, the total tends to $`\int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx`$.
-- On a ball of any radius $`R`$, at every height strictly between bottom and top, the radius times the slant factor is exactly $`R`$.
-- A slice of the ball from height $`a`$ to height $`b`$ has area $`2\pi R(b - a)`$. The whole ball has $`4\pi R^2`$.
+- On any closed interval $`[a, b]`$ with $`a \le b`$, take a radius $`f(x) \ge 0`$ whose derivative $`f'`$ exists on $`[a, b]`$ (one-sided at the ends) and is continuous there. Cut $`[a, b]`$ into $`n`$ equal height steps and add the chord bands. As $`n`$ grows, the total tends to $`\int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx`$.
+- On a ball of any positive radius $`R > 0`$, at every height strictly between $`0`$ and $`2R`$, the radius times the slant factor is exactly $`R`$.
+- For $`R > 0`$ and $`0 \le a \le b \le 2R`$, the surface-area integral from height $`a`$ to height $`b`$ equals $`2\pi R(b - a)`$. The whole ball has $`4\pi R^2`$.
 - The hand arithmetic holds exactly: the radius and slope at $`x = 3`$, the bowl's $`48\pi`$, the band's radii, the frustum algebra, the signed radius and the silver.
 
 The band totals from 6 to 6000, Step 5's numbers, the mistakes table and the figure are left to the Python and Rust checks.
@@ -733,10 +739,10 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 
 - **Plating and paint.** A turned object's coating is its spun area times a thickness: 3.1637 g of silver for this bowl.
 - **Heat loss.** A flask loses heat through its skin, so its area sets the rate; its capacity is [Volumes](03-volumes-by-slices-and-shells.md).
-- **Pappus's rule.** A spun area equals the profile's length times the distance its centre of mass travels: [Centre of mass](05-centre-of-mass-and-pappus.md).
+- **Pappus's rule.** For a smooth profile that does not cross the axis, one full turn sweeps area equal to the profile's length times the circle its balance point travels: [Centre of mass](05-centre-of-mass-and-pappus.md).
 
 > **Say it back**
-> A spun curve's area is a stack of thin rings, each circumference times width along the wall, and that width is the height step times the arc-length factor. On a ball, radius times slant factor is the ball's radius, so a slice has area 2 pi R h.
+> A smooth curve spun once round an axis it does not cross sweeps an area that is a stack of thin rings, each circumference times width along the wall, and that width is the height step times the arc-length factor. On a ball of radius R, radius times slant factor is R, so a slice of height h has area 2 pi R h.
 
 ---
 
@@ -746,10 +752,11 @@ example : 48 * π * (1 / 500) = 12 * π / 125 := by ring
 
 ## Where this goes next
 
+- [Centre of mass](05-centre-of-mass-and-pappus.md): finds a shape's balance point and turns its circular path into a shortcut for spun volumes and areas.
 - [Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md): measures any curved sheet patch by patch, with the spin angle as one grid number.
 - Surface area, a planned card on the Differential geometry wing: area for any curved surface, not only one spun round an axis.
 
-A spun surface is round about its axis; how to measure a curved sheet with no axis at all, such as a car's bonnet, is what adding small flat patches answers.
+Can a spun solid's volume or surface area be found from a single balance point without a fresh integral each time? Next on this shelf, [Centre of mass](05-centre-of-mass-and-pappus.md) answers that, while curved sheets with no axis at all wait for surface integrals.
 
 ---
 

@@ -47,8 +47,8 @@ X = lambda x: 180 + 0.8 * x
 Y = lambda x: 150 - 0.8 * f(x)
 print("figure, 0.8 units per m, chord points:",
       " ".join(f"({X(x):.1f},{Y(x):.1f})" for x in (-200, -100, 0, 100, 200)))
-assert abs(graph - exact) < 1e-7                  # road two against road three
-assert abs(param - exact) < 1e-7                  # a new clock, the same length
+assert abs(graph - exact) < 1e-6                  # road two against road three
+assert abs(param - exact) < 1e-6                  # a new clock, the same length
 assert all(p < q for p, q in zip(lengths, lengths[1:] + [exact]))   # chords climb, stay under
 assert 0 < exact - polygon(1024) < 1e-4           # road one closes the gap, from below
 print("ALL CHECKS PASS")

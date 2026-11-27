@@ -14,7 +14,7 @@ There is a shorter road. Cut the circle out of card and it balances on a pin at 
 
 The balance point of a flat shape is its **centroid**, the term used from here on. For a circle it is the middle. For most shapes an integral finds it. The rule that turns a centroid into a volume is **Pappus's theorem**, from Pappus of Alexandria around 340 AD.
 
-**The centroid is the average position of a shape's area; spin the shape round a line it does not cross, and the solid's volume is the area times the distance the centroid travels.**
+**The centroid is the average position of a shape's area; spin a bounded shape once round a line in its plane that it does not cross, and the solid's volume is the area times the distance the centroid travels.**
 
 **What kind of fact this is:** the centroid is a definition; Pappus's theorem is a theorem, proved on this card in Why it works.
 
@@ -28,7 +28,7 @@ Scale 1 m = 400 units. Shaded: the tube's cut face. Dashed: the same face half a
 
 ## The formula
 
-Slice a flat region beside the axis into thin strips parallel to it. The strip at distance $`x`$ has height $`h(x)`$. Weight each strip's area by its distance, add, and divide by the total area: that is the centroid's distance, written $`\bar{x}`$, read "x bar".
+Slice a bounded flat region of positive area $`A > 0`$ beside the axis into thin strips parallel to it ($`0 \le a \le b`$). The strip at distance $`x`$ has height $`h(x) \ge 0`$. Weight each strip's area by its distance, add, and divide by the total area: that is the centroid's distance, written $`\bar{x}`$, read "x bar".
 
 ```math
 \bar{x} = \frac{\int_a^b x\,h(x)\,dx}{\int_a^b h(x)\,dx} = \frac{M}{A}
@@ -44,7 +44,7 @@ V = A \times 2\pi\bar{x}
 
 **Read it aloud:** the volume swept out is the area times the length of the circle the centroid runs round.
 
-For the swim ring, $`A`$ is the circle's area and $`\bar{x} = R`$, so
+For the swim ring ($`0 \le r \le R`$, so the circle does not cross the axis), $`A`$ is the circle's area and $`\bar{x} = R`$, so
 
 ```math
 V = \pi r^2 \times 2\pi R = 2\pi^2 R r^2
@@ -66,7 +66,8 @@ A **centre of mass** weights each piece by mass instead of area ([Averages, mass
 
 - **The region lies on one side of the axis.** Touching is fine; crossing is not. With the tube's middle 0.05 m out, Pappus says 9.8696 L and the solid holds 10.6608 L: the part beyond the axis counts with a negative distance and subtracts volume that is there.
 - **The region is flat and the axis lies in its plane.** Tilted out of the plane, it sweeps a different solid.
-- **A full turn.** A quarter turn sweeps a quarter: area times the centroid's arc.
+- **Bounded, positive area.** An unbounded shape can have infinite area or moment; a zero-area shape has $`A = 0`$, so $`M/A`$ has no value (and sweeps zero volume).
+- **Up to one full turn.** One full turn gives $`2\pi\bar{x}`$; a quarter turn sweeps a quarter, area times the centroid's arc. Turning past one full circle overlaps the solid.
 - **The centroid of the area.** The middle of the boundary, or the balance point of an unevenly thick plate, can give the wrong distance.
 
 ---
@@ -98,9 +99,13 @@ By the definition of the centroid, $`M = A\bar{x}`$, so $`V = A \times 2\pi\bar{
 <details>
 <summary>Detailed proof</summary>
 
-Cut the distances from $`a`$ to $`b`$ into $`n`$ strips of width $`\Delta x = (b-a)/n`$. Strip k runs from $`x_{k-1}`$ to $`x_k`$ and holds area $`A_k`$ of the region. At any height, the solid it sweeps is cut in flat rings between radii $`p < q`$ inside that range, of area $`\pi(q^2 - p^2) = 2\pi\tfrac{p+q}{2}(q-p)`$, between $`2\pi x_{k-1}(q-p)`$ and $`2\pi x_k(q-p)`$. The widths $`q - p`$, integrated over height, give $`A_k`$. So the swept volume $`V_k`$ lies between $`2\pi x_{k-1}A_k`$ and $`2\pi x_k A_k`$, and the moment $`M_k`$ between $`x_{k-1}A_k`$ and $`x_k A_k`$: $`V_k`$ and $`2\pi M_k`$ differ by at most $`2\pi\,\Delta x\,A_k`$.
+Cut the distances from $`a`$ to $`b`$ ($`0 \le a \le b`$) into $`n`$ strips of width $`\Delta x = (b-a)/n`$. Strip k runs from $`x_{k-1}`$ to $`x_k`$ and holds area $`A_k`$ of the region. At any height, the solid it sweeps is cut in flat rings between radii $`p < q`$ inside that range, of area $`\pi(q^2 - p^2) = 2\pi\tfrac{p+q}{2}(q-p)`$, between $`2\pi x_{k-1}(q-p)`$ and $`2\pi x_k(q-p)`$.
 
-On one side of the axis, different strips sweep separate solids, so $`V = \sum V_k`$ and $`M = \sum M_k`$, and $`V`$ and $`2\pi M`$ differ by at most $`2\pi(b-a)A/n`$. For any $`\varepsilon > 0`$, an $`n`$ above $`2\pi(b-a)A/\varepsilon`$ pushes that below $`\varepsilon`$; a fixed gap below every $`\varepsilon`$ is zero. So $`V = 2\pi M = A \times 2\pi\bar{x}`$. Across the axis, the two sides' solids overlap and the sum fails: the swim ring at 0.05 m.
+The widths $`q - p`$, integrated over height, give $`A_k`$. So the swept volume $`V_k`$ lies between $`2\pi x_{k-1}A_k`$ and $`2\pi x_k A_k`$, and the moment $`M_k`$ between $`x_{k-1}A_k`$ and $`x_k A_k`$: $`V_k`$ and $`2\pi M_k`$ differ by at most $`2\pi\,\Delta x\,A_k`$.
+
+On one side of the axis, different strips sweep separate solids, so $`V = \sum V_k`$ and $`M = \sum M_k`$, and $`V`$ and $`2\pi M`$ differ by at most $`2\pi(b-a)A/n`$.
+
+For any $`\varepsilon > 0`$, an $`n`$ above $`2\pi(b-a)A/\varepsilon`$ pushes that below $`\varepsilon`$; a fixed gap below every $`\varepsilon`$ is zero. So $`V = 2\pi M = A \times 2\pi\bar{x}`$. Across the axis, the two sides' solids overlap and the sum fails: the swim ring at 0.05 m.
 
 </details>
 
@@ -126,7 +131,7 @@ Scale 1 m = 1000 units. The strip 0.08 m up reaches 0.06 m each side of the midd
 
 Spun round its flat edge, the half-disc sweeps a ball of radius 0.1 m. Pappus gives 0.0157080 m^2 × 2π × 0.042441 m = 4.1888 litres, which is the ball formula $`\tfrac{4}{3}\pi r^3`$. Run backwards, the same line finds the centroid from the ball's known volume.
 
-The other road stacks washers (flat rings) along the axis and never mentions a centroid ([Volumes](03-volumes-by-slices-and-shells.md)); the code takes it. Spinning a curve gives surface area the same way, length times path ([Surface area](04-surface-area-of-revolution.md)).
+The other road stacks washers (flat rings) along the axis and never mentions a centroid ([Volumes](03-volumes-by-slices-and-shells.md)); the code takes it. Spinning a smooth curve once round a line in its plane it does not cross gives surface area the same way, length times path ([Surface area](04-surface-area-of-revolution.md)).
 
 ---
 
@@ -345,8 +350,8 @@ Lean proves Pappus's theorem for every flat region that meets its conditions, an
 
 - Take a flat region that has an area and fits in a finite box, on one side of the axis. Touching the axis is fine.
 - Spun one full turn round the axis, it sweeps a solid whose volume is the area times 2π times the centroid's distance.
-- A circle of radius r, its middle R from the axis, with r no more than R, sweeps a torus of volume 2π^2 R r^2.
-- A half-disc of radius r, flat edge down, has its centroid 4r/(3π) above the flat edge: its moment divided by its area.
+- A circle of radius $`r`$, its middle $`R`$ from the axis, with $`0 \le r \le R`$, sweeps a torus of volume $`2\pi^2 R r^2`$.
+- A half-disc of radius $`r > 0`$, flat edge down, has its centroid $`4r/(3\pi)`$ above the flat edge: its moment divided by its area.
 - One thin strip sweeps a shell whose volume is the strip's area times the circle its middle travels.
 - The swim ring's volume, π × 0.1^2 × 2π × 0.3, is 3π^2/500 m^3.
 - The half-disc's moment, 2 × 0.1^3 ÷ 3, is 1/1500 m^3.
@@ -744,7 +749,7 @@ example : (4 / 10 : ℚ) / (3 / 10) = 4 / 3 ∧ (2 / 10 : ℚ) / (3 / 10) = 2 / 
 - **Ships.** The water's upward push acts at the centroid of the hull's underwater volume; stability depends on where that sits against the centre of mass.
 
 > **Say it back**
-> The centroid is the average position of a shape's area: strips weighted by distance, divided by the total area. Spin the shape once round a line it does not cross, and the volume is the area times the circle the centroid travels. The swim ring's tube, 0.0314 m^2, runs 1.885 m and holds 59.2 litres. A half-disc's centroid sits 0.0424 m up, below halfway. Across the axis, the rule undercounts.
+> For a bounded flat shape of positive area, the centroid is the average position of its area: strips weighted by distance, divided by the total area. Spin the shape once round a line in its plane that it does not cross, and the volume is the area times the circle the centroid travels. The swim ring's tube, 0.0314 m^2, runs 1.885 m and holds 59.2 litres. A half-disc's centroid sits 0.0424 m up, below halfway. Across the axis, the rule undercounts.
 
 ---
 
@@ -755,10 +760,11 @@ example : (4 / 10 : ℚ) / (3 / 10) = 4 / 3 ∧ (2 / 10 : ℚ) / (3 / 10) = 2 / 
 
 ## Where this goes next
 
+- [Infinite series](../06-Series/01-series-convergence.md): opens the next shelf by defining an endless sum as the limit of its running totals.
 - [Rotation](../../13-Engineering%20mathematics/07-Mechanics%20and%20Structures/02-rigid-body-rotation-and-moment-of-inertia.md): weighting each piece by its distance squared instead of its distance, which sets how hard a body is to spin.
 - [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md): mass, moments and centres for solids, not only flat shapes, with a density that can change from point to point.
 
-This card leaves one question open: where does the balance point sit for a solid, or for a plate whose thickness varies, when area alone no longer decides it?
+Balance points for solids or plates of varying density wait for [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md). This card finishes single-variable geometry on this shelf; next, [Infinite series](../06-Series/01-series-convergence.md) asks what it means to add infinitely many discrete numbers when there is no smooth interval to slice.
 
 ---
 

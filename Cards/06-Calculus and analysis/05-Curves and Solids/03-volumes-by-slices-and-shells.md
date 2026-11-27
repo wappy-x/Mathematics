@@ -6,13 +6,15 @@
 
 ## General Overview
 
-A glassblower draws the inside wall of a wine glass's bowl as one curve, 10 cm deep. At 2 cm from the stem's centre line the wall stands 2 cm high; at 4 cm out, 8 cm. Height is half of distance squared, so the rim sits 4.472136 cm out. Spin the curve round the centre line and the bowl appears. How much wine does it hold?
+A glassblower draws the inside wall of a wine glass's bowl as one curve, 10 cm deep. At 2 cm from the stem's centre line the wall stands 2 cm high; at 4 cm out, 8 cm. Height is half of distance squared, so the rim sits 4.472136 cm out.
+
+Spin the curve round the centre line and the bowl appears. How much wine does it hold?
 
 No box formula fits a curved bowl, but a thin piece is nearly a known shape. Cut across, like a loaf, and each slice is almost a flat coin: a short cylinder. Cut round the centre line, like tree rings, and each piece is a tube. Add thinner and thinner pieces and an integral gives the total.
 
 Both cuts give 100 pi cubic centimetres, 314.16 ml to the brim. The skill is picking the easier cut.
 
-**Cut a solid of revolution (a solid made by spinning a flat shape round a line) into thin discs across the line or thin tubes round it; each piece's volume is a known shape's volume, and the integral adds them.**
+**Cut a solid of revolution (a solid made by spinning a flat shape round a line it does not cross) into thin discs across the line or thin tubes round it; each piece's volume is a known shape's volume, and the integral adds them.**
 
 **What kind of fact this is:** a method; that each cut gives the true volume is a theorem, proved in Why it works by a squeeze.
 
@@ -26,7 +28,7 @@ Scale 1 cm = 16 units. Dashed: the axis the wall spins round. Left: the disc fro
 
 ## The formula
 
-Notation first. The **axis** is the line the solid spins round. Height up it is $`y`$, from $`a`$ to $`b`$; the cross-section there is a circle of radius $`r(y)`$. The integral sign adds thin pieces from $`a`$ to $`b`$; the closing dy names the variable they stack along ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
+Notation first. The **axis** is the line the solid spins round. Height up it is $`y`$, from $`a`$ to $`b`$ ($`a \le b`$); the cross-section there is a circle of radius $`r(y) \ge 0`$. The integral sign adds thin pieces from $`a`$ to $`b`$; the closing dy names the variable they stack along ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
 
 **Discs**, slices across the axis:
 
@@ -36,7 +38,7 @@ V = \int_a^b \pi\, r(y)^2 \, dy
 
 **Read it aloud:** add each circular slice's area up the axis.
 
-**Washers**, discs with a hole of radius $`r(y)`$ inside an outer radius $`R(y)`$:
+**Washers**, discs with a hole of radius $`r(y)`$ inside an outer radius $`R(y)`$ ($`0 \le r(y) \le R(y)`$):
 
 ```math
 V = \int_a^b \pi\,\big(R(y)^2 - r(y)^2\big)\, dy
@@ -44,7 +46,7 @@ V = \int_a^b \pi\,\big(R(y)^2 - r(y)^2\big)\, dy
 
 **Read it aloud:** each slice is a circle's area minus the hole's.
 
-**Shells**, thin tubes round the axis. A tube's distance from the axis is $`\rho`$ (Greek rho), from 0 to $`c`$; its length along the axis is $`\ell(\rho)`$:
+**Shells**, thin tubes round the axis. A tube's distance from the axis is $`\rho`$ (Greek rho), from 0 to $`c`$ ($`c \ge 0`$); its length along the axis is $`\ell(\rho) \ge 0`$:
 
 ```math
 V = \int_0^c 2\pi\,\rho\,\ell(\rho)\, d\rho
@@ -69,8 +71,8 @@ For the bowl, the wall is $`y = r^2/2`$, so a disc at height $`y`$ has $`r(y)^2 
 
 - **A known axis.** Every radius is a distance from it. Taking the wall height as the radius spins about the other axis: 280.992589, not 314.159265.
 - **An unbroken profile.** A continuous radius or length lets the squeeze close; a profile with a few breaks is split at them.
-- **Each part counted once.** Shells run over distances from 0 up; counting both sides of the axis doubles the wine to 628.318531.
-- **Areas subtracted, not radii.** A washer is $`\pi R^2 - \pi r^2`$; squaring the gap gives the glass wall 0.905869 cm^3, not 19.132299.
+- **Region on one side of the axis, each part counted once.** Touching the axis is fine; crossing it overlaps the solid. Shells run over $`\rho \ge 0`$; counting both sides doubles the wine to 628.318531.
+- **Ordered limits, non-negative sizes, and areas subtracted.** Keep $`a \le b`$, $`0 \le r \le R`$, $`c \ge 0`$ and $`\ell \ge 0`$ (splitting if boundary curves cross). A washer is $`\pi R^2 - \pi r^2`$, not $`\pi (R - r)^2`$: squaring the gap gives the glass wall 0.905869 cm^3, not 19.132299.
 
 ---
 
@@ -88,7 +90,9 @@ Both totals are Riemann sums, the sums whose limit is the integral ([The integra
 
 ### Step 2: washers subtract a hole
 
-The glass is hollow: its outer wall is the inner one lowered 0.3 cm, so at height y the outer radius squared is 2(y + 0.3) and the hole's is 2y. Each washer's area is pi times the difference, 2 pi times 0.3: 1.884956 cm^2 at every height. Below the bowl, the outer wall's 0.3 cm deep tip is solid glass: pi times 0.3 squared. Wall plus cap: 6.09 pi = 19.132299 cm^3 of glass.
+The glass is hollow: its outer wall is the inner one lowered 0.3 cm, so at height y the outer radius squared is 2(y + 0.3) and the hole's is 2y. Each washer's area is pi times the difference, 2 pi times 0.3: 1.884956 cm^2 at every height.
+
+Below the bowl, the outer wall's 0.3 cm deep tip is solid glass: pi times 0.3 squared. Wall plus cap: 6.09 pi = 19.132299 cm^3 of glass.
 
 ### Step 3: shells, a tube unrolled
 
@@ -100,16 +104,20 @@ A tube with radii u and v and length ℓ is a cylinder minus a smaller one. Fact
 
 Middle circumference, times thickness, times length: the tube slit and laid flat, exactly.
 
-The wine's tube at distance $`\rho`$ runs from the wall, $`\rho^2/2`$, to the rim. Using the length at each edge brackets every tube; with 1000 tubes the totals are 313.740386 and 314.578144, gap 0.837758, closing tenfold as before. The limit is the shell integral. An antiderivative of 2 pi rho (10 − rho^2/2) is 2 pi (5 rho^2 − rho^4/8); at $`\rho^2 = 20`$ it gives 2 pi (100 − 50) = 314.159265 cm^3.
+The wine's tube at distance $`\rho`$ runs from the wall, $`\rho^2/2`$, to the rim. Using the length at each edge brackets every tube; with 1000 tubes the totals are 313.740386 and 314.578144, gap 0.837758, closing tenfold as before.
+
+The limit is the shell integral. An antiderivative of 2 pi rho (10 − rho^2/2) is 2 pi (5 rho^2 − rho^4/8); at $`\rho^2 = 20`$ it gives 2 pi (100 − 50) = 314.159265 cm^3.
 
 <details>
 <summary>Detailed proof: the squeeze for any widening bowl</summary>
 
-Let $`r(y)`$ grow as $`y`$ rises from $`a`$ to $`b`$; cut $`[a, b]`$ into $`n`$ slices of height $`(b-a)/n`$. A slice from $`u`$ to $`v`$ holds the cylinder of radius $`r(u)`$ and lies inside the one of radius $`r(v)`$. Summing, $`L_n \le V \le U_n`$, with $`L_n`$ on bottom radii and $`U_n`$ on top radii.
+Let $`r(y) \ge 0`$ grow as $`y`$ rises from $`a`$ to $`b`$ ($`a \le b`$); cut $`[a, b]`$ into $`n`$ slices of height $`(b-a)/n`$. A slice from $`u`$ to $`v`$ holds the cylinder of radius $`r(u)`$ and lies inside the one of radius $`r(v)`$. Summing, $`L_n \le V \le U_n`$, with $`L_n`$ on bottom radii and $`U_n`$ on top radii.
 
 Each inside cylinder but the lowest is the outside cylinder of the slice below, so $`U_n - L_n = \pi\big(r(b)^2 - r(a)^2\big)(b-a)/n`$: for the bowl, 628.318531 over n. Both totals are Riemann sums of the continuous $`\pi r(y)^2`$, so both tend to its integral, and $`V`$, trapped between them for every n, equals it.
 
-For shells, let $`\ell(\rho)`$ shrink as $`\rho`$ grows, and cut $`[0, c]`$ into $`n`$ tubes of width $`w = c/n`$. The tube from $`u`$ to $`v`$ lies between exact tubes of lengths $`\ell(v)`$ and $`\ell(u)`$, each $`2\pi\cdot\tfrac{u+v}{2}\,w`$ times its length by Step 3's identity. Since $`2\pi\rho\,\ell(\rho)`$ lies between $`2\pi\rho\,\ell(v)`$ and $`2\pi\rho\,\ell(u)`$ on the tube, its integral there lies between the same two numbers. So $`V`$ and the shell integral share the bracket.
+For shells, let $`\ell(\rho) \ge 0`$ shrink as $`\rho`$ grows on $`[0, c]`$ ($`c \ge 0`$), and cut $`[0, c]`$ into $`n`$ tubes of width $`w = c/n`$. The tube from $`u`$ to $`v`$ lies between exact tubes of lengths $`\ell(v)`$ and $`\ell(u)`$, each $`2\pi\cdot\tfrac{u+v}{2}\,w`$ times its length by Step 3's identity.
+
+Since $`2\pi\rho\,\ell(\rho)`$ lies between $`2\pi\rho\,\ell(v)`$ and $`2\pi\rho\,\ell(u)`$ on the tube, its integral there lies between the same two numbers. So $`V`$ and the shell integral share the bracket.
 
 This gap does not telescope: neighbouring tubes do not cancel. But each middle radius is at most $`c`$, so $`U_n - L_n \le 2\pi c\, w \sum (\ell(u) - \ell(v)) = 2\pi c^2 \big(\ell(0) - \ell(c)\big)/n`$: for the bowl, 1256.637061 over n. The gap tends to 0, so $`V`$ equals the shell integral. A profile that rises and falls is split where it turns.
 
@@ -366,12 +374,12 @@ ALL CHECKS PASS
 
 ### Lean
 
-Lean proves the disc, washer and shell rules for every continuous radius or length, and checks the bowl's sums.
+Lean proves the disc, washer and shell rules for continuous non-negative profiles on ordered intervals, and checks the bowl's sums.
 
-- Discs: spin the region under a radius r(y) ≥ 0, from height a to b. The solid's volume is the integral of pi r(y)^2.
-- Washers: a hole of radius r(y) sits inside an outer radius R(y), with 0 ≤ r(y) ≤ R(y). The volume is the integral of pi (R(y)^2 − r(y)^2).
-- Shells: the tube at distance ρ from the axis, for ρ from 0 to c, has length ℓ(ρ) ≥ 0. The volume is the integral of 2 pi ρ ℓ(ρ).
-- Each tube may start at any height. Lean also does not need the radius to grow, as the squeeze above did.
+- Discs: for $`a \le b`$ and a continuous radius $`r(y) \ge 0`$ on $`[a, b]`$, the spun solid's volume is the integral of $`\pi r(y)^2`$.
+- Washers: for $`a \le b`$ and continuous radii with $`0 \le r(y) \le R(y)`$ on $`[a, b]`$, the volume is the integral of $`\pi (R(y)^2 - r(y)^2)`$.
+- Shells: for $`c \ge 0`$, a continuous starting height $`g(\rho)`$ and continuous length $`\ell(\rho) \ge 0`$ on $`[0, c]`$, the volume is the integral of $`2\pi \rho\,\ell(\rho)`$.
+- Lean needs only continuity of the profile (and of the tubes' starting height), not that the radius grows as the squeeze above did.
 - The bowl's wall: 2 cm out it stands 2 cm high, 4 cm out 8 cm, and the rim sits where r^2 = 20.
 - The slice area 2 pi y adds to 100 pi from 0 to 10 cm. The tubes 2 pi ρ (10 − ρ^2/2) add to 100 pi from 0 to √20.
 - The can holds pi × 20 × 10 = 200 pi, twice the bowl. The glass is 2 pi × 0.3 × 10 + pi × 0.3^2 = 6.09 pi.
@@ -664,7 +672,7 @@ example : π * 5 ^ 2 * 4 = π * 10 ^ 2 := by ring
 > **Try changing**
 > - **Set H to 5.** Guess first: what fraction of the wine? A quarter, 78.539816; the last assert fails, since 150 ml no longer fits.
 > - **Set T to 0.** Guess first: no glass, and all three wall sums print 0.000000.
-> - **Replace `max(y, 0)` by `y` in the washer sum.** Guess first: below the bowl the hole's radius squared turns negative, the tip counts as a full washer, the sum reads 19.415043 and the third assert fails.
+> - **Replace `max(y, 0)` by `y` in the washer sum.** Guess first: below the bowl the hole's radius squared turns negative and the tip counts as a full washer. The sum reads 19.415043 and the third assert fails.
 > - **Add 10000 to the list (10, 100, 1000).** Guess first: both gaps shrink tenfold again.
 
 ---
@@ -687,7 +695,7 @@ example : π * 5 ^ 2 * 4 = π * 10 ^ 2 := by ring
 - **The same glass's skin and wall.** Its surface is [Surface area](04-surface-area-of-revolution.md); the wall curve's length is [Arc length](02-arc-length.md).
 
 > **Say it back**
-> A spun solid can be cut into thin discs across its axis or thin tubes round it. A disc is pi r^2 times its thickness; a tube is circumference times length times thickness. Squeezing each sum between pieces inside and outside the solid proves the integral is the volume. Both cuts give the wine glass 100 pi, 314.16 ml. Choose the cut whose piece has one formula across the range.
+> A solid spun from a flat shape on one side of its axis can be cut into thin discs across the axis or thin tubes round it. A disc is pi r^2 times its thickness; a tube is circumference times length times thickness. Squeezing each sum between pieces inside and outside the solid proves the integral is the volume. Both cuts give the wine glass 100 pi, 314.16 ml. Choose the cut whose piece has one formula across the range.
 
 ---
 
@@ -698,9 +706,10 @@ example : π * 5 ^ 2 * 4 = π * 10 ^ 2 := by ring
 
 ## Where this goes next
 
-- [Centre of mass](05-centre-of-mass-and-pappus.md): the same volumes from one area and the path of its balance point.
+- [Surface area](04-surface-area-of-revolution.md): spins the same profile round the axis to measure the area of its outer wall instead of the volume inside.
+- [Centre of mass](05-centre-of-mass-and-pappus.md): recovers the same volumes from one flat area and the path its balance point travels.
 
-These slices work because each is a circle. A solid whose slices are any shape at all is added one small box at a time, by [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md) and [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md).
+Discs and shells measure how much a spun solid holds; how much skin covers its slanted wall is the question [Surface area](04-surface-area-of-revolution.md) answers, while solids with non-circular slices are added box by box using [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md) and [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md).
 
 ---
 

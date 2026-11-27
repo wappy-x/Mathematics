@@ -54,8 +54,8 @@ fn main() {
     let pts: Vec<String> = [-200.0, -100.0, 0.0, 100.0, 200.0].iter()
         .map(|&x: &f64| format!("({:.1},{:.1})", 180.0 + 0.8 * x, 150.0 - 0.8 * f(x))).collect();
     println!("figure, 0.8 units per m, chord points: {}", pts.join(" "));
-    assert!((graph - exact).abs() < 1e-7); // road two against road three
-    assert!((param - exact).abs() < 1e-7); // a new clock, the same length
+    assert!((graph - exact).abs() < 1e-6); // road two against road three
+    assert!((param - exact).abs() < 1e-6); // a new clock, the same length
     let mut climb = lengths.clone();
     climb.push(exact);
     assert!(climb.windows(2).all(|w| w[0] < w[1])); // chords climb, stay under

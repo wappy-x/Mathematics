@@ -40,7 +40,7 @@ Straight bars around a vector mean its length, by Pythagoras:
 \text{speed} = \lvert \mathbf v(t) \rvert = \sqrt{x'(t)^2 + y'(t)^2}, \qquad \frac{dy}{dx} = \frac{dy/dt}{dx/dt} \quad \text{when } dx/dt \neq 0
 ```
 
-**Read it aloud:** speed is the length of the velocity arrow; the steepness of the path is the up-rate over the across-rate.
+**Read it aloud:** speed is the length of the velocity arrow; where the across-rate is not zero, the steepness of the path is the up-rate over the across-rate.
 
 For the ball, with $`u`$ = 12 m/s across, $`w`$ = 16 m/s up and $`g`$ = 9.8 m/s^2:
 
@@ -65,10 +65,10 @@ Acceleration is m/s per second, m/s^2. The slope dy/dx is metres up per metre ac
 
 ### When it holds
 
-- **Both coordinates have rates.** A ball that bounces has a corner in y(t), and no velocity at the instant of the bounce.
-- **dx/dt is not zero.** The rule divides by it. Thrown straight up at 16 m/s, a ball has dx/dt = 0; at t = 1 s the ratio is 6.2 ÷ 0, no value. The path is vertical: a tangent, but no slope.
+- **Both coordinates have rates.** A ball that bounces has a corner in y(t), and no velocity at the bounce; acceleration also needs both velocity rates to exist.
+- **dx/dt is not zero.** The rule divides by it. Thrown straight up at 16 m/s, a ball has dx/dt = 0; at t = 1 s the ratio is 6.2 ÷ 0, no value. The path is vertical: a tangent, but no slope. If a curve crosses itself, the rule gives each pass its own slope.
 - **No air.** The arch is a model that ignores drag; a real ball lands short of 39.1837 m. The calculus applies to any smooth path.
-- **One clock.** Replay the throw in slow motion and the same arch is traced more slowly: speed depends on the clock, the slope dy/dx does not.
+- **One clock.** Replay the throw in slow motion and the same arch is traced more slowly: speed depends on the clock, while the slope dy/dx does not (provided the clock keeps moving).
 
 ---
 
@@ -99,13 +99,13 @@ Conversely |e| < ε forces each |ei| < ε. So the vector quotient has a limit ex
 
 ### Step 2: speed is the velocity's length
 
-In a short time h the ball's move is h times the velocity plus an error that is small next to h, so the distance covered, divided by h, heads for the velocity's length. Hence speed = |v|.
+Over a short time step h, the ball's move is h times the velocity plus an error small next to h, so the distance covered divided by |h| heads for the velocity's length. Hence speed = |v|.
 
 At the top the velocity is (12, 0), length 12 m/s. The code measures the distance covered just after the top, divided by the time: 12.0100, 12.0001, 12.000001 m/s for h = 0.1, 0.01, 0.001 s. It closes on 12, not 0.
 
 ### Step 3: the slope rule, from the chain rule
 
-Where dx/dt is never zero, x keeps moving one way, so each x belongs to one time and the height is a function of x alone: call it Y, so y(t) = Y(x(t)). The chain rule ([Chain rule](../02-Derivatives/03-chain-rule.md)) says
+On an open stretch of time where both rates exist and dx/dt is never zero, x keeps moving one way, so each x on that stretch belongs to one time and the height is a function of x alone: call it Y, so y(t) = Y(x(t)). The chain rule ([Chain rule](../02-Derivatives/03-chain-rule.md)) says
 
 ```math
 y'(t) = Y'\big(x(t)\big)\, x'(t).
@@ -359,8 +359,8 @@ The two outputs match line for line.
 Lean proves the three rules for any two coordinate functions that meet their conditions, and checks the card's speed sums.
 
 - The pair (x(t), y(t)) has a velocity at time t exactly when x and y both have rates there. The velocity is the pair of rates.
-- Speed is the velocity's length. The distance covered in a short time h, divided by the time, heads for √(x'(t)^2 + y'(t)^2) as h shrinks, forward or backward.
-- Let both coordinates have rates, and dx/dt never be zero, over a stretch of time. Then the height is a function Y of x alone: y(t) = Y(x(t)).
+- Speed is the velocity's length. When x and y both have rates at time t, the distance covered over a short step h, divided by |h|, heads for √(x'(t)^2 + y'(t)^2) as h shrinks, forward or backward.
+- Let both coordinates have rates, and dx/dt never be zero, over an open stretch of time. Then the height is a function Y of x alone on that stretch: y(t) = Y(x(t)).
 - There the path's slope dY/dx at x(t) is y'(t) ÷ x'(t). Lean does not need x' to be continuous.
 - At release 12^2 + 16^2 = 20^2, so the speed is 20 m/s. At the top 12^2 + 0^2 = 12^2, so the speed is 12 m/s.
 - Adding the parts gives 12 + 16 = 28, not 20.
@@ -526,7 +526,7 @@ example : (16 : ℕ) ^ 2 = 256 := by norm_num
 - **Curves into solids.** The shelf's other cards spin curves into solids: [Volumes](03-volumes-by-slices-and-shells.md), [Surface area](04-surface-area-of-revolution.md) and [Centre of mass](05-centre-of-mass-and-pappus.md).
 
 > **Say it back**
-> A moving point has two coordinates, each a function of time. Differentiating each gives the velocity; differentiating again gives the acceleration. The speed is the velocity's length, by Pythagoras, so the ball at the top still moves at 12 m/s. The path's slope is the up-rate over the across-rate, by the chain rule, while the across-rate is not zero.
+> A moving point has two coordinates, each a function of time. Where their rates exist, differentiating each gives velocity, and differentiating again gives acceleration. Speed is the velocity's length, by Pythagoras, so the ball at the top still moves at 12 m/s. On any open stretch where the across-rate stays nonzero, the path's slope is the up-rate over the across-rate, by the chain rule.
 
 ---
 

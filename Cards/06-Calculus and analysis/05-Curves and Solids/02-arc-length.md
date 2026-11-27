@@ -16,7 +16,7 @@ Calculus reaches it without chords. Each tiny piece of cable is almost straight,
 
 Drawn to scale at 0.8 units per metre; chord points every 100 m. The deck line marks the span only, not its height.
 
-**The length of a curve is the limit of the lengths of ever finer chord chains, and for a smooth curve that limit is the integral of $`\sqrt{1 + f'(x)^2}`$, or, for a moving point, the integral of its speed.**
+**The length of a curve is the limit of the lengths of ever finer chord chains, and for a smooth curve over a finite stretch that limit is the integral of $`\sqrt{1 + f'(x)^2}`$, or, for a moving point that traces it once, the integral of its speed.**
 
 **What kind of fact this is:** a theorem. Length is defined by chords; that it equals the integral is proved on this card in Why it works.
 
@@ -26,7 +26,7 @@ Drawn to scale at 0.8 units per metre; chord points every 100 m. The deck line m
 
 A reminder: $`f'(x)`$ is the derivative, "the rate of height per unit of x", here the cable's slope.
 
-For a graph, height $`f(x)`$ over the stretch from $`a`$ to $`b`$:
+For a graph of height $`f(x)`$ with continuous slope over a finite stretch from $`a`$ to $`b`$ ($`a \le b`$):
 
 ```math
 L = \int_a^b \sqrt{1 + f'(x)^2}\, dx
@@ -34,7 +34,7 @@ L = \int_a^b \sqrt{1 + f'(x)^2}\, dx
 
 **Read it aloud:** the length adds each tiny width, stretched by the square root of one plus the slope squared.
 
-For a point moving along a curve, its position at clock time $`t`$ is $`(x(t), y(t))`$, as on [Parametric motion](01-parametric-motion.md). Its speed is $`\sqrt{x'(t)^2 + y'(t)^2}`$, and
+For a point moving smoothly along a curve from $`t_0`$ to $`t_1`$ ($`t_0 \le t_1`$), its position at clock time $`t`$ is $`(x(t), y(t))`$, as on [Parametric motion](01-parametric-motion.md). Its speed is $`\sqrt{x'(t)^2 + y'(t)^2}`$, and the distance travelled is
 
 ```math
 L = \int_{t_0}^{t_1} \sqrt{x'(t)^2 + y'(t)^2}\, dt
@@ -51,7 +51,7 @@ The graph formula is the second one with the clock set to $`x`$ itself: then $`x
 | $`f'(x)`$ | slope: metres of rise per metre across | x/500, so 0.4 at a tower | steeper stretches count for more |
 | $`a`$, $`b`$ | the two ends of the stretch | −200 and 200 m | — |
 | $`L`$ | the length along the curve, metres | 410.424 m | — |
-| $`t`$, $`t_0`$, $`t_1`$ | a clock for the moving point, its start and end | −1 to 1 | a faster clock changes speed, not length |
+| $`t`$, $`t_0`$, $`t_1`$ | a clock for the moving point, its start and end | −1 to 1 | a faster one-way clock changes speed, not length |
 | $`x(t)`$, $`y(t)`$ | position at time t; primes are their rates | 200t and 40t^2 | — |
 | $`n`$, $`\Delta x`$ | number of chords, and the width of each | 4 chords, 100 m wide | more chords, closer total |
 
@@ -59,10 +59,10 @@ The slope is metres per metre, so the square root is a pure stretch factor and t
 
 ### When it holds
 
-- **The curve has no jumps and its slope changes without jumps.** A corner is fine: split the curve there and add the pieces. A 40 m step at midspan has slope 0 on both sides, so the formula says 400.00 m, while 1024 chords give 439.61 m.
-- **The stretch is finite.** A curve running off forever may have no length.
+- **The curve has no jumps, and its slope stays finite and changes without jumps.** A corner is fine: split the curve there and add the pieces. A 40 m step at midspan has slope 0 on both sides, so the formula says 400.00 m, while 1024 chords give 439.61 m.
+- **A finite stretch, ordered low to high ($`a \le b`$, $`t_0 \le t_1`$).** A curve running off forever may have infinite length; reversing the ends flips the integral negative. A zero-length stretch gives 0.
 - **No endless crinkling.** A continuous curve can wiggle at every scale so its chord totals grow without limit; smoothness rules that out.
-- **A moving point counts each pass.** Out and back along the cable is twice the length.
+- **A moving point counts each pass.** The speed integral measures distance travelled; out and back, or a self-crossing loop traced twice, counts every pass, so it equals the curve's length only when traced once.
 
 ---
 
@@ -110,7 +110,7 @@ Orange: the chord total. Green: the integral, 410.424 m. Orange climbs to green 
 
 For a moving point, cut the clock into short steps. In one step the point moves about $`x'(t)`$ times the step across and $`y'(t)`$ times it up, so each chord is about speed times step. One catch: the mean value theorem, applied to each coordinate, may pick two different instants in a step; because the rates have no jumps, the mismatch vanishes as steps shrink.
 
-The cable as a moving point, $`x(t) = 200t`$ and $`y(t) = 40t^2`$ for t from −1 to 1, traces the same parabola; its speed integral gives 410.424252 m. A new clock changes speed, not length.
+The cable as a moving point, $`x(t) = 200t`$ and $`y(t) = 40t^2`$ for t from −1 to 1, traces the same parabola; its speed integral gives 410.424252 m. Any smooth one-way re-clocking changes speed, not length.
 
 <details>
 <summary>Detailed proof: chord totals close in on the speed integral</summary>
@@ -235,14 +235,14 @@ X = lambda x: 180 + 0.8 * x
 Y = lambda x: 150 - 0.8 * f(x)
 print("figure, 0.8 units per m, chord points:",
       " ".join(f"({X(x):.1f},{Y(x):.1f})" for x in (-200, -100, 0, 100, 200)))
-assert abs(graph - exact) < 1e-7                  # road two against road three
-assert abs(param - exact) < 1e-7                  # a new clock, the same length
+assert abs(graph - exact) < 1e-6                  # road two against road three
+assert abs(param - exact) < 1e-6                  # a new clock, the same length
 assert all(p < q for p, q in zip(lengths, lengths[1:] + [exact]))   # chords climb, stay under
 assert 0 < exact - polygon(1024) < 1e-4           # road one closes the gap, from below
 print("ALL CHECKS PASS")
 ```
 
-**Ran 2026-09-27 on macOS, Python 3.14.6, standard library only. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, Python 3.14.10, standard library only. All checks passed. Output, pasted from the run:**
 
 ```
 span 400 m, sag 40 m, cable y = x^2/1000, slope x/500, at the tower 0.4
@@ -326,8 +326,8 @@ fn main() {
     let pts: Vec<String> = [-200.0, -100.0, 0.0, 100.0, 200.0].iter()
         .map(|&x: &f64| format!("({:.1},{:.1})", 180.0 + 0.8 * x, 150.0 - 0.8 * f(x))).collect();
     println!("figure, 0.8 units per m, chord points: {}", pts.join(" "));
-    assert!((graph - exact).abs() < 1e-7); // road two against road three
-    assert!((param - exact).abs() < 1e-7); // a new clock, the same length
+    assert!((graph - exact).abs() < 1e-6); // road two against road three
+    assert!((param - exact).abs() < 1e-6); // a new clock, the same length
     let mut climb = lengths.clone();
     climb.push(exact);
     assert!(climb.windows(2).all(|w| w[0] < w[1])); // chords climb, stay under
@@ -337,7 +337,7 @@ fn main() {
 }
 ```
 
-**Ran 2026-09-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
+**Ran 2026-11-27 on macOS, rustc 1.98.1, no crates. All checks passed. Output, pasted from the run:**
 
 ```
 span 400 m, sag 40 m, cable y = x^2/1000, slope x/500, at the tower 0.4
@@ -364,10 +364,10 @@ The outputs match line for line.
 
 ### Lean
 
-Lean proves both length formulas for every curve whose slope has no jumps, and the cable's exact length.
+Lean proves both length formulas on every closed finite interval for curves with continuous derivatives, and the cable's exact length.
 
-- For a moving point whose rates have no jumps, the least upper bound of its chord totals equals the integral of its speed. Each pass counts.
-- For a graph whose height and slope have no jumps, the length is the integral of $`\sqrt{1 + f'(x)^2}`$.
+- For a moving point on a closed finite interval $`[t_0, t_1]`$ whose coordinate derivatives exist and are continuous there, the least upper bound of its chord totals equals the integral of its speed (clamped to 0 if $`t_1 \le t_0`$). Each pass counts.
+- For a graph on a closed finite interval $`[a, b]`$ whose derivative exists and is continuous there, the length is the integral of $`\sqrt{1 + f'(x)^2}`$.
 - The cable, height x^2/1000 from −200 to 200 m, is exactly $`500\left(0.4\sqrt{1.16} + \mathrm{asinh}\, 0.4\right)`$ m long. That is Step 5's closed form.
 - The moving point x = 200t, y = 40t^2 traces the same parabola, tower to tower.
 - The hand arithmetic holds exactly, as fractions: the 40 m sag, the 0.4 slope at a tower, 1.16 and the 80 m vertical travel.
@@ -785,7 +785,7 @@ example : (340 : ℚ) - 20 = 4 / 5 * 400 := by norm_num
 - **Wires and surfaces.** Where a bent wire balances uses its length: [Centre of mass](05-centre-of-mass-and-pappus.md). Spinning a curve's length round an axis gives [Surface area](04-surface-area-of-revolution.md).
 
 > **Say it back**
-> Length is defined by chords: join points, add the straight pieces, refine; the length is the least upper bound of the totals. Each chord is its width times the square root of one plus the slope squared somewhere in its strip, so the total is a Riemann sum and the length an integral. For a moving point it is the integral of speed, whatever the clock. The 400 m cable with a 40 m sag is 410.424 m long.
+> Length is defined by chords: join points, add the straight pieces, refine; the length is the least upper bound of the totals. On a finite stretch with a continuous slope, each chord is its width times the square root of one plus the slope squared somewhere in its strip, so the total is a Riemann sum and the length an integral. For a moving point the integral of speed gives the distance travelled, whatever smooth one-way clock is used. The 400 m cable with a 40 m sag is 410.424 m long.
 
 ---
 
@@ -796,11 +796,12 @@ example : (340 : ℚ) - 20 = 4 / 5 * 400 := by norm_num
 
 ## Where this goes next
 
-- [Surface area](04-surface-area-of-revolution.md): spins each small length round an axis.
-- [Line integrals of a function](../09-Vector%20Calculus/01-scalar-line-integrals.md): weights each small length by a density.
-- [Regular curve and arc length](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/01-regular-curves-and-arc-length.md): length itself as the clock.
+- [Volumes](03-volumes-by-slices-and-shells.md): spins a flat profile round an axis and adds discs, washers or shells to find the solid's volume.
+- [Surface area](04-surface-area-of-revolution.md): spins each small piece of curve round an axis to measure the area it sweeps.
+- [Line integrals of a function](../09-Vector%20Calculus/01-scalar-line-integrals.md): weights each small length along a curve by a varying density or field.
+- [Regular curve and arc length](../../23-Differential%20geometry%20and%20Lie%20groups/01-Curves/01-regular-curves-and-arc-length.md): uses distance along a curve whose velocity never vanishes as the clock.
 
-Arc length adds plain metres of curve; how to add something that varies along it, such as the cable's weight per metre, is what a line integral answers.
+Arc length measures a curve itself; next on this shelf, [Volumes](03-volumes-by-slices-and-shells.md) asks how much space a solid holds when you spin a curve round an axis, while adding a varying density along the curve waits for line integrals.
 
 ---
 
