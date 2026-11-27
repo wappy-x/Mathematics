@@ -14,7 +14,7 @@ Each year's 8% lands on a bigger balance than the last — compounding, from [Co
 
 The log used here is the **natural log**, written **ln**: the log whose base is e, from [Compounding more often, and the number e](04-compounding-frequency-and-e.md). Any base would do; ln is the one finance uses. The count runs in fractions: 0.693 of a multiply by e takes 1 to 2, and 0.077 of one takes 1 to 1.08.
 
-**Doubling time is ln 2 divided by the log of the growth factor, and 72 divided by the rate is close enough to say out loud.**
+**For any positive rate, doubling time is ln 2 over ln of the growth factor; for modest positive rates, 72 divided by the percent rate is close.**
 
 **What kind of fact this is:** a theorem, proved in Why it works; the rule of 72 is an approximation.
 
@@ -57,7 +57,7 @@ The shortcut, in your head:
 
 ### When it holds
 
-- **A steady rate.** If it moves, there is no single factor to log.
+- **A steady positive rate and starting amount.** At 0% or below, money never doubles (ln 1 = 0); a moving rate has no single factor.
 - **Interest left in.** Taken out each year, doubling takes 12.5 years.
 - **Interest once a year.** Paid continuously, doubling takes 8.664 years.
 - **A modest rate, for 72.** At 5% it runs long: 14.400, not 14.207.
@@ -235,7 +235,7 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the doubling facts for every positive rate and every starting amount.
+Lean proves the doubling facts for every positive rate and every positive starting amount.
 
 - Interest left in and paid once a year: the money doubles at ln 2 ÷ ln (the growth factor) years, and at no other time.
 - That time always sits above ln 2 ÷ the rate, because ln of the growth factor is a shade under the rate.
@@ -357,7 +357,7 @@ example : (41577 / 200 : ℚ) ≤ 100 * (21 / 20) ^ 15 ∧ (100 : ℚ) * (21 / 2
 ## The usual mistake
 
 > [!warning]
-> **Dividing 100 by the rate.** 100 ÷ 8 gives 12.5 years. It charges every year's 8% on the starting amount, so it is wrong every time. The real answer, 9.006, is shorter, and the gap is widest at low rates.
+> **Dividing 100 by the rate.** 100 ÷ 8 gives 12.5 years. It charges every year's 8% on the starting amount, so it overshoots for every positive rate below 100%. The real answer, 9.006, is shorter, and the gap is widest at low rates.
 >
 > - Dividing ln 2 by the rate when the interest lands once a year: 8.664 years, close enough to look right. It is honest only for continuous compounding.
 > - Trusting 72 far from the middle of the range. Nearly exact at 8%, 9.000 against 9.006; already long at 5%, 14.400 against 14.207.
@@ -373,7 +373,7 @@ example : (41577 / 200 : ℚ) ≤ 100 * (21 / 20) ^ 15 ∧ (100 : ℚ) * (21 / 2
 - **Half-life, turned around.** A thing losing 10% a year halves in ln 0.5 ÷ ln 0.9 = 6.58 years: ln of a half over ln of the shrink factor.
 
 > **Say it back**
-> Doubling is about the multiplier, not the money. At 8% the multiplier is 1.08, and doubling asks how many multiplies reach 2. A log answers: ln 2 ÷ ln 1.08 = 9.006 years. Without logs: 1.08 nine times over is 1.999005, ten times 2.158925 — the double sits between. The rule of 72 does that sum in your head: 72 ÷ 8 = 9.000, long at the bottom — 14.400 at 5%, where the truth is 14.207.
+> Doubling depends on the multiplier, not the positive starting sum. At 8% (factor 1.08), doubling takes ln 2 ÷ ln 1.08 = 9.006 years; 1.08 nine times is 1.999005 and ten times is 2.158925. In your head, 72 ÷ 8 = 9.000, and 72 ÷ 5 = 14.400 against 14.207.
 
 ---
 

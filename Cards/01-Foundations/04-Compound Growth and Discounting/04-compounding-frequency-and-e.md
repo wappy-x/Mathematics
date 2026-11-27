@@ -12,9 +12,9 @@ Ask for it monthly. The bank cuts the 5% into twelve slices and pays one a month
 
 The stop is the interesting part. Paying more often is free money, and the free money runs out. Turn the dial up: one dollar at 100% for a year. Paid once, $2.000000. Twice, $2.250000. Monthly, $2.613035. Daily, $2.714567. A million times, $2.718280.
 
-**Cutting a year's interest into more and finer payments always earns more, but the total hits a ceiling. For $1 at 100% over one year, that ceiling is about 2.718281828, called e.**
+**At a positive rate on a positive balance, cutting a year's interest into more and finer payments always earns more, but the total hits a ceiling. For $1 at 100% over one year, that ceiling is about 2.718281828, called e.**
 
-**What kind of fact this is:** e is a definition, the name of the ceiling. That more payments always earn more but never pass it is a theorem, shown in words in Why it works.
+**What kind of fact this is:** e is a definition, the ceiling's name. That more payments always earn more at a positive rate and balance, yet never pass it, is a theorem, shown in Why it works.
 
 ### The picture: the ladder running out of room
 
@@ -66,7 +66,7 @@ The same list with 0.05 in it, on $100:
 
 - **The interest stays in the account.** Take each payment out instead and $1.00 at 100% ends at 2.000000, however often it is paid.
 - **The yearly rate is cut into equal slices.** Charge the full 100% every month instead of 100% ÷ 12 and the balance does not stop at 2.718282.
-- **One fixed rate, for one year.** e is the ceiling for 100% over one year. At 5% the ceiling on $100 is 105.127110, and a rate that changes partway has its own ceiling.
+- **One fixed positive rate and balance, for one year, with at least one payment.** At 0% or $0, frequency changes nothing; e is the 100% one-year ceiling, and 5% on $100 caps at 105.127110.
 
 ---
 
@@ -131,7 +131,7 @@ Just under thirteen cents, for compounding continuously instead of yearly.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, so nothing arrives knowing e. One road walks the ladder, one-plus-a-slice per payment, a million times if asked. The other never mentions payments: it adds up the shrinking list.
+Nothing is imported. One road walks the ladder up to a million payments; the other adds the shrinking list.
 
 ### Python
 
@@ -246,8 +246,8 @@ The two outputs match line for line.
 
 Lean proves the card's claims for one dollar at 100%, and again at any fixed yearly rate above zero.
 
-- At 100%, one more payment always ends the year higher, with the interest left in the account.
-- However many payments, the total stays below e.
+- At 100%, from one payment up, one more payment always ends the year higher, with the interest left in the account.
+- For any count of 1 or more payments, the total stays below e.
 - With enough payments, it gets as close to e as you like.
 - The same three facts hold at any fixed yearly rate above zero, with that rate's own ceiling in place of e.
 - That ceiling is the shrinking list, added up: 1 + rate + rate × rate ÷ 2 + …, for any rate.
@@ -410,7 +410,7 @@ example : (1 : ℚ) / 2 / 3 = 1 / 6 ∧ (1 : ℚ) / 6 / 4 = 1 / 24 := by norm_nu
 - **Moving money between dates.** Option and rate models compound continuously: one convention instead of many schedules. [Discounting](06-discounting-and-present-value.md).
 
 > **Say it back**
-> Interest paid more often earns a little more, because the early payments earn too. One dollar at 100% goes 2.000000 paid once, 2.250000 twice, 2.613035 monthly, 2.714567 daily. The gains shrink and stop at a ceiling: about 2.718281828, called e. Reaching it is what "compounded continuously" means. On $100 at 5% that is $105.13 against $105.00.
+> At a positive rate, more frequent payments earn more because early interest earns too. $1 at 100% reaches 2.000000 once, 2.250000 twice, 2.613035 monthly, 2.714567 daily, closing in on the ceiling e ≈ 2.718281828 ("compounded continuously"). Continuous compounding takes $100 at 5% to $105.13, against $105.00 paid once.
 
 ---
 

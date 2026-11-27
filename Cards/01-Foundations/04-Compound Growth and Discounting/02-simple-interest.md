@@ -12,7 +12,7 @@ Your cousin asks to borrow $500. You say yes, at 4% a year, on **simple interest
 
 The $500 has a name: the **principal**, the money actually handed over, as opposed to the interest stacked on top of it. Simple interest is the deal where the percent is only ever taken of the principal.
 
-**The same amount is added every year, so the balance climbs in equal steps — a straight line.**
+**The same amount is added every year, so the balance moves in equal steps — a straight line.**
 
 **What kind of fact this is:** a definition: a deal two people agree on, not a law of nature. The straight line follows from it, shown in Why it works.
 
@@ -227,10 +227,10 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the simple-interest rules for every principal, every rate and every number of years, not just the cousin's loan.
+Lean proves the simple-interest rules for every principal, every rate and every whole number of years, not just the cousin's loan.
 
-- After any number of years, the balance is the principal plus principal × rate × years.
-- Between any two years, the balance changes by principal × rate × the years between them: equal steps, a straight line.
+- After any whole number of years, the balance is the principal plus principal × rate × years.
+- Between any two whole years, the balance changes by principal × rate × the years between them: equal steps, a straight line.
 - If the interest earned interest, the bill would be higher from the second year on, for any principal and rate above zero.
 - The cousin's numbers: $20.00 a year, $600.00 to repay, $10500.00 if 4% were read as 4, and $608.33 if interest earned interest.
 

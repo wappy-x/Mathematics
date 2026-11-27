@@ -60,7 +60,7 @@ Above 1 is a rise, below 1 a cut, exactly 1 no change.
 
 - **Each change is taken of the price it meets.** Take the sale of the March tag instead and the jacket ends at $80.00.
 - **The factor is 1 plus or minus the change.** Multiply by 0.25 alone and the jacket comes out at $20.00.
-- **To undo a factor, divide by it.** A matching 25% cut takes $100.00 to $75.00.
+- **To undo a nonzero factor, divide by it.** A 100% cut gives factor 0 and cannot be undone; after a 25% rise, a matching 25% cut takes $100.00 to $75.00.
 
 ---
 
@@ -78,7 +78,7 @@ The long way up: 25% of $80.00 is $20.00, add it on, $100.00. The factor way: 80
 
 The sale multiplies the raised price, not the March tag: 100.00 × 0.75 = $75.00. That is 80.00 × 1.25 × 0.75. Multiplying can be grouped any way, so gather the factors first: 1.25 × 0.75 = 0.9375, and 80.00 × 0.9375 = $75.00.
 
-To read a factor back as a percent, take it from 1: 1 − 0.9375 = 0.0625, so 6.25% down.
+To read a factor below 1 back as a percent cut, take it from 1: 1 − 0.9375 = 0.0625, so 6.25% down.
 
 Run the sale first — 80.00 × 0.75 = $60.00, then × 1.25 — and it is $75.00 again. The order is not what costs the money. It is that 0.9375 is not 1.
 
@@ -245,7 +245,7 @@ Lean proves the card's three rules for every price and every change, not just th
 
 - Two changes, each taken of the price it meets, come to the start times the two growth factors multiplied. Adding the percents gives the same answer only when the price or one change is zero.
 - A rise and a cut of the same percent, not zero, leave any positive price lower than it began.
-- Any rise is undone exactly by dividing by its factor, and the cut that does it is always smaller than the rise.
+- Any positive rise is undone exactly by dividing by its factor, and the cut that does it is always smaller than the rise.
 - Every price in the worked numbers, the three mistakes and the Try changing box comes out exactly as the card says.
 
 Rounding each price to the nearest cent is left to the Python and Rust checks.
@@ -366,7 +366,7 @@ example : (1 : ℚ) + 5 / 100 = 105 / 100 := by norm_num
 - **A fund that drops and recovers.** Down 50% needs a 100% rise to get level, which is why a bad year hurts longer than it looks.
 
 > **Say it back**
-> A percent change is one number to multiply by: 1 plus the change for a rise, 1 minus it for a cut. So 25% up is 1.25, 25% down is 0.75. Changes chain by multiplying: 1.25 × 0.75 = 0.9375, a 6.25% cut, so the $80.00 jacket ends at $75.00, not $80.00. To undo a factor, divide by it: 1 ÷ 1.25 = 0.80.
+> A percent change is one number to multiply by: 1 plus the change for a rise, 1 minus it for a cut. So 25% up is 1.25, 25% down is 0.75. Changes chain by multiplying: 1.25 × 0.75 = 0.9375, a 6.25% cut, so the $80.00 jacket ends at $75.00, not $80.00. To undo a nonzero factor, divide by it: 1 ÷ 1.25 = 0.80.
 
 ---
 

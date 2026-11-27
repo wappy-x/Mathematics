@@ -79,11 +79,11 @@ Click a shelf to jump to its cards, then click a card's title to read it.
 *Percent changes as multipliers, simple and compound interest, compounding frequency and e, natural log and doubling time, present value.*
 
 1. [Growth factors: a 25% rise is a multiply by 1.25, and percent changes do not add](04-Compound%20Growth%20and%20Discounting/01-growth-factors.md)
-2. [Simple interest: the same <span>$</span>20 every year, a straight line](04-Compound%20Growth%20and%20Discounting/02-simple-interest.md)
+2. [Simple interest: the same $20 every year, a straight line](04-Compound%20Growth%20and%20Discounting/02-simple-interest.md)
 3. [Compound interest: interest that earns interest](04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)
 4. [Compounding more often, and the number e: the ceiling on how fast 5% can grow](04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)
 5. [Natural log and doubling time: how long until the money doubles, and the rule of 72](04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)
-6. [Discounting: why <span>$</span>100 next year is worth about <span>$</span>95.24 today](04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)
+6. [Discounting: why $100 next year is worth about $95.24 today](04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)
 
 [↑ Back to the shelves](#top)
 

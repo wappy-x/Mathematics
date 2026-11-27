@@ -63,6 +63,7 @@ Put letters where the numbers are and you have the compound interest formula, th
 - **The interest stays in.** Take it out and the account ends at $150.00, not $162.89.
 - **One rate every year.** If the rate moves, multiply by each year's own factor instead.
 - **Interest paid once a year.** Paid monthly, the balance ends a little higher ([Compounding more often, and the number e](04-compounding-frequency-and-e.md)).
+- **A whole number of years, and a rate above −100%.** At −100% the growth factor is 0, and fractional years need fractional exponents.
 
 ---
 
@@ -242,9 +243,9 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves the formula and both comparisons for any starting amount and yearly rate, not just $100 at 5%.
+Lean proves the formula for any starting amount, rate and whole number of years, and both comparisons when deposit and rate are above zero.
 
-- Interest left in, at one rate, paid once a year: after n years the balance is P × (1 + r)^n.
+- Interest left in, at one rate, paid once a year: after any whole number n of years, the balance is P × (1 + r)^n.
 - With a deposit and a rate above zero, interest left in ends higher than interest taken out from the second year on.
 - Under the same conditions, the gap between the two accounts is bigger each year than the year before, from year one on.
 - The card's sums come out exact: years 1 to 3, year 10 to the cent by both roads, the $12.89 gap and the three mistakes.

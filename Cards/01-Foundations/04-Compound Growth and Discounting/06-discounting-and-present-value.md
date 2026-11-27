@@ -14,7 +14,7 @@ The same $100 due in ten years is worth $61.39. The payment never changed; the w
 
 This is compounding run backwards: forward you multiply, back you divide. What it lands on is the **present value** — a future payment in today's money.
 
-**To move money back in time, divide it by the growth factor once for every year you have to wait.**
+**To move money back in time, divide it by the positive growth factor once for every year you have to wait.**
 
 **What kind of fact this is:** a definition. Why it works shows the bank sets this price.
 
@@ -70,6 +70,7 @@ Finance writes that factor as e^(−rT), said aloud as "e to the minus r T": r t
 - **The payment is certain.** The divide prices the wait, not the risk. A promise that might not be paid is worth less than $95.24.
 - **One rate holds for the whole wait.** If the rate changes, divide each year by that year's own factor. One 1.05 no longer fits.
 - **The wait is counted on the rate's clock.** A yearly rate counts years. One divide for a ten-year wait gives 95.24, not 61.39.
+- **The growth factor is positive (rate above −100%).** At −100% the growth factor is 0, and you cannot divide by 0.
 
 ---
 
@@ -242,11 +243,11 @@ The two outputs match line for line.
 
 ### Lean
 
-Lean proves three facts for any payment, rate and whole number of years, and checks the $100 example in exact fractions.
+Lean proves three general discounting facts, and checks the $100 example in exact fractions.
 
 - Dividing the payment by a positive growth factor once per year gives a deposit that grows back into the payment. No other deposit does.
 - With a positive payment and rate, each extra year of waiting cuts today's value. Each year's cut is smaller than the year before's.
-- With a rate between 0% and 100% and a wait of a year or more, taking the rate off each year comes out too low.
+- With a positive payment, a rate between 0% and 100% and a wait of a year or more, taking the rate off each year comes out too low.
 - At 5%, $100 is worth 95.24 in one year, 90.70 in two and 61.39 in ten. Banked at 5%, 95.24 and 61.39 grow back to $100.00 to the cent.
 - The factors are 0.952381 and 0.613913. The mistakes come out at 95.00 and 59.87.
 
@@ -409,7 +410,7 @@ example : (11973 / 2 : ℚ) ≤ 10000 * (95 / 100) ^ 10 ∧
 - **Option prices.** A strike price is cash due at expiry, so it enters discounted: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), same 5% and year, the same factor, shown there as 0.9512.
 
 > **Say it back**
-> Money later is worth less than money now, because money now could be in the bank earning. To price a promise, ask what deposit would grow into it: divide the payment by the growth factor once per year of waiting. At 5%, $100 due in a year is worth $95.24; in ten years, $61.39. The one-step multiplier is the discount factor: 0.952381, 0.613913, or 0.951229 continuously.
+> At a positive interest rate, money later is worth less than money now, because money now could be in the bank earning. To price a promise, ask what deposit would grow into it: divide the payment by the growth factor once per year of waiting. At 5%, $100 due in a year is worth $95.24; in ten years, $61.39. The one-step multiplier is the discount factor: 0.952381, 0.613913, or 0.951229 continuously.
 
 ---
 
@@ -424,7 +425,7 @@ Foundations moves on to logic next. The money thread continues in Financial math
 
 - [Statements and connectives](../05-Logic/01-statements-and-connectives.md): the next shelf of Foundations, where numbers give way to logic, starting with statements and truth tables.
 - [Discount factors](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): this card's discount factor, under every compounding convention.
-- [Bond price and yield](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): a bond priced by discounting every coupon and the face value, then adding them up.
+- [Bond price and yield](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): a bond priced by discounting every regular interest payment and the final repayment, then adding them up.
 - [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): an option price, where cash due at expiry is discounted by this same factor, shown there as 0.9512.
 
 Left open: a bond pays many dated amounts, not one. How do you price them all at once?
