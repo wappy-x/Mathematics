@@ -16,7 +16,7 @@ Arrows drawn from a corner of a page are another. So are the polynomials of degr
 
 Some subsets are little vector spaces themselves. The sugar-free recipes are: add two, still sugar-free; scale one, still sugar-free. Those are **subspaces**. The recipes with exactly 200 grams of flour are not: add two of them and you have 400 grams of flour.
 
-**A vector space is a collection with an add and a scale that behave the way adding and scaling numbers behave; a subspace is a subset you cannot get out of by adding or scaling.**
+**A vector space is a collection with an add and a scale that behave the way adding and scaling numbers behave; a subspace is a subset holding the zero that you cannot get out of by adding or scaling.**
 
 **What kind of fact this is:** two definitions: the eight rules are chosen, not discovered. The three-check subspace test is a theorem, proved on this card in Why it works.
 
@@ -521,7 +521,7 @@ example : ((4 : ℤ) • (![200, 100, 50] : Fin 3 → ℤ) + (-3 : ℤ) • ![20
 ## Where you meet it in real life
 
 - **Blends and mixes.** Fertiliser blends, paint mixes, alloys, portfolio weights: lists you add and scale.
-- **Solution sets.** Solutions of a batch of equations that all read "= 0" form a subspace. Put a nonzero number on the right of one and they slide off the zero vector, like the 200-gram flour set.
+- **Solution sets.** Solutions of a batch of linear equations that all read "= 0" form a subspace. Put a nonzero number on the right of one and they slide off the zero vector, like the 200-gram flour set.
 - **Quadratics.** Polynomials of degree at most 2 are a vector space; those with no constant term are a subspace of it. Nothing there is an arrow.
 - **Lines and planes through the origin.** In the arrows picture those are the subspaces, along with the zero on its own and the whole space.
 

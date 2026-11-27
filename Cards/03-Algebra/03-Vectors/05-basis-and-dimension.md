@@ -72,10 +72,10 @@ The number of vectors in a basis is the space's **dimension**: 2 here, under eit
 ```mermaid
 flowchart TD
   L["a list of vectors in the plane"] --> N{"how many vectors?"}
-  N -->|"one"| Short["spans a line only: most of the plane is unreachable"]
+  N -->|"zero or one"| Short["spans at most a line: most of the plane is unreachable"]
   N -->|"three or more"| Long["one is a mix of the others: spare"]
   N -->|"two"| X{"cross-number zero?"}
-  X -->|"zero"| Par["both sit on one line: spans that line only"]
+  X -->|"zero"| Par["both sit on one line: spans at most that line"]
   X -->|"not zero"| Bas["a basis: every point has exactly one pair of amounts"]
 ```
 
@@ -513,7 +513,7 @@ example : (4 : ℤ) • (![1, 1] : Fin 2 → ℤ) + (-3 : ℤ) • ![-1, 1] = ![
 > - Independence alone is not a basis either. The single vector (1, 1) is independent and spans only the river.
 > - Order matters: the same amounts backwards, -1 and 4, put you at (-5, 3).
 > - Dimension is not how many numbers a vector holds. The river is a line inside the plane, written as pairs: dimension 1.
-> - A basis is never unique. Only the count, 2, is fixed.
+> - A basis of the plane is never unique. Only the count, 2, is fixed.
 
 ---
 

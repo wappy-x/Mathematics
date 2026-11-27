@@ -69,13 +69,13 @@ C = x\,A + y\,B
 
 Here x = 1 and y = 1 do it.
 
-Two vectors get a shortcut: they are dependent exactly when one is a multiple of the other, and the cross-number tests that in one line. For A and B it is 10 × 8 − 2 × 5 = 70. Not zero, so A and B are independent.
+Two vectors get a shortcut: they are dependent exactly when one is a multiple of the other, and for two vectors in the plane the cross-number tests that in one line. For A and B it is 10 × 8 − 2 × 5 = 70. Not zero, so A and B are independent.
 
 ### When it holds
 
 - **Amounts may be negative or fractions.** Allow only positive amounts and no mix but zero empties the barrow: all three bags added give (24, 26). The dependent trio would then pass as independent.
 - **Every vector has the same slots, in the same order.** A mix adds nitrogen to nitrogen and phosphorus to phosphorus. A bag written phosphorus first gives the wrong mix; one with a third slot gives no mix at all.
-- **The cross-number test is for two vectors only.** Applied to the pairs of a longer list, it misleads: the pairs give 70, 70 and −70, none zero, and the trio is still dependent.
+- **The cross-number test is for two vectors with two slots only.** Applied to the pairs of a longer list, it misleads: the pairs give 70, 70 and −70, none zero, and the trio is still dependent.
 
 ---
 

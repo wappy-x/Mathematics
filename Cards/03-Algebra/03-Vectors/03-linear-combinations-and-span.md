@@ -79,7 +79,7 @@ The cross-number of two vectors in the plane: the first slot of $`A`$ times the 
 - **Any amounts are allowed, fractions and negatives included.** The span counts every such mix. A shop that sells only whole bags reaches far fewer targets: (14, 22) needs 34/35 of a bag of A and 15/7 bags of B, so it is in the span but not on the shelf.
 - **Every vector has the same slots, in the same order.** Mixing adds slot by slot. Put phosphorus first in one bag and nitrogen first in the other, and the sums mean nothing.
 - **The cross-number test needs two vectors with two slots each.** For three vectors, or vectors with more slots, it does not apply as written: write out the slot equations and solve them.
-- **The two vectors point different ways.** If one is a multiple of the other, as C = (20, 10) is of A, the cross-number is 0 and the span shrinks to one line. Then (14, 21) is out of reach.
+- **The two vectors point different ways.** If one is a multiple of the other, as C = (20, 10) is of A, the cross-number is 0 and the span shrinks to one line (or just the origin if both are zero). Then (14, 21) is out of reach.
 
 ---
 
@@ -122,7 +122,7 @@ Those three facts are precisely the test for a subspace ([Vector spaces and subs
 
 ### The shapes a span takes
 
-Any one vector but the zero one: its span is a line through the origin, the point (0, 0), made of every scaling of it. Two vectors pointing different ways: a flat plane. Three vectors in space, none of them a mix of the other two: all of space. A vector already a mix of the others adds nothing — the question [Linear independence](04-linear-independence.md) answers.
+Any one vector but the zero one: its span is a line through the origin, the point (0, 0), made of every scaling of it. Two vectors neither a multiple of the other: a flat plane. Three vectors in space, none of them a mix of the other two: all of space. A vector already a mix of the others adds nothing — the question [Linear independence](04-linear-independence.md) answers.
 
 Once matrices exist this shortens to one line: stack the bags as the columns of a matrix and ask whether the matrix times some list of amounts hits the target ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)).
 
@@ -497,7 +497,7 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] = ![2
 ## The usual mistake
 
 > [!warning]
-> **Treating the span as the handful of vectors you were given, or as a short list of mixes.** It is the entire set of mixes, and it is infinite. Two bags pointing different ways reach every point of the plane — (14, 22) included — using fractional and negative amounts.
+> **Treating the span as the handful of vectors you were given, or as a short list of mixes.** It is the entire set of mixes, and — unless every vector is zero — it is infinite. Two bags pointing different ways reach every point of the plane — (14, 22) included — using fractional and negative amounts.
 >
 > - Adding the bags instead of scaling them. One of each gives (12, 13), not (14, 21).
 > - Getting the amounts the wrong way round. Two of A and one of B gives (22, 18).
@@ -514,7 +514,7 @@ example : (2 : ℤ) • (![10, 5] : Fin 2 → ℤ) + (1 : ℤ) • ![2, 8] = ![2
 - **Solving equations.** Asking whether two equations in two unknowns have a solution is the same question as asking whether the target is in the span of the two columns ([Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 > **Say it back**
-> A linear combination is a mix: so much of one vector, so much of another, added together. The span is every target those mixes reach. Bag A = (10, 5) and bag B = (2, 8): one A and two B land exactly on (14, 21), so (14, 21) is in the span. To test any target, match slot by slot and solve the two equations you get. The cross-number here is 70, not zero, so these bags reach the whole plane — (14, 22) too, with fractions of a bag. One non-zero vector spans a line. Two vectors pointing different ways span a plane. Three in space, none a mix of the other two, span all of space.
+> A linear combination is a mix: so much of one vector, so much of another, added together. The span is every target those mixes reach. Bag A = (10, 5) and bag B = (2, 8): one A and two B land exactly on (14, 21), so (14, 21) is in the span. To test any target, match slot by slot and solve the two equations you get. The cross-number here is 70, not zero, so these bags reach the whole plane — (14, 22) too, with fractions of a bag. One non-zero vector spans a line. Two vectors neither a multiple of the other span a plane. Three in space, none a mix of the other two, span all of space.
 
 ---
 
